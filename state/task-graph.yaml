@@ -6,8 +6,21 @@ tasks:
     plan_path: docs/superpowers/plans/00-master-implementation-plan.md
     title: Establish the repository without relocating the input bundle
     depends_on: []
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - Get-Location = C:\Users\slvma\Downloads\Github\Projeto Amanda; git rev-parse
+      --show-toplevel = C:/Users/slvma/Downloads/Github/Projeto Amanda; git status
+      --short --branch = main, tree clean before the first session commit
+    - .gitignore covers .venv/, .venv-*/, .tools/, vendor/, __pycache__/, .pytest_cache/,
+      .mypy_cache/, .ruff_cache/, .env, .env.*, docs/source/, docs/review/source-extracts/,
+      TFG_Amanda_2026/, programa_necessidades.pdf, TFG_Amanda*.pdf, project/provenance/extracted/,
+      state/snapshots/private/, state/locks/, logs/raw/, *.rvt, *.rfa, *.rte, *.slog;
+      verified item by item against the M1 list
+    - 'git init was not needed: the root was already a Git repository on branch main.
+      Raw sources, PDFs and private extracts stayed untracked (protected by .gitignore,
+      not staged)'
+    - 'BLOCKER: git remote -v is empty, so no push was possible. Destination not invented.
+      After a URL exists: git remote add origin <URL>; git push -u origin main'
   P00-T02:
     id: P00-T02
     phase: PHASE_00
@@ -15,8 +28,16 @@ tasks:
     title: Enforce plan dependency order
     depends_on:
     - P00-T01
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - python -m pytest tests/policy/test_plan_order.py -q -> 3 passed
+    - python -c snippet calling diagnose_plan_order on state/task-graph.yaml -> passed
+      True, 0 issues, 11 phase edges (PHASE_01->PHASE_03 and PHASE_01->PHASE_07A now
+      present)
+    - 'state/task-graph.yaml regenerated from docs/superpowers/plans -> 159 tasks;
+      before/after snapshot compared: 0 status or evidence changes, 44 PASS preserved'
+    - load_registry(state/task-graph.yaml) -> 159 tasks, 45 PASS, 114 PENDING after
+      the P00-T01 advance
   P00-T03:
     id: P00-T03
     phase: PHASE_00
@@ -24,8 +45,18 @@ tasks:
     title: Global completion verification
     depends_on:
     - P00-T02
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - python -m pytest tests/unit tests/policy tests/project tests/providers -q ->
+      323 passed, 1 skipped, 12.71s
+    - 'python -m amanda_agent doctor -> exit 0; git/codex/powershell/dotnet AVAILABLE,
+      revit DETECTED 20260716_1515(x64) file 27.2.0.39, python312 MISSING (known false
+      negative: .venv is 3.12.14)'
+    - python -m amanda_agent status -> exit 0; phase PHASE_02, revision 51, writer
+      lease free, 5 open blockers
+    - 'release manifest verification is NOT APPLICABLE: the distribution phases (08/09)
+      never ran, so no GOLDEN release exists yet; this task verifies the fast deterministic
+      suite and tool health only, not a release artifact'
   P01-T01:
     id: P01-T01
     phase: PHASE_01
@@ -234,8 +265,23 @@ tasks:
     title: Discover actual Horizun MCP tool catalog
     depends_on:
     - P02-T05
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - python -m pytest tests/providers -q -> 9 passed
+    - tool-lab/horizun/generate_toolmap.py run against the installed Horizun contract
+      -> state/providers/horizun-toolmap.yaml regenerated from actual catalog results
+      (80 contract tools, contract_hash 8b9600f5274d7dffb6e5bd5f), no hand-typed tool
+      names
+    - tool-lab/horizun/tool-discovery.md records tools/list = 70 tools vs resource
+      horizun://contract/tools = 80 (protocol_version 2) and the 10 contract-only
+      tools
+    - 'GAP recorded, feeds blocker SITE_TOPOGRAPHY: no Toposolid creation exists among
+      the 26 kinds of horizun_create_elements; alternatives are a manual Revit toposolid
+      plus embed/grade, or horizun_execute_python (currently execute_python_allowed=false)'
+    - 'unready dependency override for P02-T05: P02-T05 (immutable disposable Revit
+      baseline) requires one user-initiated Revit 2027 launch and the Security dialog;
+      the catalog discovery itself consumes only the installed contract and is already
+      complete'
   P02-T07:
     id: P02-T07
     phase: PHASE_02
