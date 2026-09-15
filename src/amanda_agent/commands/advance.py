@@ -93,6 +93,7 @@ def run_advance(
     evidence: list,
     next_task: str | None = None,
     expected_revision: int | None = None,
+    allow_unready: str | None = None,
 ) -> dict:
     try:
         parsed = TaskStatus(status)
@@ -105,6 +106,7 @@ def run_advance(
         evidence=evidence,
         next_task=next_task,
         expected_revision=expected_revision,
+        allow_unready=allow_unready,
     )
 
 

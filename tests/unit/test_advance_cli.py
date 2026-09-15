@@ -6,9 +6,9 @@ import yaml
 from typer.testing import CliRunner
 
 from amanda_agent.cli import app
-from amanda_agent.models.state import ProjectState
+from amanda_agent.models.state import ProjectState, TaskStatus
 from amanda_agent.state.store import StateStore
-from amanda_agent.state.tasks import TaskRecord, TaskRegistry
+from amanda_agent.state.tasks import TaskRecord, TaskRegistry, load_registry
 
 runner = CliRunner()
 
@@ -126,6 +126,62 @@ def test_advance_refuses_a_non_completion_status(tmp_path: Path, monkeypatch):
 
     assert result.exit_code != 0
     assert "RUNNING" in (result.stdout + str(result.output))
+
+
+def test_advance_refuses_a_task_whose_dependency_is_still_open(
+    tmp_path: Path, monkeypatch
+):
+    monkeypatch.setenv("AMANDA_PROJECT_ROOT", str(build_root(tmp_path)))
+    registry = tmp_path / "state" / "task-graph.yaml"
+    before = registry.read_bytes()
+
+    result = runner.invoke(
+        app,
+        [
+            "advance",
+            "--task",
+            "P01-T02",
+            "--status",
+            "PASS",
+            "--evidence",
+            "nothing proved the dependency yet",
+        ],
+    )
+
+    assert result.exit_code != 0
+    text = result.stdout + str(result.output)
+    assert "P01-T01" in text
+    assert "--allow-unready" in text
+    assert registry.read_bytes() == before
+
+
+def test_the_override_flag_records_the_reason_with_the_completion(
+    tmp_path: Path, monkeypatch
+):
+    monkeypatch.setenv("AMANDA_PROJECT_ROOT", str(build_root(tmp_path)))
+
+    result = runner.invoke(
+        app,
+        [
+            "advance",
+            "--task",
+            "P01-T02",
+            "--status",
+            "PASS_WITH_WARNINGS",
+            "--evidence",
+            "capability proven on the disposable fixture",
+            "--allow-unready",
+            "P01-T01 needs the operator to approve the add-in dialog",
+        ],
+    )
+
+    assert result.exit_code == 0, result.stdout
+    registry = load_registry(tmp_path / "state" / "task-graph.yaml")
+    assert registry.tasks["P01-T02"].status == TaskStatus.PASS_WITH_WARNINGS
+    assert any(
+        "add-in dialog" in reference
+        for reference in registry.tasks["P01-T02"].evidence
+    )
 
 
 def test_advance_records_history_and_advances_the_state(tmp_path: Path, monkeypatch):

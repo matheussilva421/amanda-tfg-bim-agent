@@ -98,6 +98,11 @@ def advance(
     expected_revision: int = typer.Option(
         None, "--expected-revision", help="Refuse if the state moved on."
     ),
+    allow_unready: str = typer.Option(
+        None,
+        "--allow-unready",
+        help="Record a task whose dependencies are unfinished, with the reason.",
+    ),
 ) -> None:
     """Record a finished task. Requires evidence: green without proof is a lie."""
     from .commands.advance import run_advance
@@ -112,6 +117,7 @@ def advance(
             evidence=list(evidence or []),
             next_task=next_task,
             expected_revision=expected_revision,
+            allow_unready=allow_unready,
         )
     except AdvanceRefused as exc:
         typer.echo("advance refused: " + str(exc), err=True)

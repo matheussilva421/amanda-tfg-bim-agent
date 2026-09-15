@@ -111,6 +111,90 @@ def test_completion_is_refused_for_an_unknown_task(tmp_path: Path):
         )
 
 
+def test_completing_a_task_whose_dependency_is_unfinished_is_refused(
+    tmp_path: Path,
+):
+    """The registry is a graph, so finishing out of order is a false claim.
+
+    P01-T02 declares a hard dependency on P01-T01. Recording T02 as PASS while
+    T01 is still PENDING would make the scheduler and the durable state agree on
+    a progress level that never happened.
+    """
+    root = _seed_project(tmp_path)
+
+    with pytest.raises(AdvanceRefused, match="P01-T01"):
+        complete_task(
+            root,
+            task_id="P01-T02",
+            status=TaskStatus.PASS,
+            evidence=["looks fine to me"],
+        )
+
+
+def test_the_unready_refusal_changes_neither_registry_nor_state(tmp_path: Path):
+    root = _seed_project(tmp_path)
+    state_path = root / "PROJECT_STATE.yaml"
+    before_state = state_path.read_text(encoding="utf-8")
+    graph_path = root / "state" / "task-graph.yaml"
+    before_graph = graph_path.read_text(encoding="utf-8")
+
+    with pytest.raises(AdvanceRefused):
+        complete_task(
+            root,
+            task_id="P01-T02",
+            status=TaskStatus.PASS,
+            evidence=["x"],
+        )
+
+    assert state_path.read_text(encoding="utf-8") == before_state
+    assert graph_path.read_text(encoding="utf-8") == before_graph
+
+
+def test_an_explicit_override_records_the_completion_and_its_reason(
+    tmp_path: Path,
+):
+    """An operator may still close a task whose dependency is stuck.
+
+    The override has to be deliberate: it is a parameter, not an accident, and
+    it is echoed in the returned record so the history keeps the reason.
+    """
+    root = _seed_project(tmp_path)
+
+    result = complete_task(
+        root,
+        task_id="P01-T02",
+        status=TaskStatus.PASS,
+        evidence=["capability proven without the fixture P01-T01 creates"],
+        allow_unready="P01-T01 blocked by operator action, T02 does not consume it",
+    )
+
+    registry = load_registry(root / "state" / "task-graph.yaml")
+    assert registry.tasks["P01-T02"].status == TaskStatus.PASS
+    assert result["unready_dependencies"] == ["P01-T01"]
+    assert result["override_reason"] in result["evidence"][-1]
+
+
+def test_a_dependency_that_passed_with_warnings_still_unlocks_the_task(
+    tmp_path: Path,
+):
+    root = _seed_project(tmp_path)
+    complete_task(
+        root,
+        task_id="P01-T01",
+        status=TaskStatus.PASS_WITH_WARNINGS,
+        evidence=["a"],
+    )
+
+    outcome = complete_task(
+        root,
+        task_id="P01-T02",
+        status=TaskStatus.PASS,
+        evidence=["b"],
+    )
+
+    assert outcome["unready_dependencies"] == []
+
+
 def test_a_stale_state_revision_is_rejected_rather_than_lost(tmp_path: Path):
     root = _seed_project(tmp_path)
 

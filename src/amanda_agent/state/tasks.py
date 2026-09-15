@@ -70,6 +70,21 @@ class TaskRegistry(BaseModel):
             raise KeyError("unknown task " + task_id)
         self.tasks[task_id].evidence.append(reference)
 
+    def unready_dependencies(self, task_id: str) -> list:
+        """Hard dependencies of ``task_id`` that have not reached a pass yet.
+
+        Read-only: the caller decides whether the unfinished predecessor is a
+        reason to stop or a limitation to record. Keeping the check here means
+        the graph and the writer cannot disagree about what "dependency" means.
+        """
+        if task_id not in self.tasks:
+            raise KeyError("unknown task " + task_id)
+        return sorted(
+            dependency
+            for dependency in self.tasks[task_id].depends_on
+            if self.tasks[dependency].status not in SATISFIED
+        )
+
     # -- validation ----------------------------------------------------
     def validate(self) -> None:
         for record in self.tasks.values():

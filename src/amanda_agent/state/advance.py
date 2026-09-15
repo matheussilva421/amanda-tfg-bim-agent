@@ -73,8 +73,16 @@ def complete_task(
     next_task: str | None = None,
     expected_revision: int | None = None,
     note: str | None = None,
+    allow_unready: str | None = None,
 ) -> dict:
-    """Record one finished task in the registry, the state and the history."""
+    """Record one finished task in the registry, the state and the history.
+
+    A task whose hard dependencies have not passed yet is refused: the registry
+    is a graph, and a completion recorded ahead of its inputs is a progress
+    claim that never happened. An operator who deliberately wants to close such
+    a task passes ``allow_unready`` with the reason; the reason is appended to
+    the evidence so the history keeps it.
+    """
     root = Path(root)
     if not evidence:
         raise AdvanceRefused(
@@ -96,6 +104,21 @@ def complete_task(
 
     if task_id not in registry.tasks:
         raise AdvanceRefused("unknown task " + task_id)
+
+    unready = registry.unready_dependencies(task_id)
+    if unready:
+        if allow_unready is None or not allow_unready.strip():
+            raise AdvanceRefused(
+                "task "
+                + task_id
+                + " still has unfinished dependencies ("
+                + ", ".join(unready)
+                + "); finish them first, or pass --allow-unready with the reason"
+            )
+        evidence = list(evidence) + [
+            "unready dependency override for " + ", ".join(unready) + ": "
+            + allow_unready.strip()
+        ]
 
     store = StateStore(root / "PROJECT_STATE.yaml")
     current = store.load()
@@ -148,8 +171,11 @@ def complete_task(
     return {
         "task_id": task_id,
         "status": str(status),
+        "evidence": list(evidence),
         "next_task": saved.next_task,
         "state_revision": saved.state_revision,
+        "unready_dependencies": unready,
+        "override_reason": allow_unready.strip() if unready and allow_unready else None,
     }
 
 
