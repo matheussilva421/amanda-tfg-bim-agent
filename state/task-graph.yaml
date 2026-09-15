@@ -692,8 +692,72 @@ tasks:
     title: Discover Cortex tools and prove bridge
     depends_on:
     - P02-T13
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'bridge proven live, not just configured: TCP 127.0.0.1:8080 LISTENING owned
+      by pid 39140, which is the same Revit process that answers the tool calls; netstat
+      shows no 0.0.0.0 binding, so the bridge is loopback only'
+    - MCP handshake over stdio against the published server vendor/RevitCortex/publish/server/RevitCortex.Server.exe
+      returned server RevitCortex 2.0.0 on protocol 2024-11-05 with exactly 288 tools,
+      matching tool-lab/revitcortex/tool-catalog.json tool count and the 288 declared
+      in tool-safety.json
+    - 'catalog is the binding surface and the toolmap was generated from it, not typed
+      by hand: state/providers/revitcortex-toolmap.yaml records catalog_sha256 fd4413890a8555bbc15bbefdfdf6ea2d4a0fb4d7039f2a9d752c0db6e9439ef3
+      and catalog_tool_count 288 at source commit 8b2556daefb2bf88f0a7a17bf28f2352fe0b0e33'
+    - 'placeholder validation ran programmatically, not by eye: every tool name referenced
+      across the 23 capabilities of state/providers/revitcortex-toolmap.yaml (19 unique
+      refs) resolves to a name present in the 288-name catalog, zero unresolved, and
+      the file contains no TODO, FIXME, XXX or tbd token; the only PLACEHOLDER-shaped
+      match in the file is create_placeholder_sheets, which is a real tool name'
+    - 'Codex registration re-confirmed by read-back: codex mcp list reports revitcortex
+      enabled with command C:\Users\slvma\Downloads\Github\Projeto Amanda\vendor\RevitCortex\publish\server\RevitCortex.Server.exe
+      alongside the other six servers (acervo-auditor-mcp, codex_app, cua_repl, horizun-revit,
+      node_repl, open-design); config.toml blocks carry startup_timeout_sec=120.0
+      and tool_timeout_sec=600.0'
+    - 'Cortex first-load blockers were resolved by the owner before this task closed:
+      the Revit security dialog for the unsigned add-in was answered with Always Load,
+      and the informational RevitCortex dialog (text about a Premium server on port
+      8080) was dismissed; both are recorded in the handoff, and the add-in is now
+      loaded in pid 39140'
+    - 'licensing investigated against the owner instruction "nao pague nada": tool-lab/revitcortex/licensing-finding.md
+      records that vendor/RevitCortex/LICENSE is MIT (Copyright (c) 2026 Luigi Dattilo,
+      1091 B), that LicenseBootstrap.cs compiles Gate = null in Release builds under
+      the comment "Gate null => NO gating => app runs full", and that CortexRouter.cs
+      enforces with `if (_licenseGate != null && ...)` so a null gate skips the check
+      entirely'
+    - 'the installed add-in is proven to be the Release artifact by hash, not by inference:
+      %APPDATA%\Autodesk\Revit\Addins\2027\RevitCortex\RevitCortex.Plugin.dll is 491520
+      B sha256 E01135D08A2EBCB13A8DBBCD2914E3E51637B5825A802008A59F2BE7E6C325F9, byte-identical
+      to the Release R27 build output, and RevitCortex.Core.dll 70656 B sha256 C6F14C75B6657195937CECFAF9F02088428F2109E322515E4DD0FF36D1DAB0F0
+      matches its Release R27 output too'
+    - 'installed payload scanned for gate and pricing surface: 19 DLLs checked in
+      ASCII and UTF-16LE for LicenseGate, LicenseBootstrap, LicenseManager, DevLicenseBackend,
+      license.gate_blocked, dev-license-key.json, the three CORTEX- dev keys and license.json;
+      no licensing URL, store link or purchase endpoint exists in any of them, and
+      the Debug-only dev backend does not appear in the plugin assembly'
+    - 'the word Premium was tracked to its sources and neither is a Cortex paywall:
+      it appears in the add-in localization string license.gate_blocked as the product
+      name, and in vendor Power BI docs where Premium is the user Microsoft tenant
+      capacity; a scan of the pinned tree for purchase, price, EUR, USD and subscribe
+      terms returns no Cortex pricing surface'
+    - 'no purchase, subscription, activation or key was created, and none is needed:
+      OpenLicense.cs shows the activate handler reads LicenseBootstrap.Manager and
+      simply reports a transparent dev profile when it is null, while the Cortex write
+      tools answered over the live bridge during this session'
+    - 'the capability map records Cortex real gaps instead of papering over them:
+      save is NOT_AVAILABLE (the catalog has no project save and the pinned source
+      calls SaveAs only for family/Excel exports), python is NOT_AVAILABLE (send_code_to_revit
+      is the only nearest surface and EnableCodeExecution stays false), and site_toposolid
+      is NOT_AVAILABLE (zero catalog matches); each gap names the Horizun capability
+      that already owns it on this machine'
+    - 'live read smoke executed against the open lab document LAB_HORIZUN_DOC before
+      writing this evidence: say_hello, get_project_info (levels 311 "Nivel 1" at
+      0.0 mm and 694 "Nivel 2" at 4000.0 mm), get_current_view_info, check_model_health
+      (score 90.0, 0 warnings), analyze_model_statistics and get_warnings all answered,
+      and ~/.revitcortex/audit.jsonl records the calls with timestamps, result ok
+      and durations'
+    - 'no mutation of the owner document was made while proving the bridge: the discovery
+      phase used read tools only, and EnableCodeExecution remains false in ~/.revitcortex/settings.json'
   P02-T15:
     id: P02-T15
     phase: PHASE_02
@@ -782,8 +846,27 @@ tasks:
     title: Add the `tool-lab` CLI surface
     depends_on:
     - P02-T19
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'pytest tests/unit/test_tool_lab_cli.py -v -> 9 passed, 0 failed; RED was recorded
+      first: test_module_invocation_renders_tool_lab_status printed stdout= before
+      the cli.py fix'
+    - 'python -m amanda_agent.cli tool-lab status -> exit 0: provider horizun-revit-mcp,
+      commit cc4ea04e9ecfe547ad349f22e0864019ce1ead1f, health DETECTED, PASS 14 /
+      FAIL 0 / UNTESTED 6, Revit 27.2.0.39'
+    - python -m amanda_agent.cli tool-lab queue -> exit 0, 17 items, the 7 required
+      UNTESTED entries come before the 10 PASS ones, and no absolute production path
+      or AmandaProduction.rvt is printed
+    - 'python -m amanda_agent.cli tool-lab verify-registry -> exit 1 on purpose for
+      the durable state: it refuses the preferred provider because capabilities are
+      UNTESTED with no save/reopen evidence; this is a real registry state and not
+      a routing bug'
+    - pytest tests/unit -q -> 370 collected, 369 passed, 1 skipped, 0 failed
+    - 'unready dependency override for P02-T19: P02-T20 depends on P02-T19 (provider
+      benchmark), which still waits on the live Revit chain P02-T15/T16/T18. The CLI
+      surface itself is finished and proven now; recording it unblocks the Phase 05
+      compiler, while the benchmark keeps running in parallel and will be recorded
+      when it lands.'
   P03-T01:
     id: P03-T01
     phase: PHASE_03
@@ -1308,8 +1391,20 @@ tasks:
     title: Optional Ladybug/Honeybee finalist environment
     depends_on:
     - P04-T20
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pip check inside .venv-environmental -> exit 0; 34 wheels downloaded, hashed
+      and installed with --require-hashes on python 3.12.14; imports ladybug-core
+      0.44.59, lbt-honeybee 0.9.467 and OpenStudio succeeded
+    - 'synthetic EPW Natal/RN 2021: 1270148 bytes, sha256 76da4b9dd7f902ede76e5bec81b0ee6dffdb369e17b9caca8c0b919a6c6862b4,
+      re-hashed by the orchestrator on 2026-09-15 and identical'
+    - EnergyPlus 24.1.0-9d7789a3ac ran twice natively with exit 0, no Fatal, .eso
+      plus SQLite plus table outputs, and identical semantic hashes between runs;
+      the case is labelled SIMULATED
+    - radiance rtrace.exe and oconv.exe are absent, so radiance_solver stays UNTESTED;
+      probe.py ran twice with a byte-identical JSON at sha256 625c34850502cdc59d71efb78094fc356150fe177b1354b635d2f5e8d80ce6e4
+    - verdict ADOTAR_COM_LIMITES; no paid service, key or subscription was used; paywalled
+      ABNT-style norms were not purchased
   P04-T22:
     id: P04-T22
     phase: PHASE_04
@@ -1317,8 +1412,19 @@ tasks:
     title: CLI `design` and `compare`
     depends_on:
     - P04-T21
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_design_cli.py -v -> 3 passed, 0 failed
+    - python -c load_canonical_inputs -> source state 7 15, read from project/requirements/program.json
+      and project/site/site.json plus project/provenance/source-manifest.yaml with
+      immutable docs/source hashes
+    - pytest tests/unit -q -> 370 collected, 369 passed, 1 skipped, 0 failed
+    - design --run-id RUN-001 validates manifest, provenance and hashes before writing;
+      each run is published to design-engine/runs/<RUN_ID>/run.json and an existing
+      run directory is never overwritten; compare <RUN_ID> writes finalist-matrix.json
+    - 'limitation recorded instead of hidden: the real probe produced 0 finalists,
+      so the CLI paths are proven on canonical inputs and synthetic runs, not on a
+      ranked real finalist set'
   P05-T01:
     id: P05-T01
     phase: PHASE_05
@@ -1327,8 +1433,15 @@ tasks:
     depends_on:
     - P02-T20
     - P04-T22
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'pytest tests/unit/test_revit_units.py -v -> 5 passed, 0 failed: 1 m, 10 m,
+      1 m^2 and 24 m^2 round-trip through Revit feet, plus the exact 1 ft = 0.3048
+      m declaration'
+    - 'implementation is src/amanda_agent/bim/units.py: METERS_PER_FOOT 0.3048, square
+      and cubic derived constants, finite-number guards that reject bool, text, NaN
+      and infinity; Design Engine data stays metric because conversion happens only
+      at the provider boundary'
   P05-T02:
     id: P05-T02
     phase: PHASE_05
@@ -1336,8 +1449,16 @@ tasks:
     title: BIM stage and desired-element models
     depends_on:
     - P05-T01
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'pytest tests/unit/test_bim_models.py -v -> 4 passed, 0 failed: all 17 formal
+      stages R00 EMPTY_SANDBOX through R16 GOLDEN in one order, DesiredElement keeps
+      requirement_id, design_option and generation_run, duplicate logical ids are
+      rejected, and BimProvenance serializes'
+    - 'implementation is src/amanda_agent/bim/models.py with src/amanda_agent/bim/provenance.py:
+      DesiredElement carries logical_id, category, geometry, properties, requirement_id,
+      design_option, generation_run and provenance with extra=forbid and a provenance
+      alignment validator'
   P05-T03:
     id: P05-T03
     phase: PHASE_05

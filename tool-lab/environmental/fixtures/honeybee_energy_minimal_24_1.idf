@@ -1,0 +1,486 @@
+Version,
+ 24.1;
+
+!-   =======================================
+!-   ================ MODEL ================
+!-   =======================================
+
+
+!-   ========= SCHEDULE TYPE LIMITS =========
+
+
+!-   ============== SCHEDULES ==============
+
+
+Schedule:Constant,
+ Always On,                !- schedule name
+ Fractional,               !- schedule type limits
+ 1.0;                      !- value
+
+!-   ============== MATERIALS ==============
+
+
+Material,
+ Generic Ceiling Air Gap,  !- name
+ Smooth,                   !- roughness
+ 0.1,                      !- thickness {m}
+ 0.556,                    !- conductivity {W/m-K}
+ 1.28,                     !- density {kg/m3}
+ 1000.0,                   !- specific heat {J/kg-K}
+ 0.9,                      !- thermal absorptance
+ 0.7,                      !- solar absorptance
+ 0.7;                      !- visible absorptance
+
+Material,
+ Generic 50mm Insulation,  !- name
+ MediumRough,              !- roughness
+ 0.05,                     !- thickness {m}
+ 0.03,                     !- conductivity {W/m-K}
+ 43.0,                     !- density {kg/m3}
+ 1210.0,                   !- specific heat {J/kg-K}
+ 0.9,                      !- thermal absorptance
+ 0.7,                      !- solar absorptance
+ 0.7;                      !- visible absorptance
+
+WindowMaterial:Gas,
+ Generic Window Air Gap,   !- name
+ Air,                      !- gas type
+ 0.0127;                   !- thickness {m}
+
+WindowMaterial:Glazing,
+ Generic Low-e Glass,      !- name
+ SpectralAverage,          !- optical data type
+ ,                         !- spectral data set name
+ 0.006,                    !- thickness {m}
+ 0.45,                     !- solar transmittance
+ 0.36,                     !- solar reflectance front
+ 0.36,                     !- solar reflectance back
+ 0.71,                     !- visible transmittance
+ 0.21,                     !- visible reflectance front
+ 0.21,                     !- visible reflectance back
+ 0.0,                      !- infrared_transmittance
+ 0.84,                     !- emissivity front
+ 0.047,                    !- emissivity back
+ 1.0,                      !- conductivity {W/m-K}
+ 1.0,                      !- dirt correction factor
+ No;                       !- solar diffusing
+
+Material,
+ Generic 25mm Insulation,  !- name
+ MediumRough,              !- roughness
+ 0.025,                    !- thickness {m}
+ 0.03,                     !- conductivity {W/m-K}
+ 43.0,                     !- density {kg/m3}
+ 1210.0,                   !- specific heat {J/kg-K}
+ 0.9,                      !- thermal absorptance
+ 0.7,                      !- solar absorptance
+ 0.7;                      !- visible absorptance
+
+Material,
+ Generic Wall Air Gap,     !- name
+ Smooth,                   !- roughness
+ 0.1,                      !- thickness {m}
+ 0.667,                    !- conductivity {W/m-K}
+ 1.28,                     !- density {kg/m3}
+ 1000.0,                   !- specific heat {J/kg-K}
+ 0.9,                      !- thermal absorptance
+ 0.7,                      !- solar absorptance
+ 0.7;                      !- visible absorptance
+
+Material,
+ Generic Gypsum Board,     !- name
+ MediumSmooth,             !- roughness
+ 0.0127,                   !- thickness {m}
+ 0.16,                     !- conductivity {W/m-K}
+ 800.0,                    !- density {kg/m3}
+ 1090.0,                   !- specific heat {J/kg-K}
+ 0.9,                      !- thermal absorptance
+ 0.5,                      !- solar absorptance
+ 0.5;                      !- visible absorptance
+
+Material,
+ Generic Painted Metal,    !- name
+ Smooth,                   !- roughness
+ 0.0015,                   !- thickness {m}
+ 45.0,                     !- conductivity {W/m-K}
+ 7690.0,                   !- density {kg/m3}
+ 410.0,                    !- specific heat {J/kg-K}
+ 0.9,                      !- thermal absorptance
+ 0.5,                      !- solar absorptance
+ 0.5;                      !- visible absorptance
+
+Material,
+ Generic Roof Membrane,    !- name
+ MediumRough,              !- roughness
+ 0.01,                     !- thickness {m}
+ 0.16,                     !- conductivity {W/m-K}
+ 1120.0,                   !- density {kg/m3}
+ 1460.0,                   !- specific heat {J/kg-K}
+ 0.9,                      !- thermal absorptance
+ 0.65,                     !- solar absorptance
+ 0.65;                     !- visible absorptance
+
+Material,
+ Generic Brick,            !- name
+ MediumRough,              !- roughness
+ 0.1,                      !- thickness {m}
+ 0.9,                      !- conductivity {W/m-K}
+ 1920.0,                   !- density {kg/m3}
+ 790.0,                    !- specific heat {J/kg-K}
+ 0.9,                      !- thermal absorptance
+ 0.65,                     !- solar absorptance
+ 0.65;                     !- visible absorptance
+
+Material,
+ Generic Acoustic Tile,    !- name
+ MediumSmooth,             !- roughness
+ 0.02,                     !- thickness {m}
+ 0.06,                     !- conductivity {W/m-K}
+ 368.0,                    !- density {kg/m3}
+ 590.0,                    !- specific heat {J/kg-K}
+ 0.9,                      !- thermal absorptance
+ 0.2,                      !- solar absorptance
+ 0.2;                      !- visible absorptance
+
+Material,
+ Generic LW Concrete,      !- name
+ MediumRough,              !- roughness
+ 0.1,                      !- thickness {m}
+ 0.53,                     !- conductivity {W/m-K}
+ 1280.0,                   !- density {kg/m3}
+ 840.0,                    !- specific heat {J/kg-K}
+ 0.9,                      !- thermal absorptance
+ 0.8,                      !- solar absorptance
+ 0.8;                      !- visible absorptance
+
+Material,
+ Generic HW Concrete,      !- name
+ MediumRough,              !- roughness
+ 0.2,                      !- thickness {m}
+ 1.95,                     !- conductivity {W/m-K}
+ 2240.0,                   !- density {kg/m3}
+ 900.0,                    !- specific heat {J/kg-K}
+ 0.9,                      !- thermal absorptance
+ 0.8,                      !- solar absorptance
+ 0.8;                      !- visible absorptance
+
+WindowMaterial:Glazing,
+ Generic Clear Glass,      !- name
+ SpectralAverage,          !- optical data type
+ ,                         !- spectral data set name
+ 0.006,                    !- thickness {m}
+ 0.77,                     !- solar transmittance
+ 0.07,                     !- solar reflectance front
+ 0.07,                     !- solar reflectance back
+ 0.88,                     !- visible transmittance
+ 0.08,                     !- visible reflectance front
+ 0.08,                     !- visible reflectance back
+ 0.0,                      !- infrared_transmittance
+ 0.84,                     !- emissivity front
+ 0.84,                     !- emissivity back
+ 1.0,                      !- conductivity {W/m-K}
+ 1.0,                      !- dirt correction factor
+ No;                       !- solar diffusing
+
+Material,
+ Generic 25mm Wood,        !- name
+ MediumSmooth,             !- roughness
+ 0.0254,                   !- thickness {m}
+ 0.15,                     !- conductivity {W/m-K}
+ 608.0,                    !- density {kg/m3}
+ 1630.0,                   !- specific heat {J/kg-K}
+ 0.9,                      !- thermal absorptance
+ 0.5,                      !- solar absorptance
+ 0.5;                      !- visible absorptance
+
+!-   ============ CONSTRUCTIONS ============
+
+
+Construction,
+ Generic Roof,             !- name
+ Generic Roof Membrane,    !- layer 1
+ Generic 50mm Insulation,  !- layer 2
+ Generic LW Concrete,      !- layer 3
+ Generic Ceiling Air Gap,  !- layer 4
+ Generic Acoustic Tile;    !- layer 5
+
+Construction,
+ Generic Double Pane,      !- name
+ Generic Low-e Glass,      !- layer 1
+ Generic Window Air Gap,   !- layer 2
+ Generic Clear Glass;      !- layer 3
+
+Construction,
+ Generic Exterior Door,    !- name
+ Generic Painted Metal,    !- layer 1
+ Generic 25mm Insulation,  !- layer 2
+ Generic Painted Metal;    !- layer 3
+
+Construction:AirBoundary,
+ Generic Air Boundary,     !- construction name
+ None;                     !- air exchange method
+
+Construction,
+ Generic Interior Floor,   !- name
+ Generic Acoustic Tile,    !- layer 1
+ Generic Ceiling Air Gap,  !- layer 2
+ Generic LW Concrete;      !- layer 3
+
+Construction,
+ Generic Interior Door,    !- name
+ Generic 25mm Wood;        !- layer 1
+
+Construction,
+ Generic Underground Wall, !- name
+ Generic 50mm Insulation,  !- layer 1
+ Generic HW Concrete,      !- layer 2
+ Generic Wall Air Gap,     !- layer 3
+ Generic Gypsum Board;     !- layer 4
+
+Construction,
+ Generic Underground Roof, !- name
+ Generic 50mm Insulation,  !- layer 1
+ Generic HW Concrete,      !- layer 2
+ Generic Ceiling Air Gap,  !- layer 3
+ Generic Acoustic Tile;    !- layer 4
+
+Construction,
+ Generic Exposed Floor,    !- name
+ Generic Painted Metal,    !- layer 1
+ Generic Ceiling Air Gap,  !- layer 2
+ Generic 50mm Insulation,  !- layer 3
+ Generic LW Concrete;      !- layer 4
+
+Construction,
+ Generic Ground Slab,      !- name
+ Generic 50mm Insulation,  !- layer 1
+ Generic HW Concrete;      !- layer 2
+
+Construction,
+ Generic Interior Wall,    !- name
+ Generic Gypsum Board,     !- layer 1
+ Generic Wall Air Gap,     !- layer 2
+ Generic Gypsum Board;     !- layer 3
+
+Construction,
+ Generic Exterior Wall,    !- name
+ Generic Brick,            !- layer 1
+ Generic LW Concrete,      !- layer 2
+ Generic 50mm Insulation,  !- layer 3
+ Generic Wall Air Gap,     !- layer 4
+ Generic Gypsum Board;     !- layer 5
+
+Construction,
+ Generic Interior Ceiling, !- name
+ Generic LW Concrete,      !- layer 1
+ Generic Ceiling Air Gap,  !- layer 2
+ Generic Acoustic Tile;    !- layer 3
+
+Construction,
+ Generic Single Pane,      !- name
+ Generic Clear Glass;      !- layer 1
+
+!-   ============ HVAC SYSTEMS ============
+
+
+!-   ============ ROOM GEOMETRY ============
+
+
+!-   ________ZONE:TestRoom________
+
+
+Zone,
+ TestRoom,                 !- name
+ ,                         !- north
+ ,                         !- x
+ ,                         !- y
+ ,                         !- z
+ ,                         !- type
+ 1,                        !- multiplier
+ 3.0,                      !- ceiling height
+ 75.0,                     !- volume
+ 25.0,                     !- floor area
+ ,                         !- inside convection
+ ,                         !- outside convection
+ Yes;                      !- include floor area
+
+BuildingSurface:Detailed,
+ TestRoom_Bottom,          !- name
+ Floor,                    !- surface type
+ Generic Ground Slab,      !- construction name
+ TestRoom,                 !- zone name
+ ,                         !- space name
+ Ground,                   !- boundary condition
+ ,                         !- boundary condition object
+ NoSun,                    !- sun exposure
+ NoWind,                   !- wind exposure
+ autocalculate,            !- view factor to ground
+ 4,                        !- number of vertices
+ 5.000, 5.000, 0.000,
+ 5.000, 0.000, 0.000,
+ 0.000, 0.000, 0.000,
+ 0.000, 5.000, 0.000;
+
+BuildingSurface:Detailed,
+ TestRoom_Front,           !- name
+ Wall,                     !- surface type
+ Generic Exterior Wall,    !- construction name
+ TestRoom,                 !- zone name
+ ,                         !- space name
+ Outdoors,                 !- boundary condition
+ ,                         !- boundary condition object
+ SunExposed,               !- sun exposure
+ WindExposed,              !- wind exposure
+ Autocalculate,            !- view factor to ground
+ 4,                        !- number of vertices
+ 5.000, 5.000, 3.000,
+ 5.000, 5.000, 0.000,
+ 0.000, 5.000, 0.000,
+ 0.000, 5.000, 3.000;
+
+BuildingSurface:Detailed,
+ TestRoom_Right,           !- name
+ Wall,                     !- surface type
+ Generic Exterior Wall,    !- construction name
+ TestRoom,                 !- zone name
+ ,                         !- space name
+ Outdoors,                 !- boundary condition
+ ,                         !- boundary condition object
+ SunExposed,               !- sun exposure
+ WindExposed,              !- wind exposure
+ Autocalculate,            !- view factor to ground
+ 4,                        !- number of vertices
+ 5.000, 0.000, 3.000,
+ 5.000, 0.000, 0.000,
+ 5.000, 5.000, 0.000,
+ 5.000, 5.000, 3.000;
+
+BuildingSurface:Detailed,
+ TestRoom_Back,            !- name
+ Wall,                     !- surface type
+ Generic Exterior Wall,    !- construction name
+ TestRoom,                 !- zone name
+ ,                         !- space name
+ Outdoors,                 !- boundary condition
+ ,                         !- boundary condition object
+ SunExposed,               !- sun exposure
+ WindExposed,              !- wind exposure
+ Autocalculate,            !- view factor to ground
+ 4,                        !- number of vertices
+ 0.000, 0.000, 3.000,
+ 0.000, 0.000, 0.000,
+ 5.000, 0.000, 0.000,
+ 5.000, 0.000, 3.000;
+
+BuildingSurface:Detailed,
+ TestRoom_Left,            !- name
+ Wall,                     !- surface type
+ Generic Exterior Wall,    !- construction name
+ TestRoom,                 !- zone name
+ ,                         !- space name
+ Outdoors,                 !- boundary condition
+ ,                         !- boundary condition object
+ SunExposed,               !- sun exposure
+ WindExposed,              !- wind exposure
+ Autocalculate,            !- view factor to ground
+ 4,                        !- number of vertices
+ 0.000, 5.000, 3.000,
+ 0.000, 5.000, 0.000,
+ 0.000, 0.000, 0.000,
+ 0.000, 0.000, 3.000;
+
+BuildingSurface:Detailed,
+ TestRoom_Top,             !- name
+ Roof,                     !- surface type
+ Generic Roof,             !- construction name
+ TestRoom,                 !- zone name
+ ,                         !- space name
+ Outdoors,                 !- boundary condition
+ ,                         !- boundary condition object
+ SunExposed,               !- sun exposure
+ WindExposed,              !- wind exposure
+ Autocalculate,            !- view factor to ground
+ 4,                        !- number of vertices
+ 0.000, 5.000, 3.000,
+ 0.000, 0.000, 3.000,
+ 5.000, 0.000, 3.000,
+ 5.000, 5.000, 3.000;
+
+!-   ========== CONTEXT GEOMETRY ==========
+!-   ==========================================
+!-   =========  SIMULATION PARAMETERS =========
+!-   ==========================================
+
+
+OutputControl:Table:Style,
+ CommaAndHTML,             !- column separator
+ None;                     !- unit conversion
+
+Output:Table:SummaryReports,
+ AllSummary;               !- report 0
+
+Output:SQLite,
+ SimpleAndTabular;         !- option type
+
+Output:VariableDictionary,
+ IDF,                      !- key field
+ Unsorted;                 !- sort option
+
+OutputControl:ReportingTolerances,
+ 1.11,                     !- heating unmet setpoint tolerance
+ 1.11;                     !- cooling unmet setpoint tolerance
+
+SimulationControl,
+ Yes,                      !- do zone sizing
+ Yes,                      !- do system sizing
+ Yes,                      !- do plant sizing
+ No,                       !- run for sizing periods
+ Yes;                      !- run for run periods
+
+ShadowCalculation,
+ PolygonClipping,          !- calculation method
+ Periodic,                 !- calculation update method
+ 30,                       !- calculation frequency
+ 15000;                    !- maximum figures
+
+Timestep,
+ 4;                        !- timesteps per hour
+
+RunPeriod,
+ CustomRunPeriod,          !- name
+ 1,                        !- start month
+ 1,                        !- start day
+ 2017,                     !- start year
+ 12,                       !- end month
+ 31,                       !- end day
+ 2017,                     !- end year
+ Sunday,                   !- start day of week
+ No,                       !- use weather file holidays
+ No,                       !- use weather file daylight savings
+ No,                       !- apply weekend holiday
+ Yes,                      !- use epw rain
+ Yes;                      !- use epw snow
+
+Sizing:Parameters,
+ 1.25,                     !- heating factor
+ 1.15;                     !- cooling factor
+
+GlobalGeometryRules,
+ UpperLeftCorner,          !- starting vertex position
+ Counterclockwise,         !- vertex entry direction
+ Relative;                 !- coordinate system
+
+Building,
+ Building,                 !- name
+ 0.0,                      !- clockwise north axis
+ City,                     !- terrain
+ ,                         !- loads convergence tolerance
+ ,                         !- temperature convergence tolerance
+ FullExteriorWithReflections; !- solar distribution
+
+Site:WaterMainsTemperature,
+ CorrelationFromWeatherFile; !- calculation method
+Output:Variable,
+  *,                       !- Key Value
+  Zone Mean Air Temperature, !- Variable Name
+  Hourly;                  !- Reporting Frequency

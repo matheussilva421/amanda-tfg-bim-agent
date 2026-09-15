@@ -9,11 +9,15 @@ from pathlib import Path
 
 import typer
 
+from .commands.tool_lab import tool_lab_app
+
 app = typer.Typer(
     no_args_is_help=True,
     add_completion=False,
     help="Amanda TFG BIM Agent control plane.",
 )
+
+app.add_typer(tool_lab_app, name="tool-lab")
 
 
 @app.command()
@@ -297,3 +301,40 @@ def bootstrap() -> None:
     health = result["report"]["health"]
     for reason in health["reasons"]:
         typer.echo("  note: " + reason)
+
+
+@app.command()
+def design(
+    run_id: str = typer.Option(..., "--run-id", help="Stable design run id."),
+) -> None:
+    """Generate a deterministic run from canonical requirements and site data."""
+    from .commands.design import DesignInputError, design_command
+
+    try:
+        result = design_command(run_id)
+    except DesignInputError as exc:
+        typer.echo("design refused: " + str(exc), err=True)
+        raise typer.Exit(code=2) from exc
+    typer.echo("design run   " + result["run_id"])
+    typer.echo("run dir      " + str(result["run_directory"]))
+    typer.echo("candidates   " + str(result["candidate_count"]))
+    typer.echo("finalists    " + str(result["finalist_count"]))
+
+
+@app.command()
+def compare(
+    run_id: str = typer.Argument(..., help="Design run id such as RUN-001."),
+) -> None:
+    """Print and persist the finalist comparison matrix."""
+    from .commands.compare import CompareInputError, compare_command, render_matrix
+
+    try:
+        result = compare_command(run_id)
+    except CompareInputError as exc:
+        typer.echo("compare refused: " + str(exc), err=True)
+        raise typer.Exit(code=2) from exc
+    render_matrix(result)
+
+
+if __name__ == "__main__":
+    app()

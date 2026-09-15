@@ -49,6 +49,11 @@ dist/
 tool-lab/**/bin/
 tool-lab/**/obj/
 
+# Tool lab dependency caches: reproducible from the hashed lock files, and far
+# too heavy for Git (the environmental wheelhouse alone is ~156 MB).
+tool-lab/**/.venv*/
+wheels/
+
 # Generated local artifacts
 artifacts/local/
 deliverables/local/

@@ -1,0 +1,38 @@
+# P04-T21 lock generated from the isolated .venv-environmental wheelhouse.
+# Python: 3.12.14 (win_amd64), generated 2026-09-15.
+# Every entry below is a wheel downloaded into tool-lab/environmental/wheels/;
+# the SHA-256 is the hash of that exact downloaded wheel.
+annotated-types==0.8.0 --hash=sha256:f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0
+click==8.3.3 --hash=sha256:a2bf429bb3033c89fa4936ffb35d5cb471e3719e1f3c8a7c3fff0b8314305613
+colorama==0.4.6 --hash=sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6
+cupy-cuda12x==13.6.0 --hash=sha256:ca06fede7b8b83ca9ad80062544ef2e5bb8d4762d1c4fc3ac8349376de9c8a5e
+fastrlock==0.8.3 --hash=sha256:da06d43e1625e2ffddd303edcd6d2cd068e1c486f5fd0102b3f079c44eb13e2c
+honeybee-core==1.64.68 --hash=sha256:a0f7eda01c25c0d999dc71acda4f44eaf3e9a24e37b265d8a500c3dc999c7fc0
+honeybee-display==0.6.3 --hash=sha256:5ba3321c0c36e238d16ac80938cd8acbb53ae175a138dbc0f6f9617c1c11b971
+honeybee-energy==1.124.0 --hash=sha256:f22f6562c81a49d5ba0bdefb8be2b5b3e2523c405ebcd0f3d2222e4c3dcc2cb8
+honeybee-energy-standards==2.3.4 --hash=sha256:27ed6161dd31bcfbc1db94b349439ecb5abe266a0d745c3cbb5b04b039170aee
+honeybee-openstudio==0.7.2 --hash=sha256:3eb1bef6c89904d2fb07a5264c77b32f5f0e4c386d0142e648c858530df01e35
+honeybee-radiance==1.66.288 --hash=sha256:26167aee39521770508ad6fc21d6c449f7afad1791ebd28e03811854152e96f8
+honeybee-radiance-command==1.23.0 --hash=sha256:aaa268741636dd809c1fc146bd5771fa12528a0bac2560e8a8323ac40eb0db75
+honeybee-radiance-folder==2.11.17 --hash=sha256:4e3583247f12059f3914d3dc36506d21188c7d0feb4046b2a4c40a6df8538454
+honeybee-radiance-postprocess==0.5.14 --hash=sha256:32f149ceb5144d99a32d8afb12f7c9b2baaa27fbbc676c934634183dd5611314
+honeybee-schema==2.2.0 --hash=sha256:fcaf343da468b6550d10ff4e66ea2c6c624305ed21ea34845838a9d391081d7e
+honeybee-standards==2.0.7 --hash=sha256:194245b5bfa8f571c09b3ed8f40ee38b1a71c2c6a03b49701a19ffc3efe54679
+ladybug-comfort==0.19.8 --hash=sha256:127053bbcf48f5362dec5f107129a17b7768068008f186df8ba973cddba38dd4
+ladybug-core==0.44.59 --hash=sha256:8c09bc716cf0c3a00827c31cada3376c62989ae84ac19c32564a1cfb19daf970
+ladybug-display==0.14.3 --hash=sha256:b14d94da9ea590992bb17a6cee67c4c308bc67b6eed89e53eba346b7dc8bad56
+ladybug-geometry==1.35.4 --hash=sha256:e0ccd11bfb60eee702cb47049f6195deb85438ac3dd35a8319d55732f51b1ce5
+ladybug-geometry-polyskel==1.7.53 --hash=sha256:66c8cbc9ae3a32797f96945644c1b3aea820d16f7899d5ca9acc57de071d6b2a
+ladybug-radiance==0.2.12 --hash=sha256:66d57a562c3e896e9ae55e685a4f45e0a0ada28a8948b749966defa028a9e629
+lbt-honeybee==0.9.467 --hash=sha256:6f276dea65316b3170e23c73adf1673c3d1bf559786d72b49b3a6f9e905781a8
+lbt-ladybug==0.27.203 --hash=sha256:2d84778246718edefb94626dd75f8218b662a0723fbf7caeda04a391aa5c760c
+loguru==0.7.3 --hash=sha256:31a33c10c8e1e10422bfd431aeb5d351c7cf7fa671e3c4df004162264b28220c
+numpy==2.1.0 --hash=sha256:a0cdef204199278f5c461a0bed6ed2e052998276e6d8ab2963d5b5c39a0500bc
+openstudio==3.11.0 --hash=sha256:0c25324b9a4a680c6bfe5c599ef30da9b03b37858e1a0d8584b3581da1fbbf03
+openstudio-backporter==0.2.0 --hash=sha256:be91c6d5fa646743056649097f45c9f9e806e06e99a345d8f902a7d6aec2f983
+pydantic==2.13.5 --hash=sha256:346a034f080da3755d8e9cb5e00e8b07de1d39e4f6e2c87d8ab7cafa0b269a73
+pydantic-core==2.46.5 --hash=sha256:5e81740c09e310f5aa5cbd3e434a01c154d4bef93241c7877b39f211d2b78ba8
+pydantic-openapi-helper==1.0.5 --hash=sha256:5cefc7bb5f8ebcc722db63ceb2723e7b32c541048d9959d7815aeade3611ef04
+typing-extensions==4.16.0 --hash=sha256:481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8
+typing-inspection==0.4.4 --hash=sha256:65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147
+win32-setctime==1.2.0 --hash=sha256:95d644c4e708aba81dc3704a116d8cbc974d70b3bdb8be1d150e36be6e9d1390
