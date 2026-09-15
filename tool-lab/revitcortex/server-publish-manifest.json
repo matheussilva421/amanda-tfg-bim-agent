@@ -1,0 +1,20 @@
+﻿{
+    "captured_utc":  "2026-09-15T16:18:05.9899583Z",
+    "project":  "src/RevitCortex.Server/RevitCortex.Server.csproj",
+    "configuration":  "Release",
+    "runtime_identifier":  "win-x64",
+    "self_contained":  true,
+    "publish_dir":  "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\vendor\\RevitCortex\\publish\\server",
+    "exe_absolute_path":  "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\vendor\\RevitCortex\\publish\\server\\RevitCortex.Server.exe",
+    "exe_relative_path":  "publish\\server\\RevitCortex.Server.exe",
+    "exe_bytes":  152064,
+    "exe_sha256":  "958B4B6703D7A1EF3B093CEFE22FB3C11D192D443178D77486A5462ECE8CA671",
+    "exe_count_in_publish":  1,
+    "target_framework":  "net8.0",
+    "runtime_frameworks":  [
+                               " "
+                           ],
+    "dll_count":  218,
+    "file_count":  223,
+    "sdk_used":  "10.0.401"
+}

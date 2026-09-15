@@ -587,8 +587,104 @@ tasks:
     title: Clone/audit/build/deploy RevitCortex
     depends_on:
     - P02-T12
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'checkout pinned at 8b2556daefb2bf88f0a7a17bf28f2352fe0b0e33 (2026-07-08, "fix(elements):
+      create_level honors dryRun"), clean tree, 504 commits, remote LuDattilo/RevitCortex,
+      MIT License; plugin 1.0.50 / server 2.0.0'
+    - 'docs read before touching anything: README.md, docs/SECURITY.md, WORKFLOWS.md,
+      known-issues.json, all .csproj, deploy.ps1 + deploy-userscope.ps1 + deploy-server.ps1,
+      and the source of CodeSandboxV2.cs, CortexSettings.cs, CortexEnvironment.cs,
+      Licensing/LicenseBootstrap.cs, LicenseGate.cs, Server/Program.cs, Connection/RevitBridge.cs'
+    - 'toolchain gap found and solved without touching the machine: machine-wide SDKs
+      are 8.0.422 only, but the plugin Release R27 configuration targets net10.0-windows7.0
+      (Revit 2027 itself runs on .NET 10 - RevitExtractor.runtimeconfig.json declares
+      net10.0 / Microsoft.NETCore.App 10.0.0), so dotnet restore -p:Configuration="Release
+      R27" failed with NETSDK1045; SDK 10.0.401 installed into the gitignored repo-local
+      .dotnet/ tree from the official dot.net/v1/dotnet-install.ps1 -Channel 10.0
+      -InstallDir .dotnet -NoPath, installer script sha256 E8B873E18A81E5C4CD8AB69D84DAC8FEAD291D50B3C44633CD7FDDAD709A13D6'
+    - 'builds are green: server restore + build -c Release -> 0 warnings 0 errors;
+      plugin restore + build -c "Release R27" -> 0 errors and 5 pre-existing warnings,
+      all inside vendor code (CS8604 in Tools, SYSLIB0014 + CS8603 x2 in Core, CS0649
+      in Plugin), none introduced by this task'
+    - 'deploy target decided by evidence, not convenience: C:\ProgramData\Autodesk\Revit\Addins
+      does not exist and IsInRole(Administrator) is False, so the vendor deploy.ps1
+      machine-scope path is impossible here; the vendor deploy-userscope.ps1 path
+      was used, matching where Horizun already lives'
+    - 'deploy ran through tool-lab/revitcortex/deploy-revitcortex-2027.ps1 (committed,
+      reproduces the vendor script with two documented differences: isolated SDK via
+      DOTNET_ROOT/PATH, and the "Revit is running" pre-flight dropped because the
+      plugin had never been loaded into that process) -> "OK R27 -> %APPDATA%\Autodesk\Revit\Addins\2027\RevitCortex
+      (19 DLLs)", 76 files total'
+    - 'installed add-in hashes read back from disk: RevitCortex.addin 459 B sha256
+      C9E81E87D046E6D0A4F1BC71C7F2F56E775C32EDE78FFCDDA3CAF7F22A4AD94C; RevitCortex.Plugin.dll
+      491520 B sha256 E01135D08A2EBCB13A8DBBCD2914E3E51637B5825A802008A59F2BE7E6C325F9;
+      RevitCortex.Tools.dll 2029568 B sha256 09FA571025767065293A612A01441CCE48EDCE50335BC16FD846D1F22C7115A0;
+      RevitCortex.Core.dll 70656 B sha256 C6F14C75B6657195937CECFAF9F02088428F2109E322515E4DD0FF36D1DAB0F0'
+    - 'the manifest was read to confirm identity, not assumed: AddIn Type=Application,
+      FullClassName RevitCortex.Plugin.RevitCortexApp, AddInId A1B2C3D4-E5F6-7890-ABCD-EF1234567890,
+      which is distinct from Horizun b8e5a2f0-3c1d-4e6a-9f2b-7a4c8d1e5f30 so the two
+      add-ins are tracked separately by Revit own trust store'
+    - 'server published through tool-lab/revitcortex/publish-server.ps1 (committed)
+      which fails closed on ambiguity - it throws unless the publish contains exactly
+      one RevitCortex.Server.exe - and records tool-lab/revitcortex/server-publish-manifest.json:
+      vendor/RevitCortex/publish/server/RevitCortex.Server.exe, 152064 B, sha256 958B4B6703D7A1EF3B093CEFE22FB3C11D192D443178D77486A5462ECE8CA671,
+      self-contained win-x64, tfm net8.0, 218 DLLs / 223 files, SDK used 10.0.401'
+    - 'the executable was then resolved from that manifest and proven live, not merely
+      found: reusing tool-lab/horizun/mcp_probe.py --server against the published
+      exe completed the MCP handshake and reported server RevitCortex 2.0.0, protocol
+      2024-11-05, and 288 tools'
+    - the 288 tools contradict the README claim of "173 MCP tools across 15+ categories";
+      the divergence is recorded in the audit as a doc-vs-binary mismatch, and the
+      raw catalogue saved here (tool-lab/revitcortex/tool-catalog.json, 387578 B)
+      is the binding surface from which P02-T14 must generate revitcortex-toolmap.yaml
+    - 'security posture read out of the code: send_code_to_revit is gated by EnableCodeExecution
+      which defaults to false in ~/.revitcortex/settings.json and must stay false
+      for the whole project; the CodeSandboxV2 denylist strips comments and string
+      literals before matching System.IO, System.Net, System.Diagnostics.Process,
+      Microsoft.Win32, System.Reflection, System.Runtime.InteropServices, dynamic,
+      Invoke( and GetTypes(; read-only mode exists as a global settings switch that
+      makes CortexRouter reject write tools and was deliberately NOT enabled because
+      the plan needs writes; destructive tools raise a native confirmation dialog;
+      PathSafety.TryResolveSafe confines paths under the user profile; audit log ~/.revitcortex/audit.jsonl;
+      telemetry opt-in and off'
+    - 'two upstream behaviours are recorded so nobody mistakes them for something
+      we configured: in Release builds the license gate resolves to null (LicenseBootstrap.cs
+      / LicenseGate.cs) so the release path runs without a backend check - upstream
+      behaviour at 8b2556d, not a change made here; and the PBI live path opens an
+      HttpListener bound to loopback port 27016 for non-destructive operations. Default
+      server port is 8080 (REVITCORTEX_PORT or ~/.revitcortex/settings.json)'
+    - 'Codex registration proven by read-back: codex mcp add revitcortex -- <abs exe>
+      then codex mcp list shows revitcortex enabled at that exact path; startup_timeout_sec=120.0
+      and tool_timeout_sec=600.0 were added to the block and the file re-read to confirm
+      (%USERPROFILE%\.codex\config.toml lines 123-129). All other servers intact:
+      acervo-auditor-mcp, codex_app, cua_repl, horizun-revit, node_repl, open-design'
+    - 'config snapshot tool-lab/revitcortex/evidence/codex-config.toml.snapshot (12098
+      B) was scanned for sk-, ghp_, ghs_, Bearer and eyJ patterns: no matches, so
+      it is safe to keep in the repository'
+    - 'Revit trust state captured before any change so the decision stays reversible:
+      tool-lab/revitcortex/evidence/codesigning-backup.json records HKCU\Software\Autodesk\Revit\Autodesk
+      Revit 2027\CodeSigning captured_utc 2026-09-15T16:15:27Z with exactly one value
+      b8e5a2f0-3c1d-4e6a-9f2b-7a4c8d1e5f30 = 1 (Horizun). The RevitCortex entry A1B2C3D4-E5F6-7890-ABCD-EF1234567890
+      was deliberately NOT written: the add-in is unsigned so Revit will raise the
+      Security dialog on next start, and pre-registering that trust is left as an
+      explicit owner decision recorded in the handoff'
+    - audit report written to tool-lab/revitcortex/source-audit.md (11262 B, 160 lines)
+      covering exact revision, doc promises vs reality, prerequisites, builds, installed-artifact
+      table with path+bytes+sha256, MCP surface, enforced security posture, Codex
+      registration, add-in trust, expected writes and network activity, rollback path
+      and consequences for Plan 02
+    - 'rollback documented and available: close Revit and the MCP client, delete RevitCortex.addin
+      plus the RevitCortex\ payload under %APPDATA%\Autodesk\Revit\Addins\2027, run
+      codex mcp remove revitcortex; ~/.revitcortex state and any CodeSigning value
+      are independent of the add-in and are removed only on request; repo-local .dotnet/,
+      the vendor checkout and the publish tree delete wholesale - nothing was touched
+      outside the repository, %APPDATA%\Autodesk\Revit\Addins\2027 and %USERPROFILE%\.codex\config.toml'
+    - 'scope NOT proven and therefore not claimed: the add-in has never been loaded
+      into a Revit session - the running Revit (pid 39140, started 11:17:44) predates
+      the deploy, the Cortex Switch is still off by default, and the bridge has never
+      answered a live tool call; P02-T14 owns that first load, and the Revit restart
+      is an owner action'
   P02-T14:
     id: P02-T14
     phase: PHASE_02

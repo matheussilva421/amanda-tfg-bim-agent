@@ -1,0 +1,352 @@
+approvals_reviewer = "auto_review"
+model_reasoning_effort = "max"
+
+model = "qwen-cloud/deepseek-v4.1-flash"
+
+service_tier = "default"
+
+notify = [ "C:\\Users\\slvma\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\a708e72b10c27b59\\bin\\node_modules\\@oai\\sky\\bin\\windows\\codex-computer-use.exe", "turn-ended" ]
+model_catalog_json = "C:\\Users\\slvma\\.codex\\opencodex-catalog.json"
+# Auto-injected by opencodex
+openai_base_url = "http://127.0.0.1:10100/backend-api/codex"
+# Auto-injected by opencodex
+experimental_realtime_ws_base_url = "http://127.0.0.1:10100/v1"
+
+[marketplaces.openai-bundled]
+source_type = "local"
+source = '\\?\C:\Users\slvma\.codex\.tmp\bundled-marketplaces\openai-bundled'
+
+[marketplaces.openai-primary-runtime]
+source_type = "local"
+source = '\\?\C:\Users\slvma\.cache\codex-runtimes\codex-primary-runtime\plugins\openai-primary-runtime'
+
+[marketplaces.open-design]
+last_updated = "2026-08-27T14:33:42Z"
+last_revision = "c0710761302c69bded82e205362effcce6fde49e"
+source_type = "git"
+source = "https://github.com/nexu-io/open-design-agent-plugins.git"
+ref = "main"
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."google-calendar@openai-curated"]
+enabled = true
+
+[plugins."slack@openai-curated"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[plugins."chrome@openai-bundled"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."sites@openai-bundled"]
+enabled = true
+
+[plugins."codex-app-tools@openai-bundled"]
+enabled = true
+
+[plugins."open-design@open-design"]
+enabled = true
+
+[plugins."unified-computer-use@openai-bundled"]
+enabled = true
+
+[features]
+js_repl = false
+memories = true
+
+[features.context_management]
+experimental_mode = true
+
+[mcp_servers.node_repl]
+command = 'C:\Users\slvma\AppData\Local\OpenAI\Codex\runtimes\cua_node\a708e72b10c27b59\bin\node_repl.exe'
+startup_timeout_sec = 120.0
+
+[mcp_servers.node_repl.env]
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.908.40834"
+BROWSER_USE_TINYSKY_ENABLED = "1"
+CODEX_CLI_PATH = 'C:\Users\slvma\AppData\Local\OpenAI\Codex\bin\bffc5354119c8421\codex.exe'
+CODEX_HOME = 'C:\Users\slvma\.codex'
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = 'C:\Users\slvma\AppData\Local\OpenAI\Codex\runtimes\cua_node\a708e72b10c27b59\bin\node_modules'
+NODE_REPL_NODE_PATH = 'C:\Users\slvma\AppData\Local\OpenAI\Codex\runtimes\cua_node\a708e72b10c27b59\bin\node.exe'
+NODE_REPL_TRUSTED_CODE_PATHS = 'C:\Users\slvma\.codex;C:\Users\slvma\AppData\Local\OpenAI\Codex\runtimes\cua_node\a708e72b10c27b59\bin\node_modules'
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"C:/Users/slvma/.codex/plugins/cache/openai-bundled/browser/26.908.40834/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
+SKY_CUA_NATIVE_PIPE = "1"
+SKY_CUA_NATIVE_PIPE_DIRECTORY = '\\.\pipe\codex-computer-use-92f181f8-8735-4e12-ad66-67cf0817757c'
+
+[mcp_servers.acervo-auditor-mcp]
+command = 'C:\Python314\python.exe'
+args = ["-m", "acervo_auditor.mcp.stdio"]
+
+[mcp_servers.acervo-auditor-mcp.env]
+ACERVO_ROOT = 'D:\Organização de Materiais de Estudos\Concursos - Organizado Cowork\Concursos\Materiais de Estudos'
+ACERVO_STATE_DIR = 'D:\Organização de Materiais de Estudos\.acervo-auditor'
+PYTHONPATH = 'C:\Users\slvma\Downloads\Github\Organização de Materiais de Estudos\src'
+
+[mcp_servers.open-design]
+command = 'C:\Users\slvma\AppData\Local\Programs\Open Design\Open Design.exe'
+args = ['C:\Users\slvma\AppData\Local\Programs\Open Design\resources\app\prebundled\daemon\daemon-cli.mjs', "mcp"]
+
+[mcp_servers.open-design.env]
+ELECTRON_RUN_AS_NODE = "1"
+OD_DATA_DIR = 'C:\Users\slvma\AppData\Roaming\Open Design\namespaces\release-stable-win\data'
+OD_MCP_BOOTSTRAP_ARGS = '["--headless"]'
+OD_MCP_BOOTSTRAP_COMMAND = 'C:\Users\slvma\AppData\Local\Programs\Open Design\Open Design.exe'
+OD_SIDECAR_IPC_PATH = '\\.\pipe\open-design-release-stable-win-daemon'
+
+[mcp_servers.horizun-revit]
+command = 'C:\Users\slvma\AppData\Local\Programs\Horizun\MCP\server\horizun-mcp.exe'
+startup_timeout_sec = 120.0
+tool_timeout_sec = 600.0
+
+[mcp_servers.revitcortex]
+command = 'C:\Users\slvma\Downloads\Github\Projeto Amanda\vendor\RevitCortex\publish\server\RevitCortex.Server.exe'
+
+[desktop]
+conversationDetailMode = "STEPS_COMMANDS"
+sansFontSize = 14
+codeFontSize = 13
+ambient-suggestions-enabled = false
+show-context-window-usage = true
+appearanceTheme = "dark"
+enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "ultra", "max"]
+browser-download-prompt-enabled = true
+followUpQueueMode = "queue"
+avatar-overlay-mascot-width-px = 150
+selected-avatar-id = "custom:i-rocky"
+toys-confetti-enabled = true
+
+[desktop.open-in-target-preferences]
+global = "fileManager"
+
+[windows]
+sandbox = "elevated"
+
+[memories]
+generate_memories = true
+use_memories = true
+
+[projects.'c:\users\slvma\downloads\github\ai cli manager']
+trust_level = "trusted"
+
+[projects.'c:\windows\system32']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\downloads\github\extens-o-notion-obsidian']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\downloads\github\mods']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\downloads\github\oh my openagent']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\downloads\github\bookmarks tiktok']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\appdata\local\temp\claude\c--users-slvma-downloads-github-opencodex\aa42b0be-96e6-4346-8c42-a33b29d2d21a\scratchpad\ocxtest']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-11\qu']
+trust_level = "trusted"
+
+[projects.'d:\downloads\hostdownloaders']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-11\quero-que-voc-fa-a-uma']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-12\oi']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-12\oi-2']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\downloads\github\opencodex']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-14\realtime-voice-chat']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-16\ve']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-18\execute-c-users-slvma-downloads-github']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-19\superpowers-plugin-superpowers-openai-curated-remote']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-19\e']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\downloads\github\organização de materiais de estudos']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-20\plano-instalar-win-codexbar-no-windows']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-20\plano-instalar-win-codexbar-no-windows-2']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\downloads\github\odysseus']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-25\hatch-pet-c-users-slvma-codex']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\downloads\github\organizar']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-27\im']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-27\opendesign-codex-smoke-20260827']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\appdata\local\packages\openai.codex_2p2nqsd0c76g0\localcache\roaming\open design\namespaces\release-stable-win\data\projects\codex-local-html-smoke-test-2026-08-27-2a76']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\appdata\local\temp\od-conn-test-58h8op']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-27\poco-f7-redmi-turbo-4-pro']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-28\a']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\downloads\github\wifi']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-08-31\kill-research-procure-em-f-runs']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-09-01\new-chat']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-09-01\implemente-c-users-slvma-downloads-github']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-09-02\g']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-09-02\f']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-09-02\t']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-09-02\use-security-scan-to-continue-codex']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-09-02\te']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\appdata\local\packages\openai.codex_2p2nqsd0c76g0\localcache\roaming\open design\namespaces\release-stable-win\data\projects\redesign-do-ndice-do-acervo-a8ec']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-09-02\g-2']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-09-02\c']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-09-03\implemente-x20']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\downloads\github\dlss manager']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-09-03\pre']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\downloads\github\mods\.worktrees\trainer-relay-source']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-09-06\oi']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\downloads\github\complementação de atos']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\downloads\github\planta']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-09-12\new-chat']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\documents\codex\2026-09-14\vc']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\downloads\github\atos-tce']
+trust_level = "trusted"
+
+[projects.'c:\users\slvma\downloads\github\projeto amanda']
+trust_level = "trusted"
+
+[tui]
+status_line = ["model-with-reasoning", "five-hour-limit", "weekly-limit", "project-name", "context-remaining", "used-tokens", "total-input-tokens", "total-output-tokens"]
+status_line_use_colors = true
+
+[tui.model_availability_nux]
+"gpt-5.5" = 1
+"gpt-5.6-sol" = 4
+
+[hooks.state]
+
+[hooks.state.'C:\Users\slvma\Downloads\Github\Ai CLI Manager\.codex\hooks.json:post_tool_use:0:0']
+trusted_hash = "sha256:ad7750c4f45a0ff2621e1a2fc7d173630cd853d57f337f34fb81e03c9e5e1149"
+enabled = false
+
+[hooks.state.'C:\Users\slvma\Downloads\Github\Ai CLI Manager\.codex\hooks.json:session_start:0:0']
+trusted_hash = "sha256:28727ecb2761b80b3736b5ea549eddc8bad3a484cad53da48ca76ed5d95d44eb"
+enabled = false
+
+[hooks.state.'C:\Users\slvma\Downloads\Github\Ai CLI Manager\.codex\hooks.json:session_start:1:0']
+trusted_hash = "sha256:ed310c6c1b856cefa4eeaef24d89660ffbe3067e1b2779b324184cd9cf5a7681"
+enabled = false
+
+[hooks.state.'C:\Users\slvma\Downloads\Github\Ai CLI Manager\.codex\hooks.json:stop:0:0']
+trusted_hash = "sha256:8e44deef21bf08d39132dc692f73eafe6c68066f445a9fd4f75d80fe3c7f4a3f"
+enabled = false
+
+[hooks.state.'C:\Users\slvma\Downloads\Github\Ai CLI Manager\.codex\hooks.json:stop:1:0']
+trusted_hash = "sha256:6f79599b0c6ce36cd549ed43441f2caaf7fbdd140bc2f5deb04b0e4352b9311a"
+enabled = false
+
+[shell_environment_policy.set]
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "8e172ec9f458f2e636fc69a1b8c68c217f6bb8d10c41f70a05a0878b73863701"
+[agents]
+# Managed by opencodex: native subagent default
+default_subagent_model = "gpt-5.6-luna"
+# Managed by opencodex: native subagent default
+default_subagent_reasoning_effort = "xhigh"
+max_depth = 1
+max_threads = 12

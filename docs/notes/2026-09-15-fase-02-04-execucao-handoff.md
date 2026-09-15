@@ -13,14 +13,14 @@ Toposolid. Fases 00, 01, 03 e 07A fechadas; Fase 02 em 12/20 e Fase 04 em 19/22.
 |---|---|---|
 | PHASE_00 | 3/3 | fechada |
 | PHASE_01 | 13/13 | fechada |
-| PHASE_02 | 12/20 | T01-T12 PASS; T13-T20 abertos (RevitCortex, fault injection, benchmark) |
+| PHASE_02 | 13/20 | T01-T13 PASS; T14-T20 abertos (descoberta Cortex, smoke A/B, fallback C#, fault injection, benchmark) |
 | PHASE_03 | 15/15 | fechada |
 | PHASE_04 | 19/22 | T01-T19 PASS; T20-T22 abertos (TopologicPy, Ladybug/Honeybee, CLI) |
 | PHASE_05 | 0/23 | módulo `src/amanda_agent/bim/` implementado; tarefas ainda não registradas no grafo |
 | PHASE_07A | 11/11 | fechada |
 | demais | 0 | PHASE_06, 07B, 08, 09 |
 
-Total do grafo: 159 tarefas, **73 PASS, 86 PENDING**. Prontas agora: `P02-T13` e `P04-T20`.
+Total do grafo: 159 tarefas, **74 PASS, 85 PENDING**. Prontas agora: `P02-T14` e `P04-T20`.
 
 ## O que mudou desde a versão anterior deste handoff
 
@@ -33,6 +33,8 @@ Total do grafo: 159 tarefas, **73 PASS, 86 PENDING**. Prontas agora: `P02-T13` e
 | `dd40b88` | `feat(04)`: macrozonas, blocos, quartos, espaços externos, scoring, pareto, heurísticas ambientais, geração, pipeline e explain |
 | `f33ec23` | `docs`: handoff das fases 02/04 |
 | `dec9fd6` | `chore(04)`: fixtures de regressão (P04-T19) registradas |
+| `71c324e` | `feat(02)`: Toposolid Horizun provado por rota alternativa (P02-T12) |
+| pendente | `feat(02)`: RevitCortex auditado, construído e implantado (P02-T13) |
 
 ## Bloqueio anterior: RESOLVIDO
 
@@ -73,6 +75,12 @@ Ativar só o primeiro liga o Python e deixa o perfil em `safe_write`, porque um 
 6. **Documento ativo é lei**: `horizun_execute_python`, `save` e `audit_model` recusam agir sobre um documento que não
    seja o ativo e **não trocam de documento**. É preciso ativar antes; não existe flag de ativação em
    `horizun_document_session` (só `activate_other`, e apenas para `close`).
+7. **RevitCortex em escopo de usuário, com SDK isolado**: o SDK global 8.0.422 não compila `net10.0-windows7.0`, que é
+   o alvo do plugin `Release R27`; o SDK 10.0.401 foi instalado em `.dotnet/` (gitignored) e a máquina ficou intocada.
+   `C:\ProgramData\Autodesk\Revit\Addins` não existe e não há elevação, então vale o caminho `deploy-userscope.ps1`.
+8. **`EnableCodeExecution` permanece `false`**: é o portão de `send_code_to_revit`, que executa C# arbitrário dentro
+   do Revit. Nenhuma tarefa do projeto deve ligá-lo. O freio de emergência do add-in é o `readOnlyMode` em
+   `~/.revitcortex/settings.json`, que faz o `CortexRouter` recusar toda ferramenta de escrita.
 
 ## Testes e validações
 
@@ -90,8 +98,10 @@ python, senão `UnicodeEncodeError` em cp1252.
 
 ## Pendências e próximos passos
 
-1. **P02-T13** — clone/audit/build/deploy do RevitCortex em `vendor/RevitCortex`. Exige **fechar o Revit normalmente**
-   antes; ao fim de P02-T12 o Revit 2027 está aberto com `LAB_HORIZUN_TOPO`.
+1. **P02-T13** — CONCLUÍDO. RevitCortex em `8b2556d`: auditado, construído com o SDK 10 isolado, deployado
+   em escopo de usuário (19 DLLs), servidor publicado e resolvido por manifesto, agendado no Codex como
+   `revitcortex` com 288 ferramentas confirmadas por handshake. Detalhes em
+   `docs/notes/2026-09-15-p02-t13-revitcortex-handoff.md`. Falta o restart do Revit (ação do dono).
 2. **P02-T14..T20** — descoberta de tools do Cortex, smoke A/B, fallback C#, fault injection, crash drill, benchmark e CLI `tool-lab`.
 3. **P04-T20..T22** — TopologicPy em `.venv-topologic`, Ladybug/Honeybee e CLI `design`/`compare`.
 4. **P05-T01..T23** — o módulo `src/amanda_agent/bim/` já existe; falta registrar as tarefas no grafo com escopo honesto.
@@ -131,4 +141,3 @@ Leitura obrigatória antes de agir: `START_HERE_FOR_CODEX.md`, `docs/notes/2026-
 `docs/superpowers/plans/02-revit-tool-lab-providers.md` e este arquivo.
 
 Objetivo canônico: `C:\Users\slvma\.codex\attachments\bca1fd4d-06ed-4df9-a08f-c9fbc9ae3db2\goal-objective.md`.
-
