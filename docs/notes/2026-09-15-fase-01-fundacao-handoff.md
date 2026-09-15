@@ -3,7 +3,7 @@
 Data: 2026-09-15
 Projeto: Amanda TFG BIM Agent
 Status: implementacao local verificada e commitada; arvore Git limpa. Runtime Revit: NOT_RUN.
-Commit deste handoff: a2c7566 (58 arquivos). Estado anterior: 2d33935.
+-Commit que introduz este handoff: a2c7566 (58 arquivos). Commit que o finaliza: 7953f10.
 Handoff anterior (revisao dos planos): docs/notes/2026-09-15-revisao-planos-handoff.md
 
 ## 1. Objetivo e autorizacao
@@ -22,7 +22,8 @@ Git:
 - 3162381 chore(repo): initialize Amanda TFG BIM agent repository
 - 2d33935 feat: complete Phase 01 foundation, environment and durable state
 - a2c7566 docs: add phase 01 handoff and version reviewed plans
-- Branch main em a2c7566, arvore limpa (git status --short sem saida). Nenhum remote configurado (git remote -v vazio): nao houve push. Os comandos de publicacao estao na secao 8.
+- 7953f10 docs: finalize phase 01 handoff with post-commit state
+- Branch main em 7953f10, arvore limpa (git status --short sem saida). Nenhum remote configurado (git remote -v vazio): nao houve push. Os comandos de publicacao estao na secao 8.
 
 Testes: 64 executados, 64 aprovados, 0 falhados (6,36s).
 
@@ -144,7 +145,7 @@ B-002 (resolvido) - commit rejeitado por erro 400 do revisor; resolvido apos a d
 3. Limpar .git-commit-msg.tmp e .tmp-pytest/, ou ignora-los no .gitignore - CONCLUIDO: arquivos removidos e ambos adicionados ao .gitignore.
 4. Reconciliar o PROJECT_STATE.yaml com a Fase 01 concluida (pendencia P-1 da secao 2). EM ABERTO - e o item mais importante antes de declarar o gate da Fase 01.
 5. Reconferir project/provenance/source-inventory.json e os SHA-256 canonicos apos o commit final - CONCLUIDO, tudo MATCH.
-6. Gate da Fase 01: pytest completo (64/64 verde), doctor (exit 0), status (0 blockers, lease livre), git status limpo (arvore limpa em a2c7566). Falta apenas a reconciliacao do item 4.
+-6. Gate da Fase 01: pytest completo (64/64 verde, reexecutado apos o commit final), doctor (exit 0), status (0 blockers, lease livre), git status limpo (arvore limpa em 7953f10, state/locks ausente). Falta apenas a reconciliacao do item 4.
 7. Publicar no GitHub. Nao ha remote configurado; o usuario precisa criar o repositorio remoto. Comandos sugeridos:
 
     git remote add origin <URL-DO-REPOSITORIO>
