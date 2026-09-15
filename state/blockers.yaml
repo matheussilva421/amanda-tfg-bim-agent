@@ -1,2 +1,121 @@
 schema_version: 1
-blockers: []
+blockers:
+- id: SITE_TOPOGRAPHY
+  summary: verified survey or topographic elevations for the lot
+  severity: BLOCKING
+  owner_phase: null
+  affected_tasks:
+  - final-grading
+  - final-altimetric-accessibility-validation
+  evidence: section 5.3 states elevations as the placeholders [X], [Y], [Z] and [W];
+    no numeric elevation is asserted
+  resolution: supply and validate a survey or topographic file with a known datum
+  requires_user_action: false
+  created_utc: '2026-09-15T00:00:00Z'
+  resolved_utc: null
+  source: SITE_TOPOGRAPHY
+  tasks_blocked:
+  - final-grading
+  - final-altimetric-accessibility-validation
+  tasks_still_allowed:
+  - schematic-macrozoning
+  - planar-massing-study
+  allowed_tasks:
+  - schematic-macrozoning
+  - planar-massing-study
+  resolution_action: supply and validate a survey or topographic file with a known
+    datum
+  reason: null
+- id: SITE_BOUNDARY
+  summary: surveyed or cadastral polygon in a stated coordinate system
+  severity: BLOCKING
+  owner_phase: null
+  affected_tasks:
+  - final-area-verification
+  evidence: only a reported area of 24135 m2 is available; no polygon vertex list
+    was supplied
+  resolution: obtain the lot certificate or a georeferenced survey and re-import the
+    boundary as VERIFIED_CADASTRAL
+  requires_user_action: false
+  created_utc: '2026-09-15T00:00:00Z'
+  resolved_utc: null
+  source: SITE_BOUNDARY
+  tasks_blocked:
+  - final-area-verification
+  tasks_still_allowed:
+  - schematic-sectorization
+  - study-massing
+  allowed_tasks:
+  - schematic-sectorization
+  - study-massing
+  resolution_action: obtain the lot certificate or a georeferenced survey and re-import
+    the boundary as VERIFIED_CADASTRAL
+  reason: null
+- id: SITE_OCCUPANCY
+  summary: confirmation of the current use of the lot and of the relocation premise
+    for the police company unit
+  severity: BLOCKING
+  owner_phase: null
+  affected_tasks:
+  - final-site-availability-claim
+  evidence: the plan of accompaniment lists closing the research on visits, sources
+    and verifications as a pending phase
+  resolution: confirm the current use and the relocation premise with the responsible
+    public body
+  requires_user_action: false
+  created_utc: '2026-09-15T00:00:00Z'
+  resolved_utc: null
+  source: SITE_OCCUPANCY
+  tasks_blocked:
+  - final-site-availability-claim
+  tasks_still_allowed:
+  - study-scenario-development
+  allowed_tasks:
+  - study-scenario-development
+  resolution_action: confirm the current use and the relocation premise with the responsible
+    public body
+  reason: null
+- id: SITE_FRONTAGE_COUNT
+  summary: whether the lot has three or four frontages
+  severity: DEGRADING
+  owner_phase: null
+  affected_tasks:
+  - final-corner-and-setback-designation
+  evidence: the plan of accompaniment records that the source text asserts both, and
+    notes that Otto de Brito Guerra is a street rather than an avenue
+  resolution: settle the frontage count against a survey or cadastral document; do
+    not resolve it by counting names in prose
+  requires_user_action: false
+  created_utc: '2026-09-15T00:00:00Z'
+  resolved_utc: null
+  source: SITE_FRONTAGE_COUNT
+  tasks_blocked:
+  - final-corner-and-setback-designation
+  tasks_still_allowed:
+  - preliminary-access-split
+  allowed_tasks:
+  - preliminary-access-split
+  resolution_action: settle the frontage count against a survey or cadastral document;
+    do not resolve it by counting names in prose
+  reason: null
+- id: SITE_TRUE_NORTH
+  summary: a verified true-north bearing with a source drawing datum
+  severity: DEGRADING
+  owner_phase: null
+  affected_tasks:
+  - final-orientation-compliance-statement
+  evidence: solar findings are stated narratively; no north azimuth for the source
+    drawing was supplied
+  resolution: supply a source drawing or survey that fixes true north
+  requires_user_action: false
+  created_utc: '2026-09-15T00:00:00Z'
+  resolved_utc: null
+  source: SITE_TRUE_NORTH
+  tasks_blocked:
+  - final-orientation-compliance-statement
+  tasks_still_allowed:
+  - study-orientation-reasoning
+  allowed_tasks:
+  - study-orientation-reasoning
+  resolution_action: supply a source drawing or survey that fixes true north
+  reason: null

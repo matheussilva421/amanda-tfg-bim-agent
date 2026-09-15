@@ -162,8 +162,10 @@ tasks:
     title: Capability registry models
     depends_on:
     - P07-T13
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_capability_registry.py -q -> 16 passed, 1 skipped (repo
+      capability file not created yet)
   P02-T02:
     id: P02-T02
     phase: PHASE_02
@@ -375,8 +377,14 @@ tasks:
     title: Inventory and reconcile all supplied Amanda sources
     depends_on:
     - P03-T03
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'scripts/verify_ingested_sources.py . -> documents: 23, MATCH em todas, failures:
+      0'
+    - docs/source/ com 23 fontes imutaveis; SRC-PROGRAM-001 sha256 11daa9ef... e SRC-TFG-001
+      sha256 16abe602... atribuidos; manifest project/provenance/source-manifest.yaml
+    - 'fontes privadas (PDF/DOCX/XLSX/SVG/PPTX/DXF/IFC) fora do Git via .gitignore:
+      docs/source/, docs/review/source-extracts/, TFG_Amanda_2026/, project/provenance/extracted/'
   P03-T05:
     id: P03-T05
     phase: PHASE_03
@@ -406,8 +414,13 @@ tasks:
     title: Compile the program of needs into canonical JSON
     depends_on:
     - P03-T06
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_program_compilation.py -q -> 10 passed
+    - 'project/requirements/program.json + program-summary.md: reconciliation ok=true,
+      626.0 m2 internos / 260.0 m2 externos, faixas 783-814 e 850-950'
+    - 7 setores e 49 ambientes rastreados a SRC-PROGRAM-001; hipotese de 42 pessoas
+      registrada como REJECTED em unselected_hypotheses
   P03-T08:
     id: P03-T08
     phase: PHASE_03
@@ -415,8 +428,11 @@ tasks:
     title: Relations schema
     depends_on:
     - P03-T07
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_relations.py -q -> 9 passed; enums de relacao/fluxo,
+      auto-relacao protegida, peso e distancias validadas
+    - pytest tests/unit -q -> 226 passed antes de P03-T09/T15
   P03-T09:
     id: P03-T09
     phase: PHASE_03
@@ -424,8 +440,12 @@ tasks:
     title: Compile source-backed principles separately from design hypotheses
     depends_on:
     - P03-T08
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_fact_separation.py -q -> 3 passed; DESIGN_HYPOTHESIS
+      proibido em source-principles.yaml
+    - project/requirements/source-principles.yaml + design-hypotheses.yaml com source
+      refs
   P03-T10:
     id: P03-T10
     phase: PHASE_03
@@ -437,6 +457,9 @@ tasks:
     evidence:
     - pytest tests/unit/test_site_models.py -q -> 9 passed; poligono auto-intersectante
       rejeitado por Shapely; topography MISSING nao aceita cotas inventadas
+    - pytest tests/unit/test_site_models.py tests/unit/test_site_geometry.py -q ->
+      pass; boundary invalida rejeitada por Shapely; MISSING nao carrega cota
+    - src/amanda_agent/site/models.py + geometry.py com shapely==2.1.2 pinado
   P03-T11:
     id: P03-T11
     phase: PHASE_03
@@ -448,6 +471,11 @@ tasks:
     evidence:
     - pytest tests/unit/test_site_geometry.py -q -> pass; geometria do terreno separada
       dos dados verificados; area 24.135 m2 como afirmacao de fonte
+    - pytest tests/project/test_site_compilation.py -q -> 7 passed; area 24135 m2
+      registrada como SOURCE_ASSERTION, nao como area verificada
+    - project/site/site.json + missing-data.yaml; SITE_TOPOGRAPHY MISSING blocks final_grading
+    - pytest tests/unit/test_site_models.py -q -> pass; retangulo de area igual permanece
+      STUDY_PLACEHOLDER
   P03-T12:
     id: P03-T12
     phase: PHASE_03
@@ -466,8 +494,11 @@ tasks:
     title: Provenance integrity suite
     depends_on:
     - P03-T12
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/project/test_provenance_integrity.py -q -> 6 passed (source refs,
+      unique logical ids, no placeholder leaks, no hypothesis in source files, hashes
+      vs immutable copies, program reconciliation)
   P03-T14:
     id: P03-T14
     phase: PHASE_03
@@ -475,8 +506,10 @@ tasks:
     title: One-command validation report
     depends_on:
     - P03-T13
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - implemented in src/amanda_agent/commands/ingest.py + ingest validation; focused
+      tests green
   P03-T15:
     id: P03-T15
     phase: PHASE_03
@@ -484,8 +517,10 @@ tasks:
     title: Academic deliverable and decision register
     depends_on:
     - P03-T14
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/project/test_deliverable_scope.py -q -> 7 passed; pytest tests/project
+      -q -> 41 passed, 1 skipped
   P04-T01:
     id: P04-T01
     phase: PHASE_04
@@ -493,8 +528,11 @@ tasks:
     title: Install and pin core design dependencies
     depends_on:
     - P03-T15
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pyproject.toml declares shapely==2.1.2 and pypdf==6.0.0 (previously installed
+      but undeclared); pip install -e .[dev] reinstalled amanda-tfg-bim-agent 0.1.0
+      successfully
   P04-T02:
     id: P04-T02
     phase: PHASE_04
@@ -1055,8 +1093,11 @@ tasks:
     title: Session start protocol
     depends_on:
     - P07-T02
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_session_start.py tests/unit/test_session_end.py tests/unit/test_budgets.py
+      tests/unit/test_blockers.py tests/unit/test_tool_trust.py tests/unit/test_tool_discovery.py
+      tests/unit/test_maintenance_policy.py -q -> 45 passed in 0.61s
   P07-T04:
     id: P07-T04
     phase: PHASE_07A
@@ -1064,8 +1105,11 @@ tasks:
     title: Session end protocol
     depends_on:
     - P07-T03
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_session_start.py tests/unit/test_session_end.py tests/unit/test_budgets.py
+      tests/unit/test_blockers.py tests/unit/test_tool_trust.py tests/unit/test_tool_discovery.py
+      tests/unit/test_maintenance_policy.py -q -> 45 passed
   P07-T05:
     id: P07-T05
     phase: PHASE_07A
@@ -1073,8 +1117,11 @@ tasks:
     title: Retry/fallback/time budgets
     depends_on:
     - P07-T04
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_session_start.py tests/unit/test_session_end.py tests/unit/test_budgets.py
+      tests/unit/test_blockers.py tests/unit/test_tool_trust.py tests/unit/test_tool_discovery.py
+      tests/unit/test_maintenance_policy.py -q -> 45 passed
   P07-T06:
     id: P07-T06
     phase: PHASE_07A
@@ -1082,8 +1129,11 @@ tasks:
     title: Blocker registry
     depends_on:
     - P07-T05
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_session_start.py tests/unit/test_session_end.py tests/unit/test_budgets.py
+      tests/unit/test_blockers.py tests/unit/test_tool_trust.py tests/unit/test_tool_discovery.py
+      tests/unit/test_maintenance_policy.py -q -> 45 passed
   P07-T07:
     id: P07-T07
     phase: PHASE_07B
@@ -1129,8 +1179,11 @@ tasks:
     title: Tool trust scoring
     depends_on:
     - P07-T10
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_session_start.py tests/unit/test_session_end.py tests/unit/test_budgets.py
+      tests/unit/test_blockers.py tests/unit/test_tool_trust.py tests/unit/test_tool_discovery.py
+      tests/unit/test_maintenance_policy.py -q -> 45 passed
   P07-T12:
     id: P07-T12
     phase: PHASE_07A
@@ -1138,8 +1191,11 @@ tasks:
     title: Tool-discovery report
     depends_on:
     - P07-T11
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_session_start.py tests/unit/test_session_end.py tests/unit/test_budgets.py
+      tests/unit/test_blockers.py tests/unit/test_tool_trust.py tests/unit/test_tool_discovery.py
+      tests/unit/test_maintenance_policy.py -q -> 45 passed
   P07-T13:
     id: P07-T13
     phase: PHASE_07A
@@ -1147,8 +1203,12 @@ tasks:
     title: Maintenance/update guard
     depends_on:
     - P07-T12
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_session_start.py tests/unit/test_session_end.py tests/unit/test_budgets.py
+      tests/unit/test_blockers.py tests/unit/test_tool_trust.py tests/unit/test_tool_discovery.py
+      tests/unit/test_maintenance_policy.py -q -> 45 passed; pytest tests/unit tests/bootstrap
+      tests/policy tests/project -q -> 258 passed
   P07-T14:
     id: P07-T14
     phase: PHASE_07B

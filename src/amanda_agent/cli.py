@@ -5,9 +5,9 @@ declared before any behaviour exists so that missing behaviour is observable as
 a failing test rather than as an absent module.
 """
 
-import typer
-
 from pathlib import Path
+
+import typer
 
 app = typer.Typer(
     no_args_is_help=True,
@@ -64,8 +64,8 @@ def doctor() -> None:
 @app.command()
 def status() -> None:
     """Report project state. Read-only: never mutates the state it reports."""
-    from .commands.status import render_status, status_snapshot
     from .commands.doctor import project_root
+    from .commands.status import render_status, status_snapshot
 
     render_status(status_snapshot(project_root()))
 
@@ -185,8 +185,8 @@ def advance_phase(
 @app.command()
 def resume() -> None:
     """Show what can be resumed now, honouring typed blocker severity."""
-    from .commands.status import resume_plan
     from .commands.doctor import project_root
+    from .commands.status import resume_plan
 
     plan = resume_plan(project_root())
     typer.echo("next task   " + plan["next_task"])
@@ -226,10 +226,27 @@ def ingest(
     source_id: list[str] = typer.Option(
         None, "--id", help="Stable source id such as SRC-PROGRAM-001."
     ),
+    validate_only: bool = typer.Option(
+        False,
+        "--validate-only",
+        help="Validate sources and canonical project data, without ingesting files.",
+    ),
 ) -> None:
-    """Copy source files into docs/source/ and update the source manifest."""
+    """Ingest source files or validate the canonical project boundary."""
     from .commands.doctor import project_root
     from .commands.ingest import IngestError, ingest_sources
+
+    if validate_only:
+        from .ingest.validate import validate_project, write_validation_report
+
+        root = project_root()
+        validation = validate_project(root)
+        report_path = write_validation_report(root, validation)
+        typer.echo("report       " + str(report_path))
+        typer.echo("verdict      " + validation.verdict)
+        if validation.verdict == "NO_GO":
+            raise typer.Exit(code=1)
+        return
 
     if not paths:
         typer.echo(
