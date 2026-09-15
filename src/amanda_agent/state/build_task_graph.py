@@ -11,7 +11,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from .tasks import TaskRecord, TaskRegistry
+from .tasks import TaskRecord, TaskRegistry, load_registry
 
 HEADING = re.compile(
     r"^###\s+Task\s+[^\[]*?\[(?P<id>P\d{2}-T\d{2}|P0[07]-T\d{2})\]",
@@ -34,6 +34,10 @@ PHASE_FOR_PREFIX = {
 #: Tasks from section 07 that belong to the later 07B integration subset.
 SEVEN_B_TASKS = {"P07-T07", "P07-T08", "P07-T09", "P07-T14", "P07-T15",
                  "P07-T17", "P07-T18", "P07-T19"}
+
+#: Fields a plan owns. Status and evidence belong to the task history, not to
+#: the plan text, so a derivation must never fabricate them.
+_PLAN_OWNED = ("phase", "plan_path", "title")
 
 
 def _phase_for(task_id: str) -> str:
@@ -63,6 +67,7 @@ def parse_plan_file(path: Path) -> list:
 
 
 def build_registry(plans_dir: Path, *, relative_to: Path | None = None) -> TaskRegistry:
+    """A fresh registry for the plans, with every task at PENDING."""
     registry = TaskRegistry()
     plans_dir = Path(plans_dir)
     for plan_file in sorted(plans_dir.glob("*.md")):
@@ -81,6 +86,34 @@ def build_registry(plans_dir: Path, *, relative_to: Path | None = None) -> TaskR
     return registry
 
 
+def regenerate(plans_dir: Path, target: Path) -> TaskRegistry:
+    """Rewrite ``target`` from the plans while keeping recorded outcomes.
+
+    Rebuilding from the plans alone would reset the whole registry to PENDING
+    and drop the evidence of every finished task, which is exactly the kind of
+    quiet progress loss this repository is meant to prevent. Dependencies and
+    the plan-owned fields come from the plans; status and evidence are carried
+    over per task id, and a task the plans no longer contain is reported rather
+    than dropped silently.
+    """
+    target = Path(target)
+    derived = build_registry(plans_dir, relative_to=target.parent.parent)
+    if target.exists():
+        existing = load_registry(target)
+        for task_id, record in derived.tasks.items():
+            kept = existing.tasks.get(task_id)
+            if kept is None:
+                continue
+            record.status = kept.status
+            record.evidence = list(kept.evidence)
+        orphans = sorted(set(existing.tasks) - set(derived.tasks))
+        if orphans:
+            print("plans no longer define: " + " ".join(orphans))
+    derived.validate()
+    derived.save(target)
+    return derived
+
+
 #: Within-phase overrides named explicitly by the master plan. A task listed
 #: here keeps only these dependencies instead of the sequential default.
 EXPLICIT_DEPENDENCIES = {
@@ -94,11 +127,21 @@ EXPLICIT_DEPENDENCIES = {
 }
 
 #: Cross-phase edges: successor -> extra predecessors.
+#:
+#: The master plan's phase graph (01 -> 07A -> 02; 01 -> 03 -> 04;
+#: (02 + 04) -> 05 -> 06 -> 07B -> 08) is stated at *phase* level, so two of
+#: its edges have no counterpart in the within-phase sequential default:
+#: nothing in the reviewed plan makes P03-T01 follow P01-T13, nor P07-T01
+#: either. They are pinned here, once, so the phase contract is not left to a
+#: reader's inference. PHASE_00 is deliberately absent: it is the local
+#: verification chain, not a predecessor of the normal route.
 PHASE_BOUNDARY_DEPENDENCIES = {
     "P02-T01": ["P07-T13"],
+    "P03-T01": ["P01-T13"],
     "P04-T01": ["P03-T15"],
     "P05-T01": ["P02-T20", "P04-T22"],
     "P06-T01": ["P05-T23"],
+    "P07-T01": ["P01-T13"],
     "P07-T07": ["P06-T15"],
     "P08-T01": ["P06-T15", "P07-T19"],
     "P09-T01": ["P08-T19"],
@@ -137,11 +180,8 @@ def _wire_sequential_dependencies(registry: TaskRegistry) -> None:
 
 def main() -> int:
     root = Path(__file__).resolve().parents[3]
-    registry = build_registry(
-        root / "docs" / "superpowers" / "plans", relative_to=root
-    )
     target = root / "state" / "task-graph.yaml"
-    registry.save(target)
+    registry = regenerate(root / "docs" / "superpowers" / "plans", target)
     print("wrote " + str(target) + " with " + str(len(registry.tasks)) + " tasks")
     return 0
 
