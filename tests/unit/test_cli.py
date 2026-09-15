@@ -13,7 +13,7 @@ def test_help_lists_core_commands():
 
 
 def test_unimplemented_commands_never_report_success():
-    for command in ("doctor", "status", "resume", "rollback"):
-        result = runner.invoke(app, [command])
-        assert result.exit_code == 2, command
-        assert "not implemented" in result.output
+    # rollback stays gated: a bare invocation must never guess a target.
+    result = runner.invoke(app, ["rollback"])
+    assert result.exit_code == 2
+    assert "--checkpoint" in result.output

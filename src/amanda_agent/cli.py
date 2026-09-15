@@ -24,27 +24,99 @@ def version() -> None:
 
 @app.command()
 def doctor() -> None:
-    """Report environment health. Not implemented yet."""
-    typer.echo("doctor: not implemented", err=True)
-    raise typer.Exit(code=2)
+    """Report environment health and write state/environment-report.json."""
+    from .commands.doctor import doctor as run_doctor
+
+    report, target = run_doctor()
+    health = report["health"]
+    typer.echo("environment report: " + str(target))
+    for probe in report["probes"]:
+        typer.echo(
+            "  "
+            + probe["name"].ljust(12)
+            + probe["status"].ljust(10)
+            + (probe.get("version") or "")
+        )
+    revit = report["revit"]
+    selected = revit.get("selected")
+    if selected:
+        typer.echo(
+            "  revit".ljust(14)
+            + "DETECTED  "
+            + str(selected.get("product_version"))
+            + "  (file "
+            + str(selected.get("file_version"))
+            + ")"
+        )
+    else:
+        typer.echo("  revit".ljust(14) + str(revit.get("probe_status")))
+    for reason in health["reasons"]:
+        typer.echo("  note: " + reason)
+    if health["blocked_phases"]:
+        typer.echo("  blocked phases: " + ", ".join(health["blocked_phases"]))
+    if health["critical_failure"]:
+        typer.echo("doctor: critical environment failure", err=True)
+    raise typer.Exit(code=health["exit_code"])
 
 
 @app.command()
 def status() -> None:
-    """Report project state. Not implemented yet."""
-    typer.echo("status: not implemented", err=True)
-    raise typer.Exit(code=2)
+    """Report project state. Read-only: never mutates the state it reports."""
+    from .commands.status import render_status, status_snapshot
+    from .commands.doctor import project_root
+
+    render_status(status_snapshot(project_root()))
 
 
 @app.command()
 def resume() -> None:
-    """Resume work. Not implemented yet."""
-    typer.echo("resume: not implemented", err=True)
-    raise typer.Exit(code=2)
+    """Show what can be resumed now, honouring typed blocker severity."""
+    from .commands.status import resume_plan
+    from .commands.doctor import project_root
+
+    plan = resume_plan(project_root())
+    typer.echo("next task   " + plan["next_task"])
+    runnable = [
+        phase
+        for phase in plan["runnable_phases"]
+        if phase.startswith("PHASE")
+    ]
+    typer.echo("runnable    " + ", ".join(runnable))
+    if plan["blocked_phases"]:
+        typer.echo("blocked     " + ", ".join(plan["blocked_phases"]))
+    for blocker in plan["blockers"]:
+        typer.echo(
+            "blocker     " + blocker.id + " [" + str(blocker.severity) + "]"
+        )
 
 
 @app.command()
 def rollback() -> None:
-    """Roll back to a checkpoint. Not implemented yet."""
-    typer.echo("rollback: not implemented", err=True)
+    """Roll back to a checkpoint under a new filename.
+
+    The destructive form requires an explicit checkpoint and target so a bare
+    invocation can never overwrite a working model.
+    """
+    typer.echo(
+        "rollback requires --checkpoint and --to; refusing to guess",
+        err=True,
+    )
     raise typer.Exit(code=2)
+
+
+@app.command()
+def bootstrap() -> None:
+    """Set up the foundation and durable state. Safe to run repeatedly."""
+    from .commands.bootstrap import bootstrap_environment
+    from .commands.doctor import project_root
+
+    result = bootstrap_environment(project_root())
+    typer.echo("bootstrap root: " + result["root"])
+    if result["created"]:
+        for relative in result["created"]:
+            typer.echo("  created " + relative)
+    else:
+        typer.echo("  nothing to create; existing state preserved")
+    health = result["report"]["health"]
+    for reason in health["reasons"]:
+        typer.echo("  note: " + reason)
