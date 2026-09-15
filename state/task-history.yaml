@@ -431,3 +431,74 @@ entries:
     complete'
   recorded_utc: '2026-09-15T13:19:47Z'
   note: null
+- task_id: P04-T01
+  status: PASS
+  evidence:
+  - pip install ortools>=9.14,<10 networkx>=3.5,<4 ifcopenshell>=0.8,<1 -> resolved
+    9.15.6755 / shapely 2.1.2 / 3.6.1 / 0.8.5; import ortools, shapely, networkx,
+    ifcopenshell -> PASS
+  - requirements.lock.txt = pip freeze --exclude-editable (40 lines, no editable or
+    absolute path); fresh .venv-lockcheck built from the lock + editable install ->
+    imports PASS and pytest tests/unit tests/policy tests/project tests/providers
+    tests/solver -q -> 354 passed, 1 skipped
+  recorded_utc: '2026-09-15T13:28:31Z'
+  note: null
+- task_id: P04-T02
+  status: PASS
+  evidence:
+  - 'pytest tests/solver -q -> 31 passed (7 test modules: geometry, hard constraints,
+    adjacency, flows, privacy, archetypes, design models)'
+  - 'src/amanda_agent/design/models.py + tests/solver/test_design_models.py: pydantic
+    solution models with the sector/room/external-space contract consumed by the constraint
+    engine'
+  recorded_utc: '2026-09-15T13:28:37Z'
+  note: null
+- task_id: P04-T03
+  status: PASS
+  evidence:
+  - pytest tests/geometry/test_geometry.py -q -> 4 passed
+  - geometry.py defines the tolerances in meters and percent read from design-engine/config/tolerances.yaml;
+    containment, overlap, minimum distance, area delta and centroid are tested, and
+    a self-intersecting polygon fails early
+  recorded_utc: '2026-09-15T13:34:17Z'
+  note: null
+- task_id: P04-T04
+  status: PASS
+  evidence:
+  - pytest tests/solver/test_hard_constraints.py -q -> 6 passed
+  - validate_candidate enforces the resolution-scoped hard constraints (MACRO/BLOCK/ROOM);
+    checks unavailable at a resolution are NOT_EVALUATED and hard violations are never
+    converted to soft penalties
+  recorded_utc: '2026-09-15T13:34:18Z'
+  note: null
+- task_id: P04-T05
+  status: PASS
+  evidence:
+  - pytest tests/solver/test_adjacency.py -q -> 4 passed
+  - adjacency.py now uses networkx nx.Graph with networkx 3.6.1 installed from the
+    lock; the DeterministicGraph fallback remains for environments without it
+  recorded_utc: '2026-09-15T13:34:19Z'
+  note: null
+- task_id: P04-T06
+  status: PASS
+  evidence:
+  - pytest tests/solver/test_flows.py -q -> 4 passed
+  - flows.py models the circulation/path graph consumed by the generation pipeline
+  recorded_utc: '2026-09-15T13:34:20Z'
+  note: null
+- task_id: P04-T07
+  status: PASS
+  evidence:
+  - pytest tests/solver/test_privacy.py -q -> 3 passed
+  - privacy.py implements the privacy gradient metric used as a soft criterion, never
+    as a hard constraint
+  recorded_utc: '2026-09-15T13:34:21Z'
+  note: null
+- task_id: P04-T08
+  status: PASS
+  evidence:
+  - pytest tests/solver/test_archetypes.py -q -> 3 passed
+  - design-engine/config/archetypes.yaml plus archetypes.py resolve the archetype
+    parameters by name, without hardcoded assumptions in the solver
+  recorded_utc: '2026-09-15T13:34:22Z'
+  note: null
