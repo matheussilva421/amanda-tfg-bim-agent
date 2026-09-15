@@ -1,0 +1,48 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\r\n  \"opened\": true,\r\n  \"confirmed_active\": true,\r\n  \"source\": \"local\",\r\n  \"path_matches_request\": true,\r\n  \"requested_path\": \"C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/horizun/LAB_HORIZUN_LEVEL.rvt\",\r\n  \"active_document\": \"LAB_HORIZUN_LEVEL\",\r\n  \"active_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_LEVEL.rvt\",\r\n  \"file_saved_in_version\": \"2027\",\r\n  \"running_revit_version\": \"2027\",\r\n  \"version_guard\": \"checked\",\r\n  \"upgraded_on_open\": false,\r\n  \"detached\": false,\r\n  \"audited\": false,\r\n  \"all_worksets_opened\": false,\r\n  \"was_central\": false,\r\n  \"central_path\": null,\r\n  \"is_workshared\": false,\r\n  \"central_guard\": \"not_a_central\",\r\n  \"note\": null,\r\n  \"idempotency\": {\r\n    \"key\": \"59c1b20d-81de-4748-85e8-32205b0fd245\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"The durable claim and result were recorded; an identical retry will replay this answer.\"\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 2,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 1698\r\n  }\r\n}"
+      }
+    ],
+    "isError": false,
+    "structuredContent": {
+      "opened": true,
+      "confirmed_active": true,
+      "source": "local",
+      "path_matches_request": true,
+      "requested_path": "C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/horizun/LAB_HORIZUN_LEVEL.rvt",
+      "active_document": "LAB_HORIZUN_LEVEL",
+      "active_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_LEVEL.rvt",
+      "file_saved_in_version": "2027",
+      "running_revit_version": "2027",
+      "version_guard": "checked",
+      "upgraded_on_open": false,
+      "detached": false,
+      "audited": false,
+      "all_worksets_opened": false,
+      "was_central": false,
+      "central_path": null,
+      "is_workshared": false,
+      "central_guard": "not_a_central",
+      "note": null,
+      "idempotency": {
+        "key": "59c1b20d-81de-4748-85e8-32205b0fd245",
+        "status": "executed_once",
+        "command_executed_in_this_call": true,
+        "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+      },
+      "bridge_queue": {
+        "queued": false,
+        "ahead_at_admission": 0,
+        "waited_ms": 2,
+        "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+        "capacity": 16,
+        "execution_and_wait_ms": 1698
+      }
+    }
+  }
+}

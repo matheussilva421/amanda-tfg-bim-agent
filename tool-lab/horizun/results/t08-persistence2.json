@@ -1,0 +1,382 @@
+{
+  "evidence_id": "P02-T08-persistence-v2",
+  "calls": [
+    {
+      "tool": "horizun_query_model",
+      "args": {
+        "target_document_title": "LAB_HORIZUN_LEVEL",
+        "categories": [
+          "OST_Levels"
+        ],
+        "max_rows": 50,
+        "response_mode": "compact"
+      },
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"document\": \"LAB_HORIZUN_LEVEL\",\r\n  \"scope\": \"model\",\r\n  \"view_id\": null,\r\n  \"include_links\": true,\r\n  \"matched_total\": 3,\r\n  \"returned\": 3,\r\n  \"offset\": 0,\r\n  \"truncated\": false,\r\n  \"next_cursor\": null,\r\n  \"result_set_fingerprint\": \"39c7d491764c382f\",\r\n  \"coverage_complete\": true,\r\n  \"unreadable_total\": 0,\r\n  \"unreadable_shown\": 0,\r\n  \"unreadable_truncated\": false,\r\n  \"unreadable\": [],\r\n  \"federated_coverage\": {\r\n    \"coverage_complete\": true,\r\n    \"include_links\": true,\r\n    \"link_instances_total\": 0,\r\n    \"link_instances_loaded\": 0,\r\n    \"link_instances_unavailable\": 0,\r\n    \"sources\": [\r\n      {\r\n        \"source_kind\": \"host\",\r\n        \"source_model\": \"LAB_HORIZUN_LEVEL\",\r\n        \"link_instance_id\": null,\r\n        \"visibility_coverage\": {\r\n          \"coverage_complete\": true,\r\n          \"is_workshared\": false,\r\n          \"worksets_total\": null,\r\n          \"worksets_open\": null,\r\n          \"worksets_closed\": null,\r\n          \"worksets_read_error\": null,\r\n          \"note\": \"This model is not workshared, so every element in it is loaded and this answer covers all of it.\"\r\n        }\r\n      }\r\n    ],\r\n    \"unavailable_links\": [],\r\n    \"note\": \"Every considered source was loaded with all user worksets open.\"\r\n  },\r\n  \"summary\": {\r\n    \"by_category\": {\r\n      \"Níveis\": 3\r\n    },\r\n    \"by_level\": {\r\n      \"(no level)\": 3\r\n    },\r\n    \"by_source\": {\r\n      \"host:LAB_HORIZUN_LEVEL\": 3\r\n    }\r\n  },\r\n  \"rows\": [\r\n    {\r\n      \"element_id\": 311,\r\n      \"name\": \"Nível 1\",\r\n      \"type\": \"Cabeça de 8 mm\",\r\n      \"level\": null,\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_HORIZUN_LEVEL\",\r\n      \"link_instance_id\": null\r\n    },\r\n    {\r\n      \"element_id\": 694,\r\n      \"name\": \"Nível 2\",\r\n      \"type\": \"Cabeça de 8 mm\",\r\n      \"level\": null,\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_HORIZUN_LEVEL\",\r\n      \"link_instance_id\": null\r\n    },\r\n    {\r\n      \"element_id\": 328657,\r\n      \"name\": \"LAB_LEVEL_TEST\",\r\n      \"type\": \"Cabeça de 8 mm\",\r\n      \"level\": null,\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_HORIZUN_LEVEL\",\r\n      \"link_instance_id\": null\r\n    }\r\n  ],\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 17\r\n  }\r\n}",
+      "structured": {
+        "document": "LAB_HORIZUN_LEVEL",
+        "scope": "model",
+        "view_id": null,
+        "include_links": true,
+        "matched_total": 3,
+        "returned": 3,
+        "offset": 0,
+        "truncated": false,
+        "next_cursor": null,
+        "result_set_fingerprint": "39c7d491764c382f",
+        "coverage_complete": true,
+        "unreadable_total": 0,
+        "unreadable_shown": 0,
+        "unreadable_truncated": false,
+        "unreadable": [],
+        "federated_coverage": {
+          "coverage_complete": true,
+          "include_links": true,
+          "link_instances_total": 0,
+          "link_instances_loaded": 0,
+          "link_instances_unavailable": 0,
+          "sources": [
+            {
+              "source_kind": "host",
+              "source_model": "LAB_HORIZUN_LEVEL",
+              "link_instance_id": null,
+              "visibility_coverage": {
+                "coverage_complete": true,
+                "is_workshared": false,
+                "worksets_total": null,
+                "worksets_open": null,
+                "worksets_closed": null,
+                "worksets_read_error": null,
+                "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+              }
+            }
+          ],
+          "unavailable_links": [],
+          "note": "Every considered source was loaded with all user worksets open."
+        },
+        "summary": {
+          "by_category": {
+            "Níveis": 3
+          },
+          "by_level": {
+            "(no level)": 3
+          },
+          "by_source": {
+            "host:LAB_HORIZUN_LEVEL": 3
+          }
+        },
+        "rows": [
+          {
+            "element_id": 311,
+            "name": "Nível 1",
+            "type": "Cabeça de 8 mm",
+            "level": null,
+            "source_kind": "host",
+            "source_model": "LAB_HORIZUN_LEVEL",
+            "link_instance_id": null
+          },
+          {
+            "element_id": 694,
+            "name": "Nível 2",
+            "type": "Cabeça de 8 mm",
+            "level": null,
+            "source_kind": "host",
+            "source_model": "LAB_HORIZUN_LEVEL",
+            "link_instance_id": null
+          },
+          {
+            "element_id": 328657,
+            "name": "LAB_LEVEL_TEST",
+            "type": "Cabeça de 8 mm",
+            "level": null,
+            "source_kind": "host",
+            "source_model": "LAB_HORIZUN_LEVEL",
+            "link_instance_id": null
+          }
+        ],
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 1,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 17
+        }
+      },
+      "duration_ms": 151
+    },
+    {
+      "tool": "horizun_save_document",
+      "args": {
+        "target_document": "LAB_HORIZUN_LEVEL",
+        "expected_document": "LAB_HORIZUN_LEVEL",
+        "idempotency_key": "93dc53ab-d8bc-432e-a9ff-699af0afcb78"
+      },
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"saved\": true,\r\n  \"outcome\": \"saved_verified\",\r\n  \"outcome_means\": \"The file's bytes changed between before and after, so a write demonstrably happened.\",\r\n  \"document\": \"LAB_HORIZUN_LEVEL\",\r\n  \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_LEVEL.rvt\",\r\n  \"is_workshared\": false,\r\n  \"what_this_did\": \"Saved the file in place.\",\r\n  \"was_modified_before\": true,\r\n  \"is_modified_after\": false,\r\n  \"modified_flags_note\": \"null means Document.IsModified could not be read, which is UNKNOWN and never false.\",\r\n  \"bytes_changed_on_disk\": true,\r\n  \"verified_by\": \"sha256 of the file, read before and after\",\r\n  \"sha256_before\": \"15e0f70df13a9ad0635a7651b3fedff59e76dcfe582c25a7ea759a4b0698299d\",\r\n  \"sha256_after\": \"8b15d7360672d4cdafdf5742f031f6b11a17dbd4d9eba6d4fcde725586fb3025\",\r\n  \"file_before\": {\r\n    \"modified_utc\": \"2026-09-15T13:52:28.5592752Z\",\r\n    \"size_bytes\": 4366336\r\n  },\r\n  \"file_after\": {\r\n    \"modified_utc\": \"2026-09-15T14:07:21.7574938Z\",\r\n    \"size_bytes\": 4370432\r\n  },\r\n  \"idempotency\": {\r\n    \"key\": \"93dc53ab-d8bc-432e-a9ff-699af0afcb78\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"The durable claim and result were recorded; an identical retry will replay this answer.\"\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 576\r\n  }\r\n}",
+      "structured": {
+        "saved": true,
+        "outcome": "saved_verified",
+        "outcome_means": "The file's bytes changed between before and after, so a write demonstrably happened.",
+        "document": "LAB_HORIZUN_LEVEL",
+        "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_LEVEL.rvt",
+        "is_workshared": false,
+        "what_this_did": "Saved the file in place.",
+        "was_modified_before": true,
+        "is_modified_after": false,
+        "modified_flags_note": "null means Document.IsModified could not be read, which is UNKNOWN and never false.",
+        "bytes_changed_on_disk": true,
+        "verified_by": "sha256 of the file, read before and after",
+        "sha256_before": "15e0f70df13a9ad0635a7651b3fedff59e76dcfe582c25a7ea759a4b0698299d",
+        "sha256_after": "8b15d7360672d4cdafdf5742f031f6b11a17dbd4d9eba6d4fcde725586fb3025",
+        "file_before": {
+          "modified_utc": "2026-09-15T13:52:28.5592752Z",
+          "size_bytes": 4366336
+        },
+        "file_after": {
+          "modified_utc": "2026-09-15T14:07:21.7574938Z",
+          "size_bytes": 4370432
+        },
+        "idempotency": {
+          "key": "93dc53ab-d8bc-432e-a9ff-699af0afcb78",
+          "status": "executed_once",
+          "command_executed_in_this_call": true,
+          "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+        },
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 1,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 576
+        }
+      },
+      "duration_ms": 604
+    },
+    {
+      "tool": "horizun_document_session",
+      "args": {
+        "operation": "close",
+        "target_document": "LAB_HORIZUN_LEVEL",
+        "save_on_close": false,
+        "activate_other": true,
+        "idempotency_key": "716a5748-2ef1-497b-b1cd-1d0c29bcf2d1"
+      },
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"operation\": \"close\",\r\n  \"closed\": true,\r\n  \"closed_evidence\": \"This exact Document object is no longer in Application.Documents — compared by object identity, not by path, because a null or empty PathName would have matched nothing and the check would have passed without comparing anything, and doc.IsValidObject is now false. Not just 'Close() returned true'.\",\r\n  \"api_returned\": true,\r\n  \"title\": \"LAB_HORIZUN_LEVEL\",\r\n  \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_LEVEL.rvt\",\r\n  \"saved_on_close\": false,\r\n  \"activation\": {\r\n    \"activated_path\": \"C:\\\\Users\\\\slvma\\\\.horizun\\\\anchor\\\\HZ_ANCHOR_2027.rvt\",\r\n    \"how\": \"activated_open_document\",\r\n    \"note\": \"This already-open document was activated so the target could stop being active. Nothing about it was modified.\",\r\n    \"activated_title\": \"HZ_ANCHOR_2027\"\r\n  },\r\n  \"was_modified\": false,\r\n  \"discarded_unsaved_changes\": false,\r\n  \"discard_note\": null,\r\n  \"file_exists_after\": true,\r\n  \"file_exists_after_unknown_reason\": null,\r\n  \"bytes_before\": 4370432,\r\n  \"bytes_after\": 4370432,\r\n  \"modified_utc_after\": \"2026-09-15T14:07:21.7574938Z\",\r\n  \"disk_changed\": false,\r\n  \"disk_note\": null,\r\n  \"is_workshared\": false,\r\n  \"synced_to_central\": false,\r\n  \"sync_note\": null,\r\n  \"file_on_disk_after\": {\r\n    \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_LEVEL.rvt\",\r\n    \"exists\": true,\r\n    \"bytes\": 4370432,\r\n    \"mb\": 4.17,\r\n    \"modified_utc\": \"2026-09-15T14:07:21.7574938Z\",\r\n    \"format\": \"2027\",\r\n    \"saved_in_version\": \"(not available in this Revit API version)\",\r\n    \"is_workshared\": false,\r\n    \"is_central\": false,\r\n    \"is_local\": false,\r\n    \"central_path\": \"\",\r\n    \"revit_version\": \"2027\"\r\n  },\r\n  \"idempotency\": {\r\n    \"key\": \"716a5748-2ef1-497b-b1cd-1d0c29bcf2d1\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"The durable claim and result were recorded; an identical retry will replay this answer.\"\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 1182\r\n  }\r\n}",
+      "structured": {
+        "operation": "close",
+        "closed": true,
+        "closed_evidence": "This exact Document object is no longer in Application.Documents — compared by object identity, not by path, because a null or empty PathName would have matched nothing and the check would have passed without comparing anything, and doc.IsValidObject is now false. Not just 'Close() returned true'.",
+        "api_returned": true,
+        "title": "LAB_HORIZUN_LEVEL",
+        "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_LEVEL.rvt",
+        "saved_on_close": false,
+        "activation": {
+          "activated_path": "C:\\Users\\slvma\\.horizun\\anchor\\HZ_ANCHOR_2027.rvt",
+          "how": "activated_open_document",
+          "note": "This already-open document was activated so the target could stop being active. Nothing about it was modified.",
+          "activated_title": "HZ_ANCHOR_2027"
+        },
+        "was_modified": false,
+        "discarded_unsaved_changes": false,
+        "discard_note": null,
+        "file_exists_after": true,
+        "file_exists_after_unknown_reason": null,
+        "bytes_before": 4370432,
+        "bytes_after": 4370432,
+        "modified_utc_after": "2026-09-15T14:07:21.7574938Z",
+        "disk_changed": false,
+        "disk_note": null,
+        "is_workshared": false,
+        "synced_to_central": false,
+        "sync_note": null,
+        "file_on_disk_after": {
+          "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_LEVEL.rvt",
+          "exists": true,
+          "bytes": 4370432,
+          "mb": 4.17,
+          "modified_utc": "2026-09-15T14:07:21.7574938Z",
+          "format": "2027",
+          "saved_in_version": "(not available in this Revit API version)",
+          "is_workshared": false,
+          "is_central": false,
+          "is_local": false,
+          "central_path": "",
+          "revit_version": "2027"
+        },
+        "idempotency": {
+          "key": "716a5748-2ef1-497b-b1cd-1d0c29bcf2d1",
+          "status": "executed_once",
+          "command_executed_in_this_call": true,
+          "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+        },
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 1,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 1182
+        }
+      },
+      "duration_ms": 1208
+    },
+    {
+      "tool": "horizun_open_document",
+      "args": {
+        "path": "C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/horizun/LAB_HORIZUN_LEVEL.rvt",
+        "expected_version": "2027",
+        "idempotency_key": "1533e9a5-42c9-495c-a468-6af1b93e4588"
+      },
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"opened\": true,\r\n  \"confirmed_active\": true,\r\n  \"source\": \"local\",\r\n  \"path_matches_request\": true,\r\n  \"requested_path\": \"C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/horizun/LAB_HORIZUN_LEVEL.rvt\",\r\n  \"active_document\": \"LAB_HORIZUN_LEVEL\",\r\n  \"active_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_LEVEL.rvt\",\r\n  \"file_saved_in_version\": \"2027\",\r\n  \"running_revit_version\": \"2027\",\r\n  \"version_guard\": \"checked\",\r\n  \"upgraded_on_open\": false,\r\n  \"detached\": false,\r\n  \"audited\": false,\r\n  \"all_worksets_opened\": false,\r\n  \"was_central\": false,\r\n  \"central_path\": null,\r\n  \"is_workshared\": false,\r\n  \"central_guard\": \"not_a_central\",\r\n  \"note\": null,\r\n  \"idempotency\": {\r\n    \"key\": \"1533e9a5-42c9-495c-a468-6af1b93e4588\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"The durable claim and result were recorded; an identical retry will replay this answer.\"\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 538,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 2453\r\n  }\r\n}",
+      "structured": {
+        "opened": true,
+        "confirmed_active": true,
+        "source": "local",
+        "path_matches_request": true,
+        "requested_path": "C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/horizun/LAB_HORIZUN_LEVEL.rvt",
+        "active_document": "LAB_HORIZUN_LEVEL",
+        "active_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_LEVEL.rvt",
+        "file_saved_in_version": "2027",
+        "running_revit_version": "2027",
+        "version_guard": "checked",
+        "upgraded_on_open": false,
+        "detached": false,
+        "audited": false,
+        "all_worksets_opened": false,
+        "was_central": false,
+        "central_path": null,
+        "is_workshared": false,
+        "central_guard": "not_a_central",
+        "note": null,
+        "idempotency": {
+          "key": "1533e9a5-42c9-495c-a468-6af1b93e4588",
+          "status": "executed_once",
+          "command_executed_in_this_call": true,
+          "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+        },
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 538,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 2453
+        }
+      },
+      "duration_ms": 2466
+    },
+    {
+      "tool": "horizun_query_model",
+      "args": {
+        "target_document_title": "LAB_HORIZUN_LEVEL",
+        "categories": [
+          "OST_Levels"
+        ],
+        "max_rows": 50,
+        "response_mode": "compact"
+      },
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"document\": \"LAB_HORIZUN_LEVEL\",\r\n  \"scope\": \"model\",\r\n  \"view_id\": null,\r\n  \"include_links\": true,\r\n  \"matched_total\": 3,\r\n  \"returned\": 3,\r\n  \"offset\": 0,\r\n  \"truncated\": false,\r\n  \"next_cursor\": null,\r\n  \"result_set_fingerprint\": \"39c7d491764c382f\",\r\n  \"coverage_complete\": true,\r\n  \"unreadable_total\": 0,\r\n  \"unreadable_shown\": 0,\r\n  \"unreadable_truncated\": false,\r\n  \"unreadable\": [],\r\n  \"federated_coverage\": {\r\n    \"coverage_complete\": true,\r\n    \"include_links\": true,\r\n    \"link_instances_total\": 0,\r\n    \"link_instances_loaded\": 0,\r\n    \"link_instances_unavailable\": 0,\r\n    \"sources\": [\r\n      {\r\n        \"source_kind\": \"host\",\r\n        \"source_model\": \"LAB_HORIZUN_LEVEL\",\r\n        \"link_instance_id\": null,\r\n        \"visibility_coverage\": {\r\n          \"coverage_complete\": true,\r\n          \"is_workshared\": false,\r\n          \"worksets_total\": null,\r\n          \"worksets_open\": null,\r\n          \"worksets_closed\": null,\r\n          \"worksets_read_error\": null,\r\n          \"note\": \"This model is not workshared, so every element in it is loaded and this answer covers all of it.\"\r\n        }\r\n      }\r\n    ],\r\n    \"unavailable_links\": [],\r\n    \"note\": \"Every considered source was loaded with all user worksets open.\"\r\n  },\r\n  \"summary\": {\r\n    \"by_category\": {\r\n      \"Níveis\": 3\r\n    },\r\n    \"by_level\": {\r\n      \"(no level)\": 3\r\n    },\r\n    \"by_source\": {\r\n      \"host:LAB_HORIZUN_LEVEL\": 3\r\n    }\r\n  },\r\n  \"rows\": [\r\n    {\r\n      \"element_id\": 311,\r\n      \"name\": \"Nível 1\",\r\n      \"type\": \"Cabeça de 8 mm\",\r\n      \"level\": null,\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_HORIZUN_LEVEL\",\r\n      \"link_instance_id\": null\r\n    },\r\n    {\r\n      \"element_id\": 694,\r\n      \"name\": \"Nível 2\",\r\n      \"type\": \"Cabeça de 8 mm\",\r\n      \"level\": null,\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_HORIZUN_LEVEL\",\r\n      \"link_instance_id\": null\r\n    },\r\n    {\r\n      \"element_id\": 328657,\r\n      \"name\": \"LAB_LEVEL_TEST\",\r\n      \"type\": \"Cabeça de 8 mm\",\r\n      \"level\": null,\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_HORIZUN_LEVEL\",\r\n      \"link_instance_id\": null\r\n    }\r\n  ],\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 72,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 81\r\n  }\r\n}",
+      "structured": {
+        "document": "LAB_HORIZUN_LEVEL",
+        "scope": "model",
+        "view_id": null,
+        "include_links": true,
+        "matched_total": 3,
+        "returned": 3,
+        "offset": 0,
+        "truncated": false,
+        "next_cursor": null,
+        "result_set_fingerprint": "39c7d491764c382f",
+        "coverage_complete": true,
+        "unreadable_total": 0,
+        "unreadable_shown": 0,
+        "unreadable_truncated": false,
+        "unreadable": [],
+        "federated_coverage": {
+          "coverage_complete": true,
+          "include_links": true,
+          "link_instances_total": 0,
+          "link_instances_loaded": 0,
+          "link_instances_unavailable": 0,
+          "sources": [
+            {
+              "source_kind": "host",
+              "source_model": "LAB_HORIZUN_LEVEL",
+              "link_instance_id": null,
+              "visibility_coverage": {
+                "coverage_complete": true,
+                "is_workshared": false,
+                "worksets_total": null,
+                "worksets_open": null,
+                "worksets_closed": null,
+                "worksets_read_error": null,
+                "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+              }
+            }
+          ],
+          "unavailable_links": [],
+          "note": "Every considered source was loaded with all user worksets open."
+        },
+        "summary": {
+          "by_category": {
+            "Níveis": 3
+          },
+          "by_level": {
+            "(no level)": 3
+          },
+          "by_source": {
+            "host:LAB_HORIZUN_LEVEL": 3
+          }
+        },
+        "rows": [
+          {
+            "element_id": 311,
+            "name": "Nível 1",
+            "type": "Cabeça de 8 mm",
+            "level": null,
+            "source_kind": "host",
+            "source_model": "LAB_HORIZUN_LEVEL",
+            "link_instance_id": null
+          },
+          {
+            "element_id": 694,
+            "name": "Nível 2",
+            "type": "Cabeça de 8 mm",
+            "level": null,
+            "source_kind": "host",
+            "source_model": "LAB_HORIZUN_LEVEL",
+            "link_instance_id": null
+          },
+          {
+            "element_id": 328657,
+            "name": "LAB_LEVEL_TEST",
+            "type": "Cabeça de 8 mm",
+            "level": null,
+            "source_kind": "host",
+            "source_model": "LAB_HORIZUN_LEVEL",
+            "link_instance_id": null
+          }
+        ],
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 72,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 81
+        }
+      },
+      "duration_ms": 101
+    }
+  ]
+}

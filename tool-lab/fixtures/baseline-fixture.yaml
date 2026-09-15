@@ -1,0 +1,48 @@
+fixture_id: LAB_BASELINE_001
+revit_year: 2027
+project_units: metric
+purpose: provider-smoke-and-fault-injection
+artifact: revit/lab/baseline/LAB_R00_EMPTY.rvt
+sha256: 15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D
+bytes: 4366336
+immutable: true
+source:
+  how: created_in_session_from_installed_pt-BR_default_template_then_saved_as
+  template: C:/ProgramData/Autodesk/RVT 2027/Templates/Default_M_PTB.rte
+  created_utc: '2026-09-15T13:52:00Z'
+  revit_version: '2027'
+  revit_build: 27.2.0.39
+  provider: horizun 1.3.3
+cycle_evidence:
+  closed_utc: '2026-09-15T13:53:17Z'
+  reopen_tool: horizun_open_document
+  reopen_version_guard: checked
+  reopen_upgraded_on_open: false
+  reopen_path_matches_request: true
+  closed_again_utc: '2026-09-15T14:01:15Z'
+  reopened_utc: '2026-09-15T13:58:40Z'
+  hash_before_cycle: 15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D
+  hash_after_cycle: 15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D
+  disk_changed_on_close: false
+  bytes_before: 4366336
+  bytes_after: 4366336
+baseline_statistics:
+  element_count: 3316
+  element_type_count: 599
+  levels:
+  - name: Nível 1
+    id: 311
+  - name: Nível 2
+    id: 694
+  views: 24
+  sheets: 0
+  warnings_total: 0
+  warnings_distinct: 0
+  categories: 31
+  rooms: 0
+  areas: 0
+  cad_imported: 0
+  cad_linked: 0
+rules:
+- Never mutate this file. Copy it for every test case.
+- Copy with Copy-Item before opening; the copy is the disposable fixture.

@@ -1,0 +1,44 @@
+{
+  "manifest_id": "LAB_BASELINE_001",
+  "generated_utc": "2026-09-15T14:05:00Z",
+  "artifact": {
+    "path": "revit/lab/baseline/LAB_R00_EMPTY.rvt",
+    "sha256": "15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D",
+    "bytes": 4366336,
+    "last_write_utc": "2026-09-15T13:52:28.5592752Z"
+  },
+  "provenance": "session-created from Default_M_PTB.rte via horizun_document_session save_as; closed, reopened, closed; hash identical before and after the reopen cycle",
+  "scan": {
+    "element_count": 3316,
+    "element_type_count": 599,
+    "levels": [
+      {
+        "name": "Nível 1",
+        "id": 311
+      },
+      {
+        "name": "Nível 2",
+        "id": 694
+      }
+    ],
+    "views": 24,
+    "sheets": 0,
+    "warnings_total": 0,
+    "warnings_distinct": 0,
+    "categories": 31,
+    "rooms": 0,
+    "areas": 0,
+    "cad_imported": 0,
+    "cad_linked": 0
+  },
+  "verification": {
+    "hash_stable_across_reopen_cycle": true,
+    "independent_pre_stat_proved_path_was_empty_before_save": true,
+    "close_used_object_identity_not_path": true,
+    "bytes_equal_before_and_after_close": true
+  },
+  "consistency_notes": [
+    "Revit was seen as [Inicio] in this cycle; the bridge opened this document on request instead of a human.",
+    "The Horizun bridge keeps an empty anchor project open (C:/Users/slvma/.horizun/anchor/HZ_ANCHOR_2027.rvt) because Revit cannot reach a zero-document state through the API."
+  ]
+}
