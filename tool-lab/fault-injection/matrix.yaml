@@ -1,0 +1,221 @@
+schema_version: 1
+task_id: P02-T17
+title: Fault-injection matrix
+purpose: Declarar e executar falhas contra fixtures Revit descartáveis sem promover falhas sintéticas a evidência de produção.
+fixture_policy:
+  source: revit/lab/baseline/LAB_R00_EMPTY.rvt
+  copy_per_case: true
+  production_models_allowed: false
+error_taxonomy:
+  E01: invalid argument/input
+  E02: provider unavailable
+  E03: timeout
+  E04: Revit transaction aborted
+  E05: partial mutation
+  E06: declared success but divergent state
+  E07: model inconsistency/corruption
+cases:
+  - id: FI-001
+    slug: invalid-element-id
+    description: Enviar um ElementId que não existe na fixture descartável.
+    precondition:
+      disposable_fixture: true
+      revit_document_open: true
+      known_missing_element_id: 999999999
+    action:
+      operation: read_element
+      payload:
+        element_id: 999999999
+    expected_result:
+      status: FAIL
+      mutation: NONE
+      error_message: A entrada é rejeitada e nenhum elemento é criado, alterado ou excluído.
+    expected_error_class: E01
+    requires_revit: true
+    human_gate: true
+    proof_layer:
+      primary: provider
+      secondary: client_mcp
+      transport: bridge_local
+
+  - id: FI-002
+    slug: nonexistent-family-type
+    description: Solicitar uma família/tipo que não existe no documento descartável.
+    precondition:
+      disposable_fixture: true
+      revit_document_open: true
+      family_name: __P02_T17_MISSING_FAMILY__
+      type_name: __P02_T17_MISSING_TYPE__
+    action:
+      operation: create_hosted_or_family_element
+      payload:
+        family_name: __P02_T17_MISSING_FAMILY__
+        type_name: __P02_T17_MISSING_TYPE__
+    expected_result:
+      status: FAIL
+      mutation: NONE
+      invariant: A contagem e o hash/consulta independente do documento permanecem inalterados.
+    expected_error_class: E01
+    requires_revit: true
+    human_gate: true
+    proof_layer:
+      primary: provider
+      secondary: client_mcp
+      transport: bridge_local
+
+  - id: FI-003
+    slug: hosted-element-without-host
+    description: Solicitar um elemento hospedado sem fornecer um host válido.
+    precondition:
+      disposable_fixture: true
+      revit_document_open: true
+      valid_family_type: true
+      host_id: null
+    action:
+      operation: create_hosted_element
+      payload:
+        host_id: null
+        location_m: [1.0, 1.0, 0.0]
+    expected_result:
+      status: FAIL
+      mutation: NONE
+      invariant: Nenhum elemento órfão fica persistido e a transação é revertida/recusada.
+    expected_error_class: E04
+    alternate_error_class_if_provider_leaks_mutation: E05
+    requires_revit: true
+    human_gate: true
+    proof_layer:
+      primary: provider
+      secondary: client_mcp
+      independent_query: provider
+      transport: bridge_local
+
+  - id: FI-004
+    slug: mcp-disabled-or-disconnected
+    description: Desabilitar ou desconectar o servidor MCP antes da chamada.
+    precondition:
+      disposable_fixture: false
+      mcp_connected: false
+      revit_document_open: unknown
+    action:
+      operation: health_or_tool_call
+      payload: {}
+    expected_result:
+      status: FAIL
+      mutation: NONE
+      invariant: A falha é reportada como indisponibilidade, sem sucesso declarado.
+    expected_error_class: E02
+    requires_revit: false
+    human_gate: false
+    proof_layer:
+      primary: client_mcp
+      secondary: bridge_local
+
+  - id: FI-005
+    slug: revit-closed
+    description: Fechar o processo/documento Revit antes de uma chamada do provider.
+    precondition:
+      disposable_fixture: false
+      revit_process_running: false
+      provider_process_running: true
+    action:
+      operation: document_info
+      payload: {}
+    expected_result:
+      status: FAIL
+      mutation: NONE
+      invariant: O retorno é provider unavailable; nunca success=true nem PASS.
+    expected_error_class: E02
+    requires_revit: false
+    human_gate: false
+    proof_layer:
+      primary: bridge_local
+      secondary: client_mcp
+
+  - id: FI-006
+    slug: invalid-batch-item-after-valid-items
+    description: Enviar itens válidos seguidos de um item deliberadamente inválido no mesmo lote.
+    precondition:
+      disposable_fixture: true
+      revit_document_open: true
+      fresh_copy_per_run: true
+      valid_items_before_invalid: 2
+      invalid_item_position: 3
+    action:
+      operation: batch_create_or_modify
+      payload:
+        items:
+          - id: valid-1
+            valid: true
+          - id: valid-2
+            valid: true
+          - id: invalid-3
+            valid: false
+    expected_result:
+      status: FAIL
+      atomicity_measure: REQUIRED
+      atomicity_pass_condition: Nenhum dos itens válidos aparece após a falha e a contagem independente não muda.
+      atomicity_fail_condition: Qualquer item válido persiste após a falha; classificar como mutação parcial.
+      mutation: MUST_BE_VERIFIED
+    expected_error_class: E04
+    alternate_error_class_if_provider_leaks_mutation: E05
+    requires_revit: true
+    human_gate: true
+    proof_layer:
+      primary: provider
+      secondary: client_mcp
+      independent_query: provider
+      transport: bridge_local
+
+  - id: FI-007
+    slug: repeated-equivalent-failure-three-times
+    description: Repetir três vezes a mesma falha de saúde do provider no mesmo escopo.
+    precondition:
+      disposable_fixture: false
+      provider_scope: provider/build/capability/error_signature
+      failure_threshold: 3
+    action:
+      operation: record_provider_health_failure
+      payload:
+        error_class: E02
+        error_signature: E02:provider-unavailable
+        repetitions: 3
+    expected_result:
+      status: PASS
+      invariant: A terceira falha equivalente abre o circuito e a quarta chamada ordinária é bloqueada.
+      breaker_state: OPEN
+      failure_count: 3
+    expected_error_class: E02
+    requires_revit: false
+    human_gate: false
+    proof_layer:
+      primary: client_mcp
+      secondary: bridge_local
+      implementation: src/amanda_agent/tools/circuit_breaker.py
+
+  - id: FI-008
+    slug: timeout-on-long-read
+    description: Exceder o limite de uma leitura longa e reconciliar o estado antes de qualquer retry.
+    precondition:
+      disposable_fixture: false
+      read_is_long_running: true
+      provider_may_still_be_working: true
+    action:
+      operation: long_read
+      payload:
+        timeout_seconds: 0.01
+    expected_result:
+      status: PASS
+      error_class: E03
+      sequence:
+        - timeout_returned_to_caller
+        - verify_provider_or_model_state
+        - retry_only_if_verification_proves_safe
+      invariant: A leitura em estado IN_DOUBT não é repetida automaticamente.
+    expected_error_class: E03
+    requires_revit: false
+    human_gate: false
+    proof_layer:
+      primary: client_mcp
+      secondary: bridge_local
+      implementation: src/amanda_agent/state/budgets.py

@@ -1,0 +1,237 @@
+{
+  "schema_version": 1,
+  "task_id": "P02-T17",
+  "generated_utc": "2026-09-15T16:48:03.869Z",
+  "matrix_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\fault-injection\\matrix.yaml",
+  "target": {
+    "name": "synthetic-offline-horizun",
+    "provider": "synthetic",
+    "revit_build": "offline",
+    "breaker_failure_threshold": 3,
+    "timeout_seconds": 0.01,
+    "timeout_verification_state": "IN_DOUBT",
+    "safe_to_retry_after_timeout": false
+  },
+  "cases": [
+    {
+      "id": "FI-001",
+      "slug": "invalid-element-id",
+      "status": "SKIPPED_NEEDS_REVIT",
+      "requires_revit": true,
+      "human_gate": true,
+      "expected_error_class": "E01",
+      "target": {
+        "name": "synthetic-offline-horizun",
+        "provider": "synthetic",
+        "revit_build": "offline",
+        "breaker_failure_threshold": 3,
+        "timeout_seconds": 0.01,
+        "timeout_verification_state": "IN_DOUBT",
+        "safe_to_retry_after_timeout": false
+      },
+      "observations": {
+        "reason": "requires a disposable Revit document and human gate",
+        "provider_call_attempted": false
+      },
+      "error": null,
+      "duration_ms": 0.013
+    },
+    {
+      "id": "FI-002",
+      "slug": "nonexistent-family-type",
+      "status": "SKIPPED_NEEDS_REVIT",
+      "requires_revit": true,
+      "human_gate": true,
+      "expected_error_class": "E01",
+      "target": {
+        "name": "synthetic-offline-horizun",
+        "provider": "synthetic",
+        "revit_build": "offline",
+        "breaker_failure_threshold": 3,
+        "timeout_seconds": 0.01,
+        "timeout_verification_state": "IN_DOUBT",
+        "safe_to_retry_after_timeout": false
+      },
+      "observations": {
+        "reason": "requires a disposable Revit document and human gate",
+        "provider_call_attempted": false
+      },
+      "error": null,
+      "duration_ms": 0.004
+    },
+    {
+      "id": "FI-003",
+      "slug": "hosted-element-without-host",
+      "status": "SKIPPED_NEEDS_REVIT",
+      "requires_revit": true,
+      "human_gate": true,
+      "expected_error_class": "E04",
+      "target": {
+        "name": "synthetic-offline-horizun",
+        "provider": "synthetic",
+        "revit_build": "offline",
+        "breaker_failure_threshold": 3,
+        "timeout_seconds": 0.01,
+        "timeout_verification_state": "IN_DOUBT",
+        "safe_to_retry_after_timeout": false
+      },
+      "observations": {
+        "reason": "requires a disposable Revit document and human gate",
+        "provider_call_attempted": false
+      },
+      "error": null,
+      "duration_ms": 0.003
+    },
+    {
+      "id": "FI-004",
+      "slug": "mcp-disabled-or-disconnected",
+      "status": "PASS",
+      "requires_revit": false,
+      "human_gate": false,
+      "expected_error_class": "E02",
+      "target": {
+        "name": "synthetic-offline-horizun",
+        "provider": "synthetic",
+        "revit_build": "offline",
+        "breaker_failure_threshold": 3,
+        "timeout_seconds": 0.01,
+        "timeout_verification_state": "IN_DOUBT",
+        "safe_to_retry_after_timeout": false
+      },
+      "observations": {
+        "observed_error_class": "E02",
+        "provider_call_attempted": true,
+        "false_success": false,
+        "error_message": "E02: provider unavailable (MCP disabled/disconnected)"
+      },
+      "error": null,
+      "duration_ms": 0.006
+    },
+    {
+      "id": "FI-005",
+      "slug": "revit-closed",
+      "status": "PASS",
+      "requires_revit": false,
+      "human_gate": false,
+      "expected_error_class": "E02",
+      "target": {
+        "name": "synthetic-offline-horizun",
+        "provider": "synthetic",
+        "revit_build": "offline",
+        "breaker_failure_threshold": 3,
+        "timeout_seconds": 0.01,
+        "timeout_verification_state": "IN_DOUBT",
+        "safe_to_retry_after_timeout": false
+      },
+      "observations": {
+        "observed_error_class": "E02",
+        "provider_call_attempted": true,
+        "false_success": false,
+        "error_message": "E02: provider unavailable (Revit closed)"
+      },
+      "error": null,
+      "duration_ms": 0.004
+    },
+    {
+      "id": "FI-006",
+      "slug": "invalid-batch-item-after-valid-items",
+      "status": "SKIPPED_NEEDS_REVIT",
+      "requires_revit": true,
+      "human_gate": true,
+      "expected_error_class": "E04",
+      "target": {
+        "name": "synthetic-offline-horizun",
+        "provider": "synthetic",
+        "revit_build": "offline",
+        "breaker_failure_threshold": 3,
+        "timeout_seconds": 0.01,
+        "timeout_verification_state": "IN_DOUBT",
+        "safe_to_retry_after_timeout": false
+      },
+      "observations": {
+        "reason": "requires a disposable Revit document and human gate",
+        "provider_call_attempted": false
+      },
+      "error": null,
+      "duration_ms": 0.002
+    },
+    {
+      "id": "FI-007",
+      "slug": "repeated-equivalent-failure-three-times",
+      "status": "PASS",
+      "requires_revit": false,
+      "human_gate": false,
+      "expected_error_class": "E02",
+      "target": {
+        "name": "synthetic-offline-horizun",
+        "provider": "synthetic",
+        "revit_build": "offline",
+        "breaker_failure_threshold": 3,
+        "timeout_seconds": 0.01,
+        "timeout_verification_state": "IN_DOUBT",
+        "safe_to_retry_after_timeout": false
+      },
+      "observations": {
+        "failure_states": [
+          "OPEN",
+          "OPEN",
+          "OPEN"
+        ],
+        "failure_count": 3,
+        "observed_breaker_state": "OPEN",
+        "ordinary_call_blocked": true,
+        "block_message": "provider call blocked for capability 'repeated-equivalent-failure-three-times': OPEN",
+        "breaker_state_path": "tool-lab\\fault-injection\\results\\p02-t17-breaker-2026-09-15.yaml",
+        "scope": {
+          "provider": "synthetic",
+          "revit_build": "offline",
+          "capability": "repeated-equivalent-failure-three-times",
+          "error_signature": "E02:provider-unavailable"
+        },
+        "record_persisted": true
+      },
+      "error": null,
+      "duration_ms": 0.003
+    },
+    {
+      "id": "FI-008",
+      "slug": "timeout-on-long-read",
+      "status": "PASS",
+      "requires_revit": false,
+      "human_gate": false,
+      "expected_error_class": "E03",
+      "target": {
+        "name": "synthetic-offline-horizun",
+        "provider": "synthetic",
+        "revit_build": "offline",
+        "breaker_failure_threshold": 3,
+        "timeout_seconds": 0.01,
+        "timeout_verification_state": "IN_DOUBT",
+        "safe_to_retry_after_timeout": false
+      },
+      "observations": {
+        "observed_error_class": "E03",
+        "verification": {
+          "state": "IN_DOUBT",
+          "safe_to_retry": false
+        },
+        "verified_before_retry": true,
+        "retry_attempted": false,
+        "event_order": [
+          "long_read",
+          "verify_after_timeout"
+        ],
+        "safe_to_retry": false
+      },
+      "error": null,
+      "duration_ms": 0.013
+    }
+  ],
+  "summary": {
+    "total": 8,
+    "pass": 4,
+    "fail": 0,
+    "blocked": 0,
+    "skipped_needs_revit": 4
+  }
+}

@@ -1,0 +1,10 @@
+schema_version: 1
+breakers:
+- provider: synthetic
+  revit_build: offline
+  capability: repeated-equivalent-failure-three-times
+  error_signature: E02:provider-unavailable
+  state: OPEN
+  failure_count: 3
+  opened_at: 1789490629.0643337
+  last_failure_at: 1789490629.0643337
