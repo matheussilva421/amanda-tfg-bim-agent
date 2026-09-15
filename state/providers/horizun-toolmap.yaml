@@ -1,0 +1,537 @@
+schema_version: 1
+provider: horizun-revit-mcp
+generated_by: tool-lab/horizun/generate_toolmap.py
+generated_utc: '2026-09-15T12:32:21Z'
+rule: every tool name and every effect flag below is copied from the installed contract resource; regenerate
+  instead of editing by hand
+provenance:
+  catalog_path: tool-lab/horizun/tool-catalog.json
+  contract_resource_uri: horizun://contract/tools
+  contract_resource_capture: tool-lab/horizun/resource-dump.json
+  contract_hash: 8b9600f5274d7dffb6e5bd5f
+  protocol_version: 2
+  catalog_sha256: b3963ce413e7afc29d3b47e20dc24d6b2ef80aeb69cadfc01076f4871d7be039
+  catalog_tool_count: 70
+  contract_tool_count: 80
+  tools_listed_by_client: 70
+  server_version: 1.3.3
+  transport: stdio JSON-RPC 2.0, the same transport a client uses
+  source_url: https://github.com/HorizunGroup/horizun-revit-mcp.git
+  source_commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+  catalog_only_tools: []
+  contract_only_tools:
+  - horizun_capture_view
+  - horizun_create_family
+  - horizun_document_session
+  - horizun_excel_write_rows
+  - horizun_execute_python
+  - horizun_export
+  - horizun_open_document
+  - horizun_power_bi_push
+  - horizun_relinquish_all
+  - horizun_save_document
+  note: the client tool listing returned 70 tools while the installed contract declares 80; the contract
+    is a superset and is the authority for document, save, export and Python work
+capabilities:
+  health:
+    semantic: health
+    availability: AVAILABLE
+    tool: horizun_health
+    effect_flags:
+      horizun_health:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+    note: reports the Revit year, build, process id and the ACTIVE document; call it before every read
+      or write
+  document_info:
+    semantic: document_info
+    availability: AVAILABLE
+    tool: get_document_info
+    alternatives:
+    - horizun_target
+    - horizun_health
+    effect_flags:
+      get_document_info:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+      horizun_target:
+        effect: HostState
+        destructive: false
+        open_world: true
+      horizun_health:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+    note: read-only title, path, version and element count of the active document
+  document_query:
+    semantic: document_query
+    availability: AVAILABLE
+    tool: horizun_query_model
+    alternatives:
+    - horizun_list_elements
+    - horizun_quantities
+    effect_flags:
+      horizun_query_model:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+      horizun_list_elements:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+      horizun_quantities:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+    note: element and type queries with a closed return-field set and full/compact/summary response modes
+  model_scan:
+    semantic: model_scan
+    availability: AVAILABLE
+    tool: horizun_model_scan
+    alternatives:
+    - horizun_audit_model
+    - horizun_quantities
+    effect_flags:
+      horizun_model_scan:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+      horizun_audit_model:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+      horizun_quantities:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+    note: versioned scan profiles; aborts when the active document differs from target_document_title
+  file_info:
+    semantic: file_info
+    availability: AVAILABLE
+    tool: horizun_file_info
+    effect_flags:
+      horizun_file_info:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+    note: reads .rvt/.rfa headers from disk without opening Revit, so a version mismatch is caught before
+      a session
+  level:
+    semantic: level
+    availability: AVAILABLE
+    tool: horizun_create_elements
+    element_kind: level
+    required_fields:
+    - kind
+    - elevation
+    all_kind_fields:
+    - elevation
+    - name
+    - parameters
+    - source_reference
+    - source_row
+    effect_flags:
+      horizun_create_elements:
+        effect: MutatingUnlessDryRun
+        destructive: false
+        open_world: false
+    note: one element variant inside the single creation tool; there is no separate create_level tool
+  wall:
+    semantic: wall
+    availability: AVAILABLE
+    tool: horizun_create_elements
+    element_kind: wall
+    required_fields:
+    - kind
+    - start
+    - end
+    - level_id
+    - height
+    all_kind_fields:
+    - arc
+    - base_offset
+    - end
+    - flip
+    - height
+    - level_id
+    - offset
+    - parameters
+    - source_reference
+    - source_row
+    - start
+    - structural
+    - top_level_id
+    - top_offset
+    - type_id
+    effect_flags:
+      horizun_create_elements:
+        effect: MutatingUnlessDryRun
+        destructive: false
+        open_world: false
+    note: straight or arc walls; type_id and height are workspace parameters, not tool choices
+  floor:
+    semantic: floor
+    availability: AVAILABLE
+    tool: horizun_create_elements
+    element_kind: floor
+    required_fields:
+    - kind
+    - profile
+    - level_id
+    all_kind_fields:
+    - level_id
+    - offset
+    - parameters
+    - profile
+    - source_reference
+    - source_row
+    - structural
+    - type_id
+    effect_flags:
+      horizun_create_elements:
+        effect: MutatingUnlessDryRun
+        destructive: false
+        open_world: false
+    note: profile is a closed loop in the requested units
+  room:
+    semantic: room
+    availability: AVAILABLE
+    tool: horizun_create_elements
+    element_kind: room
+    required_fields:
+    - kind
+    - point
+    - level_id
+    all_kind_fields:
+    - level_id
+    - name
+    - number
+    - parameters
+    - point
+    - source_reference
+    - source_row
+    effect_flags:
+      horizun_create_elements:
+        effect: MutatingUnlessDryRun
+        destructive: false
+        open_world: false
+    note: room needs bounding walls in place first; it is not a room-separation workflow by itself
+  door:
+    semantic: door
+    availability: AVAILABLE
+    tool: horizun_create_elements
+    element_kind: family_instance
+    required_fields:
+    - kind
+    - point
+    - type_id
+    - coordinate_mode
+    all_kind_fields:
+    - coordinate_mode
+    - host_id
+    - level_id
+    - parameters
+    - point
+    - rotation_degrees
+    - source_reference
+    - source_row
+    - structural_type
+    - type_id
+    effect_flags:
+      horizun_create_elements:
+        effect: MutatingUnlessDryRun
+        destructive: false
+        open_world: false
+    note: no door-specific tool is published; a door is a wall-hosted family_instance, so host_id and
+      a door type_id are required
+  window:
+    semantic: window
+    availability: AVAILABLE
+    tool: horizun_create_elements
+    element_kind: family_instance
+    required_fields:
+    - kind
+    - point
+    - type_id
+    - coordinate_mode
+    all_kind_fields:
+    - coordinate_mode
+    - host_id
+    - level_id
+    - parameters
+    - point
+    - rotation_degrees
+    - source_reference
+    - source_row
+    - structural_type
+    - type_id
+    effect_flags:
+      horizun_create_elements:
+        effect: MutatingUnlessDryRun
+        destructive: false
+        open_world: false
+    note: 'same path as a door: wall-hosted family_instance with host_id; wall_opening is the host-cut
+      variant when no family should be placed'
+  views:
+    semantic: views
+    availability: AVAILABLE
+    tool: horizun_manage_views
+    alternatives:
+    - horizun_plan_views
+    - horizun_navigate
+    effect_flags:
+      horizun_manage_views:
+        effect: MutatingUnlessDryRun
+        destructive: false
+        open_world: false
+      horizun_plan_views:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+      horizun_navigate:
+        effect: HostState
+        destructive: false
+        open_world: true
+    note: floor, ceiling, structural, area, 3d, drafting, section, elevation and callout creation plus
+      template and view-range control
+  section_elevation:
+    semantic: section_elevation
+    availability: AVAILABLE
+    tool: horizun_manage_views
+    operations:
+    - create_section
+    - create_elevation
+    operation_source: horizun_manage_views.actions[].operation
+    effect_flags:
+      horizun_manage_views:
+        effect: MutatingUnlessDryRun
+        destructive: false
+        open_world: false
+    note: sections and elevations are view operations, not separate tools
+  sheets:
+    semantic: sheets
+    availability: AVAILABLE
+    tools:
+    - horizun_manage_views
+    - horizun_pack_sheets
+    operations:
+    - create_sheet
+    - place_view
+    - place_schedule
+    operation_source: horizun_manage_views.actions[].operation
+    effect_flags:
+      horizun_manage_views:
+        effect: MutatingUnlessDryRun
+        destructive: false
+        open_world: false
+      horizun_pack_sheets:
+        effect: MutatingUnlessDryRun
+        destructive: false
+        open_world: false
+    note: create_sheet, convert_placeholder_sheet and place_view live in manage_views; pack_sheets arranges
+      viewports on a sheet
+  schedules:
+    semantic: schedules
+    availability: AVAILABLE
+    tools:
+    - horizun_create_schedule
+    - horizun_manage_schedules
+    - horizun_get_schedule_data
+    - horizun_list_schedules
+    effect_flags:
+      horizun_create_schedule:
+        effect: MutatingUnlessDryRun
+        destructive: false
+        open_world: false
+      horizun_manage_schedules:
+        effect: MutatingUnlessDryRun
+        destructive: false
+        open_world: false
+      horizun_get_schedule_data:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+      horizun_list_schedules:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+    note: create_schedule takes one category; manage_schedules edits fields, filters, sorting and totals
+  dimensions:
+    semantic: dimensions
+    availability: AVAILABLE
+    tools:
+    - horizun_query_dimensions
+    - horizun_edit_dimensions
+    - horizun_plan_annotations
+    alternatives:
+    - horizun_get_dimension_references
+    effect_flags:
+      horizun_query_dimensions:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+      horizun_edit_dimensions:
+        effect: MutatingUnlessDryRun
+        destructive: false
+        open_world: false
+      horizun_plan_annotations:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+      horizun_get_dimension_references:
+        effect: ReadOnly
+        destructive: false
+        open_world: false
+    note: plan_annotations carries the automatic dimensioning operations; edit_dimensions changes placed
+      dimensions
+  site_toposolid:
+    semantic: site_toposolid
+    availability: NOT_AVAILABLE
+    justification: No tool in the installed contract creates a topographic surface or toposolid from scratch.
+      The only three contract tools that mention a toposolid are horizun_embed_floors_in_toposolid, horizun_grade_toposolid_around_floors
+      and horizun_execute_plan, and both named tools require a toposolid that already exists; the element
+      variant list of horizun_create_elements does not include a toposolid kind. The project site data
+      is also MISSING for topography, so no surface could be validated even if one were created.
+    verified_alternative: 'Create the surface once outside the creation path: either place the toposolid
+      by hand in Revit and then use horizun_grade_toposolid_around_floors and horizun_embed_floors_in_toposolid,
+      or request arbitrary Python with horizun_request_python_access and call the Revit API toposolid
+      builder through horizun_execute_python. Both paths are recorded in tool-lab/horizun/tool-discovery.md;
+      neither is proven on this machine yet.'
+    contract_scan:
+      tools_mentioning_toposolid:
+      - horizun_embed_floors_in_toposolid
+      - horizun_grade_toposolid_around_floors
+      - horizun_execute_plan
+      creation_tool_element_kinds:
+      - accessory_inline
+      - beam_system
+      - cable_tray
+      - ceiling
+      - conduit
+      - displacement
+      - duct
+      - family_instance
+      - fitting
+      - floor
+      - grid
+      - level
+      - mep_system
+      - pipe
+      - roof
+      - room
+      - room_separator
+      - shaft
+      - slab_opening
+      - stairs
+      - structural_column
+      - structural_framing
+      - wall
+      - wall_foundation
+      - wall_opening
+      - wall_profile
+  save:
+    semantic: save
+    availability: AVAILABLE
+    tools:
+    - horizun_save_document
+    - horizun_document_session
+    alternatives:
+    - horizun_open_document
+    effect_flags:
+      horizun_save_document:
+        effect: Mutating
+        destructive: false
+        open_world: false
+      horizun_document_session:
+        effect: DocumentSession
+        destructive: true
+        open_world: true
+      horizun_open_document:
+        effect: Mutating
+        destructive: false
+        open_world: true
+    note: save_document refuses a document that was never saved and proves the timestamp and size change
+      on disk; document_session carries open, save_as, close and inspect
+  export_pdf:
+    semantic: export_pdf
+    availability: AVAILABLE
+    tools:
+    - horizun_export
+    - horizun_document_session
+    alternatives:
+    - horizun_capture_view
+    format: pdf
+    effect_flags:
+      horizun_export:
+        effect: MutatingUnlessDryRun
+        destructive: true
+        open_world: true
+      horizun_document_session:
+        effect: DocumentSession
+        destructive: true
+        open_world: true
+      horizun_capture_view:
+        effect: ExternalSideEffect
+        destructive: false
+        open_world: true
+    note: combined or per-view PDFs with a closed print-policy field set, page-count re-read and an optional
+      SHA256 manifest
+  export_ifc:
+    semantic: export_ifc
+    availability: AVAILABLE
+    tool: horizun_export
+    format: ifc
+    effect_flags:
+      horizun_export:
+        effect: MutatingUnlessDryRun
+        destructive: true
+        open_world: true
+    note: IFC version, base quantities and split-walls policy come from the contract enum
+  export_dwg:
+    semantic: export_dwg
+    availability: AVAILABLE
+    tool: horizun_export
+    format: dwg
+    effect_flags:
+      horizun_export:
+        effect: MutatingUnlessDryRun
+        destructive: true
+        open_world: true
+    note: one view per call; acad_version selects 2013 or 2018
+  export_image:
+    semantic: export_image
+    availability: AVAILABLE
+    tool: horizun_export
+    alternatives:
+    - horizun_capture_view
+    format: image
+    effect_flags:
+      horizun_export:
+        effect: MutatingUnlessDryRun
+        destructive: true
+        open_world: true
+      horizun_capture_view:
+        effect: ExternalSideEffect
+        destructive: false
+        open_world: true
+    note: image export for one view; capture_view returns a PNG of the live view with orientation and
+      display-style control
+  python:
+    semantic: python
+    availability: PARTIAL
+    tool: horizun_execute_python
+    alternatives:
+    - horizun_request_python_access
+    effect_flags:
+      horizun_execute_python:
+        effect: Mutating
+        destructive: true
+        open_world: true
+      horizun_request_python_access:
+        effect: HostState
+        destructive: false
+        open_world: true
+    note: 'disabled by default: request_python_access opens a consent dialog the machine owner must approve;
+      preflight validates code without running it'
