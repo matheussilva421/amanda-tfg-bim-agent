@@ -1,0 +1,136 @@
+schema_version: 1
+generated_utc: '2026-09-15T12:26:00Z'
+scope: 'exact provenance of the Revit MCP provider installed on this machine'
+audit: tool-lab/horizun/source-audit.md
+
+provider: horizun-revit-mcp
+
+source:
+  url: https://github.com/HorizunGroup/horizun-revit-mcp.git
+  local_checkout: vendor/horizun-revit-mcp
+  commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+  commit_short: cc4ea04
+  tree_clean_at_audit: true
+  published: false
+  note: 'the checkout is gitignored; the upstream source is never redistributed'
+
+installer_record:
+  path: '%LOCALAPPDATA%/Programs/Horizun/MCP/manifest.json'
+  schema: 2
+  commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+  clean_tree: true
+  source_install: true
+  config: Release
+  built_utc: '2026-09-15T11:34:46Z'
+  server_payload_entries: 196
+  addin_payload_entries: 30
+  addin_stdlib_files: 640
+  note: >-
+    the installer wrote this record itself. Its Commit field equals the audited
+    checkout HEAD, and CleanTree/SourceInstall are true, so the deployed binaries
+    were built from the pinned tree rather than fetched as a release.
+
+installed_artifacts:
+  - role: mcp_server_exe
+    path: '%LOCALAPPDATA%/Programs/Horizun/MCP/server/horizun-mcp.exe'
+    sha256: '178a7cc335ec80250c0f605010a7e092eca204f85417efa535f876dddeae908d'
+    size_bytes: 151552
+    commit_stamp: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+    manifest_hash_match: true
+    disk_hash_match: true
+  - role: mcp_server_assembly
+    path: '%LOCALAPPDATA%/Programs/Horizun/MCP/server/horizun-mcp.dll'
+    sha256: 'dd360b3020e9c4ae652047015d0ba127a8fda2a68612e9ca53eb2bd4d3b1514f'
+    size_bytes: 1103872
+    commit_stamp: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+    manifest_hash_match: true
+    disk_hash_match: true
+  - role: revit_addin_assembly
+    path: '%APPDATA%/Autodesk/Revit/Addins/2027/Horizun/Horizun.Revit.dll'
+    sha256: '3f70b2d5929d345573e039f47858b3d51b23a82ccf67cb03d0ab0116671a7218'
+    manifest_hash_match: true
+    disk_hash_match: true
+  - role: revit_addin_manifest
+    path: '%APPDATA%/Autodesk/Revit/Addins/2027/Horizun.addin'
+    sha256: 'baeae873b9735067bcee515d78e98e9f78d66705d202b1bff34120d391b93b91'
+    manifest_hash_match: true
+    disk_hash_match: true
+    addin_id: b8e5a2f0-3c1d-4e6a-9f2b-7a4c8d1e5f30
+    entry_class: Horizun.Revit.App
+
+revit_build:
+  year: 2027
+  selected_build: 27.2.0.39
+  product_version: 20260716_1515(x64)
+  install_path: C:\Program Files\Autodesk\Revit 2027
+  addin_root: '%APPDATA%/Autodesk/Revit/Addins/2027'
+  disable_all_addins: false
+  addin_override_entries: 0
+
+sdk:
+  pinned_required: 10.0.400
+  pinned_source: 'vendor/horizun-revit-mcp/global.json (rollForward: disable)'
+  pinned_present: false
+  present_sdks:
+    - 8.0.422
+  consequence: >-
+    a rebuild or upgrade is not possible on this machine right now. Proving the
+    already installed bridge does not depend on the SDK.
+
+client_registration:
+  client: codex
+  config_path: '%USERPROFILE%/.codex/config.toml'
+  table: mcp_servers.horizun-revit
+  server_command: '%LOCALAPPDATA%/Programs/Horizun/MCP/server/horizun-mcp.exe'
+  status: enabled
+  startup_timeout_sec: 120
+  tool_timeout_sec: 600
+  other_servers_preserved:
+    - acervo-auditor-mcp
+    - cua_repl
+    - node_repl
+    - open-design
+    - codex_app
+  stale_installer_marker: >-
+    %LOCALAPPDATA%/Horizun/install-status.json still reads state=waiting_for_client_exit
+    with running_clients [Claude, Codex]. The configuration it claims not to have
+    edited is already correct, so this is a leftover marker, not pending work.
+
+verification_chain:
+  - step: upstream checkout pinned
+    method: git rev-parse HEAD + git status --short
+    result: PASS
+    detail: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f with a clean working tree
+  - step: installed build provenance
+    method: read Commit/CleanTree/SourceInstall from the installer manifest
+    result: PASS
+    detail: commit matches the checkout; source install, clean tree, Release
+  - step: installed binary integrity
+    method: compare manifest SHA-256 against freshly computed file digests
+    result: PASS
+    detail: 4 of 4 artifacts match, including both Revit-side files
+  - step: commit stamp inside the deployed assemblies
+    method: literal byte search for the 40-hex commit in the built files
+    result: PASS
+    detail: server assembly, add-in assembly and installer manifest all carry the stamp
+  - step: runtime bridge health
+    method: horizun_health over the MCP transport
+    result: BLOCKED
+    detail: >-
+      Revit has never been started by the user, so the unsigned add-in Security
+      dialog is unanswered and the MCP tools are not yet loaded by the client.
+  - step: revit write/read/verify and persistence
+    method: provider smoke tests on a disposable fixture
+    result: BLOCKED
+    detail: scheduled for P02-T05 onwards, after the user starts Revit once
+
+rollback:
+  - 'Close Revit and the MCP client before touching any of the trees below.'
+  - 'Uninstall Horizun Revit MCP from Windows Installed apps, or delete server, add-in and state trees.'
+  - 'Remove the [mcp_servers.horizun-revit] table from %USERPROFILE%/.codex/config.toml, or run: codex mcp remove horizun-revit'
+  - '%USERPROFILE%/.horizun/ state and the local signing trust are kept by default; purge only on explicit request.'
+  - 'Reinstall from the pinned checkout with vendor/horizun-revit-mcp/install.ps1 once SDK 10.0.400 exists.'
+
+capability_consequence: >-
+  no Horizun capability may be recorded as PASS while verification_chain still has
+  BLOCKED steps; installation alone is not capability proof

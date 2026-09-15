@@ -54,6 +54,8 @@ def test_validation_report_is_short_portuguese_and_lists_exact_blockers(
     assert "Comando" in report
     assert "Data" in report
     assert "GO_WITH_LIMITATIONS" in report
+    assert "## Verificacoes" in report
+    assert "MISSING" in report
     for blocker_id in (
         "SITE_TOPOGRAPHY",
         "SITE_BOUNDARY",
@@ -93,3 +95,18 @@ def test_validate_only_cli_returns_nonzero_for_malformed_canonical(
     assert result.exit_code != 0
     assert "NO_GO" in result.stdout
     assert (root / "docs" / "reports" / "ingest-report.md").exists()
+
+
+def test_malformed_site_provenance_is_reported_as_no_go(tmp_path: Path):
+    root = _copy_validation_fixture(tmp_path / "corrupt-site")
+    site_path = root / "project" / "site" / "site.json"
+    payload = json.loads(site_path.read_text(encoding="utf-8"))
+    payload["frontages"][0]["source_ref"] = ""
+    site_path.write_text(json.dumps(payload), encoding="utf-8")
+
+    result = runner.invoke(app, ["ingest", "--validate-only"], env={"AMANDA_PROJECT_ROOT": str(root)})
+
+    assert result.exit_code != 0
+    report_path = root / "docs" / "reports" / "ingest-report.md"
+    assert report_path.exists()
+    assert "NO_GO" in report_path.read_text(encoding="utf-8")

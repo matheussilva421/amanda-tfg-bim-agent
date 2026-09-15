@@ -10,7 +10,6 @@ from pathlib import Path
 from typing import Any, Literal
 
 import yaml
-from pydantic import ValidationError
 
 from ..requirements.decisions import load_decision_register
 from ..requirements.regulations import (
@@ -397,9 +396,10 @@ def _validate_provenance(context: _ValidationContext) -> None:
                     raise ValueError(f"fonte normativa ausente no manifesto: {source_id}")
 
 
-def _validate_site_status(context: _ValidationContext) -> None:
+def _validate_site_status(context: _ValidationContext) -> str:
     if context.site is None:
         raise ValueError("site.json nao foi carregado")
+    notes: list[str] = []
     topography = context.site["topography"]
     source_state = topography.get("source_state")
     representation = topography.get("representation")
@@ -408,6 +408,7 @@ def _validate_site_status(context: _ValidationContext) -> None:
         if representation != "PLANAR_PLACEHOLDER" or elevations:
             raise ValueError("status topografico MISSING inconsistente")
         context.limitations += 1
+        notes.append("topografia MISSING aceita como limitacao de estudo")
     elif source_state == "VERIFIED_TOPOGRAPHY":
         if representation != "VERIFIED_TOPOGRAPHY":
             raise ValueError("topografia verificada requer representacao verificada")
@@ -415,15 +416,20 @@ def _validate_site_status(context: _ValidationContext) -> None:
         raise ValueError("source_state topografico invalido")
     if context.site.get("boundary", {}).get("kind") == "STUDY_PLACEHOLDER":
         context.limitations += 1
+        notes.append("boundary STUDY_PLACEHOLDER permanece provisoria")
     if context.site.get("true_north") is None:
         context.limitations += 1
+        notes.append("true north pendente")
     if str(context.site.get("frontage_conflict", {}).get("resolution", "")).startswith("UNRESOLVED"):
         context.limitations += 1
+        notes.append("conflito de frentes pendente")
     if context.registry is not None and any(
         rule.status.value in {"IDENTIFIED", "SOURCE_ACQUIRED"}
         for rule in context.registry.rules
     ):
         context.limitations += 1
+        notes.append("parte do registro normativo permanece identificada")
+    return "; ".join(notes) or "validado"
 
 
 def _load_open_blockers(context: _ValidationContext) -> None:
@@ -449,11 +455,20 @@ def _run_check(
     checks: list[ValidationCheck], name: str, callback: Any
 ) -> None:
     try:
-        callback()
-    except (OSError, TypeError, ValueError, KeyError, json.JSONDecodeError, yaml.YAMLError, ValidationError) as error:
+        detail = callback()
+    except (
+        OSError,
+        TypeError,
+        ValueError,
+        KeyError,
+        IndexError,
+        AttributeError,
+        OverflowError,
+        yaml.YAMLError,
+    ) as error:
         checks.append(ValidationCheck(name, "FAIL", _short_error(error)))
     else:
-        checks.append(ValidationCheck(name, "PASS", "validado"))
+        checks.append(ValidationCheck(name, "PASS", str(detail or "validado")))
 
 
 def validate_project(root: Path) -> ValidationResult:
@@ -470,6 +485,7 @@ def validate_project(root: Path) -> ValidationResult:
     _run_check(checks, "Totais do programa", lambda: _validate_program_totals(context))
     _run_check(checks, "Status do site", lambda: _validate_site_status(context))
     _run_check(checks, "Bloqueadores abertos", lambda: _load_open_blockers(context))
+    context.limitations = max(context.limitations, len(context.open_blocker_ids))
     if any(check.status == "FAIL" for check in checks):
         verdict: Verdict = "NO_GO"
     elif context.limitations:
@@ -493,10 +509,10 @@ def render_validation_report(result: ValidationResult, *, generated_at: datetime
         "",
         "- Comando: `amanda-agent ingest --validate-only`",
         f"- Data: {timestamp.date().isoformat()}",
-        f"- Contagens: {result.total} checks; {result.passed} PASS; {result.failed} FAIL; {result.limitations} limitacoes",
+        f"- Contagens: {result.total} verificacoes; {result.passed} PASS; {result.failed} FAIL; {result.limitations} limitacoes",
         f"- Veredito: **{result.verdict}**",
         "",
-        "## Checks",
+        "## Verificacoes",
         "",
     ]
     lines.extend(

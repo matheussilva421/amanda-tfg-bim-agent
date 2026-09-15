@@ -173,8 +173,16 @@ tasks:
     title: Circuit breaker
     depends_on:
     - P02-T01
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - src/amanda_agent/tools/circuit_breaker.py with tests/unit/test_circuit_breaker.py;
+      focused run 10 passed
+    - pytest tests/unit -q --basetemp=.tmp-pytest-luna-p02t02-unit -> 275 passed,
+      1 skipped; ruff clean on both files
+    - 'reviewed: scope is provider+build+capability+error signature; INPUT/VALIDATION
+      errors never count as provider-health failures; OPEN requires a controlled read-only
+      HALF_OPEN probe after cooldown or explicit remediation; close only on independent
+      success'
   P02-T03:
     id: P02-T03
     phase: PHASE_02
@@ -182,8 +190,14 @@ tasks:
     title: Evidence record model
     depends_on:
     - P02-T02
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - src/amanda_agent/tools/evidence.py with tests/unit/test_evidence.py; focused
+      run 5 passed
+    - pytest tests/unit -q -> 275 passed, 1 skipped; ruff clean
+    - 'reviewed bridge: path::sha256=<hash> references are re-hashed, write PASS demands
+      independent model query plus save/reopen, and to_provider_capability() feeds
+      the registry'
   P02-T04:
     id: P02-T04
     phase: PHASE_02
@@ -191,8 +205,19 @@ tasks:
     title: Clone/audit/pin/build/install Horizun from source
     depends_on:
     - P02-T03
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - git -C vendor/horizun-revit-mcp rev-parse HEAD -> cc4ea04e9ecfe547ad349f22e0864019ce1ead1f,
+      status --short empty (clean tree)
+    - installer manifest C:\Users\slvma\AppData\Local/Programs/Horizun/MCP/manifest.json
+      -> Commit matches HEAD, CleanTree true, SourceInstall true, Config Release
+    - SHA-256 recomputed for 4/4 artifacts (mcp exe 178a7cc3..., mcp dll dd360b30...,
+      Horizun.Revit.dll 3f70b2d5..., Horizun.addin baeae873...) -> all match the installer
+      manifest
+    - 40-hex commit stamp found literally inside horizun-mcp.dll, Horizun.Revit.dll
+      and the installer manifest -> deployment and pinned checkout are the same revision
+    - Get-Process Revit -> nothing; horizun_health and write/read/verify remain BLOCKED
+      until the user answers the unsigned add-in Security dialog
   P02-T05:
     id: P02-T05
     phase: PHASE_02

@@ -20,3 +20,29 @@ dotnet:
   - version: 8.0.422
     base_path: C:\Program Files\dotnet\sdk
   note: inventory only; a pinned SDK is installed in Plan 02
+
+providers:
+  horizun-revit-mcp:
+    role: 'primary Revit bridge for this project'
+    source_url: https://github.com/HorizunGroup/horizun-revit-mcp.git
+    source_commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+    deployment: source-build
+    install_manifest: state/install-manifest.yaml
+    source_audit: tool-lab/horizun/source-audit.md
+    mcp_server_exe: '%LOCALAPPDATA%/Programs/Horizun/MCP/server/horizun-mcp.exe'
+    mcp_server_sha256: '178a7cc335ec80250c0f605010a7e092eca204f85417efa535f876dddeae908d'
+    revit_addin_dll_sha256: '3f70b2d5929d345573e039f47858b3d51b23a82ccf67cb03d0ab0116671a7218'
+    codex_registration: enabled
+    capabilities_proven: []
+    status_note: >-
+      installed and hash-verified against the pinned commit, but no capability is
+      proven yet: the bridge needs one user-initiated Revit launch to answer the
+      unsigned add-in Security dialog before horizun_health can run.
+  revitcortex:
+    role: 'fallback provider under evaluation'
+    status: NOT_INSTALLED
+    status_note: 'no checkout in vendor/ and no installation detected'
+  custom-api:
+    role: 'in-project provider of last resort'
+    status: NOT_BUILT
+    status_note: 'implemented only if Horizun and RevitCortex both fail their capability gates'

@@ -319,3 +319,50 @@ entries:
     tests green
   recorded_utc: '2026-09-15T12:18:32Z'
   note: null
+- task_id: PHASE_GATE
+  status: GO_WITH_LIMITATIONS
+  evidence:
+  - PHASE_02 tasks P02-T01..T03 are READY; Revit 2027 provider chain continues; site
+    topography and boundary consultants remain the declared limits.
+  recorded_utc: '2026-09-15T12:21:24Z'
+  note: advanced to PHASE_02
+- task_id: P02-T04
+  status: PASS
+  evidence:
+  - git -C vendor/horizun-revit-mcp rev-parse HEAD -> cc4ea04e9ecfe547ad349f22e0864019ce1ead1f,
+    status --short empty (clean tree)
+  - installer manifest C:\Users\slvma\AppData\Local/Programs/Horizun/MCP/manifest.json
+    -> Commit matches HEAD, CleanTree true, SourceInstall true, Config Release
+  - SHA-256 recomputed for 4/4 artifacts (mcp exe 178a7cc3..., mcp dll dd360b30...,
+    Horizun.Revit.dll 3f70b2d5..., Horizun.addin baeae873...) -> all match the installer
+    manifest
+  - 40-hex commit stamp found literally inside horizun-mcp.dll, Horizun.Revit.dll
+    and the installer manifest -> deployment and pinned checkout are the same revision
+  - Get-Process Revit -> nothing; horizun_health and write/read/verify remain BLOCKED
+    until the user answers the unsigned add-in Security dialog
+  recorded_utc: '2026-09-15T12:28:18Z'
+  note: null
+- task_id: P02-T02
+  status: PASS
+  evidence:
+  - src/amanda_agent/tools/circuit_breaker.py with tests/unit/test_circuit_breaker.py;
+    focused run 10 passed
+  - pytest tests/unit -q --basetemp=.tmp-pytest-luna-p02t02-unit -> 275 passed, 1
+    skipped; ruff clean on both files
+  - 'reviewed: scope is provider+build+capability+error signature; INPUT/VALIDATION
+    errors never count as provider-health failures; OPEN requires a controlled read-only
+    HALF_OPEN probe after cooldown or explicit remediation; close only on independent
+    success'
+  recorded_utc: '2026-09-15T12:31:50Z'
+  note: null
+- task_id: P02-T03
+  status: PASS
+  evidence:
+  - src/amanda_agent/tools/evidence.py with tests/unit/test_evidence.py; focused run
+    5 passed
+  - pytest tests/unit -q -> 275 passed, 1 skipped; ruff clean
+  - 'reviewed bridge: path::sha256=<hash> references are re-hashed, write PASS demands
+    independent model query plus save/reopen, and to_provider_capability() feeds the
+    registry'
+  recorded_utc: '2026-09-15T12:31:51Z'
+  note: null

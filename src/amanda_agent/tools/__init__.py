@@ -11,6 +11,18 @@ from .discovery import (
     ToolLabSubmission,
     ToolLabValidation,
 )
+from .evidence import (
+    CapabilityEvidenceRecord,
+    CapabilityTestResult,
+    EvidenceRecord,
+    EvidenceValidationError,
+    ModelQueryEvidence,
+    SaveReopenResult,
+    evidence_reference,
+    to_provider_capability,
+    validate_evidence_references,
+    verify_evidence_reference,
+)
 from .trust import (
     TRUST_DIMENSIONS,
     Evidence,
@@ -23,22 +35,31 @@ from .trust import (
 )
 
 __all__ = [
+    "REQUIRED_REPORT_FIELDS",
+    "TRUST_DIMENSIONS",
+    "CapabilityEvidenceRecord",
+    "CapabilityTestResult",
     "DiscoveryCandidate",
     "DiscoveryReport",
     "DiscoveryReportError",
     "Evidence",
+    "EvidenceRecord",
+    "EvidenceValidationError",
+    "ModelQueryEvidence",
     "ProductionInstallPlan",
     "PromotionDenied",
-    "REQUIRED_REPORT_FIELDS",
+    "SaveReopenResult",
     "ToolDiscoveryReport",
     "ToolLabRequiredError",
     "ToolLabSubmission",
     "ToolLabValidation",
-    "TRUST_DIMENSIONS",
     "TrustAssessment",
     "TrustEvidence",
     "TrustVerdict",
     "evaluate_trust",
+    "evidence_reference",
     "promote_trust",
+    "to_provider_capability",
+    "validate_evidence_references",
+    "verify_evidence_reference",
 ]
-
