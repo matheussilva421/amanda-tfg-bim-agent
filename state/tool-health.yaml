@@ -1,0 +1,21 @@
+schema_version: 1
+generated_utc: '2026-09-15T10:50:14Z'
+tools:
+  git:
+    status: AVAILABLE
+    version: git version 2.53.0.windows.3
+  codex:
+    status: AVAILABLE
+    version: codex-cli 0.154.0-alpha.6.2
+  powershell:
+    status: AVAILABLE
+    version: 5.1.26100.9444
+  python312:
+    status: MISSING
+    version: null
+  dotnet:
+    status: AVAILABLE
+    version: 8.0.422
+revit:
+  status: DETECTED
+  selected: 27.2.0.39

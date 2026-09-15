@@ -1,0 +1,30 @@
+﻿{
+    "schema_version":  1,
+    "generated_utc":  "2026-09-15T10:37:36Z",
+    "generator":  "bootstrap/get-revit-metadata.ps1",
+    "machine":  "DELL-G15-5530",
+    "searched_roots":  [
+                           "C:\\Program Files\\Autodesk",
+                           "C:\\Program Files (x86)\\Autodesk"
+                       ],
+    "probe_status":  "DETECTED",
+    "installation_count":  1,
+    "ambiguous":  false,
+    "installations":  [
+                          {
+                              "productName":  "Autodesk Revit",
+                              "productVersion":  "20260716_1515(x64)",
+                              "fileVersion":  "27.2.0.39",
+                              "companyName":  "Autodesk, Inc.",
+                              "legalCopyright":  "© 2026 Autodesk, Inc. All rights reserved.",
+                              "installPath":  "C:\\Program Files\\Autodesk\\Revit 2027",
+                              "executablePath":  "C:\\Program Files\\Autodesk\\Revit 2027\\Revit.exe",
+                              "apiPath":  "C:\\Program Files\\Autodesk\\Revit 2027\\RevitAPI.dll",
+                              "year":  2027
+                          }
+                      ],
+    "notes":  [
+
+              ],
+    "scope":  "read-only inventory; installed files do not prove licensing or a successful launch"
+}

@@ -1,0 +1,14 @@
+blockers: []
+current_checkpoint: null
+last_completed_task: null
+last_verified_commit: null
+next_task: P01-T01
+phase_gate: null
+phase_id: PHASE_01
+phase_name: foundation-environment-state
+phase_status: PENDING
+project: Amanda TFG BIM Agent
+revit_stage: null
+schema_version: 1
+selected_design: null
+state_revision: 1

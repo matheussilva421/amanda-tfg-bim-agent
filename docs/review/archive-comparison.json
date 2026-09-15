@@ -1,0 +1,131 @@
+{
+  "archive": "amanda-tfg-bim-agent-superpowers-plan.zip",
+  "sha256": "3e470c7442097b420ee3ab7a2bb26267b75a2448ff36842c9f58bb94928c2b4c",
+  "files": 16,
+  "comparisons": [
+    {
+      "file": "2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md",
+      "zip_entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md",
+      "identical": true
+    },
+    {
+      "file": "2026-09-11-amanda-tfg-bim-agent-design.md",
+      "zip_entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/specs/2026-09-11-amanda-tfg-bim-agent-design.md",
+      "identical": true
+    },
+    {
+      "file": "PLAN_SELF_REVIEW.md",
+      "zip_entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/PLAN_SELF_REVIEW.md",
+      "identical": true
+    },
+    {
+      "file": "START_HERE_FOR_CODEX.md",
+      "zip_entry": "amanda-tfg-bim-agent-handoff/START_HERE_FOR_CODEX.md",
+      "identical": true
+    }
+  ],
+  "child_plans": [
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/00-master-implementation-plan.md",
+      "contained_in_combined": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/01-foundation-environment-state.md",
+      "contained_in_combined": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/02-revit-tool-lab-providers.md",
+      "contained_in_combined": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/03-project-intelligence.md",
+      "contained_in_combined": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/04-design-engine.md",
+      "contained_in_combined": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/05-bim-compiler.md",
+      "contained_in_combined": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/06-qa-release-exports.md",
+      "contained_in_combined": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/07-autonomy-recovery-security.md",
+      "contained_in_combined": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/08-amanda-production-run.md",
+      "contained_in_combined": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/09-optional-render-cloud.md",
+      "contained_in_combined": true
+    }
+  ],
+  "checksums": [
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/README.md",
+      "valid": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/START_HERE_FOR_CODEX.md",
+      "valid": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/00-master-implementation-plan.md",
+      "valid": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/01-foundation-environment-state.md",
+      "valid": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/02-revit-tool-lab-providers.md",
+      "valid": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/03-project-intelligence.md",
+      "valid": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/04-design-engine.md",
+      "valid": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/05-bim-compiler.md",
+      "valid": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/06-qa-release-exports.md",
+      "valid": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/07-autonomy-recovery-security.md",
+      "valid": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/08-amanda-production-run.md",
+      "valid": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/09-optional-render-cloud.md",
+      "valid": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md",
+      "valid": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/plans/PLAN_SELF_REVIEW.md",
+      "valid": true
+    },
+    {
+      "entry": "amanda-tfg-bim-agent-handoff/docs/superpowers/specs/2026-09-11-amanda-tfg-bim-agent-design.md",
+      "valid": true
+    }
+  ]
+}

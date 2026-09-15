@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-09-15T10:52:43Z",
+  "generator": "amanda_agent doctor",
+  "project_root": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda",
+  "machine": {
+    "hostname": "Dell-G15-5530",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "python_executable": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\.venv\\Scripts\\python.exe",
+    "architecture": "AMD64"
+  },
+  "revit": {
+    "probe_status": "DETECTED",
+    "installation_count": 1,
+    "ambiguous": false,
+    "searched_roots": [
+      "C:\\Program Files\\Autodesk",
+      "C:\\Program Files (x86)\\Autodesk"
+    ],
+    "selected": {
+      "product_name": "Autodesk Revit",
+      "product_version": "20260716_1515(x64)",
+      "file_version": "27.2.0.39",
+      "install_path": "C:\\Program Files\\Autodesk\\Revit 2027",
+      "executable_path": "C:\\Program Files\\Autodesk\\Revit 2027\\Revit.exe",
+      "api_path": "C:\\Program Files\\Autodesk\\Revit 2027\\RevitAPI.dll",
+      "year": 2027
+    },
+    "installations": [
+      {
+        "product_name": "Autodesk Revit",
+        "product_version": "20260716_1515(x64)",
+        "file_version": "27.2.0.39",
+        "install_path": "C:\\Program Files\\Autodesk\\Revit 2027",
+        "executable_path": "C:\\Program Files\\Autodesk\\Revit 2027\\Revit.exe",
+        "api_path": "C:\\Program Files\\Autodesk\\Revit 2027\\RevitAPI.dll",
+        "year": 2027
+      }
+    ],
+    "notes": []
+  },
+  "probes": [
+    {
+      "name": "git",
+      "status": "AVAILABLE",
+      "version": "git version 2.53.0.windows.3",
+      "detail": "Git is required for provenance.",
+      "path": "C:\\Program Files\\Git\\cmd\\git.EXE",
+      "critical": true
+    },
+    {
+      "name": "codex",
+      "status": "AVAILABLE",
+      "version": "codex-cli 0.154.0-alpha.6.2",
+      "detail": "Codex drives the agent loop; without it the pipeline cannot run.",
+      "path": "C:\\Users\\slvma\\AppData\\Roaming\\npm\\codex.CMD",
+      "critical": true
+    },
+    {
+      "name": "powershell",
+      "status": "AVAILABLE",
+      "version": "5.1.26100.9444",
+      "detail": "Runs the bootstrap scripts.",
+      "path": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE",
+      "critical": false
+    },
+    {
+      "name": "python312",
+      "status": "MISSING",
+      "version": null,
+      "detail": "No Python 3.12 launcher was found for py -3.12, python -3.12. The control-plane venv already pins 3.12 and is used instead.",
+      "path": null,
+      "critical": false
+    },
+    {
+      "name": "dotnet",
+      "status": "AVAILABLE",
+      "version": "8.0.422",
+      "detail": "Inventory only. A provider-specific SDK is installed in Plan 02 only after auditing that source build's pinned requirements.",
+      "path": "C:\\Program Files\\dotnet\\dotnet.EXE",
+      "critical": false,
+      "sdks": [
+        {
+          "version": "8.0.422",
+          "base_path": "C:\\Program Files\\dotnet\\sdk"
+        }
+      ]
+    }
+  ],
+  "inventory": [
+    {
+      "name": "python312",
+      "status": "MISSING",
+      "version": null,
+      "detail": "No Python 3.12 launcher was found for py -3.12, python -3.12. The control-plane venv already pins 3.12 and is used instead.",
+      "path": null,
+      "critical": false
+    },
+    {
+      "name": "dotnet",
+      "status": "AVAILABLE",
+      "version": "8.0.422",
+      "detail": "Inventory only. A provider-specific SDK is installed in Plan 02 only after auditing that source build's pinned requirements.",
+      "path": "C:\\Program Files\\dotnet\\dotnet.EXE",
+      "critical": false,
+      "sdks": [
+        {
+          "version": "8.0.422",
+          "base_path": "C:\\Program Files\\dotnet\\sdk"
+        }
+      ]
+    }
+  ],
+  "scope": "read-only diagnosis; probes never install, upgrade or reconfigure the tools they inspect",
+  "health": {
+    "critical_failure": false,
+    "exit_code": 0,
+    "blocked_phases": [],
+    "reasons": [],
+    "verified": {
+      "revit_detected": true,
+      "codex_available": true
+    }
+  }
+}

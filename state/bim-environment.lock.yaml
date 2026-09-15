@@ -1,0 +1,22 @@
+schema_version: 1
+generated_utc: '2026-09-15T10:50:14Z'
+scope: 'durable environment lock: the verified host facts this project was built against'
+revit:
+  selected_build: 27.2.0.39
+  product_version: 20260716_1515(x64)
+  install_path: C:\Program Files\Autodesk\Revit 2027
+  note: installed files do not prove licensing or a successful launch
+python:
+  version: null
+  note: the control plane runs on the pinned 3.12 venv
+codex:
+  version: codex-cli 0.154.0-alpha.6.2
+git:
+  version: git version 2.53.0.windows.3
+powershell:
+  version: 5.1.26100.9444
+dotnet:
+  sdks:
+  - version: 8.0.422
+    base_path: C:\Program Files\dotnet\sdk
+  note: inventory only; a pinned SDK is installed in Plan 02

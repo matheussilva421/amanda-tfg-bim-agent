@@ -48,3 +48,7 @@ dist/
 # Generated local artifacts
 artifacts/local/
 deliverables/local/
+
+# Local scratch
+.git-commit-msg.tmp
+.tmp-pytest/
