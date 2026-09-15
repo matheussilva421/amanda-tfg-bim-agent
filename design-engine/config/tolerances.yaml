@@ -1,0 +1,10 @@
+version: 1
+units:
+  length: m
+  area: m2
+  percentage: percent
+length_m: 0.01
+distance_m: 0.01
+area_m2: 0.000001
+area_delta_percent: 1.0
+centroid_m: 0.01

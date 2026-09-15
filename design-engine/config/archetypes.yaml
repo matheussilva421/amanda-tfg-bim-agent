@@ -1,0 +1,56 @@
+version: 1
+archetypes:
+  COURTYARD:
+    initialization:
+      strategy: central_courtyard
+      seed_inputs: [site_bounds, run_seed]
+    relationships:
+      - [public, controlled, SHOULD_ADJOIN]
+      - [controlled, residential, SHOULD_BE_NEAR]
+      - [residential, courtyard, SHOULD_ADJOIN]
+    exploration_tags: [courtyard, gradient]
+  LINEAR_SPINE:
+    initialization:
+      strategy: linear_spine
+      seed_inputs: [site_bounds, run_seed]
+    relationships:
+      - [public, spine, MUST_ADJOIN]
+      - [controlled, spine, SHOULD_ADJOIN]
+      - [residential, spine, SHOULD_BE_NEAR]
+    exploration_tags: [spine, gradient]
+  CLUSTER:
+    initialization:
+      strategy: separated_clusters
+      seed_inputs: [site_bounds, run_seed]
+    relationships:
+      - [public, controlled, SHOULD_BE_NEAR]
+      - [controlled, residential, SHOULD_BE_NEAR]
+      - [residential, courtyard, CAN_BE_NEAR]
+    exploration_tags: [cluster, courtyard]
+  PRIVACY_GRADIENT:
+    initialization:
+      strategy: ordered_privacy_bands
+      seed_inputs: [site_bounds, run_seed]
+    relationships:
+      - [public, controlled, MUST_ADJOIN]
+      - [controlled, technical, SHOULD_BE_NEAR]
+      - [technical, residential, SHOULD_BE_NEAR]
+    exploration_tags: [gradient, privacy]
+  DOUBLE_COURTYARD:
+    initialization:
+      strategy: two_courtyards
+      seed_inputs: [site_bounds, run_seed]
+    relationships:
+      - [public, courtyard_a, SHOULD_ADJOIN]
+      - [residential, courtyard_b, SHOULD_ADJOIN]
+      - [courtyard_a, courtyard_b, MUST_BE_SEPARATED]
+    exploration_tags: [courtyard, gradient]
+  COMB:
+    initialization:
+      strategy: spine_with_teeth
+      seed_inputs: [site_bounds, run_seed]
+    relationships:
+      - [spine, public, MUST_ADJOIN]
+      - [spine, controlled, MUST_ADJOIN]
+      - [spine, residential, SHOULD_BE_NEAR]
+    exploration_tags: [comb, cluster]
