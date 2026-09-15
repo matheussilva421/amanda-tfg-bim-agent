@@ -271,3 +271,99 @@ def test_export_capabilities_carry_the_export_format_from_the_contract():
         capability = toolmap["capabilities"][name]
         assert expected in allowed
         assert capability["format"] == expected
+
+
+def test_the_proven_toolmap_entries_record_their_host_evidence():
+    """P02-T12: the recorded proof is real and points at a real artifact."""
+    toolmap = _load_yaml(TOOLMAP_PATH)
+    capabilities = toolmap["capabilities"]
+
+    site = capabilities["site_toposolid"]
+    assert site["availability"] == "NOT_AVAILABLE"
+    assert "horizun_execute_python" in site["proven_alternative"]
+    assert "t12-toposolid.json" in site["proven_alternative"]
+
+    python = capabilities["python"]
+    assert python["availability"] == "PARTIAL"
+    assert "t12-toposolid.json" in python["proven"]
+    assert python["proven_utc"] == "2026-09-15"
+
+    artifact = ROOT / "tool-lab" / "horizun" / "results" / "t12-toposolid.json"
+    evidence = json.loads(artifact.read_text(encoding="utf-8"))
+    assert evidence["task"] == "P02-T12"
+    assert evidence["mapped_capability"]["semantic"] == "site_toposolid"
+    assert evidence["mapped_capability"]["typed_creation_kind"] is None
+
+    applied = evidence["apply"]["output"]
+    assert applied["status"] == "verified"
+    assert applied["created_ids"]
+    assert all(check["ok"] for check in applied["verified_checks"])
+
+    persistence = evidence["persistence"]
+    assert persistence["save"]["saved"] is True
+    assert persistence["close"]["closed"] is True
+    assert persistence["reopen"]["opened_now"] is True
+    assert persistence["bytes_before_save"] != persistence["bytes_after_reopen"]
+    reopened = [row["element_id"] for row in persistence["query_after_reopen"]["rows"]]
+    assert reopened == applied["created_ids"]
+
+def test_the_toposolid_task_meets_the_plan_geometry_and_independent_read():
+    """P02-T12's plan asks for the four synthetic points, an independent
+    extents read, and a save/reopen cycle.  Each of those is asserted here
+    against the recorded host transcript, not against prose."""
+    artifact = ROOT / "tool-lab" / "horizun" / "results" / "t12-toposolid.json"
+    evidence = json.loads(artifact.read_text(encoding="utf-8"))
+
+    # The plan fixes the synthetic plane in metres.
+    assert evidence["fixture"]["synthetic_points_m"] == [
+        [0, 0, 0.0],
+        [20, 0, 0.5],
+        [20, 20, 1.0],
+        [0, 20, 0.5],
+    ]
+
+    # The rehearsal had to prove the technique and leave nothing behind.
+    rehearsal = evidence["rehearsal"]["output"]
+    assert rehearsal["rollback_ok"] is True
+    assert rehearsal["count_inside_tx"] == 1
+    assert rehearsal["after_rollback_count"] == 0
+    assert rehearsal["after_rollback_ids"] == []
+    assert rehearsal["rollback_absent"] is True
+
+    applied = evidence["apply"]["output"]
+    assert applied["requested_points_m"] == rehearsal["requested_points_m"]
+    assert applied["before_count"] == 0
+    assert applied["after_count"] == len(applied["created_ids"])
+    assert applied["doc_is_modifiable_after"] is False
+
+    # Extents through the typed model query, the strongest independent read
+    # available here.  Y came back as -2.2e-15, so compare with a tolerance.
+    read = evidence["independent_reads"]
+    by_id = read["by_id"]["reply"]
+    assert by_id["matched_total"] == 1
+    assert by_id["coverage_complete"] is True
+    row = by_id["rows"][0]
+    assert row["element_id"] == applied["created_ids"][0]
+    assert row["unique_id"]
+    extents = row["bounding_box"]
+    low = [round(value) for value in extents["min"][:2]]
+    high = [round(value) for value in extents["max"][:2]]
+    assert low == [0, 0]
+    assert high == [20, 20]
+    assert extents["max"][2] <= 1.0 and extents["min"][2] >= -1.0
+
+    # A second and third query, neither of them by element id.
+    assert read["by_category"]["reply"]["matched_total"] == 1
+    assert read["list_elements"]["reply"]["total"] == 1
+    # The request names the English category while the reply echoes the
+    # localized one, so both sides are recorded instead of assumed equal.
+    assert read["list_elements"]["arguments"]["category"] == "OST_Toposolid"
+    assert read["list_elements"]["reply"]["category"] == "Sólido topográfico"
+
+    # Save/reopen moved the file and the element survived it unchanged.
+    persistence = evidence["persistence"]
+    assert persistence["sha256_before_save"] == evidence["fixture"]["sha256_at_copy"]
+    assert persistence["sha256_after_reopen"] != persistence["sha256_before_save"]
+    assert persistence["save"]["mtime_changed"] is True
+    after = persistence["query_after_reopen"]["rows"][0]
+    assert after["unique_id"] == row["unique_id"]

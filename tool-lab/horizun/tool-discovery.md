@@ -125,10 +125,19 @@ Two verified alternatives exist, both recorded in the toolmap:
 2. Request arbitrary Python with `horizun_request_python_access` and call the
    Revit API surface builder through `horizun_execute_python`.
 
-Neither is proven on this machine yet, and the project's own site data records
-topography as `MISSING` with a planar placeholder. The honest status is therefore:
-no tool, no data, no validation — which keeps blocker `SITE_TOPOGRAPHY` open
-instead of quietly papering over it.
+**Route 2 is now proven on this machine** (P02-T12, 2026-09-15). `Toposolid.Create`
+built the synthetic `[0,0,0.0] [20,0,0.5] [20,20,1.0] [0,20,0.5]` m plane from the
+plan on a fresh baseline copy, first in a rehearsal that was rolled back and then in a
+committed transaction (element 328673, 9/9 postconditions), and the result was re-read
+by typed `horizun_query_model` queries with extents 0–20 m and survived a
+save/close/reopen cycle. Route 1 (hand-placed) is still unexercised. The full
+transcript is `tool-lab/horizun/results/t12-toposolid.json`.
+
+What that does **not** change: there is still no typed creation path in the contract,
+and the project's own site data still records topography as `MISSING` with a planar
+placeholder. So blocker `SITE_TOPOGRAPHY` stays open — the proof covers the
+*mechanism* (arbitrary Python can build and persist a surface), not the *data*, and no
+production Toposolid support is claimed.
 
 ## Reproducing and regenerating
 
@@ -153,12 +162,23 @@ guessed name cannot reach the committed file.
 
 ## What this discovery does not establish
 
-- No tool has been invoked against a live Revit. `horizun_health` was refused
-  because no bridge was reachable; that refusal is correct behaviour, not a pass.
-- Capability `python` is `PARTIAL`: installed, but blocked by local policy until
-  the machine owner approves the consent dialog.
-- The placement semantics of a wall-hosted `family_instance` (a door or window on
-  a specific host) are read from the schema, not yet exercised.
-- The 10 contract-only tools are installed but were not listed by the client
-  during discovery, so their first real call is still unproven.
-
+- **Superseded for most rows.** This list was written at discovery time, before any
+  live call. Tasks P02-T05 and P02-T07..T12 have since invoked the bridge against a
+  live Revit 2027 and are recorded as `PASS` with their own transcripts under
+  `tool-lab/horizun/results/`. What follows is what is *still* unestablished.
+- Nothing here is a claim about **production** behaviour: every proof is on
+  synthetic geometry in throwaway lab copies, not on the project model.
+- The hand-placed toposolid route (route 1 above) has never been exercised; only the
+  Python route has.
+- `horizun_execute_python` results are always `self_reported_verified` from the
+  bridge's point of view, so Python work is only ever confirmed by a separate typed
+  query — never by the script's own report.
+- The room-tag capability is `DEGRADED` in this template: tagging an `OST_Rooms`
+  reference fails in Revit for every room tag type present, in both `tag_mode`
+  values. That was proven by a rolled-back rehearsal, not assumed (P02-T11).
+- `horizun_export` with `format: image` is `DEGRADED`: ExportImage treats the
+  supplied path as a stem and appends the view type and name, so the reported path
+  is not the written path; success was therefore not claimed (P02-T11).
+- The 10 contract-only tools were not listed by the client during discovery. Their
+  first real calls are now proven for the document, save, export and Python ones;
+  the remainder still rest on the contract schema alone.

@@ -858,3 +858,60 @@ entries:
     files, the commands, the RED demo and the determinism result
   recorded_utc: '2026-09-15T14:48:29Z'
   note: null
+- task_id: P02-T12
+  status: PASS
+  evidence:
+  - fixture revit/lab/horizun/LAB_HORIZUN_TOPO.rvt copied from the GOLDEN baseline
+    LAB_R00_EMPTY.rvt (sha256 15e0f70d...299d, 4366336 bytes); the copy itself was
+    re-hashed at 15e0f70d...299d before any write
+  - 'mapped capability checked first, as the plan requires: site_toposolid is NOT_AVAILABLE
+    in state/providers/horizun-toolmap.yaml because no tool in the installed contract
+    creates a topographic surface from scratch - the 26 element kinds of horizun_create_elements
+    carry no toposolid kind and the three contract tools that mention a toposolid
+    (horizun_embed_floors_in_toposolid, horizun_grade_toposolid_around_floors, horizun_execute_plan)
+    all require one that already exists, so the plan condition "invoke actual mapped
+    site capability if available" is false on this machine'
+  - 'route used is the recorded verified alternative, not an improvised one: horizun_execute_python
+    calling the Revit API Toposolid.Create(doc, IList[XYZ], ElementId typeId, ElementId
+    levelId), with Python access granted on this machine (permission_profile full_write,
+    execute_python_ui_granted true)'
+  - 'rehearsal with rollback: the solid was built, all four synthetic points 0/0 /
+    20/0 / 20/20 / 0/20 m were read back, then tx.RollBack() restored the element
+    count to 0 - the technique was proven before anything was committed and the rehearsal
+    left nothing behind'
+  - 'apply: the committed transaction created element id 328673 (type 319144 Genérico
+    - 1000 mm, level 311 Nivel 1, category Sólido topográfico) with 9 of 9 verified_checks
+    ok, warning delta 0 and transaction_left_open false'
+  - 'independent typed re-read (not the Python self-report): horizun_query_model element_ids=[328673]
+    cache_mode=bypass include_bounding_box=true coordinate_units=m returned 1 row
+    with unique_id acc9a74d-20e8-4759-a946-2be18b798733-000503e1 and bbox min [0,
+    0, -1.0] max [20, 20, 1.0] m; horizun_list_elements OST_Toposolid reported total
+    1; the +/-1 m in Z is the 1000 mm thickness of the generic type and the requested
+    plane values 0.0/0.5/1.0 m fall inside it'
+  - 'persistence on the real file: save returned saved=true with the mtime changed
+    and bytes 4366336 -> 4370432, sha256 15e0f70d...299d -> 5a66bfa4c79036232503ada4842b60c53f45ad4b3aa23b0141013e843b2021a6;
+    close with activate_other=true closed by object identity after activating LAB_HORIZUN_FLOOR
+    as the decoy; open returned opened_now=true with upgraded=false; after the reopen
+    element 328673 came back with the same unique_id and the same bounding box'
+  - result_set_fingerprint f19e5d8efdc2bb1a was identical before and after the save/close/reopen
+    cycle, and warnings_total stayed 0 at every step
+  - evidence artifact tool-lab/horizun/results/t12-toposolid.json (24796 bytes) consolidates
+    fixture, mapped_capability, rehearsal, apply, independent_reads and persistence
+  - 'the toolmap generator now records this proof: generate_toolmap.py carries proven_alternative
+    on site_toposolid and proven/proven_utc on python, and the first regeneration
+    exposed a real serialization gap - the fields were declared but never copied into
+    the emitted entry, so the published artifact lacked them; the emit path was corrected
+    and generate_toolmap.py --check prints "toolmap is up to date"'
+  - tests/providers went from 9 to 10 passed; the new test_the_proven_toolmap_entries_record_their_host_evidence
+    asserts the NOT_AVAILABLE and PARTIAL statuses, the recorded pointer to horizun_execute_python
+    and t12-toposolid.json, and the artifact payload itself (task, mapped semantic,
+    typed_creation_kind None, apply status verified with non-empty created_ids and
+    every check ok, save/close/reopen booleans, byte count changed, reopened element
+    ids equal to the created ids); it failed RED with KeyError proven_alternative
+    before the generator fix
+  - 'scope NOT proven and not claimed: one synthetic element only, no grading or embed
+    against real terrain, project site data is still MISSING, no typed creation kind
+    for a toposolid exists in the contract, and production Toposolid support is therefore
+    not asserted'
+  recorded_utc: '2026-09-15T15:54:51Z'
+  note: null

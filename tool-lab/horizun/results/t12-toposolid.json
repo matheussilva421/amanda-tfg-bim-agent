@@ -1,0 +1,1049 @@
+{
+  "schema_version": 1,
+  "task": "P02-T12",
+  "title": "Horizun Toposolid/site test",
+  "provider": "horizun-revit-mcp",
+  "server_version": "1.3.3",
+  "contract_hash": "8b9600f5274d7dffb6e5bd5f",
+  "revit": {
+    "version": "2027",
+    "build": "27.2.0.39",
+    "permission_profile": "full_write"
+  },
+  "fixture": {
+    "path": "revit/lab/horizun/LAB_HORIZUN_TOPO.rvt",
+    "origin": "copy of the GOLDEN baseline revit/lab/baseline/LAB_R00_EMPTY.rvt",
+    "sha256_at_copy": "15e0f70df13a9ad0635a7651b3fedff59e76dcfe582c25a7ea759a4b0698299d",
+    "bytes_at_copy": 4366336,
+    "synthetic_points_m": [
+      [
+        0,
+        0,
+        0.0
+      ],
+      [
+        20,
+        0,
+        0.5
+      ],
+      [
+        20,
+        20,
+        1.0
+      ],
+      [
+        0,
+        20,
+        0.5
+      ]
+    ]
+  },
+  "mapped_capability": {
+    "semantic": "site_toposolid",
+    "toolmap_availability": "NOT_AVAILABLE",
+    "route_taken": "verified alternative 2: horizun_execute_python calling the Revit API Toposolid.Create",
+    "typed_creation_kind": null
+  },
+  "rehearsal": {
+    "job_id": "20260915-115522-277-875811",
+    "script_reported_status": "verified",
+    "evidence_status": "completed_unverified",
+    "output": {
+      "type_chosen": {
+        "id": 319144,
+        "name": "Genérico – 1000 mm"
+      },
+      "before_ids": [],
+      "rehearsal_readback": {
+        "bbox": {
+          "max_ft": [
+            65.616798,
+            65.616798,
+            0.0
+          ],
+          "min_m": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "max_m": [
+            20.0,
+            20.0,
+            0.0
+          ],
+          "min_ft": [
+            0.0,
+            0.0,
+            -3.28084
+          ]
+        },
+        "shape_error": null,
+        "level_id": 311,
+        "class": "Toposolid",
+        "shape_vertices": [
+          [
+            65.616798,
+            0.0,
+            1.64042
+          ],
+          [
+            65.616798,
+            65.616798,
+            3.28084
+          ],
+          [
+            0.0,
+            65.616798,
+            1.64042
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "bbox_error": null,
+        "type_id": 319144,
+        "category": "Sólido topográfico",
+        "created_id": 328666,
+        "alive": true,
+        "type_name": "Toposolid",
+        "geometry_error": "AttributeError: 'Toposolid' object has no attribute 'get_Geometry'"
+      },
+      "doc_is_modifiable_after": false,
+      "rollback_ok": true,
+      "count_inside_tx": 1,
+      "requested_points_m": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          20.0,
+          0.0,
+          0.5
+        ],
+        [
+          20.0,
+          20.0,
+          1.0
+        ],
+        [
+          0.0,
+          20.0,
+          0.5
+        ]
+      ],
+      "candidate_types": [
+        {
+          "id": 319144,
+          "name": "Genérico – 1000 mm"
+        },
+        {
+          "id": 319146,
+          "name": "Pradaria – 1200 mm"
+        },
+        {
+          "id": 319148,
+          "name": "Água – 2000 mm"
+        },
+        {
+          "id": 319150,
+          "name": "Caminho – Pranchas de madeira de 150 mm"
+        },
+        {
+          "id": 319152,
+          "name": "Caminho – Concreto de 350 mm"
+        },
+        {
+          "id": 319154,
+          "name": "Caminho – Asfalto de 350 mm"
+        }
+      ],
+      "before_count": 0,
+      "rehearsal_created_id": 328666,
+      "created_id_resolves_after_rollback": null,
+      "rollback_absent": true,
+      "after_rollback_count": 0,
+      "after_rollback_ids": [],
+      "requested_points_ft": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          65.616798,
+          0.0,
+          1.64042
+        ],
+        [
+          65.616798,
+          65.616798,
+          3.28084
+        ],
+        [
+          0.0,
+          65.616798,
+          1.64042
+        ]
+      ],
+      "status": "verified",
+      "level_chosen": {
+        "id": 311,
+        "label": {
+          "elevation_ft": 0.0,
+          "elevation_m": 0.0,
+          "name": "Nível 1"
+        }
+      },
+      "summary": "Toposolid.Create rehearsal inside a transaction, read back, then rolled back; element count restored to 0"
+    }
+  },
+  "apply": {
+    "meta": {
+      "evidence_status": "self_reported_verified",
+      "script_reported_status": "verified",
+      "host_verified": false,
+      "evidence_summary": "Toposolid id 328673 created through Toposolid.Create inside a committed transaction and re-read from the document; footprint and relief match all four requested synthetic points within 0.01 m.",
+      "evidence_warnings": [
+        "status=verified was reported BY THE SCRIPT and is recorded as self_reported_verified. The bridge did not re-read the model to confirm it - only typed commands carry that guarantee. SELF-REPORTED, NOT HOST-VERIFIED. Typed commands are re-read from the model by the bridge after the commit; arbitrary Python is not. self_reported_verified means the SCRIPT said it checked and attached evidence - the host did not confirm any of it, and there is no value of any field here that constitutes a bridge guarantee for Python. Treat the evidence as the script's testimony: read it, and re-read the model with a typed query if the outcome matters."
+      ],
+      "transaction_left_open": false,
+      "warning_delta": {
+        "before": {
+          "observed": true,
+          "count": 0,
+          "truncated": false,
+          "signatures": []
+        },
+        "after": {
+          "observed": true,
+          "count": 0,
+          "truncated": false,
+          "signatures": []
+        },
+        "persistent_warning_comparison_complete": true,
+        "new": [],
+        "resolved": [],
+        "suppressed_warning_coverage": "unknown",
+        "note": "GetWarnings compares persistent warnings on the captured document. A script may suppress transient failures; an empty delta does not prove no warnings were raised."
+      },
+      "job_id": "20260915-115823-100-970a2d"
+    },
+    "output": {
+      "verification": {
+        "evidence": [
+          "read back element 328673 from the committed document: Sólido topográfico",
+          "bbox_m={'min': (0.0, -0.0, -1.0), 'max': (20.0, 20.0, 1.0)}",
+          "slab shape vertices (ft)=[(65.616798000000003, 0.0, 1.64042), (65.616798000000003, 65.616798000000003, 3.28084), (0.0, 65.616798000000003, 1.64042), (0.0, 0.0, 0.0)]"
+        ],
+        "checked": true,
+        "checks": [
+          {
+            "check": "category is OST_Toposolid / Solidos topograficos",
+            "ok": true
+          },
+          {
+            "check": "element resolves after commit",
+            "ok": true
+          },
+          {
+            "check": "type matches the authoring type",
+            "ok": true
+          },
+          {
+            "check": "level matches the authoring level",
+            "ok": true
+          },
+          {
+            "check": "bbox X spans the requested footprint",
+            "ok": true
+          },
+          {
+            "check": "bbox Y spans the requested footprint",
+            "ok": true
+          },
+          {
+            "check": "bbox Z covers the requested relief",
+            "ok": true
+          },
+          {
+            "check": "slab shape vertex count matches",
+            "ok": true
+          },
+          {
+            "check": "every requested point exists as a slab shape vertex within tolerance",
+            "ok": true
+          }
+        ],
+        "failures": []
+      },
+      "vertex_match": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          true
+        ],
+        [
+          20.0,
+          0.0,
+          0.5,
+          true
+        ],
+        [
+          20.0,
+          20.0,
+          1.0,
+          true
+        ],
+        [
+          0.0,
+          20.0,
+          0.5,
+          true
+        ]
+      ],
+      "doc_is_modifiable_after": false,
+      "document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_TOPO.rvt",
+      "document_title": "LAB_HORIZUN_TOPO",
+      "readback": {
+        "level_id": 311,
+        "shape_vertices_ft": [
+          [
+            65.616798,
+            0.0,
+            1.64042
+          ],
+          [
+            65.616798,
+            65.616798,
+            3.28084
+          ],
+          [
+            0.0,
+            65.616798,
+            1.64042
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "shape_error": null,
+        "is_valid_object": true,
+        "class": "Toposolid",
+        "bbox_ft": {
+          "min": [
+            0.0,
+            -0.0,
+            -3.28084
+          ],
+          "max": [
+            65.616798,
+            65.616798,
+            3.28084
+          ]
+        },
+        "bbox_error": null,
+        "type_id": 319144,
+        "element_id": 328673,
+        "category": "Sólido topográfico",
+        "shape_vertex_count": 4,
+        "bbox_m": {
+          "min": [
+            0.0,
+            -0.0,
+            -1.0
+          ],
+          "max": [
+            20.0,
+            20.0,
+            1.0
+          ]
+        },
+        "type_name": "Genérico – 1000 mm",
+        "shape_vertices_m": [
+          [
+            20.0,
+            0.0,
+            0.5
+          ],
+          [
+            20.0,
+            20.0,
+            1.0
+          ],
+          [
+            0.0,
+            20.0,
+            0.5
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "authoring_level": {
+        "id": 311,
+        "elevation_m": 0.0,
+        "name": "Nível 1"
+      },
+      "write": {
+        "committed": true,
+        "returned_id": 328673
+      },
+      "requested_points_m": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          20.0,
+          0.0,
+          0.5
+        ],
+        [
+          20.0,
+          20.0,
+          1.0
+        ],
+        [
+          0.0,
+          20.0,
+          0.5
+        ]
+      ],
+      "before_count": 0,
+      "authoring_type": {
+        "id": 319144,
+        "name": "Genérico – 1000 mm"
+      },
+      "tolerance_m": 0.01,
+      "created_ids": [
+        328673
+      ],
+      "after_ids": [
+        328673
+      ],
+      "verified_checks": [
+        {
+          "check": "category is OST_Toposolid / Solidos topograficos",
+          "ok": true
+        },
+        {
+          "check": "element resolves after commit",
+          "ok": true
+        },
+        {
+          "check": "type matches the authoring type",
+          "ok": true
+        },
+        {
+          "check": "level matches the authoring level",
+          "ok": true
+        },
+        {
+          "check": "bbox X spans the requested footprint",
+          "ok": true
+        },
+        {
+          "check": "bbox Y spans the requested footprint",
+          "ok": true
+        },
+        {
+          "check": "bbox Z covers the requested relief",
+          "ok": true
+        },
+        {
+          "check": "slab shape vertex count matches",
+          "ok": true
+        },
+        {
+          "check": "every requested point exists as a slab shape vertex within tolerance",
+          "ok": true
+        }
+      ],
+      "after_count": 1,
+      "status": "verified",
+      "summary": "Toposolid id 328673 created through Toposolid.Create inside a committed transaction and re-read from the document; footprint and relief match all four requested synthetic points within 0.01 m."
+    }
+  },
+  "independent_reads": {
+    "by_id": {
+      "tool": "horizun_query_model",
+      "arguments": {
+        "categories": [
+          "OST_Toposolid"
+        ],
+        "element_ids": [
+          328673
+        ],
+        "cache_mode": "bypass",
+        "include_bounding_box": true,
+        "coordinate_units": "m",
+        "response_mode": "full"
+      },
+      "reply": {
+        "document": "LAB_HORIZUN_TOPO",
+        "scope": "model",
+        "view_id": null,
+        "include_links": true,
+        "matched_total": 1,
+        "returned": 1,
+        "offset": 0,
+        "truncated": false,
+        "next_cursor": null,
+        "result_set_fingerprint": "f19e5d8efdc2bb1a",
+        "coverage_complete": true,
+        "unreadable_total": 0,
+        "unreadable_shown": 0,
+        "unreadable_truncated": false,
+        "unreadable": [],
+        "federated_coverage": {
+          "coverage_complete": true,
+          "include_links": true,
+          "link_instances_total": 0,
+          "link_instances_loaded": 0,
+          "link_instances_unavailable": 0,
+          "sources": [
+            {
+              "source_kind": "host",
+              "source_model": "LAB_HORIZUN_TOPO",
+              "link_instance_id": null,
+              "visibility_coverage": {
+                "coverage_complete": true,
+                "is_workshared": false,
+                "worksets_total": null,
+                "worksets_open": null,
+                "worksets_closed": null,
+                "worksets_read_error": null,
+                "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+              }
+            }
+          ],
+          "unavailable_links": [],
+          "note": "Every considered source was loaded with all user worksets open."
+        },
+        "summary": {
+          "by_category": {
+            "Sólido topográfico": 1
+          },
+          "by_level": {
+            "Nível 1": 1
+          },
+          "by_source": {
+            "host:LAB_HORIZUN_TOPO": 1
+          }
+        },
+        "rows": [
+          {
+            "element_id": 328673,
+            "unique_id": "acc9a74d-20e8-4759-a946-2be18b798733-000503e1",
+            "category": "Sólido topográfico",
+            "name": "Genérico – 1000 mm",
+            "family": "Sólido topográfico",
+            "type": "Genérico – 1000 mm",
+            "type_id": 319144,
+            "level": "Nível 1",
+            "is_element_type": false,
+            "source_kind": "host",
+            "source_model": "LAB_HORIZUN_TOPO",
+            "link_instance_id": null,
+            "host_id": null,
+            "host_category": null,
+            "bounding_box": {
+              "min": [
+                0.0,
+                -2.1657342585967855e-15,
+                -1.0
+              ],
+              "max": [
+                19.999999999999996,
+                20.0,
+                0.9999999999999998
+              ]
+            }
+          }
+        ],
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 2,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 12
+        }
+      }
+    },
+    "by_category": {
+      "tool": "horizun_query_model",
+      "arguments": {
+        "categories": [
+          "OST_Toposolid"
+        ],
+        "cache_mode": "bypass",
+        "include_bounding_box": true,
+        "coordinate_units": "m",
+        "response_mode": "full"
+      },
+      "reply": {
+        "document": "LAB_HORIZUN_TOPO",
+        "scope": "model",
+        "view_id": null,
+        "include_links": true,
+        "matched_total": 1,
+        "returned": 1,
+        "offset": 0,
+        "truncated": false,
+        "next_cursor": null,
+        "result_set_fingerprint": "f19e5d8efdc2bb1a",
+        "coverage_complete": true,
+        "unreadable_total": 0,
+        "unreadable_shown": 0,
+        "unreadable_truncated": false,
+        "unreadable": [],
+        "federated_coverage": {
+          "coverage_complete": true,
+          "include_links": true,
+          "link_instances_total": 0,
+          "link_instances_loaded": 0,
+          "link_instances_unavailable": 0,
+          "sources": [
+            {
+              "source_kind": "host",
+              "source_model": "LAB_HORIZUN_TOPO",
+              "link_instance_id": null,
+              "visibility_coverage": {
+                "coverage_complete": true,
+                "is_workshared": false,
+                "worksets_total": null,
+                "worksets_open": null,
+                "worksets_closed": null,
+                "worksets_read_error": null,
+                "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+              }
+            }
+          ],
+          "unavailable_links": [],
+          "note": "Every considered source was loaded with all user worksets open."
+        },
+        "summary": {
+          "by_category": {
+            "Sólido topográfico": 1
+          },
+          "by_level": {
+            "Nível 1": 1
+          },
+          "by_source": {
+            "host:LAB_HORIZUN_TOPO": 1
+          }
+        },
+        "rows": [
+          {
+            "element_id": 328673,
+            "unique_id": "acc9a74d-20e8-4759-a946-2be18b798733-000503e1",
+            "category": "Sólido topográfico",
+            "name": "Genérico – 1000 mm",
+            "family": "Sólido topográfico",
+            "type": "Genérico – 1000 mm",
+            "type_id": 319144,
+            "level": "Nível 1",
+            "is_element_type": false,
+            "source_kind": "host",
+            "source_model": "LAB_HORIZUN_TOPO",
+            "link_instance_id": null,
+            "host_id": null,
+            "host_category": null,
+            "bounding_box": {
+              "min": [
+                0.0,
+                -2.1657342585967855e-15,
+                -1.0
+              ],
+              "max": [
+                19.999999999999996,
+                20.0,
+                0.9999999999999998
+              ]
+            }
+          }
+        ],
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 1,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 7
+        }
+      }
+    },
+    "list_elements": {
+      "tool": "horizun_list_elements",
+      "arguments": {
+        "category": "OST_Toposolid"
+      },
+      "reply": {
+        "category": "Sólido topográfico",
+        "include_links": true,
+        "total": 1,
+        "host_total": 1,
+        "linked_total": 0,
+        "loaded_link_instances": 0,
+        "unloaded_link_instances": 0,
+        "offset": 0,
+        "returned": 1,
+        "truncated": false,
+        "coverage_complete": true,
+        "federated_coverage": {
+          "coverage_complete": true,
+          "include_links": true,
+          "link_instances_total": 0,
+          "link_instances_loaded": 0,
+          "link_instances_unavailable": 0,
+          "sources": [
+            {
+              "source_kind": "host",
+              "source_model": "LAB_HORIZUN_TOPO",
+              "link_instance_id": null,
+              "visibility_coverage": {
+                "coverage_complete": true,
+                "is_workshared": false,
+                "worksets_total": null,
+                "worksets_open": null,
+                "worksets_closed": null,
+                "worksets_read_error": null,
+                "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+              }
+            }
+          ],
+          "unavailable_links": [],
+          "note": "Every considered source was loaded with all user worksets open."
+        },
+        "unavailable": [],
+        "rows": [
+          {
+            "element_id": 328673,
+            "unique_id": "acc9a74d-20e8-4759-a946-2be18b798733-000503e1",
+            "name": "Genérico – 1000 mm",
+            "family": "Sólido topográfico",
+            "type": "Genérico – 1000 mm",
+            "level": "Nível 1",
+            "source_kind": "host",
+            "source_model": "LAB_HORIZUN_TOPO",
+            "link_instance_id": null,
+            "read_error": null
+          }
+        ],
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 1,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 8
+        }
+      }
+    }
+  },
+  "persistence": {
+    "sha256_before_save": "15e0f70df13a9ad0635a7651b3fedff59e76dcfe582c25a7ea759a4b0698299d",
+    "sha256_after_reopen": "5a66bfa4c79036232503ada4842b60c53f45ad4b3aa23b0141013e843b2021a6",
+    "bytes_before_save": 4366336,
+    "bytes_after_reopen": 4370432,
+    "save": {
+      "operation": "save",
+      "saved": true,
+      "saved_evidence": "A pre-existing file at this path, plus File.Exists + a size + a parseable BasicFileInfo + an mtime that MOVED, all re-read from the filesystem after the write. Not 'the call did not throw'. The mtime is a gate, not a note: an unmoved one on a pre-existing file is refused above, because every other check here passes for a file that was already sitting at this path.",
+      "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_TOPO.rvt",
+      "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_TOPO.rvt",
+      "title": "LAB_HORIZUN_TOPO",
+      "bytes_before": 4366336,
+      "bytes_after": 4370432,
+      "bytes_delta": 4096,
+      "mb_before": 4.16,
+      "mb_after": 4.17,
+      "modified_utc_before": "2026-09-15T13:52:28.5592752Z",
+      "modified_utc_after": "2026-09-15T14:59:08.7749686Z",
+      "mtime_changed": true,
+      "mtime_note": null,
+      "compact_requested": false,
+      "compact_flag_passed_to_api": false,
+      "compact_note": null,
+      "audit_ran": null,
+      "audit_note": "Audit is an OpenOptions flag in the Revit API; SaveOptions/SaveAsOptions have no Audit. This value describes the OPEN of THIS document object, and only if this tool performed it — null means 'unknown' (opened in the UI, or by someone else), which is not 'no'. There is no way to re-read the flag, so an unknown here stays unknown forever; nothing infers it from the path. To deliver an audited+compacted file, open with audit=true and save with compact=true.",
+      "is_workshared": false,
+      "synced_to_central": false,
+      "sync_note": null,
+      "file_on_disk_before": {
+        "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_TOPO.rvt",
+        "exists": true,
+        "bytes": 4366336,
+        "mb": 4.16,
+        "modified_utc": "2026-09-15T13:52:28.5592752Z",
+        "format": "2027",
+        "saved_in_version": "(not available in this Revit API version)",
+        "is_workshared": false,
+        "is_central": false,
+        "is_local": false,
+        "central_path": "",
+        "revit_version": "2027"
+      },
+      "version_on_disk_before": "2027",
+      "file_on_disk_after": {
+        "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_TOPO.rvt",
+        "exists": true,
+        "bytes": 4370432,
+        "mb": 4.17,
+        "modified_utc": "2026-09-15T14:59:08.7749686Z",
+        "format": "2027",
+        "saved_in_version": "(not available in this Revit API version)",
+        "is_workshared": false,
+        "is_central": false,
+        "is_local": false,
+        "central_path": "",
+        "revit_version": "2027"
+      },
+      "version_on_disk_after": "2027",
+      "host_version": "2027",
+      "upgrade_occurred": false,
+      "upgrade_note": "The file at this path was Revit 2027 before the write and reads back as Revit 2027: this save did not change its format.",
+      "version_note": "The saved file reads back as Revit 2027, matching this host — expected, since a save always writes the host's format. That is why it says NOTHING about whether an upgrade happened: see upgrade_occurred, which compares the file's version before the write against its version now.",
+      "idempotency": {
+        "key": "amanda-t12-save-001",
+        "status": "executed_once",
+        "command_executed_in_this_call": true,
+        "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+      },
+      "bridge_queue": {
+        "queued": false,
+        "ahead_at_admission": 0,
+        "waited_ms": 1,
+        "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+        "capacity": 16,
+        "execution_and_wait_ms": 701
+      }
+    },
+    "close": {
+      "operation": "close",
+      "closed": true,
+      "closed_evidence": "This exact Document object is no longer in Application.Documents — compared by object identity, not by path, because a null or empty PathName would have matched nothing and the check would have passed without comparing anything, and doc.IsValidObject is now false. Not just 'Close() returned true'.",
+      "api_returned": true,
+      "title": "LAB_HORIZUN_TOPO",
+      "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_TOPO.rvt",
+      "saved_on_close": true,
+      "activation": {
+        "activated_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_FLOOR.rvt",
+        "how": "activated_open_document",
+        "note": "This already-open document was activated so the target could stop being active. Nothing about it was modified.",
+        "activated_title": "LAB_HORIZUN_FLOOR"
+      },
+      "was_modified": false,
+      "discarded_unsaved_changes": false,
+      "discard_note": null,
+      "file_exists_after": true,
+      "file_exists_after_unknown_reason": null,
+      "bytes_before": 4370432,
+      "bytes_after": 4370432,
+      "modified_utc_after": "2026-09-15T14:59:10.6047115Z",
+      "disk_changed": true,
+      "disk_note": null,
+      "is_workshared": false,
+      "synced_to_central": false,
+      "sync_note": null,
+      "file_on_disk_after": {
+        "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_TOPO.rvt",
+        "exists": true,
+        "bytes": 4370432,
+        "mb": 4.17,
+        "modified_utc": "2026-09-15T14:59:10.6047115Z",
+        "format": "2027",
+        "saved_in_version": "(not available in this Revit API version)",
+        "is_workshared": false,
+        "is_central": false,
+        "is_local": false,
+        "central_path": "",
+        "revit_version": "2027"
+      },
+      "idempotency": {
+        "key": "amanda-t12-close-001",
+        "status": "executed_once",
+        "command_executed_in_this_call": true,
+        "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+      },
+      "bridge_queue": {
+        "queued": false,
+        "ahead_at_admission": 0,
+        "waited_ms": 2,
+        "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+        "capacity": 16,
+        "execution_and_wait_ms": 1811
+      }
+    },
+    "reopen": {
+      "operation": "open",
+      "status": "opened",
+      "opened_now": true,
+      "active_document_verified": true,
+      "title": "LAB_HORIZUN_TOPO",
+      "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_TOPO.rvt",
+      "path_is_the_one_requested": true,
+      "identified_by": "path",
+      "path_note": null,
+      "opened_from": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_TOPO.rvt",
+      "is_workshared": false,
+      "detached": false,
+      "audit_ran": false,
+      "audit_note": "Not audited. Audit is an OPEN option in the Revit API; you cannot add it later by saving.",
+      "expected_version": "2027",
+      "host_version": "2027",
+      "file_version_before_open": "2027",
+      "file_on_disk_now": {
+        "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_TOPO.rvt",
+        "exists": true,
+        "bytes": 4370432,
+        "mb": 4.17,
+        "modified_utc": "2026-09-15T14:59:10.6047115Z",
+        "format": "2027",
+        "saved_in_version": "(not available in this Revit API version)",
+        "is_workshared": false,
+        "is_central": false,
+        "is_local": false,
+        "central_path": "",
+        "revit_version": "2027"
+      },
+      "upgraded": false,
+      "upgrade_note": null,
+      "version_guard": "checked",
+      "was_central": false,
+      "central_guard": "not_a_central",
+      "central_path": null,
+      "all_worksets_opened": false,
+      "closed_worksets_requested": [],
+      "workset_configuration_applied": false,
+      "workset_configuration_satisfied": false,
+      "workset_configuration_evidence": {
+        "requested": false,
+        "applied": false,
+        "measurement_error": null,
+        "worksets_total": 0,
+        "worksets_open": 0,
+        "worksets_closed": 0,
+        "open_workset_names": [],
+        "closed_workset_names": []
+      },
+      "idempotency": {
+        "key": "amanda-t12-reopen-001",
+        "status": "executed_once",
+        "command_executed_in_this_call": true,
+        "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+      },
+      "bridge_queue": {
+        "queued": false,
+        "ahead_at_admission": 0,
+        "waited_ms": 743,
+        "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+        "capacity": 16,
+        "execution_and_wait_ms": 2730
+      }
+    },
+    "query_after_reopen": {
+      "document": "LAB_HORIZUN_TOPO",
+      "scope": "model",
+      "view_id": null,
+      "include_links": true,
+      "matched_total": 1,
+      "returned": 1,
+      "offset": 0,
+      "truncated": false,
+      "next_cursor": null,
+      "result_set_fingerprint": "f19e5d8efdc2bb1a",
+      "coverage_complete": true,
+      "unreadable_total": 0,
+      "unreadable_shown": 0,
+      "unreadable_truncated": false,
+      "unreadable": [],
+      "federated_coverage": {
+        "coverage_complete": true,
+        "include_links": true,
+        "link_instances_total": 0,
+        "link_instances_loaded": 0,
+        "link_instances_unavailable": 0,
+        "sources": [
+          {
+            "source_kind": "host",
+            "source_model": "LAB_HORIZUN_TOPO",
+            "link_instance_id": null,
+            "visibility_coverage": {
+              "coverage_complete": true,
+              "is_workshared": false,
+              "worksets_total": null,
+              "worksets_open": null,
+              "worksets_closed": null,
+              "worksets_read_error": null,
+              "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+            }
+          }
+        ],
+        "unavailable_links": [],
+        "note": "Every considered source was loaded with all user worksets open."
+      },
+      "summary": {
+        "by_category": {
+          "Sólido topográfico": 1
+        },
+        "by_level": {
+          "Nível 1": 1
+        },
+        "by_source": {
+          "host:LAB_HORIZUN_TOPO": 1
+        }
+      },
+      "rows": [
+        {
+          "element_id": 328673,
+          "unique_id": "acc9a74d-20e8-4759-a946-2be18b798733-000503e1",
+          "category": "Sólido topográfico",
+          "name": "Genérico – 1000 mm",
+          "family": "Sólido topográfico",
+          "type": "Genérico – 1000 mm",
+          "type_id": 319144,
+          "level": "Nível 1",
+          "is_element_type": false,
+          "source_kind": "host",
+          "source_model": "LAB_HORIZUN_TOPO",
+          "link_instance_id": null,
+          "host_id": null,
+          "host_category": null,
+          "bounding_box": {
+            "min": [
+              0.0,
+              -2.1657342585967855e-15,
+              -1.0
+            ],
+            "max": [
+              19.999999999999996,
+              20.0,
+              0.9999999999999998
+            ]
+          }
+        }
+      ],
+      "bridge_queue": {
+        "queued": false,
+        "ahead_at_admission": 0,
+        "waited_ms": 736,
+        "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+        "capacity": 16,
+        "execution_and_wait_ms": 742
+      }
+    }
+  }
+}

@@ -166,7 +166,15 @@ CAPABILITIES = [
             "and horizun_embed_floors_in_toposolid, or request arbitrary Python with "
             "horizun_request_python_access and call the Revit API toposolid builder through "
             "horizun_execute_python. Both paths are recorded in "
-            "tool-lab/horizun/tool-discovery.md; neither is proven on this machine yet."
+            "tool-lab/horizun/tool-discovery.md. The Python route is now PROVEN on this "
+            "machine (P02-T12, 2026-09-15): Toposolid.Create built a synthetic 20x20 m "
+            "surface in a committed transaction, typed queries re-read it, and it "
+            "survived save/close/reopen. The hand-placed route stays unexercised."
+        ),
+        "proven_alternative": (
+            "horizun_execute_python"
+            " (Revit API Toposolid.Create; see "
+            "tool-lab/horizun/results/t12-toposolid.json)"
         ),
     },
     {
@@ -207,6 +215,14 @@ CAPABILITIES = [
         "alternatives": ["horizun_request_python_access"],
         "availability": "PARTIAL",
         "note": "disabled by default: request_python_access opens a consent dialog the machine owner must approve; preflight validates code without running it",
+        "proven_utc": "2026-09-15",
+        "proven": (
+            "granted on this machine and exercised for real: horizun_execute_python ran "
+            "transactions against revit/lab/horizun/LAB_HORIZUN_TOPO.rvt and its writes "
+            "were re-read by typed queries and survived save/close/reopen (P02-T12, "
+            "tool-lab/horizun/results/t12-toposolid.json). PARTIAL still means arbitrary "
+            "Python is a policy-gated surface, not that it is unavailable."
+        ),
     },
 ]
 
@@ -263,6 +279,8 @@ def build() -> dict:
         if entry["availability"] == "NOT_AVAILABLE":
             entry["justification"] = declared["justification"]
             entry["verified_alternative"] = declared["verified_alternative"]
+            if declared.get("proven_alternative"):
+                entry["proven_alternative"] = declared["proven_alternative"]
             entry["contract_scan"] = {
                 "tools_mentioning_toposolid": [
                     "horizun_embed_floors_in_toposolid",
@@ -342,6 +360,9 @@ def build() -> dict:
                 flags[name] = _flags(contract_tool)
         entry["effect_flags"] = flags
         entry["note"] = declared["note"]
+        if declared.get("proven"):
+            entry["proven_utc"] = declared["proven_utc"]
+            entry["proven"] = declared["proven"]
         capabilities[semantic] = entry
 
     contract_only = sorted(set(contract_by_name) - catalog_names)
