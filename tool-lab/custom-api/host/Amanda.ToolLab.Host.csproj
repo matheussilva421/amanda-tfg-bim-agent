@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Amanda.ToolLab.Host</RootNamespace>
+    <AssemblyName>Amanda.ToolLab.Host</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Deterministic>true</Deterministic>
+    <RevitInstallPath Condition="'$(RevitInstallPath)' == ''">C:\Program Files\Autodesk\Revit 2027</RevitInstallPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CreateLabWall.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="RevitAPI">
+      <HintPath>$(RevitInstallPath)\RevitAPI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>$(RevitInstallPath)\RevitAPIUI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="ValidateRevit2027References" BeforeTargets="ResolveReferences">
+    <Error Condition="!Exists('$(RevitInstallPath)\RevitAPI.dll')"
+           Text="Revit 2027 RevitAPI.dll was not found at $(RevitInstallPath)\RevitAPI.dll." />
+    <Error Condition="!Exists('$(RevitInstallPath)\RevitAPIUI.dll')"
+           Text="Revit 2027 RevitAPIUI.dll was not found at $(RevitInstallPath)\RevitAPIUI.dll." />
+  </Target>
+</Project>

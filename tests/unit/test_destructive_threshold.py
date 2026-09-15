@@ -108,3 +108,94 @@ def test_default_threshold_config_is_versioned():
 
     assert config.schema_version == 1
     assert config.managed_ratio == 0.10
+
+
+def test_cascade_dependents_are_counted_in_auditable_impact_breakdown():
+    from amanda_agent.bim.diff import (
+        DiffAction,
+        DiffOperation,
+        assess_destructive_threshold,
+    )
+
+    operation = DiffOperation(
+        logical_id="WALL-001",
+        action=DiffAction.DELETE,
+        cascade_dependents=["door-001", "room-001"],
+    )
+
+    assessment = assess_destructive_threshold(
+        [operation], managed_count=100, pre_operation_checkpoint=True
+    )
+
+    assert assessment.destructive_count == 3
+    assert assessment.direct_destructive_count == 1
+    assert assessment.cascade_count == 2
+    assert assessment.impact_breakdown == [
+        {
+            "logical_id": "WALL-001",
+            "action": "DELETE",
+            "direct_count": 1,
+            "cascade_count": 2,
+            "impact_count": 3,
+        }
+    ]
+    assert "3/100" in assessment.calculation
+
+
+def test_explicit_override_without_audit_reference_remains_blocked():
+    from amanda_agent.bim.diff import assess_destructive_threshold
+
+    assessment = assess_destructive_threshold(
+        _destructive_operations(11),
+        managed_count=100,
+        pre_operation_checkpoint=True,
+        reviewed_plan=True,
+        override=True,
+    )
+
+    assert assessment.blocked is True
+    assert assessment.override_applied is False
+    assert "audit" in assessment.reason.lower()
+
+
+def test_explicit_override_records_audit_evidence():
+    from amanda_agent.bim.diff import assess_destructive_threshold
+
+    assessment = assess_destructive_threshold(
+        _destructive_operations(11),
+        managed_count=100,
+        pre_operation_checkpoint=True,
+        reviewed_plan=True,
+        override=True,
+        audit_reference="review:P05-T06:2026-09-15",
+    )
+
+    assert assessment.allowed is True
+    assert assessment.blocked is False
+    assert assessment.override_applied is True
+    assert assessment.audit_reference == "review:P05-T06:2026-09-15"
+    assert "review:P05-T06:2026-09-15" in assessment.evidence
+
+
+def test_type_change_and_unmanaged_host_cascade_are_destructive():
+    from amanda_agent.bim.diff import (
+        DiffAction,
+        DiffOperation,
+        assess_destructive_threshold,
+    )
+
+    assessment = assess_destructive_threshold(
+        [
+            DiffOperation(
+                logical_id="WALL-001",
+                action=DiffAction.UPDATE,
+                type_changed=True,
+                unmanaged_dependents=["door-001"],
+            )
+        ],
+        managed_count=100,
+        pre_operation_checkpoint=True,
+    )
+
+    assert assessment.destructive_count == 2
+    assert assessment.allowed is True

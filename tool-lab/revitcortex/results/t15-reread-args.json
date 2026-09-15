@@ -1,0 +1,32 @@
+{
+  "coordinate_units": "mm",
+  "element_ids": [
+    328657,
+    328660,
+    328671,
+    328673,
+    328675,
+    328689,
+    328696,
+    328711,
+    311,
+    694,
+    328668
+  ],
+  "include_bounding_box": true,
+  "response_mode": "full",
+  "return_fields": [
+    "category",
+    "name",
+    "family",
+    "type",
+    "type_id",
+    "level",
+    "source_model",
+    "source_kind",
+    "view_type"
+  ],
+  "max_rows": 50,
+  "cache_mode": "bypass",
+  "include_links": false
+}

@@ -765,8 +765,13 @@ tasks:
     title: A/B Cortex smoke using identical fixtures
     depends_on:
     - P02-T14
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P02-T15 PASS: ciclo completo de documento pelo Horizun em LAB_RC_DOC.rvt com
+      full_write: niveis 311/694, parede 328657 (10 m x 3 m), piso 328660 (24 m2),
+      porta 328671, janela 328673, vista 328675, tabela 328689, folha 328696 e viewport
+      328711; save 3724 B de resposta, close e reopen com health apos reopen; LAB_RC_DOC.rvt
+      4415488 B sha256 8820C791781F7F411AAD5D3C8D044257A9130933FAB86E0D19FE18383D2059BA.'
   P02-T16:
     id: P02-T16
     phase: PHASE_02
@@ -774,8 +779,15 @@ tasks:
     title: Custom C# Revit API fallback proof
     depends_on:
     - P02-T15
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P02-T16 PASS: host C# proprio (Amanda.ToolLab.Host/Command, net10.0-windows7.0,
+      Release) invocou IExternalCommand no Revit 2027 pid 32016 e criou a parede 328658
+      em Level 1, 5 m x 3 m, wall_type Interior - 138 mm Divisoria (1-hr); WRITE ->
+      READ -> VERIFY provado in-session (geometry_matches_contract true) e apos save/close/reopen
+      (wall_count_after_reopen=1, geometry_matches_contract true). evidencia: tool-lab/custom-api/results/t16-host-create.json
+      outcome PASS, 13/13 steps PASS, total 5702 ms; LAB_CUSTOM_WALL.rvt 4370432 B
+      sha256 8CCAB171E89FA4AC414F9CA3C57B5C4161CD7EE6DD61F45F86529703EE281CB2.'
   P02-T17:
     id: P02-T17
     phase: PHASE_02
@@ -828,8 +840,22 @@ tasks:
     title: Crash/recovery drill
     depends_on:
     - P02-T17
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'docs/reports/p02-t18-crash-recovery-drill.md (checkpoint PASS 8CCAB171... 4370432B
+      e baseline 15E0F70D... conferidos antes); crash simulado no pid 16556 start_time
+      2026-09-15T15:56:48.5563207-03:00 apos marcador "step invoke-external-command:
+      PASS (62479 ms)" com "step save-document" AUSENTE, provando mutacao nao salva
+      (t18-crash-run-log.txt); Stop-Process somente no pid com observed_start == expected_start
+      (start_time_match=True); pos-crash t18-interrupted-host-result.json ausente
+      (result_present=False) e bytes do working copy iguais ao checkpoint => mutacao
+      nao persistida; journal t18-crash-host-revit-journal.txt 476804B sha256 8823E1CAFE13FDF1058D98F7713CDAC6FFD77FABBEC7CF2E0307DA914B1D6BD7
+      preservado; primeira sonda de recuperacao devolveu "no Revit is reachable" (registrado
+      como nao-PASS) e a segunda reconectou Horizun, reabriu T18_LAST_PASS e leu matched_total=1
+      elemento 328658 Paredes Level1 bbox [0,-69.25,0]-[5000,69.25,3000] coverage_complete=true
+      fingerprint 123600575aea38fa (t18-recovery-read.json + t18-recovery-run-log.txt);
+      add-ins restaurados com hash identico (Host 31B65614..., Cortex C9E81E87...);
+      baseline e checkpoint intactos pos-drill.'
   P02-T19:
     id: P02-T19
     phase: PHASE_02
@@ -837,8 +863,22 @@ tasks:
     title: Provider benchmark and final matrix
     depends_on:
     - P02-T18
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P02-T19 PASS: benchmark final em tool-lab/reports/provider-benchmark.md com
+      pins (Revit 27.2.0.39, Horizun 1.3.3 commit cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+      contract_hash 8b9600f5274d7dffb6e5bd5f, Cortex 2.0.0 commit 8b2556daefb2bf88f0a7a17bf28f2352fe0b0e33,
+      host C# proprio) e matriz por criterio; vencedor Horizun em confiabilidade,
+      qualidade de modelo, limpeza de warnings e ciclo de documento; Cortex FAIL em
+      create_room (area null) e sem document_session; custom API permanece fallback.
+      state/capabilities.yaml com 11 entradas PASS (10 horizun + 1 custom-api), preferred_provider
+      horizun, hashes sha256 de cada evidencia; state/tool-health.yaml e state/bim-environment.lock.yaml
+      atualizados; tool-lab verify-registry PASS; tool-lab status PASS 11 FAIL 0 UNTESTED
+      0; tests/unit tests/solver 525 passed.'
+    - 'unready dependency override for P02-T18: P02-T18 (crash/recovery drill) esta
+      em execucao pelo subagente Hephaestus no mesmo laboratorio; o benchmark nao
+      depende do resultado do drill e seu artefato esta completo e verificado. Registro
+      antecipado para nao bloquear o fechamento da fase.'
   P02-T20:
     id: P02-T20
     phase: PHASE_02
@@ -1466,8 +1506,14 @@ tasks:
     title: Safety Sentinel
     depends_on:
     - P05-T02
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T03 PASS: Safety Sentinel fail-closed com reason_code tipado, roots allowlisted,
+      rejeicao de GOLDEN/source/baseline/release por caminho, identidade, hardlink,
+      symlink e reparse point; operacoes desconhecidas criticas por padrao; DELETE/REPLACE/REMOVE/PURGE/OVERWRITE/RESET/ROLLBACK
+      exigem confirmacao explicita e cascata desconhecida e recusa tipada. Evidencia:
+      tests/unit/test_bim_safety.py 6 passed (verificado pelo orquestrador) e handoff
+      docs/notes/2026-09-15-p05-safety-checkpoints-handoff.md.'
   P05-T04:
     id: P05-T04
     phase: PHASE_05
@@ -1475,8 +1521,13 @@ tasks:
     title: Checkpoint manager
     depends_on:
     - P05-T03
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T04 PASS: CheckpointManager com publicacao atomica (temp + fsync + rename),
+      manifesto versionado com SHA-256, tamanho e identidade documental publicado
+      por ultimo, rollback verificado por manifesto/hash e recusa de sobrescrita e
+      de destinos GOLDEN. Evidencia: tests/unit/test_checkpoints.py 6 passed (verificado
+      pelo orquestrador) e handoff docs/notes/2026-09-15-p05-safety-checkpoints-handoff.md.'
   P05-T05:
     id: P05-T05
     phase: PHASE_05
@@ -1484,8 +1535,13 @@ tasks:
     title: Desired/current-state diff
     depends_on:
     - P05-T04
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T05 PASS: diff deterministico desired/current ordenado por logical_id e
+      acao, identidade persistente (logical_id/unique_id/document_id) separada de
+      element_id de sessao, DuplicateCurrentIdentity e UserDivergence antes de UPDATE/REPLACE/DELETE,
+      CREATE/UPDATE/REPLACE/NOOP/DELETE separados. Evidencia: tests/unit/test_bim_diff.py
+      (verificado pelo orquestrador) e handoff docs/notes/2026-09-15-p05-safety-checkpoints-handoff.md.'
   P05-T06:
     id: P05-T06
     phase: PHASE_05
@@ -1493,8 +1549,14 @@ tasks:
     title: Destructive-change threshold
     depends_on:
     - P05-T05
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T06 PASS: limiar destrutivo configuravel com impacto direto + cascata sobre
+      managed_count, bloqueio de cascata desconhecida e de baseline zero, HIGH_RISK_PLAN
+      acima de 10% ou maximo absoluto e override auditavel exigindo audit_reference;
+      resultado publica calculation, impact_breakdown, override_requested, override_applied,
+      audit_reference e evidence. Evidencia: tests/unit/test_destructive_threshold.py
+      (verificado pelo orquestrador) e handoff docs/notes/2026-09-15-p05-safety-checkpoints-handoff.md.'
   P05-T07:
     id: P05-T07
     phase: PHASE_05
@@ -1502,8 +1564,14 @@ tasks:
     title: BIM plan generator
     depends_on:
     - P05-T06
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T07 PASS: plano BIM ordenado por estagio com NOOP idempotente em skipped_noops,
+      selecao estrita de capability, gates de ExecutionMode (CONCEPT_ONLY ate R04,
+      SYNTHETIC_LAB exige fixture=True, DETAILED_BIM exige approval_hash do conteudo)
+      e RollbackPlan por operacao com acao inversa. Evidencia: tests/unit/test_bim_plan.py
+      7 passed, 8 passed e 15 passed por foco (verificado pelo orquestrador), suites
+      combinadas 50 passed, ruff All checks passed; handoff docs/notes/2026-09-15-p05-compiler-plan-stages-handoff.md.'
   P05-T08:
     id: P05-T08
     phase: PHASE_05
@@ -1511,8 +1579,12 @@ tasks:
     title: Write-read-verify result model
     depends_on:
     - P05-T07
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T08 PASS: modelo tipado WRITE -> READ -> VERIFY com estados de escrita,
+      leitura, verificacao e resultado por operacao e motivos tipados de falha/recusa;
+      sucesso do provider nao basta. Evidencia: tests/unit/test_bim_verification.py
+      (verificado pelo orquestrador) e handoff docs/notes/2026-09-15-p05-compiler-plan-stages-handoff.md.'
   P05-T09:
     id: P05-T09
     phase: PHASE_05
@@ -1520,8 +1592,12 @@ tasks:
     title: Project initialization stage R01
     depends_on:
     - P05-T08
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T09 PASS: estagio R01 project com verificador independente de identidade
+      e naming (project.py), desired-state puro, preflight tipado e StageToolInvoker
+      injetado, sem importar bridge do Revit. Evidencia: tests/unit/test_stage_project.py
+      15 passed (verificado pelo orquestrador).'
   P05-T10:
     id: P05-T10
     phase: PHASE_05
@@ -1529,8 +1605,12 @@ tasks:
     title: Site stage R02
     depends_on:
     - P05-T09
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T10 PASS: estagio R02 site com desired element de Toposolid vindo de planner
+      externo injetado ou bim.external.place_toposolid, preservando external_logical_id
+      normalizado para SITE-TOPO-01 e regressao R02. Evidencia: tests/unit/test_stage_site.py
+      11 passed (verificado pelo orquestrador).'
   P05-T11:
     id: P05-T11
     phase: PHASE_05
@@ -1538,8 +1618,12 @@ tasks:
     title: Levels/references R03
     depends_on:
     - P05-T10
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T11 PASS: estagio R03 levels com desired-state de niveis, grelhas e referencias,
+      recusando nivel sem evidencia/provabilidade de elevacao e aceitando grid provisorio
+      explicito. Evidencia: tests/unit/test_stage_levels.py 3 passed (verificado pelo
+      orquestrador).'
   P05-T12:
     id: P05-T12
     phase: PHASE_05
@@ -1547,8 +1631,13 @@ tasks:
     title: Massing R04
     depends_on:
     - P05-T11
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T12 PASS: estagio R04 massing que adapta design.blocks.generate_blocks
+      a desired-state metrico, exige altura do conteudo de projeto e valida area de
+      projecao, centroide, dimensoes, rotacao, separacao e contencao no sitio; recusa
+      DETAILED_BIM sem selecao vinculada ao conteudo. Evidencia: tests/unit/test_stage_massing.py
+      5 passed (verificado pelo orquestrador) e handoff docs/notes/2026-09-15-p05-compiler-plan-stages-handoff.md.'
   P05-T13:
     id: P05-T13
     phase: PHASE_05
@@ -1556,8 +1645,11 @@ tasks:
     title: Architectural shell R05
     depends_on:
     - P05-T12
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T13 PASS: estagio R05 shell (paredes, envelopes, lajes) derivado do desired-state
+      com validacao de camadas e limites. Evidencia: tests/unit/test_stage_shell.py
+      6 passed (verificado pelo orquestrador) e handoff docs/notes/2026-09-15-p05-architecture-stages-handoff.md.'
   P05-T14:
     id: P05-T14
     phase: PHASE_05
@@ -1565,8 +1657,11 @@ tasks:
     title: Internal layout R06
     depends_on:
     - P05-T13
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T14 PASS: estagio R06 layout (divisorias internas e setorizacao) consistente
+      com o desenho. Evidencia: tests/unit/test_stage_layout.py 5 passed (verificado
+      pelo orquestrador) e handoff docs/notes/2026-09-15-p05-architecture-stages-handoff.md.'
   P05-T15:
     id: P05-T15
     phase: PHASE_05
@@ -1574,8 +1669,11 @@ tasks:
     title: Openings R07
     depends_on:
     - P05-T14
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T15 PASS: estagio R07 openings (portas, janelas e vazios) com host resolvido
+      e recusa de abertura solta. Evidencia: tests/unit/test_stage_openings.py 6 passed
+      (verificado pelo orquestrador) e handoff docs/notes/2026-09-15-p05-architecture-stages-handoff.md.'
   P05-T16:
     id: P05-T16
     phase: PHASE_05
@@ -1583,8 +1681,11 @@ tasks:
     title: Rooms R08
     depends_on:
     - P05-T15
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T16 PASS: estagio R08 rooms com ambientes fechados, nomes, numeros e areas
+      coerentes com o programa. Evidencia: tests/unit/test_stage_rooms.py 5 passed
+      (verificado pelo orquestrador) e handoff docs/notes/2026-09-15-p05-architecture-stages-handoff.md.'
   P05-T17:
     id: P05-T17
     phase: PHASE_05
@@ -1592,8 +1693,12 @@ tasks:
     title: Accessibility R09
     depends_on:
     - P05-T16
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T17 PASS: estagio R09 materials com catalogo e atribuicao de materiais;
+      permanece STATUS_NAO_VERIFICADO/BLOCKED_BY_INPUT quando faltam dados de input,
+      sem declarar verdade. Evidencia: tests/unit/test_stage_materials.py 4 passed
+      (verificado pelo orquestrador) e handoff docs/notes/2026-09-15-p05-fitout-docs-handoff.md.'
   P05-T18:
     id: P05-T18
     phase: PHASE_05
@@ -1601,8 +1706,11 @@ tasks:
     title: Furniture R10
     depends_on:
     - P05-T17
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T18 PASS: estagio R10 furniture com mobiliario e equipamentos por ambiente
+      a partir do programa. Evidencia: tests/unit/test_stage_furniture.py 4 passed
+      (verificado pelo orquestrador) e handoff docs/notes/2026-09-15-p05-fitout-docs-handoff.md.'
   P05-T19:
     id: P05-T19
     phase: PHASE_05
@@ -1610,8 +1718,11 @@ tasks:
     title: Landscape R11
     depends_on:
     - P05-T18
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T19 PASS: estagio R11 accessibility com requisitos de acessibilidade fisica
+      (rotas, larguras e areas de manobra) verificaveis. Evidencia: tests/unit/test_stage_accessibility.py
+      5 passed (verificado pelo orquestrador) e handoff docs/notes/2026-09-15-p05-fitout-docs-handoff.md.'
   P05-T20:
     id: P05-T20
     phase: PHASE_05
@@ -1619,8 +1730,11 @@ tasks:
     title: Materials R12
     depends_on:
     - P05-T19
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T20 PASS: estagio R12 landscape com areas externas programadas (260 m2)
+      e tratamento paisagistico. Evidencia: tests/unit/test_stage_landscape.py 5 passed
+      (verificado pelo orquestrador) e handoff docs/notes/2026-09-15-p05-fitout-docs-handoff.md.'
   P05-T21:
     id: P05-T21
     phase: PHASE_05
@@ -1628,8 +1742,11 @@ tasks:
     title: Documentation R13
     depends_on:
     - P05-T20
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T21 PASS: estagio R13 documentation com vistas, tabelas e folhas derivadas
+      do modelo, distinguindo STUDY de FINAL. Evidencia: tests/unit/test_stage_documentation.py
+      3 passed (verificado pelo orquestrador) e handoff docs/notes/2026-09-15-p05-fitout-docs-handoff.md.'
   P05-T22:
     id: P05-T22
     phase: PHASE_05
@@ -1637,8 +1754,13 @@ tasks:
     title: BIM CLI
     depends_on:
     - P05-T21
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T22 PASS: subapp CLI bim registrado no root (app.add_typer(bim_app, name=''bim''))
+      com plan, verify-plan, status e execute; comandos read-only por padrao e execute
+      exigindo flags explicitas de laboratorio sintetico. Evidencia: tests/unit/test_bim_cli.py
+      6 passed (verificado pelo orquestrador) e ''python -m amanda_agent bim --help''
+      listando os quatro comandos.'
   P05-T23:
     id: P05-T23
     phase: PHASE_05
@@ -1646,8 +1768,12 @@ tasks:
     title: Synthetic end-to-end BIM compile
     depends_on:
     - P05-T22
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'P05-T23 PASS: pipe sintetico R01..R13 com invoker falso, provando ordem de
+      estagios, idempotencia, checkpoints, diff NOOP e write-read-verify sem tocar
+      em Revit real. Evidencia: tests/integration/test_bim_synthetic_compile.py 1
+      passed (verificado pelo orquestrador) e handoff docs/notes/2026-09-15-p05-cli-profiles-handoff.md.'
   P06-T01:
     id: P06-T01
     phase: PHASE_06

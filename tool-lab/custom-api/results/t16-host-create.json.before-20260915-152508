@@ -1,0 +1,47 @@
+{
+  "job": {
+    "mode": "create",
+    "work_rvt": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\custom-api\\LAB_CUSTOM_WALL.rvt",
+    "expect_element_id_value": 0
+  },
+  "document_title": "LAB_CUSTOM_WALL",
+  "is_family_document": false,
+  "fixture_level_preexisting_id": 328657,
+  "fixture_level_created": false,
+  "wall_count_before": 0,
+  "command_result": "Failed",
+  "command_message": "P02-T16 FAILED closed: Wall ElementId.Value=328659 has no bounding box to verify.",
+  "command_ms": 103,
+  "command_reported_element_id_value_parsed": 328659,
+  "outcome": "FAIL",
+  "failure": "System.InvalidOperationException: LabWallCore returned Failed: P02-T16 FAILED closed: Wall ElementId.Value=328659 has no bounding box to verify.\r\n   at Amanda.ToolLab.Host.LabHostRun.InvokeExternalCommand() in C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\custom-api\\host\\LabHostApp.cs:line 387\r\n   at Amanda.ToolLab.Host.LabHostRun.\u003C\u003Ec__DisplayClass11_0.\u003CRunCreate\u003Eb__3() in C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\custom-api\\host\\LabHostApp.cs:line 265\r\n   at Amanda.ToolLab.Host.LabHostRun.Step(String name, Action action) in C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\custom-api\\host\\LabHostApp.cs:line 503\r\n   at Amanda.ToolLab.Host.LabHostRun.RunCreate(JobSpec job) in C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\custom-api\\host\\LabHostApp.cs:line 265\r\n   at Amanda.ToolLab.Host.LabHostRun.RunJob(JobSpec job) in C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\custom-api\\host\\LabHostApp.cs:line 235\r\n   at Amanda.ToolLab.Host.LabHostRun.Execute() in C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\custom-api\\host\\LabHostApp.cs:line 179",
+  "total_ms": 234,
+  "steps": [
+    {
+      "name": "open-work-document",
+      "status": "PASS",
+      "duration_ms": 101,
+      "detail": null
+    },
+    {
+      "name": "prepare-fixture-level",
+      "status": "PASS",
+      "duration_ms": 9,
+      "detail": null
+    },
+    {
+      "name": "snapshot-walls-before",
+      "status": "PASS",
+      "duration_ms": 2,
+      "detail": null
+    },
+    {
+      "name": "invoke-external-command",
+      "status": "FAIL",
+      "duration_ms": 109,
+      "detail": "LabWallCore returned Failed: P02-T16 FAILED closed: Wall ElementId.Value=328659 has no bounding box to verify."
+    }
+  ],
+  "recorded_utc": "2026-09-15T17:58:01.5790468Z",
+  "host_assembly": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\custom-api\\host\\bin\\Release\\net10.0-windows7.0\\Amanda.ToolLab.Host.dll"
+}

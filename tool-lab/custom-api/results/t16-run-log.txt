@@ -1,0 +1,174 @@
+2026-09-15T15:34:52.6601653-03:00 baseline before sha256=15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D bytes=4366336
+2026-09-15T15:34:52.6705723-03:00 work fixture before sha256=8F7501F34959F495C3CB88B270925DCCA648AD2F6D2E550C77AB28A045038A62 bytes=4370432
+2026-09-15T15:34:52.6827934-03:00 previous artifact preserved=C:\Users\slvma\Downloads\Github\Projeto Amanda\tool-lab\custom-api\results\t16-host-create.json.before-20260915-153452
+2026-09-15T15:34:52.6880619-03:00 previous artifact preserved=C:\Users\slvma\Downloads\Github\Projeto Amanda\tool-lab\custom-api\results\host-status.log.before-20260915-153452
+2026-09-15T15:34:52.7198443-03:00 work fixture reset from baseline sha256=15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D bytes=4366336
+2026-09-15T15:34:52.7282557-03:00 held addin Amanda.ToolLab.Host.addin sha256=31B656141502BF1388A039F23B412FF236628870B701B0F657C78FD6FC7B64F6
+2026-09-15T15:34:52.7329981-03:00 held addin Horizun.addin sha256=BAEAE873B9735067BCEE515D78E98E9F78D66705D202B1BFF34120D391B93B91
+2026-09-15T15:34:52.7371137-03:00 held addin RevitCortex.addin sha256=C9E81E87D046E6D0A4F1BC71C7F2F56E775C32EDE78FFCDDA3CAF7F22A4AD94C
+2026-09-15T15:34:52.7492249-03:00 placed runtime addin Amanda.ToolLab.Host.addin sha256=31B656141502BF1388A039F23B412FF236628870B701B0F657C78FD6FC7B64F6
+2026-09-15T15:34:52.7499889-03:00 AMANDA_LAB_HOST_TOKEN and AMANDA_LAB_HOST_JOB set in runner process before Start-Process
+2026-09-15T15:34:52.8222480-03:00 started Revit pid=37224 start_time=2026-09-15T15:34:52.8062412-03:00 work_rvt=C:\Users\slvma\Downloads\Github\Projeto Amanda\revit\lab\custom-api\LAB_CUSTOM_WALL.rvt
+2026-09-15T15:34:52.8566248-03:00 job written path=C:\Users\slvma\Downloads\Github\Projeto Amanda\.tmp-t16-host-job.json expected_pid=37224 token_sha256=8368B0E18E7390F2BB711CC54F5ED89D4F0C96913E9F8AC71C215858FEB19EC1
+2026-09-15T15:35:47.9466946-03:00 result file appeared
+2026-09-15T15:35:47.9496141-03:00 result present=True process_exited=False
+2026-09-15T15:35:50.9718872-03:00 host outcome=PASS total_ms=5702
+2026-09-15T15:35:50.9752588-03:00 ownership proven before stop pid=37224 start_time=2026-09-15T15:34:52.8062412-03:00
+2026-09-15T15:35:50.9797801-03:00 owned Revit process stopped by runner after host result
+2026-09-15T15:35:53.1560820-03:00 host journal copied source=journal.0011.txt sha256=FD63E30BBE75EA68442E17EEFA4C8012BA41B226E4AF8FC1B97BDC8B9BB3A9BC bytes=542559
+2026-09-15T15:35:53.1589100-03:00 restored addin Amanda.ToolLab.Host.addin hash_match=True sha256=31B656141502BF1388A039F23B412FF236628870B701B0F657C78FD6FC7B64F6
+2026-09-15T15:35:53.1643629-03:00 restored addin Horizun.addin hash_match=True sha256=BAEAE873B9735067BCEE515D78E98E9F78D66705D202B1BFF34120D391B93B91
+2026-09-15T15:35:53.1700831-03:00 restored addin RevitCortex.addin hash_match=True sha256=C9E81E87D046E6D0A4F1BC71C7F2F56E775C32EDE78FFCDDA3CAF7F22A4AD94C
+2026-09-15T15:35:53.1723916-03:00 removed per-run host job
+2026-09-15T15:35:53.1787895-03:00 baseline after sha256=15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D bytes=4366336 intact=True
+2026-09-15T15:35:53.1858223-03:00 work fixture after sha256=8CCAB171E89FA4AC414F9CA3C57B5C4161CD7EE6DD61F45F86529703EE281CB2 bytes=4370432
+2026-09-15T15:35:53.1890466-03:00 AMANDA_LAB_HOST_TOKEN and AMANDA_LAB_HOST_JOB removed/restored in runner process
+2026-09-15T15:35:53.1894084-03:00 --- host status log ---
+2026-09-15T18:35:28.8907719Z OnStartup: entering
+2026-09-15T18:35:28.8924629Z OnStartup: external event raised
+2026-09-15T18:35:37.4969175Z handler: Execute entered
+2026-09-15T18:35:37.5888526Z step open-work-document: PASS (84 ms) 
+2026-09-15T18:35:37.6586974Z step prepare-fixture-level: PASS (69 ms) 
+2026-09-15T18:35:37.6614951Z step snapshot-walls-before: PASS (2 ms) 
+2026-09-15T18:35:37.6987390Z step invoke-external-command: PASS (36 ms) 
+2026-09-15T18:35:37.7013597Z step locate-new-wall: PASS (2 ms) 
+2026-09-15T18:35:37.7034297Z step verify-geometry-in-session: PASS (1 ms) 
+2026-09-15T18:35:38.0879390Z step save-document: PASS (384 ms) 
+2026-09-15T18:35:39.6490629Z step activate-standby-document: PASS (1560 ms) 
+2026-09-15T18:35:39.7721831Z step close-document: PASS (122 ms) 
+2026-09-15T18:35:41.6901136Z step reopen-document: PASS (1917 ms) 
+2026-09-15T18:35:41.6921249Z step verify-persistence-after-reopen: PASS (1 ms) 
+2026-09-15T18:35:43.1018252Z step activate-standby-document-final: PASS (1409 ms) 
+2026-09-15T18:35:43.1991610Z step close-document-final: PASS (96 ms) 
+2026-09-15T18:35:43.2067484Z result written to C:\Users\slvma\Downloads\Github\Projeto Amanda\tool-lab\custom-api\results\t16-host-create.json
+2026-09-15T15:35:53.1937349-03:00 --- result file ---
+{
+  "job": {
+    "mode": "create",
+    "work_rvt": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\custom-api\\LAB_CUSTOM_WALL.rvt",
+    "expect_element_id_value": 0
+  },
+  "document_title": "LAB_CUSTOM_WALL",
+  "is_family_document": false,
+  "fixture_level_created": true,
+  "fixture_level_created_id": 328657,
+  "wall_count_before": 0,
+  "command_result": "Succeeded",
+  "command_message": "P02-T16 command result: created wall ElementId.Value=328658 on \u0027Level 1\u0027 with length=5 m and height=3 m.",
+  "command_ms": 32,
+  "command_reported_element_id_value_parsed": 328658,
+  "wall_count_after": 1,
+  "command_reported_element_id_value": 328658,
+  "element_id_value": 328658,
+  "element_id_matches_command_report": true,
+  "verifications": [
+    {
+      "phase": "in_session",
+      "element_id_value": 328658,
+      "length_m": 5,
+      "height_m": 3,
+      "wall_type": "Interior - 138 mm Divis\u00F3ria (1-hr)",
+      "level": "Level 1",
+      "geometry_matches_contract": true
+    },
+    {
+      "phase": "after_reopen",
+      "element_id_value": 328658,
+      "length_m": 5,
+      "height_m": 3,
+      "wall_type": "Interior - 138 mm Divis\u00F3ria (1-hr)",
+      "level": "Level 1",
+      "geometry_matches_contract": true
+    }
+  ],
+  "save_ms": 384,
+  "standby_document_title": "LAB_R00_EMPTY",
+  "closed_document_title": "LAB_CUSTOM_WALL",
+  "reopened_document_title": "LAB_CUSTOM_WALL",
+  "wall_count_after_reopen": 1,
+  "close_document_final": "closed C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\custom-api\\LAB_CUSTOM_WALL.rvt",
+  "outcome": "PASS",
+  "total_ms": 5702,
+  "steps": [
+    {
+      "name": "open-work-document",
+      "status": "PASS",
+      "duration_ms": 84,
+      "detail": null
+    },
+    {
+      "name": "prepare-fixture-level",
+      "status": "PASS",
+      "duration_ms": 69,
+      "detail": null
+    },
+    {
+      "name": "snapshot-walls-before",
+      "status": "PASS",
+      "duration_ms": 2,
+      "detail": null
+    },
+    {
+      "name": "invoke-external-command",
+      "status": "PASS",
+      "duration_ms": 36,
+      "detail": null
+    },
+    {
+      "name": "locate-new-wall",
+      "status": "PASS",
+      "duration_ms": 2,
+      "detail": null
+    },
+    {
+      "name": "verify-geometry-in-session",
+      "status": "PASS",
+      "duration_ms": 1,
+      "detail": null
+    },
+    {
+      "name": "save-document",
+      "status": "PASS",
+      "duration_ms": 384,
+      "detail": null
+    },
+    {
+      "name": "activate-standby-document",
+      "status": "PASS",
+      "duration_ms": 1560,
+      "detail": null
+    },
+    {
+      "name": "close-document",
+      "status": "PASS",
+      "duration_ms": 122,
+      "detail": null
+    },
+    {
+      "name": "reopen-document",
+      "status": "PASS",
+      "duration_ms": 1917,
+      "detail": null
+    },
+    {
+      "name": "verify-persistence-after-reopen",
+      "status": "PASS",
+      "duration_ms": 1,
+      "detail": null
+    },
+    {
+      "name": "activate-standby-document-final",
+      "status": "PASS",
+      "duration_ms": 1409,
+      "detail": null
+    },
+    {
+      "name": "close-document-final",
+      "status": "PASS",
+      "duration_ms": 96,
+      "detail": null
+    }
+  ],
+  "recorded_utc": "2026-09-15T18:35:43.1995860Z",
+  "host_assembly": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\custom-api\\host\\bin\\Release\\net10.0-windows7.0\\Amanda.ToolLab.Host.dll"
+}

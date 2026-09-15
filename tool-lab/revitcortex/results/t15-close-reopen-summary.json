@@ -1,0 +1,516 @@
+{
+  "status": "PASS_CLOSE_REOPEN",
+  "document_path": "revit/lab/revitcortex/LAB_RC_DOC.rvt",
+  "document_title": "LAB_RC_DOC",
+  "process": {
+    "pid": 12744,
+    "start_time": "2026-09-15T15:43:06.1074563-03:00",
+    "start_time_proven": true
+  },
+  "close": {
+    "operation": "close",
+    "closed": true,
+    "closed_evidence": "This exact Document object is no longer in Application.Documents — compared by object identity, not by path, because a null or empty PathName would have matched nothing and the check would have passed without comparing anything, and doc.IsValidObject is now false. Not just 'Close() returned true'.",
+    "api_returned": true,
+    "title": "LAB_RC_DOC",
+    "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\revitcortex\\LAB_RC_DOC.rvt",
+    "saved_on_close": false,
+    "activation": {
+      "activated_path": "C:\\Users\\slvma\\.horizun\\anchor\\HZ_ANCHOR_2027.rvt",
+      "how": "opened_existing_anchor",
+      "note": "No other open document qualified, so the bridge opened its own empty anchor project. It is now the ACTIVE document and stays open - Revit cannot reach a zero-document state from the API. It is safe to close the same way, or to leave.",
+      "activated_title": "HZ_ANCHOR_2027"
+    },
+    "was_modified": false,
+    "discarded_unsaved_changes": false,
+    "discard_note": null,
+    "file_exists_after": true,
+    "file_exists_after_unknown_reason": null,
+    "bytes_before": 4415488,
+    "bytes_after": 4415488,
+    "modified_utc_after": "2026-09-15T17:48:55.168419Z",
+    "disk_changed": false,
+    "disk_note": null,
+    "is_workshared": false,
+    "synced_to_central": false,
+    "sync_note": null,
+    "file_on_disk_after": {
+      "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\revitcortex\\LAB_RC_DOC.rvt",
+      "exists": true,
+      "bytes": 4415488,
+      "mb": 4.21,
+      "modified_utc": "2026-09-15T17:48:55.168419Z",
+      "format": "2027",
+      "saved_in_version": "(not available in this Revit API version)",
+      "is_workshared": false,
+      "is_central": false,
+      "is_local": false,
+      "central_path": "",
+      "revit_version": "2027"
+    },
+    "idempotency": {
+      "key": "c63b219d-5f37-4195-89d1-cb014be8c65d",
+      "status": "executed_once",
+      "command_executed_in_this_call": true,
+      "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+    },
+    "bridge_queue": {
+      "queued": false,
+      "ahead_at_admission": 0,
+      "waited_ms": 2,
+      "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+      "capacity": 16,
+      "execution_and_wait_ms": 2402
+    }
+  },
+  "open": {
+    "operation": "open",
+    "status": "opened",
+    "opened_now": true,
+    "active_document_verified": true,
+    "title": "LAB_RC_DOC",
+    "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\revitcortex\\LAB_RC_DOC.rvt",
+    "path_is_the_one_requested": true,
+    "identified_by": "path",
+    "path_note": null,
+    "opened_from": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\revitcortex\\LAB_RC_DOC.rvt",
+    "is_workshared": false,
+    "detached": false,
+    "audit_ran": false,
+    "audit_note": "Not audited. Audit is an OPEN option in the Revit API; you cannot add it later by saving.",
+    "expected_version": "2027",
+    "host_version": "2027",
+    "file_version_before_open": "2027",
+    "file_on_disk_now": {
+      "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\revitcortex\\LAB_RC_DOC.rvt",
+      "exists": true,
+      "bytes": 4415488,
+      "mb": 4.21,
+      "modified_utc": "2026-09-15T17:48:55.168419Z",
+      "format": "2027",
+      "saved_in_version": "(not available in this Revit API version)",
+      "is_workshared": false,
+      "is_central": false,
+      "is_local": false,
+      "central_path": "",
+      "revit_version": "2027"
+    },
+    "upgraded": false,
+    "upgrade_note": null,
+    "version_guard": "checked",
+    "was_central": false,
+    "central_guard": "not_a_central",
+    "central_path": null,
+    "all_worksets_opened": false,
+    "closed_worksets_requested": [],
+    "workset_configuration_applied": false,
+    "workset_configuration_satisfied": false,
+    "workset_configuration_evidence": {
+      "requested": false,
+      "applied": false,
+      "measurement_error": null,
+      "worksets_total": 0,
+      "worksets_open": 0,
+      "worksets_closed": 0,
+      "open_workset_names": [],
+      "closed_workset_names": []
+    },
+    "idempotency": {
+      "key": "e80ee1a7-3a0c-4d3e-8ef2-f1c129338406",
+      "status": "executed_once",
+      "command_executed_in_this_call": true,
+      "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+    },
+    "bridge_queue": {
+      "queued": false,
+      "ahead_at_admission": 0,
+      "waited_ms": 2,
+      "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+      "capacity": 16,
+      "execution_and_wait_ms": 2990
+    }
+  },
+  "reread": {
+    "requested_element_ids": [
+      328657,
+      328660,
+      328671,
+      328673,
+      328675,
+      328689,
+      328696,
+      328711,
+      311,
+      694,
+      328668
+    ],
+    "matched_total": 11,
+    "returned": 11,
+    "coverage_complete": true,
+    "unreadable_total": 0,
+    "rows": [
+      {
+        "element_id": 311,
+        "category": "Níveis",
+        "name": "Nível 1",
+        "family": "Nível",
+        "type": "Cabeça de 8 mm",
+        "type_id": 305,
+        "level": null,
+        "view_type": null,
+        "source_kind": "host",
+        "source_model": "LAB_RC_DOC",
+        "bounding_box": null
+      },
+      {
+        "element_id": 694,
+        "category": "Níveis",
+        "name": "Nível 2",
+        "family": "Nível",
+        "type": "Cabeça de 8 mm",
+        "type_id": 305,
+        "level": null,
+        "view_type": null,
+        "source_kind": "host",
+        "source_model": "LAB_RC_DOC",
+        "bounding_box": null
+      },
+      {
+        "element_id": 328657,
+        "category": "Paredes",
+        "name": "Genérico - 200 mm",
+        "family": "Parede básica",
+        "type": "Genérico - 200 mm",
+        "type_id": 398,
+        "level": "Nível 1",
+        "view_type": null,
+        "source_kind": "host",
+        "source_model": "LAB_RC_DOC",
+        "bounding_box": {
+          "min": [
+            0.0,
+            -100.0,
+            0.0
+          ],
+          "max": [
+            10000.0,
+            100.0,
+            3000.0
+          ]
+        }
+      },
+      {
+        "element_id": 328660,
+        "category": "Pisos",
+        "name": "Genérico 150 mm",
+        "family": "Piso",
+        "type": "Genérico 150 mm",
+        "type_id": 339,
+        "level": "Nível 1",
+        "view_type": null,
+        "source_kind": "host",
+        "source_model": "LAB_RC_DOC",
+        "bounding_box": {
+          "min": [
+            0.0,
+            0.0,
+            -149.99999999999997
+          ],
+          "max": [
+            6000.0,
+            4000.0000000000005,
+            0.0
+          ]
+        }
+      },
+      {
+        "element_id": 328668,
+        "category": "Ambientes",
+        "name": "LAB_ROOM_TEST 1",
+        "family": null,
+        "type": null,
+        "type_id": null,
+        "level": null,
+        "view_type": null,
+        "source_kind": "host",
+        "source_model": "LAB_RC_DOC",
+        "bounding_box": null
+      },
+      {
+        "element_id": 328671,
+        "category": "Portas",
+        "name": "0915 x 2134mm",
+        "family": "M_Folha única",
+        "type": "0915 x 2134mm",
+        "type_id": 49480,
+        "level": "Nível 1",
+        "view_type": null,
+        "source_kind": "host",
+        "source_model": "LAB_RC_DOC",
+        "bounding_box": {
+          "min": [
+            2466.5,
+            -125.00000000000662,
+            -1.353583911622991E-13
+          ],
+          "max": [
+            3533.5,
+            1015.2716676170458,
+            2209.999999999999
+          ]
+        }
+      },
+      {
+        "element_id": 328673,
+        "category": "Janelas",
+        "name": "0406 x 0610mm",
+        "family": "M_Fixo",
+        "type": "0406 x 0610mm",
+        "type_id": 33067,
+        "level": "Nível 1",
+        "view_type": null,
+        "source_kind": "host",
+        "source_model": "LAB_RC_DOC",
+        "bounding_box": {
+          "min": [
+            6796.999999999983,
+            -100.00000000000199,
+            1200.0
+          ],
+          "max": [
+            7202.999999999994,
+            458.1526659915052,
+            1810.0000000000082
+          ]
+        }
+      },
+      {
+        "element_id": 328675,
+        "category": "Vistas",
+        "name": "LAB RC Planta",
+        "family": "Planta de piso",
+        "type": "Planta de piso",
+        "type_id": 49552,
+        "level": null,
+        "view_type": "FloorPlan",
+        "source_kind": "host",
+        "source_model": "LAB_RC_DOC",
+        "bounding_box": {
+          "min": [
+            -30480.0,
+            -30480.0,
+            -304800.0
+          ],
+          "max": [
+            30480.0,
+            30480.0,
+            -30.480000000000004
+          ]
+        }
+      },
+      {
+        "element_id": 328689,
+        "category": "Tabelas",
+        "name": "LAB RC Paredes",
+        "family": "Tabela",
+        "type": "Tabela",
+        "type_id": 49560,
+        "level": null,
+        "view_type": "Schedule",
+        "source_kind": "host",
+        "source_model": "LAB_RC_DOC",
+        "bounding_box": {
+          "min": [
+            -30480.0,
+            -30480.0,
+            -304800.0
+          ],
+          "max": [
+            30480.0,
+            30480.0,
+            -30.480000000000004
+          ]
+        }
+      },
+      {
+        "element_id": 328696,
+        "category": "Folhas",
+        "name": "LAB Prancha 01",
+        "family": "Folha",
+        "type": "Folha",
+        "type_id": 49561,
+        "level": null,
+        "view_type": "DrawingSheet",
+        "source_kind": "host",
+        "source_model": "LAB_RC_DOC",
+        "bounding_box": {
+          "min": [
+            -30480.0,
+            -30480.0,
+            -304800.0
+          ],
+          "max": [
+            30480.0,
+            30480.0,
+            -30.480000000000004
+          ]
+        }
+      },
+      {
+        "element_id": 328711,
+        "category": "Viewports",
+        "name": "Título com linha",
+        "family": "Viewport",
+        "type": "Título com linha",
+        "type_id": 324,
+        "level": null,
+        "view_type": null,
+        "source_kind": "host",
+        "source_model": "LAB_RC_DOC",
+        "bounding_box": null
+      }
+    ]
+  },
+  "health_after_reopen": {
+    "status": "healthy",
+    "revit_version": "2027",
+    "revit_build": "27.2.0.39",
+    "process_id": 12744,
+    "permission_profile": "full_write",
+    "active_document": {
+      "title": "LAB_RC_DOC",
+      "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\revitcortex\\LAB_RC_DOC.rvt",
+      "is_family_document": false,
+      "is_workshared": false,
+      "has_been_saved_to_disk": true
+    },
+    "open_document_count": 2
+  },
+  "hashes": {
+    "document_sha256": "8820C791781F7F411AAD5D3C8D044257A9130933FAB86E0D19FE18383D2059BA",
+    "document_bytes": 4415488,
+    "expected_saved_sha256": "8820C791781F7F411AAD5D3C8D044257A9130933FAB86E0D19FE18383D2059BA",
+    "immutable_baseline_sha256": "15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D"
+  },
+  "addin_hashes": {
+    "Amanda.ToolLab.Host.addin": "31B656141502BF1388A039F23B412FF236628870B701B0F657C78FD6FC7B64F6",
+    "Horizun.addin": "BAEAE873B9735067BCEE515D78E98E9F78D66705D202B1BFF34120D391B93B91",
+    "RevitCortex.addin": "C9E81E87D046E6D0A4F1BC71C7F2F56E775C32EDE78FFCDDA3CAF7F22A4AD94C"
+  },
+  "baseline_scan": [
+    {
+      "path": "revit/lab/baseline/LAB_R00_EMPTY.rvt",
+      "bytes": 4366336,
+      "sha256": "15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D",
+      "matches_immutable_baseline": true
+    },
+    {
+      "path": "revit/lab/custom-api/LAB_CUSTOM_WALL.0004.rvt",
+      "bytes": 4366336,
+      "sha256": "15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D",
+      "matches_immutable_baseline": true
+    },
+    {
+      "path": "revit/lab/custom-api/LAB_CUSTOM_WALL.rvt",
+      "bytes": 4370432,
+      "sha256": "8CCAB171E89FA4AC414F9CA3C57B5C4161CD7EE6DD61F45F86529703EE281CB2",
+      "matches_immutable_baseline": false
+    },
+    {
+      "path": "revit/lab/horizun/LAB_HORIZUN_DOC.0001.rvt",
+      "bytes": 4366336,
+      "sha256": "15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D",
+      "matches_immutable_baseline": true
+    },
+    {
+      "path": "revit/lab/horizun/LAB_HORIZUN_DOC.rvt",
+      "bytes": 4427776,
+      "sha256": "6A1544D3075F86219CEC609010C2446608916F2BE7B917386836E93B051D829C",
+      "matches_immutable_baseline": false
+    },
+    {
+      "path": "revit/lab/horizun/LAB_HORIZUN_FLOOR.0002.rvt",
+      "bytes": 4366336,
+      "sha256": "962A1E6B5CBB1B7716EB9BF2F3A9D87F36E2E1507A5A1015216BE42ECAFD5B68",
+      "matches_immutable_baseline": false
+    },
+    {
+      "path": "revit/lab/horizun/LAB_HORIZUN_FLOOR.rvt",
+      "bytes": 4370432,
+      "sha256": "B7EF11F9DD866594AAEFCAB376846373071173BE5D73798EABA9056A084FE28B",
+      "matches_immutable_baseline": false
+    },
+    {
+      "path": "revit/lab/horizun/LAB_HORIZUN_LEVEL.0001.rvt",
+      "bytes": 4366336,
+      "sha256": "15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D",
+      "matches_immutable_baseline": true
+    },
+    {
+      "path": "revit/lab/horizun/LAB_HORIZUN_LEVEL.rvt",
+      "bytes": 4370432,
+      "sha256": "8B15D7360672D4CDAFDF5742F031F6B11A17DBD4D9EBA6D4FCDE725586FB3025",
+      "matches_immutable_baseline": false
+    },
+    {
+      "path": "revit/lab/horizun/LAB_HORIZUN_READ.rvt",
+      "bytes": 4366336,
+      "sha256": "15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D",
+      "matches_immutable_baseline": true
+    },
+    {
+      "path": "revit/lab/horizun/LAB_HORIZUN_ROOM.0002.rvt",
+      "bytes": 4374528,
+      "sha256": "329ED4148B40C8B104EDF35392489435350D5C3D9D26E7FBF1AA1403E72B4CEB",
+      "matches_immutable_baseline": false
+    },
+    {
+      "path": "revit/lab/horizun/LAB_HORIZUN_ROOM.rvt",
+      "bytes": 4378624,
+      "sha256": "9BF42C556BD6A57E52AA3F1184C6F5500B776949FD0DA34F9CD71AA1915B20C3",
+      "matches_immutable_baseline": false
+    },
+    {
+      "path": "revit/lab/horizun/LAB_HORIZUN_TOPO.0001.rvt",
+      "bytes": 4366336,
+      "sha256": "15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D",
+      "matches_immutable_baseline": true
+    },
+    {
+      "path": "revit/lab/horizun/LAB_HORIZUN_TOPO.0002.rvt",
+      "bytes": 4370432,
+      "sha256": "D1011D1BDCE5F2777B790CC55B01699BC39EB048C80064715FFC11BF9B1981E6",
+      "matches_immutable_baseline": false
+    },
+    {
+      "path": "revit/lab/horizun/LAB_HORIZUN_TOPO.rvt",
+      "bytes": 4370432,
+      "sha256": "5A66BFA4C79036232503ADA4842B60C53F45AD4B3AA23B0141013E843B2021A6",
+      "matches_immutable_baseline": false
+    },
+    {
+      "path": "revit/lab/horizun/LAB_HORIZUN_WALL.0001.rvt",
+      "bytes": 4366336,
+      "sha256": "15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D",
+      "matches_immutable_baseline": true
+    },
+    {
+      "path": "revit/lab/horizun/LAB_HORIZUN_WALL.rvt",
+      "bytes": 4370432,
+      "sha256": "6FD0AB2DC2512847215A87E6AF2D0294943958AF9C5FE561CC3805F0BA558EB5",
+      "matches_immutable_baseline": false
+    },
+    {
+      "path": "revit/lab/revitcortex/LAB_RC_DOC.0001.rvt",
+      "bytes": 4366336,
+      "sha256": "15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D",
+      "matches_immutable_baseline": true
+    },
+    {
+      "path": "revit/lab/revitcortex/LAB_RC_DOC.rvt",
+      "bytes": 4415488,
+      "sha256": "8820C791781F7F411AAD5D3C8D044257A9130933FAB86E0D19FE18383D2059BA",
+      "matches_immutable_baseline": false
+    }
+  ]
+}

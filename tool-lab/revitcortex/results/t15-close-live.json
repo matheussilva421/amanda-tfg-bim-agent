@@ -1,0 +1,69 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\r\n  \"operation\": \"close\",\r\n  \"closed\": true,\r\n  \"closed_evidence\": \"This exact Document object is no longer in Application.Documents — compared by object identity, not by path, because a null or empty PathName would have matched nothing and the check would have passed without comparing anything, and doc.IsValidObject is now false. Not just 'Close() returned true'.\",\r\n  \"api_returned\": true,\r\n  \"title\": \"LAB_RC_DOC\",\r\n  \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\revitcortex\\\\LAB_RC_DOC.rvt\",\r\n  \"saved_on_close\": false,\r\n  \"activation\": {\r\n    \"activated_path\": \"C:\\\\Users\\\\slvma\\\\.horizun\\\\anchor\\\\HZ_ANCHOR_2027.rvt\",\r\n    \"how\": \"opened_existing_anchor\",\r\n    \"note\": \"No other open document qualified, so the bridge opened its own empty anchor project. It is now the ACTIVE document and stays open - Revit cannot reach a zero-document state from the API. It is safe to close the same way, or to leave.\",\r\n    \"activated_title\": \"HZ_ANCHOR_2027\"\r\n  },\r\n  \"was_modified\": false,\r\n  \"discarded_unsaved_changes\": false,\r\n  \"discard_note\": null,\r\n  \"file_exists_after\": true,\r\n  \"file_exists_after_unknown_reason\": null,\r\n  \"bytes_before\": 4415488,\r\n  \"bytes_after\": 4415488,\r\n  \"modified_utc_after\": \"2026-09-15T17:48:55.168419Z\",\r\n  \"disk_changed\": false,\r\n  \"disk_note\": null,\r\n  \"is_workshared\": false,\r\n  \"synced_to_central\": false,\r\n  \"sync_note\": null,\r\n  \"file_on_disk_after\": {\r\n    \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\revitcortex\\\\LAB_RC_DOC.rvt\",\r\n    \"exists\": true,\r\n    \"bytes\": 4415488,\r\n    \"mb\": 4.21,\r\n    \"modified_utc\": \"2026-09-15T17:48:55.168419Z\",\r\n    \"format\": \"2027\",\r\n    \"saved_in_version\": \"(not available in this Revit API version)\",\r\n    \"is_workshared\": false,\r\n    \"is_central\": false,\r\n    \"is_local\": false,\r\n    \"central_path\": \"\",\r\n    \"revit_version\": \"2027\"\r\n  },\r\n  \"idempotency\": {\r\n    \"key\": \"c63b219d-5f37-4195-89d1-cb014be8c65d\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"The durable claim and result were recorded; an identical retry will replay this answer.\"\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 2,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 2402\r\n  }\r\n}"
+      }
+    ],
+    "isError": false,
+    "structuredContent": {
+      "operation": "close",
+      "closed": true,
+      "closed_evidence": "This exact Document object is no longer in Application.Documents — compared by object identity, not by path, because a null or empty PathName would have matched nothing and the check would have passed without comparing anything, and doc.IsValidObject is now false. Not just 'Close() returned true'.",
+      "api_returned": true,
+      "title": "LAB_RC_DOC",
+      "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\revitcortex\\LAB_RC_DOC.rvt",
+      "saved_on_close": false,
+      "activation": {
+        "activated_path": "C:\\Users\\slvma\\.horizun\\anchor\\HZ_ANCHOR_2027.rvt",
+        "how": "opened_existing_anchor",
+        "note": "No other open document qualified, so the bridge opened its own empty anchor project. It is now the ACTIVE document and stays open - Revit cannot reach a zero-document state from the API. It is safe to close the same way, or to leave.",
+        "activated_title": "HZ_ANCHOR_2027"
+      },
+      "was_modified": false,
+      "discarded_unsaved_changes": false,
+      "discard_note": null,
+      "file_exists_after": true,
+      "file_exists_after_unknown_reason": null,
+      "bytes_before": 4415488,
+      "bytes_after": 4415488,
+      "modified_utc_after": "2026-09-15T17:48:55.168419Z",
+      "disk_changed": false,
+      "disk_note": null,
+      "is_workshared": false,
+      "synced_to_central": false,
+      "sync_note": null,
+      "file_on_disk_after": {
+        "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\revitcortex\\LAB_RC_DOC.rvt",
+        "exists": true,
+        "bytes": 4415488,
+        "mb": 4.21,
+        "modified_utc": "2026-09-15T17:48:55.168419Z",
+        "format": "2027",
+        "saved_in_version": "(not available in this Revit API version)",
+        "is_workshared": false,
+        "is_central": false,
+        "is_local": false,
+        "central_path": "",
+        "revit_version": "2027"
+      },
+      "idempotency": {
+        "key": "c63b219d-5f37-4195-89d1-cb014be8c65d",
+        "status": "executed_once",
+        "command_executed_in_this_call": true,
+        "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+      },
+      "bridge_queue": {
+        "queued": false,
+        "ahead_at_admission": 0,
+        "waited_ms": 2,
+        "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+        "capacity": 16,
+        "execution_and_wait_ms": 2402
+      }
+    }
+  }
+}

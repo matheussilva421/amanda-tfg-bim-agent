@@ -1,0 +1,306 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\r\n  \"document\": \"LAB_RC_DOC\",\r\n  \"scope\": \"model\",\r\n  \"view_id\": null,\r\n  \"include_links\": false,\r\n  \"matched_total\": 11,\r\n  \"returned\": 11,\r\n  \"offset\": 0,\r\n  \"truncated\": false,\r\n  \"next_cursor\": null,\r\n  \"result_set_fingerprint\": \"475a501f31951379\",\r\n  \"coverage_complete\": true,\r\n  \"unreadable_total\": 0,\r\n  \"unreadable_shown\": 0,\r\n  \"unreadable_truncated\": false,\r\n  \"unreadable\": [],\r\n  \"federated_coverage\": {\r\n    \"coverage_complete\": true,\r\n    \"include_links\": false,\r\n    \"link_instances_total\": 0,\r\n    \"link_instances_loaded\": 0,\r\n    \"link_instances_unavailable\": 0,\r\n    \"sources\": [\r\n      {\r\n        \"source_kind\": \"host\",\r\n        \"source_model\": \"LAB_RC_DOC\",\r\n        \"link_instance_id\": null,\r\n        \"visibility_coverage\": {\r\n          \"coverage_complete\": true,\r\n          \"is_workshared\": false,\r\n          \"worksets_total\": null,\r\n          \"worksets_open\": null,\r\n          \"worksets_closed\": null,\r\n          \"worksets_read_error\": null,\r\n          \"note\": \"This model is not workshared, so every element in it is loaded and this answer covers all of it.\"\r\n        }\r\n      }\r\n    ],\r\n    \"unavailable_links\": [],\r\n    \"note\": \"Every considered source was loaded with all user worksets open.\"\r\n  },\r\n  \"summary\": {\r\n    \"by_category\": {\r\n      \"Ambientes\": 1,\r\n      \"Folhas\": 1,\r\n      \"Janelas\": 1,\r\n      \"Níveis\": 2,\r\n      \"Paredes\": 1,\r\n      \"Pisos\": 1,\r\n      \"Portas\": 1,\r\n      \"Tabelas\": 1,\r\n      \"Viewports\": 1,\r\n      \"Vistas\": 1\r\n    },\r\n    \"by_level\": {\r\n      \"(no level)\": 7,\r\n      \"Nível 1\": 4\r\n    },\r\n    \"by_source\": {\r\n      \"host:LAB_RC_DOC\": 11\r\n    }\r\n  },\r\n  \"rows\": [\r\n    {\r\n      \"element_id\": 311,\r\n      \"category\": \"Níveis\",\r\n      \"name\": \"Nível 1\",\r\n      \"family\": \"Nível\",\r\n      \"type\": \"Cabeça de 8 mm\",\r\n      \"type_id\": 305,\r\n      \"level\": null,\r\n      \"view_type\": null,\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_RC_DOC\",\r\n      \"bounding_box\": null\r\n    },\r\n    {\r\n      \"element_id\": 694,\r\n      \"category\": \"Níveis\",\r\n      \"name\": \"Nível 2\",\r\n      \"family\": \"Nível\",\r\n      \"type\": \"Cabeça de 8 mm\",\r\n      \"type_id\": 305,\r\n      \"level\": null,\r\n      \"view_type\": null,\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_RC_DOC\",\r\n      \"bounding_box\": null\r\n    },\r\n    {\r\n      \"element_id\": 328657,\r\n      \"category\": \"Paredes\",\r\n      \"name\": \"Genérico - 200 mm\",\r\n      \"family\": \"Parede básica\",\r\n      \"type\": \"Genérico - 200 mm\",\r\n      \"type_id\": 398,\r\n      \"level\": \"Nível 1\",\r\n      \"view_type\": null,\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_RC_DOC\",\r\n      \"bounding_box\": {\r\n        \"min\": [\r\n          0.0,\r\n          -100.0,\r\n          0.0\r\n        ],\r\n        \"max\": [\r\n          10000.0,\r\n          100.0,\r\n          3000.0\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"element_id\": 328660,\r\n      \"category\": \"Pisos\",\r\n      \"name\": \"Genérico 150 mm\",\r\n      \"family\": \"Piso\",\r\n      \"type\": \"Genérico 150 mm\",\r\n      \"type_id\": 339,\r\n      \"level\": \"Nível 1\",\r\n      \"view_type\": null,\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_RC_DOC\",\r\n      \"bounding_box\": {\r\n        \"min\": [\r\n          0.0,\r\n          0.0,\r\n          -149.99999999999997\r\n        ],\r\n        \"max\": [\r\n          6000.0,\r\n          4000.0000000000005,\r\n          0.0\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"element_id\": 328668,\r\n      \"category\": \"Ambientes\",\r\n      \"name\": \"LAB_ROOM_TEST 1\",\r\n      \"family\": null,\r\n      \"type\": null,\r\n      \"type_id\": null,\r\n      \"level\": null,\r\n      \"view_type\": null,\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_RC_DOC\",\r\n      \"bounding_box\": null\r\n    },\r\n    {\r\n      \"element_id\": 328671,\r\n      \"category\": \"Portas\",\r\n      \"name\": \"0915 x 2134mm\",\r\n      \"family\": \"M_Folha única\",\r\n      \"type\": \"0915 x 2134mm\",\r\n      \"type_id\": 49480,\r\n      \"level\": \"Nível 1\",\r\n      \"view_type\": null,\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_RC_DOC\",\r\n      \"bounding_box\": {\r\n        \"min\": [\r\n          2466.5,\r\n          -125.00000000000662,\r\n          -1.353583911622991E-13\r\n        ],\r\n        \"max\": [\r\n          3533.5,\r\n          1015.2716676170458,\r\n          2209.999999999999\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"element_id\": 328673,\r\n      \"category\": \"Janelas\",\r\n      \"name\": \"0406 x 0610mm\",\r\n      \"family\": \"M_Fixo\",\r\n      \"type\": \"0406 x 0610mm\",\r\n      \"type_id\": 33067,\r\n      \"level\": \"Nível 1\",\r\n      \"view_type\": null,\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_RC_DOC\",\r\n      \"bounding_box\": {\r\n        \"min\": [\r\n          6796.999999999983,\r\n          -100.00000000000199,\r\n          1200.0\r\n        ],\r\n        \"max\": [\r\n          7202.999999999994,\r\n          458.1526659915052,\r\n          1810.0000000000082\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"element_id\": 328675,\r\n      \"category\": \"Vistas\",\r\n      \"name\": \"LAB RC Planta\",\r\n      \"family\": \"Planta de piso\",\r\n      \"type\": \"Planta de piso\",\r\n      \"type_id\": 49552,\r\n      \"level\": null,\r\n      \"view_type\": \"FloorPlan\",\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_RC_DOC\",\r\n      \"bounding_box\": {\r\n        \"min\": [\r\n          -30480.0,\r\n          -30480.0,\r\n          -304800.0\r\n        ],\r\n        \"max\": [\r\n          30480.0,\r\n          30480.0,\r\n          -30.480000000000004\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"element_id\": 328689,\r\n      \"category\": \"Tabelas\",\r\n      \"name\": \"LAB RC Paredes\",\r\n      \"family\": \"Tabela\",\r\n      \"type\": \"Tabela\",\r\n      \"type_id\": 49560,\r\n      \"level\": null,\r\n      \"view_type\": \"Schedule\",\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_RC_DOC\",\r\n      \"bounding_box\": {\r\n        \"min\": [\r\n          -30480.0,\r\n          -30480.0,\r\n          -304800.0\r\n        ],\r\n        \"max\": [\r\n          30480.0,\r\n          30480.0,\r\n          -30.480000000000004\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"element_id\": 328696,\r\n      \"category\": \"Folhas\",\r\n      \"name\": \"LAB Prancha 01\",\r\n      \"family\": \"Folha\",\r\n      \"type\": \"Folha\",\r\n      \"type_id\": 49561,\r\n      \"level\": null,\r\n      \"view_type\": \"DrawingSheet\",\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_RC_DOC\",\r\n      \"bounding_box\": {\r\n        \"min\": [\r\n          -30480.0,\r\n          -30480.0,\r\n          -304800.0\r\n        ],\r\n        \"max\": [\r\n          30480.0,\r\n          30480.0,\r\n          -30.480000000000004\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"element_id\": 328711,\r\n      \"category\": \"Viewports\",\r\n      \"name\": \"Título com linha\",\r\n      \"family\": \"Viewport\",\r\n      \"type\": \"Título com linha\",\r\n      \"type_id\": 324,\r\n      \"level\": null,\r\n      \"view_type\": null,\r\n      \"source_kind\": \"host\",\r\n      \"source_model\": \"LAB_RC_DOC\",\r\n      \"bounding_box\": null\r\n    }\r\n  ],\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 2,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 96\r\n  }\r\n}"
+      }
+    ],
+    "isError": false,
+    "structuredContent": {
+      "document": "LAB_RC_DOC",
+      "scope": "model",
+      "view_id": null,
+      "include_links": false,
+      "matched_total": 11,
+      "returned": 11,
+      "offset": 0,
+      "truncated": false,
+      "next_cursor": null,
+      "result_set_fingerprint": "475a501f31951379",
+      "coverage_complete": true,
+      "unreadable_total": 0,
+      "unreadable_shown": 0,
+      "unreadable_truncated": false,
+      "unreadable": [],
+      "federated_coverage": {
+        "coverage_complete": true,
+        "include_links": false,
+        "link_instances_total": 0,
+        "link_instances_loaded": 0,
+        "link_instances_unavailable": 0,
+        "sources": [
+          {
+            "source_kind": "host",
+            "source_model": "LAB_RC_DOC",
+            "link_instance_id": null,
+            "visibility_coverage": {
+              "coverage_complete": true,
+              "is_workshared": false,
+              "worksets_total": null,
+              "worksets_open": null,
+              "worksets_closed": null,
+              "worksets_read_error": null,
+              "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+            }
+          }
+        ],
+        "unavailable_links": [],
+        "note": "Every considered source was loaded with all user worksets open."
+      },
+      "summary": {
+        "by_category": {
+          "Ambientes": 1,
+          "Folhas": 1,
+          "Janelas": 1,
+          "Níveis": 2,
+          "Paredes": 1,
+          "Pisos": 1,
+          "Portas": 1,
+          "Tabelas": 1,
+          "Viewports": 1,
+          "Vistas": 1
+        },
+        "by_level": {
+          "(no level)": 7,
+          "Nível 1": 4
+        },
+        "by_source": {
+          "host:LAB_RC_DOC": 11
+        }
+      },
+      "rows": [
+        {
+          "element_id": 311,
+          "category": "Níveis",
+          "name": "Nível 1",
+          "family": "Nível",
+          "type": "Cabeça de 8 mm",
+          "type_id": 305,
+          "level": null,
+          "view_type": null,
+          "source_kind": "host",
+          "source_model": "LAB_RC_DOC",
+          "bounding_box": null
+        },
+        {
+          "element_id": 694,
+          "category": "Níveis",
+          "name": "Nível 2",
+          "family": "Nível",
+          "type": "Cabeça de 8 mm",
+          "type_id": 305,
+          "level": null,
+          "view_type": null,
+          "source_kind": "host",
+          "source_model": "LAB_RC_DOC",
+          "bounding_box": null
+        },
+        {
+          "element_id": 328657,
+          "category": "Paredes",
+          "name": "Genérico - 200 mm",
+          "family": "Parede básica",
+          "type": "Genérico - 200 mm",
+          "type_id": 398,
+          "level": "Nível 1",
+          "view_type": null,
+          "source_kind": "host",
+          "source_model": "LAB_RC_DOC",
+          "bounding_box": {
+            "min": [
+              0.0,
+              -100.0,
+              0.0
+            ],
+            "max": [
+              10000.0,
+              100.0,
+              3000.0
+            ]
+          }
+        },
+        {
+          "element_id": 328660,
+          "category": "Pisos",
+          "name": "Genérico 150 mm",
+          "family": "Piso",
+          "type": "Genérico 150 mm",
+          "type_id": 339,
+          "level": "Nível 1",
+          "view_type": null,
+          "source_kind": "host",
+          "source_model": "LAB_RC_DOC",
+          "bounding_box": {
+            "min": [
+              0.0,
+              0.0,
+              -149.99999999999997
+            ],
+            "max": [
+              6000.0,
+              4000.0000000000005,
+              0.0
+            ]
+          }
+        },
+        {
+          "element_id": 328668,
+          "category": "Ambientes",
+          "name": "LAB_ROOM_TEST 1",
+          "family": null,
+          "type": null,
+          "type_id": null,
+          "level": null,
+          "view_type": null,
+          "source_kind": "host",
+          "source_model": "LAB_RC_DOC",
+          "bounding_box": null
+        },
+        {
+          "element_id": 328671,
+          "category": "Portas",
+          "name": "0915 x 2134mm",
+          "family": "M_Folha única",
+          "type": "0915 x 2134mm",
+          "type_id": 49480,
+          "level": "Nível 1",
+          "view_type": null,
+          "source_kind": "host",
+          "source_model": "LAB_RC_DOC",
+          "bounding_box": {
+            "min": [
+              2466.5,
+              -125.00000000000662,
+              -1.353583911622991e-13
+            ],
+            "max": [
+              3533.5,
+              1015.2716676170458,
+              2209.999999999999
+            ]
+          }
+        },
+        {
+          "element_id": 328673,
+          "category": "Janelas",
+          "name": "0406 x 0610mm",
+          "family": "M_Fixo",
+          "type": "0406 x 0610mm",
+          "type_id": 33067,
+          "level": "Nível 1",
+          "view_type": null,
+          "source_kind": "host",
+          "source_model": "LAB_RC_DOC",
+          "bounding_box": {
+            "min": [
+              6796.999999999983,
+              -100.00000000000199,
+              1200.0
+            ],
+            "max": [
+              7202.999999999994,
+              458.1526659915052,
+              1810.0000000000082
+            ]
+          }
+        },
+        {
+          "element_id": 328675,
+          "category": "Vistas",
+          "name": "LAB RC Planta",
+          "family": "Planta de piso",
+          "type": "Planta de piso",
+          "type_id": 49552,
+          "level": null,
+          "view_type": "FloorPlan",
+          "source_kind": "host",
+          "source_model": "LAB_RC_DOC",
+          "bounding_box": {
+            "min": [
+              -30480.0,
+              -30480.0,
+              -304800.0
+            ],
+            "max": [
+              30480.0,
+              30480.0,
+              -30.480000000000004
+            ]
+          }
+        },
+        {
+          "element_id": 328689,
+          "category": "Tabelas",
+          "name": "LAB RC Paredes",
+          "family": "Tabela",
+          "type": "Tabela",
+          "type_id": 49560,
+          "level": null,
+          "view_type": "Schedule",
+          "source_kind": "host",
+          "source_model": "LAB_RC_DOC",
+          "bounding_box": {
+            "min": [
+              -30480.0,
+              -30480.0,
+              -304800.0
+            ],
+            "max": [
+              30480.0,
+              30480.0,
+              -30.480000000000004
+            ]
+          }
+        },
+        {
+          "element_id": 328696,
+          "category": "Folhas",
+          "name": "LAB Prancha 01",
+          "family": "Folha",
+          "type": "Folha",
+          "type_id": 49561,
+          "level": null,
+          "view_type": "DrawingSheet",
+          "source_kind": "host",
+          "source_model": "LAB_RC_DOC",
+          "bounding_box": {
+            "min": [
+              -30480.0,
+              -30480.0,
+              -304800.0
+            ],
+            "max": [
+              30480.0,
+              30480.0,
+              -30.480000000000004
+            ]
+          }
+        },
+        {
+          "element_id": 328711,
+          "category": "Viewports",
+          "name": "Título com linha",
+          "family": "Viewport",
+          "type": "Título com linha",
+          "type_id": 324,
+          "level": null,
+          "view_type": null,
+          "source_kind": "host",
+          "source_model": "LAB_RC_DOC",
+          "bounding_box": null
+        }
+      ],
+      "bridge_queue": {
+        "queued": false,
+        "ahead_at_admission": 0,
+        "waited_ms": 2,
+        "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+        "capacity": 16,
+        "execution_and_wait_ms": 96
+      }
+    }
+  }
+}

@@ -1,8 +1,8 @@
-"""Read-only project status plus the resume plan.
+"""Project status plus the resume plan.
 
-Both commands only read. Reporting must never advance a revision or create a
-directory, because a status call is exactly what you run when something has
-already gone wrong.
+The state report remains read-only with respect to project state. In addition
+to the existing stdout contract, each status call refreshes the derived
+``state/status.md`` dashboard from the files it reads.
 """
 
 from __future__ import annotations
@@ -90,7 +90,7 @@ def status_snapshot(root: Path) -> dict:
     if tasks["available"] and tasks["ready"]:
         if next_task not in tasks["ready"]:
             next_task = tasks["ready"][0]
-    return {
+    snapshot = {
         "phase_id": state.phase_id,
         "phase_name": state.phase_name,
         "phase_status": str(state.phase_status),
@@ -111,6 +111,15 @@ def status_snapshot(root: Path) -> dict:
         },
         "state_revision": state.state_revision,
     }
+    try:
+        from ..status_dashboard import write_status_markdown
+
+        write_status_markdown(root)
+    except (OSError, ValueError, TypeError) as exc:
+        # The existing terminal report remains usable when a derived dashboard
+        # cannot be written; expose the failure to callers instead of hiding it.
+        snapshot["status_dashboard_error"] = str(exc)
+    return snapshot
 
 
 def render_status(snapshot: dict) -> None:

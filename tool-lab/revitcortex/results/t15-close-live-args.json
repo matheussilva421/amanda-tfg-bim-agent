@@ -1,0 +1,7 @@
+{
+  "activate_other": true,
+  "operation": "close",
+  "idempotency_key": "c63b219d-5f37-4195-89d1-cb014be8c65d",
+  "save_on_close": false,
+  "target_document": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\revitcortex\\LAB_RC_DOC.rvt"
+}

@@ -1,0 +1,297 @@
+{
+  "evidence_id": "P02-T15-cortex-fixture",
+  "task": "P02-T15",
+  "run_date": "2026-09-15",
+  "status": "PARTIAL_BLOCKED_MANUAL_MODAL",
+  "verdict": "Cortex mutations and independent readbacks passed for levels, wall, floor, hosted door/window, view, schedule, sheet, and viewport. The room was created but did not prove the required 16 m2 area, and the required close/reopen persistence readback could not run because Revit presented a persistent human-only modal dialog.",
+  "scope_guard": {
+    "revit_pid": 39140,
+    "revit_process_was_restarted": false,
+    "revit_process_was_closed_or_killed": false,
+    "post_run_process_observation": {"pid_39140_present": false, "revit_exe_processes_found": [], "revit_accelerator_found": {"pid": 2760, "has_exited": false}, "action_taken": false, "note": "Observed during final read-only verification after the close request had already been rejected as never started; causality was not established and no process action was taken."},
+    "send_code_to_revit_called": false,
+    "enable_code_execution_changed": false,
+    "active_document_before_run": "LAB_HORIZUN_DOC",
+    "active_document_touched": false,
+    "git_add_commit_push_called": false,
+    "state_yaml_files_changed_by_this_run": false,
+    "modal_dialog_clicked_or_dismissed": false
+  },
+  "fixture": {
+    "source": "C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/baseline/LAB_R00_EMPTY.rvt",
+    "target": "C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/revitcortex/LAB_RC_DOC.rvt",
+    "source_sha256": "15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D",
+    "target_sha256_after_copy": "15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D",
+    "target_bytes_after_copy": 4366336,
+    "copy_verified": true,
+    "units_used_by_cortex": "mm",
+    "open": {
+      "helper": ".tmp-hz.py",
+      "operation": "horizun_open_document",
+      "path": "C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/revitcortex/LAB_RC_DOC.rvt",
+      "expected_version": "2027",
+      "opened": true,
+      "confirmed_active": true,
+      "active_document": "LAB_RC_DOC",
+      "document_path": "C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/revitcortex/LAB_RC_DOC.rvt",
+      "file_saved_in_version": "2027",
+      "running_revit_version": "2027",
+      "version_guard": "checked",
+      "is_workshared": false,
+      "bridge_queue_execution_and_wait_ms": 3275,
+      "raw_output": ".tmp-t15-open-out.json"
+    }
+  },
+  "canonical_desired_contracts": {
+    "wall": {
+      "source": "tool-lab/horizun/results/t09-wall.json",
+      "length_m": 10,
+      "height_m": 3,
+      "base_level_id": 311,
+      "type_id": 398,
+      "start_m": [0, 0, 0],
+      "end_m": [10, 0, 0]
+    },
+    "floor": {
+      "source": "tool-lab/horizun/results/t10-floor.json",
+      "area_m2": 24,
+      "boundary_m": [[0, 0], [6, 0], [6, 4], [0, 4]],
+      "level_id": 311,
+      "type_id": 339
+    },
+    "room": {
+      "source": "tool-lab/horizun/results/t10-room.json",
+      "area_m2": 16,
+      "point_m": [2, 2],
+      "name": "LAB_ROOM_TEST",
+      "number": "L-01",
+      "level_id": 311
+    },
+    "views_sheet": {
+      "source": "tool-lab/horizun/results/t11-views-sheet.json",
+      "floor_plan_name": "LAB Planta Nivel 1",
+      "scale": 50,
+      "sheet_number": "LAB-01",
+      "sheet_name": "LAB Prancha 01",
+      "floor_plan_placed": true
+    },
+    "schedule": {
+      "source": "tool-lab/horizun/results/t11-schedule.json",
+      "name": "LAB Tabela de Ambientes",
+      "category": "Ambientes",
+      "fields": ["Número", "Nome", "Área", "Nível"],
+      "itemized": true,
+      "include_links": false
+    }
+  },
+  "family_type_confirmation": {
+    "tool": "get_available_family_types",
+    "categories_requested": ["OST_Walls", "OST_Doors", "OST_Windows"],
+    "limit": 500,
+    "compact": false,
+    "wall_type": {"type_id": 398, "family": "Parede básica", "type_name": "Genérico - 200 mm", "category": "Paredes"},
+    "door_type": {"type_id": 49480, "family": "M_Folha única", "type_name": "0915 x 2134mm", "category": "Portas"},
+    "window_type": {"type_id": 33067, "family": "M_Fixo", "type_name": "0406 x 0610mm", "category": "Janelas"},
+    "duration_ms": 16,
+    "raw_output": ".tmp-t15-family-types-out.json"
+  },
+  "levels": {
+    "requested": [
+      {"name": "Nível 1", "elevation_mm": 0},
+      {"name": "Nível 2", "elevation_mm": 4000}
+    ],
+    "action": "reused_existing_levels",
+    "reason": "The immutable baseline already contained both exact levels, so no duplicate create_level mutation was needed.",
+    "readback": [
+      {"id": 311, "name": "Nível 1", "elevation_mm": 0},
+      {"id": 694, "name": "Nível 2", "elevation_mm": 4000}
+    ],
+    "status": "PASS_EXISTING",
+    "read_duration_ms": 6
+  },
+  "operations": {
+    "wall": {
+      "input": {
+        "tool": "create_line_based_element",
+        "specs": "[{\"category\":\"OST_Walls\",\"locationLine\":{\"p0\":{\"x\":0,\"y\":0,\"z\":0},\"p1\":{\"x\":10000,\"y\":0,\"z\":0}},\"typeId\":398,\"height\":3000,\"baseLevel\":0}]"
+      },
+      "write": {"message": "Successfully created 1 element(s).", "created_element_ids": [328657]},
+      "readback": {
+        "filter": {"id": 328657, "category": "Paredes", "built_in_category": "OST_Walls", "type_id": 398, "type_name": "Genérico - 200 mm", "name": "Genérico - 200 mm"},
+        "current_view": {"location_line_start_mm": [0, 0, 0], "location_line_end_mm": [10000, 0, 0], "length_mm": 10000},
+        "solid_geometry": {"solid_count": 1, "bbox_min_mm": [0, -100, 0], "bbox_max_mm": [10000, 100, 3000], "size_x_mm": 10000, "size_y_mm": 200, "size_z_mm": 3000, "volume_m3": 5.99999, "face_count": 6, "edge_count": 12},
+        "parameters": {"CURVE_ELEM_LENGTH_internal_ft": 32.808398950131235, "HOST_AREA_COMPUTED_internal_ft2": 322.9173125012917, "HOST_VOLUME_COMPUTED_internal_ft3": 211.88800032893158, "ELEM_TYPE_PARAM": 398}
+      },
+      "verify": {"length_m": 10, "height_m": 3, "status": "PASS"},
+      "durations_ms": {"write": 226, "read_filter": 51, "read_parameters": 44, "read_geometry": 75, "read_current_view": 29, "read_project_info": 5, "read_statistics": 15, "read_warnings": 12, "read_health": 18}
+    },
+    "floor": {
+      "input": {
+        "tool": "create_floor",
+        "boundaryPoints": "[{\"x\":0,\"y\":0},{\"x\":6000,\"y\":0},{\"x\":6000,\"y\":4000},{\"x\":0,\"y\":4000}]",
+        "levelElevation": 0
+      },
+      "write": {"floor_id": 328660, "floor_type_name": "Genérico 150 mm", "level_name": "Nível 1", "hole_count": 0, "warnings": []},
+      "readback": {
+        "filter": {"id": 328660, "category": "Pisos", "built_in_category": "OST_Floors", "type_id": 339, "type_name": "Genérico 150 mm", "level_id": 311, "level_name": "Nível 1", "bbox_min_mm": [0, 0, -150], "bbox_max_mm": [6000, 4000, 0]},
+        "solid_geometry": {"solid_count": 1, "bbox_min_mm": [0, 0, -150], "bbox_max_mm": [6000, 4000, 0], "size_x_mm": 6000, "size_y_mm": 4000, "size_z_mm": 150, "volume_m3": 3.599994, "face_count": 6, "edge_count": 12},
+        "parameters": {"HOST_AREA_COMPUTED_internal_ft2": 258.33385000103334, "HOST_VOLUME_COMPUTED_internal_ft3": 127.13280019735892, "HOST_PERIMETER_COMPUTED_internal_ft": 65.61679790026247, "SCHEDULE_LEVEL_PARAM": 311, "ELEM_TYPE_PARAM": 339}
+      },
+      "verify": {"plan_bbox_area_m2": 24, "status": "PASS"},
+      "durations_ms": {"write": 122, "read_filter": 14, "read_parameters": 8, "read_geometry": 4, "read_current_view": 7, "read_project_info": 6, "read_statistics": 14, "read_warnings": 2, "read_health": 21}
+    },
+    "room": {
+      "input": {"tool": "create_room", "levelId": 311, "x": 2000, "y": 2000, "name": "LAB_ROOM_TEST"},
+      "write": {"room_id": 328668, "room_name": "LAB_ROOM_TEST", "room_number": "1", "level_name": "Nível 1"},
+      "readback": {
+        "filter": {"id": 328668, "category": "Ambientes", "class": "Room", "name": "LAB_ROOM_TEST 1", "number": "1", "area_mm2": null, "perimeter_mm": null, "volume_mm3": 0, "bbox_min_mm": [780.8, 1085.6, 0], "bbox_max_mm": [3219.2, 2914.4, 1504.8]},
+        "current_view": {"location_point_mm": [2000.0000000000002, 2000.0000000000002, 0]},
+        "solid_geometry": {"solid_count": 0},
+        "parameters": {"ROOM_NAME": "LAB_ROOM_TEST", "ROOM_NUMBER": "1", "ROOM_LEVEL_ID": 311, "ROOM_AREA": null, "ROOM_AREA_hasValue": false, "ROOM_PERIMETER": null, "ROOM_VOLUME": null},
+        "warnings": [{"severity": "Warning", "description": "Ambiente não está em uma região apropriadamente fechada", "failing_element_ids": [328668]}]
+      },
+      "verify": {"point_m": [2, 2], "expected_area_m2": 16, "measured_area_m2": null, "status": "FAIL_GEOMETRY_UNPROVEN", "reason": "The exact sequence creates one wall, so the room has no closed boundary. Revit reports null area and the unclosed-region warning."},
+      "durations_ms": {"write": 87, "read_filter": 21, "read_parameters": 16, "read_geometry": 3, "read_current_view": 10, "read_project_info": 4, "read_statistics": 33, "read_warnings": 19, "read_health": 8}
+    },
+    "door": {
+      "input": {"tool": "create_point_based_element", "specs": "[{\"category\":\"OST_Doors\",\"locationPoint\":{\"x\":3000,\"y\":0,\"z\":0},\"typeId\":49480,\"hostWallId\":328657,\"baseLevel\":0}]"},
+      "write": {"created_element_ids": [328671]},
+      "readback": {
+        "filter": {"id": 328671, "category": "Portas", "type_id": 49480, "family": "M_Folha única", "type_name": "0915 x 2134mm", "level_id": 311, "bbox_min_mm": [2466.5, -125, 0], "bbox_max_mm": [3533.5, 125, 2210]},
+        "current_view_location_point_mm": [3000, 0, 0],
+        "parameters": {"HOST_ID_PARAM": 328657, "SCHEDULE_LEVEL_PARAM": 311, "FAMILY_LEVEL_PARAM": 311, "ELEM_TYPE_PARAM": 49480},
+        "solid_geometry": {"solid_count": 3, "size_x_mm": 1067, "size_y_mm": 250, "size_z_mm": 2210, "volume_m3": 0.119856}
+      },
+      "verify": {"host_wall_id": 328657, "host_relation_proved_by": "HOST_ID_PARAM", "status": "PASS"},
+      "durations_ms": {"write": 293, "read_filter": 35, "read_parameters": 8, "read_geometry": 11, "read_current_view": 5, "read_project_info": 5, "read_statistics": 12, "read_warnings": 3, "read_health": 18}
+    },
+    "window": {
+      "input": {"tool": "create_point_based_element", "specs": "[{\"category\":\"OST_Windows\",\"locationPoint\":{\"x\":7000,\"y\":0,\"z\":1200},\"typeId\":33067,\"hostWallId\":328657,\"baseLevel\":0}]"},
+      "write": {"created_element_ids": [328673]},
+      "readback": {
+        "filter": {"id": 328673, "category": "Janelas", "type_id": 33067, "family": "M_Fixo", "type_name": "0406 x 0610mm", "level_id": 311, "bbox_min_mm": [6797, -100, 1200], "bbox_max_mm": [7203, 100, 1810]},
+        "current_view_location_point_mm": [7000.000000000001, 0, 1200],
+        "parameters": {"HOST_ID_PARAM": 328657, "SCHEDULE_LEVEL_PARAM": 311, "FAMILY_LEVEL_PARAM": 311, "ELEM_TYPE_PARAM": 33067},
+        "solid_geometry": {"solid_count": 4, "size_x_mm": 406, "size_y_mm": 200, "size_z_mm": 610, "volume_m3": 0.015614}
+      },
+      "verify": {"host_wall_id": 328657, "host_relation_proved_by": "HOST_ID_PARAM", "status": "PASS"},
+      "durations_ms": {"write": 198, "read_filter": 19, "read_parameters": 5, "read_geometry": 5, "read_current_view": 3, "read_project_info": 7, "read_statistics": 16, "read_warnings": 2, "read_health": 13}
+    },
+    "view_sheet_schedule": {
+      "view": {
+        "input": {"tool": "create_view", "viewType": "FloorPlan", "levelId": 311, "name": "LAB RC Planta", "scale": 50},
+        "write": {"view_id": 328675, "view_name": "LAB RC Planta", "view_type": "FloorPlan", "scale": 50},
+        "readback_parameters": {"VIEW_FAMILY": "Plantas de piso", "VIEW_TYPE": "Plantas de piso", "VIEWER_SHEET_NUMBER": "---", "VIEWER_DETAIL_NUMBER": "-"},
+        "status": "PASS",
+        "duration_ms": {"write": 50, "read_parameters": 9}
+      },
+      "schedule": {
+        "schedulable_fields_probe": {"tool": "list_schedulable_fields", "category": "OST_Walls", "field_count": 136, "duration_ms": 79, "relevant_fields_found": ["Comprimento", "Área", "Família e tipo"], "Nível": "not schedulable in regular wall schedule"},
+        "input": {"tool": "create_schedule", "name": "LAB RC Paredes", "category": "OST_Walls", "fields": ["Comprimento", "Área", "Família e tipo", "Nível"], "scheduleType": "regular"},
+        "write": {"schedule_id": 328689, "schedule_name": "LAB RC Paredes", "schedule_type": "regular", "added_field_count": 3, "skipped_field_count": 1, "skipped_fields": [{"field": "Nível", "reason": "NotSchedulableForCategory", "suggestions": ["Analítico: Nível associado mais baixo/alto"]}]},
+        "readback": {"headers": ["Comprimento", "Área", "Família e tipo"], "rows": [["10000", "28 m²", "Parede básica: Genérico - 200 mm"]], "field_count": 3, "row_count": 3, "parameters": {"VIEW_FAMILY": "Tabelas", "VIEW_TYPE": "Tabelas", "VIEWER_SHEET_NUMBER": "---"}},
+        "verify": {"wall_schedule_row_present": true, "status": "PASS_WITH_FIELD_DIVERGENCE"},
+        "duration_ms": {"write": 30, "read_data": 37, "read_parameters": 6}
+      },
+      "sheet": {
+        "input": {"tool": "create_sheet", "sheetNumber": "LAB-01", "sheetName": "LAB Prancha 01"},
+        "write": {"sheet_id": 328696, "sheet_number": "LAB-01", "sheet_name": "LAB Prancha 01"},
+        "readback_parameters": {"VIEW_FAMILY": "Folhas", "VIEW_TYPE": "Folhas", "SHEET_NUMBER": "LAB-01", "SHEET_NAME": "LAB Prancha 01"},
+        "status": "PASS",
+        "duration_ms": {"write": 39, "read_parameters": 4}
+      },
+      "viewport": {
+        "input": {"tool": "place_viewport", "sheetId": 328696, "viewId": 328675, "positionX": 420, "positionY": 297, "rotation": "none"},
+        "write": {"viewport_id": 328711, "sheet_number": "LAB-01", "view_name": "LAB RC Planta", "rotation": "None"},
+        "readback_parameters": {"VIEWER_SHEET_NUMBER": "LAB-01", "VIEWER_DETAIL_NUMBER": "1", "VIEW_POSITION_X": 0, "VIEW_POSITION_Y": 0, "category": "Viewports"},
+        "verify": {"view_id": 328675, "sheet_id": 328696, "placement_link_proved_by": ["create response", "VIEWER_SHEET_NUMBER"], "status": "PASS"},
+        "duration_ms": {"write": 142, "read_parameters": 8}
+      }
+    }
+  },
+  "verification_snapshots": {
+    "baseline": {"total_elements": 3316, "total_views": 11, "total_sheets": 0, "total_warnings": 0, "health_score": 90, "health_grade": "A", "unplaced_room_count": 0},
+    "after_wall": {"total_elements": 3317, "total_warnings": 0, "health_score": 90, "health_grade": "A"},
+    "after_floor": {"total_elements": 3326, "total_warnings": 0, "health_score": 90, "health_grade": "A"},
+    "after_room": {"total_elements": 3329, "total_warnings": 1, "health_score": 90, "health_grade": "A", "unplaced_room_count": 1},
+    "after_door": {"total_elements": 3330, "total_warnings": 1, "health_score": 90, "health_grade": "A"},
+    "after_window": {"total_elements": 3331, "total_warnings": 1, "health_score": 90, "health_grade": "A"},
+    "after_view": {"total_elements": 3340, "total_views": 12, "total_warnings": 1, "health_score": 90, "health_grade": "A"},
+    "after_schedule": {"total_elements": 3346, "total_views": 13, "total_warnings": 1, "health_score": 90, "health_grade": "A"},
+    "after_sheet": {"total_elements": 3359, "total_views": 15, "total_sheets": 1, "total_warnings": 1, "health_score": 90, "health_grade": "A"},
+    "final_before_persistence": {"total_elements": 3360, "total_views": 15, "total_sheets": 1, "total_warnings": 1, "health_score": 90, "health_grade": "A", "unused_family_count": 69, "unplaced_room_count": 1, "unplaced_view_count": 11}
+  },
+  "audit_durations": {
+    "source": "%USERPROFILE%/.revitcortex/audit.jsonl",
+    "filter_window_utc": "2026-09-15T17:30:00Z onward",
+    "note": "These are the Cortex audit duration_ms values. The audit reported result=ok for each call and elements_affected=0 even for mutations; returned ids and independent reads are the state evidence.",
+    "baseline_ms": {"get_project_info": 6, "check_model_health": 8, "analyze_model_statistics": 46, "get_warnings": 4, "get_available_family_types": 16},
+    "mutation_ms": {"create_line_based_element": 226, "create_floor": 122, "create_room": 87, "create_point_based_element_door": 293, "create_point_based_element_window": 198, "create_view": 50, "create_schedule": 30, "create_sheet": 39, "place_viewport": 142},
+    "verification_ms": {
+      "wall": {"ai_element_filter": 51, "get_element_parameters": 44, "get_element_solid_geometry": 75, "get_current_view_elements": 29, "get_project_info": 5, "analyze_model_statistics": 15, "get_warnings": 12, "check_model_health": 18},
+      "floor": {"ai_element_filter": 14, "get_element_parameters": 8, "get_element_solid_geometry": 4, "get_current_view_elements": 7, "get_project_info": 6, "analyze_model_statistics": 14, "get_warnings": 2, "check_model_health": 21},
+      "room": {"ai_element_filter": 21, "get_element_parameters": 16, "get_element_solid_geometry": 3, "get_current_view_elements": 10, "get_project_info": 4, "analyze_model_statistics": 33, "get_warnings": 19, "check_model_health": 8},
+      "door": {"ai_element_filter": 35, "get_element_parameters": 8, "get_element_solid_geometry": 11, "get_current_view_elements": 5, "get_project_info": 5, "analyze_model_statistics": 12, "get_warnings": 3, "check_model_health": 18},
+      "window": {"ai_element_filter": 19, "get_element_parameters": 5, "get_element_solid_geometry": 5, "get_current_view_elements": 3, "get_project_info": 7, "analyze_model_statistics": 16, "get_warnings": 2, "check_model_health": 13},
+      "view": {"get_element_parameters": 9, "get_current_view_info": 1, "get_project_info": 3, "analyze_model_statistics": 18, "get_warnings": 2, "check_model_health": 26},
+      "schedule": {"list_schedulable_fields": 79, "get_schedule_data": 37, "get_element_parameters": 6, "get_project_info": 3, "analyze_model_statistics": 16, "get_warnings": 2, "check_model_health": 11},
+      "sheet": {"get_element_parameters": 4, "get_project_info": 3, "analyze_model_statistics": 14, "get_warnings": 1, "check_model_health": 12},
+      "viewport": {"get_element_parameters": 8, "get_project_info": 2, "analyze_model_statistics": 16, "get_warnings": 1, "check_model_health": 8}
+    }
+  },
+  "persistence": {
+    "pre_cycle": {"sha256": "15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D", "bytes": 4366336, "source": "verified immediately after immutable copy"},
+    "pre_save_get_file_hash": {"sha256": null, "bytes_reported": 4366336, "error": "The process cannot access the file because it is being used by another process.", "interpretation": "The open Revit document locked the file; the pre-cycle copy hash above is the valid pre-open hash."},
+    "save": {
+      "helper": ".tmp-hz.py",
+      "operation": "horizun_save_document",
+      "saved": true,
+      "outcome": "saved_verified",
+      "document": "LAB_RC_DOC",
+      "path": "C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/revitcortex/LAB_RC_DOC.rvt",
+      "was_modified_before": true,
+      "is_modified_after": false,
+      "bytes_changed_on_disk": true,
+      "verified_by": "sha256 read before/after",
+      "sha256_before": "15e0f70df13a9ad0635a7651b3edff59e76dcfe582c25a7ea759a4b0698299d",
+      "sha256_after": "8820c791781f7f411aad5d3c8d044257a9130933fab86e0d19fe18383d2059ba",
+      "file_before": {"modified_utc": "2026-09-15T13:52:28.5592752Z", "bytes": 4366336},
+      "file_after": {"modified_utc": "2026-09-15T17:48:55.168419Z", "bytes": 4415488},
+      "bridge_queue_execution_and_wait_ms": 845,
+      "helper_wall_clock_ms": 1340,
+      "raw_output": ".tmp-t15-save-out.json"
+    },
+    "post_save_get_file_hash": {"sha256": null, "bytes_reported": 4415488, "error": "The process cannot access the file because it is being used by another process.", "interpretation": "The independent save response contains the authoritative before/after hashes while Revit holds the file lock."},
+    "final_read_only_file_check": {"sha256": "8820C791781F7F411AAD5D3C8D044257A9130933FAB86E0D19FE18383D2059BA", "bytes": 4415488, "source": "Get-FileHash after the final process observation found no Revit.exe", "process_state_at_check": "PID 39140 absent; RevitAccelerator PID 2760 remained alive"},
+    "close_attempt": {
+      "helper": ".tmp-hz.py",
+      "operation": "horizun_document_session close",
+      "started": false,
+      "file_written": false,
+      "helper_wall_clock_ms": 3422,
+      "error_exact": "Error: Revit has a MODAL DIALOG open: 'Segurança - Complemento não certificado' [#32770]. 'horizun_document_session' was queued but Revit does not service the bridge until the dialog is answered by a human, so the request was removed from the queue after 3000 ms instead of holding this call for the full 600000 ms timeout. It NEVER STARTED: nothing ran and nothing was written. The dialog persisted across 3 probes about a second apart, so it is not one the bridge auto-cancels during a command - it predates this request. Answer or close it in the Revit UI (check every monitor: it can open on another screen) and retry.",
+      "raw_output": ".tmp-t15-close-out.json"
+    },
+    "reopen": {"attempted": false, "reason": "Stopped exactly at the modal boundary; .tmp-t15-reopen.json remains prepared for a human-resolved retry.", "status": "PENDING_MANUAL_DIALOG"},
+    "status": "BLOCKED_CLOSE_REOPEN",
+    "pass_rule": "Full persistence PASS is withheld because close/reopen and post-reopen independent reads were not completed."
+  },
+  "raw_probe_outputs": [
+    ".tmp-t15-open-out.json",
+    ".tmp-t15-empty-out.json",
+    ".tmp-t15-family-types-out.json",
+    ".tmp-t15-wall-out.json",
+    ".tmp-t15-floor-out.json",
+    ".tmp-t15-room-out.json",
+    ".tmp-t15-door-out.json",
+    ".tmp-t15-window-out.json",
+    ".tmp-t15-view-out.json",
+    ".tmp-t15-schedule-out.json",
+    ".tmp-t15-schedule-data-out.json",
+    ".tmp-t15-sheet-out.json",
+    ".tmp-t15-place-viewport-out.json",
+    ".tmp-t15-save-out.json",
+    ".tmp-t15-close-out.json"
+  ],
+  "surface_audit": {"updated": false, "reason": "No new relevant Cortex surface was discovered beyond the canonical tool map and catalog; the observed room warning and schedule field skip are recorded here as run evidence."}
+}

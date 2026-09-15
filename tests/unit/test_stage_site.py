@@ -12,11 +12,11 @@ from pathlib import Path
 
 import pytest
 
-from amanda_agent.bim.models import BimStage
+from amanda_agent.bim.models import BimStage, DesiredElement
 from amanda_agent.bim.stages import (
     CheckStatus,
-    ExecutionMode,
     EvidenceScope,
+    ExecutionMode,
     MissingCapabilityError,
     PreflightRequest,
     StageError,
@@ -301,3 +301,32 @@ def test_site_checkpoint_label_is_r02_site(tmp_path: Path):
 
     assert plan.checkpoint_label == stage_checkpoint_label(BimStage.R02)
     assert plan.checkpoint_label == "R02_SITE"
+
+
+def test_verified_toposolid_uses_an_injected_external_desired_element_planner(
+    tmp_path: Path,
+):
+    calls = {}
+
+    def planner(footprint, *, elevation, name):
+        calls.update(footprint=footprint, elevation=elevation, name=name)
+        return DesiredElement(
+            logical_id="SITE-TOPO-01",
+            category="Toposolid",
+            geometry={"footprint": footprint, "elevation_m": elevation},
+            properties={"name": name},
+            requirement_id="P05-T10:TOPOGRAPHY",
+            design_option="SELECTED_SOLUTION",
+            generation_run="run-01",
+        )
+
+    plan = plan_site_stage(
+        _request(tmp_path, _verified_site()),
+        toposolid_planner=planner,
+    )
+
+    assert calls["name"] == "SITE-TOPO-01"
+    assert calls["elevation"] == 1.0
+    assert plan.toposolid is not None
+    assert plan.toposolid.desired_element.category == "Toposolid"
+    assert plan.toposolid.operation.payload["desired_element"]["logical_id"] == "SITE-TOPO-01"

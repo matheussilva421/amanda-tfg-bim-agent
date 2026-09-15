@@ -1,0 +1,440 @@
+2026-09-15T16:02:44.7217421-03:00 last PASS checkpoint before sha256=8CCAB171E89FA4AC414F9CA3C57B5C4161CD7EE6DD61F45F86529703EE281CB2 bytes=4370432
+2026-09-15T16:02:44.7324065-03:00 baseline before sha256=15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D bytes=4366336
+2026-09-15T16:02:44.7339951-03:00 interrupted mutation result present before recovery=False
+2026-09-15T16:02:44.7444311-03:00 held recovery addin Amanda.ToolLab.Host.addin sha256=31B656141502BF1388A039F23B412FF236628870B701B0F657C78FD6FC7B64F6; Horizun remains installed
+2026-09-15T16:02:44.7495993-03:00 held recovery addin RevitCortex.addin sha256=C9E81E87D046E6D0A4F1BC71C7F2F56E775C32EDE78FFCDDA3CAF7F22A4AD94C; Horizun remains installed
+2026-09-15T16:02:44.8209266-03:00 started new own Revit pid=28172 start_time=2026-09-15T16:02:44.8062098-03:00 checkpoint=C:\Users\slvma\Downloads\Github\Projeto Amanda\revit\lab\custom-api\T18_LAST_PASS.rvt
+Error: no Revit is reachable. Is Revit running with the Horizun add-in loaded?
+isError: true
+Error: no Revit is reachable. Is Revit running with the Horizun add-in loaded?
+isError: true
+Error: no Revit is reachable. Is Revit running with the Horizun add-in loaded?
+isError: true
+{
+
+  "status": "healthy",
+
+  "horizun_version": "1.3.3",
+
+  "contract_hash": "8b9600f5274d7dffb6e5bd5f",
+
+  "python_runtime": {
+
+    "state": "cold",
+
+    "initialization_attempts": 0,
+
+    "initialization_elapsed_ms": null,
+
+    "last_error": null,
+
+    "first_call_requires_initialization": true
+
+  },
+
+  "horizun_hub": {
+
+    "product": "Horizun Revit MCP",
+
+    "part_of": "Horizun Hub",
+
+    "url": "https://horizunhub.com",
+
+    "note": "This bridge is the generic, organisation-neutral half: transport, safety guards and a tool surface over the Revit API. The delivery workflows built on it - model audits, classification catalogues, family homologation, pre-delivery QA - live in Horizun Hub, not in this add-in."
+
+  },
+
+  "horizun_commit": "cc4ea04e9ecfe547ad349f22e0864019ce1ead1f",
+
+  "built_from_clean_tree": true,
+
+  "addin_assembly": {
+
+    "path": "C:\\Users\\slvma\\AppData\\Roaming\\Autodesk\\Revit\\Addins\\2027\\Horizun\\Horizun.Revit.dll",
+
+    "sha256": "3f70b2d5929d345573e039f47858b3d51b23a82ccf67cb03d0ab0116671a7218",
+
+    "bytes": 4827648,
+
+    "written_utc": "2026-09-15T11:34:11.762552Z",
+
+    "means": "the add-in assembly Revit loaded in THIS process, hashed here rather than guessed from a deployment path. A null field could not be read and is not a zero."
+
+  },
+
+  "log_file": "C:\\Users\\slvma\\.horizun\\logs\\revit-2027.log",
+
+  "data_paths": {
+
+    "data_root": "C:\\Users\\slvma\\.horizun",
+
+    "resolved_from": "SpecialFolder.UserProfile",
+
+    "settings_path": "C:\\Users\\slvma\\.horizun\\settings.json",
+
+    "discovery_path": "C:\\Users\\slvma\\.horizun\\discovery",
+
+    "jobs_path": "C:\\Users\\slvma\\.horizun\\jobs",
+
+    "logs_path": "C:\\Users\\slvma\\.horizun\\logs",
+
+    "access": {
+
+      "data_root": {
+
+        "path": "C:\\Users\\slvma\\.horizun",
+
+        "exists": true,
+
+        "readable": true,
+
+        "writable": true
+
+      },
+
+      "settings_path": {
+
+        "path": "C:\\Users\\slvma\\.horizun\\settings.json",
+
+        "exists": true,
+
+        "readable": true,
+
+        "writable": true
+
+      },
+
+      "discovery_path": {
+
+        "path": "C:\\Users\\slvma\\.horizun\\discovery",
+
+        "exists": true,
+
+        "readable": true,
+
+        "writable": true
+
+      },
+
+      "jobs_path": {
+
+        "path": "C:\\Users\\slvma\\.horizun\\jobs",
+
+        "exists": true,
+
+        "readable": true,
+
+        "writable": true
+
+      },
+
+      "logs_path": {
+
+        "path": "C:\\Users\\slvma\\.horizun\\logs",
+
+        "exists": true,
+
+        "readable": true,
+
+        "writable": true
+
+      }
+
+    },
+
+    "why_not_localappdata": "LocalApplicationData is redirected per-package under MSIX/AppContainer, and is a different folder outright under a different user or elevation context. The MCP server is launched by the MCP client and Revit is launched by the user, so the two can resolve it differently and neither is told - the server then writes jobs Revit never sees and reads a discovery directory the add-in never wrote to, and reports 'no Revit has published a bridge' with Revit running. The user profile is not package-redirected, so both halves reach one folder.",
+
+    "legacy_data_root": "C:\\Users\\slvma\\AppData\\Local\\Horizun",
+
+    "legacy_file_count": 3,
+
+    "legacy_note": "State from before 0.3 is still in the old %LOCALAPPDATA% location. NOTHING READS IT - it is named here so a machine with old discovery files does not look like a machine with a broken bridge. Delete it when you are satisfied nothing is missing."
+
+  },
+
+  "revit_version": "2027",
+
+  "revit_build": "27.2.0.39",
+
+  "revit_name": "Autodesk Revit 2027",
+
+  "revit_language": "Brazilian_Portuguese",
+
+  "username": "matheussilva421NWUNZ",
+
+  "process_id": 28172,
+
+  "tool_packs": {
+
+    "source": "default",
+
+    "restricting": false,
+
+    "active": null,
+
+    "chosen": null,
+
+    "added_by_dependency": null,
+
+    "problem": null,
+
+    "tools_visible": 80,
+
+    "tools_total": 80,
+
+    "known_packs": [
+
+      "administration",
+
+      "architecture",
+
+      "audit",
+
+      "coordination",
+
+      "core",
+
+      "documentation",
+
+      "family",
+
+      "interoperability",
+
+      "mep",
+
+      "model",
+
+      "planimetry",
+
+      "powerbi",
+
+      "read",
+
+      "schedules",
+
+      "structure",
+
+      "unsafe_code"
+
+    ]
+
+  },
+
+  "operational_controls": {
+
+    "permission_profile": "full_write",
+
+    "mcp_paused": false,
+
+    "force_read_only_on_workshared": false,
+
+    "note": "These are local machine controls shared by the ribbon and MCP server. When MCP is paused only horizun_health remains callable; central protection refuses potential writes to a workshared active document."
+
+  },
+
+  "current_action": "Revit is executing 'horizun_health' (0 s elapsed).",
+
+  "registry": {
+
+    "clean": true,
+
+    "registered": 73,
+
+    "contract_commands": 73,
+
+    "missing": [],
+
+    "unadvertised": [],
+
+    "duplicates": [],
+
+    "case_mismatches": [],
+
+    "means": "every plugin command the contract advertises is registered exac
+--- structuredContent ---
+{"status": "healthy", "horizun_version": "1.3.3", "contract_hash": "8b9600f5274d7dffb6e5bd5f", "python_runtime": {"state": "cold", "initialization_attempts": 0, "initialization_elapsed_ms": null, "last_error": null, "first_call_requires_initialization": true}, "horizun_hub": {"product": "Horizun Revit MCP", "part_of": "Horizun Hub", "url": "https://horizunhub.com", "note": "This bridge is the generic, organisation-neutral half: transport, safety guards and a tool surface over the Revit API. The delivery workflows built on it - model audits, classification catalogues, family homologation, pre-delivery QA - live in Horizun Hub, not in this add-in."}, "horizun_commit": "cc4ea04e9ecfe547ad349f22e0864019ce1ead1f", "built_from_clean_tree": true, "addin_assembly": {"path": "C:\\Users\\slvma\\AppData\\Roaming\\Autodesk\\Revit\\Addins\\2027\\Horizun\\Horizun.Revit.dll", "sha256": "3f70b2d5929d345573e039f47858b3d51b23a82ccf67cb03d0ab0116671a7218", "bytes": 4827648, "written_utc": "2026-09-15T11:34:11.762552Z", "means": "the add-in assembly Revit loaded in THIS process, hashed here rather than guessed from a deployment path. A null field could not be read and is not a zero."}, "log_file": "C:\\Users\\slvma\\.horizun\\logs\\revit-2027.log", "data_paths": {"data_root": "C:\\Users\\slvma\\.horizun", "resolved_from": "SpecialFolder.UserProfile", "settings_path": "C:\\Users\\slvma\\.horizun\\settings.json", "discovery_path": "C:\\Users\\slvma\\.horizun\\discovery", "jobs_path": "C:\\Users\\slvma\\.horizun\\jobs", "logs_path": "C:\\Users\\slvma\\.horizun\\logs", "access": {"data_root": {"path": "C:\\Users\\slvma\\.horizun", "exists": true, "readable": true, "writable": true}, "settings_path": {"path": "C:\\Users\\slvma\\.horizun\\settings.json", "exists": true, "readable": true, "writable": true}, "discovery_path": {"path": "C:\\Users\\slvma\\.horizun\\discovery", "exists": true, "readable": true, "writable": true}, "jobs_path": {"path": "C:\\Users\\slvma\\.horizun\\jobs", "exists": true, "readable": true, "writable": true}, "logs_path": {"path": "C:\\Users\\slvma\\.horizun\\logs", "exists": true, "readable": true, "writable": true}}, "why_not_localappdata": "LocalApplicationData is redirected per-package under MSIX/AppContainer, and is a different folder outright under a different user or elevation context. The MCP server is launched by the MCP client and Revit is launched by the user, so the two can resolve it differently and neither is told - the server then writes jobs Revit never sees and reads a discovery directory the add-in never wrote to, and reports 'no Revit has published a bridge' with Revit running. The user profile is not package-redirected, so both halves reach one folder.", "legacy_data_root": "C:\\Users\\slvma\\AppData\\Local\\Horizun", "legacy_file_count": 3, "legacy_note": "State from before 0.3 is still in the old %LOCALAPPDATA% location. NOTHING READS IT - it is named here so a machine with old discovery files does not look like a machine with a broken bridge. Delete it when you are satisfied nothing is missing."}, "revit_version": "2027", "revit_build": "27.2.0.39", "revit_name": "Autodesk Revit 2027", "revit_language": "Brazilian_Portuguese", "username": "matheussilva421NWUNZ", "process_id": 28172, "tool_packs": {"source": "default", "restricting": false, "active": null, "chosen": null, "added_by_dependency": null, "problem": null, "tools_visible": 80, "tools_total": 80, "known_packs": ["administration", "architecture", "audit", "coordination", "core", "documentation", "family", "interoperability", "mep", "model", "planimetry", "powerbi", "read", "schedules", "structure", "unsafe_code"]}, "operational_controls": {"permission_profile": "full_write", "mcp_paused": false, "force_read_only_on_workshared": false, "note": "These are local machine controls shared by the ribbon and MCP server. When MCP is paused only horizun_health remains callable; central protection refuses potential writes to a workshared active document."}, "current_action": "Revit is executing 'horizun_health' (0 s elapsed).", "registry": {"clean": true, "registered": 73, "contract_commands": 73, "missing": [], "unadvertised": [], "duplicates": [], "case_mismatches": [], "means": "every plugin command the contract advertises is registered exactly once, and nothing is registered that the contract does not name."}, "jobs": {"jobs_path": "C:\\Users\\slvma\\.horizun\\jobs", "records": 9, "examined": 9, "truncated": false, "queued": 0, "running": 0, "interrupted": 0, "running_or_died": 0, "finished_ok": 5, "finished_failed": 4, "unreadable": 0, "note": null}, "timings": {"scope": "this process session only; resets when Revit restarts", "tools_tracked": 0, "tools_dropped": 0, "tools": {}}, "clients": {"other_clients_connected": 0, "distinct_clients_in_window": 1, "unidentified_connections_in_window": 0, "window_seconds": 600, "clients_seen": [{"pid": 35240, "process_name": "horizun-mcp", "seconds_since_last_request": 9, "process_alive": true}]
+2026-09-15T16:03:12.1151862-03:00 recovery provider health status=healthy process_id=28172 revit_version=2027 build=27.2.0.39
+2026-09-15T16:03:12.1175032-03:00 recovery active document title=T18_LAST_PASS path=C:\Users\slvma\Downloads\Github\Projeto Amanda\revit\lab\custom-api\T18_LAST_PASS.rvt
+2026-09-15T16:03:12.1196339-03:00 recovery controls permission_profile=full_write mcp_paused=False
+{
+
+  "document": "T18_LAST_PASS",
+
+  "scope": "model",
+
+  "view_id": null,
+
+  "include_links": false,
+
+  "matched_total": 1,
+
+  "returned": 1,
+
+  "offset": 0,
+
+  "truncated": false,
+
+  "next_cursor": null,
+
+  "result_set_fingerprint": "123600575aea38fa",
+
+  "coverage_complete": true,
+
+  "unreadable_total": 0,
+
+  "unreadable_shown": 0,
+
+  "unreadable_truncated": false,
+
+  "unreadable": [],
+
+  "federated_coverage": {
+
+    "coverage_complete": true,
+
+    "include_links": false,
+
+    "link_instances_total": 0,
+
+    "link_instances_loaded": 0,
+
+    "link_instances_unavailable": 0,
+
+    "sources": [
+
+      {
+
+        "source_kind": "host",
+
+        "source_model": "T18_LAST_PASS",
+
+        "link_instance_id": null,
+
+        "visibility_coverage": {
+
+          "coverage_complete": true,
+
+          "is_workshared": false,
+
+          "worksets_total": null,
+
+          "worksets_open": null,
+
+          "worksets_closed": null,
+
+          "worksets_read_error": null,
+
+          "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+
+        }
+
+      }
+
+    ],
+
+    "unavailable_links": [],
+
+    "note": "Every considered source was loaded with all user worksets open."
+
+  },
+
+  "summary": {
+
+    "by_category": {
+
+      "Paredes": 1
+
+    },
+
+    "by_level": {
+
+      "Level 1": 1
+
+    },
+
+    "by_source": {
+
+      "host:T18_LAST_PASS": 1
+
+    }
+
+  },
+
+  "rows": [
+
+    {
+
+      "element_id": 328658,
+
+      "category": "Paredes",
+
+      "name": "Interior - 138 mm Divis�ria (1-hr)",
+
+      "family": "Parede b�sica",
+
+      "type": "Interior - 138 mm Divis�ria (1-hr)",
+
+      "type_id": 396,
+
+      "level": "Level 1",
+
+      "source_kind": "host",
+
+      "source_model": "T18_LAST_PASS",
+
+      "bounding_box": {
+
+        "min": [
+
+          0.0,
+
+          -69.24999999999999,
+
+          0.0
+
+        ],
+
+        "max": [
+
+          4999.999999999999,
+
+          69.24999999999999,
+
+          2999.9999999999995
+
+        ]
+
+      }
+
+    }
+
+  ],
+
+  "bridge_queue": {
+
+    "queued": false,
+
+    "ahead_at_admission": 0,
+
+    "waited_ms": 1,
+
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+
+    "capacity": 16,
+
+    "execution_and_wait_ms": 49
+
+  }
+
+}
+--- structuredContent ---
+{"document": "T18_LAST_PASS", "scope": "model", "view_id": null, "include_links": false, "matched_total": 1, "returned": 1, "offset": 0, "truncated": false, "next_cursor": null, "result_set_fingerprint": "123600575aea38fa", "coverage_complete": true, "unreadable_total": 0, "unreadable_shown": 0, "unreadable_truncated": false, "unreadable": [], "federated_coverage": {"coverage_complete": true, "include_links": false, "link_instances_total": 0, "link_instances_loaded": 0, "link_instances_unavailable": 0, "sources": [{"source_kind": "host", "source_model": "T18_LAST_PASS", "link_instance_id": null, "visibility_coverage": {"coverage_complete": true, "is_workshared": false, "worksets_total": null, "worksets_open": null, "worksets_closed": null, "worksets_read_error": null, "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."}}], "unavailable_links": [], "note": "Every considered source was loaded with all user worksets open."}, "summary": {"by_category": {"Paredes": 1}, "by_level": {"Level 1": 1}, "by_source": {"host:T18_LAST_PASS": 1}}, "rows": [{"element_id": 328658, "category": "Paredes", "name": "Interior - 138 mm Divis�ria (1-hr)", "family": "Parede b�sica", "type": "Interior - 138 mm Divis�ria (1-hr)", "type_id": 396, "level": "Level 1", "source_kind": "host", "source_model": "T18_LAST_PASS", "bounding_box": {"min": [0.0, -69.24999999999999, 0.0], "max": [4999.999999999999, 69.24999999999999, 2999.9999999999995]}}], "bridge_queue": {"queued": false, "ahead_at_admission": 0, "waited_ms": 1, "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)", "capacity": 16, "execution_and_wait_ms": 49}}
+2026-09-15T16:03:12.6592371-03:00 recovery read matched_total=1 returned=1 coverage_complete=True unreadable_total=0
+2026-09-15T16:03:12.6672565-03:00 recovery read wall element_id=328658 bbox={"min":[0.0,-69.24999999999999,0.0],"max":[4999.999999999999,69.24999999999999,2999.9999999999995]}
+2026-09-15T16:03:12.6732541-03:00 recovery cleanup ownership proof pid=28172 observed_start=2026-09-15T16:02:44.8062098-03:00 expected_start=2026-09-15T16:02:44.8062098-03:00 start_time_match=True
+2026-09-15T16:03:12.6826557-03:00 new recovery Revit stopped after health/read smoke
+2026-09-15T16:03:12.6985693-03:00 restored addin Amanda.ToolLab.Host.addin hash_match=True sha256=31B656141502BF1388A039F23B412FF236628870B701B0F657C78FD6FC7B64F6
+2026-09-15T16:03:12.7066173-03:00 restored addin RevitCortex.addin hash_match=True sha256=C9E81E87D046E6D0A4F1BC71C7F2F56E775C32EDE78FFCDDA3CAF7F22A4AD94C
+2026-09-15T16:03:12.7080913-03:00 interrupted mutation result present after recovery=False
+2026-09-15T16:03:13.2528058-03:00 last PASS checkpoint after sha256=8CCAB171E89FA4AC414F9CA3C57B5C4161CD7EE6DD61F45F86529703EE281CB2 intact=True
+2026-09-15T16:03:13.2531692-03:00 baseline after sha256=15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D intact=True

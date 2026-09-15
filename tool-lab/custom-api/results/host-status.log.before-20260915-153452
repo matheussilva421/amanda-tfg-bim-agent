@@ -1,0 +1,14 @@
+2026-09-15T18:33:39.7570745Z OnStartup: entering
+2026-09-15T18:33:39.7596338Z OnStartup: external event raised
+2026-09-15T18:33:50.3523376Z handler: Execute entered
+2026-09-15T18:33:50.4534099Z step open-work-document: PASS (94 ms) 
+2026-09-15T18:33:50.6402662Z step prepare-fixture-level: PASS (186 ms) 
+2026-09-15T18:33:50.6432638Z step snapshot-walls-before: PASS (2 ms) 
+2026-09-15T18:33:50.7719449Z step invoke-external-command: PASS (128 ms) 
+2026-09-15T18:33:50.7750692Z step locate-new-wall: PASS (2 ms) 
+2026-09-15T18:33:50.7777287Z step verify-geometry-in-session: PASS (2 ms) 
+2026-09-15T18:33:51.4458376Z step save-document: PASS (667 ms) 
+2026-09-15T18:33:54.4664286Z step activate-standby-document: PASS (3019 ms) 
+2026-09-15T18:33:54.6316319Z step close-document: FAIL (164 ms) The referenced object is not valid, possibly because it has been deleted from the database, or its creation was undone.
+2026-09-15T18:33:54.6542016Z handler: job failed: The referenced object is not valid, possibly because it has been deleted from the database, or its creation was undone.
+2026-09-15T18:33:54.6600842Z result written to C:\Users\slvma\Downloads\Github\Projeto Amanda\tool-lab\custom-api\results\t16-host-create.json

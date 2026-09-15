@@ -1,0 +1,206 @@
+schema_version: 1
+generated_utc: '2026-09-15T18:50:00Z'
+preferred_provider: horizun
+entries:
+- provider: horizun
+  status: PASS
+  priority: 10
+  provider_commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+  transport_provider: horizun-revit-mcp
+  tool_schema_hash: sha256:8b9600f5274d7dffb6e5bd5f
+  tested_scope:
+    operation: wall
+    writes: true
+  evidence_scope: PROVIDER
+  revit_build: 20260716_1515(x64)
+  save_reopen: true
+  independent_query: true
+  transport_healthy: true
+  warnings_delta: 0
+  evidence:
+  - tool-lab/horizun/results/t09-wall.json::sha256=1dbe7eb516a541e0cf8ce28d9997a568b3767f7218404b2254e0e3870d7bbb3c
+  - tool-lab/revitcortex/results/t15-cortex-fixture.json::sha256=cb696597ce833cac36ddee883e056a22863d608d05c089544ba7eeeaaf639171
+  - tool-lab/custom-api/results/t16-host-create.json::sha256=8cd174f15826303ffe3274f4bac94720aa75126a23a6e99f81101e729685a0fa
+  limitations: []
+- provider: horizun
+  status: PASS
+  priority: 10
+  provider_commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+  transport_provider: horizun-revit-mcp
+  tool_schema_hash: sha256:8b9600f5274d7dffb6e5bd5f
+  tested_scope:
+    operation: floor
+    writes: true
+  evidence_scope: PROVIDER
+  revit_build: 20260716_1515(x64)
+  save_reopen: true
+  independent_query: true
+  transport_healthy: true
+  warnings_delta: 0
+  evidence:
+  - tool-lab/horizun/results/t10-floor.json::sha256=ab2dbee3cd351d206adca98b4b3676597d838e68fb6eb54fbea67c5ff53ff9c7
+  limitations: []
+- provider: horizun
+  status: PASS
+  priority: 10
+  provider_commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+  transport_provider: horizun-revit-mcp
+  tool_schema_hash: sha256:8b9600f5274d7dffb6e5bd5f
+  tested_scope:
+    operation: room
+    writes: true
+  evidence_scope: PROVIDER
+  revit_build: 20260716_1515(x64)
+  save_reopen: true
+  independent_query: true
+  transport_healthy: true
+  warnings_delta: 0
+  evidence:
+  - tool-lab/horizun/results/t10-room.json::sha256=9fb9e56ec228b791c96497dc03a2140a70006495a9877e7bc034a1ef58703d95
+  limitations: []
+- provider: horizun
+  status: PASS
+  priority: 10
+  provider_commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+  transport_provider: horizun-revit-mcp
+  tool_schema_hash: sha256:8b9600f5274d7dffb6e5bd5f
+  tested_scope:
+    operation: level
+    writes: false
+  evidence_scope: PROVIDER
+  revit_build: 20260716_1515(x64)
+  save_reopen: true
+  independent_query: true
+  transport_healthy: true
+  warnings_delta: 0
+  evidence:
+  - tool-lab/horizun/results/t08-apply.json::sha256=b02a7a172c00f66d1251fe9743313221e2a1efb88084dd95852534706c279f7c
+  limitations: []
+- provider: horizun
+  status: PASS
+  priority: 10
+  provider_commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+  transport_provider: horizun-revit-mcp
+  tool_schema_hash: sha256:8b9600f5274d7dffb6e5bd5f
+  tested_scope:
+    operation: toposolid
+    writes: true
+  evidence_scope: PROVIDER
+  revit_build: 20260716_1515(x64)
+  save_reopen: true
+  independent_query: true
+  transport_healthy: true
+  warnings_delta: 0
+  evidence:
+  - tool-lab/horizun/results/t12-toposolid.json::sha256=349716b4094e0b7d55b9026266829864018bb2cbc781c661b812926d1699ded5
+  limitations: []
+- provider: horizun
+  status: PASS
+  priority: 10
+  provider_commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+  transport_provider: horizun-revit-mcp
+  tool_schema_hash: sha256:8b9600f5274d7dffb6e5bd5f
+  tested_scope:
+    operation: views_sheet_schedule
+    writes: true
+  evidence_scope: PROVIDER
+  revit_build: 20260716_1515(x64)
+  save_reopen: true
+  independent_query: true
+  transport_healthy: true
+  warnings_delta: 0
+  evidence:
+  - tool-lab/horizun/results/t11-views-sheet.json::sha256=29e0393c3659fa2de75f9b3af150e05107fc497adfca3eb524e5729c7bd48d8b
+  limitations: []
+- provider: horizun
+  status: PASS
+  priority: 10
+  provider_commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+  transport_provider: horizun-revit-mcp
+  tool_schema_hash: sha256:8b9600f5274d7dffb6e5bd5f
+  tested_scope:
+    operation: hosted_openings
+    writes: true
+  evidence_scope: PROVIDER
+  revit_build: 20260716_1515(x64)
+  save_reopen: true
+  independent_query: true
+  transport_healthy: true
+  warnings_delta: 0
+  evidence:
+  - tool-lab/horizun/results/t11-dimension-references.json::sha256=0b795f6da57463633391359bcefaa6a47c831fb0807430547a1380cb3a963cd2
+  limitations: []
+- provider: horizun
+  status: PASS
+  priority: 10
+  provider_commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+  transport_provider: horizun-revit-mcp
+  tool_schema_hash: sha256:8b9600f5274d7dffb6e5bd5f
+  tested_scope:
+    operation: export_ifc_pdf_dwg
+    writes: true
+  evidence_scope: PROVIDER
+  revit_build: 20260716_1515(x64)
+  save_reopen: true
+  independent_query: true
+  transport_healthy: true
+  warnings_delta: 0
+  evidence:
+  - tool-lab/horizun/results/t11-export-matrix.json::sha256=6a175630091fd071c95fcc7a107972cdf2682c75ae8b719f4666371433c18387
+  limitations: []
+- provider: horizun
+  status: PASS
+  priority: 10
+  provider_commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+  transport_provider: horizun-revit-mcp
+  tool_schema_hash: sha256:8b9600f5274d7dffb6e5bd5f
+  tested_scope:
+    operation: document_session
+    writes: true
+  evidence_scope: PROVIDER
+  revit_build: 20260716_1515(x64)
+  save_reopen: true
+  independent_query: true
+  transport_healthy: true
+  warnings_delta: 0
+  evidence:
+  - tool-lab/revitcortex/results/t15-reread.json::sha256=706592df2e8421ca29f56e31890a3f438b1c5c8eafc3bf1f98a0465eba7e6867
+  - tool-lab/custom-api/results/t16-host-create.json::sha256=8cd174f15826303ffe3274f4bac94720aa75126a23a6e99f81101e729685a0fa
+  limitations: []
+- provider: horizun
+  status: PASS
+  priority: 10
+  provider_commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+  transport_provider: horizun-revit-mcp
+  tool_schema_hash: sha256:8b9600f5274d7dffb6e5bd5f
+  tested_scope:
+    operation: execute_python
+    writes: true
+  evidence_scope: PROVIDER
+  revit_build: 20260716_1515(x64)
+  save_reopen: true
+  independent_query: true
+  transport_healthy: true
+  warnings_delta: 0
+  evidence:
+  - tool-lab/horizun/health-probe-2026-09-15.json::sha256=264f41ec1db64e857872e1181add651d3cb716c2c04bc61489cbdad527bfce7a
+  limitations: []
+- provider: custom-api
+  status: PASS
+  priority: 30
+  provider_commit: local-source
+  transport_provider: amanda-tool-lab-host
+  tool_schema_hash: sha256:local
+  tested_scope:
+    operation: create_wall
+    writes: true
+  evidence_scope: PROVIDER
+  revit_build: 20260716_1515(x64)
+  save_reopen: true
+  independent_query: true
+  transport_healthy: true
+  warnings_delta: 0
+  evidence:
+  - tool-lab/custom-api/results/t16-host-create.json::sha256=8cd174f15826303ffe3274f4bac94720aa75126a23a6e99f81101e729685a0fa
+  limitations:
+  - 'fallback path only: prefer a typed provider when its evidence is equal or better'

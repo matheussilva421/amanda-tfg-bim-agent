@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "task": "P02-T18",
+  "verdict": "PASS_WITH_WARNINGS",
+  "crash": {
+    "checkpoint_path": "revit/lab/custom-api/T18_LAST_PASS.rvt",
+    "checkpoint_sha256": "8CCAB171E89FA4AC414F9CA3C57B5C4161CD7EE6DD61F45F86529703EE281CB2",
+    "work_path": "revit/lab/custom-api/T18_CRASH_WORK.rvt",
+    "work_sha256_before": "8CCAB171E89FA4AC414F9CA3C57B5C4161CD7EE6DD61F45F86529703EE281CB2",
+    "work_sha256_after": "8CCAB171E89FA4AC414F9CA3C57B5C4161CD7EE6DD61F45F86529703EE281CB2",
+    "work_bytes": 4370432,
+    "host_pid": 16556,
+    "host_start_time": "2026-09-15T15:56:48.5563207-03:00",
+    "start_time_proven": true,
+    "job_expected_pid": 16556,
+    "work_rvt_exact": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\custom-api\\T18_CRASH_WORK.rvt",
+    "launch_token_sha256": "937F3A566F46B20F23DAD1B5779EBA1A6EB4DDF8E8EA4D2D10BDC82B3DCA8514",
+    "ownership_guard_acceptance": "host reached invoke-external-command after opening the exact work_rvt; a pid/token/document mismatch would have stood down",
+    "mutation_marker": "step invoke-external-command: PASS",
+    "save_marker_present": false,
+    "result_path": "tool-lab/custom-api/results/t18-interrupted-host-result.json",
+    "result_present_after_crash": false,
+    "crash_action": "Stop-Process only after StartTime equality",
+    "journal_wall_id": 328659,
+    "journal_transaction": "Transaction Successful",
+    "journal_save_marker_present": false
+  },
+  "recovery": {
+    "new_host_pid": 28172,
+    "new_start_time": "2026-09-15T16:02:44.8062098-03:00",
+    "health_status": "healthy",
+    "health_process_id": 28172,
+    "revit_version": "2027",
+    "revit_build": "27.2.0.39",
+    "active_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\custom-api\\T18_LAST_PASS.rvt",
+    "active_document_exact": true,
+    "permission_profile": "full_write",
+    "mcp_paused": false,
+    "read_element_id": 328658,
+    "read_matched_total": 1,
+    "read_returned": 1,
+    "read_coverage_complete": true,
+    "read_unreadable_total": 0,
+    "interrupted_result_present_after_recovery": false,
+    "checkpoint_hash_after": "8CCAB171E89FA4AC414F9CA3C57B5C4161CD7EE6DD61F45F86529703EE281CB2",
+    "baseline_hash": "15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D"
+  },
+  "code_reconciliation": {
+    "checkpoint_guard": "src/amanda_agent/bim/checkpoints.py",
+    "session_running_gate": "src/amanda_agent/session/end.py",
+    "maintenance_provider_gate": "src/amanda_agent/maintenance/policy.py",
+    "deterministic_diff": "src/amanda_agent/bim/diff.py",
+    "compensating_plan": "src/amanda_agent/bim/plan.py",
+    "persisted_recovery_state": "src/amanda_agent/tools/circuit_breaker.py"
+  },
+  "evidence": {
+    "t18-crash-run-log.txt": {
+      "path": "tool-lab/custom-api/results/t18-crash-run-log.txt",
+      "bytes": 3412,
+      "sha256": "DA781F2C6016206803281041AA72A858C0D2F392E7A3FCF8C6410C044B112AF6"
+    },
+    "t18-recovery-run-log.txt": {
+      "path": "tool-lab/custom-api/results/t18-recovery-run-log.txt",
+      "bytes": 17459,
+      "sha256": "230A7EFFAD22243399CB83A22F4CBAEA9E0310071C2AD65DDF7ED3D6D33B011C"
+    },
+    "T18_LAST_PASS.rvt.manifest.json": {
+      "path": "revit/lab/custom-api/T18_LAST_PASS.rvt.manifest.json",
+      "bytes": 1128,
+      "sha256": "A0A5AB6931A57C98B34614B1763DB2686BEC320396D4CF578BE5F3A68E9DE707"
+    },
+    "t18-recovery-health.json": {
+      "path": "tool-lab/custom-api/results/t18-recovery-health.json",
+      "bytes": 16758,
+      "sha256": "F7662117A59198ECCBC2856D89A58724F5AF6C1E2AE06CE911F767E709D79073"
+    },
+    "t18-recovery-read.json": {
+      "path": "tool-lab/custom-api/results/t18-recovery-read.json",
+      "bytes": 5498,
+      "sha256": "EF222356CAFBAA9F888A7D7B5C553AA357FD5BFAAE65DFD158749D315627062D"
+    },
+    "t18-host-status.log": {
+      "path": "tool-lab/custom-api/results/t18-host-status.log",
+      "bytes": 597,
+      "sha256": "0D831E0E5891079C09EB060D55B921511D92D29DFE212C1966C23A535DC654A3"
+    },
+    "t18-crash-host-revit-journal.txt": {
+      "path": "tool-lab/custom-api/results/t18-crash-host-revit-journal.txt",
+      "bytes": 476804,
+      "sha256": "8823E1CAFE13FDF1058D98F7713CDAC6FFD77FABBEC7CF2E0307DA914B1D6BD7"
+    }
+  }
+}

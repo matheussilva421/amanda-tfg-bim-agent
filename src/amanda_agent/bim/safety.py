@@ -10,10 +10,12 @@ from __future__ import annotations
 import os
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
+from enum import StrEnum
 from pathlib import Path
 from typing import Any
 
 _FILE_ATTRIBUTE_REPARSE_POINT = 0x400
+
 
 def _is_reparse_point(path: Path) -> bool:
     """Return True for symlinks, junctions and other reparse points.
@@ -23,10 +25,10 @@ def _is_reparse_point(path: Path) -> bool:
     """
 
     try:
-        if not path.exists():
-            return False
         if path.is_symlink():
             return True
+        if not path.exists():
+            return False
     except OSError:
         return False
     if os.name == "nt":
@@ -45,8 +47,64 @@ def _is_reparse_point(path: Path) -> bool:
 class SafetyError(RuntimeError):
     """A target cannot be proven safe for a BIM write."""
 
+    def __init__(
+        self,
+        message: str,
+        *,
+        reason_code: SafetyReason | None = None,
+        assessment: OperationRiskAssessment | None = None,
+    ) -> None:
+        self.reason_code = reason_code or SafetyReason.UNSAFE_TARGET
+        self.reason = self.reason_code
+        self.assessment = assessment
+        super().__init__(message)
+
 
 TargetRejected = SafetyError
+
+
+class SafetyReason(StrEnum):
+    """Machine-readable reason for every Sentinel refusal."""
+
+    UNSAFE_TARGET = "UNSAFE_TARGET"
+    TARGET_OUTSIDE_WRITABLE_ROOT = "TARGET_OUTSIDE_WRITABLE_ROOT"
+    PROTECTED_TARGET = "PROTECTED_TARGET"
+    AMBIGUOUS_TARGET_IDENTITY = "AMBIGUOUS_TARGET_IDENTITY"
+    TARGET_NOT_REGULAR_FILE = "TARGET_NOT_REGULAR_FILE"
+    ACTIVE_DOCUMENT_MISMATCH = "ACTIVE_DOCUMENT_MISMATCH"
+    ACTIVE_DOCUMENT_UNLABELLED = "ACTIVE_DOCUMENT_UNLABELLED"
+    WRITER_LEASE_REQUIRED = "WRITER_LEASE_REQUIRED"
+    WRITER_LEASE_INVALID = "WRITER_LEASE_INVALID"
+    WRITER_LEASE_DOCUMENT_MISMATCH = "WRITER_LEASE_DOCUMENT_MISMATCH"
+    EXPLICIT_CONFIRMATION_REQUIRED = "EXPLICIT_CONFIRMATION_REQUIRED"
+    UNKNOWN_OPERATION = "UNKNOWN_OPERATION"
+    UNKNOWN_CASCADE = "UNKNOWN_CASCADE"
+    INVALID_RISK_INPUT = "INVALID_RISK_INPUT"
+
+
+class RiskLevel(StrEnum):
+    """Risk severity used by the operation Sentinel."""
+
+    LOW = "LOW"
+    MEDIUM = "MEDIUM"
+    HIGH = "HIGH"
+    CRITICAL = "CRITICAL"
+
+
+@dataclass(frozen=True)
+class OperationRiskAssessment:
+    """Deterministic risk classification before a BIM operation is invoked."""
+
+    operation: str
+    risk: RiskLevel
+    destructive: bool
+    affected_count: int
+    cascade_count: int
+    impact_count: int
+    managed_count: int | None
+    ratio: float | None
+    cascade_unknown: bool
+    reason: str
 
 _PROTECTED_TOKENS = frozenset(
     {"golden", "master", "source", "baseline", "checkpoint", "checkpoints", "release", "releases"}
@@ -126,12 +184,33 @@ def _lease_info(lease: Any) -> Mapping[str, Any] | None:
     return None
 
 
-def _reject_path_components(candidate: Path) -> None:
+def _reject_path_components(
+    candidate: Path, *, ignored_exact_tokens: frozenset[str] = frozenset()
+) -> None:
     for component in candidate.parts:
         lowered = component.casefold()
-        if any(token in lowered for token in _PROTECTED_TOKENS):
+        if any(
+            token in lowered
+            and not (token in ignored_exact_tokens and lowered == token)
+            for token in _PROTECTED_TOKENS
+        ):
             raise SafetyError(
-                f"protected filename/path component {component!r} cannot be a writable target"
+                f"protected filename/path component {component!r} cannot be a writable target",
+                reason_code=SafetyReason.PROTECTED_TARGET,
+            )
+
+
+def _reject_protected_root_components(
+    root: Path, *, ignored_exact_tokens: frozenset[str] = frozenset()
+) -> None:
+    """Reject reserved root names without matching incidental test/path text."""
+
+    for component in root.parts:
+        lowered = component.casefold()
+        if lowered in _PROTECTED_TOKENS and lowered not in ignored_exact_tokens:
+            raise SafetyError(
+                f"protected writable root component {component!r} is not allowed",
+                reason_code=SafetyReason.PROTECTED_TARGET,
             )
 
 
@@ -142,11 +221,17 @@ def _reject_symlink_components(candidate: Path, roots: list[Path]) -> None:
     cursor = candidate
     while True:
         try:
-            linked = _is_reparse_point(cursor) if cursor.exists() else False
+            linked = _is_reparse_point(cursor)
         except OSError as exc:
-            raise SafetyError(f"cannot inspect target path component {cursor}") from exc
+            raise SafetyError(
+                f"cannot inspect target path component {cursor}",
+                reason_code=SafetyReason.AMBIGUOUS_TARGET_IDENTITY,
+            ) from exc
         if linked and cursor not in root_set:
-            raise SafetyError(f"symlink/junction target identity is ambiguous: {cursor}")
+            raise SafetyError(
+                f"symlink/junction target identity is ambiguous: {cursor}",
+                reason_code=SafetyReason.AMBIGUOUS_TARGET_IDENTITY,
+            )
         if cursor.parent == cursor:
             break
         cursor = cursor.parent
@@ -162,20 +247,171 @@ def _reject_protected_identity(
     for raw_path in protected_paths:
         protected = Path(raw_path).resolve(strict=False)
         if candidate == protected or _under(candidate, protected):
-            raise SafetyError(f"protected source/baseline/checkpoint/release identity: {candidate}")
+            raise SafetyError(
+                f"protected source/baseline/checkpoint/release identity: {candidate}",
+                reason_code=SafetyReason.PROTECTED_TARGET,
+            )
 
     for raw_identity in protected_identities:
         if isinstance(raw_identity, ProtectedIdentity):
             protected_path = raw_identity.path
             file_id = raw_identity.file_id
         else:
-            protected_path = Path(raw_identity["path"])
-            file_id = raw_identity.get("file_id")
+            try:
+                protected_path = Path(raw_identity["path"])
+                file_id = raw_identity.get("file_id")
+            except (KeyError, TypeError) as exc:
+                raise SafetyError(
+                    "protected manifest identity is not readable",
+                    reason_code=SafetyReason.AMBIGUOUS_TARGET_IDENTITY,
+                ) from exc
         canonical = protected_path.resolve(strict=False)
         if candidate == canonical or _under(candidate, canonical):
-            raise SafetyError(f"protected manifest identity: {candidate}")
+            raise SafetyError(
+                f"protected manifest identity: {candidate}",
+                reason_code=SafetyReason.PROTECTED_TARGET,
+            )
         if file_id is not None and candidate_identity == tuple(file_id):
-            raise SafetyError(f"protected file identity: {candidate}")
+            raise SafetyError(
+                f"protected file identity: {candidate}",
+                reason_code=SafetyReason.PROTECTED_TARGET,
+            )
+
+
+_KNOWN_READ_OPERATIONS = frozenset({"READ", "QUERY", "INSPECT", "NOOP", "VERIFY"})
+_KNOWN_MUTATIONS = frozenset({"CREATE", "UPDATE", "UPSERT", "WRITE"})
+_KNOWN_DESTRUCTIVE = frozenset(
+    {"DELETE", "REMOVE", "PURGE", "REPLACE", "OVERWRITE", "RESET", "ROLLBACK"}
+)
+
+
+def _operation_name(operation: Any) -> str:
+    value = getattr(operation, "value", operation)
+    if not isinstance(value, str) or not value.strip():
+        raise SafetyError(
+            "operation must be a non-empty name",
+            reason_code=SafetyReason.INVALID_RISK_INPUT,
+        )
+    return value.strip().upper().rsplit(".", 1)[-1]
+
+
+def _risk_count(value: int, label: str) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise SafetyError(
+            f"{label} must be a non-negative integer",
+            reason_code=SafetyReason.INVALID_RISK_INPUT,
+        )
+    return value
+
+
+def classify_operation_risk(
+    operation: Any,
+    *,
+    affected_count: int = 0,
+    managed_count: int | None = None,
+    cascade_count: int = 0,
+    cascade_unknown: bool = False,
+) -> OperationRiskAssessment:
+    """Classify operation risk from its action and known damage scale."""
+
+    name = _operation_name(operation)
+    affected = _risk_count(affected_count, "affected_count")
+    cascades = _risk_count(cascade_count, "cascade_count")
+    if managed_count is not None:
+        managed = _risk_count(managed_count, "managed_count")
+    else:
+        managed = None
+    if not isinstance(cascade_unknown, bool):
+        raise SafetyError(
+            "cascade_unknown must be boolean",
+            reason_code=SafetyReason.INVALID_RISK_INPUT,
+        )
+
+    known = name in _KNOWN_READ_OPERATIONS | _KNOWN_MUTATIONS | _KNOWN_DESTRUCTIVE
+    destructive = name in _KNOWN_DESTRUCTIVE
+    if not known:
+        return OperationRiskAssessment(
+            operation=name,
+            risk=RiskLevel.CRITICAL,
+            destructive=True,
+            affected_count=affected,
+            cascade_count=cascades,
+            impact_count=affected + cascades,
+            managed_count=managed,
+            ratio=None if managed is None else float("inf") if managed == 0 else (affected + cascades) / managed,
+            cascade_unknown=cascade_unknown,
+            reason="operation is not in the Sentinel allowlist",
+        )
+
+    impact = affected + cascades
+    ratio = None if managed is None else float("inf") if managed == 0 and impact else (impact / managed if managed else 0.0)
+    if not destructive:
+        risk = RiskLevel.LOW if name in _KNOWN_READ_OPERATIONS else RiskLevel.MEDIUM
+        reason = "operation does not delete or replace managed content"
+    elif cascade_unknown:
+        risk = RiskLevel.CRITICAL
+        reason = "destructive cascade cannot be bounded before mutation"
+    elif impact > 10 or (ratio is not None and ratio > 0.10):
+        risk = RiskLevel.CRITICAL
+        reason = "destructive impact exceeds the Sentinel scale guard"
+    else:
+        risk = RiskLevel.HIGH
+        reason = "destructive operation requires explicit confirmation"
+    return OperationRiskAssessment(
+        operation=name,
+        risk=risk,
+        destructive=destructive,
+        affected_count=affected,
+        cascade_count=cascades,
+        impact_count=impact,
+        managed_count=managed,
+        ratio=ratio,
+        cascade_unknown=cascade_unknown,
+        reason=reason,
+    )
+
+
+def assert_operation_safe(
+    operation: Any,
+    *,
+    affected_count: int = 0,
+    managed_count: int | None = None,
+    cascade_count: int = 0,
+    cascade_unknown: bool = False,
+    confirmation: str | bool | None = None,
+    confirmed: bool = False,
+) -> OperationRiskAssessment:
+    """Allow an operation only after fail-closed Sentinel checks."""
+
+    assessment = classify_operation_risk(
+        operation,
+        affected_count=affected_count,
+        managed_count=managed_count,
+        cascade_count=cascade_count,
+        cascade_unknown=cascade_unknown,
+    )
+    if assessment.operation not in _KNOWN_READ_OPERATIONS | _KNOWN_MUTATIONS | _KNOWN_DESTRUCTIVE:
+        raise SafetyError(
+            f"unknown operation {assessment.operation!r} is refused by default",
+            reason_code=SafetyReason.UNKNOWN_OPERATION,
+            assessment=assessment,
+        )
+    if assessment.cascade_unknown:
+        raise SafetyError(
+            "destructive cascade is unknown; operation is refused",
+            reason_code=SafetyReason.UNKNOWN_CASCADE,
+            assessment=assessment,
+        )
+    has_confirmation = confirmed is True or (
+        isinstance(confirmation, str) and bool(confirmation.strip())
+    ) or confirmation is True
+    if assessment.destructive and not has_confirmation:
+        raise SafetyError(
+            "explicit confirmation is required for a destructive operation",
+            reason_code=SafetyReason.EXPLICIT_CONFIRMATION_REQUIRED,
+            assessment=assessment,
+        )
+    return assessment
 
 
 def assert_writable_target(
@@ -193,6 +429,14 @@ def assert_writable_target(
     lease: Any | None = None,
     lease_token: str | None = None,
     require_lease: bool = False,
+    operation: Any | None = None,
+    affected_count: int = 0,
+    managed_count: int | None = None,
+    cascade_count: int = 0,
+    cascade_unknown: bool = False,
+    confirmation: str | bool | None = None,
+    confirmed: bool = False,
+    allow_checkpoint_directory: bool = False,
 ) -> Path:
     """Return a canonical target only when every supplied safety invariant passes.
 
@@ -209,21 +453,46 @@ def assert_writable_target(
     )
     candidate = candidate_input.resolve(strict=False)
     roots = _as_roots(writable_roots, root=root, writable_root=writable_root)
+    ignored_exact_tokens = (
+        frozenset({"checkpoint", "checkpoints"})
+        if allow_checkpoint_directory
+        else frozenset()
+    )
 
     if not any(_under(candidate, allowed) for allowed in roots):
-        raise SafetyError(f"target is outside the canonical writable root allowlist: {candidate}")
+        raise SafetyError(
+            f"target is outside the canonical writable root allowlist: {candidate}",
+            reason_code=SafetyReason.TARGET_OUTSIDE_WRITABLE_ROOT,
+        )
+    for allowed in roots:
+        _reject_protected_root_components(
+            allowed, ignored_exact_tokens=ignored_exact_tokens
+        )
     relative_targets = [candidate.relative_to(allowed) for allowed in roots if _under(candidate, allowed)]
     for relative_target in relative_targets:
-        _reject_path_components(relative_target)
+        _reject_path_components(
+            relative_target, ignored_exact_tokens=ignored_exact_tokens
+        )
     _reject_symlink_components(raw_absolute, roots)
     _reject_symlink_components(candidate, roots)
 
     if candidate.exists() and candidate.is_file():
         try:
             if candidate.stat().st_nlink > 1:
-                raise SafetyError(f"hardlink target identity is ambiguous: {candidate}")
+                raise SafetyError(
+                    f"hardlink target identity is ambiguous: {candidate}",
+                    reason_code=SafetyReason.AMBIGUOUS_TARGET_IDENTITY,
+                )
         except OSError as exc:
-            raise SafetyError(f"cannot inspect target identity: {candidate}") from exc
+            raise SafetyError(
+                f"cannot inspect target identity: {candidate}",
+                reason_code=SafetyReason.AMBIGUOUS_TARGET_IDENTITY,
+            ) from exc
+    elif candidate.exists():
+        raise SafetyError(
+            f"writable target is not a regular file: {candidate}",
+            reason_code=SafetyReason.TARGET_NOT_REGULAR_FILE,
+        )
     _reject_protected_identity(
         candidate,
         protected_paths=protected_paths,
@@ -238,32 +507,75 @@ def assert_writable_target(
         active_path = Path(expected_active_path).resolve(strict=False)
         if active_path != candidate:
             raise SafetyError(
-                f"active document path does not match target: {active_path} != {candidate}"
+                f"active document path does not match target: {active_path} != {candidate}",
+                reason_code=SafetyReason.ACTIVE_DOCUMENT_MISMATCH,
             )
     if expected_active_id is not None:
         if target_document_id is None:
-            raise SafetyError("active document identity cannot be matched to an unlabelled target")
+            raise SafetyError(
+                "active document identity cannot be matched to an unlabelled target",
+                reason_code=SafetyReason.ACTIVE_DOCUMENT_UNLABELLED,
+            )
         if expected_active_id != target_document_id:
             raise SafetyError(
-                f"active document identity does not match target: {expected_active_id} != {target_document_id}"
+                f"active document identity does not match target: {expected_active_id} != {target_document_id}",
+                reason_code=SafetyReason.ACTIVE_DOCUMENT_MISMATCH,
             )
 
     if require_lease and lease is None:
-        raise SafetyError("a shared writer lease is required before a BIM write")
+        raise SafetyError(
+            "a shared writer lease is required before a BIM write",
+            reason_code=SafetyReason.WRITER_LEASE_REQUIRED,
+        )
     if lease is not None:
         info = _lease_info(lease)
         if not info or not info.get("owner_token"):
-            raise SafetyError("writer lease is missing or unreadable")
+            raise SafetyError(
+                "writer lease is missing or unreadable",
+                reason_code=SafetyReason.WRITER_LEASE_INVALID,
+            )
         if lease_token is not None and info.get("owner_token") != lease_token:
-            raise SafetyError("writer lease token is stale or belongs to another owner")
+            raise SafetyError(
+                "writer lease token is stale or belongs to another owner",
+                reason_code=SafetyReason.WRITER_LEASE_INVALID,
+            )
+        lease_document_id = info.get("document_identity", info.get("document_id"))
+        expected_document_id = target_document_id or expected_active_id
+        if expected_document_id is not None:
+            if lease_document_id is None:
+                raise SafetyError(
+                    "writer lease has no document identity to match the target",
+                    reason_code=SafetyReason.WRITER_LEASE_DOCUMENT_MISMATCH,
+                )
+            if str(lease_document_id) != str(expected_document_id):
+                raise SafetyError(
+                    "writer lease document identity does not match the active target document",
+                    reason_code=SafetyReason.WRITER_LEASE_DOCUMENT_MISMATCH,
+                )
+
+    if operation is not None:
+        assert_operation_safe(
+            operation,
+            affected_count=affected_count,
+            managed_count=managed_count,
+            cascade_count=cascade_count,
+            cascade_unknown=cascade_unknown,
+            confirmation=confirmation,
+            confirmed=confirmed,
+        )
 
     return candidate
 
 
 __all__ = [
     "DocumentIdentity",
+    "OperationRiskAssessment",
     "ProtectedIdentity",
+    "RiskLevel",
     "SafetyError",
+    "SafetyReason",
     "TargetRejected",
+    "assert_operation_safe",
     "assert_writable_target",
+    "classify_operation_risk",
 ]

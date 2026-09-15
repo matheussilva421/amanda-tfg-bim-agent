@@ -93,3 +93,101 @@ def test_rollback_verifies_checkpoint_hash_before_copy(tmp_path: Path):
     with pytest.raises(CheckpointError, match="hash"):
         manager.rollback(manifest, restore)
     assert not restore.exists()
+
+
+def test_manifest_keeps_version_document_identity_and_provenance(tmp_path: Path):
+    from amanda_agent.bim.checkpoints import CheckpointManager, CheckpointManifest
+
+    source = tmp_path / "working.rvt"
+    target = tmp_path / "R02_SITE.rvt"
+    source.write_bytes(b"document bytes")
+
+    manifest = CheckpointManager().create_checkpoint(
+        source,
+        target,
+        stage="R02_SITE",
+        document_id="doc-001",
+        provenance={"generation_run": "run-001", "source_refs": ["site-v1"]},
+    )
+    loaded = CheckpointManifest.load(manifest.manifest_path)
+
+    assert manifest.version == 1
+    assert manifest.source_sha256 == manifest.sha256
+    assert manifest.document_id == "doc-001"
+    assert manifest.provenance["generation_run"] == "run-001"
+    assert loaded.document_id == manifest.document_id
+    assert loaded.provenance == manifest.provenance
+
+
+def test_rollback_refuses_checkpoint_for_a_different_current_document(tmp_path: Path):
+    from amanda_agent.bim.checkpoints import CheckpointError, CheckpointManager
+
+    source = tmp_path / "working.rvt"
+    checkpoint = tmp_path / "R02.rvt"
+    restore = tmp_path / "restore.rvt"
+    source.write_bytes(b"known good")
+    manager = CheckpointManager()
+    manifest = manager.create_checkpoint(
+        source, checkpoint, stage="R02", document_id="doc-before-save-as"
+    )
+
+    with pytest.raises(CheckpointError, match="document identity") as caught:
+        manager.rollback(
+            manifest,
+            restore,
+            current_document_id="doc-after-save-as",
+        )
+
+    assert caught.value.reason_code == "DOCUMENT_IDENTITY_MISMATCH"
+    assert not restore.exists()
+
+
+def test_rollback_requires_current_identity_when_manifest_has_one(tmp_path: Path):
+    from amanda_agent.bim.checkpoints import CheckpointError, CheckpointManager
+
+    source = tmp_path / "working.rvt"
+    checkpoint = tmp_path / "R02.rvt"
+    restore = tmp_path / "restore.rvt"
+    source.write_bytes(b"known good")
+    manager = CheckpointManager()
+    manifest = manager.create_checkpoint(
+        source, checkpoint, stage="R02", document_id="doc-001"
+    )
+
+    with pytest.raises(CheckpointError, match="current document"):
+        manager.rollback(manifest, restore)
+
+
+def test_rollback_requires_current_path_when_manifest_has_only_document_path(
+    tmp_path: Path,
+):
+    from amanda_agent.bim.checkpoints import CheckpointError, CheckpointManager
+
+    source = tmp_path / "working.rvt"
+    checkpoint = tmp_path / "R02.rvt"
+    restore = tmp_path / "restore.rvt"
+    source.write_bytes(b"known good")
+    manager = CheckpointManager()
+    manifest = manager.create_checkpoint(
+        source,
+        checkpoint,
+        stage="R02",
+        document_path=source,
+    )
+
+    with pytest.raises(CheckpointError, match="current document"):
+        manager.rollback(manifest, restore)
+
+
+def test_checkpoint_protection_applies_to_parent_directories(tmp_path: Path):
+    from amanda_agent.bim.checkpoints import CheckpointError, CheckpointManager
+
+    source = tmp_path / "working.rvt"
+    source.write_bytes(b"model")
+
+    with pytest.raises(CheckpointError, match="protected"):
+        CheckpointManager().create_checkpoint(
+            source,
+            tmp_path / "GOLDEN" / "R02.rvt",
+            stage="R02",
+        )

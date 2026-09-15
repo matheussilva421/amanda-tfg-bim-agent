@@ -26,12 +26,43 @@ class DiffAction(StrEnum):
 Action = DiffAction
 
 
-class UserDivergence(RuntimeError):
+class DiffReason(StrEnum):
+    """Machine-readable reason for a refused reconciliation."""
+
+    INVALID_INPUT = "INVALID_INPUT"
+    DUPLICATE_CURRENT_IDENTITY = "DUPLICATE_CURRENT_IDENTITY"
+    USER_DIVERGENCE = "USER_DIVERGENCE"
+    DOCUMENT_IDENTITY_MISMATCH = "DOCUMENT_IDENTITY_MISMATCH"
+
+
+class DiffError(ValueError):
+    """Base error carrying a non-silent diff refusal reason."""
+
+    def __init__(self, message: str, *, reason_code: DiffReason) -> None:
+        self.reason_code = reason_code
+        self.reason = reason_code
+        super().__init__(message)
+
+
+class DuplicateCurrentIdentity(DiffError):
+    """Two current elements claim the same persistent Revit identity."""
+
+    def __init__(self, message: str) -> None:
+        super().__init__(message, reason_code=DiffReason.DUPLICATE_CURRENT_IDENTITY)
+
+
+class UserDivergence(DiffError):
     """The current managed element no longer matches its recorded baseline."""
 
+    def __init__(self, message: str) -> None:
+        super().__init__(message, reason_code=DiffReason.USER_DIVERGENCE)
 
-class DocumentIdentityMismatch(RuntimeError):
+
+class DocumentIdentityMismatch(DiffError):
     """A diff was requested for a document other than the active document."""
+
+    def __init__(self, message: str) -> None:
+        super().__init__(message, reason_code=DiffReason.DOCUMENT_IDENTITY_MISMATCH)
 
 
 class DiffOperation(BaseModel):
@@ -47,10 +78,12 @@ class DiffOperation(BaseModel):
     cascade_count: int | None = Field(default=0, ge=0)
     cascade_unknown: bool = False
     cascade_dependents: list[str] = Field(default_factory=list)
+    type_changed: bool = False
+    unmanaged_dependents: list[str] = Field(default_factory=list)
 
     @property
     def destructive(self) -> bool:
-        return self.action in {DiffAction.DELETE, DiffAction.REPLACE}
+        return self.action in {DiffAction.DELETE, DiffAction.REPLACE} or self.type_changed
 
     @property
     def unique_id(self) -> str | None:
@@ -59,6 +92,22 @@ class DiffOperation(BaseModel):
     @property
     def document_id(self) -> str | None:
         return self.current.document_id if self.current is not None else None
+
+    @property
+    def identity(self) -> dict[str, str | None]:
+        """Persistent identity; ``element_id`` is intentionally excluded."""
+
+        return {
+            "logical_id": self.logical_id,
+            "unique_id": self.unique_id,
+            "document_id": self.document_id,
+        }
+
+    @property
+    def persistent_identity(self) -> dict[str, str | None]:
+        """Explicit alias for callers serializing reconciliation evidence."""
+
+        return self.identity
 
 
 class DiffResult(BaseModel):
@@ -78,6 +127,16 @@ class DiffResult(BaseModel):
     def changed_operations(self) -> list[DiffOperation]:
         return [operation for operation in self.operations if operation.action is not DiffAction.NOOP]
 
+    @property
+    def identity_map(self) -> dict[str, dict[str, str | None]]:
+        """Stable logical-to-Revit identity mapping for audit output."""
+
+        return {
+            operation.logical_id: operation.identity
+            for operation in self.operations
+            if operation.current is not None
+        }
+
     def assess_destructive_threshold(self, **kwargs: Any) -> DestructiveRiskAssessment:
         return assess_destructive_threshold(
             self.operations, managed_count=self.managed_count, **kwargs
@@ -94,6 +153,17 @@ class DestructiveRiskStatus(StrEnum):
 
 class DestructiveThresholdError(RuntimeError):
     """The planned destructive delta is not currently authorized."""
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        assessment: DestructiveRiskAssessment | None = None,
+    ) -> None:
+        self.assessment = assessment
+        self.reason_code = assessment.status if assessment is not None else "THRESHOLD_BLOCKED"
+        self.reason = self.reason_code
+        super().__init__(message)
 
 
 class DestructiveThresholdConfig(BaseModel):
@@ -129,19 +199,57 @@ class DestructiveRiskAssessment(BaseModel):
     allowed: bool
     reason: str = Field(min_length=1)
     config_version: int = Field(ge=1)
+    direct_destructive_count: int = Field(default=0, ge=0)
+    cascade_count: int = Field(default=0, ge=0)
+    impact_breakdown: list[dict[str, Any]] = Field(default_factory=list)
+    calculation: str = Field(default="", min_length=1)
+    override_requested: bool = False
+    override_applied: bool = False
+    audit_reference: str | None = None
+    evidence: str = Field(default="", min_length=1)
 
 
 def _coerce_operation(operation: DiffOperation | Mapping[str, Any]) -> DiffOperation:
     return operation if isinstance(operation, DiffOperation) else DiffOperation.model_validate(operation)
 
 
-def _destructive_impact(operation: DiffOperation) -> tuple[int, bool]:
+def _impact_parts(operation: DiffOperation) -> tuple[int, int, bool]:
     if not operation.destructive:
-        return 0, False
-    if operation.cascade_unknown or operation.cascade_count is None:
-        return 0, True
-    cascade_count = max(operation.cascade_count, len(operation.cascade_dependents))
-    return 1 + cascade_count, False
+        return 0, 0, False
+    dependent_ids = set(operation.cascade_dependents)
+    dependent_ids.update(operation.unmanaged_dependents)
+    cascade_count = max(operation.cascade_count or 0, len(dependent_ids))
+    return 1, cascade_count, operation.cascade_unknown or operation.cascade_count is None
+
+
+def _destructive_impact(operation: DiffOperation) -> tuple[int, bool]:
+    direct_count, cascade_count, unknown = _impact_parts(operation)
+    return direct_count + cascade_count, unknown
+
+
+def _risk_evidence(
+    *,
+    managed_count: int,
+    destructive_count: int,
+    direct_count: int,
+    cascade_count: int,
+    breakdown: list[dict[str, Any]],
+    audit_reference: str | None,
+) -> tuple[str, str]:
+    denominator = managed_count if managed_count else 0
+    ratio = "inf" if managed_count == 0 and destructive_count else f"{destructive_count / managed_count:.6f}"
+    calculation = (
+        f"{destructive_count}/{denominator} managed elements; "
+        f"ratio={ratio}; direct={direct_count}; cascade={cascade_count}"
+    )
+    evidence = calculation
+    if breakdown:
+        evidence += "; impacts=" + ",".join(
+            f"{item['logical_id']}:{item['impact_count']}" for item in breakdown
+        )
+    if audit_reference:
+        evidence += f"; audit_reference={audit_reference}"
+    return calculation, evidence
 
 
 def assess_destructive_threshold(
@@ -152,57 +260,104 @@ def assess_destructive_threshold(
     reviewed_plan: bool = False,
     release_high_risk: bool = False,
     config: DestructiveThresholdConfig | Mapping[str, Any] | None = None,
+    override: bool = False,
+    explicit_override: bool = False,
+    audit_reference: str | None = None,
 ) -> DestructiveRiskAssessment:
     """Apply the versioned managed-element threshold before mutation."""
 
-    if isinstance(managed_count, bool) or managed_count < 0:
+    if isinstance(managed_count, bool) or not isinstance(managed_count, int) or managed_count < 0:
         raise ValueError("managed_count must be a non-negative integer")
     threshold = (
         config
         if isinstance(config, DestructiveThresholdConfig)
         else DestructiveThresholdConfig.model_validate(config or {})
     )
-    normalized = [_coerce_operation(operation) for operation in operations]
+    normalized = sorted(
+        (_coerce_operation(operation) for operation in operations),
+        key=lambda operation: (operation.logical_id, operation.action.value),
+    )
     destructive_count = 0
+    direct_destructive_count = 0
+    cascade_count = 0
     unknown_cascade = False
+    breakdown: list[dict[str, Any]] = []
     for operation in normalized:
-        impact, unknown = _destructive_impact(operation)
+        direct_count, operation_cascade_count, unknown = _impact_parts(operation)
+        impact = direct_count + operation_cascade_count
         destructive_count += impact
+        direct_destructive_count += direct_count
+        cascade_count += operation_cascade_count
         unknown_cascade = unknown_cascade or unknown
+        if direct_count:
+            breakdown.append(
+                {
+                    "logical_id": operation.logical_id,
+                    "action": operation.action.value,
+                    "direct_count": direct_count,
+                    "cascade_count": operation_cascade_count,
+                    "impact_count": impact,
+                }
+            )
     ratio = destructive_count / managed_count if managed_count else float("inf") if destructive_count else 0.0
+    requested_override = bool(override or explicit_override or release_high_risk)
+    audit_reference = audit_reference.strip() if isinstance(audit_reference, str) else None
+    calculation, evidence = _risk_evidence(
+        managed_count=managed_count,
+        destructive_count=destructive_count,
+        direct_count=direct_destructive_count,
+        cascade_count=cascade_count,
+        breakdown=breakdown,
+        audit_reference=audit_reference,
+    )
 
-    if unknown_cascade:
+    def result(
+        *,
+        status: DestructiveRiskStatus,
+        blocked: bool,
+        allowed: bool,
+        reason: str,
+        override_applied: bool = False,
+    ) -> DestructiveRiskAssessment:
         return DestructiveRiskAssessment(
-            status=DestructiveRiskStatus.UNKNOWN_CASCADE,
+            status=status,
             managed_count=managed_count,
             destructive_count=destructive_count,
             ratio=ratio,
+            blocked=blocked,
+            allowed=allowed,
+            reason=reason,
+            config_version=threshold.schema_version,
+            direct_destructive_count=direct_destructive_count,
+            cascade_count=cascade_count,
+            impact_breakdown=breakdown,
+            calculation=calculation,
+            override_requested=requested_override,
+            override_applied=override_applied,
+            audit_reference=audit_reference,
+            evidence=evidence,
+        )
+
+    if unknown_cascade:
+        return result(
+            status=DestructiveRiskStatus.UNKNOWN_CASCADE,
             blocked=True,
             allowed=False,
             reason="cascade impact is unknown; reconcile dependents before mutation",
-            config_version=threshold.schema_version,
         )
     if destructive_count == 0:
-        return DestructiveRiskAssessment(
+        return result(
             status=DestructiveRiskStatus.PASS,
-            managed_count=managed_count,
-            destructive_count=0,
-            ratio=0.0,
             blocked=False,
             allowed=True,
             reason="no DELETE or REPLACE operation is planned",
-            config_version=threshold.schema_version,
         )
     if managed_count == 0:
-        return DestructiveRiskAssessment(
+        return result(
             status=DestructiveRiskStatus.NO_MANAGED_BASELINE,
-            managed_count=0,
-            destructive_count=destructive_count,
-            ratio=ratio,
             blocked=True,
             allowed=False,
             reason="destructive changes require a non-empty managed baseline",
-            config_version=threshold.schema_version,
         )
 
     high_risk = (
@@ -214,42 +369,42 @@ def assess_destructive_threshold(
         )
     )
     if high_risk:
-        allowed = release_high_risk and reviewed_plan and pre_operation_checkpoint
-        reason = (
-            "HIGH_RISK_PLAN requires a pre-operation checkpoint and concrete reviewed plan"
-            if not allowed
-            else "HIGH_RISK_PLAN explicitly released by reviewed plan and checkpoint"
+        if (override or explicit_override) and not audit_reference:
+            return result(
+                status=DestructiveRiskStatus.HIGH_RISK_PLAN,
+                blocked=True,
+                allowed=False,
+                reason="explicit threshold override requires an audit reference",
+            )
+        allowed = (
+            pre_operation_checkpoint
+            and reviewed_plan
+            and (release_high_risk or override or explicit_override)
         )
-        return DestructiveRiskAssessment(
+        reason = (
+            "HIGH_RISK_PLAN requires a pre-operation checkpoint, concrete reviewed plan and explicit audit"
+            if not allowed
+            else "HIGH_RISK_PLAN explicitly released by reviewed plan, checkpoint and audit"
+        )
+        return result(
             status=DestructiveRiskStatus.HIGH_RISK_PLAN,
-            managed_count=managed_count,
-            destructive_count=destructive_count,
-            ratio=ratio,
             blocked=not allowed,
             allowed=allowed,
             reason=reason,
-            config_version=threshold.schema_version,
+            override_applied=allowed,
         )
     if not pre_operation_checkpoint:
-        return DestructiveRiskAssessment(
+        return result(
             status=DestructiveRiskStatus.CHECKPOINT_REQUIRED,
-            managed_count=managed_count,
-            destructive_count=destructive_count,
-            ratio=ratio,
             blocked=True,
             allowed=False,
             reason="a pre-operation checkpoint is required before destructive mutation",
-            config_version=threshold.schema_version,
         )
-    return DestructiveRiskAssessment(
+    return result(
         status=DestructiveRiskStatus.PASS,
-        managed_count=managed_count,
-        destructive_count=destructive_count,
-        ratio=ratio,
         blocked=False,
         allowed=True,
         reason="destructive delta is within the managed-element threshold",
-        config_version=threshold.schema_version,
     )
 
 
@@ -263,7 +418,7 @@ def enforce_destructive_threshold(
         operations, managed_count=managed_count, **kwargs
     )
     if assessment.blocked:
-        raise DestructiveThresholdError(assessment.reason)
+        raise DestructiveThresholdError(assessment.reason, assessment=assessment)
     return assessment
 
 
@@ -307,7 +462,19 @@ def equivalent_properties(left: Mapping[str, Any], right: Mapping[str, Any], *, 
 
 
 def _coerce_current(current: CurrentState | Mapping[str, Any]) -> CurrentState:
-    return current if isinstance(current, CurrentState) else CurrentState.model_validate(current)
+    state = current if isinstance(current, CurrentState) else CurrentState.model_validate(current)
+    seen: dict[tuple[str, str], str] = {}
+    for element in state.elements:
+        identity = (element.document_id, element.unique_id)
+        previous = seen.get(identity)
+        if previous is not None:
+            raise DuplicateCurrentIdentity(
+                "duplicate current persistent identity: "
+                f"document_id={element.document_id!r}, unique_id={element.unique_id!r} "
+                f"claimed by {previous!r} and {element.logical_id!r}"
+            )
+        seen[identity] = element.logical_id or f"<unmanaged:{element.unique_id}>"
+    return state
 
 
 def diff_states(
@@ -336,6 +503,10 @@ def diff_states(
         expected = desired_by_id.get(logical_id)
         observed = current_by_id.get(logical_id)
         if expected is None:
+            if observed is not None and observed.diverged:
+                raise UserDivergence(
+                    f"user divergence detected for managed logical_id {logical_id}"
+                )
             operations.append(
                 DiffOperation(logical_id=logical_id, action=DiffAction.DELETE, current=observed)
             )
@@ -384,9 +555,12 @@ __all__ = [
     "DestructiveThresholdConfig",
     "DestructiveThresholdError",
     "DiffAction",
+    "DiffError",
     "DiffOperation",
+    "DiffReason",
     "DiffResult",
     "DocumentIdentityMismatch",
+    "DuplicateCurrentIdentity",
     "UserDivergence",
     "assess_destructive_threshold",
     "compute_diff",

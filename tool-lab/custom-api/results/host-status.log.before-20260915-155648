@@ -1,0 +1,17 @@
+2026-09-15T18:35:28.8907719Z OnStartup: entering
+2026-09-15T18:35:28.8924629Z OnStartup: external event raised
+2026-09-15T18:35:37.4969175Z handler: Execute entered
+2026-09-15T18:35:37.5888526Z step open-work-document: PASS (84 ms) 
+2026-09-15T18:35:37.6586974Z step prepare-fixture-level: PASS (69 ms) 
+2026-09-15T18:35:37.6614951Z step snapshot-walls-before: PASS (2 ms) 
+2026-09-15T18:35:37.6987390Z step invoke-external-command: PASS (36 ms) 
+2026-09-15T18:35:37.7013597Z step locate-new-wall: PASS (2 ms) 
+2026-09-15T18:35:37.7034297Z step verify-geometry-in-session: PASS (1 ms) 
+2026-09-15T18:35:38.0879390Z step save-document: PASS (384 ms) 
+2026-09-15T18:35:39.6490629Z step activate-standby-document: PASS (1560 ms) 
+2026-09-15T18:35:39.7721831Z step close-document: PASS (122 ms) 
+2026-09-15T18:35:41.6901136Z step reopen-document: PASS (1917 ms) 
+2026-09-15T18:35:41.6921249Z step verify-persistence-after-reopen: PASS (1 ms) 
+2026-09-15T18:35:43.1018252Z step activate-standby-document-final: PASS (1409 ms) 
+2026-09-15T18:35:43.1991610Z step close-document-final: PASS (96 ms) 
+2026-09-15T18:35:43.2067484Z result written to C:\Users\slvma\Downloads\Github\Projeto Amanda\tool-lab\custom-api\results\t16-host-create.json

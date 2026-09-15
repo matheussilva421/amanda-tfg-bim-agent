@@ -10,6 +10,7 @@ from pathlib import Path
 import typer
 
 from .commands.tool_lab import tool_lab_app
+from .commands.bim import bim_app
 
 app = typer.Typer(
     no_args_is_help=True,
@@ -18,6 +19,7 @@ app = typer.Typer(
 )
 
 app.add_typer(tool_lab_app, name="tool-lab")
+app.add_typer(bim_app, name="bim")
 
 
 @app.command()

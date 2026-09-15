@@ -1,0 +1,5 @@
+2026-09-15T18:27:08.7466264Z OnStartup: entering
+2026-09-15T18:27:08.7495440Z OnStartup: external event raised
+2026-09-15T18:27:24.9353523Z handler: Execute entered
+2026-09-15T18:27:24.9412073Z guard: standing down: job targets pid 29768, this process is 32016
+2026-09-15T18:27:24.9416306Z handler: standing down; no result file and no Revit state change

@@ -1,0 +1,28 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    16044073674562669
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\custom-api\\T18_LAST_PASS.rvt",
+  "created_utc": "2026-09-15T18:54:39.904346Z",
+  "document_id": null,
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\custom-api\\T18_LAST_PASS.rvt.manifest.json",
+  "provenance": {
+    "purpose": "P02-T18 crash/recovery disposable checkpoint",
+    "source_outcome": "PASS",
+    "source_result": "tool-lab/custom-api/results/t16-host-create.json"
+  },
+  "schema_version": 1,
+  "sha256": "8ccab171e89fa4ac414f9ca3c57b5c4161cd7ee6dd61f45f86529703ee281cb2",
+  "size_bytes": 4370432,
+  "source_document_id": null,
+  "source_document_path": null,
+  "source_file_id": [
+    9107472496377837229,
+    2251799815750484
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\custom-api\\LAB_CUSTOM_WALL.rvt",
+  "source_sha256": "8ccab171e89fa4ac414f9ca3c57b5c4161cd7ee6dd61f45f86529703ee281cb2",
+  "stage": "P02-T16_PASS",
+  "version": 1
+}

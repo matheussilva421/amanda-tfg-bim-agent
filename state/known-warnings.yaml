@@ -1,0 +1,14 @@
+schema_version: 1
+severity_map_version: 1
+severity_map:
+  QA-ROOM-OVERLAP: LOW
+entries:
+  - id: QA-ROOM-OVERLAP
+    regex: "room overlap"
+    text: "room overlap warning"
+    severity: LOW
+    status: KNOWN
+    reason: "Known provider warning retained for review in study runs."
+    provenance:
+      source: "qa baseline"
+      status: VERSIONED

@@ -20,29 +20,91 @@ dotnet:
   - version: 8.0.422
     base_path: C:\Program Files\dotnet\sdk
   note: inventory only; a pinned SDK is installed in Plan 02
-
 providers:
   horizun-revit-mcp:
-    role: 'primary Revit bridge for this project'
+    role: primary Revit bridge for this project
     source_url: https://github.com/HorizunGroup/horizun-revit-mcp.git
     source_commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
     deployment: source-build
     install_manifest: state/install-manifest.yaml
     source_audit: tool-lab/horizun/source-audit.md
     mcp_server_exe: '%LOCALAPPDATA%/Programs/Horizun/MCP/server/horizun-mcp.exe'
-    mcp_server_sha256: '178a7cc335ec80250c0f605010a7e092eca204f85417efa535f876dddeae908d'
-    revit_addin_dll_sha256: '3f70b2d5929d345573e039f47858b3d51b23a82ccf67cb03d0ab0116671a7218'
+    mcp_server_sha256: 178a7cc335ec80250c0f605010a7e092eca204f85417efa535f876dddeae908d
+    revit_addin_dll_sha256: 3f70b2d5929d345573e039f47858b3d51b23a82ccf67cb03d0ab0116671a7218
     codex_registration: enabled
-    capabilities_proven: []
-    status_note: >-
-      installed and hash-verified against the pinned commit, but no capability is
-      proven yet: the bridge needs one user-initiated Revit launch to answer the
-      unsigned add-in Security dialog before horizun_health can run.
+    capabilities_proven:
+    - read_model
+    - create_level
+    - create_wall
+    - create_floor
+    - create_room
+    - create_hosted_openings
+    - create_view
+    - create_sheet
+    - create_schedule
+    - create_toposolid
+    - export_ifc_pdf_dwg_csv_png
+    - document_session
+    - execute_python
+    - persistence_save_close_reopen
+    status_note: Full write path proven on disposable files; permission profile full_write;
+      contract_hash 8b9600f5274d7dffb6e5bd5f.
+    status: VERIFIED
+    evidence_state: PROVEN
   revitcortex:
-    role: 'fallback provider under evaluation'
-    status: NOT_INSTALLED
-    status_note: 'no checkout in vendor/ and no installation detected'
+    role: fallback provider under evaluation
+    status_note: Mutations and independent re-reads are proven, and it is licensed
+      MIT with no gate in Release; it is not preferred because it has no document
+      cycle to prove save/reopen and its room creation returned a null area.
+    source_url: https://github.com/LuDattilo/RevitCortex.git
+    source_commit: 8b2556daefb2bf88f0a7a17bf28f2352fe0b0e33
+    server_version: 2.0.0
+    catalog_tool_count: 288
+    capabilities_proven:
+    - read_model
+    - create_level
+    - create_wall
+    - create_floor
+    - create_hosted_openings
+    - create_view
+    - create_sheet
+    - create_schedule
+    - create_toposolid
+    capabilities_failed:
+    - create_room
+    capabilities_absent:
+    - document_session
+    - save
+    - open
+    - close
+    - export
+    - execute_python
+    installed: true
+    evidence_state: PROVEN_PARTIAL
   custom-api:
-    role: 'in-project provider of last resort'
-    status: NOT_BUILT
-    status_note: 'implemented only if Horizun and RevitCortex both fail their capability gates'
+    role: in-project provider of last resort
+    status_note: Host C# Amanda.ToolLab.Host + Amanda.ToolLab.Command proved create_wall
+      with in-session re-read and after a save/close/reopen cycle on a disposable
+      file. Kept as the fallback of last resort.
+    capabilities_proven:
+    - create_wall
+    - document_session
+    installed: true
+    evidence_state: PROVEN_FALLBACK
+preferred_provider: horizun
+preferred_provider_rule: 'benchmark tool-lab/reports/provider-benchmark.md: Horizun
+  wins reliability, model quality, warning cleanliness and owns the only document
+  cycle; no UNTESTED provider is preferred'
+optional_versions:
+  uv:
+    version: 0.12.1
+    build: '329541a50 2026-07-31 x86_64-pc-windows-msvc'
+    executable: 'C:\Users\slvma\AppData\Local\hermes\bin\uv.exe'
+    sha256: F537CC65C1791D9A022132302B21ECD48CDF0A605A7B345809FBE8AF4E807D
+    uvx_executable: 'C:\Users\slvma\AppData\Local\hermes\bin\uvx.exe'
+    uvx_sha256: 5A25C39E939542D803B9B69630DE4FB2261157131A7427F2C03CEDEA29DACCF9
+    license: 'MIT OR Apache-2.0'
+    license_source: https://github.com/astral-sh/uv/blob/main/README.md
+    signature_status: NotSigned
+    scheduling_decision: DEFERRED_OPTIONAL
+    blender_mcp_status: UNTESTED

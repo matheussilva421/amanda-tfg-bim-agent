@@ -1,0 +1,341 @@
+schema_version: 1
+max_simultaneous_people:
+  value: 20
+  citation_id: fnas-centro-dia-20
+  provisional: false
+  confidence: high
+citations:
+  - id: fnas-centro-dia-20
+    url: https://fnas.mds.gov.br/wp-content/uploads/2025/06/MANUAL-DE-ORIENTACOES-DE-PROJETOS-ARQUITETONICOS.pdf
+    locator: "Programa de Necessidades: Centro Dia - até 20 pessoas/dia"
+    acessado_em: "2026-09-15"
+    paywalled: false
+    secondary: false
+profiles:
+  - id: ambulatorial
+    label: Acolhimento ambulatorial
+    max_simultaneous_people:
+      value: 20
+      citation_id: capacidade-ambulatorial
+      provisional: true
+      confidence: low
+    provisional: true
+    citations:
+      - id: capacidade-ambulatorial
+        url: https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2009/decreto/d7053.htm
+        locator: "Art. 8: limite de capacidade, acessibilidade, salubridade e conforto"
+        acessado_em: "2026-09-15"
+        paywalled: false
+        secondary: false
+      - id: rdc50-ambulatorial
+        url: https://bvsms.saude.gov.br/bvs/saudelegis/anvisa/2002/rdc0050_21_02_2002.html
+        locator: "Anexo, Unidade funcional 1 - Atendimento ambulatorial: sala de atendimento individualizado, quantificação mínima 1 e dimensão mínima 9,0 m²"
+        acessado_em: "2026-09-15"
+        paywalled: false
+        secondary: false
+      - id: rdc63-servico-saude
+        url: https://bvsms.saude.gov.br/bvs/saudelegis/anvisa/2011/rdc0063_25_11_2011.html
+        locator: "Art. 1 e Anexo I: requisitos de boas práticas para funcionamento de serviços de saúde"
+        acessado_em: "2026-09-15"
+        paywalled: false
+        secondary: false
+    sectors:
+      - id: acolhida
+        label: Acolhida e espera
+        share_of_useful_area:
+          value: 0.20
+          citation_id: rdc63-servico-saude
+          provisional: true
+          confidence: low
+        minimum_rooms:
+          value: 1
+          citation_id: rdc63-servico-saude
+          provisional: true
+          confidence: low
+        privacy_level: medium
+        area_per_person_m2:
+          value: 1.0
+          citation_id: rdc50-ambulatorial
+          provisional: true
+          confidence: low
+      - id: atendimento
+        label: Atendimento individualizado
+        share_of_useful_area:
+          value: 0.45
+          citation_id: rdc50-ambulatorial
+          provisional: true
+          confidence: low
+        minimum_rooms:
+          value: 1
+          citation_id: rdc50-ambulatorial
+          provisional: false
+        privacy_level: high
+        area_per_person_m2:
+          value: 9.0
+          citation_id: rdc50-ambulatorial
+          provisional: false
+      - id: apoio
+        label: Apoio administrativo e sanitário
+        share_of_useful_area:
+          value: 0.35
+          citation_id: rdc63-servico-saude
+          provisional: true
+          confidence: low
+        minimum_rooms:
+          value: 1
+          citation_id: rdc63-servico-saude
+          provisional: true
+          confidence: low
+        privacy_level: medium
+        area_per_person_m2:
+          value: 5.5
+          citation_id: rdc50-ambulatorial
+          provisional: true
+          confidence: low
+    mandatory_requirements:
+      - id: recepcao-espera
+        label: Acolhida, registro e espera acessível
+        citation_id: rdc63-servico-saude
+      - id: sala-atendimento
+        label: Sala de atendimento individualizado
+        citation_id: rdc50-ambulatorial
+      - id: apoio-higiene
+        label: Apoio sanitário e limpeza compatível com o serviço
+        citation_id: rdc63-servico-saude
+    adjacency_rules:
+      mandatory:
+        - source: acolhida
+          target: atendimento
+          citation_id: rdc63-servico-saude
+      permitted:
+        - source: atendimento
+          target: apoio
+          citation_id: rdc63-servico-saude
+      undesired:
+        - source: acolhida
+          target: apoio
+          citation_id: rdc63-servico-saude
+
+  - id: internacao
+    label: Acolhimento com internação
+    max_simultaneous_people:
+      value: 20
+      citation_id: capacidade-internacao
+      provisional: true
+      confidence: low
+    provisional: true
+    citations:
+      - id: capacidade-internacao
+        url: https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2009/decreto/d7053.htm
+        locator: "Art. 8: limite de capacidade, acessibilidade, salubridade e conforto"
+        acessado_em: "2026-09-15"
+        paywalled: false
+        secondary: false
+      - id: rdc50-internacao
+        url: https://bvsms.saude.gov.br/bvs/saudelegis/anvisa/2002/rdc0050_21_02_2002.html
+        locator: "Anexo, Unidade funcional 3 - Internação: assistência em ambientes individuais ou coletivos; isolamento e áreas de apoio"
+        acessado_em: "2026-09-15"
+        paywalled: false
+        secondary: false
+      - id: rdc63-internacao
+        url: https://bvsms.saude.gov.br/bvs/saudelegis/anvisa/2011/rdc0063_25_11_2011.html
+        locator: "Anexo I: boas práticas de funcionamento e garantia de direitos do usuário do serviço de saúde"
+        acessado_em: "2026-09-15"
+        paywalled: false
+        secondary: false
+    sectors:
+      - id: acolhida
+        label: Acolhida e avaliação
+        share_of_useful_area:
+          value: 0.15
+          citation_id: rdc63-internacao
+          provisional: true
+          confidence: low
+        minimum_rooms:
+          value: 1
+          citation_id: rdc50-internacao
+          provisional: true
+          confidence: low
+        privacy_level: high
+        area_per_person_m2:
+          value: 9.0
+          citation_id: rdc50-internacao
+          provisional: true
+          confidence: low
+      - id: alojamento
+        label: Alojamento e cuidados
+        share_of_useful_area:
+          value: 0.55
+          citation_id: rdc50-internacao
+          provisional: true
+          confidence: low
+        minimum_rooms:
+          value: 1
+          citation_id: rdc50-internacao
+          provisional: true
+          confidence: low
+        privacy_level: very_high
+        area_per_person_m2:
+          value: 10.0
+          citation_id: rdc50-internacao
+          provisional: true
+          confidence: low
+      - id: apoio
+        label: Apoio assistencial e serviços
+        share_of_useful_area:
+          value: 0.30
+          citation_id: rdc63-internacao
+          provisional: true
+          confidence: low
+        minimum_rooms:
+          value: 1
+          citation_id: rdc50-internacao
+          provisional: true
+          confidence: low
+        privacy_level: medium
+        area_per_person_m2:
+          value: 5.5
+          citation_id: rdc50-internacao
+          provisional: true
+          confidence: low
+    mandatory_requirements:
+      - id: acolhida-internacao
+        label: Acolhida e classificação inicial do usuário
+        citation_id: rdc63-internacao
+      - id: alojamento-cuidados
+        label: Ambientes de alojamento e assistência compatíveis com o cuidado
+        citation_id: rdc50-internacao
+      - id: apoio-nutricao-higiene
+        label: Apoio de alimentação, higiene, limpeza e resíduos
+        citation_id: rdc50-internacao
+    adjacency_rules:
+      mandatory:
+        - source: acolhida
+          target: alojamento
+          citation_id: rdc63-internacao
+        - source: alojamento
+          target: apoio
+          citation_id: rdc50-internacao
+      permitted:
+        - source: acolhida
+          target: apoio
+          citation_id: rdc63-internacao
+      undesired:
+        - source: acolhida
+          target: alojamento
+          citation_id: rdc50-internacao
+
+  - id: centro-dia
+    label: Centro-dia de convivência e cuidados
+    max_simultaneous_people:
+      value: 20
+      citation_id: fnas-centro-dia-20
+      provisional: false
+      confidence: high
+    provisional: true
+    citations:
+      - id: fnas-centro-dia-20
+        url: https://fnas.mds.gov.br/wp-content/uploads/2025/06/MANUAL-DE-ORIENTACOES-DE-PROJETOS-ARQUITETONICOS.pdf
+        locator: "Programa de Necessidades: Centro Dia - até 20 pessoas/dia"
+        acessado_em: "2026-09-15"
+        paywalled: false
+        secondary: false
+      - id: mds-centro-dia
+        url: https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Cadernos/caderno_centro_dia_orientacoes_tecnicas2.pdf
+        locator: "p. 37 e seção 3.2: autonomia, privacidade, acolhida e escuta qualificada no Centro-dia"
+        acessado_em: "2026-09-15"
+        paywalled: false
+        secondary: false
+      - id: decreto-pnsru
+        url: https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2009/decreto/d7053.htm
+        locator: "Arts. 5, 6 e 8: dignidade, atendimento humanizado, acessibilidade, salubridade e conforto"
+        acessado_em: "2026-09-15"
+        paywalled: false
+        secondary: false
+      - id: rdc63-centro-dia
+        url: https://bvsms.saude.gov.br/bvs/saudelegis/anvisa/2011/rdc0063_25_11_2011.html
+        locator: "Art. 1 e Anexo I: boas práticas para serviços de saúde quando houver atividade assistencial"
+        acessado_em: "2026-09-15"
+        paywalled: false
+        secondary: false
+    sectors:
+      - id: acolhida
+        label: Acolhida, escuta e apoio familiar
+        share_of_useful_area:
+          value: 0.20
+          citation_id: mds-centro-dia
+          provisional: true
+          confidence: low
+        minimum_rooms:
+          value: 1
+          citation_id: mds-centro-dia
+          provisional: true
+          confidence: low
+        privacy_level: high
+        area_per_person_m2:
+          value: 4.8
+          citation_id: fnas-centro-dia-20
+          provisional: true
+          confidence: low
+      - id: convivencia
+        label: Convivência, cuidados e atividades
+        share_of_useful_area:
+          value: 0.55
+          citation_id: mds-centro-dia
+          provisional: true
+          confidence: low
+        minimum_rooms:
+          value: 1
+          citation_id: fnas-centro-dia-20
+          provisional: true
+          confidence: low
+        privacy_level: medium
+        area_per_person_m2:
+          value: 5.0
+          citation_id: fnas-centro-dia-20
+          provisional: true
+          confidence: low
+      - id: apoio
+        label: Apoio, alimentação e higiene
+        share_of_useful_area:
+          value: 0.25
+          citation_id: decreto-pnsru
+          provisional: true
+          confidence: low
+        minimum_rooms:
+          value: 1
+          citation_id: mds-centro-dia
+          provisional: true
+          confidence: low
+        privacy_level: medium
+        area_per_person_m2:
+          value: 3.0
+          citation_id: fnas-centro-dia-20
+          provisional: true
+          confidence: low
+    mandatory_requirements:
+      - id: acolhida-escuta
+        label: Acolhida, escuta qualificada e encaminhamentos
+        citation_id: mds-centro-dia
+      - id: convivencia-cuidados
+        label: Convivência em grupo, cuidados pessoais e apoio aos cuidadores
+        citation_id: mds-centro-dia
+      - id: acessibilidade
+        label: Acesso acessível, seguro e compatível com autonomia
+        citation_id: decreto-pnsru
+    adjacency_rules:
+      mandatory:
+        - source: acolhida
+          target: convivencia
+          citation_id: mds-centro-dia
+        - source: convivencia
+          target: apoio
+          citation_id: decreto-pnsru
+      permitted:
+        - source: acolhida
+          target: apoio
+          citation_id: mds-centro-dia
+      undesired:
+        - source: convivencia
+          target: apoio
+          citation_id: mds-centro-dia

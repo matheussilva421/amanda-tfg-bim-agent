@@ -174,3 +174,166 @@ def test_human_summary_markdown_is_written_alongside_json(tmp_path: Path):
     assert json_path.name == "BIM_PLAN.json"
     assert markdown_path.name == "BIM_PLAN.md"
     assert markdown_path.read_text(encoding="utf-8").find("ROOM-01") >= 0
+
+
+def _capability(root: Path, operation: str, *, provider: str = "horizun", priority: int = 1):
+    from amanda_agent.models.capability import ProviderCapability
+
+    reference, _ = _evidence_ref(root, f"{provider}-{operation.replace('.', '-')}.json", operation)
+    return ProviderCapability(
+        provider=provider,
+        status="PASS",
+        priority=priority,
+        provider_commit="abc" * 21,
+        transport_provider="mcp",
+        tool_schema_hash="hash-1",
+        tested_scope={"operation": operation, "writes": True},
+        evidence_scope="PROVIDER",
+        revit_build="2027",
+        save_reopen=True,
+        independent_query=True,
+        evidence=[reference],
+    )
+
+
+def test_plan_is_ordered_by_stage_and_has_a_rollback_for_each_command(tmp_path: Path):
+    from amanda_agent.bim.diff import DiffAction, DiffOperation, DiffResult
+    from amanda_agent.bim.models import BimStage, DesiredElement
+    from amanda_agent.bim.plan import generate_bim_plan
+    from amanda_agent.models.capability import CapabilityRegistry
+
+    project = DesiredElement(
+        logical_id="PRJ-0001",
+        category="Project",
+        geometry={},
+        properties={"name": "AMANDA"},
+        requirement_id="REQ-PROJECT",
+        design_option="OPTION-A",
+        generation_run="run-001",
+    )
+    level = DesiredElement(
+        logical_id="LEVEL-01",
+        category="Levels",
+        geometry={"elevation_m": 0.0},
+        properties={"name": "Térreo"},
+        requirement_id="REQ-LEVEL",
+        design_option="OPTION-A",
+        generation_run="run-001",
+    )
+    result = DiffResult(
+        document_id="doc-001",
+        managed_count=1,
+        operations=[
+            DiffOperation(
+                logical_id=level.logical_id,
+                action=DiffAction.CREATE,
+                desired=level,
+                semantic_capability="revit.create_level",
+            ),
+            DiffOperation(
+                logical_id=project.logical_id,
+                action=DiffAction.CREATE,
+                desired=project,
+                semantic_capability="revit.create_project",
+            ),
+        ],
+    )
+    registry = CapabilityRegistry(
+        entries=[
+            _capability(tmp_path, "revit.create_level"),
+            _capability(tmp_path, "revit.create_project"),
+        ]
+    )
+
+    plan = generate_bim_plan(
+        result,
+        registry=registry,
+        revit_build="2027",
+        tool_schema_hash="hash-1",
+        stage=BimStage.R01,
+    )
+
+    assert [operation.stage for operation in plan.operations] == [BimStage.R01, BimStage.R03]
+    assert [operation.logical_id for operation in plan.operations] == ["PRJ-0001", "LEVEL-01"]
+    assert all(operation.rollback is not None for operation in plan.operations)
+    assert plan.operations[0].rollback.semantic_capability == "revit.delete_element"
+    assert plan.operations[0].rollback.payload["logical_id"] == "PRJ-0001"
+
+
+def test_equal_current_state_is_not_replanned(tmp_path: Path):
+    from amanda_agent.bim.desired_state import DesiredState
+    from amanda_agent.bim.diff import diff_states
+    from amanda_agent.bim.models import DesiredElement
+    from amanda_agent.bim.plan import generate_bim_plan
+
+    element = DesiredElement(
+        logical_id="ROOM-01",
+        category="Rooms",
+        geometry={"bounds": [0.0, 0.0, 3.0, 4.0]},
+        properties={"name": "Acolhimento"},
+        requirement_id="REQ-ROOM-001",
+        design_option="OPTION-A",
+        generation_run="run-001",
+    )
+    result = diff_states(
+        DesiredState(elements=[element]),
+        {
+            "document_id": "doc-001",
+            "elements": [
+                {
+                    "logical_id": "ROOM-01",
+                    "category": "Rooms",
+                    "geometry": {"bounds": [0.0, 0.0, 3.0, 4.0]},
+                    "properties": {"name": "Acolhimento"},
+                    "unique_id": "uid-1",
+                    "document_id": "doc-001",
+                }
+            ],
+        },
+        expected_document_id="doc-001",
+    )
+    plan = generate_bim_plan(
+        result,
+        registry=_registry(tmp_path),
+        revit_build="2027",
+        tool_schema_hash="hash-1",
+    )
+
+    assert plan.operations == []
+    assert plan.skipped_noops == ["ROOM-01"]
+
+
+def test_plan_refuses_execution_mode_outside_its_scope(tmp_path: Path):
+    from amanda_agent.bim.models import BimStage
+    from amanda_agent.bim.plan import PlanGenerationError, generate_bim_plan
+    from amanda_agent.bim.stages import ExecutionMode
+
+    with pytest.raises(PlanGenerationError, match="CONCEPT_ONLY.*R04"):
+        generate_bim_plan(
+            _diff_result(),
+            registry=_registry(tmp_path),
+            revit_build="2027",
+            tool_schema_hash="hash-1",
+            stage=BimStage.R05,
+            execution_mode=ExecutionMode.CONCEPT_ONLY,
+        )
+
+    with pytest.raises(PlanGenerationError, match="fixture"):
+        generate_bim_plan(
+            _diff_result(),
+            registry=_registry(tmp_path),
+            revit_build="2027",
+            tool_schema_hash="hash-1",
+            execution_mode=ExecutionMode.SYNTHETIC_LAB,
+            fixture=False,
+        )
+
+    with pytest.raises(PlanGenerationError, match="content-bound"):
+        generate_bim_plan(
+            _diff_result(),
+            registry=_registry(tmp_path),
+            revit_build="2027",
+            tool_schema_hash="hash-1",
+            execution_mode=ExecutionMode.DETAILED_BIM,
+            solution=None,
+        )

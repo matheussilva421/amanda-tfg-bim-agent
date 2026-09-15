@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Error: no Revit is reachable. Is Revit running with the Horizun add-in loaded?"
+      }
+    ],
+    "isError": true
+  }
+}

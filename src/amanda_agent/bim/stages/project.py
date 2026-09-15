@@ -11,21 +11,20 @@ from __future__ import annotations
 
 import os
 import re
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable
 from enum import StrEnum
 from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from amanda_agent.models.capability import CapabilityRegistry, EvidenceScope
-
 from ..checkpoints import sha256_file
 from ..models import BimStage
+from ..verification import VerificationResult, verify_write
 from . import (
     PreflightReport,
     PreflightRequest,
-    StageExecutionRecord,
     StageError,
+    StageExecutionRecord,
     StageOperation,
     StagePreflightError,
     StageToolInvoker,
@@ -139,8 +138,10 @@ def select_project_template(
         discovered=discovered,
         notes=[
             *notes,
-            "template was discovered by name and version; it is exercised only when the "
-            "project is created",
+            (
+                "template was discovered by name and version; it is exercised only when the "
+                "project is created"
+            ),
         ],
     )
 
@@ -331,6 +332,40 @@ def execute_project_initialization(
     return dispatch_operations(plan.operations, invoker=invoker)
 
 
+def verify_project_initialization(
+    plan: ProjectInitializationPlan,
+    *,
+    tool_reported_success: bool,
+    query_result: dict[str, object] | None,
+    require_persistence: bool = False,
+    persistence_evidence: bool = False,
+) -> list[VerificationResult]:
+    """Verify the R01 project identity and naming after an independent query."""
+
+    if not plan.operations:
+        raise StageError("R01 project plan has no operation to verify")
+    operation = plan.operations[0]
+    metadata = plan.metadata
+    expected = {
+        "project_name": metadata.project_name,
+        "project_number": metadata.project_number,
+        "view_prefix": metadata.view_prefix,
+        "sheet_prefix": metadata.sheet_prefix,
+        "room_number_scheme": metadata.room_number_scheme,
+        "family_prefix": metadata.family_prefix,
+        "material_prefix": metadata.material_prefix,
+        "stage_prefix": metadata.stage_prefix,
+    }
+    return verify_write(
+        logical_id=operation.logical_id,
+        tool_reported_success=tool_reported_success,
+        query_result=query_result,
+        expected_properties=expected,
+        require_persistence=require_persistence,
+        persistence_evidence=persistence_evidence,
+    )
+
+
 __all__ = [
     "PROJECT_CREATE_CAPABILITY",
     "PROJECT_LOGICAL_ID",
@@ -346,4 +381,5 @@ __all__ = [
     "execute_project_initialization",
     "plan_project_initialization",
     "select_project_template",
+    "verify_project_initialization",
 ]

@@ -1,0 +1,22 @@
+2026-09-15T17:57:14.9128987Z OnStartup: entering
+2026-09-15T17:57:14.9142069Z OnStartup: external event raised
+2026-09-15T17:57:15.2413489Z handler: Execute entered
+2026-09-15T17:57:16.9298601Z step open-work-document: PASS (1659 ms) 
+2026-09-15T17:57:16.9473842Z step prepare-fixture-level: PASS (17 ms) 
+2026-09-15T17:57:16.9505670Z step snapshot-walls-before: PASS (2 ms) 
+2026-09-15T17:57:16.9740568Z step invoke-external-command: FAIL (23 ms) LabWallCore returned Failed: P02-T16 FAILED closed: Wall ElementId.Value=328658 has no bounding box to verify.
+2026-09-15T17:57:16.9895917Z handler: job failed: LabWallCore returned Failed: P02-T16 FAILED closed: Wall ElementId.Value=328658 has no bounding box to verify.
+2026-09-15T17:57:17.0084905Z result written to C:\Users\slvma\Downloads\Github\Projeto Amanda\tool-lab\custom-api\results\t16-host-create.json
+2026-09-15T17:57:17.0213307Z exit revit command posted
+2026-09-15T17:57:27.6773812Z OnShutdown
+2026-09-15T17:57:45.5477665Z OnStartup: entering
+2026-09-15T17:57:45.5497639Z OnStartup: external event raised
+2026-09-15T17:58:01.3449045Z handler: Execute entered
+2026-09-15T17:58:01.4524877Z step open-work-document: PASS (101 ms) 
+2026-09-15T17:58:01.4623672Z step prepare-fixture-level: PASS (9 ms) 
+2026-09-15T17:58:01.4654434Z step snapshot-walls-before: PASS (2 ms) 
+2026-09-15T17:58:01.5752603Z step invoke-external-command: FAIL (109 ms) LabWallCore returned Failed: P02-T16 FAILED closed: Wall ElementId.Value=328659 has no bounding box to verify.
+2026-09-15T17:58:01.5787168Z handler: job failed: LabWallCore returned Failed: P02-T16 FAILED closed: Wall ElementId.Value=328659 has no bounding box to verify.
+2026-09-15T17:58:01.5818987Z result written to C:\Users\slvma\Downloads\Github\Projeto Amanda\tool-lab\custom-api\results\t16-host-create.json
+2026-09-15T17:58:01.5887296Z exit revit command posted
+2026-09-15T17:58:05.6821551Z OnShutdown

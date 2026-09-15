@@ -136,3 +136,55 @@ def test_unique_id_and_document_identity_survive_process_round_trip():
     assert restored.elements[0].unique_id == "revit-unique-1"
     assert restored.elements[0].document_id == "doc-001"
     assert restored.elements[0].element_id is None
+
+
+def test_duplicate_current_revit_unique_id_is_a_hard_error():
+    from amanda_agent.bim.current_state import CurrentElement, CurrentState
+    from amanda_agent.bim.desired_state import DesiredState
+    from amanda_agent.bim.diff import DuplicateCurrentIdentity, diff_states
+
+    current = CurrentState(
+        document_id="doc-001",
+        elements=[
+            CurrentElement(**_current("ROOM-01", unique_id="same-uid")),
+            CurrentElement(**_current("ROOM-02", unique_id="same-uid")),
+        ],
+    )
+
+    with pytest.raises(DuplicateCurrentIdentity, match="unique_id"):
+        diff_states(DesiredState(elements=[]), current)
+
+
+def test_divergent_managed_element_is_refused_before_delete():
+    from amanda_agent.bim.current_state import CurrentElement, CurrentState
+    from amanda_agent.bim.desired_state import DesiredState
+    from amanda_agent.bim.diff import UserDivergence, diff_states
+
+    with pytest.raises(UserDivergence, match="divergence"):
+        diff_states(
+            DesiredState(elements=[]),
+            CurrentState(
+                document_id="doc-001",
+                elements=[CurrentElement(**_current("ROOM-01", diverged=True))],
+            ),
+        )
+
+
+def test_diff_operation_exposes_persistent_element_identity():
+    from amanda_agent.bim.current_state import CurrentElement, CurrentState
+    from amanda_agent.bim.desired_state import DesiredState
+    from amanda_agent.bim.diff import diff_states
+
+    result = diff_states(
+        DesiredState(elements=[_desired("ROOM-01")]),
+        CurrentState(
+            document_id="doc-001",
+            elements=[CurrentElement(**_current("ROOM-01", unique_id="revit-uid-1"))],
+        ),
+    )
+
+    assert result.operations[0].identity == {
+        "logical_id": "ROOM-01",
+        "unique_id": "revit-uid-1",
+        "document_id": "doc-001",
+    }

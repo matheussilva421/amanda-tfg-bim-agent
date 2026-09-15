@@ -8,7 +8,7 @@ the capability registry proves that operation for the exact build.
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -22,7 +22,7 @@ from amanda_agent.site.models import (
     TopographyRepresentation,
 )
 
-from ..models import BimStage
+from ..models import BimStage, DesiredElement
 from ..verification import VerificationResult, verify_write
 from . import (
     PreflightReport,
@@ -107,6 +107,7 @@ class ToposolidRequest(BaseModel):
     operation: StageOperation
     extent: SiteExtent
     point_count: int = Field(ge=1)
+    desired_element: DesiredElement
     source_representation: TopographyRepresentation = (
         TopographyRepresentation.VERIFIED_TOPOGRAPHY
     )
@@ -177,11 +178,40 @@ def _extent(points: Sequence[Coordinate3D]) -> SiteExtent:
     )
 
 
+def _default_toposolid_element(
+    footprint: Sequence[Coordinate2D],
+    *,
+    elevation: float,
+    name: str,
+    points: Sequence[Coordinate3D],
+    generation_run: str,
+) -> DesiredElement:
+    """Small local fallback used when the external artifact module is absent."""
+
+    return DesiredElement(
+        logical_id=name,
+        category="Toposolid",
+        geometry={
+            "footprint": [list(point) for point in footprint],
+            "points": [list(point) for point in points],
+            "base_elevation_m": elevation,
+        },
+        properties={
+            "name": name,
+            "source_representation": TopographyRepresentation.VERIFIED_TOPOGRAPHY.value,
+        },
+        requirement_id="P05-T10:TOPOGRAPHY",
+        design_option="SELECTED_SOLUTION",
+        generation_run=generation_run,
+    )
+
+
 def plan_site_stage(
     request: PreflightRequest,
     *,
     blockers: Sequence[str] = DEFAULT_TOPOGRAPHY_BLOCKERS,
     include_study_scenario: bool = True,
+    toposolid_planner: Callable[..., DesiredElement] | None = None,
 ) -> SiteStagePlan:
     """Preflight the mode, then describe the site representation honestly."""
 
@@ -203,8 +233,10 @@ def plan_site_stage(
     source_state = site.topography.source_state
     study_scenario = _study_scenario(site) if include_study_scenario else None
     notes = [
-        f"topography source remains {source_state.value}; "
-        "no surveyed elevation is claimed by this plan"
+        (
+            f"topography source remains {source_state.value}; "
+            "no surveyed elevation is claimed by this plan"
+        )
     ]
 
     if representation is TopographyRepresentation.PLANAR_PLACEHOLDER:
@@ -273,6 +305,44 @@ def plan_site_stage(
         preferred_provider=preferred.provider,
         fallback_providers=[entry.provider for entry in rest],
     )
+    planner = toposolid_planner
+    if planner is None:
+        try:
+            from ..external import place_toposolid as external_planner
+        except ModuleNotFoundError as exc:
+            if exc.name != "amanda_agent.bim.external":
+                raise
+            external_planner = None
+        planner = external_planner or (
+            lambda footprint, *, elevation, name: _default_toposolid_element(
+                footprint,
+                elevation=elevation,
+                name=name,
+                points=points,
+                generation_run=effective.generation_run,
+            )
+        )
+    try:
+        desired_element = planner(
+            list(site.boundary.coordinates),
+            elevation=extent.min_z,
+            name=TOPO_LOGICAL_ID,
+        )
+    except Exception as exc:
+        raise StageError(f"Toposolid desired-element planner failed: {exc}") from exc
+    if not isinstance(desired_element, DesiredElement):
+        raise StageError("Toposolid desired-element planner must return DesiredElement")
+    if desired_element.logical_id != TOPO_LOGICAL_ID or desired_element.category != "Toposolid":
+        properties = dict(desired_element.properties)
+        properties.setdefault("external_logical_id", desired_element.logical_id)
+        desired_element = desired_element.model_copy(
+            update={
+                "logical_id": TOPO_LOGICAL_ID,
+                "category": "Toposolid",
+                "properties": properties,
+            }
+        )
+    operation.payload["desired_element"] = desired_element.model_dump(mode="json")
     return SiteStagePlan(
         preflight=report,
         representation=representation,
@@ -284,6 +354,7 @@ def plan_site_stage(
             operation=operation,
             extent=extent,
             point_count=len(points),
+            desired_element=desired_element,
         ),
         operations=[operation],
         blockers=list(blockers) if study_scenario is not None else [],
@@ -324,8 +395,8 @@ def execute_site_stage(
 
 __all__ = [
     "DEFAULT_TOPOGRAPHY_BLOCKERS",
-    "TOPO_LOGICAL_ID",
     "TOPOSOLID_CAPABILITY",
+    "TOPO_LOGICAL_ID",
     "PlanarReference",
     "SiteExtent",
     "SiteStagePlan",

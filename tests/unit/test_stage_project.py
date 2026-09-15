@@ -29,6 +29,7 @@ from amanda_agent.bim.stages.project import (
     execute_project_initialization,
     plan_project_initialization,
     select_project_template,
+    verify_project_initialization,
 )
 from amanda_agent.design.models import DesignSolution, DesignStatus, MetricSet
 from amanda_agent.models.capability import CapabilityRegistry, ProviderCapability
@@ -438,3 +439,28 @@ def test_operations_are_dispatched_through_the_injected_adapter(tmp_path: Path):
     assert call.payload["template_origin"] == TemplateOrigin.INSTALLED_ARCHITECTURAL.value
     assert records[0].reported_success is True
     assert records[0].logical_id == "PRJ-0001"
+
+
+def test_project_write_requires_independent_read_and_verifies_naming(tmp_path: Path):
+    plan = _plan(tmp_path, _request(tmp_path))
+
+    results = verify_project_initialization(
+        plan,
+        tool_reported_success=True,
+        query_result={
+            "logical_id": "PRJ-0001",
+            "unique_id": "uid-project",
+            "properties": {
+                "project_name": plan.metadata.project_name,
+                "project_number": plan.metadata.project_number,
+                "view_prefix": plan.metadata.view_prefix,
+                "sheet_prefix": plan.metadata.sheet_prefix,
+                "room_number_scheme": plan.metadata.room_number_scheme,
+                "family_prefix": plan.metadata.family_prefix,
+                "material_prefix": plan.metadata.material_prefix,
+                "stage_prefix": plan.metadata.stage_prefix,
+            },
+        },
+    )
+
+    assert results and all(result.passed for result in results)

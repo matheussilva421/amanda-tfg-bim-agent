@@ -1,0 +1,87 @@
+{
+  "job": {
+    "mode": "create",
+    "work_rvt": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\custom-api\\LAB_CUSTOM_WALL.rvt",
+    "expect_element_id_value": 0
+  },
+  "document_title": "LAB_CUSTOM_WALL",
+  "is_family_document": false,
+  "fixture_level_created": true,
+  "fixture_level_created_id": 328657,
+  "wall_count_before": 0,
+  "command_result": "Succeeded",
+  "command_message": "P02-T16 command result: created wall ElementId.Value=328658 on \u0027Level 1\u0027 with length=5 m and height=3 m.",
+  "command_ms": 162,
+  "command_reported_element_id_value_parsed": 328658,
+  "wall_count_after": 1,
+  "command_reported_element_id_value": 328658,
+  "element_id_value": 328658,
+  "element_id_matches_command_report": true,
+  "verifications": [
+    {
+      "phase": "in_session",
+      "element_id_value": 328658,
+      "length_m": 5,
+      "height_m": 3,
+      "wall_type": "Interior - 138 mm Divis\u00F3ria (1-hr)",
+      "level": "Level 1",
+      "geometry_matches_contract": true
+    }
+  ],
+  "save_ms": 639,
+  "outcome": "FAIL",
+  "failure": "Autodesk.Revit.Exceptions.InvalidOperationException: The active document may not be closed from the API.\r\n   at Autodesk.Revit.DB.Document.Close(Boolean saveModified)\r\n   at Amanda.ToolLab.Host.LabHostRun.\u003C\u003Ec__DisplayClass11_0.\u003CRunCreate\u003Eb__7() in C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\custom-api\\host\\LabHostApp.cs:line 364\r\n   at Amanda.ToolLab.Host.LabHostRun.Step(String name, Action action) in C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\custom-api\\host\\LabHostApp.cs:line 571\r\n   at Amanda.ToolLab.Host.LabHostRun.RunCreate(JobSpec job) in C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\custom-api\\host\\LabHostApp.cs:line 362\r\n   at Amanda.ToolLab.Host.LabHostRun.RunJob(JobSpec job) in C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\custom-api\\host\\LabHostApp.cs:line 303\r\n   at Amanda.ToolLab.Host.LabHostRun.Execute() in C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\custom-api\\host\\LabHostApp.cs:line 248",
+  "total_ms": 1124,
+  "steps": [
+    {
+      "name": "open-work-document",
+      "status": "PASS",
+      "duration_ms": 109,
+      "detail": null
+    },
+    {
+      "name": "prepare-fixture-level",
+      "status": "PASS",
+      "duration_ms": 150,
+      "detail": null
+    },
+    {
+      "name": "snapshot-walls-before",
+      "status": "PASS",
+      "duration_ms": 5,
+      "detail": null
+    },
+    {
+      "name": "invoke-external-command",
+      "status": "PASS",
+      "duration_ms": 170,
+      "detail": null
+    },
+    {
+      "name": "locate-new-wall",
+      "status": "PASS",
+      "duration_ms": 4,
+      "detail": null
+    },
+    {
+      "name": "verify-geometry-in-session",
+      "status": "PASS",
+      "duration_ms": 3,
+      "detail": null
+    },
+    {
+      "name": "save-document",
+      "status": "PASS",
+      "duration_ms": 639,
+      "detail": null
+    },
+    {
+      "name": "close-document",
+      "status": "FAIL",
+      "duration_ms": 3,
+      "detail": "The active document may not be closed from the API."
+    }
+  ],
+  "recorded_utc": "2026-09-15T18:30:55.3565711Z",
+  "host_assembly": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\custom-api\\host\\bin\\Release\\net10.0-windows7.0\\Amanda.ToolLab.Host.dll"
+}

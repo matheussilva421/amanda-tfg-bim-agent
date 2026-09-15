@@ -1,0 +1,9 @@
+2026-09-15T18:57:53.1010691Z OnStartup: entering
+2026-09-15T18:57:53.1070056Z OnStartup: external event raised
+2026-09-15T18:58:02.9135040Z handler: Execute entered
+2026-09-15T18:58:02.9988876Z step open-work-document: PASS (77 ms) 
+2026-09-15T18:58:03.0038288Z step prepare-fixture-level: PASS (4 ms) 
+2026-09-15T18:58:03.0061068Z step snapshot-walls-before: PASS (1 ms) 
+2026-09-15T18:59:05.4857600Z step invoke-external-command: PASS (62479 ms) 
+2026-09-15T18:59:05.4887735Z step locate-new-wall: PASS (2 ms) 
+2026-09-15T18:59:05.4909794Z step verify-geometry-in-session: PASS (1 ms) 
