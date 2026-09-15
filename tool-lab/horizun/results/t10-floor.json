@@ -1,0 +1,1379 @@
+{
+  "evidence_id": "P02-T10-floor-create-persistence",
+  "task": "P02-T10",
+  "phase": "floor",
+  "desired": {
+    "kind": "floor",
+    "size_m": [
+      6.0,
+      4.0
+    ],
+    "area_m2": 24.0,
+    "level_id": 311,
+    "type_id": 339,
+    "units": "m",
+    "polygon": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        6,
+        0,
+        0
+      ],
+      [
+        6,
+        4,
+        0
+      ],
+      [
+        0,
+        4,
+        0
+      ]
+    ]
+  },
+  "calls": [
+    {
+      "tool": "horizun_open_document",
+      "args": {
+        "path": "C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/horizun/LAB_HORIZUN_FLOOR.rvt",
+        "expected_version": "2027",
+        "idempotency_key": "d4d89654-373c-45be-8674-a7f67616cf32"
+      },
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"opened\": true,\r\n  \"confirmed_active\": true,\r\n  \"source\": \"local\",\r\n  \"path_matches_request\": true,\r\n  \"requested_path\": \"C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/horizun/LAB_HORIZUN_FLOOR.rvt\",\r\n  \"active_document\": \"LAB_HORIZUN_FLOOR\",\r\n  \"active_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_FLOOR.rvt\",\r\n  \"file_saved_in_version\": \"2027\",\r\n  \"running_revit_version\": \"2027\",\r\n  \"version_guard\": \"checked\",\r\n  \"upgraded_on_open\": false,\r\n  \"detached\": false,\r\n  \"audited\": false,\r\n  \"all_worksets_opened\": false,\r\n  \"was_central\": false,\r\n  \"central_path\": null,\r\n  \"is_workshared\": false,\r\n  \"central_guard\": \"not_a_central\",\r\n  \"note\": null,\r\n  \"idempotency\": {\r\n    \"key\": \"d4d89654-373c-45be-8674-a7f67616cf32\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"The durable claim and result were recorded; an identical retry will replay this answer.\"\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 88\r\n  }\r\n}",
+      "text_len": 1283,
+      "structured": {
+        "opened": true,
+        "confirmed_active": true,
+        "source": "local",
+        "path_matches_request": true,
+        "requested_path": "C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/horizun/LAB_HORIZUN_FLOOR.rvt",
+        "active_document": "LAB_HORIZUN_FLOOR",
+        "active_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_FLOOR.rvt",
+        "file_saved_in_version": "2027",
+        "running_revit_version": "2027",
+        "version_guard": "checked",
+        "upgraded_on_open": false,
+        "detached": false,
+        "audited": false,
+        "all_worksets_opened": false,
+        "was_central": false,
+        "central_path": null,
+        "is_workshared": false,
+        "central_guard": "not_a_central",
+        "note": null,
+        "idempotency": {
+          "key": "d4d89654-373c-45be-8674-a7f67616cf32",
+          "status": "executed_once",
+          "command_executed_in_this_call": true,
+          "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+        },
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 1,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 88
+        }
+      },
+      "duration_ms": 202
+    },
+    {
+      "tool": "horizun_query_model",
+      "args": {
+        "categories": [
+          "OST_Floors"
+        ],
+        "response_mode": "summary",
+        "include_links": false
+      },
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"document\": \"LAB_HORIZUN_FLOOR\",\r\n  \"scope\": \"model\",\r\n  \"view_id\": null,\r\n  \"include_links\": false,\r\n  \"matched_total\": 0,\r\n  \"coverage_complete\": true,\r\n  \"unreadable_total\": 0,\r\n  \"unreadable_shown\": 0,\r\n  \"unreadable_truncated\": false,\r\n  \"unreadable\": [],\r\n  \"federated_coverage\": {\r\n    \"coverage_complete\": true,\r\n    \"include_links\": false,\r\n    \"link_instances_total\": 0,\r\n    \"link_instances_loaded\": 0,\r\n    \"link_instances_unavailable\": 0,\r\n    \"sources\": [\r\n      {\r\n        \"source_kind\": \"host\",\r\n        \"source_model\": \"LAB_HORIZUN_FLOOR\",\r\n        \"link_instance_id\": null,\r\n        \"visibility_coverage\": {\r\n          \"coverage_complete\": true,\r\n          \"is_workshared\": false,\r\n          \"worksets_total\": null,\r\n          \"worksets_open\": null,\r\n          \"worksets_closed\": null,\r\n          \"worksets_read_error\": null,\r\n          \"note\": \"This model is not workshared, so every element in it is loaded and this answer covers all of it.\"\r\n        }\r\n      }\r\n    ],\r\n    \"unavailable_links\": [],\r\n    \"note\": \"Every considered source was loaded with all user worksets open.\"\r\n  },\r\n  \"summary\": {\r\n    \"by_category\": {},\r\n    \"by_level\": {},\r\n    \"by_source\": {}\r\n  },\r\n  \"response_mode\": \"summary\",\r\n  \"note\": \"Counts cover the whole matched set. No element rows were returned; use full or compact to inspect them.\",\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 2,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 6\r\n  }\r\n}",
+      "text_len": 1656,
+      "structured": {
+        "document": "LAB_HORIZUN_FLOOR",
+        "scope": "model",
+        "view_id": null,
+        "include_links": false,
+        "matched_total": 0,
+        "coverage_complete": true,
+        "unreadable_total": 0,
+        "unreadable_shown": 0,
+        "unreadable_truncated": false,
+        "unreadable": [],
+        "federated_coverage": {
+          "coverage_complete": true,
+          "include_links": false,
+          "link_instances_total": 0,
+          "link_instances_loaded": 0,
+          "link_instances_unavailable": 0,
+          "sources": [
+            {
+              "source_kind": "host",
+              "source_model": "LAB_HORIZUN_FLOOR",
+              "link_instance_id": null,
+              "visibility_coverage": {
+                "coverage_complete": true,
+                "is_workshared": false,
+                "worksets_total": null,
+                "worksets_open": null,
+                "worksets_closed": null,
+                "worksets_read_error": null,
+                "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+              }
+            }
+          ],
+          "unavailable_links": [],
+          "note": "Every considered source was loaded with all user worksets open."
+        },
+        "summary": {
+          "by_category": {},
+          "by_level": {},
+          "by_source": {}
+        },
+        "response_mode": "summary",
+        "note": "Counts cover the whole matched set. No element rows were returned; use full or compact to inspect them.",
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 2,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 6
+        }
+      },
+      "duration_ms": 51
+    },
+    {
+      "tool": "get_document_info",
+      "args": {},
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"title\": \"LAB_HORIZUN_FLOOR\",\r\n  \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_FLOOR.rvt\",\r\n  \"is_workshared\": false,\r\n  \"is_family_document\": false,\r\n  \"revit_version\": \"2027\",\r\n  \"revit_build\": \"27.2.0.39\",\r\n  \"element_count\": 3316,\r\n  \"shared_coordinates\": {\r\n    \"active_location\": \"Terreno padrão\",\r\n    \"east_west_mm\": 0.0,\r\n    \"north_south_mm\": 0.0,\r\n    \"elevation_mm\": 0.0,\r\n    \"angle_to_true_north_degrees\": 0.0\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 8\r\n  }\r\n}",
+      "text_len": 793,
+      "structured": {
+        "title": "LAB_HORIZUN_FLOOR",
+        "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_FLOOR.rvt",
+        "is_workshared": false,
+        "is_family_document": false,
+        "revit_version": "2027",
+        "revit_build": "27.2.0.39",
+        "element_count": 3316,
+        "shared_coordinates": {
+          "active_location": "Terreno padrão",
+          "east_west_mm": 0.0,
+          "north_south_mm": 0.0,
+          "elevation_mm": 0.0,
+          "angle_to_true_north_degrees": 0.0
+        },
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 1,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 8
+        }
+      },
+      "duration_ms": 51
+    },
+    {
+      "tool": "horizun_model_scan",
+      "args": {
+        "target_document_title": "LAB_HORIZUN_FLOOR"
+      },
+      "is_error": false,
+      "error": null,
+      "text": "",
+      "text_len": 240084,
+      "structured": null,
+      "duration_ms": 1107,
+      "structured_health_only": {
+        "status": "ok",
+        "warnings_total": 0,
+        "warnings_distinct": 0,
+        "warnings_identity": "grouped by FailureDefinitionId, which is the same value in every language and Revit version. The description is a LABEL, not the key: grouping by it splits one warning across two languages and merges two different warnings that happen to read alike. Where identity_is_stable is false the guid could not be read and the text was used instead, so that group must not be compared across languages or versions.",
+        "warnings_occurrences_means": "occurrences counts WARNINGS, not elements. One warning can name many failing elements, so the sum of occurrences is smaller than the number of elements involved and neither is the other.",
+        "warning_profile": {
+          "status": "not_requested",
+          "means": "no warning profile was supplied, so no warning was triaged. This is NOT a pass: every warning below is reported with Revit's own severity and none with yours."
+        },
+        "warnings_by_type": {
+          "total": 0,
+          "returned": 0,
+          "truncated": false,
+          "items": [],
+          "limit": 50,
+          "resumed": false
+        },
+        "rooms": {
+          "total": 0,
+          "unplaced": {
+            "total": 0,
+            "returned": 0,
+            "truncated": false,
+            "items": [],
+            "limit": 50,
+            "resumed": false
+          },
+          "unbounded": {
+            "total": 0,
+            "returned": 0,
+            "truncated": false,
+            "items": [],
+            "limit": 50,
+            "resumed": false
+          },
+          "unreadable": {
+            "total": 0,
+            "returned": 0,
+            "truncated": false,
+            "items": [],
+            "limit": 50,
+            "resumed": false
+          },
+          "note": "unreadable is separate from unbounded on purpose: a read that threw is not a defect we found, it is a defect we cannot rule out. Unplaced and unbounded both understate any area takeoff taken from this model."
+        },
+        "areas": {
+          "total": 0,
+          "unplaced": {
+            "total": 0,
+            "returned": 0,
+            "truncated": false,
+            "items": [],
+            "limit": 50,
+            "resumed": false
+          },
+          "unbounded": {
+            "total": 0,
+            "returned": 0,
+            "truncated": false,
+            "items": [],
+            "limit": 50,
+            "resumed": false
+          },
+          "unreadable": {
+            "total": 0,
+            "returned": 0,
+            "truncated": false,
+            "items": [],
+            "limit": 50,
+            "resumed": false
+          },
+          "note": "unreadable is separate from unbounded on purpose: a read that threw is not a defect we found, it is a defect we cannot rule out. Unplaced and unbounded both understate any area takeoff taken from this model."
+        }
+      }
+    },
+    {
+      "tool": "horizun_create_elements",
+      "args": {
+        "target_document": "LAB_HORIZUN_FLOOR",
+        "units": "m",
+        "dry_run": true,
+        "elements": [
+          {
+            "kind": "floor",
+            "type_id": 339,
+            "level_id": 311,
+            "profile": [
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  6.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  6.0,
+                  4.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  4.0,
+                  0.0
+                ]
+              ]
+            ]
+          }
+        ]
+      },
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"dry_run\": true,\r\n  \"tabular\": null,\r\n  \"transaction_status\": \"not_started\",\r\n  \"requested\": 1,\r\n  \"valid\": 1,\r\n  \"invalid\": 0,\r\n  \"errors\": [],\r\n  \"plan\": [\r\n    {\r\n      \"index\": 0,\r\n      \"kind\": \"floor\",\r\n      \"references_resolved\": true\r\n    }\r\n  ],\r\n  \"validation_level\": \"arguments_and_references\",\r\n  \"api_rehearsal\": null,\r\n  \"note\": \"No transaction opened; API construction and instance parameters are not rehearsed. Correct every invalid row before apply.\",\r\n  \"application\": {\r\n    \"state\": \"rehearsed\",\r\n    \"fully_applied\": false,\r\n    \"transaction_status\": \"not_started\",\r\n    \"requested\": 1,\r\n    \"applied\": 0,\r\n    \"verified\": 0,\r\n    \"unresolved\": 0,\r\n    \"failed\": 0,\r\n    \"unknown\": 0,\r\n    \"state_means\": \"rehearsed: a valid dry run. Everything resolved and NOTHING was written.\"\r\n  },\r\n  \"document\": \"LAB_HORIZUN_FLOOR [C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_FLOOR.rvt]\",\r\n  \"document_fingerprint\": \"7c5f64a9ca9a422b\",\r\n  \"change_preview\": {\r\n    \"fingerprint\": \"a132ffb66d99594bd595b6433eeb414786ed04cee8644ef0845552dd86986eca\",\r\n    \"total\": 1,\r\n    \"shown\": 1,\r\n    \"truncated\": false,\r\n    \"expected_cascade\": 0,\r\n    \"ro",
+      "text_len": 3617,
+      "structured": {
+        "dry_run": true,
+        "tabular": null,
+        "transaction_status": "not_started",
+        "requested": 1,
+        "valid": 1,
+        "invalid": 0,
+        "errors": [],
+        "plan": [
+          {
+            "index": 0,
+            "kind": "floor",
+            "references_resolved": true
+          }
+        ],
+        "validation_level": "arguments_and_references",
+        "api_rehearsal": null,
+        "note": "No transaction opened; API construction and instance parameters are not rehearsed. Correct every invalid row before apply.",
+        "application": {
+          "state": "rehearsed",
+          "fully_applied": false,
+          "transaction_status": "not_started",
+          "requested": 1,
+          "applied": 0,
+          "verified": 0,
+          "unresolved": 0,
+          "failed": 0,
+          "unknown": 0,
+          "state_means": "rehearsed: a valid dry run. Everything resolved and NOTHING was written."
+        },
+        "document": "LAB_HORIZUN_FLOOR [C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_FLOOR.rvt]",
+        "document_fingerprint": "7c5f64a9ca9a422b",
+        "change_preview": {
+          "fingerprint": "a132ffb66d99594bd595b6433eeb414786ed04cee8644ef0845552dd86986eca",
+          "total": 1,
+          "shown": 1,
+          "truncated": false,
+          "expected_cascade": 0,
+          "rows": [
+            {
+              "unique_id": "create:0",
+              "element_id": null,
+              "action": "create",
+              "category": "floor",
+              "type": "Genérico 150 mm",
+              "captured_state": {
+                "host_uid": "",
+                "level": "Nível 1",
+                "level_elev_mm": "0",
+                "level_uid": "e3e052f9-0156-11d5-9301-0000863f27ad-00000137",
+                "system_type": "",
+                "system_type_uid": "",
+                "top_level_elev_mm": "",
+                "top_level_uid": "",
+                "type_uid": "e3e052f9-0156-11d5-9301-0000863f27ad-00000153"
+              },
+              "proposed_values": null,
+              "values_truncated": false
+            }
+          ],
+          "note": "Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values."
+        },
+        "plan_resolved": {
+          "elements": 1,
+          "create": 1,
+          "modify": 0,
+          "delete": 0,
+          "expected_cascade": 0,
+          "fingerprint": "a132ffb66d99594bd595b6433eeb414786ed04cee8644ef0845552dd86986eca"
+        },
+        "confirmation_token": "hz-0c439af441b111b71436e996c27ff644",
+        "confirmation_expires_utc": "2026-09-15 14:30:37Z",
+        "confirmation_note": "To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds this ordered heterogeneous batch, its units, AND what its names resolved to right now - the types, system types and levels, including each level's measured elevation. A type renamed, a name re-pointed or a level moved before you apply refuses as a stale plan instead of creating something else under the approved words.",
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 2,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 37
+        }
+      },
+      "duration_ms": 51
+    },
+    {
+      "tool": "horizun_create_elements",
+      "args": {
+        "target_document": "LAB_HORIZUN_FLOOR",
+        "units": "m",
+        "dry_run": false,
+        "confirmation_token": "hz-0c439af441b111b71436e996c27ff644",
+        "idempotency_key": "ab802f35-4180-411f-8710-c9dda000fec1",
+        "elements": [
+          {
+            "kind": "floor",
+            "type_id": 339,
+            "level_id": 311,
+            "profile": [
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  6.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  6.0,
+                  4.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  4.0,
+                  0.0
+                ]
+              ]
+            ]
+          }
+        ]
+      },
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"dry_run\": false,\r\n  \"transaction_status\": \"Committed\",\r\n  \"transaction_name\": \"Horizun: create elements\",\r\n  \"requested\": 1,\r\n  \"created_verified\": 1,\r\n  \"rows\": [\r\n    {\r\n      \"index\": 0,\r\n      \"kind\": \"floor\",\r\n      \"element_id\": 328659,\r\n      \"unique_id\": \"583fbd48-74d3-48c7-8abc-50be724b482c-000503d3\",\r\n      \"present_after_commit\": true,\r\n      \"verified\": true,\r\n      \"postconditions\": {\r\n        \"all_verified\": true,\r\n        \"checked\": 7,\r\n        \"all_measured\": true,\r\n        \"required\": [\r\n          \"kind\",\r\n          \"level_elevation\",\r\n          \"level_id\",\r\n          \"offset\",\r\n          \"profile_xy\",\r\n          \"reference_face_elevation\",\r\n          \"type_id\"\r\n        ],\r\n        \"missing\": [],\r\n        \"unexpected\": [],\r\n        \"verified_means\": \"true only when EXACTLY the required properties were checked - each once, none missing, none substituted - and every one of them was RE-READ from the committed model and matched. A property that could not be read counts as unmeasured, never as agreement, and an empty checklist is not a pass.\",\r\n        \"properties\": [\r\n          {\r\n            \"property\": \"kind\",\r\n            \"measured\": true,\r\n            \"reques",
+      "text_len": 4278,
+      "structured": {
+        "dry_run": false,
+        "transaction_status": "Committed",
+        "transaction_name": "Horizun: create elements",
+        "requested": 1,
+        "created_verified": 1,
+        "rows": [
+          {
+            "index": 0,
+            "kind": "floor",
+            "element_id": 328659,
+            "unique_id": "583fbd48-74d3-48c7-8abc-50be724b482c-000503d3",
+            "present_after_commit": true,
+            "verified": true,
+            "postconditions": {
+              "all_verified": true,
+              "checked": 7,
+              "all_measured": true,
+              "required": [
+                "kind",
+                "level_elevation",
+                "level_id",
+                "offset",
+                "profile_xy",
+                "reference_face_elevation",
+                "type_id"
+              ],
+              "missing": [],
+              "unexpected": [],
+              "verified_means": "true only when EXACTLY the required properties were checked - each once, none missing, none substituted - and every one of them was RE-READ from the committed model and matched. A property that could not be read counts as unmeasured, never as agreement, and an empty checklist is not a pass.",
+              "properties": [
+                {
+                  "property": "kind",
+                  "measured": true,
+                  "requested": "floor",
+                  "found_in_committed_model": "floor",
+                  "matches": true
+                },
+                {
+                  "property": "type_id",
+                  "measured": true,
+                  "requested": 339,
+                  "found_in_committed_model": 339,
+                  "matches": true
+                },
+                {
+                  "property": "level_id",
+                  "measured": true,
+                  "requested": 311,
+                  "found_in_committed_model": 311,
+                  "matches": true
+                },
+                {
+                  "property": "level_elevation",
+                  "measured": true,
+                  "requested": 0.0,
+                  "found_in_committed_model": 0.0,
+                  "matches": true,
+                  "unit": "feet",
+                  "tolerance": 1e-06,
+                  "method": "Revit parameter/location/sketch/face readback"
+                },
+                {
+                  "property": "offset",
+                  "measured": true,
+                  "requested": 0.0,
+                  "found_in_committed_model": 0.0,
+                  "matches": true,
+                  "unit": "feet",
+                  "tolerance": 1e-06,
+                  "method": "Revit parameter/location/sketch/face readback"
+                },
+                {
+                  "property": "profile_xy",
+                  "measured": true,
+                  "requested": true,
+                  "found_in_committed_model": true,
+                  "matches": true
+                },
+                {
+                  "property": "reference_face_elevation",
+                  "measured": true,
+                  "requested": 0.0,
+                  "found_in_committed_model": 0.0,
+                  "matches": true,
+                  "unit": "feet",
+                  "tolerance": 1e-06,
+                  "method": "Revit parameter/location/sketch/face readback"
+                }
+              ]
+            },
+            "source_comparison": null,
+            "kind_verified": true,
+            "type_verified": true,
+            "structural_type_verified": true,
+            "actual_class": "Floor",
+            "actual_category": "Pisos"
+          }
+        ],
+        "verification": {
+          "intended": 1,
+          "actual": 1,
+          "verified": true
+        },
+        "application": {
+          "state": "verified_applied",
+          "fully_applied": true,
+          "transaction_status": "Committed",
+          "requested": 1,
+          "applied": 1,
+          "verified": 1,
+          "unresolved": 0,
+          "failed": 0,
+          "unknown": 0,
+          "state_means": "verified_applied: every requested change is in the model and was re-read after the commit. This is the only state besides no_op that lets a plan keep its work."
+        },
+        "tabular": null,
+        "idempotency": {
+          "key": "ab802f35-4180-411f-8710-c9dda000fec1",
+          "status": "executed_once",
+          "command_executed_in_this_call": true,
+          "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+        },
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 1,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 169
+        }
+      },
+      "duration_ms": 202
+    },
+    {
+      "tool": "horizun_query_model",
+      "args": {
+        "element_ids": [
+          328659
+        ],
+        "include_links": false,
+        "return_fields": [
+          "category",
+          "family",
+          "type",
+          "type_id",
+          "level",
+          "unique_id"
+        ],
+        "return_parameters": [
+          "Área",
+          "Perímetro"
+        ],
+        "coordinate_units": "m",
+        "include_bounding_box": true
+      },
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"document\": \"LAB_HORIZUN_FLOOR\",\r\n  \"scope\": \"model\",\r\n  \"view_id\": null,\r\n  \"include_links\": false,\r\n  \"matched_total\": 1,\r\n  \"returned\": 1,\r\n  \"offset\": 0,\r\n  \"truncated\": false,\r\n  \"next_curso",
+      "text_len": 2654,
+      "structured": {
+        "document": "LAB_HORIZUN_FLOOR",
+        "scope": "model",
+        "view_id": null,
+        "include_links": false,
+        "matched_total": 1,
+        "returned": 1,
+        "offset": 0,
+        "truncated": false,
+        "next_cursor": null,
+        "result_set_fingerprint": "a2337a537505c7af",
+        "coverage_complete": true,
+        "unreadable_total": 0,
+        "unreadable_shown": 0,
+        "unreadable_truncated": false,
+        "unreadable": [],
+        "federated_coverage": {
+          "coverage_complete": true,
+          "include_links": false,
+          "link_instances_total": 0,
+          "link_instances_loaded": 0,
+          "link_instances_unavailable": 0,
+          "sources": [
+            {
+              "source_kind": "host",
+              "source_model": "LAB_HORIZUN_FLOOR",
+              "link_instance_id": null,
+              "visibility_coverage": {
+                "coverage_complete": true,
+                "is_workshared": false,
+                "worksets_total": null,
+                "worksets_open": null,
+                "worksets_closed": null,
+                "worksets_read_error": null,
+                "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+              }
+            }
+          ],
+          "unavailable_links": [],
+          "note": "Every considered source was loaded with all user worksets open."
+        },
+        "summary": {
+          "by_category": {
+            "Pisos": 1
+          },
+          "by_level": {
+            "Nível 1": 1
+          },
+          "by_source": {
+            "host:LAB_HORIZUN_FLOOR": 1
+          }
+        },
+        "rows": [
+          {
+            "element_id": 328659,
+            "unique_id": "583fbd48-74d3-48c7-8abc-50be724b482c-000503d3",
+            "category": "Pisos",
+            "family": "Piso",
+            "type": "Genérico 150 mm",
+            "type_id": 339,
+            "level": "Nível 1",
+            "bounding_box": {
+              "min": [
+                0.0,
+                0.0,
+                -0.14999999999999997
+              ],
+              "max": [
+                5.999999999999999,
+                3.9999999999999996,
+                0.0
+              ]
+            },
+            "parameters": {
+              "Área": {
+                "exists": true,
+                "scope": "instance",
+                "storage_type": "Double",
+                "raw": 258.3338500010333,
+                "display": "24 m²"
+              },
+              "Perímetro": {
+                "exists": true,
+                "scope": "instance",
+                "storage_type": "Double",
+                "raw": 65.61679790026245,
+                "display": "20000"
+              }
+            }
+          }
+        ],
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 1,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 5
+        }
+      },
+      "duration_ms": 50
+    },
+    {
+      "tool": "horizun_query_model",
+      "args": {
+        "categories": [
+          "OST_Floors"
+        ],
+        "response_mode": "summary",
+        "include_links": false
+      },
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"document\": \"LAB_HORIZUN_FLOOR\",\r\n  \"scope\": \"model\",\r\n  \"view_id\": null,\r\n  \"include_links\": false,\r\n  \"matched_total\": 1,\r\n  \"coverage_complete\": true,\r\n  \"unreadable_total\": 0,\r\n  \"unreadable_shown\": 0,\r\n  \"unreadable_truncated\": false,\r\n  \"unreadable\": [],\r\n  \"federated_coverage\": {\r\n    \"coverage_complete\": true,\r\n    \"include_links\": false,\r\n    \"link_instances_total\": 0,\r\n    \"link_instances_loaded\": 0,\r\n    \"link_instances_unavailable\": 0,\r\n    \"sources\": [\r\n      {\r\n        \"source_kind\": \"host\",\r\n        \"source_model\": \"LAB_HORIZUN_FLOOR\",\r\n        \"link_instance_id\": null,\r\n        \"visibility_coverage\": {\r\n          \"coverage_complete\": true,\r\n          \"is_workshared\": false,\r\n          \"worksets_total\": null,\r\n          \"worksets_open\": null,\r\n          \"worksets_closed\": null,\r\n          \"worksets_read_error\": null,\r\n          \"note\": \"This model is not workshared, so every element in it is loaded and this answer covers all of it.\"\r\n        }\r\n      }\r\n    ],\r\n    \"unavailable_links\": [],\r\n    \"note\": \"Every considered source was loaded with all user worksets open.\"\r\n  },\r\n  \"summary\": {\r\n    \"by_category\": {\r\n      \"Pisos\": 1\r\n    },\r\n    \"by_level\": {\r\n      \"Nível 1\": 1\r\n    },\r\n    \"by_source\": {\r\n      \"host:LAB_HORIZUN_FLOOR\": 1\r\n    }\r\n  },\r\n  \"response_mode\": \"summary\",\r\n  \"note\": \"Counts cover the whole matched set. No element rows were returned; use full or compact to inspect them.\",\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 5\r\n  }\r\n}",
+      "text_len": 1747,
+      "structured": {
+        "document": "LAB_HORIZUN_FLOOR",
+        "scope": "model",
+        "view_id": null,
+        "include_links": false,
+        "matched_total": 1,
+        "coverage_complete": true,
+        "unreadable_total": 0,
+        "unreadable_shown": 0,
+        "unreadable_truncated": false,
+        "unreadable": [],
+        "federated_coverage": {
+          "coverage_complete": true,
+          "include_links": false,
+          "link_instances_total": 0,
+          "link_instances_loaded": 0,
+          "link_instances_unavailable": 0,
+          "sources": [
+            {
+              "source_kind": "host",
+              "source_model": "LAB_HORIZUN_FLOOR",
+              "link_instance_id": null,
+              "visibility_coverage": {
+                "coverage_complete": true,
+                "is_workshared": false,
+                "worksets_total": null,
+                "worksets_open": null,
+                "worksets_closed": null,
+                "worksets_read_error": null,
+                "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+              }
+            }
+          ],
+          "unavailable_links": [],
+          "note": "Every considered source was loaded with all user worksets open."
+        },
+        "summary": {
+          "by_category": {
+            "Pisos": 1
+          },
+          "by_level": {
+            "Nível 1": 1
+          },
+          "by_source": {
+            "host:LAB_HORIZUN_FLOOR": 1
+          }
+        },
+        "response_mode": "summary",
+        "note": "Counts cover the whole matched set. No element rows were returned; use full or compact to inspect them.",
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 1,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 5
+        }
+      },
+      "duration_ms": 50
+    },
+    {
+      "tool": "get_document_info",
+      "args": {},
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"title\": \"LAB_HORIZUN_FLOOR\",\r\n  \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_FLOOR.rvt\",\r\n  \"is_workshared\": false,\r\n  \"is_family_document\": false,\r\n  \"revit_version\": \"2027\",\r\n  \"revit_build\": \"27.2.0.39\",\r\n  \"element_count\": 3324,\r\n  \"shared_coordinates\": {\r\n    \"active_location\": \"Terreno padrão\",\r\n    \"east_west_mm\": 0.0,\r\n    \"north_south_mm\": 0.0,\r\n    \"elevation_mm\": 0.0,\r\n    \"angle_to_true_north_degrees\": 0.0\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 5\r\n  }\r\n}",
+      "text_len": 793,
+      "structured": {
+        "title": "LAB_HORIZUN_FLOOR",
+        "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_FLOOR.rvt",
+        "is_workshared": false,
+        "is_family_document": false,
+        "revit_version": "2027",
+        "revit_build": "27.2.0.39",
+        "element_count": 3324,
+        "shared_coordinates": {
+          "active_location": "Terreno padrão",
+          "east_west_mm": 0.0,
+          "north_south_mm": 0.0,
+          "elevation_mm": 0.0,
+          "angle_to_true_north_degrees": 0.0
+        },
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 1,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 5
+        }
+      },
+      "duration_ms": 51
+    },
+    {
+      "tool": "horizun_model_scan",
+      "args": {
+        "target_document_title": "LAB_HORIZUN_FLOOR"
+      },
+      "is_error": false,
+      "error": null,
+      "text": "",
+      "text_len": 240577,
+      "structured": null,
+      "duration_ms": 706,
+      "structured_health_only": {
+        "status": "ok",
+        "warnings_total": 0,
+        "warnings_distinct": 0,
+        "warnings_identity": "grouped by FailureDefinitionId, which is the same value in every language and Revit version. The description is a LABEL, not the key: grouping by it splits one warning across two languages and merges two different warnings that happen to read alike. Where identity_is_stable is false the guid could not be read and the text was used instead, so that group must not be compared across languages or versions.",
+        "warnings_occurrences_means": "occurrences counts WARNINGS, not elements. One warning can name many failing elements, so the sum of occurrences is smaller than the number of elements involved and neither is the other.",
+        "warning_profile": {
+          "status": "not_requested",
+          "means": "no warning profile was supplied, so no warning was triaged. This is NOT a pass: every warning below is reported with Revit's own severity and none with yours."
+        },
+        "warnings_by_type": {
+          "total": 0,
+          "returned": 0,
+          "truncated": false,
+          "items": [],
+          "limit": 50,
+          "resumed": false
+        },
+        "rooms": {
+          "total": 0,
+          "unplaced": {
+            "total": 0,
+            "returned": 0,
+            "truncated": false,
+            "items": [],
+            "limit": 50,
+            "resumed": false
+          },
+          "unbounded": {
+            "total": 0,
+            "returned": 0,
+            "truncated": false,
+            "items": [],
+            "limit": 50,
+            "resumed": false
+          },
+          "unreadable": {
+            "total": 0,
+            "returned": 0,
+            "truncated": false,
+            "items": [],
+            "limit": 50,
+            "resumed": false
+          },
+          "note": "unreadable is separate from unbounded on purpose: a read that threw is not a defect we found, it is a defect we cannot rule out. Unplaced and unbounded both understate any area takeoff taken from this model."
+        },
+        "areas": {
+          "total": 0,
+          "unplaced": {
+            "total": 0,
+            "returned": 0,
+            "truncated": false,
+            "items": [],
+            "limit": 50,
+            "resumed": false
+          },
+          "unbounded": {
+            "total": 0,
+            "returned": 0,
+            "truncated": false,
+            "items": [],
+            "limit": 50,
+            "resumed": false
+          },
+          "unreadable": {
+            "total": 0,
+            "returned": 0,
+            "truncated": false,
+            "items": [],
+            "limit": 50,
+            "resumed": false
+          },
+          "note": "unreadable is separate from unbounded on purpose: a read that threw is not a defect we found, it is a defect we cannot rule out. Unplaced and unbounded both understate any area takeoff taken from this model."
+        }
+      }
+    },
+    {
+      "tool": "horizun_save_document",
+      "args": {
+        "target_document": "LAB_HORIZUN_FLOOR",
+        "expected_document": "LAB_HORIZUN_FLOOR",
+        "idempotency_key": "2182dded-8f0f-4683-9bb5-35c1c97d18eb"
+      },
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"saved\": true,\r\n  \"outcome\": \"saved_verified\",\r\n  \"outcome_means\": \"The file's bytes changed between before and after, so a write demonstrably happened.\",\r\n  \"document\": \"LAB_HORIZUN_FLOOR\",\r\n  \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_FLOOR.rvt\",\r\n  \"is_workshared\": false,\r\n  \"what_this_did\": \"Saved the file in place.\",\r\n  \"was_modified_before\": true,\r\n  \"is_modified_after\": false,\r\n  \"modified_flags_note\": \"null means Document.IsModified could not be read, which is UNKNOWN and never false.\",\r\n  \"bytes_changed_on_disk\": true,\r\n  \"verified_by\": \"sha256 of the file, read before and after\",\r\n  \"sha256_before\": \"962a1e6b5cbb1b7716eb9bf2f3a9d87f36e2e1507a5a1015216be42ecafd5b68\",\r\n  \"sha256_after\": \"b7ef11f9dd866594aaefcab376846373071173be5d73798eaba9056a084fe28b\",\r\n  \"file_before\": {\r\n    \"modified_utc\": \"2026-09-15T14:20:14.2737836Z\"",
+      "text_len": 1608,
+      "structured": {
+        "saved": true,
+        "outcome": "saved_verified",
+        "outcome_means": "The file's bytes changed between before and after, so a write demonstrably happened.",
+        "document": "LAB_HORIZUN_FLOOR",
+        "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_FLOOR.rvt",
+        "is_workshared": false,
+        "what_this_did": "Saved the file in place.",
+        "was_modified_before": true,
+        "is_modified_after": false,
+        "modified_flags_note": "null means Document.IsModified could not be read, which is UNKNOWN and never false.",
+        "bytes_changed_on_disk": true,
+        "verified_by": "sha256 of the file, read before and after",
+        "sha256_before": "962a1e6b5cbb1b7716eb9bf2f3a9d87f36e2e1507a5a1015216be42ecafd5b68",
+        "sha256_after": "b7ef11f9dd866594aaefcab376846373071173be5d73798eaba9056a084fe28b",
+        "file_before": {
+          "modified_utc": "2026-09-15T14:20:14.2737836Z",
+          "size_bytes": 4366336
+        },
+        "file_after": {
+          "modified_utc": "2026-09-15T14:20:38.9627587Z",
+          "size_bytes": 4370432
+        },
+        "idempotency": {
+          "key": "2182dded-8f0f-4683-9bb5-35c1c97d18eb",
+          "status": "executed_once",
+          "command_executed_in_this_call": true,
+          "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+        },
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 6,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 552
+        }
+      },
+      "duration_ms": 605
+    },
+    {
+      "tool": "horizun_document_session",
+      "args": {
+        "operation": "close",
+        "target_document": "LAB_HORIZUN_FLOOR",
+        "save_on_close": false,
+        "activate_other": true,
+        "idempotency_key": "eddcbe78-6cd5-4d56-9e5d-637acd628736"
+      },
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"operation\": \"close\",\r\n  \"closed\": true,\r\n  \"closed_evidence\": \"This exact Document object is no longer in Application.Documents — compared by object identity, not by path, because a null or empty PathName would have matched nothing and the check would have passed without comparing anything, and doc.IsValidObject is now false. Not just 'Close() returned true'.\",\r\n  \"api_returned\": true,\r\n  \"title\": \"LAB_HORIZUN_FLOOR\",\r\n  \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_FLOOR.rvt\",\r\n  \"saved_on_close\": false,\r\n  \"activation\": {\r\n    \"activated_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_WALL.rvt\",\r\n    \"how\": \"activated_open_document\",\r\n    \"note\": \"This already-open document was activated so the target could stop being active. Nothing about it was modified.\",\r\n    \"activated_title\": \"LAB",
+      "text_len": 2380,
+      "structured": {
+        "operation": "close",
+        "closed": true,
+        "closed_evidence": "This exact Document object is no longer in Application.Documents — compared by object identity, not by path, because a null or empty PathName would have matched nothing and the check would have passed without comparing anything, and doc.IsValidObject is now false. Not just 'Close() returned true'.",
+        "api_returned": true,
+        "title": "LAB_HORIZUN_FLOOR",
+        "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_FLOOR.rvt",
+        "saved_on_close": false,
+        "activation": {
+          "activated_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_WALL.rvt",
+          "how": "activated_open_document",
+          "note": "This already-open document was activated so the target could stop being active. Nothing about it was modified.",
+          "activated_title": "LAB_HORIZUN_WALL"
+        },
+        "was_modified": false,
+        "discarded_unsaved_changes": false,
+        "discard_note": null,
+        "file_exists_after": true,
+        "file_exists_after_unknown_reason": null,
+        "bytes_before": 4370432,
+        "bytes_after": 4370432,
+        "modified_utc_after": "2026-09-15T14:20:38.9627587Z",
+        "disk_changed": false,
+        "disk_note": null,
+        "is_workshared": false,
+        "synced_to_central": false,
+        "sync_note": null,
+        "file_on_disk_after": {
+          "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_FLOOR.rvt",
+          "exists": true,
+          "bytes": 4370432,
+          "mb": 4.17,
+          "modified_utc": "2026-09-15T14:20:38.9627587Z",
+          "format": "2027",
+          "saved_in_version": "(not available in this Revit API version)",
+          "is_workshared": false,
+          "is_central": false,
+          "is_local": false,
+          "central_path": "",
+          "revit_version": "2027"
+        },
+        "idempotency": {
+          "key": "eddcbe78-6cd5-4d56-9e5d-637acd628736",
+          "status": "executed_once",
+          "command_executed_in_this_call": true,
+          "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+        },
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 1,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 1069
+        }
+      },
+      "duration_ms": 1108
+    },
+    {
+      "tool": "horizun_open_document",
+      "args": {
+        "path": "C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/horizun/LAB_HORIZUN_FLOOR.rvt",
+        "expected_version": "2027",
+        "idempotency_key": "9f224910-f293-4659-b4d2-0e85e69742b1"
+      },
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"opened\": true,\r\n  \"confirmed_active\": true,\r\n  \"source\": \"local\",\r\n  \"path_matches_request\": true,\r\n  \"requested_path\": \"C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/horizun/LAB_HORIZUN_FLOOR.rvt\",\r\n  \"active_document\": \"LAB_HORIZUN_FLOOR\",\r\n  \"active_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_FLOOR.rvt\",\r\n  \"file_saved_in_version\": \"2027\",\r\n  \"running_revit_version\": \"2027\",\r\n  \"version_guard\": \"checked\",\r\n  \"upgraded_on_open\": false,\r\n  \"detached\": false,\r\n  \"audited\": false,\r\n  \"all_worksets_opened\": false,\r\n  \"was_central\": false,\r\n  \"central_path\": null,\r\n  \"is_workshared\": false,\r\n  \"central_guard\": \"not_a_central\",\r\n  \"note\": null,\r\n  \"idempotency\": {\r\n    \"key\": \"9f224910-f293-4659-b4d2-0e85e69742b1\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"The durable claim and result were recorded; an identical retry will replay this answer.\"\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 528,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 2712\r\n  }\r\n}",
+      "text_len": 1287,
+      "structured": {
+        "opened": true,
+        "confirmed_active": true,
+        "source": "local",
+        "path_matches_request": true,
+        "requested_path": "C:/Users/slvma/Downloads/Github/Projeto Amanda/revit/lab/horizun/LAB_HORIZUN_FLOOR.rvt",
+        "active_document": "LAB_HORIZUN_FLOOR",
+        "active_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_FLOOR.rvt",
+        "file_saved_in_version": "2027",
+        "running_revit_version": "2027",
+        "version_guard": "checked",
+        "upgraded_on_open": false,
+        "detached": false,
+        "audited": false,
+        "all_worksets_opened": false,
+        "was_central": false,
+        "central_path": null,
+        "is_workshared": false,
+        "central_guard": "not_a_central",
+        "note": null,
+        "idempotency": {
+          "key": "9f224910-f293-4659-b4d2-0e85e69742b1",
+          "status": "executed_once",
+          "command_executed_in_this_call": true,
+          "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+        },
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 528,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 2712
+        }
+      },
+      "duration_ms": 2768
+    },
+    {
+      "tool": "horizun_query_model",
+      "args": {
+        "categories": [
+          "OST_Floors"
+        ],
+        "include_links": false,
+        "return_fields": [
+          "category",
+          "type",
+          "level",
+          "unique_id"
+        ],
+        "return_parameters": [
+          "Área"
+        ],
+        "coordinate_units": "m",
+        "include_bounding_box": true
+      },
+      "is_error": false,
+      "error": null,
+      "text": "{\r\n  \"document\": \"LAB_HORIZUN_FLOOR\",\r\n  \"scope\": \"model\",\r\n  \"view_id\": null,\r\n  \"include_links\": false,\r\n  \"matched_total\": 1,\r\n  \"returned\": 1,\r\n  \"offset\": 0,\r\n  \"truncated\": false,\r\n  \"next_curso",
+      "text_len": 2409,
+      "structured": {
+        "document": "LAB_HORIZUN_FLOOR",
+        "scope": "model",
+        "view_id": null,
+        "include_links": false,
+        "matched_total": 1,
+        "returned": 1,
+        "offset": 0,
+        "truncated": false,
+        "next_cursor": null,
+        "result_set_fingerprint": "96cf53148adcbe06",
+        "coverage_complete": true,
+        "unreadable_total": 0,
+        "unreadable_shown": 0,
+        "unreadable_truncated": false,
+        "unreadable": [],
+        "federated_coverage": {
+          "coverage_complete": true,
+          "include_links": false,
+          "link_instances_total": 0,
+          "link_instances_loaded": 0,
+          "link_instances_unavailable": 0,
+          "sources": [
+            {
+              "source_kind": "host",
+              "source_model": "LAB_HORIZUN_FLOOR",
+              "link_instance_id": null,
+              "visibility_coverage": {
+                "coverage_complete": true,
+                "is_workshared": false,
+                "worksets_total": null,
+                "worksets_open": null,
+                "worksets_closed": null,
+                "worksets_read_error": null,
+                "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+              }
+            }
+          ],
+          "unavailable_links": [],
+          "note": "Every considered source was loaded with all user worksets open."
+        },
+        "summary": {
+          "by_category": {
+            "Pisos": 1
+          },
+          "by_level": {
+            "Nível 1": 1
+          },
+          "by_source": {
+            "host:LAB_HORIZUN_FLOOR": 1
+          }
+        },
+        "rows": [
+          {
+            "element_id": 328659,
+            "unique_id": "583fbd48-74d3-48c7-8abc-50be724b482c-000503d3",
+            "category": "Pisos",
+            "type": "Genérico 150 mm",
+            "level": "Nível 1",
+            "bounding_box": {
+              "min": [
+                0.0,
+                0.0,
+                -0.14999999999999997
+              ],
+              "max": [
+                5.999999999999999,
+                3.9999999999999996,
+                0.0
+              ]
+            },
+            "parameters": {
+              "Área": {
+                "exists": true,
+                "scope": "instance",
+                "storage_type": "Double",
+                "raw": 258.3338500010333,
+                "display": "24 m²"
+              }
+            }
+          }
+        ],
+        "bridge_queue": {
+          "queued": false,
+          "ahead_at_admission": 0,
+          "waited_ms": 91,
+          "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+          "capacity": 16,
+          "execution_and_wait_ms": 98
+        }
+      },
+      "duration_ms": 152
+    }
+  ],
+  "facts": {
+    "open": {
+      "opened": true,
+      "confirmed_active": true,
+      "path_matches_request": true,
+      "version_guard": "checked",
+      "upgraded_on_open": false
+    },
+    "floors_before": 0,
+    "element_count_before": 3316,
+    "warnings_before": 0,
+    "dry_run": {
+      "valid": 1,
+      "invalid": 0,
+      "errors": [],
+      "plan": [
+        {
+          "index": 0,
+          "kind": "floor",
+          "references_resolved": true
+        }
+      ],
+      "token": true
+    },
+    "apply": {
+      "is_error": false,
+      "transaction_status": "Committed",
+      "created_verified": 1,
+      "rows": [
+        {
+          "index": 0,
+          "kind": "floor",
+          "element_id": 328659,
+          "unique_id": "583fbd48-74d3-48c7-8abc-50be724b482c-000503d3",
+          "present_after_commit": true,
+          "verified": true
+        }
+      ],
+      "postconditions": [
+        {
+          "property": "kind",
+          "measured": true,
+          "requested": "floor",
+          "found_in_committed_model": "floor",
+          "matches": true,
+          "unit": null
+        },
+        {
+          "property": "type_id",
+          "measured": true,
+          "requested": 339,
+          "found_in_committed_model": 339,
+          "matches": true,
+          "unit": null
+        },
+        {
+          "property": "level_id",
+          "measured": true,
+          "requested": 311,
+          "found_in_committed_model": 311,
+          "matches": true,
+          "unit": null
+        },
+        {
+          "property": "level_elevation",
+          "measured": true,
+          "requested": 0.0,
+          "found_in_committed_model": 0.0,
+          "matches": true,
+          "unit": "feet"
+        },
+        {
+          "property": "offset",
+          "measured": true,
+          "requested": 0.0,
+          "found_in_committed_model": 0.0,
+          "matches": true,
+          "unit": "feet"
+        },
+        {
+          "property": "profile_xy",
+          "measured": true,
+          "requested": true,
+          "found_in_committed_model": true,
+          "matches": true,
+          "unit": null
+        },
+        {
+          "property": "reference_face_elevation",
+          "measured": true,
+          "requested": 0.0,
+          "found_in_committed_model": 0.0,
+          "matches": true,
+          "unit": "feet"
+        }
+      ],
+      "post_all_verified": true,
+      "post_checked": 7
+    },
+    "created_ids": [
+      328659
+    ],
+    "floor_after": {
+      "element_id": 328659,
+      "unique_id": "583fbd48-74d3-48c7-8abc-50be724b482c-000503d3",
+      "category": "Pisos",
+      "family": "Piso",
+      "type": "Genérico 150 mm",
+      "type_id": 339,
+      "level": "Nível 1",
+      "bounding_box": {
+        "min": [
+          0.0,
+          0.0,
+          -0.14999999999999997
+        ],
+        "max": [
+          5.999999999999999,
+          3.9999999999999996,
+          0.0
+        ]
+      },
+      "parameters": {
+        "Área": {
+          "exists": true,
+          "scope": "instance",
+          "storage_type": "Double",
+          "raw": 258.3338500010333,
+          "display": "24 m²"
+        },
+        "Perímetro": {
+          "exists": true,
+          "scope": "instance",
+          "storage_type": "Double",
+          "raw": 65.61679790026245,
+          "display": "20000"
+        }
+      }
+    },
+    "floors_after": 1,
+    "element_count_after": 3324,
+    "warnings_after": 0,
+    "save": {
+      "saved": true,
+      "outcome": "saved_verified",
+      "bytes_changed_on_disk": true,
+      "sha256_before": "962a1e6b5cbb1b7716eb9bf2f3a9d87f36e2e1507a5a1015216be42ecafd5b68",
+      "sha256_after": "b7ef11f9dd866594aaefcab376846373071173be5d73798eaba9056a084fe28b",
+      "is_modified_after": false
+    },
+    "close": {
+      "closed": true,
+      "disk_changed": false,
+      "bytes_before": 4370432,
+      "bytes_after": 4370432,
+      "saved_on_close": false
+    },
+    "reopen": {
+      "opened": true,
+      "confirmed_active": true,
+      "version_guard": "checked",
+      "upgraded_on_open": false
+    },
+    "floors_after_reopen": 1,
+    "floor_after_reopen": {
+      "element_id": 328659,
+      "unique_id": "583fbd48-74d3-48c7-8abc-50be724b482c-000503d3",
+      "category": "Pisos",
+      "type": "Genérico 150 mm",
+      "level": "Nível 1",
+      "bounding_box": {
+        "min": [
+          0.0,
+          0.0,
+          -0.14999999999999997
+        ],
+        "max": [
+          5.999999999999999,
+          3.9999999999999996,
+          0.0
+        ]
+      },
+      "parameters": {
+        "Área": {
+          "exists": true,
+          "scope": "instance",
+          "storage_type": "Double",
+          "raw": 258.3338500010333,
+          "display": "24 m²"
+        }
+      }
+    }
+  }
+}

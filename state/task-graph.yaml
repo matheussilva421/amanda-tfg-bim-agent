@@ -337,8 +337,43 @@ tasks:
     title: Horizun `create_wall` persistence test
     depends_on:
     - P02-T08
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - fresh disposable copy revit/lab/horizun/LAB_HORIZUN_WALL.rvt; sha256 equals
+      the GOLDEN baseline 15e0f70d...299d at copy time and byte count 4366336
+    - OPEN by path with the bridge itself (horizun_open_document, version_guard=checked,
+      upgraded_on_open=false, confirmed_active=true)
+    - 'BEFORE: horizun_query_model categories=[OST_Walls] level=''Nivel 1'' response_mode=summary
+      matched_total=0; get_document_info element_count=3316; horizun_model_scan (target_document_title
+      required) health.status=ok warnings_total=0'
+    - DRY RUN horizun_create_elements units=m kind=wall type_id=398 level_id=311 start=[0,0,0]
+      end=[10,0,0] height=3.0 -> dry_run=true valid=1 invalid=0 errors=[] references_resolved=true
+      with a single-use confirmation_token; zero transaction opened
+    - 'APPLY with dry_run=false + confirmation_token + idempotency_key committed in
+      one transaction: element_id 328657 unique_id efd42f85-5ba1-4e3a-9d92-9398cc656c08-000503d1
+      present_after_commit=true created_verified=1; postconditions checked=14 all_verified=true
+      all_measured=true (kind, type_id 398, level_id 311, level_elevation 0.0 ft,
+      start/end xyz, height, offset, flip, structural)'
+    - 'INDEPENDENT RE-READ by element_ids replaces the write path: Comprimento raw
+      32.80839895013123 ft display 10000 mm = exactly 10.0 m; Altura nao conectada
+      9.842519685039369 ft = exactly 3.0 m; level ''Nivel 1''; type ''Generico - 200
+      mm''; bounding box min [0,-0.1,0] max [9.999999999999998,0.1,2.9999999999999996]
+      m; Area 30 m2 = 10x3'
+    - 'count delta exactly +1: walls at Nivel 1 0 -> 1, element_count 3316 -> 3317;
+      category listing OST_Walls total=1; warnings_total 0 before and after, scan
+      health.status=ok both times'
+    - 'PERSISTENCE: horizun_save_document saved=true outcome=saved_verified with sha256
+      before 15e0f70d...299d changed on disk; close disk_changed=false bytes 4370432
+      -> 4370432; reopen version_guard=checked; element still present with an identical
+      bounding box and identical unique_id'
+    - 'FULL PROCESS RESTART: Revit killed (Stop-Process), relaunched, bridge healthy
+      again with a NEW process_id 39140 and revit_build 27.2.0.39; document reopened
+      cold and queried again - element_count 3317, wall 328657 still ''Nivel 1'',
+      Comprimento display 10000 mm, walls at Nivel 1 = 1, warnings 0'
+    - 'bridge argument facts learned: ''name'' is refused for kind=wall (name is not
+      applicable), and horizun_model_scan REQUIRES target_document_title even with
+      one document open'
+    - evidence files tool-lab/horizun/results/t09-wall.json and t09-restart.json
   P02-T10:
     id: P02-T10
     phase: PHASE_02
@@ -346,8 +381,57 @@ tasks:
     title: Horizun floor and room tests
     depends_on:
     - P02-T09
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - fresh disposable copy revit/lab/horizun/LAB_HORIZUN_FLOOR.rvt; sha256 equals
+      the GOLDEN baseline 15e0f70d...299d at copy time
+    - 'OPEN by path with the bridge itself (horizun_open_document version_guard=checked
+      upgraded_on_open=false confirmed_active=true); BEFORE: floors=0 element_count=3316
+      warnings_total=0'
+    - DRY RUN horizun_create_elements units=m kind=floor type_id=339 level_id=311
+      profile=[[0,0,0],[6,0,0],[6,4,0],[0,4,0]] -> dry_run=true valid=1 invalid=0
+      errors=[] references_resolved=true with a single-use confirmation_token; zero
+      transaction opened
+    - 'APPLY with dry_run=false + confirmation_token + idempotency_key committed in
+      one transaction: element_id 328659 unique_id 583fbd48-74d3-48c7-8abc-50be724b482c-000503d3
+      present_after_commit=true; postconditions checked=7 all_verified=true all_measured=true
+      (kind, type_id 339, level_id 311, level_elevation 0.0 ft, offset, profile_xy,
+      reference_face_elevation)'
+    - 'INDEPENDENT RE-READ replaces the write path: Area display ''24 m2'' (raw 258.3338500010333
+      ft2 = exactly 24.0 m2 = 6x4), Perimetro display 20000 mm, bounding box 6x4x0.15
+      m, level ''Nivel 1'', type ''Generico 150 mm'''
+    - 'count delta: floors 0 -> 1 and element_count 3316 -> 3324 (the floor draws
+      its own 8 internal elements); warnings_total 0 before and after, scan health.status=ok
+      both times'
+    - 'PERSISTENCE: horizun_save_document saved=true outcome=saved_verified sha256
+      962a1e6b...->b7ef11f9... bytes_changed_on_disk=true; close closed=true disk_changed=false
+      4370432 bytes; reopen version_guard=checked and the floor is still there with
+      the identical unique_id, bbox and Area 24 m2'
+    - fresh disposable copy revit/lab/horizun/LAB_HORIZUN_ROOM.rvt; sha256 equals
+      the GOLDEN baseline at copy time
+    - 'ENCLOSURE built by the bridge in one committed transaction: 4 walls kind=wall
+      type_id=398 height=3.0 level_id=311 whose centre lines sit at -0.1 and 4.1 so
+      the inner faces land on 0 and 4 m; ids 328657-328660, post_checked 14 each,
+      post_all_verified=[true x4]'
+    - 'INDEPENDENT wall re-read: four walls present, perimeter sum 55.11811 m = exactly
+      4 x 4.2 m, every bounding box on the expected centre line'
+    - DRY RUN kind=room level_id=311 point=[2.0,2.0] name=LAB_ROOM_TEST number=L-01
+      -> valid=1 invalid=0 references_resolved=true; the bridge refuses a Z coordinate
+      for room.point (XY only)
+    - 'APPLY committed: element_id 328661 unique_id bf4d260d-1c24-4dd0-9501-52686dd6c67a-000503d5
+      present_after_commit=true post_checked=6 all_verified=true (kind, level_id,
+      level_elevation, name, start_x, start_y)'
+    - 'INDEPENDENT RE-READ: Area display ''16 m2'' (raw 172.22256666735547 ft2 = exactly
+      16.0 m2 = 4x4 inner), Perimetro display 16000 mm, Numero ''L-01'', Nome ''LAB_ROOM_TEST'',
+      full name ''LAB_ROOM_TEST L-01'', category ''Ambientes'', bbox 4x4x2.4384 m'
+    - 'ENCLOSURE PROVEN by the bridge health section: rooms total=1 with unplaced=0
+      unbounded=0 unreadable=0, i.e. the room is placed and bounded by real geometry
+      rather than reported bounded by the writer'
+    - warnings_total on the model scan stayed 0 before and after the room write
+    - 'PERSISTENCE: save saved_verified sha256 329ed414...->9bf42c55... bytes_changed_on_disk=true;
+      close closed=true disk_changed=false 4378624 bytes; reopen and the room row
+      comes back identical (same unique_id, Area 16 m2, same number/name)'
+    - evidence files tool-lab/horizun/results/t10-floor.json and tool-lab/horizun/results/t10-room.json
   P02-T11:
     id: P02-T11
     phase: PHASE_02
