@@ -1,0 +1,868 @@
+{
+ "evidence_id": "P02-T11-composite-persistence",
+ "task": "P02-T11",
+ "before": {
+  "doc_info": {
+   "tool": "get_document_info",
+   "args": {},
+   "duration_ms": 50,
+   "error": null,
+   "text": "{\r\n  \"title\": \"LAB_HORIZUN_DOC\",\r\n  \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt\",\r\n  \"is_workshared\": false,\r\n  \"is_family_document\": false,\r\n  \"revit_version\": \"2027\",\r\n  \"revit_build\": \"27.2.0.39\",\r\n  \"element_count\": 3407,\r\n  \"shared_coordinates\": {\r\n    \"active_location\": \"Terreno padrão\",\r\n    \"east_west_mm\": 0.0,\r\n    \"north_south_mm\": 0.0,\r\n    \"elevation_mm\": 0.0,\r\n    \"angle_to_true_north_degrees\": 0.0\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 6\r\n  }\r\n}",
+   "structured": {
+    "title": "LAB_HORIZUN_DOC",
+    "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+    "is_workshared": false,
+    "is_family_document": false,
+    "revit_version": "2027",
+    "revit_build": "27.2.0.39",
+    "element_count": 3407,
+    "shared_coordinates": {
+     "active_location": "Terreno padrão",
+     "east_west_mm": 0.0,
+     "north_south_mm": 0.0,
+     "elevation_mm": 0.0,
+     "angle_to_true_north_degrees": 0.0
+    },
+    "bridge_queue": {
+     "queued": false,
+     "ahead_at_admission": 0,
+     "waited_ms": 1,
+     "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+     "capacity": 16,
+     "execution_and_wait_ms": 6
+    }
+   },
+   "isError": false
+  },
+  "element_count": 3407,
+  "health": {
+   "status": "ok",
+   "warnings_total": 0,
+   "warnings_distinct": 0,
+   "warnings_identity": "grouped by FailureDefinitionId, which is the same value in every language and Revit version. The description is a LABEL, not the key: grouping by it splits one warning across two languages and merges two different warnings that happen to read alike. Where identity_is_stable is false the guid could not be read and the text was used instead, so that group must not be compared across languages or versions.",
+   "warnings_occurrences_means": "occurrences counts WARNINGS, not elements. One warning can name many failing elements, so the sum of occurrences is smaller than the number of elements involved and neither is the other.",
+   "warning_profile": {
+    "status": "not_requested",
+    "means": "no warning profile was supplied, so no warning was triaged. This is NOT a pass: every warning below is reported with Revit's own severity and none with yours."
+   },
+   "warnings_by_type": {
+    "total": 0,
+    "returned": 0,
+    "truncated": false,
+    "items": [],
+    "limit": 50,
+    "resumed": false
+   },
+   "rooms": {
+    "total": 1,
+    "unplaced": {
+     "total": 0,
+     "returned": 0,
+     "truncated": false,
+     "items": [],
+     "limit": 50,
+     "resumed": false
+    },
+    "unbounded": {
+     "total": 0,
+     "returned": 0,
+     "truncated": false,
+     "items": [],
+     "limit": 50,
+     "resumed": false
+    },
+    "unreadable": {
+     "total": 0,
+     "returned": 0,
+     "truncated": false,
+     "items": [],
+     "limit": 50,
+     "resumed": false
+    },
+    "note": "unreadable is separate from unbounded on purpose: a read that threw is not a defect we found, it is a defect we cannot rule out. Unplaced and unbounded both understate any area takeoff taken from this model."
+   },
+   "areas": {
+    "total": 0,
+    "unplaced": {
+     "total": 0,
+     "returned": 0,
+     "truncated": false,
+     "items": [],
+     "limit": 50,
+     "resumed": false
+    },
+    "unbounded": {
+     "total": 0,
+     "returned": 0,
+     "truncated": false,
+     "items": [],
+     "limit": 50,
+     "resumed": false
+    },
+    "unreadable": {
+     "total": 0,
+     "returned": 0,
+     "truncated": false,
+     "items": [],
+     "limit": 50,
+     "resumed": false
+    },
+    "note": "unreadable is separate from unbounded on purpose: a read that threw is not a defect we found, it is a defect we cannot rule out. Unplaced and unbounded both understate any area takeoff taken from this model."
+   }
+  }
+ },
+ "save": {
+  "tool": "horizun_save_document",
+  "args": {
+   "target_document": "LAB_HORIZUN_DOC",
+   "expected_document": "LAB_HORIZUN_DOC",
+   "idempotency_key": "a097cf79-ca92-4335-adc2-e84d6686af16"
+  },
+  "duration_ms": 811,
+  "error": null,
+  "text": "{\r\n  \"saved\": true,\r\n  \"outcome\": \"saved_verified\",\r\n  \"outcome_means\": \"The file's bytes changed between before and after, so a write demonstrably happened.\",\r\n  \"document\": \"LAB_HORIZUN_DOC\",\r\n  \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt\",\r\n  \"is_workshared\": false,\r\n  \"what_this_did\": \"Saved the file in place.\",\r\n  \"was_modified_before\": true,\r\n  \"is_modified_after\": false,\r\n  \"modified_flags_note\": \"null means Document.IsModified could not be read, which is UNKNOWN and never false.\",\r\n  \"bytes_changed_on_disk\": true,\r\n  \"verified_by\": \"sha256 of the file, read before and after\",\r\n  \"sha256_before\": \"15e0f70df13a9ad0635a7651b3fedff59e76dcfe582c25a7ea759a4b0698299d\",\r\n  \"sha256_after\": \"6a1544d3075f86219cec609010c2446608916f2be7b917386836e93b051d829c\",\r\n  \"file_before\": {\r\n    \"modified_utc\": \"2026-09-15T13:52:28.5592752Z\",\r\n    \"size_bytes\": 4366336\r\n  },\r\n  \"file_after\": {\r\n    \"modified_utc\": \"2026-09-15T14:39:13.2666277Z\",\r\n    \"size_bytes\": 4427776\r\n  },\r\n  \"idempotency\": {\r\n    \"key\": \"a097cf79-ca92-4335-adc2-e84d6686af16\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"Th",
+  "structured": {
+   "saved": true,
+   "outcome": "saved_verified",
+   "outcome_means": "The file's bytes changed between before and after, so a write demonstrably happened.",
+   "document": "LAB_HORIZUN_DOC",
+   "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+   "is_workshared": false,
+   "what_this_did": "Saved the file in place.",
+   "was_modified_before": true,
+   "is_modified_after": false,
+   "modified_flags_note": "null means Document.IsModified could not be read, which is UNKNOWN and never false.",
+   "bytes_changed_on_disk": true,
+   "verified_by": "sha256 of the file, read before and after",
+   "sha256_before": "15e0f70df13a9ad0635a7651b3fedff59e76dcfe582c25a7ea759a4b0698299d",
+   "sha256_after": "6a1544d3075f86219cec609010c2446608916f2be7b917386836e93b051d829c",
+   "file_before": {
+    "modified_utc": "2026-09-15T13:52:28.5592752Z",
+    "size_bytes": 4366336
+   },
+   "file_after": {
+    "modified_utc": "2026-09-15T14:39:13.2666277Z",
+    "size_bytes": 4427776
+   },
+   "idempotency": {
+    "key": "a097cf79-ca92-4335-adc2-e84d6686af16",
+    "status": "executed_once",
+    "command_executed_in_this_call": true,
+    "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+   },
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 2,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 787
+   }
+  },
+  "isError": false
+ },
+ "save_sha256": "6a1544d3075f86219cec609010c2446608916f2be7b917386836e93b051d829c",
+ "save_bytes": 4427776,
+ "close": {
+  "tool": "horizun_document_session",
+  "args": {
+   "operation": "close",
+   "target_document": "LAB_HORIZUN_DOC",
+   "save_on_close": false,
+   "activate_other": true,
+   "idempotency_key": "78ff23e4-62e8-4886-814f-bb73b212646b"
+  },
+  "duration_ms": 1158,
+  "error": null,
+  "text": "{\r\n  \"operation\": \"close\",\r\n  \"closed\": true,\r\n  \"closed_evidence\": \"This exact Document object is no longer in Application.Documents — compared by object identity, not by path, because a null or empty PathName would have matched nothing and the check would have passed without comparing anything, and doc.IsValidObject is now false. Not just 'Close() returned true'.\",\r\n  \"api_returned\": true,\r\n  \"title\": \"LAB_HORIZUN_DOC\",\r\n  \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt\",\r\n  \"saved_on_close\": false,\r\n  \"activation\": {\r\n    \"activated_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_FLOOR.rvt\",\r\n    \"how\": \"activated_open_document\",\r\n    \"note\": \"This already-open document was activated so the target could stop being active. Nothing about it was modified.\",\r\n    \"activated_title\": \"LAB_HORIZUN_FLOOR\"\r\n  },\r\n  \"was_modified\": false,\r\n  \"discarded_unsaved_changes\": false,\r\n  \"discard_note\": null,\r\n  \"file_exists_after\": true,\r\n  \"file_exists_after_unknown_reason\": null,\r\n  \"bytes_before\": 4427776,\r\n  \"bytes_after\": 4427776,\r\n  \"modified_utc_after\": \"2026-09-15T14:39:13.2666277Z\",\r\n  \"disk_changed\": false,\r\n  \"disk_note\": null,\r\n  \"is_workshared\": false,\r\n  \"synced_to_central\": false,\r\n  \"sync_note\": null,\r\n  \"file_on_disk_after\": {\r\n    \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt\",\r\n    \"exists\": true,\r\n    \"bytes\": 4427776,\r\n    \"mb\": 4.22,\r\n    \"modified_utc\": \"2026-09-15T14:39:13.2666277Z\",\r\n    \"format\": \"2027\",\r\n ",
+  "structured": {
+   "operation": "close",
+   "closed": true,
+   "closed_evidence": "This exact Document object is no longer in Application.Documents — compared by object identity, not by path, because a null or empty PathName would have matched nothing and the check would have passed without comparing anything, and doc.IsValidObject is now false. Not just 'Close() returned true'.",
+   "api_returned": true,
+   "title": "LAB_HORIZUN_DOC",
+   "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+   "saved_on_close": false,
+   "activation": {
+    "activated_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_FLOOR.rvt",
+    "how": "activated_open_document",
+    "note": "This already-open document was activated so the target could stop being active. Nothing about it was modified.",
+    "activated_title": "LAB_HORIZUN_FLOOR"
+   },
+   "was_modified": false,
+   "discarded_unsaved_changes": false,
+   "discard_note": null,
+   "file_exists_after": true,
+   "file_exists_after_unknown_reason": null,
+   "bytes_before": 4427776,
+   "bytes_after": 4427776,
+   "modified_utc_after": "2026-09-15T14:39:13.2666277Z",
+   "disk_changed": false,
+   "disk_note": null,
+   "is_workshared": false,
+   "synced_to_central": false,
+   "sync_note": null,
+   "file_on_disk_after": {
+    "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+    "exists": true,
+    "bytes": 4427776,
+    "mb": 4.22,
+    "modified_utc": "2026-09-15T14:39:13.2666277Z",
+    "format": "2027",
+    "saved_in_version": "(not available in this Revit API version)",
+    "is_workshared": false,
+    "is_central": false,
+    "is_local": false,
+    "central_path": "",
+    "revit_version": "2027"
+   },
+   "idempotency": {
+    "key": "78ff23e4-62e8-4886-814f-bb73b212646b",
+    "status": "executed_once",
+    "command_executed_in_this_call": true,
+    "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+   },
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 1,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 1103
+   }
+  },
+  "isError": false
+ },
+ "reopen": {
+  "tool": "horizun_open_document",
+  "args": {
+   "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+   "expected_version": "2027",
+   "idempotency_key": "40894f55-654f-4cc1-a28c-d4c15b986944"
+  },
+  "duration_ms": 2567,
+  "error": null,
+  "text": "{\r\n  \"opened\": true,\r\n  \"confirmed_active\": true,\r\n  \"source\": \"local\",\r\n  \"path_matches_request\": true,\r\n  \"requested_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt\",\r\n  \"active_document\": \"LAB_HORIZUN_DOC\",\r\n  \"active_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt\",\r\n  \"file_saved_in_version\": \"2027\",\r\n  \"running_revit_version\": \"2027\",\r\n  \"version_guard\": \"checked\",\r\n  \"upgraded_on_open\": false,\r\n  \"detached\": false,\r\n  \"audited\": false,\r\n  \"all_worksets_opened\": false,\r\n  \"was_central\": false,\r\n  \"central_path\": null,\r\n  \"is_workshared\": false,\r\n  \"central_guard\": \"not_a_central\",\r\n  \"note\": null,\r\n  \"idempotency\": {\r\n    \"key\": \"40894f55-654f-4cc1-a28c-d4c15b986944\",\r\n    \"sta",
+  "structured": {
+   "opened": true,
+   "confirmed_active": true,
+   "source": "local",
+   "path_matches_request": true,
+   "requested_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+   "active_document": "LAB_HORIZUN_DOC",
+   "active_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+   "file_saved_in_version": "2027",
+   "running_revit_version": "2027",
+   "version_guard": "checked",
+   "upgraded_on_open": false,
+   "detached": false,
+   "audited": false,
+   "all_worksets_opened": false,
+   "was_central": false,
+   "central_path": null,
+   "is_workshared": false,
+   "central_guard": "not_a_central",
+   "note": null,
+   "idempotency": {
+    "key": "40894f55-654f-4cc1-a28c-d4c15b986944",
+    "status": "executed_once",
+    "command_executed_in_this_call": true,
+    "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+   },
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 648,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 2513
+   }
+  },
+  "isError": false
+ },
+ "after": {
+  "doc_info": {
+   "tool": "get_document_info",
+   "args": {},
+   "duration_ms": 51,
+   "error": null,
+   "text": "{\r\n  \"title\": \"LAB_HORIZUN_DOC\",\r\n  \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt\",\r\n  \"is_workshared\": false,\r\n  \"is_family_document\": false,\r\n  \"revit_version\": \"2027\",\r\n  \"revit_build\": \"27.2.0.39\",\r\n  \"element_count\": 3407,\r\n  \"shared_coordinates\": {\r\n    \"active_location\": \"Terreno padrão\",\r\n    \"east_west_mm\": 0.0,\r\n    \"north_south_mm\": 0.0,\r\n    \"elevation_mm\": 0.0,\r\n    \"angle_to_true_north_degrees\": 0.0\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 20,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 25\r\n  }\r\n}",
+   "structured": {
+    "title": "LAB_HORIZUN_DOC",
+    "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+    "is_workshared": false,
+    "is_family_document": false,
+    "revit_version": "2027",
+    "revit_build": "27.2.0.39",
+    "element_count": 3407,
+    "shared_coordinates": {
+     "active_location": "Terreno padrão",
+     "east_west_mm": 0.0,
+     "north_south_mm": 0.0,
+     "elevation_mm": 0.0,
+     "angle_to_true_north_degrees": 0.0
+    },
+    "bridge_queue": {
+     "queued": false,
+     "ahead_at_admission": 0,
+     "waited_ms": 20,
+     "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+     "capacity": 16,
+     "execution_and_wait_ms": 25
+    }
+   },
+   "isError": false
+  },
+  "element_count": 3407,
+  "health": {
+   "status": "ok",
+   "warnings_total": 0,
+   "warnings_distinct": 0,
+   "warnings_identity": "grouped by FailureDefinitionId, which is the same value in every language and Revit version. The description is a LABEL, not the key: grouping by it splits one warning across two languages and merges two different warnings that happen to read alike. Where identity_is_stable is false the guid could not be read and the text was used instead, so that group must not be compared across languages or versions.",
+   "warnings_occurrences_means": "occurrences counts WARNINGS, not elements. One warning can name many failing elements, so the sum of occurrences is smaller than the number of elements involved and neither is the other.",
+   "warning_profile": {
+    "status": "not_requested",
+    "means": "no warning profile was supplied, so no warning was triaged. This is NOT a pass: every warning below is reported with Revit's own severity and none with yours."
+   },
+   "warnings_by_type": {
+    "total": 0,
+    "returned": 0,
+    "truncated": false,
+    "items": [],
+    "limit": 50,
+    "resumed": false
+   },
+   "rooms": {
+    "total": 1,
+    "unplaced": {
+     "total": 0,
+     "returned": 0,
+     "truncated": false,
+     "items": [],
+     "limit": 50,
+     "resumed": false
+    },
+    "unbounded": {
+     "total": 0,
+     "returned": 0,
+     "truncated": false,
+     "items": [],
+     "limit": 50,
+     "resumed": false
+    },
+    "unreadable": {
+     "total": 0,
+     "returned": 0,
+     "truncated": false,
+     "items": [],
+     "limit": 50,
+     "resumed": false
+    },
+    "note": "unreadable is separate from unbounded on purpose: a read that threw is not a defect we found, it is a defect we cannot rule out. Unplaced and unbounded both understate any area takeoff taken from this model."
+   },
+   "areas": {
+    "total": 0,
+    "unplaced": {
+     "total": 0,
+     "returned": 0,
+     "truncated": false,
+     "items": [],
+     "limit": 50,
+     "resumed": false
+    },
+    "unbounded": {
+     "total": 0,
+     "returned": 0,
+     "truncated": false,
+     "items": [],
+     "limit": 50,
+     "resumed": false
+    },
+    "unreadable": {
+     "total": 0,
+     "returned": 0,
+     "truncated": false,
+     "items": [],
+     "limit": 50,
+     "resumed": false
+    },
+    "note": "unreadable is separate from unbounded on purpose: a read that threw is not a defect we found, it is a defect we cannot rule out. Unplaced and unbounded both understate any area takeoff taken from this model."
+   }
+  }
+ },
+ "requery": {
+  "tool": "horizun_query_model",
+  "args": {
+   "element_ids": [
+    328667,
+    328669,
+    328756,
+    328775,
+    328776,
+    328721,
+    328681,
+    328692,
+    328702,
+    328712,
+    328738,
+    328769,
+    328770,
+    328751
+   ],
+   "include_links": false,
+   "coordinate_units": "m",
+   "return_fields": [
+    "category",
+    "family",
+    "type",
+    "type_id",
+    "level"
+   ]
+  },
+  "duration_ms": 50,
+  "error": null,
+  "text": "{\r\n  \"document\": \"LAB_HORIZUN_DOC\",\r\n  \"scope\": \"model\",\r\n  \"view_id\": null,\r\n  \"include_links\": false,\r\n  \"matched_total\": 14,\r\n  \"returned\": 14,\r\n  \"offset\": 0,\r\n  \"truncated\": false,\r\n  \"next_cursor\": null,\r\n  \"result_set_fingerprint\": \"588f7b25abe6c810\",\r\n  \"coverage_complete\": true,\r\n  \"unreadable_total\": 0,\r\n  \"unreadable_shown\": 0,\r\n  \"unreadable_truncated\": false,\r\n  \"unreadable\": [],\r\n  \"federated_coverage\": {\r\n    \"coverage_complete\": true,\r\n    \"include_links\": false,\r\n    \"link_instances_total\": 0,\r\n    \"link_instances_loaded\": 0,\r\n    \"link_instances_unavailable\": 0,\r\n    \"sources\": [\r\n      {\r\n        \"source_kind\": \"host\",\r\n        \"source_model\": \"LAB_HORIZUN_DOC\",\r\n        \"link_instance_id\": null,\r\n        \"visibility_coverage\": {\r\n          \"coverage_complete\": true,\r\n          \"is_workshared\": false,\r\n          \"worksets_total\": null,\r\n          \"worksets_open\": null,\r\n          \"worksets_closed\": null,\r\n          \"worksets_read_error\": null,\r\n          \"note\": \"This model is not workshared, so every element in it is loaded and this answer covers all of it.\"\r\n        }\r\n      }\r\n    ],\r\n    \"unavailable_links\": [],\r\n    \"note\": \"Every considered source was loaded with all user worksets open.\"\r\n  },\r\n  \"summary\": {\r\n    \"by_category\": {\r\n      \"Ambientes\": 1,\r\n      \"Cotas\": 2,\r\n      \"Folhas\": 1,\r\n      \"Identificadores de janela\": 1,\r\n      \"Identificadores de porta\": 1,\r\n      \"Janelas\": 1,\r\n      \"Pisos\": 1,\r\n      \"Portas\": 1,\r\n      \"Tabelas\": 1,\r\n      \"Vistas\": 4\r\n    },\r\n    \"by_level\": {\r\n      \"(no level)\": 11,\r\n      \"Nível 1\": 3\r\n    },\r\n    \"by_source\": {\r\n      \"host:LAB_HORIZUN_DOC\": 14\r\n    }\r\n  },\r\n  \"rows\": [\r\n    {\r\n      \"element_id\": 328667,\r\n      \"category\": \"Portas\",\r\n      \"family\": \"M_Folha única\",\r\n      \"type\": \"0915 x 2134mm\",\r\n      \"type_id\": 49480,\r\n      \"level\": \"Nível 1\"\r\n    },\r\n    {\r\n      \"element_id\": 328669,\r\n      \"category\": \"Janelas\",\r\n      \"family\": \"M_Fixo\",\r\n      \"type\": \"0915 x 1220mm\",\r\n      \"type_id\": 33077,\r\n      \"level\": \"Nível 1\"\r\n    },\r\n    {\r\n      \"element_id\": 328681,\r\n      \"category\": \"Vistas\",\r\n      \"family\": \"Planta de piso\",\r\n      \"type\": \"Planta de piso\",\r\n      \"type_id\": 49552,\r\n      \"level\": null\r\n    },\r\n    {\r\n      \"element_id\": 328692,\r\n      \"category\": \"Vistas\",\r\n      \"family\": \"Corte\",\r\n      \"type\": \"Corte da construção\",\r\n      \"type_id\": 49554,\r\n      \"level\": null\r\n    },\r\n    {\r\n      \"element_id\": 328702,\r\n      \"category\": \"Vistas\",\r\n      \"family\": \"Elevação\",\r\n      \"type\": \"Elevação da construção\",\r\n      \"type_id\": 49557,\r\n      \"level\": null\r\n    },\r\n    {\r\n      \"element_id\": 328712,\r\n      \"category\": \"Vistas\",\r\n      \"family\": \"Vista 3D\",\r\n      \"type\": \"Vista 3D\",\r\n      \"type_id\": 49559,\r\n      \"level\": null\r\n    },\r\n    {\r\n      \"element_id\": 328721,\r\n      \"category\": \"Folhas\",\r\n      \"family\": \"Folha\",\r\n      \"type\": \"Folha\",\r\n      \"type_id\": 49561,\r\n      \"level\": null\r\n    },\r\n    {\r\n      \"element_id\": 328738,\r\n      \"category\": \"Tabelas\",\r\n      \"family\": \"Tabela\",\r\n      \"type\": \"Tabela\",\r\n      \"type_id\": 49560,\r\n      \"level\": null\r\n    },\r\n    {\r\n      \"element_id\": 328751,\r\n      \"category\": \"Pisos\",\r\n      \"family\": \"Piso\",\r\n      \"type\": \"Genérico 150 mm\",\r\n      \"type_id\": 339,\r\n      \"level\": \"Nível 1\"\r\n    },\r\n    {\r\n      \"element_id\": 328756,\r\n      \"category\": \"Ambientes\",\r\n      \"family\": null,\r\n      \"type\": null,\r\n      \"type_id\": null,\r\n      \"level\": null\r\n    },\r\n    {\r\n      \"element_id\": 328769,\r\n      \"category\": \"Identificadores de porta\",\r\n      \"family\": \"M_Identificador da porta\",\r\n      \"type\": \"M_Identificador da porta\",\r\n      \"type_id\": 1233,\r\n      \"level\": null\r\n    },\r\n    {\r\n      \"element_id\": 328770,\r\n      \"category\": \"Identificadores de janela\",\r\n      \"family\": \"M_Identificador da janela\",\r\n      \"type\": \"M_Identificador da janela\",\r\n      \"type_id\": 3796,\r\n      \"level\": null\r\n    },\r\n    {\r\n      \"element_id\": 328775,\r\n      \"category\": \"Cotas\",\r\n      \"family\": \"Estilo de cota linear\",\r\n      \"type\": \"Diagonal - 2,5 mm Arial\",\r\n      \"type_id\": 261,\r\n      \"level\": null\r\n    },\r\n    {\r\n      \"element_id\": 328776,\r\n      \"category\": \"Cotas\",\r\n      \"family\": \"Estilo de cota linear\",\r\n      \"type\": \"Diagonal - 2,5 mm Arial\",\r\n      \"type_id\": 261,\r\n      \"level\": null\r\n    }\r\n  ],\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 26,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 34\r\n  }\r\n}",
+  "structured": {
+   "document": "LAB_HORIZUN_DOC",
+   "scope": "model",
+   "view_id": null,
+   "include_links": false,
+   "matched_total": 14,
+   "returned": 14,
+   "offset": 0,
+   "truncated": false,
+   "next_cursor": null,
+   "result_set_fingerprint": "588f7b25abe6c810",
+   "coverage_complete": true,
+   "unreadable_total": 0,
+   "unreadable_shown": 0,
+   "unreadable_truncated": false,
+   "unreadable": [],
+   "federated_coverage": {
+    "coverage_complete": true,
+    "include_links": false,
+    "link_instances_total": 0,
+    "link_instances_loaded": 0,
+    "link_instances_unavailable": 0,
+    "sources": [
+     {
+      "source_kind": "host",
+      "source_model": "LAB_HORIZUN_DOC",
+      "link_instance_id": null,
+      "visibility_coverage": {
+       "coverage_complete": true,
+       "is_workshared": false,
+       "worksets_total": null,
+       "worksets_open": null,
+       "worksets_closed": null,
+       "worksets_read_error": null,
+       "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+      }
+     }
+    ],
+    "unavailable_links": [],
+    "note": "Every considered source was loaded with all user worksets open."
+   },
+   "summary": {
+    "by_category": {
+     "Ambientes": 1,
+     "Cotas": 2,
+     "Folhas": 1,
+     "Identificadores de janela": 1,
+     "Identificadores de porta": 1,
+     "Janelas": 1,
+     "Pisos": 1,
+     "Portas": 1,
+     "Tabelas": 1,
+     "Vistas": 4
+    },
+    "by_level": {
+     "(no level)": 11,
+     "Nível 1": 3
+    },
+    "by_source": {
+     "host:LAB_HORIZUN_DOC": 14
+    }
+   },
+   "rows": [
+    {
+     "element_id": 328667,
+     "category": "Portas",
+     "family": "M_Folha única",
+     "type": "0915 x 2134mm",
+     "type_id": 49480,
+     "level": "Nível 1"
+    },
+    {
+     "element_id": 328669,
+     "category": "Janelas",
+     "family": "M_Fixo",
+     "type": "0915 x 1220mm",
+     "type_id": 33077,
+     "level": "Nível 1"
+    },
+    {
+     "element_id": 328681,
+     "category": "Vistas",
+     "family": "Planta de piso",
+     "type": "Planta de piso",
+     "type_id": 49552,
+     "level": null
+    },
+    {
+     "element_id": 328692,
+     "category": "Vistas",
+     "family": "Corte",
+     "type": "Corte da construção",
+     "type_id": 49554,
+     "level": null
+    },
+    {
+     "element_id": 328702,
+     "category": "Vistas",
+     "family": "Elevação",
+     "type": "Elevação da construção",
+     "type_id": 49557,
+     "level": null
+    },
+    {
+     "element_id": 328712,
+     "category": "Vistas",
+     "family": "Vista 3D",
+     "type": "Vista 3D",
+     "type_id": 49559,
+     "level": null
+    },
+    {
+     "element_id": 328721,
+     "category": "Folhas",
+     "family": "Folha",
+     "type": "Folha",
+     "type_id": 49561,
+     "level": null
+    },
+    {
+     "element_id": 328738,
+     "category": "Tabelas",
+     "family": "Tabela",
+     "type": "Tabela",
+     "type_id": 49560,
+     "level": null
+    },
+    {
+     "element_id": 328751,
+     "category": "Pisos",
+     "family": "Piso",
+     "type": "Genérico 150 mm",
+     "type_id": 339,
+     "level": "Nível 1"
+    },
+    {
+     "element_id": 328756,
+     "category": "Ambientes",
+     "family": null,
+     "type": null,
+     "type_id": null,
+     "level": null
+    },
+    {
+     "element_id": 328769,
+     "category": "Identificadores de porta",
+     "family": "M_Identificador da porta",
+     "type": "M_Identificador da porta",
+     "type_id": 1233,
+     "level": null
+    },
+    {
+     "element_id": 328770,
+     "category": "Identificadores de janela",
+     "family": "M_Identificador da janela",
+     "type": "M_Identificador da janela",
+     "type_id": 3796,
+     "level": null
+    },
+    {
+     "element_id": 328775,
+     "category": "Cotas",
+     "family": "Estilo de cota linear",
+     "type": "Diagonal - 2,5 mm Arial",
+     "type_id": 261,
+     "level": null
+    },
+    {
+     "element_id": 328776,
+     "category": "Cotas",
+     "family": "Estilo de cota linear",
+     "type": "Diagonal - 2,5 mm Arial",
+     "type_id": 261,
+     "level": null
+    }
+   ],
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 26,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 34
+   }
+  },
+  "isError": false
+ },
+ "requery_dimensions": {
+  "tool": "horizun_query_dimensions",
+  "args": {
+   "view_id": 312
+  },
+  "duration_ms": 50,
+  "error": null,
+  "text": "{\r\n  \"document\": \"LAB_HORIZUN_DOC\",\r\n  \"units\": {\r\n    \"internal\": \"feet\",\r\n    \"display\": \"mm\"\r\n  },\r\n  \"filters\": {\r\n    \"view_id\": 312,\r\n    \"element_ids\": null,\r\n    \"dimension_type_id\": null,\r\n    \"shapes\": null\r\n  },\r\n  \"total_matched\": 2,\r\n  \"returned\": 2,\r\n  \"offset\": 0,\r\n  \"max_rows\": 100,\r\n  \"truncated\": false,\r\n  \"ordering\": \"rows are ordered by element_id ascending; offset/max_rows page over that order\",\r\n  \"coverage\": {\r\n    \"inspected\": 7,\r\n    \"unreadable_total\": 0,\r\n    \"unreadable_shown\": 0,\r\n    \"unreadable\": []\r\n  },\r\n  \"rows\": [\r\n    {\r\n      \"element_id\": 328775,\r\n      \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-00050447\",\r\n      \"shape\": \"linear\",\r\n      \"category\": \"Cotas\",\r\n      \"is_view_specific\": true,\r\n      \"owner_view\": {\r\n        \"id\": 312,\r\n        \"unique_id\": \"c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138\",\r\n        \"name\": \"Nível 1\"\r\n      },\r\n      \"type\": {\r\n        \"id\": 261,\r\n        \"unique_id\": \"e3e052f9-0156-11d5-9301-0000863f27ad-00000105\",\r\n        \"name\": \"Diagonal - 2,5 mm Arial\",\r\n        \"style_type\": \"Linear\"\r\n      },\r\n      \"curve\": {\r\n        \"kind\": \"line\",\r\n        \"bound\": false,\r\n        \"origin\": [\r\n          0.0,\r\n          999.9999999999999,\r\n          0.0\r\n        ],\r\n        \"direction\": [\r\n          1.0,\r\n          0.0,\r\n          0.0\r\n        ]\r\n      },\r\n      \"references_available\": true,\r\n      \"references\": [\r\n        {\r\n          \"index\": 0,\r\n          \"stable_representation\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR\",\r\n          \"linked\": false,\r\n          \"element_id\": 328657,\r\n          \"element_exists\": true,\r\n          \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n          \"category\": \"Paredes\",\r\n          \"reference_resolvable\": true\r\n        },\r\n        {\r\n          \"index\": 1,\r\n          \"stable_representation\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR\",\r\n          \"linked\": false,\r\n          \"element_id\": 328657,\r\n          \"element_exists\": true,\r\n          \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n          \"category\": \"Paredes\",\r\n          \"reference_resolvable\": true\r\n        }\r\n      ],\r\n      \"broken_references\": 0,\r\n      \"linked_references\": 0,\r\n      \"linked_references_resolved\": 0,\r\n      \"unloaded_link_references\": 0,\r\n      \"unreadable_link_references\": 0,\r\n      \"reference_coverage\": \"host_only\",\r\n      \"number_of_segments\": 0,\r\n      \"segments\": [],\r\n      \"value_internal_feet\": 19.6850393",
+  "structured": {
+   "document": "LAB_HORIZUN_DOC",
+   "units": {
+    "internal": "feet",
+    "display": "mm"
+   },
+   "filters": {
+    "view_id": 312,
+    "element_ids": null,
+    "dimension_type_id": null,
+    "shapes": null
+   },
+   "total_matched": 2,
+   "returned": 2,
+   "offset": 0,
+   "max_rows": 100,
+   "truncated": false,
+   "ordering": "rows are ordered by element_id ascending; offset/max_rows page over that order",
+   "coverage": {
+    "inspected": 7,
+    "unreadable_total": 0,
+    "unreadable_shown": 0,
+    "unreadable": []
+   },
+   "rows": [
+    {
+     "element_id": 328775,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-00050447",
+     "shape": "linear",
+     "category": "Cotas",
+     "is_view_specific": true,
+     "owner_view": {
+      "id": 312,
+      "unique_id": "c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138",
+      "name": "Nível 1"
+     },
+     "type": {
+      "id": 261,
+      "unique_id": "e3e052f9-0156-11d5-9301-0000863f27ad-00000105",
+      "name": "Diagonal - 2,5 mm Arial",
+      "style_type": "Linear"
+     },
+     "curve": {
+      "kind": "line",
+      "bound": false,
+      "origin": [
+       0.0,
+       999.9999999999999,
+       0.0
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ]
+     },
+     "references_available": true,
+     "references": [
+      {
+       "index": 0,
+       "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+       "linked": false,
+       "element_id": 328657,
+       "element_exists": true,
+       "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+       "category": "Paredes",
+       "reference_resolvable": true
+      },
+      {
+       "index": 1,
+       "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR",
+       "linked": false,
+       "element_id": 328657,
+       "element_exists": true,
+       "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+       "category": "Paredes",
+       "reference_resolvable": true
+      }
+     ],
+     "broken_references": 0,
+     "linked_references": 0,
+     "linked_references_resolved": 0,
+     "unloaded_link_references": 0,
+     "unreadable_link_references": 0,
+     "reference_coverage": "host_only",
+     "number_of_segments": 0,
+     "segments": [],
+     "value_internal_feet": 19.685039370078737,
+     "value_presented": "6000",
+     "eq": null,
+     "lock": false,
+     "spot": null,
+     "warnings": []
+    },
+    {
+     "element_id": 328776,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-00050448",
+     "shape": "linear",
+     "category": "Cotas",
+     "is_view_specific": true,
+     "owner_view": {
+      "id": 312,
+      "unique_id": "c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138",
+      "name": "Nível 1"
+     },
+     "type": {
+      "id": 261,
+      "unique_id": "e3e052f9-0156-11d5-9301-0000863f27ad-00000105",
+      "name": "Diagonal - 2,5 mm Arial",
+      "style_type": "Linear"
+     },
+     "curve": {
+      "kind": "line",
+      "bound": false,
+      "origin": [
+       2999.9999999999995,
+       -999.9999999999999,
+       0.0
+      ],
+      "direction": [
+       0.0,
+       -1.0,
+       0.0
+      ]
+     },
+     "references_available": true,
+     "references": [
+      {
+       "index": 0,
+       "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE",
+       "linked": false,
+       "element_id": 328657,
+       "element_exists": true,
+       "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+       "category": "Paredes",
+       "reference_resolvable": true
+      },
+      {
+       "index": 1,
+       "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE",
+       "linked": false,
+       "element_id": 328657,
+       "element_exists": true,
+       "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+       "category": "Paredes",
+       "reference_resolvable": true
+      }
+     ],
+     "broken_references": 0,
+     "linked_references": 0,
+     "linked_references_resolved": 0,
+     "unloaded_link_references": 0,
+     "unreadable_link_references": 0,
+     "reference_coverage": "host_only",
+     "number_of_segments": 0,
+     "segments": [],
+     "value_internal_feet": 0.6561679790026247,
+     "value_presented": "200",
+     "eq": null,
+     "lock": false,
+     "spot": null,
+     "warnings": []
+    }
+   ],
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 2,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 12
+   }
+  },
+  "isError": false
+ },
+ "requery_walls": {
+  "tool": "horizun_query_model",
+  "args": {
+   "categories": [
+    "OST_Walls"
+   ],
+   "level": "Nível 1",
+   "include_links": false,
+   "response_mode": "summary"
+  },
+  "duration_ms": 50,
+  "error": null,
+  "text": "{\r\n  \"document\": \"LAB_HORIZUN_DOC\",\r\n  \"scope\": \"model\",\r\n  \"view_id\": null,\r\n  \"include_links\": false,\r\n  \"matched_total\": 5,\r\n  \"coverage_complete\": true,\r\n  \"unreadable_total\": 0,\r\n  \"unreadable_shown\": 0,\r\n  \"unreadable_truncated\": false,\r\n  \"unreadable\": [],\r\n  \"federated_coverage\": {\r\n    \"coverage_complete\": true,\r\n    \"include_links\": false,\r\n    \"link_instances_total\": 0,\r\n    \"link_instances_loaded\": 0,\r\n    \"link_instances_unavailable\": 0,\r\n    \"sources\": [\r\n      {\r\n        \"source_kind\": \"host\",\r\n        \"source_model\": \"LAB_HORIZUN_DOC\",\r\n        \"link_instance_id\": null,\r\n        \"visibility_coverage\": {\r\n          \"coverage_complete\": true,\r\n          \"is_workshared\": false,\r\n          \"worksets_total\": null,\r\n          \"worksets_open\": null,\r\n          \"worksets_closed\": null,\r\n          \"worksets_read_error\": null,\r\n          \"note\": \"This model is not workshared, so every element in it is loaded and this answer covers all of it.\"\r\n        }\r\n      }\r\n    ],\r\n    \"unavailable_links\": [],\r\n    \"note\": \"Every considered source was loaded with all user worksets open.\"\r\n  },\r\n  \"summary\": {\r\n    \"by_category\": {\r\n      \"Paredes\": 5\r\n    },\r\n    \"by_level\": {\r\n      \"N",
+  "structured": {
+   "document": "LAB_HORIZUN_DOC",
+   "scope": "model",
+   "view_id": null,
+   "include_links": false,
+   "matched_total": 5,
+   "coverage_complete": true,
+   "unreadable_total": 0,
+   "unreadable_shown": 0,
+   "unreadable_truncated": false,
+   "unreadable": [],
+   "federated_coverage": {
+    "coverage_complete": true,
+    "include_links": false,
+    "link_instances_total": 0,
+    "link_instances_loaded": 0,
+    "link_instances_unavailable": 0,
+    "sources": [
+     {
+      "source_kind": "host",
+      "source_model": "LAB_HORIZUN_DOC",
+      "link_instance_id": null,
+      "visibility_coverage": {
+       "coverage_complete": true,
+       "is_workshared": false,
+       "worksets_total": null,
+       "worksets_open": null,
+       "worksets_closed": null,
+       "worksets_read_error": null,
+       "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+      }
+     }
+    ],
+    "unavailable_links": [],
+    "note": "Every considered source was loaded with all user worksets open."
+   },
+   "summary": {
+    "by_category": {
+     "Paredes": 5
+    },
+    "by_level": {
+     "Nível 1": 5
+    },
+    "by_source": {
+     "host:LAB_HORIZUN_DOC": 5
+    }
+   },
+   "response_mode": "summary",
+   "note": "Counts cover the whole matched set. No element rows were returned; use full or compact to inspect them.",
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 3,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 11
+   }
+  },
+  "isError": false
+ }
+}

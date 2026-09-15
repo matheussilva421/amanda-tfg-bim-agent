@@ -1,0 +1,302 @@
+{
+ "text": "{\r\n  \"dry_run\": false,\r\n  \"transaction_status\": \"Committed\",\r\n  \"transaction_name\": \"Horizun: create elements\",\r\n  \"requested\": 2,\r\n  \"created_verified\": 2,\r\n  \"rows\": [\r\n    {\r\n      \"index\": 0,\r\n      \"kind\": \"wall\",\r\n      \"element_id\": 328657,\r\n      \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n      \"present_after_commit\": true,\r\n      \"verified\": true,\r\n      \"postconditions\": {\r\n        \"all_verified\": true,\r\n        \"checked\": 14,\r\n        \"all_measured\": true,\r\n        \"required\": [\r\n          \"end_x\",\r\n          \"end_y\",\r\n          \"end_z\",\r\n          \"flip\",\r\n          \"height\",\r\n          \"kind\",\r\n          \"level_elevation\",\r\n          \"level_id\",\r\n          \"offset\",\r\n          \"start_x\",\r\n          \"start_y\",\r\n          \"start_z\",\r\n          \"structural\",\r\n          \"type_id\"\r\n        ],\r\n        \"missing\": [],\r\n        \"unexpected\": [],\r\n        \"verified_means\": \"true only when EXACTLY the required properties were checked - each once, none missing, none substituted - and every one of them was RE-READ from the committed model and matched. A property that could not be read counts as unmeasured, never as agreement, and an empty checklist is not a pass.\",\r\n        \"properties\": [\r\n          {\r\n            \"property\": \"kind\",\r\n            \"measured\": true,\r\n            \"requested\": \"wall\",\r\n            \"found_in_committed_model\": \"wall\",\r\n         ",
+ "sc": {
+  "dry_run": false,
+  "transaction_status": "Committed",
+  "transaction_name": "Horizun: create elements",
+  "requested": 2,
+  "created_verified": 2,
+  "rows": [
+   {
+    "index": 0,
+    "kind": "wall",
+    "element_id": 328657,
+    "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+    "present_after_commit": true,
+    "verified": true,
+    "postconditions": {
+     "all_verified": true,
+     "checked": 14,
+     "all_measured": true,
+     "required": [
+      "end_x",
+      "end_y",
+      "end_z",
+      "flip",
+      "height",
+      "kind",
+      "level_elevation",
+      "level_id",
+      "offset",
+      "start_x",
+      "start_y",
+      "start_z",
+      "structural",
+      "type_id"
+     ],
+     "missing": [],
+     "unexpected": [],
+     "verified_means": "true only when EXACTLY the required properties were checked - each once, none missing, none substituted - and every one of them was RE-READ from the committed model and matched. A property that could not be read counts as unmeasured, never as agreement, and an empty checklist is not a pass.",
+     "properties": [
+      {
+       "property": "kind",
+       "measured": true,
+       "requested": "wall",
+       "found_in_committed_model": "wall",
+       "matches": true
+      },
+      {
+       "property": "type_id",
+       "measured": true,
+       "requested": 398,
+       "found_in_committed_model": 398,
+       "matches": true
+      },
+      {
+       "property": "level_id",
+       "measured": true,
+       "requested": 311,
+       "found_in_committed_model": 311,
+       "matches": true
+      },
+      {
+       "property": "level_elevation",
+       "measured": true,
+       "requested": 0.0,
+       "found_in_committed_model": 0.0,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "start_x",
+       "measured": true,
+       "requested": 0.0,
+       "found_in_committed_model": 0.0,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "start_y",
+       "measured": true,
+       "requested": 0.0,
+       "found_in_committed_model": 0.0,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "start_z",
+       "measured": true,
+       "requested": 0.0,
+       "found_in_committed_model": 0.0,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "end_x",
+       "measured": true,
+       "requested": 19.685039370078737,
+       "found_in_committed_model": 19.685039370078737,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "end_y",
+       "measured": true,
+       "requested": 0.0,
+       "found_in_committed_model": 0.0,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "end_z",
+       "measured": true,
+       "requested": 0.0,
+       "found_in_committed_model": 0.0,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "height",
+       "measured": true,
+       "requested": 9.842519685039369,
+       "found_in_committed_model": 9.842519685039369,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "offset",
+       "measured": true,
+       "requested": 0.0,
+       "found_in_committed_model": 0.0,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "flip",
+       "measured": true,
+       "requested": false,
+       "found_in_committed_model": false,
+       "matches": true
+      },
+      {
+       "property": "structural",
+       "measured": true,
+       "requested": false,
+       "found_in_committed_model": false,
+       "matches": true
+      }
+     ]
+    },
+    "source_comparison": null,
+    "geometry_base_z_feet": 0.0,
+    "geometry_top_z_feet": 9.842519685039369,
+    "kind_verified": true,
+    "type_verified": true,
+    "structural_type_verified": true,
+    "actual_class": "Wall",
+    "actual_category": "Paredes"
+   },
+   {
+    "index": 1,
+    "kind": "floor",
+    "element_id": 328660,
+    "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d4",
+    "present_after_commit": true,
+    "verified": true,
+    "postconditions": {
+     "all_verified": true,
+     "checked": 7,
+     "all_measured": true,
+     "required": [
+      "kind",
+      "level_elevation",
+      "level_id",
+      "offset",
+      "profile_xy",
+      "reference_face_elevation",
+      "type_id"
+     ],
+     "missing": [],
+     "unexpected": [],
+     "verified_means": "true only when EXACTLY the required properties were checked - each once, none missing, none substituted - and every one of them was RE-READ from the committed model and matched. A property that could not be read counts as unmeasured, never as agreement, and an empty checklist is not a pass.",
+     "properties": [
+      {
+       "property": "kind",
+       "measured": true,
+       "requested": "floor",
+       "found_in_committed_model": "floor",
+       "matches": true
+      },
+      {
+       "property": "type_id",
+       "measured": true,
+       "requested": 339,
+       "found_in_committed_model": 339,
+       "matches": true
+      },
+      {
+       "property": "level_id",
+       "measured": true,
+       "requested": 311,
+       "found_in_committed_model": 311,
+       "matches": true
+      },
+      {
+       "property": "level_elevation",
+       "measured": true,
+       "requested": 0.0,
+       "found_in_committed_model": 0.0,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "offset",
+       "measured": true,
+       "requested": 0.0,
+       "found_in_committed_model": 0.0,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "profile_xy",
+       "measured": true,
+       "requested": true,
+       "found_in_committed_model": true,
+       "matches": true
+      },
+      {
+       "property": "reference_face_elevation",
+       "measured": true,
+       "requested": 0.0,
+       "found_in_committed_model": 0.0,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      }
+     ]
+    },
+    "source_comparison": null,
+    "kind_verified": true,
+    "type_verified": true,
+    "structural_type_verified": true,
+    "actual_class": "Floor",
+    "actual_category": "Pisos"
+   }
+  ],
+  "verification": {
+   "intended": 2,
+   "actual": 2,
+   "verified": true
+  },
+  "application": {
+   "state": "verified_applied",
+   "fully_applied": true,
+   "transaction_status": "Committed",
+   "requested": 2,
+   "applied": 2,
+   "verified": 2,
+   "unresolved": 0,
+   "failed": 0,
+   "unknown": 0,
+   "state_means": "verified_applied: every requested change is in the model and was re-read after the commit. This is the only state besides no_op that lets a plan keep its work."
+  },
+  "tabular": null,
+  "idempotency": {
+   "key": "10e09df1-29d0-4a92-9c23-f198eaa80b33",
+   "status": "executed_once",
+   "command_executed_in_this_call": true,
+   "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+  },
+  "bridge_queue": {
+   "queued": false,
+   "ahead_at_admission": 0,
+   "waited_ms": 13,
+   "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+   "capacity": 16,
+   "execution_and_wait_ms": 62
+  }
+ }
+}

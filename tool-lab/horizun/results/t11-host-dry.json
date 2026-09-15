@@ -1,0 +1,110 @@
+{
+ "text": "{\r\n  \"dry_run\": true,\r\n  \"tabular\": null,\r\n  \"transaction_status\": \"not_started\",\r\n  \"requested\": 2,\r\n  \"valid\": 2,\r\n  \"invalid\": 0,\r\n  \"errors\": [],\r\n  \"plan\": [\r\n    {\r\n      \"index\": 0,\r\n      \"kind\": \"family_instance\",\r\n      \"references_resolved\": true\r\n    },\r\n    {\r\n      \"index\": 1,\r\n      \"kind\": \"family_instance\",\r\n      \"references_resolved\": true\r\n    }\r\n  ],\r\n  \"validation_level\": \"arguments_and_references\",\r\n  \"api_rehearsal\": null,\r\n  \"note\": \"No transaction opened; API construction and instance parameters are not rehearsed. Correct every invalid row before apply.\",\r\n  \"application\": {\r\n    \"state\": \"rehearsed\",\r\n    \"fully_applied\": false,\r\n    \"transaction_status\": \"not_started\",\r\n    \"requested\": 2,\r\n    \"applied\": 0,\r\n    \"verified\": 0,\r\n    \"unresolved\": 0,\r\n    \"failed\": 0,\r\n    \"unknown\": 0,\r\n    \"state_means\": \"rehearsed: a valid dry run. Everything resolved and NOTHING was written.\"\r\n  },\r\n  \"document\": \"LAB_HORIZUN_DOC [C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt]\",\r\n  \"document_fingerprint\": \"d20058fd6184ce09\",\r\n  \"change_preview\": {\r\n    \"fingerprint\": \"2d341405a7d229cc5d283b0c92c775986f170ca30e379cbab817f1cdacc83d94\",\r\n    \"total\": 2,\r\n    \"shown\": 2,\r\n    \"truncated\": false,\r\n    \"expected_cascade\": 0,\r\n    \"rows\": [\r\n      {\r\n        \"unique_id\": \"create:0\",\r\n        \"element_id\": null,\r\n        \"action\": \"create\",\r\n        \"category\": \"family_instance\",\r\n        \"type\": \"0915 x 2134mm\",\r\n        ",
+ "sc": {
+  "dry_run": true,
+  "tabular": null,
+  "transaction_status": "not_started",
+  "requested": 2,
+  "valid": 2,
+  "invalid": 0,
+  "errors": [],
+  "plan": [
+   {
+    "index": 0,
+    "kind": "family_instance",
+    "references_resolved": true
+   },
+   {
+    "index": 1,
+    "kind": "family_instance",
+    "references_resolved": true
+   }
+  ],
+  "validation_level": "arguments_and_references",
+  "api_rehearsal": null,
+  "note": "No transaction opened; API construction and instance parameters are not rehearsed. Correct every invalid row before apply.",
+  "application": {
+   "state": "rehearsed",
+   "fully_applied": false,
+   "transaction_status": "not_started",
+   "requested": 2,
+   "applied": 0,
+   "verified": 0,
+   "unresolved": 0,
+   "failed": 0,
+   "unknown": 0,
+   "state_means": "rehearsed: a valid dry run. Everything resolved and NOTHING was written."
+  },
+  "document": "LAB_HORIZUN_DOC [C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt]",
+  "document_fingerprint": "d20058fd6184ce09",
+  "change_preview": {
+   "fingerprint": "2d341405a7d229cc5d283b0c92c775986f170ca30e379cbab817f1cdacc83d94",
+   "total": 2,
+   "shown": 2,
+   "truncated": false,
+   "expected_cascade": 0,
+   "rows": [
+    {
+     "unique_id": "create:0",
+     "element_id": null,
+     "action": "create",
+     "category": "family_instance",
+     "type": "0915 x 2134mm",
+     "captured_state": {
+      "host_uid": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+      "level": "Nível 1",
+      "level_elev_mm": "0",
+      "level_uid": "e3e052f9-0156-11d5-9301-0000863f27ad-00000137",
+      "system_type": "",
+      "system_type_uid": "",
+      "top_level_elev_mm": "",
+      "top_level_uid": "",
+      "type_uid": "e009de02-514d-461b-add9-7bfd5943a204-0000c148"
+     },
+     "proposed_values": null,
+     "values_truncated": false
+    },
+    {
+     "unique_id": "create:1",
+     "element_id": null,
+     "action": "create",
+     "category": "family_instance",
+     "type": "0915 x 1220mm",
+     "captured_state": {
+      "host_uid": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+      "level": "Nível 1",
+      "level_elev_mm": "0",
+      "level_uid": "e3e052f9-0156-11d5-9301-0000863f27ad-00000137",
+      "system_type": "",
+      "system_type_uid": "",
+      "top_level_elev_mm": "",
+      "top_level_uid": "",
+      "type_uid": "04d1f996-00c3-4cd4-a075-3c8bb4e6970c-00008135"
+     },
+     "proposed_values": null,
+     "values_truncated": false
+    }
+   ],
+   "note": "Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values."
+  },
+  "plan_resolved": {
+   "elements": 2,
+   "create": 2,
+   "modify": 0,
+   "delete": 0,
+   "expected_cascade": 0,
+   "fingerprint": "2d341405a7d229cc5d283b0c92c775986f170ca30e379cbab817f1cdacc83d94"
+  },
+  "confirmation_token": "hz-d31ab7643f34ce7a961d6c7a78835379",
+  "confirmation_expires_utc": "2026-09-15 14:38:17Z",
+  "confirmation_note": "To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds this ordered heterogeneous batch, its units, AND what its names resolved to right now - the types, system types and levels, including each level's measured elevation. A type renamed, a name re-pointed or a level moved before you apply refuses as a stale plan instead of creating something else under the approved words.",
+  "bridge_queue": {
+   "queued": false,
+   "ahead_at_admission": 0,
+   "waited_ms": 1,
+   "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+   "capacity": 16,
+   "execution_and_wait_ms": 22
+  }
+ }
+}

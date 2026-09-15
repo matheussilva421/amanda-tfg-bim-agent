@@ -1,0 +1,305 @@
+{
+ "dry_run": {
+  "text": "{\r\n  \"dry_run\": true,\r\n  \"transaction_status\": \"not_started\",\r\n  \"actions\": 7,\r\n  \"valid\": 7,\r\n  \"invalid\": 0,\r\n  \"errors\": [],\r\n  \"plan\": [\r\n    {\r\n      \"index\": 0,\r\n      \"operation\": \"create_floor_plan\",\r\n      \"key\": \"fp\"\r\n    },\r\n    {\r\n      \"index\": 1,\r\n      \"operation\": \"create_section\",\r\n      \"key\": \"sec\"\r\n    },\r\n    {\r\n      \"index\": 2,\r\n      \"operation\": \"create_elevation\",\r\n      \"key\": \"elev\"\r\n    },\r\n    {\r\n      \"index\": 3,\r\n      \"operation\": \"create_3d\",\r\n      \"key\": \"t3d\"\r\n    },\r\n    {\r\n      \"index\": 4,\r\n      \"operation\": \"create_sheet\",\r\n      \"key\": \"sh\"\r\n    },\r\n    {\r\n      \"index\": 5,\r\n      \"operation\": \"place_view\",\r\n      \"key\": null\r\n    },\r\n    {\r\n      \"index\": 6,\r\n      \"operation\": \"place_view\",\r\n      \"key\": null\r\n    }\r\n  ],\r\n  \"note\": \"Nothing was created or changed. Aliases are resolved in action order.\",\r\n  \"application\": {\r\n    \"state\": \"rehearsed\",\r\n    \"fully_applied\": false,\r\n    \"transaction_status\": \"not_started\",\r\n    \"requested\": 7,\r\n    \"applied\": 0,\r\n    \"verified\": 0,\r\n    \"unresolved\": 0,\r\n    \"failed\": 0,\r\n    \"unknown\": 0,\r\n    \"state_means\": \"rehearsed: a valid dry run. Everything resolved and NOTHING was written.\"\r\n  },\r\n  \"document\": \"LAB_HORIZUN_DOC [C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt]\",\r\n  \"document_fingerprint\": \"d20058fd6184ce09\",\r\n  \"change_preview\": {\r\n    \"fingerprint\": \"a196fd5e773c175b37ee074c443160ac7605850b9335d374cfd0514e890c37fa\",\r\n    \"total\": 7,\r\n    \"shown\": 7,\r\n    \"truncated\": false,\r\n    \"expected_cascade\": 0,\r\n    \"rows\": [\r\n      {\r\n        \"unique_id\": \"action:0\",\r\n        \"element_id\": null,\r\n        \"action\": \"create\",\r\n        \"category\": \"create_floor_plan\",\r\n        \"type\": null,\r\n        \"captured_state\": {\r\n          \"level_id\": \"e3e052f9-0156-11d5-9301-0000863f27ad-00000137|Nível 1\"\r\n        },\r\n        \"proposed_values\": {\r\n          \"specification\": \"{\\\"operation\\\":\\\"create_floor_plan\\\",\\\"key\\\":\\\"fp\\\",\\\"name\\\":\\\"LAB",
+  "sc": {
+   "dry_run": true,
+   "transaction_status": "not_started",
+   "actions": 7,
+   "valid": 7,
+   "invalid": 0,
+   "errors": [],
+   "plan": [
+    {
+     "index": 0,
+     "operation": "create_floor_plan",
+     "key": "fp"
+    },
+    {
+     "index": 1,
+     "operation": "create_section",
+     "key": "sec"
+    },
+    {
+     "index": 2,
+     "operation": "create_elevation",
+     "key": "elev"
+    },
+    {
+     "index": 3,
+     "operation": "create_3d",
+     "key": "t3d"
+    },
+    {
+     "index": 4,
+     "operation": "create_sheet",
+     "key": "sh"
+    },
+    {
+     "index": 5,
+     "operation": "place_view",
+     "key": null
+    },
+    {
+     "index": 6,
+     "operation": "place_view",
+     "key": null
+    }
+   ],
+   "note": "Nothing was created or changed. Aliases are resolved in action order.",
+   "application": {
+    "state": "rehearsed",
+    "fully_applied": false,
+    "transaction_status": "not_started",
+    "requested": 7,
+    "applied": 0,
+    "verified": 0,
+    "unresolved": 0,
+    "failed": 0,
+    "unknown": 0,
+    "state_means": "rehearsed: a valid dry run. Everything resolved and NOTHING was written."
+   },
+   "document": "LAB_HORIZUN_DOC [C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt]",
+   "document_fingerprint": "d20058fd6184ce09",
+   "change_preview": {
+    "fingerprint": "a196fd5e773c175b37ee074c443160ac7605850b9335d374cfd0514e890c37fa",
+    "total": 7,
+    "shown": 7,
+    "truncated": false,
+    "expected_cascade": 0,
+    "rows": [
+     {
+      "unique_id": "action:0",
+      "element_id": null,
+      "action": "create",
+      "category": "create_floor_plan",
+      "type": null,
+      "captured_state": {
+       "level_id": "e3e052f9-0156-11d5-9301-0000863f27ad-00000137|Nível 1"
+      },
+      "proposed_values": {
+       "specification": "{\"operation\":\"create_floor_plan\",\"key\":\"fp\",\"name\":\"LAB Planta Nivel 1\",\"level_id\":311,\"view_scale\":50}"
+      },
+      "values_truncated": false
+     },
+     {
+      "unique_id": "action:1",
+      "element_id": null,
+      "action": "create",
+      "category": "create_section",
+      "type": null,
+      "captured_state": {},
+      "proposed_values": {
+       "specification": "{\"operation\":\"create_section\",\"key\":\"sec\",\"name\":\"LAB Corte A\",\"start\":[3.0,-2.0,1.5],\"end\":[3.0,1.0,1.5],\"view_scale\":50}"
+      },
+      "values_truncated": false
+     },
+     {
+      "unique_id": "action:2",
+      "element_id": null,
+      "action": "create",
+      "category": "create_elevation",
+      "type": null,
+      "captured_state": {
+       "plan_view_id": "c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138|Nível 1"
+      },
+      "proposed_values": {
+       "specification": "{\"operation\":\"create_elevation\",\"key\":\"elev\",\"name\":\"LAB Elevacao\",\"point\":[3.0,2.0,1.5],\"plan_view_id\":312}"
+      },
+      "values_truncated": false
+     },
+     {
+      "unique_id": "action:3",
+      "element_id": null,
+      "action": "create",
+      "category": "create_3d",
+      "type": null,
+      "captured_state": {},
+      "proposed_values": {
+       "specification": "{\"operation\":\"create_3d\",\"key\":\"t3d\",\"name\":\"LAB Vista 3D\"}"
+      },
+      "values_truncated": false
+     },
+     {
+      "unique_id": "action:4",
+      "element_id": null,
+      "action": "create",
+      "category": "create_sheet",
+      "type": null,
+      "captured_state": {
+       "title_block_type_id": "fca46435-22e5-11d5-932d-0000863f27ad-0000114c|A1 métrico"
+      },
+      "proposed_values": {
+       "specification": "{\"operation\":\"create_sheet\",\"key\":\"sh\",\"name\":\"LAB Prancha 01\",\"number\":\"LAB-01\",\"title_block_type_id\":4428}"
+      },
+      "values_truncated": false
+     },
+     {
+      "unique_id": "action:5",
+      "element_id": null,
+      "action": "modify",
+      "category": "place_view",
+      "type": null,
+      "captured_state": {},
+      "proposed_values": {
+       "specification": "{\"operation\":\"place_view\",\"sheet_key\":\"sh\",\"view_key\":\"fp\",\"point\":[0.15,0.4]}"
+      },
+      "values_truncated": false
+     },
+     {
+      "unique_id": "action:6",
+      "element_id": null,
+      "action": "modify",
+      "category": "place_view",
+      "type": null,
+      "captured_state": {},
+      "proposed_values": {
+       "specification": "{\"operation\":\"place_view\",\"sheet_key\":\"sh\",\"view_key\":\"sec\",\"point\":[0.55,0.4]}"
+      },
+      "values_truncated": false
+     }
+    ],
+    "note": "Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values."
+   },
+   "plan_resolved": {
+    "elements": 7,
+    "create": 5,
+    "modify": 2,
+    "delete": 0,
+    "expected_cascade": 0,
+    "fingerprint": "a196fd5e773c175b37ee074c443160ac7605850b9335d374cfd0514e890c37fa"
+   },
+   "confirmation_token": "hz-e276581411229e9709ce2097c58793e8",
+   "confirmation_expires_utc": "2026-09-15 14:40:00Z",
+   "confirmation_note": "To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds the ordered dependency graph AND what every referenced id resolves to right now, by identity and by name - a template edited into a different template, a renamed source view or a swapped titleblock refuses as a stale plan.",
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 1,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 7
+   }
+  }
+ },
+ "apply": {
+  "text": "{\r\n  \"transaction_status\": \"Committed\",\r\n  \"transaction_name\": \"Horizun: manage views and sheets\",\r\n  \"actions_verified\": 7,\r\n  \"aliases\": {\r\n    \"fp\": 328681,\r\n    \"sec\": 328692,\r\n    \"elev\": 328702,\r\n    \"t3d\": 328712,\r\n    \"sh\": 328721\r\n  },\r\n  \"rows\": [\r\n    {\r\n      \"index\": 0,\r\n      \"operation\": \"create_floor_plan\",\r\n      \"element_id\": 328681,\r\n      \"present_after_commit\": true,\r\n      \"verified\": true,\r\n      \"actual_class\": \"ViewPlan\",\r\n      \"view_scale_requested\": 50,\r\n      \"view_scale\": 50,\r\n      \"view_scale_verified\": true\r\n    },\r\n    {\r\n      \"index\": 1,\r\n      \"operation\": \"create_section\",\r\n      \"element_id\": 328692,\r\n      \"present_after_commit\": true,\r\n      \"verified\": true,\r\n      \"actual_class\": \"ViewSection\",\r\n      \"view_scale_requested\": 50,\r\n      \"view_scale\": 50,\r\n      \"view_scale_verified\": true\r\n    },\r\n    {\r\n      \"index\": 2,\r\n      \"operation\": \"create_elevation\",\r\n      \"element_id\": 328702,\r\n      \"present_after_commit\": true,\r\n      \"verified\": true,\r\n      \"actual_class\": \"ViewSection\"\r\n    },\r\n    {\r\n      \"index\": 3,\r\n      \"operation\": \"create_3d\",\r\n      \"element_id\": 328712,\r\n      \"present_after_commit\": true,\r\n      \"verified\": true,\r\n      \"actual_class\": \"View3D\"\r\n    },\r\n    {\r\n      \"index\": 4,\r\n      \"operation\": \"create_sheet\",\r\n      \"element_id\": 328721,\r\n      \"present_after_commit\": true,\r\n      \"verified\": true,\r\n      \"actual_class\": \"ViewSheet\"\r\n    },\r\n    {\r\n      \"index\": 5,\r\n      \"operation\": \"place_view\",\r\n      \"element_id\": 328727,\r\n      \"present_after_commit\": true,\r\n      \"verified\": true,\r\n      \"actual_class\": \"Viewport\",\r\n      \"sheet_id\": 328721,\r\n      \"view_id\": 328681,\r\n      \"actual_center_internal_feet\": [\r\n        0.4921259842519685,\r\n        1.3123359580052494,\r\n        0.0675853018372703\r\n      ],\r\n      \"center_error_on_sheet_internal_feet\": 1.1102230246251565E-16\r\n    },\r\n    {\r\n      \"index\": 6,\r\n      \"operation\": \"place_view\",\r\n      \"element_id\": 328737,\r\n      \"present_after_commit\": true,\r\n      \"verified\": true,\r\n      \"actual_class\": \"Viewport\",\r\n      \"sheet_id\": 328721,\r\n      \"view_id\": 328692,\r\n      \"actual_center_internal_feet\": [\r\n        1.804461942257218,\r\n        1.3123359580052352,\r\n        -164.04199475065616\r\n      ],\r\n      \"center_error_on_sheet_internal_feet\": 1.4210854715202004E-14\r\n    }\r\n  ],\r\n  \"application\": {\r\n    \"state\": \"verified_applied\",\r\n    \"fully_applied\": true,\r\n    \"transaction_status\": \"Committed\",\r\n    \"requested\": 7,\r\n    \"applied\": 7,\r\n    \"verified\": 7,\r\n    \"unresolved\": 0,\r\n    \"failed\": 0,\r\n    \"unknown\": 0,\r\n    \"state_means\": \"verified_applied: every requested change is in the model and was re-read after the commit. This is the only state besides no_op that lets a plan keep its work.\"\r\n  },\r\n  \"idempotency\": {\r\n    \"key\": \"45ad2705-3105-46b4-91fb-208e4bb400db\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"The durable claim and result were recorded; an identical retry will replay this answer.\"\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait h",
+  "sc": {
+   "transaction_status": "Committed",
+   "transaction_name": "Horizun: manage views and sheets",
+   "actions_verified": 7,
+   "aliases": {
+    "fp": 328681,
+    "sec": 328692,
+    "elev": 328702,
+    "t3d": 328712,
+    "sh": 328721
+   },
+   "rows": [
+    {
+     "index": 0,
+     "operation": "create_floor_plan",
+     "element_id": 328681,
+     "present_after_commit": true,
+     "verified": true,
+     "actual_class": "ViewPlan",
+     "view_scale_requested": 50,
+     "view_scale": 50,
+     "view_scale_verified": true
+    },
+    {
+     "index": 1,
+     "operation": "create_section",
+     "element_id": 328692,
+     "present_after_commit": true,
+     "verified": true,
+     "actual_class": "ViewSection",
+     "view_scale_requested": 50,
+     "view_scale": 50,
+     "view_scale_verified": true
+    },
+    {
+     "index": 2,
+     "operation": "create_elevation",
+     "element_id": 328702,
+     "present_after_commit": true,
+     "verified": true,
+     "actual_class": "ViewSection"
+    },
+    {
+     "index": 3,
+     "operation": "create_3d",
+     "element_id": 328712,
+     "present_after_commit": true,
+     "verified": true,
+     "actual_class": "View3D"
+    },
+    {
+     "index": 4,
+     "operation": "create_sheet",
+     "element_id": 328721,
+     "present_after_commit": true,
+     "verified": true,
+     "actual_class": "ViewSheet"
+    },
+    {
+     "index": 5,
+     "operation": "place_view",
+     "element_id": 328727,
+     "present_after_commit": true,
+     "verified": true,
+     "actual_class": "Viewport",
+     "sheet_id": 328721,
+     "view_id": 328681,
+     "actual_center_internal_feet": [
+      0.4921259842519685,
+      1.3123359580052494,
+      0.0675853018372703
+     ],
+     "center_error_on_sheet_internal_feet": 1.1102230246251565e-16
+    },
+    {
+     "index": 6,
+     "operation": "place_view",
+     "element_id": 328737,
+     "present_after_commit": true,
+     "verified": true,
+     "actual_class": "Viewport",
+     "sheet_id": 328721,
+     "view_id": 328692,
+     "actual_center_internal_feet": [
+      1.804461942257218,
+      1.3123359580052352,
+      -164.04199475065616
+     ],
+     "center_error_on_sheet_internal_feet": 1.4210854715202004e-14
+    }
+   ],
+   "application": {
+    "state": "verified_applied",
+    "fully_applied": true,
+    "transaction_status": "Committed",
+    "requested": 7,
+    "applied": 7,
+    "verified": 7,
+    "unresolved": 0,
+    "failed": 0,
+    "unknown": 0,
+    "state_means": "verified_applied: every requested change is in the model and was re-read after the commit. This is the only state besides no_op that lets a plan keep its work."
+   },
+   "idempotency": {
+    "key": "45ad2705-3105-46b4-91fb-208e4bb400db",
+    "status": "executed_once",
+    "command_executed_in_this_call": true,
+    "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+   },
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 1,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 395
+   }
+  }
+ }
+}

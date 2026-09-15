@@ -1,0 +1,1706 @@
+{
+ "evidence_id": "P02-T11-dimension",
+ "task": "P02-T11",
+ "refs": {
+  "tool": "horizun_get_dimension_references",
+  "args": {
+   "view_id": 312,
+   "element_ids": [
+    328657
+   ],
+   "units": "m",
+   "selectors": [
+    "exterior_face",
+    "interior_face",
+    "edge"
+   ],
+   "include_incompatible": false,
+   "max_results": 500
+  },
+  "duration_ms": 51,
+  "error": null,
+  "text": "{\r\n  \"document\": \"LAB_HORIZUN_DOC\",\r\n  \"view_id\": 312,\r\n  \"view_name\": \"Nível 1\",\r\n  \"units\": \"m\",\r\n  \"selectors_requested\": [\r\n    \"exterior_face\",\r\n    \"interior_face\",\r\n    \"edge\"\r\n  ],\r\n  \"selectors_defaulted\": false,\r\n  \"coverage\": {\r\n    \"requested\": 1,\r\n    \"inspected\": 1,\r\n    \"host_targets_inspected\": 1,\r\n    \"linked_targets_named\": 0,\r\n    \"linked_targets_inspected\": 0,\r\n    \"link_instances_named\": 0,\r\n    \"unreadable\": []\r\n  },\r\n  \"linked_candidates\": 0,\r\n  \"total_candidates\": 38,\r\n  \"returned\": 38,\r\n  \"offset\": 0,\r\n  \"truncated\": false,\r\n  \"include_incompatible\": false,\r\n  \"incompatible_excluded\": 0,\r\n  \"ordering\": \"rows are ordered by (element_id ascending, selector, reference_type, geometry_fingerprint, stable_representation), all ordinal - the same candidates arrive in the same order on every call.\",\r\n  \"fingerprint_note\": \"geometry_fingerprint quantises every internal-feet value on a 0.1 mm grid (1/3048 ft) before hashing, so regeneration jitter keeps the identity and a real move of 0.2 mm or more changes it.\",\r\n  \"warnings\": [],\r\n  \"rows\": [\r\n    {\r\n      \"stable_representation\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:26:CUT_EDGE/3\",\r\n      \"element_id\": 328657,\r\n      \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n      \"source_model\": \"LAB_HORIZUN_DOC\",\r\n      \"host_model\": \"LAB_HORIZUN_DOC\",\r\n      \"linked\": false,\r\n      \"link\": null,\r\n      \"link_instance\": null,\r\n      \"reference_type\": \"edge\",\r\n      \"selector\": \"edge\",\r\n      \"ambiguous\": false,\r\n      \"ambiguity_group\": null,\r\n      \"geometry\": {\r\n        \"kind\": \"line\",\r\n        \"start\": [\r\n          3.4574999999999987,\r\n          0.1,\r\n          1.1999999999999997\r\n        ],\r\n        \"end\": [\r\n          3.457499999999999,\r\n          -0.1,\r\n          1.1999999999999997\r\n        ],\r\n        \"direction\": [\r\n          2.7071678232459817E-15,\r\n          -1.0,\r\n          0.0\r\n        ]\r\n      },\r\n      \"representative_point\": [\r\n        3.457499999999999,\r\n        0.0,\r\n        1.1999999999999997\r\n      ],\r\n      \"distance\": null,\r\n      \"view_id\": 312,\r\n      \"compatible_with_dimension\": true,\r\n      \"incompatibility_reason\": null,\r\n      \"geometry_fingerprint\": \"037ff4a41cde7562df66ca6eba65f79d252d55e43eaf4159973ddd75513d337e\",\r\n      \"warnings\": []\r\n    },\r\n    {\r\n      \"stable_representation\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:CUT_EDGE/2\",\r\n      \"element_id\": 328657,\r\n      \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n      \"source_model\": \"LAB_HORIZUN_DOC\",\r\n      \"host_model\": \"LAB_HORIZUN_DOC\",\r\n      \"linked\": false,\r\n      \"link\": null,\r\n      \"link_instance\": null,\r\n      \"reference_type\": \"edge\",\r\n      \"selector\": \"edge\",\r\n      \"ambiguous\": false,\r\n      \"ambiguity_group\": null,\r\n      \"geometry\": {\r\n        \"kind\": \"line\",\r\n        \"start\": [\r\n          5.999999999999999,\r\n          0.1,\r\n          1.1999999999999997\r\n        ],\r\n        \"end\": [\r\n          3.4574999999999987,\r\n          0.1,\r\n          1.1999999999999997\r\n        ],\r\n        \"direction\": [\r\n          -1.0,\r\n          0.0,\r\n          0.0\r\n        ]\r\n      },\r\n      \"representative_point\": [\r\n        4.728749999999999,\r\n        0.1,\r\n        1.1999999999999997\r\n      ],\r\n      \"distance\": null,\r\n      \"view_id\": 312,\r\n      \"compatible_with_dimension\": true,\r\n      \"incompatibility_reason\": null,\r\n      \"geometry_fingerprint\": \"0b761875b0ed8c98ef6c43de44f3c3893137328c3f7f9ce038de00df947df7e0\",\r\n      \"warnings\": []\r\n    },\r\n    {\r\n      \"stable_representation\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:38:LINEAR\",\r\n      \"element_id\": 328657,\r\n      \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n      \"source_model\": \"LAB_HORIZUN_DOC\",\r\n      \"host_model\": \"LAB_HORIZUN_DOC\",\r\n      \"linked\": false,\r\n      \"link\": null,\r\n      \"link_instance\": null,\r\n      \"reference_type\": \"edge\",\r\n      \"selector\": \"edge\",\r\n      \"ambiguous\": false,\r\n      \"ambiguity_group\": null,\r\n      \"geometry\": {\r\n        \"kind\": \"line\",\r\n        \"start\": [\r\n          2.5424999999999986,\r\n          0.1,\r\n          0.0\r\n        ],\r\n        \"end\": [\r\n          2.542499999999999,\r\n          -0.1,\r\n          0.0\r\n        ],\r\n        \"direction\": [\r\n          2.7071678232459817E-15,\r\n          -1.0,\r\n          0.0\r\n        ]\r\n      },\r\n      \"representative_point\": [\r\n        2.542499999999999,\r\n        0.0,\r\n        0.0\r\n      ],\r\n      \"distance\": null,\r\n      \"view_id\": 312,\r\n      \"compatible_with_dimension\": true,\r\n      \"incompatibility_reason\": null,\r\n      \"geometry_fingerprint\": \"0ca8179ca40f8a355a5ec3d8aa7fd7d223d0579d71676ab1f9af841316a745e3\",\r\n      \"warnings\": []\r\n    },\r\n    {\r\n      \"stable_representation\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:62:LINEAR\",\r\n      \"element_id\": 328657,\r\n      \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n      \"source_model\": \"LAB_HORIZUN_DOC\",\r\n      \"host_model\": \"LAB_HORIZUN_DOC\",\r\n      \"linked\": false,\r\n      \"link\": null,\r\n      \"link_instance\": null,\r\n      \"reference_type\": \"edge\",\r\n      \"selector\": \"edge\",\r\n      \"ambiguous\": false,\r\n      \"ambiguity_group\": null,\r\n      \"geometry\": {\r\n        \"kind\": \"line\",\r\n        \"start\": [\r\n          1.0424999999999836,\r\n          -0.1,\r\n          0.9000000000000005\r\n        ],\r\n        \"end\": [\r\n          1.0424999999999842,\r\n          0.1,\r\n          0.9000000000000005\r\n        ],\r\n        \"direction\": [\r\n          3.383959779057477E-15,\r\n          1.0,\r\n          0.0\r\n        ]\r\n      },\r\n      \"representative_point\": [\r\n        1.042499999999984,\r\n        0.0,\r\n        0.9000000000000005\r\n      ],\r\n      \"distance\": null,\r\n      \"view_id\": 312,\r\n      \"compatible_with_dimension\": true,\r\n      \"incompatibility_reason\": null,\r\n      \"geometry_fingerprint\": \"1090d5bf76fbfb2a07249ec97a3f6f5dbaf93127be9b5d0b23c5fbd73520b50e\",\r\n      \"warnings\": []\r\n    },\r\n    {\r\n      \"stable_representation\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:CUT_EDGE/3\",\r\n      \"element_id\": 328657,\r\n      \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n      \"source_model\": \"LAB_HORIZUN_DOC\",\r\n      \"host_model\": \"LAB_HORIZUN_DOC\",\r\n      \"linked\": false,\r\n      \"link\": null,\r\n      \"link_instance\": null,\r\n      \"reference_type\": \"edge\",\r\n      \"selector\": \"edge\",\r\n      \"ambiguous\": false,\r\n      \"ambiguity_group\": null,\r\n      \"geometry\": {\r\n        \"kind\": \"line\",\r\n        \"start\": [\r\n          3.457499999999999,\r\n          -0.1,\r\n          1.1999999999999997\r\n        ],\r\n        \"end\": [\r\n          6.000000000000001,\r\n          -0.1,\r\n          1.1999999999999997\r\n        ],\r\n        \"direction\": [\r\n          1.0,\r\n          0.0,\r\n          0.0\r\n        ]\r\n      },\r\n      \"representative_point\": [\r\n        4.72875,\r\n        -0.1,\r\n        1.1999999999999997\r\n      ],\r\n      \"distance\": null,\r\n      \"view_id\": 312,\r\n      \"compatible_with_dimension\": true,\r\n      \"incompatibility_reason\": null,\r\n      \"geometry_fingerprint\": \"16402f8fe7ab5a794df648787c58be2addb0d75c3770913f04a0a2aa2cb7f10f\",\r\n      \"warnings\": []\r\n    },\r\n    {\r\n      \"stable_representation\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:61:LINEAR\",\r\n      \"element_id\": 328657,\r\n      \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n      \"source_model\": \"LAB_HORIZUN_DOC\",\r\n      \"host_model\": \"LAB_HORIZUN_DOC\",\r\n      \"linked\": false,\r\n      \"link\": null,\r\n      \"link_instance\": null,\r\n      \"reference_type\": \"edge\",\r\n      \"selector\": \"edge\",\r\n      \"ambiguous\": false,\r\n      \"ambiguity_group\": null,\r\n      \"geometry\": {\r\n        \"kind\": \"line\",\r\n        \"start\": [\r\n          1.9574999999999836,\r\n          0.1,\r\n          0.9000000000000005\r\n        ],\r\n        \"end\": [\r\n          1.957499999999983,\r\n          -0.1,\r\n          0.9000000000000005\r\n        ],\r\n        \"direction\": [\r\n          -2.7071678232459817E-15,\r\n          -1.0,\r\n          0.0\r\n        ]\r\n      },\r\n      \"representative_point\": [\r\n        1.9574999999999834,\r\n        0.0,\r\n ",
+  "structured": {
+   "document": "LAB_HORIZUN_DOC",
+   "view_id": 312,
+   "view_name": "Nível 1",
+   "units": "m",
+   "selectors_requested": [
+    "exterior_face",
+    "interior_face",
+    "edge"
+   ],
+   "selectors_defaulted": false,
+   "coverage": {
+    "requested": 1,
+    "inspected": 1,
+    "host_targets_inspected": 1,
+    "linked_targets_named": 0,
+    "linked_targets_inspected": 0,
+    "link_instances_named": 0,
+    "unreadable": []
+   },
+   "linked_candidates": 0,
+   "total_candidates": 38,
+   "returned": 38,
+   "offset": 0,
+   "truncated": false,
+   "include_incompatible": false,
+   "incompatible_excluded": 0,
+   "ordering": "rows are ordered by (element_id ascending, selector, reference_type, geometry_fingerprint, stable_representation), all ordinal - the same candidates arrive in the same order on every call.",
+   "fingerprint_note": "geometry_fingerprint quantises every internal-feet value on a 0.1 mm grid (1/3048 ft) before hashing, so regeneration jitter keeps the identity and a real move of 0.2 mm or more changes it.",
+   "warnings": [],
+   "rows": [
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:26:CUT_EDGE/3",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       3.4574999999999987,
+       0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       3.457499999999999,
+       -0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       2.7071678232459817e-15,
+       -1.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      3.457499999999999,
+      0.0,
+      1.1999999999999997
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "037ff4a41cde7562df66ca6eba65f79d252d55e43eaf4159973ddd75513d337e",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:CUT_EDGE/2",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       5.999999999999999,
+       0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       3.4574999999999987,
+       0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       -1.0,
+       0.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      4.728749999999999,
+      0.1,
+      1.1999999999999997
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "0b761875b0ed8c98ef6c43de44f3c3893137328c3f7f9ce038de00df947df7e0",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:38:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       2.5424999999999986,
+       0.1,
+       0.0
+      ],
+      "end": [
+       2.542499999999999,
+       -0.1,
+       0.0
+      ],
+      "direction": [
+       2.7071678232459817e-15,
+       -1.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      2.542499999999999,
+      0.0,
+      0.0
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "0ca8179ca40f8a355a5ec3d8aa7fd7d223d0579d71676ab1f9af841316a745e3",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:62:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       1.0424999999999836,
+       -0.1,
+       0.9000000000000005
+      ],
+      "end": [
+       1.0424999999999842,
+       0.1,
+       0.9000000000000005
+      ],
+      "direction": [
+       3.383959779057477e-15,
+       1.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      1.042499999999984,
+      0.0,
+      0.9000000000000005
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "1090d5bf76fbfb2a07249ec97a3f6f5dbaf93127be9b5d0b23c5fbd73520b50e",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:CUT_EDGE/3",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       3.457499999999999,
+       -0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       6.000000000000001,
+       -0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      4.72875,
+      -0.1,
+      1.1999999999999997
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "16402f8fe7ab5a794df648787c58be2addb0d75c3770913f04a0a2aa2cb7f10f",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:61:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       1.9574999999999836,
+       0.1,
+       0.9000000000000005
+      ],
+      "end": [
+       1.957499999999983,
+       -0.1,
+       0.9000000000000005
+      ],
+      "direction": [
+       -2.7071678232459817e-15,
+       -1.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      1.9574999999999834,
+      0.0,
+      0.9000000000000005
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "196b6421673fdecbfac4b1daf8322cea9fc7a4f40ec89303cd90170de5ef327a",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:CUT_EDGE/7",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       1.0424999999999842,
+       0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       0.0,
+       0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       -1.0,
+       0.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      0.5212499999999921,
+      0.1,
+      1.1999999999999997
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "1a51024e03f883092dc3f2e2db205f12e0dda8f9be1ae22947ac4eb3fabfe797",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       0.0,
+       -0.1,
+       0.0
+      ],
+      "end": [
+       0.0,
+       0.1,
+       0.0
+      ],
+      "direction": [
+       0.0,
+       1.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "1ad5d8e6e06111423ab70ee47c33b505d8f07af51257f1f294288108e4e11a0e",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:43:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       0.0,
+       -0.1,
+       0.0
+      ],
+      "end": [
+       2.542499999999999,
+       -0.1,
+       0.0
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      1.2712499999999995,
+      -0.1,
+      0.0
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "2c2c76f6dca3896e811586f4f3edac500f24931b85e80ffc5cd9112905a86aaf",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:42:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       2.5424999999999986,
+       0.1,
+       0.0
+      ],
+      "end": [
+       0.0,
+       0.1,
+       0.0
+      ],
+      "direction": [
+       -1.0,
+       0.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      1.2712499999999993,
+      0.1,
+      0.0
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "31388b34a2dbeef55ca2cee3ee2eca3e3e8465ae6c9309951c4a9f0312b67412",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:19:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       0.0,
+       -0.1,
+       1.2
+      ],
+      "end": [
+       0.0,
+       -0.1,
+       0.0
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ]
+     },
+     "representative_point": [
+      0.0,
+      -0.1,
+      0.6
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "45314adc0e91ebd2442d82c0f8030c098b48cff9937fe5eadcfa82fd3d516f8b",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:11:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       5.999999999999999,
+       -0.1,
+       0.0
+      ],
+      "end": [
+       6.000000000000001,
+       -0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       9.023892744153274e-16,
+       0.0,
+       1.0
+      ]
+     },
+     "representative_point": [
+      6.000000000000001,
+      -0.1,
+      0.5999999999999999
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "48f33aa9c477634c4cd077983900545dc3d7e1bb9b57447fe1683755cad19fbc",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:39:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       5.999999999999999,
+       0.1,
+       0.0
+      ],
+      "end": [
+       3.4574999999999987,
+       0.1,
+       0.0
+      ],
+      "direction": [
+       -1.0,
+       0.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      4.728749999999999,
+      0.1,
+      0.0
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "5802c8a686e6c642239de895dccb8e7bbedae1a0a88746f31bf4f1e87b49e7ca",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:48:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       1.0424999999999836,
+       -0.1,
+       0.9000000000000005
+      ],
+      "end": [
+       1.0424999999999836,
+       -0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ]
+     },
+     "representative_point": [
+      1.0424999999999836,
+      -0.1,
+      1.05
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "61d41f871b01ac534bb59bc437f499dc5a7484607e97828ddd70f3d9c2e6a65e",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:55:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       1.957499999999983,
+       -0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       1.957499999999983,
+       -0.1,
+       0.9000000000000005
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ]
+     },
+     "representative_point": [
+      1.957499999999983,
+      -0.1,
+      1.05
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "6661c1e72f665888ee06a0f5b0f20590e39a78c63f7aec09efb1fb5160943096",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       5.999999999999999,
+       0.1,
+       0.0
+      ],
+      "end": [
+       5.999999999999999,
+       -0.1,
+       0.0
+      ],
+      "direction": [
+       0.0,
+       -1.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      5.999999999999999,
+      0.0,
+      0.0
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "672f539e226baaeaa19521b71e6d3f551ab187b8d21d034b3f6c73a9f7e873ba",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:29:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       3.457499999999999,
+       -0.1,
+       0.0
+      ],
+      "end": [
+       3.4574999999999987,
+       0.1,
+       0.0
+      ],
+      "direction": [
+       -2.7071678232459817e-15,
+       1.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      3.457499999999999,
+      0.0,
+      0.0
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "682bdc19b73e51f70db582d528576ad36b89adcd9933fa9c8080ab0d64ec10b7",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:59:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       1.957499999999983,
+       -0.1,
+       0.9000000000000005
+      ],
+      "end": [
+       1.0424999999999836,
+       -0.1,
+       0.9000000000000005
+      ],
+      "direction": [
+       -1.0,
+       0.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      1.4999999999999833,
+      -0.1,
+      0.9000000000000005
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "6a8605e5a558a7a53bc4f0d338ed6bc0f99682c9c31164b8a130b1b810e05755",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:54:CUT_EDGE/1",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       1.9574999999999836,
+       0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       1.957499999999983,
+       -0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       -2.7071678232459817e-15,
+       -1.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      1.9574999999999834,
+      0.0,
+      1.1999999999999997
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "7b63ebfb86778433131313b50c66ac65fb00b80a69db2628a1ae3a22c716a3ec",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:47:CUT_EDGE/3",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       1.0424999999999836,
+       -0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       1.0424999999999842,
+       0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       3.383959779057477e-15,
+       1.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      1.042499999999984,
+      0.0,
+      1.1999999999999997
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "7c569d1071ad85043fc9bb329a9dce6e38975fba942e2cd780cd3ae289751b5c",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:20:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       0.0,
+       0.1,
+       0.0
+      ],
+      "end": [
+       0.0,
+       0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ]
+     },
+     "representative_point": [
+      0.0,
+      0.1,
+      0.5999999999999999
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "7ca1ec41d06cb4bce8514e28114fe980473e779c309b16acf6cc1f65e72e1fc3",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:36:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       2.542499999999999,
+       -0.1,
+       0.0
+      ],
+      "end": [
+       2.542499999999999,
+       -0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ]
+     },
+     "representative_point": [
+      2.542499999999999,
+      -0.1,
+      0.5999999999999999
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "7ca6932fb492ae9f0294aa126d3086ac72d6f347d009c7f0828b31f10447631e",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:28:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       3.457499999999999,
+       -0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       3.457499999999999,
+       -0.1,
+       0.0
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ]
+     },
+     "representative_point": [
+      3.457499999999999,
+      -0.1,
+      0.5999999999999999
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "91f9f32a9bae08aed228b4ced8094d02a1e9b463119f1c182c7fb74434574320",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:60:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       1.0424999999999842,
+       0.1,
+       0.9000000000000005
+      ],
+      "end": [
+       1.9574999999999836,
+       0.1,
+       0.9000000000000005
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      1.4999999999999838,
+      0.1,
+      0.9000000000000005
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "9dddc9a0c8f62f87672bc146e80b4e3a0d3b27195d304cfd8747de2e0b703dc9",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:CUT_EDGE/7",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       1.957499999999983,
+       -0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       2.542499999999999,
+       -0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      2.249999999999991,
+      -0.1,
+      1.1999999999999997
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "a8594eea3359305ede5d553dd7015bbdcba233a6403b038d3866d1ac4ee8979f",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:CUT_EDGE/11",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       0.0,
+       -0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       1.0424999999999836,
+       -0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      0.5212499999999918,
+      -0.1,
+      1.1999999999999997
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "a8d3a312bd77cf012d0840c0796831a2a60733993a375c0ae87916ffbcda4f86",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:49:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       1.0424999999999842,
+       0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       1.0424999999999842,
+       0.1,
+       0.9000000000000005
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ]
+     },
+     "representative_point": [
+      1.0424999999999842,
+      0.1,
+      1.05
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "b03ed10eebb17f1eb80f21a544e4b5831df483fa36c5df3d5947563d2de076c1",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:10:CUT_EDGE/3",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       6.000000000000001,
+       -0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       5.999999999999999,
+       0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       -5.4143356464919635e-15,
+       1.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      6.000000000000001,
+      0.0,
+      1.1999999999999997
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "c454d5493c20930ce31792006871e9e2f038b99a3be6b68b84a16430d21714ce",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:34:CUT_EDGE/1",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       2.542499999999999,
+       -0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       2.5424999999999986,
+       0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       -2.7071678232459817e-15,
+       1.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      2.542499999999999,
+      0.0,
+      1.1999999999999997
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "d20f661d1f71baf0e585717576e915ccd4687c66699617980baeab00bffe7e1c",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:56:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       1.9574999999999836,
+       0.1,
+       0.9000000000000005
+      ],
+      "end": [
+       1.9574999999999836,
+       0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ]
+     },
+     "representative_point": [
+      1.9574999999999836,
+      0.1,
+      1.05
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "d71decece63e28122be5609518aa7f51dcb4055a5c143bb077bfa9c5fb1eb3b5",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:18:CUT_EDGE/1",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       0.0,
+       0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       0.0,
+       -0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       0.0,
+       -1.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      0.0,
+      0.0,
+      1.1999999999999997
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "dc68d39d0273c806166bd3b532a7acba5de1efd27ea70ab434fb03636a9925d2",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:35:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       2.5424999999999986,
+       0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       2.5424999999999986,
+       0.1,
+       0.0
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ]
+     },
+     "representative_point": [
+      2.5424999999999986,
+      0.1,
+      0.5999999999999999
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "dfad7287e42fdb51c224fa5b988cc406c1d5045d7c74c5d9c8a593674035b6cc",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:12:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       5.999999999999999,
+       0.1,
+       1.2
+      ],
+      "end": [
+       5.999999999999999,
+       0.1,
+       0.0
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ]
+     },
+     "representative_point": [
+      5.999999999999999,
+      0.1,
+      0.6
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "e36035aaa7ec2268dd4b7ee9a408b1794604f97ceb67346db33430a8fb900352",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:46:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       3.457499999999999,
+       -0.1,
+       0.0
+      ],
+      "end": [
+       5.999999999999999,
+       -0.1,
+       0.0
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      4.728749999999999,
+      -0.1,
+      0.0
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "e3a6e8f243488720207a7bbeefe2ff40653ab870cbe709ebd81a0509e3c6bb78",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:27:LINEAR",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       3.4574999999999987,
+       0.1,
+       0.0
+      ],
+      "end": [
+       3.4574999999999987,
+       0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ]
+     },
+     "representative_point": [
+      3.4574999999999987,
+      0.1,
+      0.5999999999999999
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "e4b5092b03f0c1d003f535631738e028c072456466aa4ca8f977b58ce2ac661c",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:CUT_EDGE/11",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "edge",
+     "selector": "edge",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "line",
+      "start": [
+       2.5424999999999986,
+       0.1,
+       1.1999999999999997
+      ],
+      "end": [
+       1.9574999999999836,
+       0.1,
+       1.1999999999999997
+      ],
+      "direction": [
+       -1.0,
+       0.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      2.249999999999991,
+      0.1,
+      1.1999999999999997
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "e9d293077088591824c8659e7898a4f1cb3c29ec16c28a73bbe61e7768241c48",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "face",
+     "selector": "exterior_face",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "plane",
+      "origin": [
+       0.0,
+       0.1,
+       0.0
+      ],
+      "normal": [
+       0.0,
+       1.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      2.9999999999999996,
+      0.1,
+      1.4999999999999998
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "561fd923ded18abd70a4f7143a670d7fecfa621afec1dc7abc8bf99382eae4ac",
+     "warnings": []
+    },
+    {
+     "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE",
+     "element_id": 328657,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+     "source_model": "LAB_HORIZUN_DOC",
+     "host_model": "LAB_HORIZUN_DOC",
+     "linked": false,
+     "link": null,
+     "link_instance": null,
+     "reference_type": "face",
+     "selector": "interior_face",
+     "ambiguous": false,
+     "ambiguity_group": null,
+     "geometry": {
+      "kind": "plane",
+      "origin": [
+       0.0,
+       -0.1,
+       0.0
+      ],
+      "normal": [
+       0.0,
+       -1.0,
+       0.0
+      ]
+     },
+     "representative_point": [
+      2.9999999999999996,
+      -0.1,
+      1.4999999999999998
+     ],
+     "distance": null,
+     "view_id": 312,
+     "compatible_with_dimension": true,
+     "incompatibility_reason": null,
+     "geometry_fingerprint": "c7b22e93ba76f8285740569eca846bad8fa32e49176751397e1f7eede49815b7",
+     "warnings": []
+    }
+   ],
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 1,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 10
+   }
+  },
+  "isError": false
+ },
+ "x_aligned": {
+  "0.1": {
+   "ref": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:CUT_EDGE/11",
+   "y": 0.1,
+   "z": 1.1999999999999997,
+   "x0": 2.5424999999999986,
+   "x1": 1.9574999999999836
+  },
+  "-0.1": {
+   "ref": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:46:LINEAR",
+   "y": -0.1,
+   "z": 0.0,
+   "x0": 3.457499999999999,
+   "x1": 5.999999999999999
+  }
+ }
+}

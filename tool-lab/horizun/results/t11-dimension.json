@@ -1,0 +1,1068 @@
+{
+ "evidence_id": "P02-T11-dimension",
+ "task": "P02-T11",
+ "desired": [
+  {
+   "operation": "dimension",
+   "view_id": 312,
+   "expected_value": 6.0,
+   "references": [
+    "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+    "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR"
+   ],
+   "line_start": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "line_end": [
+    6.0,
+    1.0,
+    0.0
+   ]
+  },
+  {
+   "operation": "dimension",
+   "view_id": 312,
+   "expected_value": 0.2,
+   "references": [
+    "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE",
+    "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE"
+   ],
+   "line_start": [
+    3.0,
+    -1.0,
+    0.0
+   ],
+   "line_end": [
+    3.0,
+    -2.0,
+    0.0
+   ]
+  }
+ ],
+ "open": {
+  "tool": "horizun_open_document",
+  "args": {
+   "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+   "expected_version": "2027",
+   "idempotency_key": "2bad1df6-8e3a-4b70-951e-b235d2a760d4"
+  },
+  "duration_ms": 151,
+  "error": null,
+  "text": "{\r\n  \"opened\": true,\r\n  \"confirmed_active\": true,\r\n  \"source\": \"local\",\r\n  \"path_matches_request\": true,\r\n  \"requested_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt\",\r\n  \"active_document\": \"LAB_HORIZUN_DOC\",\r\n  \"active_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt\",\r\n  \"file_saved_in_ver",
+  "structured": {
+   "opened": true,
+   "confirmed_active": true,
+   "source": "local",
+   "path_matches_request": true,
+   "requested_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+   "active_document": "LAB_HORIZUN_DOC",
+   "active_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+   "file_saved_in_version": "2027",
+   "running_revit_version": "2027",
+   "version_guard": "checked",
+   "upgraded_on_open": false,
+   "detached": false,
+   "audited": false,
+   "all_worksets_opened": false,
+   "was_central": false,
+   "central_path": null,
+   "is_workshared": false,
+   "central_guard": "not_a_central",
+   "note": null,
+   "idempotency": {
+    "key": "2bad1df6-8e3a-4b70-951e-b235d2a760d4",
+    "status": "executed_once",
+    "command_executed_in_this_call": true,
+    "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+   },
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 3,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 38
+   }
+  },
+  "isError": false
+ },
+ "dry_run": {
+  "tool": "horizun_annotate",
+  "args": {
+   "target_document": "LAB_HORIZUN_DOC",
+   "units": "m",
+   "actions": [
+    {
+     "operation": "dimension",
+     "view_id": 312,
+     "expected_value": 6.0,
+     "references": [
+      "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+      "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR"
+     ],
+     "line_start": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "line_end": [
+      6.0,
+      1.0,
+      0.0
+     ]
+    },
+    {
+     "operation": "dimension",
+     "view_id": 312,
+     "expected_value": 0.2,
+     "references": [
+      "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE",
+      "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE"
+     ],
+     "line_start": [
+      3.0,
+      -1.0,
+      0.0
+     ],
+     "line_end": [
+      3.0,
+      -2.0,
+      0.0
+     ]
+    }
+   ],
+   "dry_run": true
+  },
+  "duration_ms": 100,
+  "error": null,
+  "text": "{\r\n  \"dry_run\": true,\r\n  \"valid\": 2,\r\n  \"invalid\": 0,\r\n  \"errors\": [],\r\n  \"plan\": [\r\n    {\r\n      \"index\": 0,\r\n      \"operation\": \"dimension\",\r\n      \"references\": 2,\r\n      \"view\": {\r\n        \"id\": 312,\r\n        \"unique_id\": \"c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138\",\r\n        \"name\": \"Nível 1\"\r\n      },\r\n      \"dimension_type\": {\r\n        \"id\": 261,\r\n        \"unique_id\": \"e3e052f9-0156-11d5-9301-0000863f27ad-00000105\",\r\n        \"name\": \"Diagonal - 2,5 mm Arial\",\r\n        \"source\": \"default\"\r\n      },\r\n      \"reference_detail\": [\r\n        {\r\n          \"order\": 0,\r\n          \"requested\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR\",\r\n          \"reserialized\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR\",\r\n          \"owner_unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n          \"reference_type\": \"REFERENCE_TYPE_LINEAR\",\r\n          \"geometry_fingerprint\": \"20df4b25c7ee2d64a7d97e157bb7d8c78a19f85697e005cb1509b744c3ec80c4\",\r\n          \"linked\": false,\r\n          \"link\": null\r\n        },\r\n        {\r\n          \"order\": 1,\r\n          \"requested\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR\",\r\n          \"reserialized\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR\",\r\n          \"owner_unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n          \"reference_type\": \"REFERENCE_TYPE_LINEAR\",\r\n          \"geometry_fingerprint\": \"4da0b6e1d63e745c8eb302dc29497f1665a3253b79347d37ae496c15962c2ef7\",\r\n          \"linked\": false,\r\n          \"link\": null\r\n        }\r\n      ],\r\n      \"has_linked_references\": false,\r\n      \"line_feet\": {\r\n        \"start\": \"[0,3.28084,0]\",\r\n        \"end\": \"[19.685039,3.28084,0]\"\r\n      },\r\n      \"expected_value_internal_feet\": {\r\n        \"value\": 19.685039370078737,\r\n        \"tolerance\": 0.00032808398950131233\r\n      },\r\n      \"rehearsed_values\": {\r\n        \"internal_feet\": 19.685039370078737,\r\n        \"per_segment_feet\": [],\r\n        \"presented\": \"6000\",\r\n        \"internal_unit\": \"feet\"\r\n      }\r\n    },\r\n    {\r\n      \"index\": 1,\r\n      \"operation\": \"dimension\",\r\n      \"references\": 2,\r\n      \"view\": {\r\n        \"id\": 312,\r\n        \"unique_id\": \"c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138\",\r\n        \"name\": \"Nível 1\"\r\n      },\r\n      \"dimension_type\": {\r\n        \"id\": 261,\r\n        \"unique_id\": \"e3e052f9-0156-11d5-9301-0000863f27ad-00000105\",\r\n        \"name\": \"Diagonal - 2,5 mm Arial\",\r\n        \"source\": \"default\"\r\n      },\r\n      \"reference_detail\": [\r\n        {\r\n          \"order\": 0,\r\n          \"requested\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE\",\r\n          \"reserialized\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE\",\r\n          \"owner_unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n          \"reference_type\": \"REFERENCE_TYPE_SURFACE\",\r\n          \"geometry_fingerprint\": \"5852b1832209b5dc1b66320a316761322a238cb18e6350748218cd85082cb57c\",\r\n          \"linked\": false,\r\n          \"link\": null\r\n        },\r\n        {\r\n          \"order\": 1,\r\n          \"requested\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE\",\r\n          \"reserialized\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE\",\r\n          \"owner_unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n          \"reference_type\": \"REFERENCE_TYPE_SURFACE\",\r\n          \"geometry_fingerprint\": \"7fcd15d6443024a4ff4b6beffeca0162763184b33d14e15b8750d337136b97db\",\r\n          \"linked\": false,\r\n          \"link\": null\r\n        }\r\n      ],\r\n      \"has_linked_references\": false,\r\n      \"line_feet\": {\r\n        \"start\": \"[9.84252,-3.28084,0]\",\r\n        \"end\": \"[9.84252,-6.56168,0]\"\r\n      },\r\n      \"expected_value_internal_feet\": {\r\n        \"value\": 0.6561679790026247,\r\n        \"tolerance\": 0.00032808398950131233\r\n      },\r\n      \"rehearsed_values\": {\r\n        \"internal_feet\": 0.6561679790026247,\r\n        \"per_segment_feet\": [],\r\n        \"presented\": \"200\",\r\n        \"internal_unit\": \"feet\"\r\n      }\r\n    }\r\n  ],\r\n  \"rehearsal\": {\r\n   ",
+  "structured": {
+   "dry_run": true,
+   "valid": 2,
+   "invalid": 0,
+   "errors": [],
+   "plan": [
+    {
+     "index": 0,
+     "operation": "dimension",
+     "references": 2,
+     "view": {
+      "id": 312,
+      "unique_id": "c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138",
+      "name": "Nível 1"
+     },
+     "dimension_type": {
+      "id": 261,
+      "unique_id": "e3e052f9-0156-11d5-9301-0000863f27ad-00000105",
+      "name": "Diagonal - 2,5 mm Arial",
+      "source": "default"
+     },
+     "reference_detail": [
+      {
+       "order": 0,
+       "requested": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+       "reserialized": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+       "owner_unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+       "reference_type": "REFERENCE_TYPE_LINEAR",
+       "geometry_fingerprint": "20df4b25c7ee2d64a7d97e157bb7d8c78a19f85697e005cb1509b744c3ec80c4",
+       "linked": false,
+       "link": null
+      },
+      {
+       "order": 1,
+       "requested": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR",
+       "reserialized": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR",
+       "owner_unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+       "reference_type": "REFERENCE_TYPE_LINEAR",
+       "geometry_fingerprint": "4da0b6e1d63e745c8eb302dc29497f1665a3253b79347d37ae496c15962c2ef7",
+       "linked": false,
+       "link": null
+      }
+     ],
+     "has_linked_references": false,
+     "line_feet": {
+      "start": "[0,3.28084,0]",
+      "end": "[19.685039,3.28084,0]"
+     },
+     "expected_value_internal_feet": {
+      "value": 19.685039370078737,
+      "tolerance": 0.00032808398950131233
+     },
+     "rehearsed_values": {
+      "internal_feet": 19.685039370078737,
+      "per_segment_feet": [],
+      "presented": "6000",
+      "internal_unit": "feet"
+     }
+    },
+    {
+     "index": 1,
+     "operation": "dimension",
+     "references": 2,
+     "view": {
+      "id": 312,
+      "unique_id": "c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138",
+      "name": "Nível 1"
+     },
+     "dimension_type": {
+      "id": 261,
+      "unique_id": "e3e052f9-0156-11d5-9301-0000863f27ad-00000105",
+      "name": "Diagonal - 2,5 mm Arial",
+      "source": "default"
+     },
+     "reference_detail": [
+      {
+       "order": 0,
+       "requested": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE",
+       "reserialized": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE",
+       "owner_unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+       "reference_type": "REFERENCE_TYPE_SURFACE",
+       "geometry_fingerprint": "5852b1832209b5dc1b66320a316761322a238cb18e6350748218cd85082cb57c",
+       "linked": false,
+       "link": null
+      },
+      {
+       "order": 1,
+       "requested": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE",
+       "reserialized": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE",
+       "owner_unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+       "reference_type": "REFERENCE_TYPE_SURFACE",
+       "geometry_fingerprint": "7fcd15d6443024a4ff4b6beffeca0162763184b33d14e15b8750d337136b97db",
+       "linked": false,
+       "link": null
+      }
+     ],
+     "has_linked_references": false,
+     "line_feet": {
+      "start": "[9.84252,-3.28084,0]",
+      "end": "[9.84252,-6.56168,0]"
+     },
+     "expected_value_internal_feet": {
+      "value": 0.6561679790026247,
+      "tolerance": 0.00032808398950131233
+     },
+     "rehearsed_values": {
+      "internal_feet": 0.6561679790026247,
+      "per_segment_feet": [],
+      "presented": "200",
+      "internal_unit": "feet"
+     }
+    }
+   ],
+   "rehearsal": {
+    "transaction_status": "RolledBack",
+    "rolled_back_confirmed": true,
+    "all_constructible": true,
+    "not_constructible": 0,
+    "note": "Every annotation was created PROVISIONALLY inside one transaction, measured, and the transaction was rolled back; transaction_status is what Revit's RollBack() returned. Nothing from the rehearsal remains in the model when rolled_back_confirmed is true.",
+    "actions": [
+     {
+      "index": 0,
+      "operation": "dimension",
+      "constructible": true,
+      "reason": null,
+      "evidence": {
+       "class": "LinearDimension",
+       "shape": "Linear",
+       "values": {
+        "internal_feet": 19.685039370078737,
+        "per_segment_feet": [],
+        "presented": "6000",
+        "internal_unit": "feet"
+       },
+       "segments": 0,
+       "references_read": [
+        "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+        "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR"
+       ],
+       "references_available": true
+      },
+      "verification": {
+       "comparison_tolerance_feet": 1e-06,
+       "all_match": true,
+       "checks": [
+        {
+         "field": "class",
+         "requested": "Dimension (or a subclass)",
+         "read": "LinearDimension",
+         "match": true
+        },
+        {
+         "field": "shape",
+         "requested": "Linear",
+         "read": "Linear",
+         "match": true
+        },
+        {
+         "field": "owner_view_id",
+         "requested": 312,
+         "read": 312,
+         "match": true
+        },
+        {
+         "field": "dimension_type_id",
+         "requested": 261,
+         "read": 261,
+         "match": true
+        },
+        {
+         "field": "references_available_observed",
+         "requested": "enforced post-commit; Revit materialises this at commit",
+         "read": true,
+         "match": true
+        },
+        {
+         "field": "references_count",
+         "requested": 2,
+         "read": 2,
+         "match": true
+        },
+        {
+         "field": "references_owners_vs_requested",
+         "requested": [
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR"
+         ],
+         "read": [
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR"
+         ],
+         "match": true
+        },
+        {
+         "field": "references_order_vs_rehearsed",
+         "requested": [
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR"
+         ],
+         "read": [
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR"
+         ],
+         "match": true
+        },
+        {
+         "field": "segments",
+         "requested": 0,
+         "read": 0,
+         "match": true
+        },
+        {
+         "field": "value_internal_feet_vs_rehearsed",
+         "requested": 19.685039370078737,
+         "read": 19.685039370078737,
+         "match": true
+        },
+        {
+         "field": "line_carries_requested_endpoints",
+         "requested": "[0,3.28084,0] -> [19.685039,3.28084,0]",
+         "read": "unbound through [0,3.28084,0] along [1,0,0]",
+         "match": true
+        }
+       ]
+      },
+      "expected_value_preview": {
+       "unit": "feet",
+       "expected_internal_feet": 19.685039370078737,
+       "tolerance_internal_feet": 0.00032808398950131233,
+       "measured_internal_feet": 19.685039370078737,
+       "would_pass": true,
+       "note": null
+      }
+     },
+     {
+      "index": 1,
+      "operation": "dimension",
+      "constructible": true,
+      "reason": null,
+      "evidence": {
+       "class": "LinearDimension",
+       "shape": "Linear",
+       "values": {
+        "internal_feet": 0.6561679790026247,
+        "per_segment_feet": [],
+        "presented": "200",
+        "internal_unit": "feet"
+       },
+       "segments": 0,
+       "references_read": [
+        "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE",
+        "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE"
+       ],
+       "references_available": true
+      },
+      "verification": {
+       "comparison_tolerance_feet": 1e-06,
+       "all_match": true,
+       "checks": [
+        {
+         "field": "class",
+         "requested": "Dimension (or a subclass)",
+         "read": "LinearDimension",
+         "match": true
+        },
+        {
+         "field": "shape",
+         "requested": "Linear",
+         "read": "Linear",
+         "match": true
+        },
+        {
+         "field": "owner_view_id",
+         "requested": 312,
+         "read": 312,
+         "match": true
+        },
+        {
+         "field": "dimension_type_id",
+         "requested": 261,
+         "read": 261,
+         "match": true
+        },
+        {
+         "field": "references_available_observed",
+         "requested": "enforced post-commit; Revit materialises this at commit",
+         "read": true,
+         "match": true
+        },
+        {
+         "field": "references_count",
+         "requested": 2,
+         "read": 2,
+         "match": true
+        },
+        {
+         "field": "references_owners_vs_requested",
+         "requested": [
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE",
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE"
+         ],
+         "read": [
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE",
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE"
+         ],
+         "match": true
+        },
+        {
+         "field": "references_order_vs_rehearsed",
+         "requested": [
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE",
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE"
+         ],
+         "read": [
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE",
+          "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE"
+         ],
+         "match": true
+        },
+        {
+         "field": "segments",
+         "requested": 0,
+         "read": 0,
+         "match": true
+        },
+        {
+         "field": "value_internal_feet_vs_rehearsed",
+         "requested": 0.6561679790026247,
+         "read": 0.6561679790026247,
+         "match": true
+        },
+        {
+         "field": "line_carries_requested_endpoints",
+         "requested": "[9.84252,-3.28084,0] -> [9.84252,-6.56168,0]",
+         "read": "unbound through [9.84252,-3.28084,0] along [0,-1,0]",
+         "match": true
+        }
+       ]
+      },
+      "expected_value_preview": {
+       "unit": "feet",
+       "expected_internal_feet": 0.6561679790026247,
+       "tolerance_internal_feet": 0.00032808398950131233,
+       "measured_internal_feet": 0.6561679790026247,
+       "would_pass": true,
+       "note": null
+      }
+     }
+    ]
+   },
+   "application": {
+    "state": "rehearsed",
+    "fully_applied": false,
+    "transaction_status": "not_started",
+    "requested": 2,
+    "applied": 0,
+    "verified": 0,
+    "unresolved": 0,
+    "failed": 0,
+    "unknown": 0,
+    "state_means": "rehearsed: a valid dry run. Everything resolved and NOTHING was written."
+   },
+   "document": "LAB_HORIZUN_DOC [C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt]",
+   "document_fingerprint": "d20058fd6184ce09",
+   "change_preview": {
+    "fingerprint": "c04f5c75d2a33b06c6ecbfa935e46419b5ac2bb076eb056c21b1500c3ad60eed",
+    "total": 2,
+    "shown": 2,
+    "truncated": false,
+    "expected_cascade": 0,
+    "rows": [
+     {
+      "unique_id": "action:0",
+      "element_id": null,
+      "action": "create",
+      "category": "dimension",
+      "type": null,
+      "captured_state": {
+       "line": "0.0,1000.0,0.0;6000.0,1000.0,0.0",
+       "measured": "6000.0",
+       "ref.0": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR|1870701a-5645-43a6-aa36-d6518169b043-000503d1|REFERENCE_TYPE_LINEAR|20df4b25c7ee2d64a7d97e157bb7d8c78a19f85697e005cb1509b744c3ec80c4",
+       "ref.1": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR|1870701a-5645-43a6-aa36-d6518169b043-000503d1|REFERENCE_TYPE_LINEAR|4da0b6e1d63e745c8eb302dc29497f1665a3253b79347d37ae496c15962c2ef7",
+       "references": "2",
+       "type": "e3e052f9-0156-11d5-9301-0000863f27ad-00000105|Diagonal - 2,5 mm Arial",
+       "type_source": "default",
+       "view": "c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138|Nível 1"
+      },
+      "proposed_values": null,
+      "values_truncated": false
+     },
+     {
+      "unique_id": "action:1",
+      "element_id": null,
+      "action": "create",
+      "category": "dimension",
+      "type": null,
+      "captured_state": {
+       "line": "3000.0,-1000.0,0.0;3000.0,-2000.0,0.0",
+       "measured": "200.0",
+       "ref.0": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE|1870701a-5645-43a6-aa36-d6518169b043-000503d1|REFERENCE_TYPE_SURFACE|5852b1832209b5dc1b66320a316761322a238cb18e6350748218cd85082cb57c",
+       "ref.1": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE|1870701a-5645-43a6-aa36-d6518169b043-000503d1|REFERENCE_TYPE_SURFACE|7fcd15d6443024a4ff4b6beffeca0162763184b33d14e15b8750d337136b97db",
+       "references": "2",
+       "type": "e3e052f9-0156-11d5-9301-0000863f27ad-00000105|Diagonal - 2,5 mm Arial",
+       "type_source": "default",
+       "view": "c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138|Nível 1"
+      },
+      "proposed_values": null,
+      "values_truncated": false
+     }
+    ],
+    "note": "Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values."
+   },
+   "plan_resolved": {
+    "elements": 2,
+    "create": 2,
+    "modify": 0,
+    "delete": 0,
+    "expected_cascade": 0,
+    "fingerprint": "c04f5c75d2a33b06c6ecbfa935e46419b5ac2bb076eb056c21b1500c3ad60eed"
+   },
+   "confirmation_token": "hz-81556abb767c896d02d9e42f27295fd9",
+   "confirmation_expires_utc": "2026-09-15 14:47:29Z",
+   "confirmation_note": "To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds views, geometry, text, the identity of every view and target, and - for dimensions - the EFFECTIVE dimension type, every reference's reserialized identity, owner and 0.1 mm geometry fingerprint, and the measured value of this rehearsal. A model that moves before you spend it refuses as a stale plan rather than dimensioning something else.",
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 1,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 64
+   }
+  },
+  "isError": false
+ },
+ "apply": {
+  "tool": "horizun_annotate",
+  "args": {
+   "target_document": "LAB_HORIZUN_DOC",
+   "units": "m",
+   "actions": [
+    {
+     "operation": "dimension",
+     "view_id": 312,
+     "expected_value": 6.0,
+     "references": [
+      "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+      "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR"
+     ],
+     "line_start": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "line_end": [
+      6.0,
+      1.0,
+      0.0
+     ]
+    },
+    {
+     "operation": "dimension",
+     "view_id": 312,
+     "expected_value": 0.2,
+     "references": [
+      "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE",
+      "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE"
+     ],
+     "line_start": [
+      3.0,
+      -1.0,
+      0.0
+     ],
+     "line_end": [
+      3.0,
+      -2.0,
+      0.0
+     ]
+    }
+   ],
+   "dry_run": false,
+   "confirmation_token": "hz-81556abb767c896d02d9e42f27295fd9",
+   "idempotency_key": "a7381b61-2024-4bb3-9815-a203dcced91f"
+  },
+  "duration_ms": 51,
+  "error": null,
+  "text": "{\r\n  \"transaction_status\": \"Committed\",\r\n  \"transaction_group_status\": \"Committed\",\r\n  \"state\": \"committed_verified\",\r\n  \"annotations_verified\": 2,\r\n  \"comparison_tolerance_feet\": 1E-06,\r\n  \"units_note\": \"Measured values are Revit internal units (decimal feet); 'presented' is the document's own display formatting.\",\r\n  \"rows\": [\r\n    {\r\n      \"index\": 0,\r\n      \"operation\": \"dimension\",\r\n      \"element_id\": 328775,\r\n      \"verified\": true,\r\n      \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-00050447\",\r\n      \"class\": \"LinearDimension\",\r\n      \"shape\": \"Linear\",\r\n      \"values\": {\r\n        \"internal_feet\": 19.685039370078737,\r\n        \"per_segment_feet\": [],\r\n        \"presented\": \"6000\",\r\n        \"internal_unit\": \"feet\"\r\n      },\r\n      \"verification\": {\r\n        \"comparison_tolerance_feet\": 1E-06,\r\n        \"all_match\": true,\r\n        \"checks\": [\r\n          {\r\n            \"field\": \"class\",\r\n            \"requested\": \"Dimension (or a subclass)\",\r\n            \"read\": \"LinearDimension\",\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"shape\",\r\n            \"requested\": \"Linear\",\r\n            \"read\": \"Linear\",\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"owner_view_id\",\r\n            \"requested\": 312,\r\n            \"read\": 312,\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"dimension_type_id\",\r\n            \"requested\": 261,\r\n            \"read\": 261,\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"references_count\",\r\n            \"requested\": 2,\r\n            \"read\": 2,\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"references_owners_vs_requested\",\r\n            \"requested\": [\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR\",\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR\"\r\n            ],\r\n            \"read\": [\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR\",\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR\"\r\n            ],\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"references_order_vs_rehearsed\",\r\n            \"requested\": [\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR\",\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR\"\r\n            ],\r\n            \"read\": [\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR\",\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR\"\r\n            ],\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"segments\",\r\n            \"requested\": 0,\r\n            \"read\": 0,\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"value_internal_feet_vs_rehearsed\",\r\n            \"requested\": 19.685039370078737,\r\n            \"read\": 19.685039370078737,\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"line_carries_requested_endpoints\",\r\n            \"requested\": \"[0,3.28084,0] -> [19.685039,3.28084,0]\",\r\n            \"read\": \"unbound through [0,3.28084,0] along [1,0,0]\",\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"expected_value\",\r\n            \"requested\": {\r\n              \"unit\": \"feet\",\r\n              \"value_internal_feet\": 19.685039370078737,\r\n              \"tolerance_internal_feet\": 0.00032808398950131233\r\n            },\r\n            \"read\": 19.685039370078737,\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"references_available\",\r\n            \"requested\": true,\r\n            \"read\": true,\r\n            \"match\": true,\r\n            \"verified_by\": \"flag\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"index\": 1,\r\n      \"operation\": \"dimension\",\r\n      \"element_id\": 328776,\r\n      \"verified\": true,\r\n      \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-00050448\",\r\n      \"class\": \"LinearDimension\",\r\n      \"shape\": \"Linear\",\r\n      \"values\": {\r\n        \"internal_feet\": 0.6561679790026247,\r\n        \"per_segment_feet\": [],\r\n        \"presented\": \"200\",\r\n        \"internal_unit\": \"feet\"\r\n      },\r\n      \"verification\": {\r\n        \"comparison_tolerance_feet\": 1E-06,\r\n        \"all_match\": true,\r\n        \"checks\": [\r\n          {\r\n            \"field\": \"class\",\r\n            \"requested\": \"Dimension (or a subclass)\",\r\n            \"read\": \"LinearDimension\",\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"shape\",\r\n            \"requested\": \"Linear\",\r\n            \"read\": \"Linear\",\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"owner_view_id\",\r\n            \"requested\": 312,\r\n            \"read\": 312,\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"dimension_type_id\",\r\n            \"requested\": 261,\r\n            \"read\": 261,\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"references_count\",\r\n            \"requested\": 2,\r\n            \"read\": 2,\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"references_owners_vs_requested\",\r\n            \"requested\": [\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE\",\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE\"\r\n            ],\r\n            \"read\": [\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE\",\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE\"\r\n            ],\r\n            \"match\": true\r\n          },\r\n          {\r\n            \"field\": \"references_order_vs_rehearsed\",\r\n            \"requested\": [\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE\",\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE\"\r\n            ],\r\n            \"read\": [\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE\",\r\n              \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE\"\r\n ",
+  "structured": {
+   "transaction_status": "Committed",
+   "transaction_group_status": "Committed",
+   "state": "committed_verified",
+   "annotations_verified": 2,
+   "comparison_tolerance_feet": 1e-06,
+   "units_note": "Measured values are Revit internal units (decimal feet); 'presented' is the document's own display formatting.",
+   "rows": [
+    {
+     "index": 0,
+     "operation": "dimension",
+     "element_id": 328775,
+     "verified": true,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-00050447",
+     "class": "LinearDimension",
+     "shape": "Linear",
+     "values": {
+      "internal_feet": 19.685039370078737,
+      "per_segment_feet": [],
+      "presented": "6000",
+      "internal_unit": "feet"
+     },
+     "verification": {
+      "comparison_tolerance_feet": 1e-06,
+      "all_match": true,
+      "checks": [
+       {
+        "field": "class",
+        "requested": "Dimension (or a subclass)",
+        "read": "LinearDimension",
+        "match": true
+       },
+       {
+        "field": "shape",
+        "requested": "Linear",
+        "read": "Linear",
+        "match": true
+       },
+       {
+        "field": "owner_view_id",
+        "requested": 312,
+        "read": 312,
+        "match": true
+       },
+       {
+        "field": "dimension_type_id",
+        "requested": 261,
+        "read": 261,
+        "match": true
+       },
+       {
+        "field": "references_count",
+        "requested": 2,
+        "read": 2,
+        "match": true
+       },
+       {
+        "field": "references_owners_vs_requested",
+        "requested": [
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR"
+        ],
+        "read": [
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR"
+        ],
+        "match": true
+       },
+       {
+        "field": "references_order_vs_rehearsed",
+        "requested": [
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR"
+        ],
+        "read": [
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR"
+        ],
+        "match": true
+       },
+       {
+        "field": "segments",
+        "requested": 0,
+        "read": 0,
+        "match": true
+       },
+       {
+        "field": "value_internal_feet_vs_rehearsed",
+        "requested": 19.685039370078737,
+        "read": 19.685039370078737,
+        "match": true
+       },
+       {
+        "field": "line_carries_requested_endpoints",
+        "requested": "[0,3.28084,0] -> [19.685039,3.28084,0]",
+        "read": "unbound through [0,3.28084,0] along [1,0,0]",
+        "match": true
+       },
+       {
+        "field": "expected_value",
+        "requested": {
+         "unit": "feet",
+         "value_internal_feet": 19.685039370078737,
+         "tolerance_internal_feet": 0.00032808398950131233
+        },
+        "read": 19.685039370078737,
+        "match": true
+       },
+       {
+        "field": "references_available",
+        "requested": true,
+        "read": true,
+        "match": true,
+        "verified_by": "flag"
+       }
+      ]
+     }
+    },
+    {
+     "index": 1,
+     "operation": "dimension",
+     "element_id": 328776,
+     "verified": true,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-00050448",
+     "class": "LinearDimension",
+     "shape": "Linear",
+     "values": {
+      "internal_feet": 0.6561679790026247,
+      "per_segment_feet": [],
+      "presented": "200",
+      "internal_unit": "feet"
+     },
+     "verification": {
+      "comparison_tolerance_feet": 1e-06,
+      "all_match": true,
+      "checks": [
+       {
+        "field": "class",
+        "requested": "Dimension (or a subclass)",
+        "read": "LinearDimension",
+        "match": true
+       },
+       {
+        "field": "shape",
+        "requested": "Linear",
+        "read": "Linear",
+        "match": true
+       },
+       {
+        "field": "owner_view_id",
+        "requested": 312,
+        "read": 312,
+        "match": true
+       },
+       {
+        "field": "dimension_type_id",
+        "requested": 261,
+        "read": 261,
+        "match": true
+       },
+       {
+        "field": "references_count",
+        "requested": 2,
+        "read": 2,
+        "match": true
+       },
+       {
+        "field": "references_owners_vs_requested",
+        "requested": [
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE",
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE"
+        ],
+        "read": [
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE",
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE"
+        ],
+        "match": true
+       },
+       {
+        "field": "references_order_vs_rehearsed",
+        "requested": [
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE",
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE"
+        ],
+        "read": [
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE",
+         "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE"
+        ],
+        "match": true
+       },
+       {
+        "field": "segments",
+        "requested": 0,
+        "read": 0,
+        "match": true
+       },
+       {
+        "field": "value_internal_feet_vs_rehearsed",
+        "requested": 0.6561679790026247,
+        "read": 0.6561679790026247,
+        "match": true
+       },
+       {
+        "field": "line_carries_requested_endpoints",
+        "requested": "[9.84252,-3.28084,0] -> [9.84252,-6.56168,0]",
+        "read": "unbound through [9.84252,-3.28084,0] along [0,-1,0]",
+        "match": true
+       },
+       {
+        "field": "expected_value",
+        "requested": {
+         "unit": "feet",
+         "value_internal_feet": 0.6561679790026247,
+         "tolerance_internal_feet": 0.00032808398950131233
+        },
+        "read": 0.6561679790026247,
+        "match": true
+       },
+       {
+        "field": "references_available",
+        "requested": true,
+        "read": true,
+        "match": true,
+        "verified_by": "flag"
+       }
+      ]
+     }
+    }
+   ],
+   "application": {
+    "state": "verified_applied",
+    "fully_applied": true,
+    "transaction_status": "Committed",
+    "requested": 2,
+    "applied": 2,
+    "verified": 2,
+    "unresolved": 0,
+    "failed": 0,
+    "unknown": 0,
+    "state_means": "verified_applied: every requested change is in the model and was re-read after the commit. This is the only state besides no_op that lets a plan keep its work."
+   },
+   "idempotency": {
+    "key": "a7381b61-2024-4bb3-9815-a203dcced91f",
+    "status": "executed_once",
+    "command_executed_in_this_call": true,
+    "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+   },
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 1,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 29
+   }
+  },
+  "isError": false
+ },
+ "query_dimensions": {
+  "tool": "horizun_query_dimensions",
+  "args": {
+   "view_id": 312
+  },
+  "duration_ms": 50,
+  "error": null,
+  "text": "{\r\n  \"document\": \"LAB_HORIZUN_DOC\",\r\n  \"units\": {\r\n    \"internal\": \"feet\",\r\n    \"display\": \"mm\"\r\n  },\r\n  \"filters\": {\r\n    \"view_id\": 312,\r\n    \"element_ids\": null,\r\n    \"dimension_type_id\": null,\r\n    \"shapes\": null\r\n  },\r\n  \"total_matched\": 2,\r\n  \"returned\": 2,\r\n  \"offset\": 0,\r\n  \"max_rows\": 100,\r\n  \"truncated\": false,\r\n  \"ordering\": \"rows are ordered by element_id ascending; offset/max_rows page over that order\",\r\n  \"coverage\": {\r\n    \"inspected\": 7,\r\n    \"unreadable_total\": 0,\r\n    \"unreadable_shown\": 0,\r\n    \"unreadable\": []\r\n  },\r\n  \"rows\": [\r\n    {\r\n      \"element_id\": 328775,\r\n      \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-00050447\",\r\n      \"shape\": \"linear\",\r\n      \"category\": \"Cotas\",\r\n      \"is_view_specific\": true,\r\n      \"owner_view\": {\r\n        \"id\": 312,\r\n        \"unique_id\": \"c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138\",\r\n        \"name\": \"Nível 1\"\r\n      },\r\n      \"type\": {\r\n        \"id\": 261,\r\n        \"unique_id\": \"e3e052f9-0156-11d5-9301-0000863f27ad-00000105\",\r\n        \"name\": \"Diagonal - 2,5 mm Arial\",\r\n        \"style_type\": \"Linear\"\r\n      },\r\n      \"curve\": {\r\n        \"kind\": \"line\",\r\n        \"bound\": false,\r\n        \"origin\": [\r\n          0.0,\r\n          999.9999999999999,\r\n          0.0\r\n        ],\r\n        \"direction\": [\r\n          1.0,\r\n          0.0,\r\n          0.0\r\n        ]\r\n      },\r\n      \"references_available\": true,\r\n      \"references\": [\r\n        {\r\n          \"index\": 0,\r\n          \"stable_representation\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR\",\r\n          \"linked\": false,\r\n          \"element_id\": 328657,\r\n          \"element_exists\": true,\r\n          \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n          \"category\": \"Paredes\",\r\n          \"reference_resolvable\": true\r\n        },\r\n        {\r\n          \"index\": 1,\r\n          \"stable_representation\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR\",\r\n          \"linked\": false,\r\n          \"element_id\": 328657,\r\n          \"element_exists\": true,\r\n          \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n          \"category\": \"Paredes\",\r\n          \"reference_resolvable\": true\r\n        }\r\n      ],\r\n      \"broken_references\": 0,\r\n      \"linked_references\": 0,\r\n      \"linked_references_resolved\": 0,\r\n      \"unloaded_link_references\": 0,\r\n      \"unreadable_link_references\": 0,\r\n      \"reference_coverage\": \"host_only\",\r\n      \"number_of_segments\": 0,\r\n      \"segments\": [],\r\n      \"value_internal_feet\": 19.685039370078737,\r\n      \"value_presented\": \"6000\",\r\n      \"eq\": null,\r\n      \"lock\": false,\r\n      \"spot\": null,\r\n      \"warnings\": []\r\n    },\r\n    {\r\n      \"element_id\": 328776,\r\n      \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-00050448\",\r\n      \"shape\": \"linear\",\r\n      \"category\": \"Cotas\",\r\n      \"is_view_specific\": true,\r\n      \"owner_view\": {\r\n        \"id\": 312,\r\n        \"unique_id\": \"c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138\",\r\n        \"name\": \"Nível 1\"\r\n      },\r\n      \"type\": {\r\n        \"id\": 261,\r\n        \"unique_id\": \"e3e052f9-0156-11d5-9301-0000863f27ad-00000105\",\r\n        \"name\": \"Diagonal - 2,5 mm Arial\",\r\n        \"style_type\": \"Linear\"\r\n      },\r\n      \"curve\": {\r\n        \"kind\": \"line\",\r\n        \"bound\": false,\r\n        \"origin\": [\r\n          2999.9999999999995,\r\n          -999.9999999999999,\r\n          0.0\r\n        ],\r\n        \"direction\": [\r\n          0.0,\r\n          -1.0,\r\n          0.0\r\n        ]\r\n      },\r\n      \"references_available\": true,\r\n      \"references\": [\r\n        {\r\n          \"index\": 0,\r\n          \"stable_representation\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE\",\r\n          \"linked\": false,\r\n          \"element_id\": 328657,\r\n          \"element_exists\": true,\r\n          \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503d1\",\r\n          \"category\": \"Paredes\",\r\n          \"reference_resolvable\": true\r\n        },\r\n        {\r\n          \"index\": 1,\r\n          \"stable_representation\": \"1870701a-5645-43a6-aa36-d6518169b043-0005",
+  "structured": {
+   "document": "LAB_HORIZUN_DOC",
+   "units": {
+    "internal": "feet",
+    "display": "mm"
+   },
+   "filters": {
+    "view_id": 312,
+    "element_ids": null,
+    "dimension_type_id": null,
+    "shapes": null
+   },
+   "total_matched": 2,
+   "returned": 2,
+   "offset": 0,
+   "max_rows": 100,
+   "truncated": false,
+   "ordering": "rows are ordered by element_id ascending; offset/max_rows page over that order",
+   "coverage": {
+    "inspected": 7,
+    "unreadable_total": 0,
+    "unreadable_shown": 0,
+    "unreadable": []
+   },
+   "rows": [
+    {
+     "element_id": 328775,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-00050447",
+     "shape": "linear",
+     "category": "Cotas",
+     "is_view_specific": true,
+     "owner_view": {
+      "id": 312,
+      "unique_id": "c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138",
+      "name": "Nível 1"
+     },
+     "type": {
+      "id": 261,
+      "unique_id": "e3e052f9-0156-11d5-9301-0000863f27ad-00000105",
+      "name": "Diagonal - 2,5 mm Arial",
+      "style_type": "Linear"
+     },
+     "curve": {
+      "kind": "line",
+      "bound": false,
+      "origin": [
+       0.0,
+       999.9999999999999,
+       0.0
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ]
+     },
+     "references_available": true,
+     "references": [
+      {
+       "index": 0,
+       "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:22:LINEAR",
+       "linked": false,
+       "element_id": 328657,
+       "element_exists": true,
+       "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+       "category": "Paredes",
+       "reference_resolvable": true
+      },
+      {
+       "index": 1,
+       "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:13:LINEAR",
+       "linked": false,
+       "element_id": 328657,
+       "element_exists": true,
+       "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+       "category": "Paredes",
+       "reference_resolvable": true
+      }
+     ],
+     "broken_references": 0,
+     "linked_references": 0,
+     "linked_references_resolved": 0,
+     "unloaded_link_references": 0,
+     "unreadable_link_references": 0,
+     "reference_coverage": "host_only",
+     "number_of_segments": 0,
+     "segments": [],
+     "value_internal_feet": 19.685039370078737,
+     "value_presented": "6000",
+     "eq": null,
+     "lock": false,
+     "spot": null,
+     "warnings": []
+    },
+    {
+     "element_id": 328776,
+     "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-00050448",
+     "shape": "linear",
+     "category": "Cotas",
+     "is_view_specific": true,
+     "owner_view": {
+      "id": 312,
+      "unique_id": "c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138",
+      "name": "Nível 1"
+     },
+     "type": {
+      "id": 261,
+      "unique_id": "e3e052f9-0156-11d5-9301-0000863f27ad-00000105",
+      "name": "Diagonal - 2,5 mm Arial",
+      "style_type": "Linear"
+     },
+     "curve": {
+      "kind": "line",
+      "bound": false,
+      "origin": [
+       2999.9999999999995,
+       -999.9999999999999,
+       0.0
+      ],
+      "direction": [
+       0.0,
+       -1.0,
+       0.0
+      ]
+     },
+     "references_available": true,
+     "references": [
+      {
+       "index": 0,
+       "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:6:SURFACE",
+       "linked": false,
+       "element_id": 328657,
+       "element_exists": true,
+       "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+       "category": "Paredes",
+       "reference_resolvable": true
+      },
+      {
+       "index": 1,
+       "stable_representation": "1870701a-5645-43a6-aa36-d6518169b043-000503d1:5:SURFACE",
+       "linked": false,
+       "element_id": 328657,
+       "element_exists": true,
+       "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503d1",
+       "category": "Paredes",
+       "reference_resolvable": true
+      }
+     ],
+     "broken_references": 0,
+     "linked_references": 0,
+     "linked_references_resolved": 0,
+     "unloaded_link_references": 0,
+     "unreadable_link_references": 0,
+     "reference_coverage": "host_only",
+     "number_of_segments": 0,
+     "segments": [],
+     "value_internal_feet": 0.6561679790026247,
+     "value_presented": "200",
+     "eq": null,
+     "lock": false,
+     "spot": null,
+     "warnings": []
+    }
+   ],
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 1,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 18
+   }
+  },
+  "isError": false
+ }
+}

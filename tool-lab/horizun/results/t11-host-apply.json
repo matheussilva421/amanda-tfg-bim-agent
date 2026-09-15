@@ -1,0 +1,280 @@
+{
+ "text": "{\r\n  \"dry_run\": false,\r\n  \"transaction_status\": \"Committed\",\r\n  \"transaction_name\": \"Horizun: create elements\",\r\n  \"requested\": 2,\r\n  \"created_verified\": 2,\r\n  \"rows\": [\r\n    {\r\n      \"index\": 0,\r\n      \"kind\": \"family_instance\",\r\n      \"element_id\": 328667,\r\n      \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503db\",\r\n      \"present_after_commit\": true,\r\n      \"verified\": true,\r\n      \"postconditions\": {\r\n        \"all_verified\": true,\r\n        \"checked\": 9,\r\n        \"all_measured\": true,\r\n        \"required\": [\r\n          \"host_id\",\r\n          \"kind\",\r\n          \"level_elevation\",\r\n          \"level_id\",\r\n          \"start_x\",\r\n          \"start_y\",\r\n          \"start_z\",\r\n          \"structural_type\",\r\n          \"type_id\"\r\n        ],\r\n        \"missing\": [],\r\n        \"unexpected\": [],\r\n        \"verified_means\": \"true only when EXACTLY the required properties were checked - each once, none missing, none substituted - and every one of them was RE-READ from the committed model and matched. A property that could not be read counts as unmeasured, never as agreement, and an empty checklist is not a pass.\",\r\n        \"properties\": [\r\n          {\r\n            \"property\": \"kind\",\r\n            \"measured\": true,\r\n            \"requested\": \"family_instance\",\r\n            \"found_in_committed_model\": \"family_instance\",\r\n            \"matches\": true\r\n          },\r\n          {\r\n            \"property\": \"type_id\",\r\n            \"measured\": true,\r\n            \"requested\": 49480,\r\n            \"found_in_committed_model\": 49480,\r\n            \"matches\": true\r\n          },\r\n          {\r\n            \"property\": \"level_id\",\r\n            \"measured\": true,\r\n            \"requested\": 311,\r\n            \"found_in_committed_model\": 311,\r\n            \"matches\": true\r\n          },\r\n          {\r\n          ",
+ "sc": {
+  "dry_run": false,
+  "transaction_status": "Committed",
+  "transaction_name": "Horizun: create elements",
+  "requested": 2,
+  "created_verified": 2,
+  "rows": [
+   {
+    "index": 0,
+    "kind": "family_instance",
+    "element_id": 328667,
+    "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503db",
+    "present_after_commit": true,
+    "verified": true,
+    "postconditions": {
+     "all_verified": true,
+     "checked": 9,
+     "all_measured": true,
+     "required": [
+      "host_id",
+      "kind",
+      "level_elevation",
+      "level_id",
+      "start_x",
+      "start_y",
+      "start_z",
+      "structural_type",
+      "type_id"
+     ],
+     "missing": [],
+     "unexpected": [],
+     "verified_means": "true only when EXACTLY the required properties were checked - each once, none missing, none substituted - and every one of them was RE-READ from the committed model and matched. A property that could not be read counts as unmeasured, never as agreement, and an empty checklist is not a pass.",
+     "properties": [
+      {
+       "property": "kind",
+       "measured": true,
+       "requested": "family_instance",
+       "found_in_committed_model": "family_instance",
+       "matches": true
+      },
+      {
+       "property": "type_id",
+       "measured": true,
+       "requested": 49480,
+       "found_in_committed_model": 49480,
+       "matches": true
+      },
+      {
+       "property": "level_id",
+       "measured": true,
+       "requested": 311,
+       "found_in_committed_model": 311,
+       "matches": true
+      },
+      {
+       "property": "level_elevation",
+       "measured": true,
+       "requested": 0.0,
+       "found_in_committed_model": 0.0,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "start_x",
+       "measured": true,
+       "requested": 9.842519685039369,
+       "found_in_committed_model": 9.842519685039369,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "start_y",
+       "measured": true,
+       "requested": 0.0,
+       "found_in_committed_model": 0.0,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "start_z",
+       "measured": true,
+       "requested": 0.0,
+       "found_in_committed_model": 0.0,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "structural_type",
+       "measured": true,
+       "requested": "NonStructural",
+       "found_in_committed_model": "NonStructural",
+       "matches": true
+      },
+      {
+       "property": "host_id",
+       "measured": true,
+       "requested": 328657,
+       "found_in_committed_model": 328657,
+       "matches": true
+      }
+     ]
+    },
+    "source_comparison": null,
+    "coordinate_reference": "internal_origin",
+    "absolute_z_feet": 0.0,
+    "location_point_z_feet": 0.0,
+    "level_elevation_feet": 0.0,
+    "offset_feet": 0.0,
+    "geometry_base_z_feet": 0.0,
+    "geometry_top_z_feet": 7.250656167978999,
+    "kind_verified": true,
+    "type_verified": true,
+    "structural_type_verified": true,
+    "actual_class": "FamilyInstance",
+    "actual_category": "Portas",
+    "host_verified": true
+   },
+   {
+    "index": 1,
+    "kind": "family_instance",
+    "element_id": 328669,
+    "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503dd",
+    "present_after_commit": true,
+    "verified": true,
+    "postconditions": {
+     "all_verified": true,
+     "checked": 9,
+     "all_measured": true,
+     "required": [
+      "host_id",
+      "kind",
+      "level_elevation",
+      "level_id",
+      "start_x",
+      "start_y",
+      "start_z",
+      "structural_type",
+      "type_id"
+     ],
+     "missing": [],
+     "unexpected": [],
+     "verified_means": "true only when EXACTLY the required properties were checked - each once, none missing, none substituted - and every one of them was RE-READ from the committed model and matched. A property that could not be read counts as unmeasured, never as agreement, and an empty checklist is not a pass.",
+     "properties": [
+      {
+       "property": "kind",
+       "measured": true,
+       "requested": "family_instance",
+       "found_in_committed_model": "family_instance",
+       "matches": true
+      },
+      {
+       "property": "type_id",
+       "measured": true,
+       "requested": 33077,
+       "found_in_committed_model": 33077,
+       "matches": true
+      },
+      {
+       "property": "level_id",
+       "measured": true,
+       "requested": 311,
+       "found_in_committed_model": 311,
+       "matches": true
+      },
+      {
+       "property": "level_elevation",
+       "measured": true,
+       "requested": 0.0,
+       "found_in_committed_model": 0.0,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "start_x",
+       "measured": true,
+       "requested": 4.921259842519684,
+       "found_in_committed_model": 4.921259842519684,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "start_y",
+       "measured": true,
+       "requested": 0.0,
+       "found_in_committed_model": 0.0,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "start_z",
+       "measured": true,
+       "requested": 2.9527559055118107,
+       "found_in_committed_model": 2.9527559055118107,
+       "matches": true,
+       "unit": "feet",
+       "tolerance": 1e-06,
+       "method": "Revit parameter/location/sketch/face readback"
+      },
+      {
+       "property": "structural_type",
+       "measured": true,
+       "requested": "NonStructural",
+       "found_in_committed_model": "NonStructural",
+       "matches": true
+      },
+      {
+       "property": "host_id",
+       "measured": true,
+       "requested": 328657,
+       "found_in_committed_model": 328657,
+       "matches": true
+      }
+     ]
+    },
+    "source_comparison": null,
+    "coordinate_reference": "internal_origin",
+    "absolute_z_feet": 2.9527559055118107,
+    "location_point_z_feet": 2.9527559055118107,
+    "level_elevation_feet": 0.0,
+    "offset_feet": 2.9527559055118107,
+    "geometry_base_z_feet": 2.952755905511853,
+    "geometry_top_z_feet": 6.955380577427843,
+    "kind_verified": true,
+    "type_verified": true,
+    "structural_type_verified": true,
+    "actual_class": "FamilyInstance",
+    "actual_category": "Janelas",
+    "host_verified": true
+   }
+  ],
+  "verification": {
+   "intended": 2,
+   "actual": 2,
+   "verified": true
+  },
+  "application": {
+   "state": "verified_applied",
+   "fully_applied": true,
+   "transaction_status": "Committed",
+   "requested": 2,
+   "applied": 2,
+   "verified": 2,
+   "unresolved": 0,
+   "failed": 0,
+   "unknown": 0,
+   "state_means": "verified_applied: every requested change is in the model and was re-read after the commit. This is the only state besides no_op that lets a plan keep its work."
+  },
+  "tabular": null,
+  "idempotency": {
+   "key": "cdc6db00-1a1f-4ccb-81f7-4031d522a40e",
+   "status": "executed_once",
+   "command_executed_in_this_call": true,
+   "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+  },
+  "bridge_queue": {
+   "queued": false,
+   "ahead_at_admission": 0,
+   "waited_ms": 1,
+   "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+   "capacity": 16,
+   "execution_and_wait_ms": 622
+  }
+ }
+}

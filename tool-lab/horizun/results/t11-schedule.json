@@ -1,0 +1,220 @@
+{
+ "dry_run": {
+  "text": "{\r\n  \"dry_run\": true,\r\n  \"transaction_status\": \"not_started\",\r\n  \"category\": \"Ambientes\",\r\n  \"category_id\": -2000160,\r\n  \"name\": \"LAB Tabela de Ambientes\",\r\n  \"fields_requested\": [\r\n    \"Número\",\r\n    \"Nome\",\r\n    \"Área\",\r\n    \"Nível\"\r\n  ],\r\n  \"include_links\": false,\r\n  \"itemized\": true,\r\n  \"host_element_count\": 0,\r\n  \"note\": \"Nothing was written. Field availability and linked rows are verified after creation, not guessed from host elements.\",\r\n  \"document\": \"LAB_HORIZUN_DOC [C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt]\",\r\n  \"document_fingerprint\": \"d20058fd6184ce09\",\r\n  \"change_preview\": {\r\n    \"fingerprint\": \"3eed84b53042d352f36b924a55c28c664278d1d4925f32305a6290776d3562b9\",\r\n    \"total\": 1,\r\n    \"shown\": 1,\r\n    \"truncated\": false,\r\n    \"expected_cascade\": 0,\r\n    \"rows\": [\r\n      {\r\n        \"unique_id\": \"schedule:LAB Tabela de Ambientes\",\r\n        \"element_id\": null,\r\n        \"action\": \"create\",\r\n        \"category\": \"Ambientes\",\r\n        \"type\": null,\r\n        \"captured_state\": {\r\n          \"category_id\": \"-2000160\",\r\n          \"fields\": \"Número,Nome,Área,Nível\",\r\n          \"include_links\": \"0\",\r\n          \"itemized\": \"1\"\r\n        },\r\n        \"proposed_values\": null,\r\n        \"values_truncated\": false\r\n      }\r\n    ],\r\n    \"note\": \"Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values.\"\r\n  },\r\n  \"plan_resolved\": {\r\n    \"elements\": 1,\r\n    \"create\": 1,\r\n    \"modify\": 0,\r\n    \"delete\": 0,\r\n    \"expected_cascade\": 0,\r\n    \"fingerprint\": \"3eed84b53042d352f",
+  "sc": {
+   "dry_run": true,
+   "transaction_status": "not_started",
+   "category": "Ambientes",
+   "category_id": -2000160,
+   "name": "LAB Tabela de Ambientes",
+   "fields_requested": [
+    "Número",
+    "Nome",
+    "Área",
+    "Nível"
+   ],
+   "include_links": false,
+   "itemized": true,
+   "host_element_count": 0,
+   "note": "Nothing was written. Field availability and linked rows are verified after creation, not guessed from host elements.",
+   "document": "LAB_HORIZUN_DOC [C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt]",
+   "document_fingerprint": "d20058fd6184ce09",
+   "change_preview": {
+    "fingerprint": "3eed84b53042d352f36b924a55c28c664278d1d4925f32305a6290776d3562b9",
+    "total": 1,
+    "shown": 1,
+    "truncated": false,
+    "expected_cascade": 0,
+    "rows": [
+     {
+      "unique_id": "schedule:LAB Tabela de Ambientes",
+      "element_id": null,
+      "action": "create",
+      "category": "Ambientes",
+      "type": null,
+      "captured_state": {
+       "category_id": "-2000160",
+       "fields": "Número,Nome,Área,Nível",
+       "include_links": "0",
+       "itemized": "1"
+      },
+      "proposed_values": null,
+      "values_truncated": false
+     }
+    ],
+    "note": "Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values."
+   },
+   "plan_resolved": {
+    "elements": 1,
+    "create": 1,
+    "modify": 0,
+    "delete": 0,
+    "expected_cascade": 0,
+    "fingerprint": "3eed84b53042d352f36b924a55c28c664278d1d4925f32305a6290776d3562b9"
+   },
+   "confirmation_token": "hz-3fb040c9d2b9d12474bbc24f2031de7d",
+   "confirmation_expires_utc": "2026-09-15 14:40:34Z",
+   "confirmation_note": "To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token is bound to this category AS RESOLVED (not just the text you typed), the schedule name, field list and link/itemization settings. A category text that starts resolving to a different category refuses as a stale plan.",
+   "application": {
+    "state": "rehearsed",
+    "fully_applied": false,
+    "transaction_status": "not_started",
+    "requested": 1,
+    "applied": 0,
+    "verified": 0,
+    "unresolved": 0,
+    "failed": 0,
+    "unknown": 0,
+    "state_means": "rehearsed: a valid dry run. Everything resolved and NOTHING was written."
+   },
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 2,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 17
+   }
+  }
+ },
+ "apply": {
+  "text": "{\r\n  \"created\": true,\r\n  \"schedule_id\": 328738,\r\n  \"name\": \"LAB Tabela de Ambientes\",\r\n  \"category\": \"Ambientes\",\r\n  \"category_id\": -2000160,\r\n  \"include_links_verified\": false,\r\n  \"itemized_verified\": true,\r\n  \"fields_verified\": [\r\n    \"Número\",\r\n    \"Nome\",\r\n    \"Área\",\r\n    \"Nível\"\r\n  ],\r\n  \"postcondition\": {\r\n    \"all_verified\": true,\r\n    \"checked\": 5,\r\n    \"all_measured\": true,\r\n    \"required\": [\r\n      \"category\",\r\n      \"fields\",\r\n      \"include_links\",\r\n      \"itemized\",\r\n      \"name\"\r\n    ],\r\n    \"missing\": [],\r\n    \"unexpected\": [],\r\n    \"verified_means\": \"true only when EXACTLY the required properties were checked - each once, none missing, none substituted - and every one of them was RE-READ from the committed model and matched. A property that could not be read counts as unmeasured, never as agreement, and an empty checklist is not a pass.\",\r\n    \"properties\": [\r\n      {\r\n        \"property\": \"name\",\r\n        \"measured\": true,\r\n        \"requested\": \"LAB Tabela de Ambientes\",\r\n        \"found_in_committed_model\": \"LAB Tabela de Ambientes\",\r\n        \"matches\": true\r\n      },\r\n      {\r\n        \"property\": \"category\",\r\n        \"measured\": true,\r\n        \"requested\": {\r\n          \"id\": -2000160,\r\n          \"name\": \"Ambientes\"\r\n        },\r\n        \"found_in_committed_model\": {\r\n          \"id\": -2000160,\r\n          \"name\": \"Ambientes\"\r\n        },\r\n        \"matches\": true\r\n      },\r\n      {\r\n        \"property\": \"fields\",\r\n        \"measured\": true,\r\n        \"requested\": [\r\n          \"Número\",\r\n          \"Nome\",\r\n          \"Área\",\r\n          \"Nível\"\r\n        ],\r\n        \"found_in_committed_model\": [\r\n          \"Número\",\r\n          \"Nome\",\r\n          \"Área\",\r\n          \"Nível\"\r\n        ],\r\n        \"matches\": true\r\n      },\r\n      {\r\n        \"property\": \"include_links\",\r\n        \"measured\": true,\r\n        \"requested\": false,\r\n        \"found_in_committed_model\": false,\r\n        \"matches\": true\r\n      },\r\n      {\r\n        \"property\": \"itemized\",\r\n        \"measured\": true,\r\n        \"requested\": true,\r\n        \"found_in_committed_model\": true,\r\n        \"matches\": true\r\n      }\r\n    ]\r\n  },\r\n  \"fields_missing\": [],\r\n  \"body_rows\": 2,\r\n  \"has_body_rows\": true,\r\n  \"federated_coverage\": {\r\n    \"coverage_complete\": true,\r\n    \"include_links\": false,\r\n    \"link_instances_total\": 0,\r\n    \"link_instances_loaded\": 0,\r\n    \"link_instances_unavailable\": 0,\r\n    \"sources\": [\r\n      {\r\n        \"source_kind\": \"host\",\r\n        \"source_model\": \"LAB_HORIZUN_DOC\",\r\n        \"link_instance_id\": null,\r\n        \"visibility_coverage\": {\r\n          \"coverage_complete\": true,\r\n          \"is_workshared\": false,\r\n          \"worksets_total\": null,\r\n          \"worksets_open\": null,\r\n          \"worksets_closed\": null,\r\n          \"worksets_read_error\": null,\r\n          \"note\": \"This model is not workshared, so every element in it is loaded and this answer covers all of it.\"\r\n        }\r\n      }\r\n    ],\r\n    \"unavailable_links\": [],\r\n    \"note\": \"Every considered source was loaded w",
+  "sc": {
+   "created": true,
+   "schedule_id": 328738,
+   "name": "LAB Tabela de Ambientes",
+   "category": "Ambientes",
+   "category_id": -2000160,
+   "include_links_verified": false,
+   "itemized_verified": true,
+   "fields_verified": [
+    "Número",
+    "Nome",
+    "Área",
+    "Nível"
+   ],
+   "postcondition": {
+    "all_verified": true,
+    "checked": 5,
+    "all_measured": true,
+    "required": [
+     "category",
+     "fields",
+     "include_links",
+     "itemized",
+     "name"
+    ],
+    "missing": [],
+    "unexpected": [],
+    "verified_means": "true only when EXACTLY the required properties were checked - each once, none missing, none substituted - and every one of them was RE-READ from the committed model and matched. A property that could not be read counts as unmeasured, never as agreement, and an empty checklist is not a pass.",
+    "properties": [
+     {
+      "property": "name",
+      "measured": true,
+      "requested": "LAB Tabela de Ambientes",
+      "found_in_committed_model": "LAB Tabela de Ambientes",
+      "matches": true
+     },
+     {
+      "property": "category",
+      "measured": true,
+      "requested": {
+       "id": -2000160,
+       "name": "Ambientes"
+      },
+      "found_in_committed_model": {
+       "id": -2000160,
+       "name": "Ambientes"
+      },
+      "matches": true
+     },
+     {
+      "property": "fields",
+      "measured": true,
+      "requested": [
+       "Número",
+       "Nome",
+       "Área",
+       "Nível"
+      ],
+      "found_in_committed_model": [
+       "Número",
+       "Nome",
+       "Área",
+       "Nível"
+      ],
+      "matches": true
+     },
+     {
+      "property": "include_links",
+      "measured": true,
+      "requested": false,
+      "found_in_committed_model": false,
+      "matches": true
+     },
+     {
+      "property": "itemized",
+      "measured": true,
+      "requested": true,
+      "found_in_committed_model": true,
+      "matches": true
+     }
+    ]
+   },
+   "fields_missing": [],
+   "body_rows": 2,
+   "has_body_rows": true,
+   "federated_coverage": {
+    "coverage_complete": true,
+    "include_links": false,
+    "link_instances_total": 0,
+    "link_instances_loaded": 0,
+    "link_instances_unavailable": 0,
+    "sources": [
+     {
+      "source_kind": "host",
+      "source_model": "LAB_HORIZUN_DOC",
+      "link_instance_id": null,
+      "visibility_coverage": {
+       "coverage_complete": true,
+       "is_workshared": false,
+       "worksets_total": null,
+       "worksets_open": null,
+       "worksets_closed": null,
+       "worksets_read_error": null,
+       "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+      }
+     }
+    ],
+    "unavailable_links": [],
+    "note": "Every considered source was loaded with all user worksets open."
+   },
+   "application": {
+    "state": "verified_applied",
+    "fully_applied": true,
+    "transaction_status": "Committed",
+    "requested": 1,
+    "applied": 1,
+    "verified": 1,
+    "unresolved": 0,
+    "failed": 0,
+    "unknown": 0,
+    "state_means": "verified_applied: every requested change is in the model and was re-read after the commit. This is the only state besides no_op that lets a plan keep its work."
+   },
+   "idempotency": {
+    "key": "3cfb87c5-180f-468f-bc8b-d00568fc8a3e",
+    "status": "executed_once",
+    "command_executed_in_this_call": true,
+    "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+   },
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 2,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 104
+   }
+  }
+ }
+}

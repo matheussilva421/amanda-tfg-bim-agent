@@ -1,0 +1,461 @@
+{
+ "evidence_id": "P02-T11-annotate-tags-and-dimension",
+ "task": "P02-T11",
+ "open": {
+  "tool": "horizun_open_document",
+  "args": {
+   "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+   "expected_version": "2027",
+   "idempotency_key": "dc04700e-cf7b-443a-8d10-e5530665a496"
+  },
+  "duration_ms": 201,
+  "error": null,
+  "text": "{\r\n  \"opened\": true,\r\n  \"confirmed_active\": true,\r\n  \"source\": \"local\",\r\n  \"path_matches_request\": true,\r\n  \"requested_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt\",\r\n  \"active_document\": \"LAB_HORIZUN_DOC\",\r\n  \"active_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt\",\r\n  \"file_saved_in_ver",
+  "structured": {
+   "opened": true,
+   "confirmed_active": true,
+   "source": "local",
+   "path_matches_request": true,
+   "requested_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+   "active_document": "LAB_HORIZUN_DOC",
+   "active_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+   "file_saved_in_version": "2027",
+   "running_revit_version": "2027",
+   "version_guard": "checked",
+   "upgraded_on_open": false,
+   "detached": false,
+   "audited": false,
+   "all_worksets_opened": false,
+   "was_central": false,
+   "central_path": null,
+   "is_workshared": false,
+   "central_guard": "not_a_central",
+   "note": null,
+   "idempotency": {
+    "key": "dc04700e-cf7b-443a-8d10-e5530665a496",
+    "status": "executed_once",
+    "command_executed_in_this_call": true,
+    "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+   },
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 2,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 57
+   }
+  },
+  "isError": false
+ },
+ "tag_type_55349": {
+  "tool": "horizun_query_model",
+  "args": {
+   "element_ids": [
+    55349
+   ],
+   "include_links": false,
+   "return_fields": [
+    "category",
+    "family",
+    "type",
+    "type_id"
+   ]
+  },
+  "duration_ms": 50,
+  "error": null,
+  "text": "{\r\n  \"document\": \"LAB_HORIZUN_DOC\",\r\n  \"scope\": \"model\",\r\n  \"view_id\": null,\r\n  \"include_links\": false,\r\n  \"matched_total\": 1,\r\n  \"returned\": 1,\r\n  \"offset\": 0,\r\n  \"truncated\": false,\r\n  \"next_cursor\": null,\r\n  \"result_set_fingerprint\": \"11f11eac6fc3a4fb\",\r\n  \"coverage_complete\": true,\r\n  \"unreadable_total\": 0,\r\n  \"unreadable_shown\": 0,\r\n  \"unreadable_truncated\": false,\r\n  \"unreadable\": [],\r\n  \"federated_coverage\": {\r\n    \"coverage_complete\": true,\r\n    \"include_links\": false,\r\n    \"link_instances_total\": 0,\r\n    \"link_instances_loaded\": 0,\r\n    \"link_instances_unavailable\": 0,\r\n    \"sources\": [\r\n      {\r\n        \"source_kind\": \"host\",\r\n        \"source_model\": \"LAB_HORIZUN_DOC\",\r\n        \"link_instance_id\": null,\r\n        \"visibility_coverage\": {\r\n          \"coverage_complete\": true,\r\n          \"is_workshared\": false,\r\n          \"worksets_total\": null,\r\n          \"worksets_open\": null,\r\n          \"worksets_closed\": null,\r\n          \"worksets_read_error\": null,\r\n          \"note\": \"This model is not workshared, so every element in it is loaded and this answer covers all of it.\"\r\n        }\r\n      }\r\n    ],\r\n    \"unavailable_links\": [],\r\n    \"note\": \"Every considered source was loaded ",
+  "structured": {
+   "document": "LAB_HORIZUN_DOC",
+   "scope": "model",
+   "view_id": null,
+   "include_links": false,
+   "matched_total": 1,
+   "returned": 1,
+   "offset": 0,
+   "truncated": false,
+   "next_cursor": null,
+   "result_set_fingerprint": "11f11eac6fc3a4fb",
+   "coverage_complete": true,
+   "unreadable_total": 0,
+   "unreadable_shown": 0,
+   "unreadable_truncated": false,
+   "unreadable": [],
+   "federated_coverage": {
+    "coverage_complete": true,
+    "include_links": false,
+    "link_instances_total": 0,
+    "link_instances_loaded": 0,
+    "link_instances_unavailable": 0,
+    "sources": [
+     {
+      "source_kind": "host",
+      "source_model": "LAB_HORIZUN_DOC",
+      "link_instance_id": null,
+      "visibility_coverage": {
+       "coverage_complete": true,
+       "is_workshared": false,
+       "worksets_total": null,
+       "worksets_open": null,
+       "worksets_closed": null,
+       "worksets_read_error": null,
+       "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+      }
+     }
+    ],
+    "unavailable_links": [],
+    "note": "Every considered source was loaded with all user worksets open."
+   },
+   "summary": {
+    "by_category": {
+     "Identificadores de ambiente": 1
+    },
+    "by_level": {
+     "(no level)": 1
+    },
+    "by_source": {
+     "host:LAB_HORIZUN_DOC": 1
+    }
+   },
+   "rows": [
+    {
+     "element_id": 55349,
+     "category": "Identificadores de ambiente",
+     "family": "M_Identificador do ambiente",
+     "type": "Identificador de ambiente com área",
+     "type_id": 55349
+    }
+   ],
+   "bridge_queue": {
+    "queued": false,
+    "ahead_at_admission": 0,
+    "waited_ms": 3,
+    "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+    "capacity": 16,
+    "execution_and_wait_ms": 8
+   }
+  },
+  "isError": false
+ },
+ "room_multicategory_probe": {
+  "valid": 1,
+  "actions": [
+   {
+    "ok": false,
+    "reason": "There is no loaded tag type that can be used when tagging referenceToTag with tagMode."
+   }
+  ]
+ },
+ "tags_door_window": {
+  "dry_run": {
+   "tool": "horizun_annotate",
+   "args": {
+    "target_document": "LAB_HORIZUN_DOC",
+    "units": "m",
+    "actions": [
+     {
+      "operation": "tag",
+      "view_id": 312,
+      "element_id": 328667,
+      "point": [
+       3.0,
+       0.9,
+       0.0
+      ],
+      "require_tag_text": true
+     },
+     {
+      "operation": "tag",
+      "view_id": 312,
+      "element_id": 328669,
+      "point": [
+       1.5,
+       0.9,
+       0.0
+      ],
+      "require_tag_text": true
+     }
+    ],
+    "dry_run": true
+   },
+   "duration_ms": 50,
+   "error": null,
+   "text": "{\r\n  \"dry_run\": true,\r\n  \"valid\": 2,\r\n  \"invalid\": 0,\r\n  \"errors\": [],\r\n  \"plan\": [\r\n    {\r\n      \"index\": 0,\r\n      \"operation\": \"tag\",\r\n      \"references\": null,\r\n      \"view\": {\r\n        \"id\": 312,\r\n        \"unique_id\": \"c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138\",\r\n        \"name\": \"Nível 1\"\r\n      },\r\n      \"target\": {\r\n        \"id\": 328667,\r\n        \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503db\",\r\n        \"name\": \"0915 x 2134mm\"\r\n      },\r\n      \"tag_type\": {\r\n        \"id\": 1233,\r\n        \"unique_id\": \"458c1092-01bb-11d5-9302-0000863f27ad-000004d1\",\r\n        \"name\": \"M_Identificador da porta\",\r\n        \"source\": \"default\"\r\n      },\r\n      \"existing_tags_for_target_in_view\": 0\r\n    },\r\n    {\r\n      \"index\": 1,\r\n      \"operation\": \"tag\",\r\n      \"references\": null,\r\n      \"view\": {\r\n        \"id\": 312,\r\n        \"unique_id\": \"c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138\",\r\n        \"name\": \"Nível 1\"\r\n      },\r\n      \"target\": {\r\n        \"id\": 328669,\r\n        \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503dd\",\r\n        \"name\": \"0915 x 1220mm\"\r\n      },\r\n      \"tag_type\": {\r\n        \"id\": 3796,\r\n        \"unique_id\": \"762addb1-14c8-11d5-9320-0000863f27ad-00000ed4\",\r\n        \"name\": \"M_Identificador da janela\",\r\n        \"source\": \"default\"\r\n      },\r\n      \"existing_tags_for_target_in_view\": 0\r\n    }\r\n  ],\r\n  \"rehearsal\": {\r\n    \"transaction_status\": \"RolledBack\",\r\n    \"rolled_back_confirmed\": true,\r\n    \"all_constructible\": true,\r\n    \"not_constructible\": 0,\r\n    \"note\": \"Every annotation was created PROVISIONALLY inside one transaction, measured, and the transaction was rolled back; transaction_status is what Revit's RollBack() returned. Nothing from the rehearsal remains in the model when rolled_back_confirmed is true.\",\r\n    \"actions\": [\r\n      {\r\n        \"index\": 0,\r\n        \"operation\": \"tag\",\r\n        \"constructible\": true,\r\n        \"reason\": null\r\n      },\r\n      {\r\n        \"index\": 1,\r\n        \"operation\": \"tag\",\r\n        \"constructible\": true,\r\n        \"reason\": null\r\n      }\r\n    ]\r\n  },\r\n  \"application\": {\r\n    \"state\": \"rehearsed\",\r\n    \"fully_applied\": false,\r\n    \"transaction_status\": \"not_started\",\r\n    \"requested\": 2,\r\n    \"applied\": 0,\r\n    \"verified\": 0,\r\n    \"unresolved\": 0,\r\n    \"failed\": 0,\r\n    \"unknown\": 0,\r\n    \"state_means\": \"rehearsed: a valid dry run. Everything resolved and NOTHING was written.\"\r\n  },\r\n  \"document\": \"LAB_HORIZUN_DOC [C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt]\",\r\n  \"document_fingerprint\": \"d20058fd6184ce09\",\r\n  \"change_preview\": {\r\n    \"fingerprint\": \"3095943ed292d0381dc3766ef693582be0e0cc0d379cec477c49f0e4a0f7a094\",\r\n    \"total\": 2,\r\n    \"shown\": 2,\r\n    \"truncated\": false,\r\n    \"expected_cascade\": 0,\r\n    \"rows\": [\r\n      {\r\n        \"unique_id\": \"action:0\",\r\n        \"element_id\": null,\r\n        \"action\": \"create\",\r\n        \"category\": \"tag\",\r\n        \"type\": null,\r\n        \"captured_state\": {\r\n          \"existing_tags_for_tar",
+   "structured": {
+    "dry_run": true,
+    "valid": 2,
+    "invalid": 0,
+    "errors": [],
+    "plan": [
+     {
+      "index": 0,
+      "operation": "tag",
+      "references": null,
+      "view": {
+       "id": 312,
+       "unique_id": "c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138",
+       "name": "Nível 1"
+      },
+      "target": {
+       "id": 328667,
+       "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503db",
+       "name": "0915 x 2134mm"
+      },
+      "tag_type": {
+       "id": 1233,
+       "unique_id": "458c1092-01bb-11d5-9302-0000863f27ad-000004d1",
+       "name": "M_Identificador da porta",
+       "source": "default"
+      },
+      "existing_tags_for_target_in_view": 0
+     },
+     {
+      "index": 1,
+      "operation": "tag",
+      "references": null,
+      "view": {
+       "id": 312,
+       "unique_id": "c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138",
+       "name": "Nível 1"
+      },
+      "target": {
+       "id": 328669,
+       "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503dd",
+       "name": "0915 x 1220mm"
+      },
+      "tag_type": {
+       "id": 3796,
+       "unique_id": "762addb1-14c8-11d5-9320-0000863f27ad-00000ed4",
+       "name": "M_Identificador da janela",
+       "source": "default"
+      },
+      "existing_tags_for_target_in_view": 0
+     }
+    ],
+    "rehearsal": {
+     "transaction_status": "RolledBack",
+     "rolled_back_confirmed": true,
+     "all_constructible": true,
+     "not_constructible": 0,
+     "note": "Every annotation was created PROVISIONALLY inside one transaction, measured, and the transaction was rolled back; transaction_status is what Revit's RollBack() returned. Nothing from the rehearsal remains in the model when rolled_back_confirmed is true.",
+     "actions": [
+      {
+       "index": 0,
+       "operation": "tag",
+       "constructible": true,
+       "reason": null
+      },
+      {
+       "index": 1,
+       "operation": "tag",
+       "constructible": true,
+       "reason": null
+      }
+     ]
+    },
+    "application": {
+     "state": "rehearsed",
+     "fully_applied": false,
+     "transaction_status": "not_started",
+     "requested": 2,
+     "applied": 0,
+     "verified": 0,
+     "unresolved": 0,
+     "failed": 0,
+     "unknown": 0,
+     "state_means": "rehearsed: a valid dry run. Everything resolved and NOTHING was written."
+    },
+    "document": "LAB_HORIZUN_DOC [C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt]",
+    "document_fingerprint": "d20058fd6184ce09",
+    "change_preview": {
+     "fingerprint": "3095943ed292d0381dc3766ef693582be0e0cc0d379cec477c49f0e4a0f7a094",
+     "total": 2,
+     "shown": 2,
+     "truncated": false,
+     "expected_cascade": 0,
+     "rows": [
+      {
+       "unique_id": "action:0",
+       "element_id": null,
+       "action": "create",
+       "category": "tag",
+       "type": null,
+       "captured_state": {
+        "existing_tags_for_target_in_view": "0",
+        "references": "",
+        "tag_rehearsal": "{\"view_id\":312,\"type_id\":1233,\"head\":[9.84251969,2.95275591,0.0],\"orientation\":\"Horizontal\",\"has_leader\":false,\"orphaned\":false,\"text\":\"1\",\"extent\":\"24000,5365,36000,12000\",\"view_scale\":100,\"extent_measured\":true}",
+        "target": "1870701a-5645-43a6-aa36-d6518169b043-000503db|0915 x 2134mm",
+        "type": "458c1092-01bb-11d5-9302-0000863f27ad-000004d1|M_Identificador da porta",
+        "view": "c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138|Nível 1"
+       },
+       "proposed_values": null,
+       "values_truncated": false
+      },
+      {
+       "unique_id": "action:1",
+       "element_id": null,
+       "action": "create",
+       "category": "tag",
+       "type": null,
+       "captured_state": {
+        "existing_tags_for_target_in_view": "0",
+        "references": "",
+        "tag_rehearsal": "{\"view_id\":312,\"type_id\":3796,\"head\":[4.92125984,2.95275591,0.0],\"orientation\":\"Horizontal\",\"has_leader\":false,\"orphaned\":false,\"text\":\"15\",\"extent\":\"11000,5365,19000,12000\",\"view_scale\":100,\"extent_measured\":true}",
+        "target": "1870701a-5645-43a6-aa36-d6518169b043-000503dd|0915 x 1220mm",
+        "type": "762addb1-14c8-11d5-9320-0000863f27ad-00000ed4|M_Identificador da janela",
+        "view": "c3f5348f-6947-4ddf-aa1e-749882f86acc-00000138|Nível 1"
+       },
+       "proposed_values": null,
+       "values_truncated": false
+      }
+     ],
+     "note": "Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values."
+    },
+    "plan_resolved": {
+     "elements": 2,
+     "create": 2,
+     "modify": 0,
+     "delete": 0,
+     "expected_cascade": 0,
+     "fingerprint": "3095943ed292d0381dc3766ef693582be0e0cc0d379cec477c49f0e4a0f7a094"
+    },
+    "confirmation_token": "hz-07db44d55adda698d8bf3ca7363766a5",
+    "confirmation_expires_utc": "2026-09-15 14:46:33Z",
+    "confirmation_note": "To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds views, geometry, text, the identity of every view and target, and - for dimensions - the EFFECTIVE dimension type, every reference's reserialized identity, owner and 0.1 mm geometry fingerprint, and the measured value of this rehearsal. A model that moves before you spend it refuses as a stale plan rather than dimensioning something else.",
+    "bridge_queue": {
+     "queued": false,
+     "ahead_at_admission": 0,
+     "waited_ms": 9,
+     "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+     "capacity": 16,
+     "execution_and_wait_ms": 40
+    }
+   },
+   "isError": false
+  },
+  "apply": {
+   "tool": "horizun_annotate",
+   "args": {
+    "target_document": "LAB_HORIZUN_DOC",
+    "units": "m",
+    "actions": [
+     {
+      "operation": "tag",
+      "view_id": 312,
+      "element_id": 328667,
+      "point": [
+       3.0,
+       0.9,
+       0.0
+      ],
+      "require_tag_text": true
+     },
+     {
+      "operation": "tag",
+      "view_id": 312,
+      "element_id": 328669,
+      "point": [
+       1.5,
+       0.9,
+       0.0
+      ],
+      "require_tag_text": true
+     }
+    ],
+    "dry_run": false,
+    "confirmation_token": "hz-07db44d55adda698d8bf3ca7363766a5",
+    "idempotency_key": "98fb9b22-e85b-4d17-bb70-3500a293bc10"
+   },
+   "duration_ms": 101,
+   "error": null,
+   "text": "{\r\n  \"transaction_status\": \"Committed\",\r\n  \"transaction_group_status\": \"Committed\",\r\n  \"state\": \"committed_verified\",\r\n  \"annotations_verified\": 2,\r\n  \"comparison_tolerance_feet\": 1E-06,\r\n  \"units_note\": \"Measured values are Revit internal units (decimal feet); 'presented' is the document's own display formatting.\",\r\n  \"rows\": [\r\n    {\r\n      \"index\": 0,\r\n      \"operation\": \"tag\",\r\n      \"element_id\": 328769,\r\n      \"verified\": true,\r\n      \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-00050441\",\r\n      \"tag_evidence\": {\r\n        \"view_id\": 312,\r\n        \"type_id\": 1233,\r\n        \"head\": [\r\n          9.84251969,\r\n          2.95275591,\r\n          0.0\r\n        ],\r\n        \"orientation\": \"Horizontal\",\r\n        \"has_leader\": false,\r\n        \"orphaned\": false,\r\n        \"text\": \"1\",\r\n        \"extent\": \"24000,5365,36000,12000\",\r\n        \"view_scale\": 100,\r\n        \"extent_measured\": true\r\n      },\r\n      \"matches_rehearsal\": true,\r\n      \"layout_method\": \"conservative annotation bounding boxes; visual approval remains separate\"\r\n    },\r\n    {\r\n      \"index\": 1,\r\n      \"operation\": \"tag\",\r\n      \"element_id\": 328770,\r\n      \"verified\": true,\r\n      \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-00050442\",\r\n      \"tag_evidence\": {\r\n        \"view_id\": 312,\r\n        \"type_id\": 3796,\r\n        \"head\": [\r\n          4.92125984,\r\n          2.95275591,\r\n          0.0\r\n        ],\r\n        \"orientation\": \"Horizontal\",\r\n        \"has_leader\": false,\r\n        \"orphaned\": false,\r\n        \"text\": \"15\",\r\n        \"extent\": \"11000,5365,19000,12000\",\r\n        \"view_scale\": 100,\r\n        \"extent_measured\": true\r\n      },\r\n      \"matches_rehearsal\": true,\r\n      \"layout_method\": \"conservative annotation bounding boxes; visual approval remains separate\"\r\n    }\r\n  ],\r\n  \"application\": {\r\n    \"state\": \"verified_applied\",\r\n    \"fully_applied\": true,\r\n    \"transaction_status\": \"Committed\",\r\n    \"requested\": 2,\r\n    \"applied\": 2,\r\n    \"verified\": 2,\r\n    \"unresolved\": 0,\r\n    \"failed\": 0,\r\n    \"unknown\": 0,\r\n    \"state_means\": \"verified_applied: every requested change is in the model and was re-read after the commit. This is the only state besides no_op that lets a plan keep its work.\"\r\n  },\r\n  \"idempotency\": {\r\n    \"key\": \"98fb9b22-e85b-4d17-bb70-3500a293bc10\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"The durable claim and result were recorded; an identical retry will replay this answer.\"\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 8,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 49\r\n  }\r\n}",
+   "structured": {
+    "transaction_status": "Committed",
+    "transaction_group_status": "Committed",
+    "state": "committed_verified",
+    "annotations_verified": 2,
+    "comparison_tolerance_feet": 1e-06,
+    "units_note": "Measured values are Revit internal units (decimal feet); 'presented' is the document's own display formatting.",
+    "rows": [
+     {
+      "index": 0,
+      "operation": "tag",
+      "element_id": 328769,
+      "verified": true,
+      "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-00050441",
+      "tag_evidence": {
+       "view_id": 312,
+       "type_id": 1233,
+       "head": [
+        9.84251969,
+        2.95275591,
+        0.0
+       ],
+       "orientation": "Horizontal",
+       "has_leader": false,
+       "orphaned": false,
+       "text": "1",
+       "extent": "24000,5365,36000,12000",
+       "view_scale": 100,
+       "extent_measured": true
+      },
+      "matches_rehearsal": true,
+      "layout_method": "conservative annotation bounding boxes; visual approval remains separate"
+     },
+     {
+      "index": 1,
+      "operation": "tag",
+      "element_id": 328770,
+      "verified": true,
+      "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-00050442",
+      "tag_evidence": {
+       "view_id": 312,
+       "type_id": 3796,
+       "head": [
+        4.92125984,
+        2.95275591,
+        0.0
+       ],
+       "orientation": "Horizontal",
+       "has_leader": false,
+       "orphaned": false,
+       "text": "15",
+       "extent": "11000,5365,19000,12000",
+       "view_scale": 100,
+       "extent_measured": true
+      },
+      "matches_rehearsal": true,
+      "layout_method": "conservative annotation bounding boxes; visual approval remains separate"
+     }
+    ],
+    "application": {
+     "state": "verified_applied",
+     "fully_applied": true,
+     "transaction_status": "Committed",
+     "requested": 2,
+     "applied": 2,
+     "verified": 2,
+     "unresolved": 0,
+     "failed": 0,
+     "unknown": 0,
+     "state_means": "verified_applied: every requested change is in the model and was re-read after the commit. This is the only state besides no_op that lets a plan keep its work."
+    },
+    "idempotency": {
+     "key": "98fb9b22-e85b-4d17-bb70-3500a293bc10",
+     "status": "executed_once",
+     "command_executed_in_this_call": true,
+     "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+    },
+    "bridge_queue": {
+     "queued": false,
+     "ahead_at_admission": 0,
+     "waited_ms": 8,
+     "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+     "capacity": 16,
+     "execution_and_wait_ms": 49
+    }
+   },
+   "isError": false
+  }
+ }
+}

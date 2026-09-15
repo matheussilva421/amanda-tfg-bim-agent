@@ -1,0 +1,1171 @@
+{
+ "evidence_id": "P02-T11-export-matrix",
+ "task": "P02-T11",
+ "exports": {
+  "pdf_sheet_and_views": {
+   "request": {
+    "format": "pdf",
+    "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.pdf",
+    "view_ids": [
+     328721,
+     328681,
+     328692,
+     328712
+    ],
+    "pdf_combine": true,
+    "emit_manifest": true,
+    "target_document": "LAB_HORIZUN_DOC",
+    "overwrite": true
+   },
+   "dry_run": {
+    "tool": "horizun_export",
+    "args": {
+     "format": "pdf",
+     "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.pdf",
+     "view_ids": [
+      328721,
+      328681,
+      328692,
+      328712
+     ],
+     "pdf_combine": true,
+     "emit_manifest": true,
+     "target_document": "LAB_HORIZUN_DOC",
+     "overwrite": true,
+     "dry_run": true
+    },
+    "duration_ms": 50,
+    "error": null,
+    "text": "{\r\n  \"dry_run\": true,\r\n  \"format\": \"pdf\",\r\n  \"output_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC.pdf\",\r\n  \"planned_files\": [\r\n    \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC.pdf\"\r\n  ],\r\n  \"delivery\": null,\r\n  \"print_policy\": {\r\n    \"requested\": {},\r\n    \"effective\": {\r\n      \"paper_format\": \"Default\",\r\n      \"orientation\": \"auto\",\r\n      \"placement\": \"center\",\r\n      \"origin_offset_x\": null,\r\n      \"origin_offset_y\": null,\r\n      \"zoom\": \"fit_to_page\",\r\n      \"zoom_percentage\": null,\r\n      \"color_depth\": \"color\",\r\n      \"raster_quality\": \"high\",\r\n      \"export_quality_dpi\": 600,\r\n      \"always_use_raster\": false,\r\n      \"hide_crop_boundaries\": true,\r\n      \"hide_scope_boxes\": true,\r\n      \"hide_reference_planes\": true,\r\n      \"hide_unreferenced_view_tags\": true,\r\n      \"mask_coincident_lines\": false,\r\n      \"replace_halftone_with_thin_lines\": false,\r\n      \"view_links_in_blue\": false,\r\n      \"stop_on_error\": true,\r\n      \"export_in_background\": false\r\n    },\r\n    \"verified_from_output\": [\r\n      \"paper_format\",\r\n      \"orientation\"\r\n    ],\r\n    \"means\": \"effective is what the exporter will be handed; only paper_format and orientation are proved from the produced pages\"\r\n  },\r\n  \"manifest_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC.pdf.manifest.json\",\r\n  \"views\": [\r\n    {\r\n      \"id\": 328721,\r\n      \"name\": \"LAB Prancha 01\"\r\n    },\r\n    {\r\n      \"id\": 328681,\r\n      \"name\": \"LAB Planta Nivel 1\"\r\n    },\r\n    {\r\n      \"id\": 328692,\r\n      \"name\": \"LAB Corte A\"\r\n    },\r\n    {\r\n      \"id\": 328712,\r\n      \"name\": \"LAB Vista 3D\"\r\n    }\r\n  ],\r\n  \"schedule\": null,\r\n  \"overwrite\": true,\r\n  \"exporter_available\": true,\r\n  \"note\": \"Nothing was exported and no file was created.\",\r\n  \"document\": \"LAB_HORIZUN_DOC [C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt]\",\r\n  \"document_fingerprint\": \"d20058fd6184ce09\",\r\n  \"change_preview\": {\r\n    \"fingerprint\": \"99246035bbbbc54c5b6f193e8d942195fcbb08d49c7c09a94c962df2678c3b40\",\r\n    \"total\": 4,\r\n    \"shown\": 4,\r\n    \"truncated\": false,\r\n    \"expected_cascade\": 0,\r\n    \"rows\": [\r\n      {\r\n        \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503e9\",\r\n        \"element_id\": null,\r\n        \"action\": \"modify\",\r\n        \"category\": \"view\",\r\n        \"type\": \"LAB Planta Nivel 1\",\r\n        \"captured_state\": {\r\n  ",
+    "structured": {
+     "dry_run": true,
+     "format": "pdf",
+     "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.pdf",
+     "planned_files": [
+      "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.pdf"
+     ],
+     "delivery": null,
+     "print_policy": {
+      "requested": {},
+      "effective": {
+       "paper_format": "Default",
+       "orientation": "auto",
+       "placement": "center",
+       "origin_offset_x": null,
+       "origin_offset_y": null,
+       "zoom": "fit_to_page",
+       "zoom_percentage": null,
+       "color_depth": "color",
+       "raster_quality": "high",
+       "export_quality_dpi": 600,
+       "always_use_raster": false,
+       "hide_crop_boundaries": true,
+       "hide_scope_boxes": true,
+       "hide_reference_planes": true,
+       "hide_unreferenced_view_tags": true,
+       "mask_coincident_lines": false,
+       "replace_halftone_with_thin_lines": false,
+       "view_links_in_blue": false,
+       "stop_on_error": true,
+       "export_in_background": false
+      },
+      "verified_from_output": [
+       "paper_format",
+       "orientation"
+      ],
+      "means": "effective is what the exporter will be handed; only paper_format and orientation are proved from the produced pages"
+     },
+     "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.pdf.manifest.json",
+     "views": [
+      {
+       "id": 328721,
+       "name": "LAB Prancha 01"
+      },
+      {
+       "id": 328681,
+       "name": "LAB Planta Nivel 1"
+      },
+      {
+       "id": 328692,
+       "name": "LAB Corte A"
+      },
+      {
+       "id": 328712,
+       "name": "LAB Vista 3D"
+      }
+     ],
+     "schedule": null,
+     "overwrite": true,
+     "exporter_available": true,
+     "note": "Nothing was exported and no file was created.",
+     "document": "LAB_HORIZUN_DOC [C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt]",
+     "document_fingerprint": "d20058fd6184ce09",
+     "change_preview": {
+      "fingerprint": "99246035bbbbc54c5b6f193e8d942195fcbb08d49c7c09a94c962df2678c3b40",
+      "total": 4,
+      "shown": 4,
+      "truncated": false,
+      "expected_cascade": 0,
+      "rows": [
+       {
+        "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503e9",
+        "element_id": null,
+        "action": "modify",
+        "category": "view",
+        "type": "LAB Planta Nivel 1",
+        "captured_state": {
+         "role": "export_source"
+        },
+        "proposed_values": null,
+        "values_truncated": false
+       },
+       {
+        "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503f4",
+        "element_id": null,
+        "action": "modify",
+        "category": "view",
+        "type": "LAB Corte A",
+        "captured_state": {
+         "role": "export_source"
+        },
+        "proposed_values": null,
+        "values_truncated": false
+       },
+       {
+        "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-00050408",
+        "element_id": null,
+        "action": "modify",
+        "category": "view",
+        "type": "LAB Vista 3D",
+        "captured_state": {
+         "role": "export_source"
+        },
+        "proposed_values": null,
+        "values_truncated": false
+       },
+       {
+        "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-00050411",
+        "element_id": null,
+        "action": "modify",
+        "category": "view",
+        "type": "LAB Prancha 01",
+        "captured_state": {
+         "role": "export_source"
+        },
+        "proposed_values": null,
+        "values_truncated": false
+       }
+      ],
+      "note": "Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values."
+     },
+     "plan_resolved": {
+      "elements": 4,
+      "create": 0,
+      "modify": 4,
+      "delete": 0,
+      "expected_cascade": 0,
+      "fingerprint": "99246035bbbbc54c5b6f193e8d942195fcbb08d49c7c09a94c962df2678c3b40"
+     },
+     "confirmation_token": "hz-19e0cb953e5c2630a84f4d9a2a59964b",
+     "confirmation_expires_utc": "2026-09-15 14:48:20Z",
+     "confirmation_note": "To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds format, destination, options, the IDENTITY of every selected view and schedule as resolved now, and which destination files already exist - a source renamed or a file that appears under a no-overwrite approval refuses as a stale plan.",
+     "bridge_queue": {
+      "queued": false,
+      "ahead_at_admission": 0,
+      "waited_ms": 3,
+      "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+      "capacity": 16,
+      "execution_and_wait_ms": 13
+     }
+    },
+    "isError": false
+   },
+   "apply": {
+    "tool": "horizun_export",
+    "args": {
+     "format": "pdf",
+     "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.pdf",
+     "view_ids": [
+      328721,
+      328681,
+      328692,
+      328712
+     ],
+     "pdf_combine": true,
+     "emit_manifest": true,
+     "target_document": "LAB_HORIZUN_DOC",
+     "overwrite": true,
+     "dry_run": false,
+     "confirmation_token": "hz-19e0cb953e5c2630a84f4d9a2a59964b",
+     "idempotency_key": "7750db92-9c4a-45a8-ba98-655376e3a647"
+    },
+    "duration_ms": 6448,
+    "error": null,
+    "text": "{\r\n  \"format\": \"pdf\",\r\n  \"api_accepted\": true,\r\n  \"files_verified\": 1,\r\n  \"requested_output_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC.pdf\",\r\n  \"files\": [\r\n    {\r\n      \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC.pdf\",\r\n      \"bytes\": 71153,\r\n      \"last_write_utc\": \"2026-09-15T14:38:24.6034804Z\"\r\n    }\r\n  ],\r\n  \"note\": \"One produced file was re-read from disk.\",\r\n  \"delivery\": {\r\n    \"schema\": \"horizun.delivery-manifest/1\",\r\n    \"utc\": \"2026-09-15T14:38:26.4597805Z\",\r\n    \"document\": \"LAB_HORIZUN_DOC\",\r\n    \"combined\": true,\r\n    \"files\": [\r\n      {\r\n        \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC.pdf\",\r\n        \"bytes\": 71153,\r\n        \"sha256\": \"55dfae59c1eaa43cb432a3182266a457d4a540c0eeb497c00502a70f7a250b8e\",\r\n        \"pages\": 4,\r\n        \"expected_pages\": 4,\r\n        \"page_count_verified\": true,\r\n        \"page_geometry\": [\r\n          {\r\n            \"page\": 1,\r\n            \"width_points\": 2381.04,\r\n            \"height_points\": 1683.72\r\n          },\r\n          {\r\n            \"page\": 2,\r\n            \"width_points\": 2915.4,\r\n            \"height_points\": 2916.0\r\n          },\r\n          {\r\n            \"page\": 3,\r\n            \"width_points\": 21.4504,\r\n            \"height_points\": 14400.0\r\n          },\r\n          {\r\n            \"page\": 4,\r\n            \"width_points\": 1141.2,\r\n            \"height_points\": 778.56\r\n          }\r\n        ],\r\n        \"visual_approval\": \"not_performed\",\r\n        \"source_views\": [\r\n          {\r\n            \"id\": 328721,\r\n            \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-00050411\",\r\n            \"name\": \"LAB Prancha 01\",\r\n            \"sheet_number\": \"LAB-01\",\r\n            \"revision_ids\": []\r\n          },\r\n          {\r\n            \"id\": 328681,\r\n            \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503e9\",\r\n            \"name\": \"LAB Planta Nivel 1\",\r\n            \"sheet_number\": null,\r\n            \"revision_ids\": []\r\n          },\r\n          {\r\n            \"id\": 328692,\r\n            \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503f4\",\r\n            \"name\": \"LAB Corte A\",\r\n            \"sheet_number\": null,\r\n            \"revision_ids\": []\r\n          },\r\n          {\r\n            \"id\": 328712,\r\n            \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-00050408\",\r\n            \"name\": \"LAB Vista 3D\",\r\n            \"sheet_number\": null,\r\n            \"revision_ids\": []\r\n          }\r\n        ],\r\n        \"page_verdicts\": [\r\n          {\r\n            \"page_width_points\": 2381.04,\r\n            \"page_height_points\": 1683.72,\r\n            \"page_width_mm\": 839.98,\r\n            \"page_height_mm\": 593.98,\r\n            \"tolerance_points\": 2.0,\r\n            \"titleblock_width_mm\": 594.0,\r\n            \"titleblock_height_mm\": 840.0,\r\n            \"page_exceeds_titleblock\": false,\r\n            \"expected_width_points\": 1683.78,\r\n            \"expected_height_points\": 2381.102,\r\n            \"paper_format\": \"verified\",\r\n            \"page_orientation_observed\": \"landscape\",\r\n            \"orientation\": \"requested_unverifiable\",\r\n            \"orientation_reason\": \"auto lets Revit choose per page; the observed orientation is reported, not judged\",\r\n            \"page_verified\": true,\r\n            \"page\": 1,\r\n            \"source_view_id\": 328721\r\n          },\r\n          {\r\n            \"page_width_points\": 2915.4,\r\n            \"page",
+    "structured": {
+     "format": "pdf",
+     "api_accepted": true,
+     "files_verified": 1,
+     "requested_output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.pdf",
+     "files": [
+      {
+       "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.pdf",
+       "bytes": 71153,
+       "last_write_utc": "2026-09-15T14:38:24.6034804Z"
+      }
+     ],
+     "note": "One produced file was re-read from disk.",
+     "delivery": {
+      "schema": "horizun.delivery-manifest/1",
+      "utc": "2026-09-15T14:38:26.4597805Z",
+      "document": "LAB_HORIZUN_DOC",
+      "combined": true,
+      "files": [
+       {
+        "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.pdf",
+        "bytes": 71153,
+        "sha256": "55dfae59c1eaa43cb432a3182266a457d4a540c0eeb497c00502a70f7a250b8e",
+        "pages": 4,
+        "expected_pages": 4,
+        "page_count_verified": true,
+        "page_geometry": [
+         {
+          "page": 1,
+          "width_points": 2381.04,
+          "height_points": 1683.72
+         },
+         {
+          "page": 2,
+          "width_points": 2915.4,
+          "height_points": 2916.0
+         },
+         {
+          "page": 3,
+          "width_points": 21.4504,
+          "height_points": 14400.0
+         },
+         {
+          "page": 4,
+          "width_points": 1141.2,
+          "height_points": 778.56
+         }
+        ],
+        "visual_approval": "not_performed",
+        "source_views": [
+         {
+          "id": 328721,
+          "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-00050411",
+          "name": "LAB Prancha 01",
+          "sheet_number": "LAB-01",
+          "revision_ids": []
+         },
+         {
+          "id": 328681,
+          "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503e9",
+          "name": "LAB Planta Nivel 1",
+          "sheet_number": null,
+          "revision_ids": []
+         },
+         {
+          "id": 328692,
+          "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503f4",
+          "name": "LAB Corte A",
+          "sheet_number": null,
+          "revision_ids": []
+         },
+         {
+          "id": 328712,
+          "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-00050408",
+          "name": "LAB Vista 3D",
+          "sheet_number": null,
+          "revision_ids": []
+         }
+        ],
+        "page_verdicts": [
+         {
+          "page_width_points": 2381.04,
+          "page_height_points": 1683.72,
+          "page_width_mm": 839.98,
+          "page_height_mm": 593.98,
+          "tolerance_points": 2.0,
+          "titleblock_width_mm": 594.0,
+          "titleblock_height_mm": 840.0,
+          "page_exceeds_titleblock": false,
+          "expected_width_points": 1683.78,
+          "expected_height_points": 2381.102,
+          "paper_format": "verified",
+          "page_orientation_observed": "landscape",
+          "orientation": "requested_unverifiable",
+          "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+          "page_verified": true,
+          "page": 1,
+          "source_view_id": 328721
+         },
+         {
+          "page_width_points": 2915.4,
+          "page_height_points": 2916.0,
+          "page_width_mm": 1028.49,
+          "page_height_mm": 1028.7,
+          "tolerance_points": 2.0,
+          "paper_format": "requested_unverifiable",
+          "paper_format_reason": "Default prints the source at its own size and the source size was not readable",
+          "page_orientation_observed": "square",
+          "orientation": "requested_unverifiable",
+          "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+          "page_verified": true,
+          "page": 2,
+          "source_view_id": 328681
+         },
+         {
+          "page_width_points": 21.45,
+          "page_height_points": 14400.0,
+          "page_width_mm": 7.57,
+          "page_height_mm": 5080.0,
+          "tolerance_points": 2.0,
+          "paper_format": "requested_unverifiable",
+          "paper_format_reason": "Default prints the source at its own size and the source size was not readable",
+          "page_orientation_observed": "portrait",
+          "orientation": "requested_unverifiable",
+          "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+          "page_verified": true,
+          "page": 3,
+          "source_view_id": 328692
+         },
+         {
+          "page_width_points": 1141.2,
+          "page_height_points": 778.56,
+          "page_width_mm": 402.59,
+          "page_height_mm": 274.66,
+          "tolerance_points": 2.0,
+          "paper_format": "requested_unverifiable",
+          "paper_format_reason": "Default prints the source at its own size and the source size was not readable",
+          "page_orientation_observed": "landscape",
+          "orientation": "requested_unverifiable",
+          "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+          "page_verified": true,
+          "page": 4,
+          "source_view_id": 328712
+         }
+        ]
+       }
+      ],
+      "print_policy": {
+       "schema": "horizun.pdf-print-policy/1",
+       "options": [
+        {
+         "option": "paper_format",
+         "source": "defaulted",
+         "requested": null,
+         "applied": "Default",
+         "status": "requested_unverifiable",
+         "pages": [
+          "verified",
+          "requested_unverifiable",
+          "requested_unverifiable",
+          "requested_unverifiable"
+         ],
+         "reason": "Default prints the source at its own size and the source size was not readable"
+        },
+        {
+         "option": "orientation",
+         "source": "defaulted",
+         "requested": null,
+         "applied": "auto",
+         "status": "requested_unverifiable",
+         "pages": [
+          "requested_unverifiable",
+          "requested_unverifiable",
+          "requested_unverifiable",
+          "requested_unverifiable"
+         ],
+         "reason": "auto lets Revit choose per page; the observed orientation is reported, not judged"
+        },
+        {
+         "option": "placement",
+         "source": "defaulted",
+         "requested": null,
+         "applied": "center",
+         "status": "requested_unverifiable",
+         "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+        },
+        {
+         "option": "origin_offset_x",
+         "source": "defaulted",
+         "requested": null,
+         "applied": null,
+         "status": "not_applicable",
+         "reason": "offsets apply only with placement='lower_left'"
+        },
+        {
+         "option": "origin_offset_y",
+         "source": "defaulted",
+         "requested": null,
+         "applied": null,
+         "status": "not_applicable",
+         "reason": "offsets apply only with placement='lower_left'"
+        },
+        {
+         "option": "zoom",
+         "source": "defaulted",
+         "requested": null,
+         "applied": "fit_to_page",
+         "status": "requested_unverifiable",
+         "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+        },
+        {
+         "option": "zoom_percentage",
+         "source": "defaulted",
+         "requested": null,
+         "applied": null,
+         "status": "not_applicable",
+         "reason": "a percentage applies only with zoom='zoom'"
+        },
+        {
+         "option": "color_depth",
+         "source": "defaulted",
+         "requested": null,
+         "applied": "color",
+         "status": "requested_unverifiable",
+         "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+        },
+        {
+         "option": "raster_quality",
+         "source": "defaulted",
+         "requested": null,
+         "applied": "high",
+         "status": "requested_unverifiable",
+         "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+        },
+        {
+         "option": "export_quality_dpi",
+         "source": "defaulted",
+         "requested": null,
+         "applied": 600,
+         "status": "requested_unverifiable",
+         "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+        },
+        {
+         "option": "always_use_raster",
+         "source": "defaulted",
+         "requested": null,
+         "applied": false,
+         "status": "requested_unverifiable",
+         "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+        },
+        {
+         "option": "hide_crop_boundaries",
+         "source": "defaulted",
+         "requested": null,
+         "applied": true,
+         "status": "requested_unverifiable",
+         "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+        },
+        {
+         "option": "hide_scope_boxes",
+         "source": "defaulted",
+         "requested": null,
+         "applied": true,
+         "status": "requested_unverifiable",
+         "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+        },
+        {
+         "option": "hide_reference_planes",
+         "source": "defaulted",
+         "requested": null,
+         "applied": true,
+         "status": "requested_unverifiable",
+         "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+        },
+        {
+         "option": "hide_unreferenced_view_tags",
+         "source": "defaulted",
+         "requested": null,
+         "applied": true,
+         "status": "requested_unverifiable",
+         "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+        },
+        {
+         "option": "mask_coincident_lines",
+         "source": "defaulted",
+         "requested": null,
+         "applied": false,
+         "status": "requested_unverifiable",
+         "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+        },
+        {
+         "option": "replace_halftone_with_thin_lines",
+         "source": "defaulted",
+         "requested": null,
+         "applied": false,
+         "status": "requested_unverifiable",
+         "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+        },
+        {
+         "option": "view_links_in_blue",
+         "source": "defaulted",
+         "requested": null,
+         "applied": false,
+         "status": "requested_unverifiable",
+         "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+        },
+        {
+         "option": "stop_on_error",
+         "source": "defaulted",
+         "requested": null,
+         "applied": true,
+         "status": "requested_unverifiable",
+         "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+        },
+        {
+         "option": "export_in_background",
+         "source": "defaulted",
+         "requested": null,
+         "applied": false,
+         "status": "requested_unverifiable",
+         "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+        }
+       ],
+       "pages": [
+        {
+         "page_width_points": 2381.04,
+         "page_height_points": 1683.72,
+         "page_width_mm": 839.98,
+         "page_height_mm": 593.98,
+         "tolerance_points": 2.0,
+         "titleblock_width_mm": 594.0,
+         "titleblock_height_mm": 840.0,
+         "page_exceeds_titleblock": false,
+         "expected_width_points": 1683.78,
+         "expected_height_points": 2381.102,
+         "paper_format": "verified",
+         "page_orientation_observed": "landscape",
+         "orientation": "requested_unverifiable",
+         "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+         "page_verified": true,
+         "page": 1,
+         "source_view_id": 328721
+        },
+        {
+         "page_width_points": 2915.4,
+         "page_height_points": 2916.0,
+         "page_width_mm": 1028.49,
+         "page_height_mm": 1028.7,
+         "tolerance_points": 2.0,
+         "paper_format": "requested_unverifiable",
+         "paper_format_reason": "Default prints the source at its own size and the source size was not readable",
+         "page_orientation_observed": "square",
+         "orientation": "requested_unverifiable",
+         "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+         "page_verified": true,
+         "page": 2,
+         "source_view_id": 328681
+        },
+        {
+         "page_width_points": 21.45,
+         "page_height_points": 14400.0,
+         "page_width_mm": 7.57,
+         "page_height_mm": 5080.0,
+         "tolerance_points": 2.0,
+         "paper_format": "requested_unverifiable",
+         "paper_format_reason": "Default prints the source at its own size and the source size was not readable",
+         "page_orientation_observed": "portrait",
+         "orientation": "requested_unverifiable",
+         "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+         "page_verified": true,
+         "page": 3,
+         "source_view_id": 328692
+        },
+        {
+         "page_width_points": 1141.2,
+         "page_height_points": 778.56,
+         "page_width_mm": 402.59,
+         "page_height_mm": 274.66,
+         "tolerance_points": 2.0,
+         "paper_format": "requested_unverifiable",
+         "paper_format_reason": "Default prints the source at its own size and the source size was not readable",
+         "page_orientation_observed": "landscape",
+         "orientation": "requested_unverifiable",
+         "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+         "page_verified": true,
+         "page": 4,
+         "source_view_id": 328712
+        }
+       ],
+       "composition": {
+        "pages_exceeding_titleblock": [],
+        "held": true,
+        "means": "with Default paper the page follows the sheet outline; a page larger than its titleblock proves something on the sheet lies outside it (inside the paper is not inside the frame)"
+       },
+       "verifiable_options_held": true,
+       "verified_from_output": [
+        "paper_format",
+        "orientation"
+       ],
+       "means": "verified = proved from the produced page geometry; requested_unverifiable = applied to the exporter, not provable from the file; verified_mismatch = the file contradicts the request."
+      },
+      "source_mapping": "export invocation mapping; page identity and visual content are not independently verified",
+      "visual_approval": "required",
+      "package_verified": true
+     },
+     "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.pdf.manifest.json",
+     "idempotency": {
+      "key": "7750db92-9c4a-45a8-ba98-655376e3a647",
+      "status": "executed_once",
+      "command_executed_in_this_call": true,
+      "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+     },
+     "bridge_queue": {
+      "queued": false,
+      "ahead_at_admission": 0,
+      "waited_ms": 1,
+      "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+      "capacity": 16,
+      "execution_and_wait_ms": 6406
+     }
+    },
+    "isError": false
+   },
+   "duration_ms": 6498
+  },
+  "ifc4": {
+   "request": {
+    "format": "ifc",
+    "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.ifc",
+    "ifc_version": "IFC4",
+    "target_document": "LAB_HORIZUN_DOC",
+    "overwrite": true
+   },
+   "dry_run": {
+    "tool": "horizun_export",
+    "args": {
+     "format": "ifc",
+     "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.ifc",
+     "ifc_version": "IFC4",
+     "target_document": "LAB_HORIZUN_DOC",
+     "overwrite": true,
+     "dry_run": true
+    },
+    "duration_ms": 51,
+    "error": null,
+    "text": "{\r\n  \"dry_run\": true,\r\n  \"format\": \"ifc\",\r\n  \"output_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC.ifc\",\r\n  \"planned_files\": [\r\n    \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC.ifc\"\r\n  ],\r\n  \"delivery\": null,\r\n  \"print_policy\": null,\r\n  \"manifest_path\": null,\r\n  \"views\": [],\r\n  \"schedule\": null,\r\n  \"overwrite\": true,\r\n  \"exporter_available\": true,\r\n  \"note\": \"Nothing was exported and no file was created.\",\r\n  \"document\": \"LAB_HORIZUN_DOC [C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt]\",\r\n  \"document_fingerprint\": \"d20058fd6184ce09\",\r\n  \"change_preview\": {\r\n    \"fingerprint\": \"750bb2ba5a425613e4c3d0decddc3b3af1b0495aeaa0493b3a1fc7fbf6d1ee1c\",\r\n    \"total\": 0,\r\n    \"shown\": 0,\r\n    \"truncated\": false,\r\n    \"expected_cascade\": 0,\r\n    \"rows\": [],\r\n    \"note\": \"Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values.\"\r\n  },\r\n  \"plan_resolved\": {\r\n    \"elements\": 0,\r\n    \"create\": 0,\r\n    \"modify\": 0,\r\n    \"delete\": 0,\r\n    \"expected_cascade\": 0,\r\n    \"fingerprint\": \"750bb2ba5a425613e4c3d0decddc3b3af1b0495aeaa0493b3a1fc7fbf6d1ee1c\"\r\n  },\r\n  \"confirmation_token\": \"hz-757ca67b5b83f6761130ccc01e339f49\",\r\n  \"confirmation_expires_utc\": \"2026-09-15 14:48:26Z\",\r\n  \"confirmation_note\": \"To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds format, destination, options, the IDENTITY of every selected view and schedule as resolved now, and which destination files already exist - a source renamed or a file that appears under a no-overwrite approval refuses as a stale plan.\",\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 3,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a",
+    "structured": {
+     "dry_run": true,
+     "format": "ifc",
+     "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.ifc",
+     "planned_files": [
+      "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.ifc"
+     ],
+     "delivery": null,
+     "print_policy": null,
+     "manifest_path": null,
+     "views": [],
+     "schedule": null,
+     "overwrite": true,
+     "exporter_available": true,
+     "note": "Nothing was exported and no file was created.",
+     "document": "LAB_HORIZUN_DOC [C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt]",
+     "document_fingerprint": "d20058fd6184ce09",
+     "change_preview": {
+      "fingerprint": "750bb2ba5a425613e4c3d0decddc3b3af1b0495aeaa0493b3a1fc7fbf6d1ee1c",
+      "total": 0,
+      "shown": 0,
+      "truncated": false,
+      "expected_cascade": 0,
+      "rows": [],
+      "note": "Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values."
+     },
+     "plan_resolved": {
+      "elements": 0,
+      "create": 0,
+      "modify": 0,
+      "delete": 0,
+      "expected_cascade": 0,
+      "fingerprint": "750bb2ba5a425613e4c3d0decddc3b3af1b0495aeaa0493b3a1fc7fbf6d1ee1c"
+     },
+     "confirmation_token": "hz-757ca67b5b83f6761130ccc01e339f49",
+     "confirmation_expires_utc": "2026-09-15 14:48:26Z",
+     "confirmation_note": "To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds format, destination, options, the IDENTITY of every selected view and schedule as resolved now, and which destination files already exist - a source renamed or a file that appears under a no-overwrite approval refuses as a stale plan.",
+     "bridge_queue": {
+      "queued": false,
+      "ahead_at_admission": 0,
+      "waited_ms": 3,
+      "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+      "capacity": 16,
+      "execution_and_wait_ms": 7
+     }
+    },
+    "isError": false
+   },
+   "apply": {
+    "tool": "horizun_export",
+    "args": {
+     "format": "ifc",
+     "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.ifc",
+     "ifc_version": "IFC4",
+     "target_document": "LAB_HORIZUN_DOC",
+     "overwrite": true,
+     "dry_run": false,
+     "confirmation_token": "hz-757ca67b5b83f6761130ccc01e339f49",
+     "idempotency_key": "3e4c5cc7-47f9-4c58-b2bf-0390f253db42"
+    },
+    "duration_ms": 2968,
+    "error": null,
+    "text": "{\r\n  \"format\": \"ifc\",\r\n  \"api_accepted\": true,\r\n  \"files_verified\": 1,\r\n  \"requested_output_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC.ifc\",\r\n  \"files\": [\r\n    {\r\n      \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC.ifc\",\r\n      \"bytes\": 63249,\r\n      \"last_write_utc\": \"2026-09-15T14:38:29.4655333Z\"\r\n    }\r\n  ],\r\n  \"note\": \"One produced file was re-read from disk.\",\r\n  \"idempotency\": {\r\n    \"key\": \"3e4c5cc7-47f9-4c58-b2bf-0390f253db42\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"The durable claim and result were recorded; an identical retry will replay this answer.\"\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 13,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 2912\r\n  }\r\n}",
+    "structured": {
+     "format": "ifc",
+     "api_accepted": true,
+     "files_verified": 1,
+     "requested_output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.ifc",
+     "files": [
+      {
+       "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.ifc",
+       "bytes": 63249,
+       "last_write_utc": "2026-09-15T14:38:29.4655333Z"
+      }
+     ],
+     "note": "One produced file was re-read from disk.",
+     "idempotency": {
+      "key": "3e4c5cc7-47f9-4c58-b2bf-0390f253db42",
+      "status": "executed_once",
+      "command_executed_in_this_call": true,
+      "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+     },
+     "bridge_queue": {
+      "queued": false,
+      "ahead_at_admission": 0,
+      "waited_ms": 13,
+      "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+      "capacity": 16,
+      "execution_and_wait_ms": 2912
+     }
+    },
+    "isError": false
+   },
+   "duration_ms": 3019
+  },
+  "dwg": {
+   "request": {
+    "format": "dwg",
+    "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.dwg",
+    "view_ids": [
+     328681
+    ],
+    "acad_version": "2018",
+    "target_document": "LAB_HORIZUN_DOC",
+    "overwrite": true
+   },
+   "dry_run": {
+    "tool": "horizun_export",
+    "args": {
+     "format": "dwg",
+     "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.dwg",
+     "view_ids": [
+      328681
+     ],
+     "acad_version": "2018",
+     "target_document": "LAB_HORIZUN_DOC",
+     "overwrite": true,
+     "dry_run": true
+    },
+    "duration_ms": 51,
+    "error": null,
+    "text": "{\r\n  \"dry_run\": true,\r\n  \"format\": \"dwg\",\r\n  \"output_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC.dwg\",\r\n  \"planned_files\": [\r\n    \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC.dwg\"\r\n  ],\r\n  \"delivery\": null,\r\n  \"print_policy\": null,\r\n  \"manifest_path\": null,\r\n  \"views\": [\r\n    {\r\n      \"id\": 328681,\r\n      \"name\": \"LAB Planta Nivel 1\"\r\n    }\r\n  ],\r\n  \"schedule\": null,\r\n  \"overwrite\": true,\r\n  \"exporter_available\": true,\r\n  \"note\": \"Nothing was exported and no file was created.\",\r\n  \"document\": \"LAB_HORIZUN_DOC [C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt]\",\r\n  \"document_fingerprint\": \"d20058fd6184ce09\",\r\n  \"change_preview\": {\r\n    \"fingerprint\": \"bf66f64d9d5f13b4cc4f3214c1b06ae1fd30e3f349edfd001fb3116e383cfec4\",\r\n    \"total\": 1,\r\n    \"shown\": 1,\r\n    \"truncated\": false,\r\n    \"expected_cascade\": 0,\r\n    \"rows\": [\r\n      {\r\n        \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503e9\",\r\n        \"element_id\": null,\r\n        \"action\": \"modify\",\r\n        \"category\": \"view\",\r\n        \"type\": \"LAB Planta Nivel 1\",\r\n        \"captured_state\": {\r\n          \"role\": \"export_source\"\r\n        },\r\n        \"proposed_values\": null,\r\n        \"values_truncated\": false\r\n      }\r\n    ],\r\n    \"note\": \"Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values.\"\r\n  },\r\n  \"plan_resolved\": {\r\n    \"elements\": 1,\r\n    \"create\": 0,\r\n    \"modify\": 1,\r\n    \"delete\": 0,\r\n    \"expected_cascade\": 0,\r\n    \"fingerprint\": \"bf66f64d9d5f13b4cc4f3214c1b06ae1fd30e3f349edfd001fb3116e383cfec4\"\r\n  },\r\n  \"confirmation_token\": \"hz-15a503992d5a968a23a93bc0c28c3726\",\r\n  \"confirmation_expires_utc\": \"2026-09-15 14:48:29Z\",\r\n  \"confirmation_note\": \"To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds format, destination, options",
+    "structured": {
+     "dry_run": true,
+     "format": "dwg",
+     "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.dwg",
+     "planned_files": [
+      "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.dwg"
+     ],
+     "delivery": null,
+     "print_policy": null,
+     "manifest_path": null,
+     "views": [
+      {
+       "id": 328681,
+       "name": "LAB Planta Nivel 1"
+      }
+     ],
+     "schedule": null,
+     "overwrite": true,
+     "exporter_available": true,
+     "note": "Nothing was exported and no file was created.",
+     "document": "LAB_HORIZUN_DOC [C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt]",
+     "document_fingerprint": "d20058fd6184ce09",
+     "change_preview": {
+      "fingerprint": "bf66f64d9d5f13b4cc4f3214c1b06ae1fd30e3f349edfd001fb3116e383cfec4",
+      "total": 1,
+      "shown": 1,
+      "truncated": false,
+      "expected_cascade": 0,
+      "rows": [
+       {
+        "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503e9",
+        "element_id": null,
+        "action": "modify",
+        "category": "view",
+        "type": "LAB Planta Nivel 1",
+        "captured_state": {
+         "role": "export_source"
+        },
+        "proposed_values": null,
+        "values_truncated": false
+       }
+      ],
+      "note": "Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values."
+     },
+     "plan_resolved": {
+      "elements": 1,
+      "create": 0,
+      "modify": 1,
+      "delete": 0,
+      "expected_cascade": 0,
+      "fingerprint": "bf66f64d9d5f13b4cc4f3214c1b06ae1fd30e3f349edfd001fb3116e383cfec4"
+     },
+     "confirmation_token": "hz-15a503992d5a968a23a93bc0c28c3726",
+     "confirmation_expires_utc": "2026-09-15 14:48:29Z",
+     "confirmation_note": "To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds format, destination, options, the IDENTITY of every selected view and schedule as resolved now, and which destination files already exist - a source renamed or a file that appears under a no-overwrite approval refuses as a stale plan.",
+     "bridge_queue": {
+      "queued": false,
+      "ahead_at_admission": 0,
+      "waited_ms": 14,
+      "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+      "capacity": 16,
+      "execution_and_wait_ms": 17
+     }
+    },
+    "isError": false
+   },
+   "apply": {
+    "tool": "horizun_export",
+    "args": {
+     "format": "dwg",
+     "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.dwg",
+     "view_ids": [
+      328681
+     ],
+     "acad_version": "2018",
+     "target_document": "LAB_HORIZUN_DOC",
+     "overwrite": true,
+     "dry_run": false,
+     "confirmation_token": "hz-15a503992d5a968a23a93bc0c28c3726",
+     "idempotency_key": "cfd5bed2-cdbf-4f09-bc67-c9642facd524"
+    },
+    "duration_ms": 654,
+    "error": null,
+    "text": "{\r\n  \"format\": \"dwg\",\r\n  \"api_accepted\": true,\r\n  \"files_verified\": 1,\r\n  \"requested_output_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC.dwg\",\r\n  \"files\": [\r\n    {\r\n      \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC.dwg\",\r\n      \"bytes\": 19579,\r\n      \"last_write_utc\": \"2026-09-15T14:38:30Z\"\r\n    }\r\n  ],\r\n  \"note\": \"One produced file was re-read from disk.\",\r\n  \"idempotency\": {\r\n    \"key\": \"cfd5bed2-cdbf-4f09-bc67-c9642facd524\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"The durable claim and result were recorded; an identical retry will replay this answer.\"\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 634\r\n  }\r\n}",
+    "structured": {
+     "format": "dwg",
+     "api_accepted": true,
+     "files_verified": 1,
+     "requested_output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.dwg",
+     "files": [
+      {
+       "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.dwg",
+       "bytes": 19579,
+       "last_write_utc": "2026-09-15T14:38:30Z"
+      }
+     ],
+     "note": "One produced file was re-read from disk.",
+     "idempotency": {
+      "key": "cfd5bed2-cdbf-4f09-bc67-c9642facd524",
+      "status": "executed_once",
+      "command_executed_in_this_call": true,
+      "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+     },
+     "bridge_queue": {
+      "queued": false,
+      "ahead_at_admission": 0,
+      "waited_ms": 1,
+      "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+      "capacity": 16,
+      "execution_and_wait_ms": 634
+     }
+    },
+    "isError": false
+   },
+   "duration_ms": 705
+  },
+  "image": {
+   "request": {
+    "format": "image",
+    "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC_planta.png",
+    "view_ids": [
+     328681
+    ],
+    "image_pixels": 2048,
+    "target_document": "LAB_HORIZUN_DOC",
+    "overwrite": true
+   },
+   "dry_run": {
+    "tool": "horizun_export",
+    "args": {
+     "format": "image",
+     "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC_planta.png",
+     "view_ids": [
+      328681
+     ],
+     "image_pixels": 2048,
+     "target_document": "LAB_HORIZUN_DOC",
+     "overwrite": true,
+     "dry_run": true
+    },
+    "duration_ms": 51,
+    "error": null,
+    "text": "{\r\n  \"dry_run\": true,\r\n  \"format\": \"image\",\r\n  \"output_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC_planta.png\",\r\n  \"planned_files\": [\r\n    \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC_planta.png\"\r\n  ],\r\n  \"delivery\": null,\r\n  \"print_policy\": null,\r\n  \"manifest_path\": null,\r\n  \"views\": [\r\n    {\r\n      \"id\": 328681,\r\n      \"name\": \"LAB Planta Nivel 1\"\r\n    }\r\n  ],\r\n  \"schedule\": null,\r\n  \"overwrite\": true,\r\n  \"exporter_available\": true,\r\n  \"note\": \"Nothing was exported and no file was created.\",\r\n  \"document\": \"LAB_HORIZUN_DOC [C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt]\",\r\n  \"document_fingerprint\": \"d20058fd6184ce09\",\r\n  \"change_preview\": {\r\n    \"fingerprint\": \"bf66f64d9d5f13b4cc4f3214c1b06ae1fd30e3f349edfd001fb3116e383cfec4\",\r\n    \"total\": 1,\r\n    \"shown\": 1,\r\n    \"truncated\": false,\r\n    \"expected_cascade\": 0,\r\n    \"rows\": [\r\n      {\r\n        \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-000503e9\",\r\n        \"element_id\": null,\r\n        \"action\": \"modify\",\r\n        \"category\": \"view\",\r\n        \"type\": \"LAB Planta Nivel 1\",\r\n        \"captured_state\": {\r\n          \"role\": \"export_source\"\r\n        },\r\n        \"proposed_values\": null,\r\n        \"values_truncated\": false\r\n      }\r\n    ],\r\n    \"note\": \"Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values.\"\r\n  },\r\n  \"plan_resolved\": {\r\n    \"elements\": 1,\r\n    \"create\": 0,\r\n    \"modify\": 1,\r\n    \"delete\": 0,\r\n    \"expected_cascade\": 0,\r\n    \"fingerprint\": \"bf66f64d9d5f13b4cc4f3214c1b06ae1fd30e3f349edfd001fb3116e383cfec4\"\r\n  },\r\n  \"confirmation_token\": \"hz-183d2ada977768777b9fb11ec37438f4\",\r\n  \"confirmation_expires_utc\": \"2026-09-15 14:48:30Z\",\r\n  \"confirmation_note\": \"To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds format, dest",
+    "structured": {
+     "dry_run": true,
+     "format": "image",
+     "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC_planta.png",
+     "planned_files": [
+      "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC_planta.png"
+     ],
+     "delivery": null,
+     "print_policy": null,
+     "manifest_path": null,
+     "views": [
+      {
+       "id": 328681,
+       "name": "LAB Planta Nivel 1"
+      }
+     ],
+     "schedule": null,
+     "overwrite": true,
+     "exporter_available": true,
+     "note": "Nothing was exported and no file was created.",
+     "document": "LAB_HORIZUN_DOC [C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt]",
+     "document_fingerprint": "d20058fd6184ce09",
+     "change_preview": {
+      "fingerprint": "bf66f64d9d5f13b4cc4f3214c1b06ae1fd30e3f349edfd001fb3116e383cfec4",
+      "total": 1,
+      "shown": 1,
+      "truncated": false,
+      "expected_cascade": 0,
+      "rows": [
+       {
+        "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503e9",
+        "element_id": null,
+        "action": "modify",
+        "category": "view",
+        "type": "LAB Planta Nivel 1",
+        "captured_state": {
+         "role": "export_source"
+        },
+        "proposed_values": null,
+        "values_truncated": false
+       }
+      ],
+      "note": "Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values."
+     },
+     "plan_resolved": {
+      "elements": 1,
+      "create": 0,
+      "modify": 1,
+      "delete": 0,
+      "expected_cascade": 0,
+      "fingerprint": "bf66f64d9d5f13b4cc4f3214c1b06ae1fd30e3f349edfd001fb3116e383cfec4"
+     },
+     "confirmation_token": "hz-183d2ada977768777b9fb11ec37438f4",
+     "confirmation_expires_utc": "2026-09-15 14:48:30Z",
+     "confirmation_note": "To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds format, destination, options, the IDENTITY of every selected view and schedule as resolved now, and which destination files already exist - a source renamed or a file that appears under a no-overwrite approval refuses as a stale plan.",
+     "bridge_queue": {
+      "queued": false,
+      "ahead_at_admission": 0,
+      "waited_ms": 8,
+      "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+      "capacity": 16,
+      "execution_and_wait_ms": 12
+     }
+    },
+    "isError": false
+   },
+   "apply": {
+    "tool": "horizun_export",
+    "args": {
+     "format": "image",
+     "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC_planta.png",
+     "view_ids": [
+      328681
+     ],
+     "image_pixels": 2048,
+     "target_document": "LAB_HORIZUN_DOC",
+     "overwrite": true,
+     "dry_run": false,
+     "confirmation_token": "hz-183d2ada977768777b9fb11ec37438f4",
+     "idempotency_key": "87b8d8e1-a1c4-48c8-904b-810ea1381e90"
+    },
+    "duration_ms": 403,
+    "error": null,
+    "text": "Error: Revit returned from export (accepted=True), but no new or changed non-empty file was measured in C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports. Success is not claimed.",
+    "structured": {
+     "external_files_may_exist": true,
+     "rollback_available": false,
+     "planned_files": [
+      "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC_planta.png"
+     ]
+    },
+    "isError": true
+   },
+   "duration_ms": 454
+  },
+  "schedule_csv": {
+   "request": {
+    "format": "schedule_csv",
+    "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC_ambientes.csv",
+    "schedule_id": 328738,
+    "target_document": "LAB_HORIZUN_DOC",
+    "overwrite": true
+   },
+   "dry_run": {
+    "tool": "horizun_export",
+    "args": {
+     "format": "schedule_csv",
+     "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC_ambientes.csv",
+     "schedule_id": 328738,
+     "target_document": "LAB_HORIZUN_DOC",
+     "overwrite": true,
+     "dry_run": true
+    },
+    "duration_ms": 51,
+    "error": null,
+    "text": "{\r\n  \"dry_run\": true,\r\n  \"format\": \"schedule_csv\",\r\n  \"output_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC_ambientes.csv\",\r\n  \"planned_files\": [\r\n    \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC_ambientes.csv\"\r\n  ],\r\n  \"delivery\": null,\r\n  \"print_policy\": null,\r\n  \"manifest_path\": null,\r\n  \"views\": [],\r\n  \"schedule\": \"LAB Tabela de Ambientes\",\r\n  \"overwrite\": true,\r\n  \"exporter_available\": true,\r\n  \"note\": \"Nothing was exported and no file was created.\",\r\n  \"document\": \"LAB_HORIZUN_DOC [C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\horizun\\\\LAB_HORIZUN_DOC.rvt]\",\r\n  \"document_fingerprint\": \"d20058fd6184ce09\",\r\n  \"change_preview\": {\r\n    \"fingerprint\": \"9f26c40bf8e825c4cc12f2dad0d9ed68880a273912e9fe5ff7cdc00b2da0ec23\",\r\n    \"total\": 1,\r\n    \"shown\": 1,\r\n    \"truncated\": false,\r\n    \"expected_cascade\": 0,\r\n    \"rows\": [\r\n      {\r\n        \"unique_id\": \"1870701a-5645-43a6-aa36-d6518169b043-00050422\",\r\n        \"element_id\": null,\r\n        \"action\": \"modify\",\r\n        \"category\": \"schedule\",\r\n        \"type\": \"LAB Tabela de Ambientes\",\r\n        \"captured_state\": {\r\n          \"role\": \"export_source\"\r\n        },\r\n        \"proposed_values\": null,\r\n        \"values_truncated\": false\r\n      }\r\n    ],\r\n    \"note\": \"Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values.\"\r\n  },\r\n  \"plan_resolved\": {\r\n    \"elements\": 1,\r\n    \"create\": 0,\r\n    \"modify\": 1,\r\n    \"delete\": 0,\r\n    \"expected_cascade\": 0,\r\n    \"fingerprint\": \"9f26c40bf8e825c4cc12f2dad0d9ed68880a273912e9fe5ff7cdc00b2da0ec23\"\r\n  },\r\n  \"confirmation_token\": \"hz-1bdc99c09cf17026f19a74e6792fb7e8\",\r\n  \"confirmation_expires_utc\": \"2026-09-15 14:48:30Z\",\r\n  \"confirmation_note\": \"To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds format, destination, options, the IDENTITY o",
+    "structured": {
+     "dry_run": true,
+     "format": "schedule_csv",
+     "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC_ambientes.csv",
+     "planned_files": [
+      "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC_ambientes.csv"
+     ],
+     "delivery": null,
+     "print_policy": null,
+     "manifest_path": null,
+     "views": [],
+     "schedule": "LAB Tabela de Ambientes",
+     "overwrite": true,
+     "exporter_available": true,
+     "note": "Nothing was exported and no file was created.",
+     "document": "LAB_HORIZUN_DOC [C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt]",
+     "document_fingerprint": "d20058fd6184ce09",
+     "change_preview": {
+      "fingerprint": "9f26c40bf8e825c4cc12f2dad0d9ed68880a273912e9fe5ff7cdc00b2da0ec23",
+      "total": 1,
+      "shown": 1,
+      "truncated": false,
+      "expected_cascade": 0,
+      "rows": [
+       {
+        "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-00050422",
+        "element_id": null,
+        "action": "modify",
+        "category": "schedule",
+        "type": "LAB Tabela de Ambientes",
+        "captured_state": {
+         "role": "export_source"
+        },
+        "proposed_values": null,
+        "values_truncated": false
+       }
+      ],
+      "note": "Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values."
+     },
+     "plan_resolved": {
+      "elements": 1,
+      "create": 0,
+      "modify": 1,
+      "delete": 0,
+      "expected_cascade": 0,
+      "fingerprint": "9f26c40bf8e825c4cc12f2dad0d9ed68880a273912e9fe5ff7cdc00b2da0ec23"
+     },
+     "confirmation_token": "hz-1bdc99c09cf17026f19a74e6792fb7e8",
+     "confirmation_expires_utc": "2026-09-15 14:48:30Z",
+     "confirmation_note": "To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds format, destination, options, the IDENTITY of every selected view and schedule as resolved now, and which destination files already exist - a source renamed or a file that appears under a no-overwrite approval refuses as a stale plan.",
+     "bridge_queue": {
+      "queued": false,
+      "ahead_at_admission": 0,
+      "waited_ms": 5,
+      "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+      "capacity": 16,
+      "execution_and_wait_ms": 8
+     }
+    },
+    "isError": false
+   },
+   "apply": {
+    "tool": "horizun_export",
+    "args": {
+     "format": "schedule_csv",
+     "output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC_ambientes.csv",
+     "schedule_id": 328738,
+     "target_document": "LAB_HORIZUN_DOC",
+     "overwrite": true,
+     "dry_run": false,
+     "confirmation_token": "hz-1bdc99c09cf17026f19a74e6792fb7e8",
+     "idempotency_key": "9124f1af-84f4-400b-8219-3432e37a75f3"
+    },
+    "duration_ms": 50,
+    "error": null,
+    "text": "{\r\n  \"format\": \"schedule_csv\",\r\n  \"api_accepted\": true,\r\n  \"files_verified\": 1,\r\n  \"requested_output_path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC_ambientes.csv\",\r\n  \"files\": [\r\n    {\r\n      \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\tool-lab\\\\horizun\\\\exports\\\\LAB_HORIZUN_DOC_ambientes.csv\",\r\n      \"bytes\": 121,\r\n      \"last_write_utc\": \"2026-09-15T14:38:30.7628808Z\"\r\n    }\r\n  ],\r\n  \"note\": \"One produced file was re-read from disk.\",\r\n  \"idempotency\": {\r\n    \"key\": \"9124f1af-84f4-400b-8219-3432e37a75f3\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"The durable claim and result were recorded; an identical retry will replay this answer.\"\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 20\r\n  }\r\n}",
+    "structured": {
+     "format": "schedule_csv",
+     "api_accepted": true,
+     "files_verified": 1,
+     "requested_output_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC_ambientes.csv",
+     "files": [
+      {
+       "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC_ambientes.csv",
+       "bytes": 121,
+       "last_write_utc": "2026-09-15T14:38:30.7628808Z"
+      }
+     ],
+     "note": "One produced file was re-read from disk.",
+     "idempotency": {
+      "key": "9124f1af-84f4-400b-8219-3432e37a75f3",
+      "status": "executed_once",
+      "command_executed_in_this_call": true,
+      "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+     },
+     "bridge_queue": {
+      "queued": false,
+      "ahead_at_admission": 0,
+      "waited_ms": 1,
+      "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+      "capacity": 16,
+      "execution_and_wait_ms": 20
+     }
+    },
+    "isError": false
+   },
+   "duration_ms": 101
+  }
+ },
+ "files": {
+  "LAB_HORIZUN_DOC.dwg": {
+   "bytes": 19579,
+   "sha256": "18e7831c66f068ee53473c253da34ae02bfa7a4596e52c95e9a35f50c6c08413"
+  },
+  "LAB_HORIZUN_DOC.ifc": {
+   "bytes": 63249,
+   "sha256": "5d3fe64ee47567bbccaa921005a9337ae6f0b7b6da58986c39a3be2908241a92"
+  },
+  "LAB_HORIZUN_DOC.pcp": {
+   "bytes": 22632,
+   "sha256": "3e75ff3b4df18ad84c75ba3e78d53a6b162d0203acb8c45b47298eebc057aa2f"
+  },
+  "LAB_HORIZUN_DOC.pdf": {
+   "bytes": 71153,
+   "sha256": "55dfae59c1eaa43cb432a3182266a457d4a540c0eeb497c00502a70f7a250b8e"
+  },
+  "LAB_HORIZUN_DOC.pdf.manifest.json": {
+   "bytes": 15409,
+   "sha256": "3e94ba297a7f2617be6e092574cd7b75d64ff23947bb5663411063377dfba138"
+  },
+  "LAB_HORIZUN_DOC_ambientes.csv": {
+   "bytes": 121,
+   "sha256": "91c37df858e172276e6e3cbb68d7fabfeed5b8b3f71fb64d0bbe02a88be0c55a"
+  },
+  "LAB_HORIZUN_DOC_planta - Planta de piso - LAB Planta Nivel 1.png": {
+   "bytes": 19195,
+   "sha256": "a74272b5ecd8add5a360b25ec4c7869b19e5d1a93e3a21f0a86bcb569af797bc"
+  }
+ }
+}

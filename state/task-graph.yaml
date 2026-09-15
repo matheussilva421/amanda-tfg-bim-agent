@@ -439,8 +439,85 @@ tasks:
     title: Horizun hosted/documentation/export matrix
     depends_on:
     - P02-T10
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - composite fixture revit/lab/horizun/LAB_HORIZUN_DOC.rvt copied from the GOLDEN
+      baseline LAB_R00_EMPTY.rvt (sha256 15e0f70d...299d, 4366336 bytes) and grown
+      by the bridge only, every write a dry-run rehearsal followed by a single-use
+      confirmation_token
+    - 'DOOR hosted in a verified wall: kind=family_instance host_id=328657 (wall id
+      328657, 6 m, level 311) point [3.0,0,0] -> element_id 328667 type_id 49480 host_verified=true
+      present_after_commit=true 9 postconditions all_verified; independent re-read
+      is Portas / M_Folha unica / 0915 x 2134mm on Nivel 1 with bbox 2.4665..3.5335
+      x -0.125..1.015 x 0..2.21 m'
+    - 'WINDOW in the same wall: element_id 328669 type_id 33077 host_id 328657 host_verified=true
+      9 postconditions; independent re-read Janelas / M_Fixo / 0915 x 1220mm with
+      sill Z=0.9 m and opening 1.0425..1.9575 m'
+    - 'FLOOR PLAN view 328681 at scale 50 plus SECTION 328692 (scale 50), ELEVATION
+      328702 (plan_view_id=312 was required: without a ViewPlan the call refuses)
+      and 3D view 328712 - all seven manage_views actions Committed in one batch;
+      evidence tool-lab/horizun/results/t11-views-sheet.json'
+    - SHEET 328721 (name LAB Prancha 01, number LAB-01, metric A1 title type 4428)
+      with two VIEWPORTS 328727 (plan) and 328737 (section) placed by action batch,
+      viewport point in metres
+    - ROOM SCHEDULE 328738 LAB Tabela de Ambientes over OST_Rooms with fields Numero/Nome/Area/Nivel,
+      itemized, include_links=false; the bridge re-read the fields itself and body_rows=2;
+      a schedule whose name already exists is refused rather than overwritten
+    - 'DIMENSION committed_verified, not merely created: LinearDimension 328775 between
+      the two LINEAR end faces of wall 328657 with expected_value=6.0 m -> measured
+      internal 19.685039370078737 ft, presented 6000 (mm), references count 2, owner_view
+      312, type 261, every check all_match=true; second dimension 328776 across the
+      exterior_face/interior_face SURFACE references with expected_value=0.2 m ->
+      presented 200; both re-read through horizun_query_dimensions as host_only references
+      with 0 broken'
+    - TAGS committed_verified for door 328667 -> tag 328769 and window 328669 -> tag
+      328770 (types 1233 and 3796, both orphaned=false, extent_measured=true, matches_rehearsal=true);
+      the tag type, its existing count in the view and the measured values were bound
+      into the plan
+    - 'TAG GAP proven by rehearsal, not assumed: tagging the Room 328756 fails in
+      Revit with "There is no loaded tag type that can be used when tagging referenceToTag
+      with tagMode" for the resolved default type and for all three room tag types
+      present in the template (55349, 55347, 86959), in tag_mode by_category and multi_category
+      alike; the rehearsal transaction rolled back and proved nothing was left behind,
+      and the room tag is therefore a DEGRADED capability in this template, not a
+      bridge defect proven elsewhere'
+    - 'PDF export: 4 printable sources (sheet 328721 + plan 328681 + section 328692
+      + 3D 328712) combined into 71153 bytes, and emit_manifest=true wrote LAB_HORIZUN_DOC.pdf.manifest.json
+      with schema horizun.delivery-manifest/1, sha256 55dfae59c1eaa43cb432a3182266a457d4a540c0eeb497c00502a70f7a250b8e,
+      pages=4 page_count_verified=true and per-page geometry; the independent check
+      opened the file and counted 4 /Type /Page objects, header %PDF-1.6'
+    - 'IFC export retained for the later parser task: 63249 bytes sha256 5d3fe64ee47567bb...
+      with FILE_SCHEMA(IFC4) read from the produced file itself, ViewDefinition CoordinationView_V2.0'
+    - 'DWG export for the plan view with acad_version=2018: 19579 bytes sha256 18e7831c66f068ee...,
+      independent signature AC1032 which is exactly the 2018 format the request asked
+      for'
+    - 'SCHEDULE_CSV export of schedule 328738: 121 bytes sha256 91c37df858e17227...,
+      4 lines, header "LAB Tabela de Ambientes" and the data row D-01 / LAB_ROOM_DOC
+      / 16 m2 / Nivel 1 read back independently'
+    - 'IMAGE export is DEGRADED: horizun_export format=image wrote "LAB_HORIZUN_DOC_planta
+      - Planta de piso - LAB Planta Nivel 1.png" (19195 bytes, PNG signature, 2048x2048
+      px) but reported "no new or changed non-empty file was measured" because ExportImage
+      treats the supplied path as a stem and appends view type and name, so success
+      was NOT claimed; the mapped alternative horizun_capture_view returned captured=true
+      with image_path, bytes=14076, pixel 1600x1600, sha256 25b6e3a0980573e0..., detail_level
+      Coarse and spatial metadata whose calibration_status is requires_export_pixel_calibration
+      with world_to_pixel_verified=false, so no pixels-per-unit transform is claimed'
+    - 'COMPOSITE save/close/reopen on the real file: before the cycle element_count=3407
+      and scan health status=ok warnings_total=0; save returned saved_verified with
+      bytes_changed_on_disk=true and sha256 15e0f70d...->6a1544d3075f86219cec609010c2446608916f2be7b917386836e93b051d829c
+      at 4427776 bytes; close with activate_other=true closed by object identity (the
+      document is no longer in Application.Documents) after activating LAB_HORIZUN_FLOOR
+      as the decoy; reopen confirmed_active=true version_guard=checked upgraded_on_open=false;
+      after the cycle element_count is 3407 again, warnings_total 0, and 14 of 14
+      written elements come back from an independent query (328667 328669 328751 328756
+      328769 328770 328775 328776 328681 328692 328702 328712 328721 328738) with
+      5 walls on Nivel 1 and the two dimensions still reading 6000 and 200'
+    - 'warning delta across the whole task: warnings_total 0 before and 0 after every
+      write and after the composite reopen; the document never left scan health status=ok'
+    - evidence files tool-lab/horizun/results/t11-base.json, t11-host-dry.json, t11-host-apply.json,
+      t11-views-sheet.json, t11-schedule.json, t11-room-batch.json, t11-tags.json,
+      t11-dimension.json, t11-export-matrix.json, t11-artifact-verification.json and
+      t11-composite-persistence.json, with the exported artefacts under tool-lab/horizun/exports
   P02-T12:
     id: P02-T12
     phase: PHASE_02

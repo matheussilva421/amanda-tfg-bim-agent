@@ -1,0 +1,392 @@
+{
+  "schema": "horizun.delivery-manifest/1",
+  "utc": "2026-09-15T14:38:26.4597805Z",
+  "document": "LAB_HORIZUN_DOC",
+  "combined": true,
+  "files": [
+    {
+      "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\tool-lab\\horizun\\exports\\LAB_HORIZUN_DOC.pdf",
+      "bytes": 71153,
+      "sha256": "55dfae59c1eaa43cb432a3182266a457d4a540c0eeb497c00502a70f7a250b8e",
+      "pages": 4,
+      "expected_pages": 4,
+      "page_count_verified": true,
+      "page_geometry": [
+        {
+          "page": 1,
+          "width_points": 2381.04,
+          "height_points": 1683.72
+        },
+        {
+          "page": 2,
+          "width_points": 2915.4,
+          "height_points": 2916.0
+        },
+        {
+          "page": 3,
+          "width_points": 21.4504,
+          "height_points": 14400.0
+        },
+        {
+          "page": 4,
+          "width_points": 1141.2,
+          "height_points": 778.56
+        }
+      ],
+      "visual_approval": "not_performed",
+      "source_views": [
+        {
+          "id": 328721,
+          "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-00050411",
+          "name": "LAB Prancha 01",
+          "sheet_number": "LAB-01",
+          "revision_ids": []
+        },
+        {
+          "id": 328681,
+          "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503e9",
+          "name": "LAB Planta Nivel 1",
+          "sheet_number": null,
+          "revision_ids": []
+        },
+        {
+          "id": 328692,
+          "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-000503f4",
+          "name": "LAB Corte A",
+          "sheet_number": null,
+          "revision_ids": []
+        },
+        {
+          "id": 328712,
+          "unique_id": "1870701a-5645-43a6-aa36-d6518169b043-00050408",
+          "name": "LAB Vista 3D",
+          "sheet_number": null,
+          "revision_ids": []
+        }
+      ],
+      "page_verdicts": [
+        {
+          "page_width_points": 2381.04,
+          "page_height_points": 1683.72,
+          "page_width_mm": 839.98,
+          "page_height_mm": 593.98,
+          "tolerance_points": 2.0,
+          "titleblock_width_mm": 594.0,
+          "titleblock_height_mm": 840.0,
+          "page_exceeds_titleblock": false,
+          "expected_width_points": 1683.78,
+          "expected_height_points": 2381.102,
+          "paper_format": "verified",
+          "page_orientation_observed": "landscape",
+          "orientation": "requested_unverifiable",
+          "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+          "page_verified": true,
+          "page": 1,
+          "source_view_id": 328721
+        },
+        {
+          "page_width_points": 2915.4,
+          "page_height_points": 2916.0,
+          "page_width_mm": 1028.49,
+          "page_height_mm": 1028.7,
+          "tolerance_points": 2.0,
+          "paper_format": "requested_unverifiable",
+          "paper_format_reason": "Default prints the source at its own size and the source size was not readable",
+          "page_orientation_observed": "square",
+          "orientation": "requested_unverifiable",
+          "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+          "page_verified": true,
+          "page": 2,
+          "source_view_id": 328681
+        },
+        {
+          "page_width_points": 21.45,
+          "page_height_points": 14400.0,
+          "page_width_mm": 7.57,
+          "page_height_mm": 5080.0,
+          "tolerance_points": 2.0,
+          "paper_format": "requested_unverifiable",
+          "paper_format_reason": "Default prints the source at its own size and the source size was not readable",
+          "page_orientation_observed": "portrait",
+          "orientation": "requested_unverifiable",
+          "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+          "page_verified": true,
+          "page": 3,
+          "source_view_id": 328692
+        },
+        {
+          "page_width_points": 1141.2,
+          "page_height_points": 778.56,
+          "page_width_mm": 402.59,
+          "page_height_mm": 274.66,
+          "tolerance_points": 2.0,
+          "paper_format": "requested_unverifiable",
+          "paper_format_reason": "Default prints the source at its own size and the source size was not readable",
+          "page_orientation_observed": "landscape",
+          "orientation": "requested_unverifiable",
+          "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+          "page_verified": true,
+          "page": 4,
+          "source_view_id": 328712
+        }
+      ]
+    }
+  ],
+  "print_policy": {
+    "schema": "horizun.pdf-print-policy/1",
+    "options": [
+      {
+        "option": "paper_format",
+        "source": "defaulted",
+        "requested": null,
+        "applied": "Default",
+        "status": "requested_unverifiable",
+        "pages": [
+          "verified",
+          "requested_unverifiable",
+          "requested_unverifiable",
+          "requested_unverifiable"
+        ],
+        "reason": "Default prints the source at its own size and the source size was not readable"
+      },
+      {
+        "option": "orientation",
+        "source": "defaulted",
+        "requested": null,
+        "applied": "auto",
+        "status": "requested_unverifiable",
+        "pages": [
+          "requested_unverifiable",
+          "requested_unverifiable",
+          "requested_unverifiable",
+          "requested_unverifiable"
+        ],
+        "reason": "auto lets Revit choose per page; the observed orientation is reported, not judged"
+      },
+      {
+        "option": "placement",
+        "source": "defaulted",
+        "requested": null,
+        "applied": "center",
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "origin_offset_x",
+        "source": "defaulted",
+        "requested": null,
+        "applied": null,
+        "status": "not_applicable",
+        "reason": "offsets apply only with placement='lower_left'"
+      },
+      {
+        "option": "origin_offset_y",
+        "source": "defaulted",
+        "requested": null,
+        "applied": null,
+        "status": "not_applicable",
+        "reason": "offsets apply only with placement='lower_left'"
+      },
+      {
+        "option": "zoom",
+        "source": "defaulted",
+        "requested": null,
+        "applied": "fit_to_page",
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "zoom_percentage",
+        "source": "defaulted",
+        "requested": null,
+        "applied": null,
+        "status": "not_applicable",
+        "reason": "a percentage applies only with zoom='zoom'"
+      },
+      {
+        "option": "color_depth",
+        "source": "defaulted",
+        "requested": null,
+        "applied": "color",
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "raster_quality",
+        "source": "defaulted",
+        "requested": null,
+        "applied": "high",
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "export_quality_dpi",
+        "source": "defaulted",
+        "requested": null,
+        "applied": 600,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "always_use_raster",
+        "source": "defaulted",
+        "requested": null,
+        "applied": false,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "hide_crop_boundaries",
+        "source": "defaulted",
+        "requested": null,
+        "applied": true,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "hide_scope_boxes",
+        "source": "defaulted",
+        "requested": null,
+        "applied": true,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "hide_reference_planes",
+        "source": "defaulted",
+        "requested": null,
+        "applied": true,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "hide_unreferenced_view_tags",
+        "source": "defaulted",
+        "requested": null,
+        "applied": true,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "mask_coincident_lines",
+        "source": "defaulted",
+        "requested": null,
+        "applied": false,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "replace_halftone_with_thin_lines",
+        "source": "defaulted",
+        "requested": null,
+        "applied": false,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "view_links_in_blue",
+        "source": "defaulted",
+        "requested": null,
+        "applied": false,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "stop_on_error",
+        "source": "defaulted",
+        "requested": null,
+        "applied": true,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "export_in_background",
+        "source": "defaulted",
+        "requested": null,
+        "applied": false,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      }
+    ],
+    "pages": [
+      {
+        "page_width_points": 2381.04,
+        "page_height_points": 1683.72,
+        "page_width_mm": 839.98,
+        "page_height_mm": 593.98,
+        "tolerance_points": 2.0,
+        "titleblock_width_mm": 594.0,
+        "titleblock_height_mm": 840.0,
+        "page_exceeds_titleblock": false,
+        "expected_width_points": 1683.78,
+        "expected_height_points": 2381.102,
+        "paper_format": "verified",
+        "page_orientation_observed": "landscape",
+        "orientation": "requested_unverifiable",
+        "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+        "page_verified": true,
+        "page": 1,
+        "source_view_id": 328721
+      },
+      {
+        "page_width_points": 2915.4,
+        "page_height_points": 2916.0,
+        "page_width_mm": 1028.49,
+        "page_height_mm": 1028.7,
+        "tolerance_points": 2.0,
+        "paper_format": "requested_unverifiable",
+        "paper_format_reason": "Default prints the source at its own size and the source size was not readable",
+        "page_orientation_observed": "square",
+        "orientation": "requested_unverifiable",
+        "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+        "page_verified": true,
+        "page": 2,
+        "source_view_id": 328681
+      },
+      {
+        "page_width_points": 21.45,
+        "page_height_points": 14400.0,
+        "page_width_mm": 7.57,
+        "page_height_mm": 5080.0,
+        "tolerance_points": 2.0,
+        "paper_format": "requested_unverifiable",
+        "paper_format_reason": "Default prints the source at its own size and the source size was not readable",
+        "page_orientation_observed": "portrait",
+        "orientation": "requested_unverifiable",
+        "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+        "page_verified": true,
+        "page": 3,
+        "source_view_id": 328692
+      },
+      {
+        "page_width_points": 1141.2,
+        "page_height_points": 778.56,
+        "page_width_mm": 402.59,
+        "page_height_mm": 274.66,
+        "tolerance_points": 2.0,
+        "paper_format": "requested_unverifiable",
+        "paper_format_reason": "Default prints the source at its own size and the source size was not readable",
+        "page_orientation_observed": "landscape",
+        "orientation": "requested_unverifiable",
+        "orientation_reason": "auto lets Revit choose per page; the observed orientation is reported, not judged",
+        "page_verified": true,
+        "page": 4,
+        "source_view_id": 328712
+      }
+    ],
+    "composition": {
+      "pages_exceeding_titleblock": [],
+      "held": true,
+      "means": "with Default paper the page follows the sheet outline; a page larger than its titleblock proves something on the sheet lies outside it (inside the paper is not inside the frame)"
+    },
+    "verifiable_options_held": true,
+    "verified_from_output": [
+      "paper_format",
+      "orientation"
+    ],
+    "means": "verified = proved from the produced page geometry; requested_unverifiable = applied to the exporter, not provable from the file; verified_mismatch = the file contradicts the request."
+  },
+  "source_mapping": "export invocation mapping; page identity and visual content are not independently verified",
+  "visual_approval": "required",
+  "package_verified": true
+}
