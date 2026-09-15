@@ -1,0 +1,82 @@
+version: 1
+units:
+  ratio: normalized_0_1
+  percentage: percent
+dimensions:
+  program_compliance:
+    unit: ratio
+    bounds: [0, 1]
+    direction: higher
+    weight: 0.18
+    missing_data: exclude_and_rebalance
+    evidence_source: canonical program and hard-constraint report
+  privacy_security:
+    unit: ratio
+    bounds: [0, 1]
+    direction: higher
+    weight: 0.14
+    missing_data: exclude_and_rebalance
+    evidence_source: privacy transition evidence
+  adjacency:
+    unit: ratio
+    bounds: [0, 1]
+    direction: higher
+    weight: 0.10
+    missing_data: exclude_and_rebalance
+    evidence_source: Shapely relation evaluation
+  circulation:
+    unit: ratio
+    bounds: [0, 1]
+    direction: higher
+    weight: 0.10
+    missing_data: exclude_and_rebalance
+    evidence_source: traversable flow graph
+  accessibility:
+    unit: ratio
+    bounds: [0, 1]
+    direction: higher
+    weight: 0.12
+    missing_data: exclude_and_rebalance
+    evidence_source: accessible room and route checks
+  solar_heuristic:
+    unit: ratio
+    bounds: [0, 1]
+    direction: higher
+    weight: 0.06
+    missing_data: exclude_and_rebalance
+    evidence_source: project-labeled environmental heuristic
+  ventilation_heuristic:
+    unit: ratio
+    bounds: [0, 1]
+    direction: higher
+    weight: 0.06
+    missing_data: exclude_and_rebalance
+    evidence_source: project-labeled environmental heuristic
+  green_integration:
+    unit: ratio
+    bounds: [0, 1]
+    direction: higher
+    weight: 0.06
+    missing_data: exclude_and_rebalance
+    evidence_source: first-class external program geometry
+  compactness:
+    unit: ratio
+    bounds: [0, 1]
+    direction: higher
+    weight: 0.05
+    missing_data: exclude_and_rebalance
+    evidence_source: footprint and perimeter metrics
+  constructability:
+    unit: ratio
+    bounds: [0, 1]
+    direction: higher
+    weight: 0.08
+    missing_data: exclude_and_rebalance
+    evidence_source: block and room geometry checks
+  concept_fidelity:
+    unit: ratio
+    bounds: [0, 1]
+    direction: higher
+    weight: 0.05
+    missing_data: exclude_and_rebalance
+    evidence_source: configured archetype relationship evidence
