@@ -1,0 +1,14 @@
+schema_version: 1
+documents:
+- source_id: SRC-PROGRAM-001
+  filename: programa_necessidades.pdf
+  sha256: 11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17
+  mime_type: application/pdf
+  ingested_at: '2026-09-15T11:42:51.160273Z'
+  immutable_path: docs/source/programa_necessidades.pdf
+- source_id: SRC-TFG-001
+  filename: TFG_Amanda Fernandes_ENTREGA 15.06.2026.pdf
+  sha256: 16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e
+  mime_type: application/pdf
+  ingested_at: '2026-09-15T11:42:51.246679Z'
+  immutable_path: docs/source/TFG_Amanda Fernandes_ENTREGA 15.06.2026.pdf

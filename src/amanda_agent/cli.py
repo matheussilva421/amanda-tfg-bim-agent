@@ -7,6 +7,8 @@ a failing test rather than as an absent module.
 
 import typer
 
+from pathlib import Path
+
 app = typer.Typer(
     no_args_is_help=True,
     add_completion=False,
@@ -214,6 +216,46 @@ def rollback() -> None:
         err=True,
     )
     raise typer.Exit(code=2)
+
+
+@app.command()
+def ingest(
+    paths: list[str] = typer.Argument(
+        None, help="Source files to copy into the immutable local store."
+    ),
+    source_id: list[str] = typer.Option(
+        None, "--id", help="Stable source id such as SRC-PROGRAM-001."
+    ),
+) -> None:
+    """Copy source files into docs/source/ and update the source manifest."""
+    from .commands.doctor import project_root
+    from .commands.ingest import IngestError, ingest_sources
+
+    if not paths:
+        typer.echo(
+            "ingest needs at least one PATH, for example: "
+            "amanda-agent ingest programa_necessidades.pdf --id SRC-PROGRAM-001",
+            err=True,
+        )
+        raise typer.Exit(code=2)
+    try:
+        documents = ingest_sources(
+            project_root(),
+            [Path(value) for value in paths],
+            source_ids=list(source_id) if source_id else None,
+        )
+    except IngestError as exc:
+        typer.echo("ingest refused: " + str(exc), err=True)
+        raise typer.Exit(code=2)
+    for document in documents:
+        typer.echo(
+            "ingested     "
+            + document.source_id
+            + "  "
+            + document.sha256
+            + "  "
+            + document.immutable_path
+        )
 
 
 @app.command()

@@ -112,3 +112,60 @@ entries:
   - pytest tests/unit/test_human_gate.py -q -> 11 passed
   recorded_utc: '2026-09-15T11:25:17Z'
   note: null
+- task_id: P03-T01
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_source_manifest.py -q -> pass; sha256 streaming 1MiB; SourceDocument
+    round-trip
+  recorded_utc: '2026-09-15T11:43:16Z'
+  note: null
+- task_id: P03-T02
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_provenance.py -q -> pass; SOURCE_FACT sem source_id rejeitado;
+    hipotese nao pode alegar fact class
+  recorded_utc: '2026-09-15T11:43:17Z'
+  note: null
+- task_id: P03-T03
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_ingest_command.py tests/unit/test_ingest_cli.py -q -> 11
+    passed; copia byte-a-byte, duplicata por hash, conflito de path imutavel, manifesto
+    atomico, CLI ingest --id
+  recorded_utc: '2026-09-15T11:43:18Z'
+  note: null
+- task_id: P03-T05
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_pdf_adapter.py -q -> pass; pypdf==6.0.0; extracao preserva
+    pagina/hash; texto selecionavel tem prioridade sobre OCR
+  recorded_utc: '2026-09-15T11:43:24Z'
+  note: null
+- task_id: P03-T06
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_requirement_models.py -q -> pass; rejeita area zero/negativa,
+    NaN/inf, intervalo invalido, IDs duplicados; draft bloqueia campo desconhecido
+  recorded_utc: '2026-09-15T11:43:25Z'
+  note: null
+- task_id: P03-T10
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_site_models.py -q -> 9 passed; poligono auto-intersectante
+    rejeitado por Shapely; topography MISSING nao aceita cotas inventadas
+  recorded_utc: '2026-09-15T11:43:26Z'
+  note: null
+- task_id: P03-T11
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_site_geometry.py -q -> pass; geometria do terreno separada
+    dos dados verificados; area 24.135 m2 como afirmacao de fonte
+  recorded_utc: '2026-09-15T11:43:27Z'
+  note: null
+- task_id: P03-T12
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_regulation_registry.py -q -> pass; regra numerica nao verificada
+    nao compila como DERIVED_CONSTRAINT
+  recorded_utc: '2026-09-15T11:43:28Z'
+  note: null

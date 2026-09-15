@@ -341,8 +341,10 @@ tasks:
     plan_path: docs/superpowers/plans/03-project-intelligence.md
     title: Source manifest and hashing
     depends_on: []
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_source_manifest.py -q -> pass; sha256 streaming 1MiB;
+      SourceDocument round-trip
   P03-T02:
     id: P03-T02
     phase: PHASE_03
@@ -350,8 +352,10 @@ tasks:
     title: Provenance model
     depends_on:
     - P03-T01
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_provenance.py -q -> pass; SOURCE_FACT sem source_id rejeitado;
+      hipotese nao pode alegar fact class
   P03-T03:
     id: P03-T03
     phase: PHASE_03
@@ -359,8 +363,11 @@ tasks:
     title: Immutable ingest command
     depends_on:
     - P03-T02
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_ingest_command.py tests/unit/test_ingest_cli.py -q ->
+      11 passed; copia byte-a-byte, duplicata por hash, conflito de path imutavel,
+      manifesto atomico, CLI ingest --id
   P03-T04:
     id: P03-T04
     phase: PHASE_03
@@ -377,8 +384,10 @@ tasks:
     title: PDF text extraction adapter
     depends_on:
     - P03-T04
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_pdf_adapter.py -q -> pass; pypdf==6.0.0; extracao preserva
+      pagina/hash; texto selecionavel tem prioridade sobre OCR
   P03-T06:
     id: P03-T06
     phase: PHASE_03
@@ -386,8 +395,10 @@ tasks:
     title: Program requirement schema
     depends_on:
     - P03-T05
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_requirement_models.py -q -> pass; rejeita area zero/negativa,
+      NaN/inf, intervalo invalido, IDs duplicados; draft bloqueia campo desconhecido
   P03-T07:
     id: P03-T07
     phase: PHASE_03
@@ -422,8 +433,10 @@ tasks:
     title: Canonical site schema
     depends_on:
     - P03-T09
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_site_models.py -q -> 9 passed; poligono auto-intersectante
+      rejeitado por Shapely; topography MISSING nao aceita cotas inventadas
   P03-T11:
     id: P03-T11
     phase: PHASE_03
@@ -431,8 +444,10 @@ tasks:
     title: Compile known site facts and missing-data registry
     depends_on:
     - P03-T10
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_site_geometry.py -q -> pass; geometria do terreno separada
+      dos dados verificados; area 24.135 m2 como afirmacao de fonte
   P03-T12:
     id: P03-T12
     phase: PHASE_03
@@ -440,8 +455,10 @@ tasks:
     title: Regulation source registry
     depends_on:
     - P03-T11
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_regulation_registry.py -q -> pass; regra numerica nao
+      verificada nao compila como DERIVED_CONSTRAINT
   P03-T13:
     id: P03-T13
     phase: PHASE_03
