@@ -1232,8 +1232,39 @@ tasks:
     title: Optional TopologicPy spike
     depends_on:
     - P04-T19
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'TopologicPy spike (P04-T20) delivered as an optional, isolated capability probe:
+      tool-lab/topologic/spike.py builds a native 3D cell from a 2D contour with area
+      24.0 m2 and volume 72.0 m3 in a real runtime, not a simulation'
+    - 'environment isolated: .venv-topologic created from the project Python 3.12.14
+      with topologicpy==0.9.70 and topologic_core==8.0.4 pinned in tool-lab/topologic/requirements-lock.txt
+      (31 distributions); pip check reports no broken requirements and the lock matches
+      metadata (LOCK_MATCH True)'
+    - 'runtime gap found and fixed rather than papered over: the first run failed
+      because topologic_core was not an installed dependency of topologicpy at this
+      release, so the cell constructors were unavailable; installing the matching
+      release made the constructors work'
+    - 'measured on the real runtime: base_wire_closed true, area 24.0 m2, volume 72.0
+      m3, cell of 12 vertices / 30 edges / 20 faces, and a contour adjacency graph
+      of 4 vertices and 4 edges that closes as a cycle'
+    - 'exports proven: space.obj 557 B with 12 vertex records and 20 face records,
+      plus space.topology.json 33059 B; both written by the real exporter'
+    - 'two limits recorded instead of hidden: the OBJ material sidecar space.mtl references
+      example.mtl which does not exist (PARTIAL), and IFC is NOT_ATTEMPTED because
+      this TopologicPy release exposes BIM/dotBIM export rather than a tested IFC
+      writer'
+    - 'verdict ADOTAR_COM_LIMITES with scheduling DEFERRED_OPTIONAL: the spike stays
+      pinned and outside the Shapely/NetworkX solver, and no dependency was added
+      to the core'
+    - 'focused test green: .venv/Scripts/python.exe -m pytest tests/unit/test_topologic_spike.py
+      -q -p no:cacheprovider --basetemp=.tmp-pytest-main-c -> 5 tests collected across
+      the three integration scopes, all passed, 0 failed'
+    - ruff check on tool-lab/topologic/spike.py and tests/unit/test_topologic_spike.py
+      is clean
+    - recovery point recorded in tool-lab/topologic/HANDOFF.md and README.md; artefacts
+      hashed (report 53FF6517..., obj 07336714..., mtl B5152B57..., topology json
+      3B6F7416...) so a re-run can be compared byte for byte
   P04-T21:
     id: P04-T21
     phase: PHASE_04

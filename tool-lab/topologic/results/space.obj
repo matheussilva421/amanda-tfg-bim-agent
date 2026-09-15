@@ -1,0 +1,37 @@
+# topologicpy The version that you are using (0.9.70) is EQUAL TO the latest version (0.9.70) available on PyPI.
+mtllib example.mtl
+
+g Untitled_000
+v 6.0 -0.0 4.0
+v 0.0 -0.0 0.0
+v 6.0 -0.0 0.0
+v 0.0 -0.0 4.0
+v 6.0 -1.5 2.0
+v 3.0 -1.5 0.0
+v 3.0 -1.5 4.0
+v 0.0 -1.5 2.0
+v 6.0 -3.0 0.0
+v 6.0 -3.0 4.0
+v 0.0 -3.0 0.0
+v 0.0 -3.0 4.0
+usemtl color_000
+f 1 2 3
+f 1 4 2
+f 5 3 1
+f 6 2 3
+f 7 1 4
+f 8 4 2
+f 5 9 3
+f 1 10 5
+f 6 11 2
+f 3 9 6
+f 7 10 1
+f 4 12 7
+f 8 12 4
+f 2 11 8
+f 5 10 9
+f 6 9 11
+f 7 12 10
+f 8 11 12
+f 10 11 9
+f 10 12 11

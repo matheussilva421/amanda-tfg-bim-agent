@@ -1,0 +1,103 @@
+{
+  "assessment": {
+    "capability_status": "PROVEN_OPTIONAL",
+    "proven_value": [
+      "native 3D cell construction from a 2D contour",
+      "native area and volume measurement",
+      "topology counts and contour adjacency graph",
+      "OBJ and TopologicPy topology JSON export"
+    ],
+    "recommendation": "ADOTAR_COM_LIMITES",
+    "scheduling_decision": "DEFERRED_OPTIONAL"
+  },
+  "dependencies": {
+    "lark": "1.3.1",
+    "nbformat": "5.11.1",
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "plotly": "7.0.0",
+    "requests": "2.34.2",
+    "scipy": "1.18.1",
+    "shapely": "2.1.2",
+    "topologic_core": "8.0.4",
+    "topologicpy": "0.9.70"
+  },
+  "exports": {
+    "ifc": {
+      "reason": "This TopologicPy release exposes BIM/dotBIM export, not a tested IFC writer.",
+      "status": "NOT_ATTEMPTED"
+    },
+    "obj": {
+      "bytes": 557,
+      "face_records": 20,
+      "material_library": {
+        "generated_sidecar": "tool-lab\\topologic\\results\\space.mtl",
+        "reference_exists": false,
+        "referenced_name": "example.mtl",
+        "status": "PARTIAL"
+      },
+      "path": "tool-lab\\topologic\\results\\space.obj",
+      "status": "PASS",
+      "vertex_records": 12
+    },
+    "topology_json": {
+      "bytes": 33059,
+      "path": "tool-lab\\topologic\\results\\space.topology.json",
+      "status": "PASS"
+    }
+  },
+  "input": {
+    "contour_2d_m": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        6.0,
+        0.0
+      ],
+      [
+        6.0,
+        4.0
+      ],
+      [
+        0.0,
+        4.0
+      ]
+    ],
+    "height_m": 3.0,
+    "space_kind": "rectangular_compartment",
+    "units": "m"
+  },
+  "measurements": {
+    "area_m2": 24.0,
+    "area_times_height_m3": 72.0,
+    "height_m": 3.0,
+    "volume_m3": 72.0
+  },
+  "runtime": {
+    "executable": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\.venv-topologic\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python_implementation": "CPython",
+    "python_version": "3.12.14"
+  },
+  "spike": "topologicpy_space_from_2d_contour",
+  "status": "PASS",
+  "timestamp_utc": "2026-09-15T16:51:35Z",
+  "topologicpy": {
+    "core_version": "8.0.4",
+    "imported": true,
+    "license": "GNU Lesser General Public License v3 (package metadata)",
+    "module": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\.venv-topologic\\Lib\\site-packages\\topologicpy\\__init__.py",
+    "version": "0.9.70"
+  },
+  "topology": {
+    "base_wire_closed": true,
+    "edges": 30,
+    "faces": 20,
+    "graph_edges": 4,
+    "graph_is_closed_cycle": true,
+    "graph_vertices": 4,
+    "vertices": 12
+  }
+}
