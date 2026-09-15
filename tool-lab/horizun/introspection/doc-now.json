@@ -1,0 +1,37 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\r\n  \"title\": \"LAB_R00_EMPTY\",\r\n  \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\baseline\\\\LAB_R00_EMPTY.rvt\",\r\n  \"is_workshared\": false,\r\n  \"is_family_document\": false,\r\n  \"revit_version\": \"2027\",\r\n  \"revit_build\": \"27.2.0.39\",\r\n  \"element_count\": 3316,\r\n  \"shared_coordinates\": {\r\n    \"active_location\": \"Terreno padrão\",\r\n    \"east_west_mm\": 0.0,\r\n    \"north_south_mm\": 0.0,\r\n    \"elevation_mm\": 0.0,\r\n    \"angle_to_true_north_degrees\": 0.0\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 7\r\n  }\r\n}"
+      }
+    ],
+    "isError": false,
+    "structuredContent": {
+      "title": "LAB_R00_EMPTY",
+      "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\baseline\\LAB_R00_EMPTY.rvt",
+      "is_workshared": false,
+      "is_family_document": false,
+      "revit_version": "2027",
+      "revit_build": "27.2.0.39",
+      "element_count": 3316,
+      "shared_coordinates": {
+        "active_location": "Terreno padrão",
+        "east_west_mm": 0.0,
+        "north_south_mm": 0.0,
+        "elevation_mm": 0.0,
+        "angle_to_true_north_degrees": 0.0
+      },
+      "bridge_queue": {
+        "queued": false,
+        "ahead_at_admission": 0,
+        "waited_ms": 1,
+        "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+        "capacity": 16,
+        "execution_and_wait_ms": 7
+      }
+    }
+  }
+}

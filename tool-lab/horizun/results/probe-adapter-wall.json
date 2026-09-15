@@ -1,0 +1,298 @@
+{
+  "logical_id": "LIVE-WALL-ADAPTER-DACFE5",
+  "reported_success": true,
+  "tool": "horizun_create_elements",
+  "error": null,
+  "payload": {
+    "dry_run": false,
+    "transaction_status": "Committed",
+    "transaction_name": "Horizun: create elements",
+    "requested": 1,
+    "created_verified": 1,
+    "rows": [
+      {
+        "index": 0,
+        "kind": "wall",
+        "element_id": 328666,
+        "unique_id": "4c348be7-e24f-4fb8-956d-9697124289fa-000503da",
+        "present_after_commit": true,
+        "verified": true,
+        "postconditions": {
+          "all_verified": true,
+          "checked": 16,
+          "all_measured": true,
+          "required": [
+            "end_x",
+            "end_y",
+            "end_z",
+            "flip",
+            "height",
+            "kind",
+            "level_elevation",
+            "level_id",
+            "offset",
+            "parameters.ALL_MODEL_INSTANCE_COMMENTS",
+            "parameters.ALL_MODEL_MARK",
+            "start_x",
+            "start_y",
+            "start_z",
+            "structural",
+            "type_id"
+          ],
+          "missing": [],
+          "unexpected": [],
+          "verified_means": "true only when EXACTLY the required properties were checked - each once, none missing, none substituted - and every one of them was RE-READ from the committed model and matched. A property that could not be read counts as unmeasured, never as agreement, and an empty checklist is not a pass.",
+          "properties": [
+            {
+              "property": "kind",
+              "measured": true,
+              "requested": "wall",
+              "found_in_committed_model": "wall",
+              "matches": true
+            },
+            {
+              "property": "type_id",
+              "measured": true,
+              "requested": 396,
+              "found_in_committed_model": 396,
+              "matches": true
+            },
+            {
+              "property": "level_id",
+              "measured": true,
+              "requested": 311,
+              "found_in_committed_model": 311,
+              "matches": true
+            },
+            {
+              "property": "level_elevation",
+              "measured": true,
+              "requested": 0.0,
+              "found_in_committed_model": 0.0,
+              "matches": true,
+              "unit": "feet",
+              "tolerance": 1e-06,
+              "method": "Revit parameter/location/sketch/face readback"
+            },
+            {
+              "property": "start_x",
+              "measured": true,
+              "requested": 0.0,
+              "found_in_committed_model": 0.0,
+              "matches": true,
+              "unit": "feet",
+              "tolerance": 1e-06,
+              "method": "Revit parameter/location/sketch/face readback"
+            },
+            {
+              "property": "start_y",
+              "measured": true,
+              "requested": 0.0,
+              "found_in_committed_model": 0.0,
+              "matches": true,
+              "unit": "feet",
+              "tolerance": 1e-06,
+              "method": "Revit parameter/location/sketch/face readback"
+            },
+            {
+              "property": "start_z",
+              "measured": true,
+              "requested": 0.0,
+              "found_in_committed_model": 0.0,
+              "matches": true,
+              "unit": "feet",
+              "tolerance": 1e-06,
+              "method": "Revit parameter/location/sketch/face readback"
+            },
+            {
+              "property": "end_x",
+              "measured": true,
+              "requested": 16.404199475065617,
+              "found_in_committed_model": 16.404199475065617,
+              "matches": true,
+              "unit": "feet",
+              "tolerance": 1e-06,
+              "method": "Revit parameter/location/sketch/face readback"
+            },
+            {
+              "property": "end_y",
+              "measured": true,
+              "requested": 0.0,
+              "found_in_committed_model": 0.0,
+              "matches": true,
+              "unit": "feet",
+              "tolerance": 1e-06,
+              "method": "Revit parameter/location/sketch/face readback"
+            },
+            {
+              "property": "end_z",
+              "measured": true,
+              "requested": 0.0,
+              "found_in_committed_model": 0.0,
+              "matches": true,
+              "unit": "feet",
+              "tolerance": 1e-06,
+              "method": "Revit parameter/location/sketch/face readback"
+            },
+            {
+              "property": "height",
+              "measured": true,
+              "requested": 9.84251968503937,
+              "found_in_committed_model": 9.84251968503937,
+              "matches": true,
+              "unit": "feet",
+              "tolerance": 1e-06,
+              "method": "Revit parameter/location/sketch/face readback"
+            },
+            {
+              "property": "offset",
+              "measured": true,
+              "requested": 0.0,
+              "found_in_committed_model": 0.0,
+              "matches": true,
+              "unit": "feet",
+              "tolerance": 1e-06,
+              "method": "Revit parameter/location/sketch/face readback"
+            },
+            {
+              "property": "flip",
+              "measured": true,
+              "requested": false,
+              "found_in_committed_model": false,
+              "matches": true
+            },
+            {
+              "property": "structural",
+              "measured": true,
+              "requested": false,
+              "found_in_committed_model": false,
+              "matches": true
+            },
+            {
+              "property": "parameters.ALL_MODEL_MARK",
+              "measured": true,
+              "requested": "LIVE-WALL-ADAPTER-DACFE5",
+              "found_in_committed_model": "LIVE-WALL-ADAPTER-DACFE5",
+              "matches": true
+            },
+            {
+              "property": "parameters.ALL_MODEL_INSTANCE_COMMENTS",
+              "measured": true,
+              "requested": "Amanda LIVE-WALL-ADAPTER-DACFE5 (revit.create_wall)",
+              "found_in_committed_model": "Amanda LIVE-WALL-ADAPTER-DACFE5 (revit.create_wall)",
+              "matches": true
+            }
+          ]
+        },
+        "source_comparison": null,
+        "geometry_base_z_feet": 0.0,
+        "geometry_top_z_feet": 9.84251968503937,
+        "kind_verified": true,
+        "type_verified": true,
+        "structural_type_verified": true,
+        "actual_class": "Wall",
+        "actual_category": "Paredes",
+        "structural_verified": {
+          "requested": false,
+          "read": false,
+          "verified": true
+        }
+      }
+    ],
+    "verification": {
+      "intended": 1,
+      "actual": 1,
+      "verified": true
+    },
+    "application": {
+      "state": "verified_applied",
+      "fully_applied": true,
+      "transaction_status": "Committed",
+      "requested": 1,
+      "applied": 1,
+      "verified": 1,
+      "unresolved": 0,
+      "failed": 0,
+      "unknown": 0,
+      "state_means": "verified_applied: every requested change is in the model and was re-read after the commit. This is the only state besides no_op that lets a plan keep its work."
+    },
+    "tabular": null,
+    "idempotency": {
+      "key": "efe05ae3-6ade-4641-a963-d18df72d1dee",
+      "status": "executed_once",
+      "command_executed_in_this_call": true,
+      "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+    },
+    "bridge_queue": {
+      "queued": false,
+      "ahead_at_admission": 0,
+      "waited_ms": 1,
+      "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+      "capacity": 16,
+      "execution_and_wait_ms": 28
+    },
+    "write_tool": "horizun_create_elements",
+    "logical_id": "LIVE-WALL-ADAPTER-DACFE5",
+    "readback_tool": "horizun_query_model",
+    "readback_query": {
+      "parameters": [
+        {
+          "name": "ALL_MODEL_MARK",
+          "operator": "equals",
+          "value": "LIVE-WALL-ADAPTER-DACFE5"
+        }
+      ],
+      "return_fields": [
+        "unique_id",
+        "name",
+        "category",
+        "type",
+        "type_id",
+        "level",
+        "source_kind",
+        "source_model",
+        "source_reference"
+      ],
+      "response_mode": "compact",
+      "cache_mode": "bypass"
+    },
+    "plan": {
+      "dry_run_tool": "horizun_create_elements",
+      "dry_run_key": "efe05ae3-6ade-4641-a963-d18df72d1dee:dry-run",
+      "plan_resolved": {
+        "elements": 1,
+        "create": 1,
+        "modify": 0,
+        "delete": 0,
+        "expected_cascade": 0,
+        "fingerprint": "11dfece866f7e0de1c6369eb1827d01fdffc32fb1b6498744474b50bddc189bd"
+      },
+      "change_preview_fingerprint": "11dfece866f7e0de1c6369eb1827d01fdffc32fb1b6498744474b50bddc189bd",
+      "confirmation_expires_utc": "2026-09-15 21:40:37Z"
+    },
+    "readback_rows": [
+      {
+        "element_id": 328666,
+        "unique_id": "4c348be7-e24f-4fb8-956d-9697124289fa-000503da",
+        "source_reference": null,
+        "category": "Paredes",
+        "name": "Interior - 138 mm Divisória (1-hr)",
+        "type": "Interior - 138 mm Divisória (1-hr)",
+        "type_id": 396,
+        "level": "Nível 1",
+        "source_kind": "host",
+        "source_model": "LAB_ROUTE_PROBE"
+      }
+    ],
+    "element_id": 328666,
+    "unique_id": "4c348be7-e24f-4fb8-956d-9697124289fa-000503da",
+    "name": "Interior - 138 mm Divisória (1-hr)",
+    "category": "Paredes",
+    "type": "Interior - 138 mm Divisória (1-hr)",
+    "type_id": 396,
+    "level": "Nível 1",
+    "source_kind": "host",
+    "source_model": "LAB_ROUTE_PROBE",
+    "readback_verified": true
+  }
+}

@@ -73,10 +73,12 @@ from .privacy import (
     privacy_penalty,
     score_privacy_gradient,
 )
+from .refinement import SCORE_DIMENSIONS, RefinementInputError, refine_run
 
 __all__ = [
     "DIRECT_PUBLIC_RESIDENTIAL_PENALTY",
     "PINNED_SHAPELY_VERSION",
+    "SCORE_DIMENSIONS",
     "AdjacencyResult",
     "AdjacencyStatus",
     "ArchetypeName",
@@ -95,6 +97,7 @@ __all__ = [
     "MacroSeed",
     "MetricSet",
     "PrivacyGradientResult",
+    "RefinementInputError",
     "ViolationSeverity",
     "adjacency_penalty",
     "analyze_route",
@@ -128,6 +131,7 @@ __all__ = [
     "overlaps",
     "polygon_contains",
     "privacy_penalty",
+    "refine_run",
     "score_privacy_gradient",
     "soft_penalties_from_violations",
     "validate_adjacency",

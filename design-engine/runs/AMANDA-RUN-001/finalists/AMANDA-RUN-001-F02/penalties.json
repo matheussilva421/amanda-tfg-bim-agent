@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "solution_id": "AMANDA-RUN-001-F02",
+  "hard_violations": [],
+  "soft_penalties": {
+    "privacy_gradient": 1.0,
+    "adjacency_distance": 0.05840875326378692,
+    "circulation": 0.16666666666666663,
+    "compactness": 0.9385835537157367
+  },
+  "block_checks": [
+    {
+      "code": "gross_area_budget",
+      "message": "gross-area budget is unavailable at this resolution",
+      "severity": "INFO",
+      "status": "NOT_EVALUATED",
+      "resolution": "BLOCK",
+      "expected": null,
+      "actual": null,
+      "evidence": [],
+      "penalty": 0.0
+    },
+    {
+      "code": "required_rooms",
+      "message": "expanded room instances are unavailable at this resolution",
+      "severity": "INFO",
+      "status": "NOT_EVALUATED",
+      "resolution": "BLOCK",
+      "expected": null,
+      "actual": null,
+      "evidence": [],
+      "penalty": 0.0
+    },
+    {
+      "code": "accessible_rooms",
+      "message": "expanded accessible rooms are unavailable at this resolution",
+      "severity": "INFO",
+      "status": "NOT_EVALUATED",
+      "resolution": "BLOCK",
+      "expected": null,
+      "actual": null,
+      "evidence": [],
+      "penalty": 0.0
+    }
+  ],
+  "room_checks": [],
+  "recheck_status": "PASS"
+}

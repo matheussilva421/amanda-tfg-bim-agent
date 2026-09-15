@@ -1,0 +1,132 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\r\n  \"mode\": \"sync\",\r\n  \"executed\": true,\r\n  \"source\": {\r\n    \"from\": \"code\",\r\n    \"path\": null,\r\n    \"chars\": 610,\r\n    \"decoded_as\": null,\r\n    \"newlines_normalized\": false,\r\n    \"includes\": [],\r\n    \"helpers_version\": 1,\r\n    \"read_from_disk_by_this_call\": false,\r\n    \"note\": \"Source is frozen before durable admission. Same key with different source is refused with both hashes; queued work executes its admitted snapshot. SHA-256 covers UTF-8 of the decoded submitted text (file newlines normalized).\"\r\n  },\r\n  \"dialogs\": [],\r\n  \"failures\": [],\r\n  \"revit_raised_observed\": true,\r\n  \"revit_raised_note\": \"Everything Revit raised while this script ran. A dialog means Revit stopped for a human and the bridge answered it - by default Cancel, which is why an open comes back to the script as 'Opening was canceled' with no other clue. 'while' is the script's OWN last checkpoint() label at that instant: the bridge cannot see which API call was in flight and does not pretend to, so checkpoint per item if you want each dialog attributed. From inside the script, revit_raised(since) returns the same records DURING the run - take len(revit_raised()) before an open and pass it back after to get exactly what that open raised. To let an open continue past its dialog instead of cancelling: `with dialog_answer('dismiss'): doc = app.OpenDocumentFile(...)` - around THAT call only.\",\r\n  \"dialogs_observed\": true,\r\n  \"failures_observed\": true,\r\n  \"observation_complete\": true,\r\n  \"observation_note\": \"Both Revit dialog and failure-processing channels were observed.\",\r\n  \"dialogs_subscribed\": true,\r\n  \"failures_subscribed\": true,\r\n  \"dialogs_processing_complete\": true,\r\n  \"failures_processing_complete\": true,\r\n  \"observer_errors\": [],\r\n  \"output\": {\r\n    \"attrs\": [\r\n      \"Compare\",\r\n      \"CompareTo\",\r\n      \"Equals\",\r\n      \"GetHashCode\",\r\n      \"GetType\",\r\n      \"InvalidElementId\",\r\n      \"MemberwiseClone\",\r\n      \"Parse\",\r\n      \"ReferenceEquals\",\r\n      \"ToString\",\r\n      \"TryParse\",\r\n      \"Value\"\r\n    ],\r\n    \"values\": {\r\n      \"ToString\": \"311\",\r\n      \"Value\": \"311\"\r\n    }\r\n  },\r\n  \"output_kind\": \"structure\",\r\n  \"output_note\": null,\r\n  \"stdout_capture_error\": null,\r\n  \"evidence_status\": \"completed_unverified\",\r\n  \"script_reported_status\": null,\r\n  \"host_verified\": false,\r\n  \"evidence_summary\": null,\r\n  \"evidence_structured\": false,\r\n  \"evidence_warnings\": [\r\n    \"__output__ is an object but carries no 'status' field, so it does not follow the evidence contract and is reported completed_unverified. Recommended shape: {\\\"status\\\":\\\"verified|completed_unverified|partial|failed\\\",\\\"summary\\\":\\\"...\\\",\\\"created_ids\\\":[],\\\"modified_ids\\\":[],\\\"deleted_ids\\\":[],\\\"verification\\\":{\\\"checked\\\":true,\\\"evidence\\\":[]},\\\"warnings\\\":[]}\"\r\n  ],\r\n  \"evidence_contract\": \"self_reported_verified means the SCRIPT declared verified and attached evidence - the bridge did NOT re-read the model to confirm it. completed_unverified means it finished without anything structured to classify (a verified claim with no evidence is downgraded to this). partial means part happened or part verified. failed is the script's own failure report. There is no 'verified' state on this path at all: that word is reserved for typed commands, which the host re-reads after the commit. Recommended __output__ shape: {\\\"status\\\":\\\"verified|completed_unverified|partial|failed\\\",\\\"summary\\\":\\\"...\\\",\\\"created_ids\\\":[],\\\"modified_ids\\\":[],\\\"deleted_ids\\\":[],\\\"verification\\\":{\\\"checked\\\":true,\\\"evidence\\\":[]},\\\"warnings\\\":[]}\",\r\n  \"host_verification_note\": \"SELF-REPORTED, NOT HOST-VERIFIED. Typed commands are re-read from the model by the bridge after the commit; arbitrary Python is not. self_reported_verified means the SCRIPT said it checked and attached evidence - the host did not confirm any of it, and there is no value of any field here that constitutes a bridge guarantee for Python. Treat the evidence as the script's testimony: read it, and re-read the model with a typed query if the outcome matters.\",\r\n  \"typed_alternatives\": null,\r\n  \"printed\": null,\r\n  \"transaction_left_open\": false,\r\n  \"transaction_policy\": \"REQUIRED of any script that opens a Transaction: wrap it in try/finally and Commit() or RollBack() in the finally. This command CANNOT close it for you - the Revit API exposes no handle on a transaction opened by other code, so there is no implementation that would satisfy a promise to do it. WHAT IS ENFORCED: Document.IsModifiable is re-read after your script, and a document left modifiable makes this command FAIL with transaction_left_open=true. WHAT ACTUALLY HAPPENS TO THE ORPHAN, measured on Revit 2026 rather than assumed: when this handler returns to Revit, Revit ends the transaction itself and its status becomes RolledBack - verified by holding a reference to it across calls and reading GetStatus(). So the DOCUMENT recovers, and your script's writes DO NOT: everything inside that transaction is discarded, which is why leaving one open is reported as a failure rather than a warning. That cleanup is a host behaviour this command observed, not a guarantee it offers - do not build on it.\",\r\n  \"job_id\": \"20260915-181725-535-cc26eb\",\r\n  \"job_file\": \"C:\\\\Users\\\\slvma\\\\.horizun\\\\jobs\\\\20260915-181725-535-cc26eb.jsonl\",\r\n  \"checkpoints\": 0,\r\n  \"warning_delta\": {\r\n    \"before\": {\r\n      \"observed\": true,\r\n      \"count\": 0,\r\n      \"truncated\": false,\r\n      \"signatures\": []\r\n    },\r\n    \"after\": {\r\n      \"observed\": true,\r\n      \"count\": 0,\r\n      \"truncated\": false,\r\n      \"signatures\": []\r\n    },\r\n    \"persistent_warning_comparison_complete\": true,\r\n    \"new\": [],\r\n    \"resolved\": [],\r\n    \"suppressed_warning_coverage\": \"unknown\",\r\n    \"note\": \"GetWarnings compares persistent warnings on the captured document. A script may suppress transient failures; an empty delta does not prove no warnings were raised.\"\r\n  },\r\n  \"host_observations\": {\r\n    \"scope\": \"reported_ids_existence_and_category_only\",\r\n    \"reported\": null,\r\n    \"checked\": 0,\r\n    \"truncated\": false,\r\n    \"rows\": [],\r\n    \"geometry_verified\": false,\r\n    \"creation_by_this_script_verified\": false\r\n  },\r\n  \"execution_sha256\": \"01a0a860e155d84a02c646b8028ee31b668034dbc09a65f4bcd9a947a4148afc\",\r\n  \"runtime\": {\r\n    \"python\": \"3.4.2.0\",\r\n    \"clr\": \"10.0.11\",\r\n    \"helpers_version\": 1\r\n  },\r\n  \"output_truncated\": false,\r\n  \"output_original_chars\": null,\r\n  \"output_full_path\": null,\r\n  \"idempotency\": {\r\n    \"key\": \"660eda48-8842-40dd-a3da-c101e49b219c\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"The durable claim and result were recorded; an identical retry will replay this answer.\"\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 2,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 110\r\n  }\r\n}"
+      }
+    ],
+    "isError": false,
+    "structuredContent": {
+      "mode": "sync",
+      "executed": true,
+      "source": {
+        "from": "code",
+        "path": null,
+        "chars": 610,
+        "decoded_as": null,
+        "newlines_normalized": false,
+        "includes": [],
+        "helpers_version": 1,
+        "read_from_disk_by_this_call": false,
+        "note": "Source is frozen before durable admission. Same key with different source is refused with both hashes; queued work executes its admitted snapshot. SHA-256 covers UTF-8 of the decoded submitted text (file newlines normalized)."
+      },
+      "dialogs": [],
+      "failures": [],
+      "revit_raised_observed": true,
+      "revit_raised_note": "Everything Revit raised while this script ran. A dialog means Revit stopped for a human and the bridge answered it - by default Cancel, which is why an open comes back to the script as 'Opening was canceled' with no other clue. 'while' is the script's OWN last checkpoint() label at that instant: the bridge cannot see which API call was in flight and does not pretend to, so checkpoint per item if you want each dialog attributed. From inside the script, revit_raised(since) returns the same records DURING the run - take len(revit_raised()) before an open and pass it back after to get exactly what that open raised. To let an open continue past its dialog instead of cancelling: `with dialog_answer('dismiss'): doc = app.OpenDocumentFile(...)` - around THAT call only.",
+      "dialogs_observed": true,
+      "failures_observed": true,
+      "observation_complete": true,
+      "observation_note": "Both Revit dialog and failure-processing channels were observed.",
+      "dialogs_subscribed": true,
+      "failures_subscribed": true,
+      "dialogs_processing_complete": true,
+      "failures_processing_complete": true,
+      "observer_errors": [],
+      "output": {
+        "attrs": [
+          "Compare",
+          "CompareTo",
+          "Equals",
+          "GetHashCode",
+          "GetType",
+          "InvalidElementId",
+          "MemberwiseClone",
+          "Parse",
+          "ReferenceEquals",
+          "ToString",
+          "TryParse",
+          "Value"
+        ],
+        "values": {
+          "ToString": "311",
+          "Value": "311"
+        }
+      },
+      "output_kind": "structure",
+      "output_note": null,
+      "stdout_capture_error": null,
+      "evidence_status": "completed_unverified",
+      "script_reported_status": null,
+      "host_verified": false,
+      "evidence_summary": null,
+      "evidence_structured": false,
+      "evidence_warnings": [
+        "__output__ is an object but carries no 'status' field, so it does not follow the evidence contract and is reported completed_unverified. Recommended shape: {\"status\":\"verified|completed_unverified|partial|failed\",\"summary\":\"...\",\"created_ids\":[],\"modified_ids\":[],\"deleted_ids\":[],\"verification\":{\"checked\":true,\"evidence\":[]},\"warnings\":[]}"
+      ],
+      "evidence_contract": "self_reported_verified means the SCRIPT declared verified and attached evidence - the bridge did NOT re-read the model to confirm it. completed_unverified means it finished without anything structured to classify (a verified claim with no evidence is downgraded to this). partial means part happened or part verified. failed is the script's own failure report. There is no 'verified' state on this path at all: that word is reserved for typed commands, which the host re-reads after the commit. Recommended __output__ shape: {\"status\":\"verified|completed_unverified|partial|failed\",\"summary\":\"...\",\"created_ids\":[],\"modified_ids\":[],\"deleted_ids\":[],\"verification\":{\"checked\":true,\"evidence\":[]},\"warnings\":[]}",
+      "host_verification_note": "SELF-REPORTED, NOT HOST-VERIFIED. Typed commands are re-read from the model by the bridge after the commit; arbitrary Python is not. self_reported_verified means the SCRIPT said it checked and attached evidence - the host did not confirm any of it, and there is no value of any field here that constitutes a bridge guarantee for Python. Treat the evidence as the script's testimony: read it, and re-read the model with a typed query if the outcome matters.",
+      "typed_alternatives": null,
+      "printed": null,
+      "transaction_left_open": false,
+      "transaction_policy": "REQUIRED of any script that opens a Transaction: wrap it in try/finally and Commit() or RollBack() in the finally. This command CANNOT close it for you - the Revit API exposes no handle on a transaction opened by other code, so there is no implementation that would satisfy a promise to do it. WHAT IS ENFORCED: Document.IsModifiable is re-read after your script, and a document left modifiable makes this command FAIL with transaction_left_open=true. WHAT ACTUALLY HAPPENS TO THE ORPHAN, measured on Revit 2026 rather than assumed: when this handler returns to Revit, Revit ends the transaction itself and its status becomes RolledBack - verified by holding a reference to it across calls and reading GetStatus(). So the DOCUMENT recovers, and your script's writes DO NOT: everything inside that transaction is discarded, which is why leaving one open is reported as a failure rather than a warning. That cleanup is a host behaviour this command observed, not a guarantee it offers - do not build on it.",
+      "job_id": "20260915-181725-535-cc26eb",
+      "job_file": "C:\\Users\\slvma\\.horizun\\jobs\\20260915-181725-535-cc26eb.jsonl",
+      "checkpoints": 0,
+      "warning_delta": {
+        "before": {
+          "observed": true,
+          "count": 0,
+          "truncated": false,
+          "signatures": []
+        },
+        "after": {
+          "observed": true,
+          "count": 0,
+          "truncated": false,
+          "signatures": []
+        },
+        "persistent_warning_comparison_complete": true,
+        "new": [],
+        "resolved": [],
+        "suppressed_warning_coverage": "unknown",
+        "note": "GetWarnings compares persistent warnings on the captured document. A script may suppress transient failures; an empty delta does not prove no warnings were raised."
+      },
+      "host_observations": {
+        "scope": "reported_ids_existence_and_category_only",
+        "reported": null,
+        "checked": 0,
+        "truncated": false,
+        "rows": [],
+        "geometry_verified": false,
+        "creation_by_this_script_verified": false
+      },
+      "execution_sha256": "01a0a860e155d84a02c646b8028ee31b668034dbc09a65f4bcd9a947a4148afc",
+      "runtime": {
+        "python": "3.4.2.0",
+        "clr": "10.0.11",
+        "helpers_version": 1
+      },
+      "output_truncated": false,
+      "output_original_chars": null,
+      "output_full_path": null,
+      "idempotency": {
+        "key": "660eda48-8842-40dd-a3da-c101e49b219c",
+        "status": "executed_once",
+        "command_executed_in_this_call": true,
+        "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+      },
+      "bridge_queue": {
+        "queued": false,
+        "ahead_at_admission": 0,
+        "waited_ms": 2,
+        "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+        "capacity": 16,
+        "execution_and_wait_ms": 110
+      }
+    }
+  }
+}

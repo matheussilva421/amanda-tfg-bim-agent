@@ -1,0 +1,29 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Error: Atomic creation failed at item 0: parameters.AMANDA_LOGICAL_ID: no exact parameter name matched"
+      }
+    ],
+    "isError": true,
+    "structuredContent": {
+      "code": "revit_creation_failed",
+      "tool": "horizun_create_elements",
+      "operation": "create",
+      "index": 0,
+      "phase": "create",
+      "exception_type": "System.ArgumentException",
+      "exception_message": "parameters.AMANDA_LOGICAL_ID: no exact parameter name matched",
+      "exception_stack_trace": "   at Horizun.Revit.Commands.CreateElementsCommand.ApplyInstanceParameters(Element element, Plan p)\r\n   at Horizun.Revit.Commands.CreateElementsCommand.ApplyPlans(Document doc, JObject request, List`1 plans, Int32 requested, Boolean rehearsal)",
+      "write_started": true,
+      "changes_applied": false,
+      "transaction_status": "RolledBack",
+      "rollback_status": "RolledBack",
+      "rollback_error": null,
+      "verification": []
+    }
+  }
+}

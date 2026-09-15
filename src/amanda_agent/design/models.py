@@ -220,6 +220,7 @@ class DesignSolution(BaseModel):
     engine_version: str = Field(min_length=1)
     archetype: str = Field(min_length=1)
     geometry: dict[str, Any] = Field(min_length=1)
+    geometry_hash: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
     metrics: MetricSet
     hard_violations: list[ConstraintViolation]
     soft_penalties: dict[str, float]

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+<rect width="1200" height="900" fill="#ffffff"/>
+<text x="30" y="24" font-family="Arial" font-size="16" fill="#17202a">Amanda P08-T06 zoning (STUDY)</text>
+<polygon points="30.00,870.00 870.00,870.00 870.00,30.00 30.00,30.00 30.00,870.00" fill="#f3f4f6" stroke="#17202a" stroke-width="2"/>
+<polygon points="870.00,150.00 30.00,150.00 30.00,30.00 870.00,30.00 870.00,150.00" fill="#dbeafe" fill-opacity="0.82" stroke="#64748b" stroke-width="1"/>
+<text x="450.00" y="90.00" font-family="Arial" font-size="12" text-anchor="middle" fill="#17202a">SEC-01</text>
+<polygon points="870.00,270.00 30.00,270.00 30.00,150.00 870.00,150.00 870.00,270.00" fill="#dcfce7" fill-opacity="0.82" stroke="#64748b" stroke-width="1"/>
+<text x="450.00" y="210.00" font-family="Arial" font-size="12" text-anchor="middle" fill="#17202a">SEC-02</text>
+<polygon points="870.00,390.00 30.00,390.00 30.00,270.00 870.00,270.00 870.00,390.00" fill="#fef3c7" fill-opacity="0.82" stroke="#64748b" stroke-width="1"/>
+<text x="450.00" y="330.00" font-family="Arial" font-size="12" text-anchor="middle" fill="#17202a">SEC-03</text>
+<polygon points="870.00,510.00 30.00,510.00 30.00,390.00 870.00,390.00 870.00,510.00" fill="#fce7f3" fill-opacity="0.82" stroke="#64748b" stroke-width="1"/>
+<text x="450.00" y="450.00" font-family="Arial" font-size="12" text-anchor="middle" fill="#17202a">SEC-04</text>
+<polygon points="870.00,630.00 30.00,630.00 30.00,510.00 870.00,510.00 870.00,630.00" fill="#ede9fe" fill-opacity="0.82" stroke="#64748b" stroke-width="1"/>
+<text x="450.00" y="570.00" font-family="Arial" font-size="12" text-anchor="middle" fill="#17202a">SEC-05</text>
+<polygon points="870.00,750.00 30.00,750.00 30.00,630.00 870.00,630.00 870.00,750.00" fill="#ffedd5" fill-opacity="0.82" stroke="#64748b" stroke-width="1"/>
+<text x="450.00" y="690.00" font-family="Arial" font-size="12" text-anchor="middle" fill="#17202a">SEC-06</text>
+<polygon points="30.00,870.00 30.00,750.00 870.00,750.00 870.00,870.00 30.00,870.00" fill="#cffafe" fill-opacity="0.82" stroke="#64748b" stroke-width="1"/>
+<text x="450.00" y="810.00" font-family="Arial" font-size="12" text-anchor="middle" fill="#17202a">SEC-07</text>
+<polygon points="78.36,870.00 78.36,821.64 30.00,821.64 30.00,870.00 78.36,870.00" fill="#86efac" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+<polygon points="126.72,870.00 126.72,821.64 78.36,821.64 78.36,870.00 126.72,870.00" fill="#86efac" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+<polygon points="156.34,870.00 156.34,840.38 126.72,840.38 126.72,870.00 156.34,870.00" fill="#86efac" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+<polygon points="185.95,870.00 185.95,840.38 156.34,840.38 156.34,870.00 185.95,870.00" fill="#86efac" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+<polygon points="220.15,870.00 220.15,835.80 185.95,835.80 185.95,870.00 220.15,870.00" fill="#86efac" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+</svg>

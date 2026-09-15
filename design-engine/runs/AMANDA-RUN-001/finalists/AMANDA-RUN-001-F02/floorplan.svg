@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+<rect width="1200" height="900" fill="#ffffff"/>
+<text x="30" y="24" font-family="Arial" font-size="16" fill="#17202a">Amanda P08-T06 floorplan (STUDY)</text>
+<polygon points="30.00,870.00 870.00,870.00 870.00,30.00 30.00,30.00 30.00,870.00" fill="#f3f4f6" stroke="#17202a" stroke-width="2"/>
+<polygon points="502.07,97.44 502.07,82.56 397.93,82.56 397.93,97.44 502.07,97.44" fill="#93c5fd" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+<polygon points="553.41,224.77 553.41,195.23 346.59,195.23 346.59,224.77 553.41,224.77" fill="#93c5fd" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+<polygon points="501.58,337.37 501.58,322.63 398.42,322.63 398.42,337.37 501.58,337.37" fill="#93c5fd" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+<polygon points="513.98,459.14 513.98,440.86 386.02,440.86 386.02,459.14 513.98,459.14" fill="#93c5fd" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+<polygon points="514.37,579.20 514.37,560.80 385.63,560.80 385.63,579.20 514.37,579.20" fill="#93c5fd" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+<polygon points="537.89,702.56 537.89,677.44 362.11,677.44 362.11,702.56 537.89,702.56" fill="#93c5fd" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+<polygon points="78.36,870.00 78.36,821.64 30.00,821.64 30.00,870.00 78.36,870.00" fill="#86efac" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+<polygon points="126.72,870.00 126.72,821.64 78.36,821.64 78.36,870.00 126.72,870.00" fill="#86efac" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+<polygon points="156.34,870.00 156.34,840.38 126.72,840.38 126.72,870.00 156.34,870.00" fill="#86efac" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+<polygon points="185.95,870.00 185.95,840.38 156.34,840.38 156.34,870.00 185.95,870.00" fill="#86efac" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+<polygon points="220.15,870.00 220.15,835.80 185.95,835.80 185.95,870.00 220.15,870.00" fill="#86efac" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="1"/>
+</svg>

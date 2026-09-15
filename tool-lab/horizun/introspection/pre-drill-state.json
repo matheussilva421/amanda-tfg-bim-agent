@@ -1,0 +1,386 @@
+{
+  "document_info": {
+    "isError": false,
+    "texts": [
+      "{\r\n  \"title\": \"LAB_R00_EMPTY\",\r\n  \"path\": \"C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\baseline\\\\LAB_R00_EMPTY.rvt\",\r\n  \"is_workshared\": false,\r\n  \"is_family_document\": false,\r\n  \"revit_version\": \"2027\",\r\n  \"revit_build\": \"27.2.0.39\",\r\n  \"element_count\": 3316,\r\n  \"shared_coordinates\": {\r\n    \"active_location\": \"Terreno padrão\",\r\n    \"east_west_mm\": 0.0,\r\n    \"north_south_mm\": 0.0,\r\n    \"elevation_mm\": 0.0,\r\n    \"angle_to_true_north_degrees\": 0.0\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 19\r\n  }\r\n}"
+    ],
+    "structured": {
+      "title": "LAB_R00_EMPTY",
+      "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\baseline\\LAB_R00_EMPTY.rvt",
+      "is_workshared": false,
+      "is_family_document": false,
+      "revit_version": "2027",
+      "revit_build": "27.2.0.39",
+      "element_count": 3316,
+      "shared_coordinates": {
+        "active_location": "Terreno padrão",
+        "east_west_mm": 0.0,
+        "north_south_mm": 0.0,
+        "elevation_mm": 0.0,
+        "angle_to_true_north_degrees": 0.0
+      },
+      "bridge_queue": {
+        "queued": false,
+        "ahead_at_admission": 0,
+        "waited_ms": 1,
+        "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+        "capacity": 16,
+        "execution_and_wait_ms": 19
+      }
+    }
+  },
+  "levels": {
+    "isError": false,
+    "texts": [
+      "{\r\n  \"document\": \"LAB_R00_EMPTY\",\r\n  \"scope\": \"model\",\r\n  \"view_id\": null,\r\n  \"include_links\": true,\r\n  \"matched_total\": 2,\r\n  \"returned\": 2,\r\n  \"offset\": 0,\r\n  \"truncated\": false,\r\n  \"next_cursor\": null,\r\n  \"result_set_fingerprint\": \"84d8e7fcf1dddd66\",\r\n  \"coverage_complete\": true,\r\n  \"unreadable_total\": 0,\r\n  \"unreadable_shown\": 0,\r\n  \"unreadable_truncated\": false,\r\n  \"unreadable\": [],\r\n  \"federated_coverage\": {\r\n    \"coverage_complete\": true,\r\n    \"include_links\": true,\r\n    \"link_instances_total\": 0,\r\n    \"link_instances_loaded\": 0,\r\n    \"link_instances_unavailable\": 0,\r\n    \"sources\": [\r\n      {\r\n        \"source_kind\": \"host\",\r\n        \"source_model\": \"LAB_R00_EMPTY\",\r\n        \"link_instance_id\": null,\r\n        \"visibility_coverage\": {\r\n          \"coverage_complete\": true,\r\n          \"is_workshared\": false,\r\n          \"worksets_total\": null,\r\n          \"worksets_open\": null,\r\n          \"worksets_closed\": null,\r\n          \"worksets_read_error\": null,\r\n          \"note\": \"This model is not workshared, so every element in it is loaded and this answer covers all of it.\"\r\n        }\r\n      }\r\n    ],\r\n    \"unavailable_links\": [],\r\n    \"note\": \"Every considered source was loaded with all user worksets open.\"\r\n  },\r\n  \"summary\": {\r\n    \"by_category\": {\r\n      \"Níveis\": 2\r\n    },\r\n    \"by_level\": {\r\n      \"(no level)\": 2\r\n    },\r\n    \"by_source\": {\r\n      \"host:LAB_R00_EMPTY\": 2\r\n    }\r\n  },\r\n  \"rows\": [\r\n    {\r\n      \"element_id\": 311,\r\n      \"unique_id\": \"e3e052f9-0156-11d5-9301-"
+    ],
+    "structured": {
+      "document": "LAB_R00_EMPTY",
+      "scope": "model",
+      "view_id": null,
+      "include_links": true,
+      "matched_total": 2,
+      "returned": 2,
+      "offset": 0,
+      "truncated": false,
+      "next_cursor": null,
+      "result_set_fingerprint": "84d8e7fcf1dddd66",
+      "coverage_complete": true,
+      "unreadable_total": 0,
+      "unreadable_shown": 0,
+      "unreadable_truncated": false,
+      "unreadable": [],
+      "federated_coverage": {
+        "coverage_complete": true,
+        "include_links": true,
+        "link_instances_total": 0,
+        "link_instances_loaded": 0,
+        "link_instances_unavailable": 0,
+        "sources": [
+          {
+            "source_kind": "host",
+            "source_model": "LAB_R00_EMPTY",
+            "link_instance_id": null,
+            "visibility_coverage": {
+              "coverage_complete": true,
+              "is_workshared": false,
+              "worksets_total": null,
+              "worksets_open": null,
+              "worksets_closed": null,
+              "worksets_read_error": null,
+              "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+            }
+          }
+        ],
+        "unavailable_links": [],
+        "note": "Every considered source was loaded with all user worksets open."
+      },
+      "summary": {
+        "by_category": {
+          "Níveis": 2
+        },
+        "by_level": {
+          "(no level)": 2
+        },
+        "by_source": {
+          "host:LAB_R00_EMPTY": 2
+        }
+      },
+      "rows": [
+        {
+          "element_id": 311,
+          "unique_id": "e3e052f9-0156-11d5-9301-0000863f27ad-00000137",
+          "category": "Níveis",
+          "name": "Nível 1",
+          "family": "Nível",
+          "type": "Cabeça de 8 mm",
+          "type_id": 305,
+          "level": null,
+          "is_element_type": false,
+          "source_kind": "host",
+          "source_model": "LAB_R00_EMPTY",
+          "link_instance_id": null,
+          "host_id": null,
+          "host_category": null,
+          "parameters": {
+            "Name": {
+              "exists": false
+            }
+          }
+        },
+        {
+          "element_id": 694,
+          "unique_id": "458c0e49-01bb-11d5-9302-0000863f27ad-000002b6",
+          "category": "Níveis",
+          "name": "Nível 2",
+          "family": "Nível",
+          "type": "Cabeça de 8 mm",
+          "type_id": 305,
+          "level": null,
+          "is_element_type": false,
+          "source_kind": "host",
+          "source_model": "LAB_R00_EMPTY",
+          "link_instance_id": null,
+          "host_id": null,
+          "host_category": null,
+          "parameters": {
+            "Name": {
+              "exists": false
+            }
+          }
+        }
+      ],
+      "bridge_queue": {
+        "queued": false,
+        "ahead_at_admission": 0,
+        "waited_ms": 1,
+        "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+        "capacity": 16,
+        "execution_and_wait_ms": 77
+      }
+    }
+  },
+  "walls_count": {
+    "isError": false,
+    "texts": [
+      "{\r\n  \"document\": \"LAB_R00_EMPTY\",\r\n  \"scope\": \"model\",\r\n  \"include_links\": true,\r\n  \"matched_total\": 3316,\r\n  \"group_by\": [\r\n    \"category\"\r\n  ],\r\n  \"groups\": [\r\n    {\r\n      \"key\": {\r\n        \"category\": \"(no category)\"\r\n      },\r\n      \"count\": 2650\r\n    },\r\n    {\r\n      \"key\": {\r\n        \"category\": \"Configurações de tipo de espaço\"\r\n      },\r\n      \"count\": 125\r\n    },\r\n    {\r\n      \"key\": {\r\n        \"category\": \"Materiais\"\r\n      },\r\n      \"count\": 114\r\n    },\r\n    {\r\n      \"key\": {\r\n        \"category\": \"Componentes de legenda\"\r\n      },\r\n      \"count\": 80\r\n    },\r\n    {\r\n      \"key\": {\r\n        \"category\": \"Recursos de materiais\"\r\n      },\r\n      \"count\": 78\r\n    },\r\n    {\r\n      \"key\": {\r\n        \"category\": \"Tabelas de carga AVAC\"\r\n      },\r\n      \"count\": 50\r\n    },\r\n    {\r\n      \"key\": {\r\n        \"category\": \"Caminho do sol\"\r\n      },\r\n      \"count\": 48\r\n    },\r\n    {\r\n      \"key\": {\r\n        \"category\": \"Elemento de parâmetro de classificação de carga elétrica \"\r\n      },\r\n      \"count\": 36\r\n    },\r\n    {\r\n      \"key\": {\r\n        \"category\": \"Configurações de tipo de construção\"\r\n      },\r\n      \"count\": 33\r\n    },\r\n    {\r\n      \"key\": {\r\n        \"category\": \"Vistas\"\r\n      },\r\n      \"count\": 26\r\n    },\r\n    {\r\n      \"key\": {\r\n        \"category\": \"Segmentos de tubulação\"\r\n      },\r\n      \"count\": 12\r\n    },\r\n    {\r\n      \"key\": {\r\n        \"category\": \"Eixo do plano de trabalho\"\r\n      },\r\n      \"count\": 10\r\n    },\r\n    {\r\n      \"key\": {\r\n        \"category\": \"Esquem"
+    ],
+    "structured": {
+      "document": "LAB_R00_EMPTY",
+      "scope": "model",
+      "include_links": true,
+      "matched_total": 3316,
+      "group_by": [
+        "category"
+      ],
+      "groups": [
+        {
+          "key": {
+            "category": "(no category)"
+          },
+          "count": 2650
+        },
+        {
+          "key": {
+            "category": "Configurações de tipo de espaço"
+          },
+          "count": 125
+        },
+        {
+          "key": {
+            "category": "Materiais"
+          },
+          "count": 114
+        },
+        {
+          "key": {
+            "category": "Componentes de legenda"
+          },
+          "count": 80
+        },
+        {
+          "key": {
+            "category": "Recursos de materiais"
+          },
+          "count": 78
+        },
+        {
+          "key": {
+            "category": "Tabelas de carga AVAC"
+          },
+          "count": 50
+        },
+        {
+          "key": {
+            "category": "Caminho do sol"
+          },
+          "count": 48
+        },
+        {
+          "key": {
+            "category": "Elemento de parâmetro de classificação de carga elétrica "
+          },
+          "count": 36
+        },
+        {
+          "key": {
+            "category": "Configurações de tipo de construção"
+          },
+          "count": 33
+        },
+        {
+          "key": {
+            "category": "Vistas"
+          },
+          "count": 26
+        },
+        {
+          "key": {
+            "category": "Segmentos de tubulação"
+          },
+          "count": 12
+        },
+        {
+          "key": {
+            "category": "Eixo do plano de trabalho"
+          },
+          "count": 10
+        },
+        {
+          "key": {
+            "category": "Esquema de preenchimento de cor"
+          },
+          "count": 9
+        },
+        {
+          "key": {
+            "category": "Casos de carga estrutural"
+          },
+          "count": 8
+        },
+        {
+          "key": {
+            "category": "Classificações de carga elétrica"
+          },
+          "count": 6
+        },
+        {
+          "key": {
+            "category": "Definições de fator de demanda elétrica "
+          },
+          "count": 5
+        },
+        {
+          "key": {
+            "category": "Elevações"
+          },
+          "count": 4
+        },
+        {
+          "key": {
+            "category": "Modelos de tabela de painéis - Painel de ramificação"
+          },
+          "count": 3
+        },
+        {
+          "key": {
+            "category": "Curvas de nível principais"
+          },
+          "count": 2
+        },
+        {
+          "key": {
+            "category": "Esquemas de área"
+          },
+          "count": 2
+        },
+        {
+          "key": {
+            "category": "Fases"
+          },
+          "count": 2
+        },
+        {
+          "key": {
+            "category": "Níveis"
+          },
+          "count": 2
+        },
+        {
+          "key": {
+            "category": "Sequências de numeração de revisão"
+          },
+          "count": 2
+        },
+        {
+          "key": {
+            "category": "Terreno compart."
+          },
+          "count": 2
+        },
+        {
+          "key": {
+            "category": "Informações do projeto"
+          },
+          "count": 1
+        },
+        {
+          "key": {
+            "category": "Modelos de tabela de painéis - Caixa de interruptor"
+          },
+          "count": 1
+        },
+        {
+          "key": {
+            "category": "Modelos de tabela de painéis - Painel de dados"
+          },
+          "count": 1
+        },
+        {
+          "key": {
+            "category": "Origem interna"
+          },
+          "count": 1
+        },
+        {
+          "key": {
+            "category": "Ponto base do projeto"
+          },
+          "count": 1
+        },
+        {
+          "key": {
+            "category": "Ponto de levantamento topográfico"
+          },
+          "count": 1
+        },
+        {
+          "key": {
+            "category": "Revisão"
+          },
+          "count": 1
+        }
+      ],
+      "groups_truncated": false,
+      "coverage_complete": true,
+      "unreadable_total": 0,
+      "unreadable_shown": 0,
+      "unreadable_truncated": false,
+      "unreadable": [],
+      "federated_coverage": {
+        "coverage_complete": true,
+        "include_links": true,
+        "link_instances_total": 0,
+        "link_instances_loaded": 0,
+        "link_instances_unavailable": 0,
+        "sources": [
+          {
+            "source_kind": "host",
+            "source_model": "LAB_R00_EMPTY",
+            "link_instance_id": null,
+            "visibility_coverage": {
+              "coverage_complete": true,
+              "is_workshared": false,
+              "worksets_total": null,
+              "worksets_open": null,
+              "worksets_closed": null,
+              "worksets_read_error": null,
+              "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+            }
+          }
+        ],
+        "unavailable_links": [],
+        "note": "Every considered source was loaded with all user worksets open."
+      },
+      "note": "Aggregated server-side; no rows were returned. Drop group_by to page through rows.",
+      "bridge_queue": {
+        "queued": false,
+        "ahead_at_admission": 0,
+        "waited_ms": 1,
+        "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+        "capacity": 16,
+        "execution_and_wait_ms": 186
+      }
+    }
+  }
+}

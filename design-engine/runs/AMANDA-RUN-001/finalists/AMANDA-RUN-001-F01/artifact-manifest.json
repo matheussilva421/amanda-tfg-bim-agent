@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "solution_id": "AMANDA-RUN-001-F01",
+  "files": {
+    "adjacency-graph.json": "2c05b1c356a721de43c4b44efe3e6e6a699888ee470148ec5d7a194f29176518",
+    "floorplan.png": "319b07c3baf14380bdfb6589dee31ad3481d9a0df3962ff21b74eddcde9f246d",
+    "floorplan.svg": "1bf0df6be383b591bbaedffcc5c5005b69b3bedd3dd82267199e5c32781211aa",
+    "flow-graphs.json": "5e3b2c0541e9c48a02c1d534468b5f2b2d9a1f42e9a50d72da22c3ca9b8687e7",
+    "geometry.geojson": "79cdcf89778622f3b2cfa236760ee80c064dc488af4718d1dcd36fce5268df53",
+    "metrics.json": "b4b64989821f238edc71ef261456cd9de4f56cb1b511c6c9eaee8e6cd7439968",
+    "penalties.json": "a4735c61b7a5db0a07dd5dabd94f1c1d0a58c30235d753ef9f59b1a8b8c46002",
+    "solution.json": "0f31268dc818d53d641ef138981f7d41cdc29a3ba560128f5b9efa20e4307ee0",
+    "validation.json": "2ce87d03ba95eb6b9b1ef8b8a50b353cf28cfc11c05e6acb69d67a1632b0eb2f",
+    "WHY_THIS_OPTION.md": "2e692b427bac96c83eca8252729a8cef9379ee351e009e3786509ab3bca69661",
+    "zoning.png": "62911ad3d32a8a0cf3af9c3161b95dcf9ea7a4b2021de90a7712165375e05fa5",
+    "zoning.svg": "e2ed53daf0b4cac4caf140ec794e8fe6208d43a91d80b55cd8b7fe8a59368423"
+  }
+}

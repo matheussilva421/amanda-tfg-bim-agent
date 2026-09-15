@@ -1,0 +1,142 @@
+{
+  "target_document": "LAB_ROUTE_PROBE",
+  "measured_utc": "2026-09-15",
+  "revit_version": "2027",
+  "revit_build": "27.2.0.39",
+  "horizun_version": "1.3.3",
+  "contract_hash": "8b9600f5274d7dffb6e5bd5f",
+  "runs": {
+    "LIVE10": ".tmp-probe-live10.log (17 routes in one sweep)",
+    "LIVE13": ".tmp-probe-live13.log (revit.create_project in isolation)"
+  },
+  "proven": 18,
+  "total": 18,
+  "note": "LAB/STUDY evidence only. A PROVEN row means the bridge committed the element and an independent read returned it for the same ElementId.",
+  "routes": [
+    {
+      "capability": "revit.create_project",
+      "route": "horizun_document_session",
+      "status": "PROVEN",
+      "evidence": "independent get_document_info reports the requested project 'LAB_R01_TEMPLATE' at 'C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\probe\\\\LAB_R01_TEMPLATE.rte' after document_session.open"
+    },
+    {
+      "capability": "revit.create_level",
+      "route": "horizun_create_elements",
+      "status": "PROVEN",
+      "element_id": 329137,
+      "evidence": "independent query returned 1 row(s) for ElementId 329137"
+    },
+    {
+      "capability": "revit.create_grid",
+      "route": "horizun_create_elements",
+      "status": "PROVEN",
+      "element_id": 329138,
+      "evidence": "independent query returned 1 row(s) for ElementId 329138"
+    },
+    {
+      "capability": "revit.create_wall",
+      "route": "horizun_create_elements",
+      "status": "PROVEN",
+      "element_id": 329139,
+      "evidence": "independent query returned 1 row(s) for ElementId 329139"
+    },
+    {
+      "capability": "revit.create_floor",
+      "route": "horizun_create_elements",
+      "status": "PROVEN",
+      "element_id": 329149,
+      "evidence": "independent query returned 1 row(s) for ElementId 329149"
+    },
+    {
+      "capability": "revit.create_slab",
+      "route": "horizun_create_elements",
+      "status": "PROVEN",
+      "element_id": 329168,
+      "evidence": "independent query returned 1 row(s) for ElementId 329168"
+    },
+    {
+      "capability": "revit.create_roof",
+      "route": "horizun_create_elements",
+      "status": "PROVEN",
+      "element_id": 329183,
+      "evidence": "independent query returned 1 row(s) for ElementId 329183"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "route": "horizun_create_elements",
+      "status": "PROVEN",
+      "element_id": 329198,
+      "evidence": "independent query returned 1 row(s) for ElementId 329198"
+    },
+    {
+      "capability": "revit.create_room",
+      "route": "horizun_create_elements",
+      "status": "PROVEN",
+      "element_id": 329205,
+      "evidence": "independent query returned 1 row(s) for ElementId 329205"
+    },
+    {
+      "capability": "revit.create_opening",
+      "route": "horizun_create_elements",
+      "status": "PROVEN",
+      "element_id": 329207,
+      "evidence": "independent query returned 1 row(s) for ElementId 329207"
+    },
+    {
+      "capability": "revit.create_toposolid",
+      "route": "horizun_execute_python",
+      "status": "PROVEN",
+      "element_id": 329210,
+      "evidence": "independent query returned 1 row(s) for ElementId 329210"
+    },
+    {
+      "capability": "revit.create_mass",
+      "route": "horizun_execute_python",
+      "status": "PROVEN",
+      "element_id": 329226,
+      "evidence": "independent query returned 1 row(s) for ElementId 329226"
+    },
+    {
+      "capability": "revit.create_reference",
+      "route": "horizun_execute_python",
+      "status": "PROVEN",
+      "element_id": 329227,
+      "evidence": "independent query returned 1 row(s) for ElementId 329227"
+    },
+    {
+      "capability": "revit.create_accessibility_element",
+      "route": "horizun_execute_python",
+      "status": "PROVEN",
+      "element_id": 329228,
+      "evidence": "independent query returned 1 row(s) for ElementId 329228"
+    },
+    {
+      "capability": "revit.create_furniture_element",
+      "route": "horizun_execute_python",
+      "status": "PROVEN",
+      "element_id": 329229,
+      "evidence": "independent query returned 1 row(s) for ElementId 329229"
+    },
+    {
+      "capability": "revit.create_landscape_element",
+      "route": "horizun_execute_python",
+      "status": "PROVEN",
+      "element_id": 329231,
+      "evidence": "independent query returned 1 row(s) for ElementId 329231"
+    },
+    {
+      "capability": "revit.assign_material",
+      "route": "horizun_execute_python",
+      "status": "PROVEN",
+      "element_id": 329139,
+      "evidence": "independent query returned 1 row(s) for ElementId 329139"
+    },
+    {
+      "capability": "revit.create_documentation_element",
+      "route": "horizun_execute_python",
+      "status": "PROVEN",
+      "element_id": 328782,
+      "evidence": "independent query returned 1 row(s) for ElementId 328782"
+    }
+  ]
+}

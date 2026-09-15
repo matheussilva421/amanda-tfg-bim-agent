@@ -1,0 +1,69 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\r\n  \"document\": \"LAB_ROUTE_PROBE\",\r\n  \"scope\": \"model\",\r\n  \"view_id\": null,\r\n  \"include_links\": true,\r\n  \"matched_total\": 0,\r\n  \"returned\": 0,\r\n  \"offset\": 0,\r\n  \"truncated\": false,\r\n  \"next_cursor\": null,\r\n  \"result_set_fingerprint\": \"e3b0c44298fc1c14\",\r\n  \"coverage_complete\": true,\r\n  \"unreadable_total\": 0,\r\n  \"unreadable_shown\": 0,\r\n  \"unreadable_truncated\": false,\r\n  \"unreadable\": [],\r\n  \"federated_coverage\": {\r\n    \"coverage_complete\": true,\r\n    \"include_links\": true,\r\n    \"link_instances_total\": 0,\r\n    \"link_instances_loaded\": 0,\r\n    \"link_instances_unavailable\": 0,\r\n    \"sources\": [\r\n      {\r\n        \"source_kind\": \"host\",\r\n        \"source_model\": \"LAB_ROUTE_PROBE\",\r\n        \"link_instance_id\": null,\r\n        \"visibility_coverage\": {\r\n          \"coverage_complete\": true,\r\n          \"is_workshared\": false,\r\n          \"worksets_total\": null,\r\n          \"worksets_open\": null,\r\n          \"worksets_closed\": null,\r\n          \"worksets_read_error\": null,\r\n          \"note\": \"This model is not workshared, so every element in it is loaded and this answer covers all of it.\"\r\n        }\r\n      }\r\n    ],\r\n    \"unavailable_links\": [],\r\n    \"note\": \"Every considered source was loaded with all user worksets open.\"\r\n  },\r\n  \"summary\": {\r\n    \"by_category\": {},\r\n    \"by_level\": {},\r\n    \"by_source\": {}\r\n  },\r\n  \"rows\": [],\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 9\r\n  }\r\n}"
+      }
+    ],
+    "isError": false,
+    "structuredContent": {
+      "document": "LAB_ROUTE_PROBE",
+      "scope": "model",
+      "view_id": null,
+      "include_links": true,
+      "matched_total": 0,
+      "returned": 0,
+      "offset": 0,
+      "truncated": false,
+      "next_cursor": null,
+      "result_set_fingerprint": "e3b0c44298fc1c14",
+      "coverage_complete": true,
+      "unreadable_total": 0,
+      "unreadable_shown": 0,
+      "unreadable_truncated": false,
+      "unreadable": [],
+      "federated_coverage": {
+        "coverage_complete": true,
+        "include_links": true,
+        "link_instances_total": 0,
+        "link_instances_loaded": 0,
+        "link_instances_unavailable": 0,
+        "sources": [
+          {
+            "source_kind": "host",
+            "source_model": "LAB_ROUTE_PROBE",
+            "link_instance_id": null,
+            "visibility_coverage": {
+              "coverage_complete": true,
+              "is_workshared": false,
+              "worksets_total": null,
+              "worksets_open": null,
+              "worksets_closed": null,
+              "worksets_read_error": null,
+              "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+            }
+          }
+        ],
+        "unavailable_links": [],
+        "note": "Every considered source was loaded with all user worksets open."
+      },
+      "summary": {
+        "by_category": {},
+        "by_level": {},
+        "by_source": {}
+      },
+      "rows": [],
+      "bridge_queue": {
+        "queued": false,
+        "ahead_at_admission": 0,
+        "waited_ms": 1,
+        "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+        "capacity": 16,
+        "execution_and_wait_ms": 9
+      }
+    }
+  }
+}

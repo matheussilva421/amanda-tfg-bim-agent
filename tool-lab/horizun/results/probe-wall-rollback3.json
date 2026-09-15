@@ -1,0 +1,285 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\r\n  \"dry_run\": true,\r\n  \"tabular\": null,\r\n  \"transaction_status\": \"not_started\",\r\n  \"requested\": 1,\r\n  \"valid\": 1,\r\n  \"invalid\": 0,\r\n  \"errors\": [],\r\n  \"plan\": [\r\n    {\r\n      \"index\": 0,\r\n      \"kind\": \"wall\",\r\n      \"references_resolved\": true\r\n    }\r\n  ],\r\n  \"validation_level\": \"revit_construction_rolled_back\",\r\n  \"api_rehearsal\": {\r\n    \"dry_run\": true,\r\n    \"transaction_status\": \"RolledBack\",\r\n    \"changes_applied\": false,\r\n    \"provisional_elements_absent\": true,\r\n    \"provisional_verification\": [\r\n      {\r\n        \"index\": 0,\r\n        \"kind\": \"wall\",\r\n        \"element_id\": 328665,\r\n        \"unique_id\": \"4c348be7-e24f-4fb8-956d-9697124289fa-000503d9\",\r\n        \"present_after_commit\": true,\r\n        \"verified\": true,\r\n        \"postconditions\": {\r\n          \"all_verified\": true,\r\n          \"checked\": 16,\r\n          \"all_measured\": true,\r\n          \"required\": [\r\n            \"end_x\",\r\n            \"end_y\",\r\n            \"end_z\",\r\n            \"flip\",\r\n            \"height\",\r\n            \"kind\",\r\n            \"level_elevation\",\r\n            \"level_id\",\r\n            \"offset\",\r\n            \"parameters.ALL_MODEL_INSTANCE_COMMENTS\",\r\n            \"parameters.ALL_MODEL_MARK\",\r\n            \"start_x\",\r\n            \"start_y\",\r\n            \"start_z\",\r\n            \"structural\",\r\n            \"type_id\"\r\n          ],\r\n          \"missing\": [],\r\n          \"unexpected\": [],\r\n          \"verified_means\": \"true only when EXACTLY the required properties were checked - each once, none missing, none substituted - and every one of them was RE-READ from the committed model and matched. A property that could not be read counts as unmeasured, never as agreement, and an empty checklist is not a pass.\",\r\n          \"properties\": [\r\n            {\r\n              \"property\": \"kind\",\r\n              \"measured\": true,\r\n              \"requested\": \"wall\",\r\n              \"found_in_committed_model\": \"wall\",\r\n              \"matches\": true\r\n            },\r\n            {\r\n              \"property\": \"type_id\",\r\n              \"measured\": true,\r\n              \"requested\": 396,\r\n              \"found_in_committed_model\": 396,\r\n              \"matches\": true\r\n            },\r\n            {\r\n              \"property\": \"level_id\",\r\n              \"measured\": true,\r\n              \"requested\": 311,\r\n              \"found_in_committed_model\": 311,\r\n              \"matches\": true\r\n            },\r\n            {\r\n              \"property\": \"level_elevation\",\r\n              \"measured\": true,\r\n              \"requested\": 0.0,\r\n              \"found_in_committed_model\": 0.0,\r\n              \"matches\": true,\r\n              \"unit\": \"feet\",\r\n              \"tolerance\": 1E-06,\r\n              \"method\": \"Revit parameter/location/sketch/face readback\"\r\n            },\r\n            {\r\n              \"property\": \"start_x\",\r\n              \"measured\": true,\r\n              \"requested\": 0.0,\r\n              \"found_in_committed_model\": 0.0,\r\n              \"matches\": true,\r\n              \"unit\": \"feet\",\r\n              \"tolerance\": 1E-06,\r\n              \"method\": \"Revit parameter/location/sketch/face readback\"\r\n            },\r\n            {\r\n              \"property\": \"start_y\",\r\n              \"measured\": true,\r\n              \"requested\": 0.0,\r\n              \"found_in_committed_model\": 0.0,\r\n              \"matches\": true,\r\n              \"unit\": \"feet\",\r\n              \"tolerance\": 1E-06,\r\n              \"method\": \"Revit parameter/location/sketch/face readback\"\r\n            },\r\n            {\r\n              \"property\": \"start_z\",\r\n              \"measured\": true,\r\n              \"requested\": 0.0,\r\n              \"found_in_committed_model\": 0.0,\r\n              \"matches\": true,\r\n              \"unit\": \"feet\",\r\n              \"tolerance\": 1E-06,\r\n              \"method\": \"Revit parameter/location/sketch/face readback\"\r\n            },\r\n            {\r\n              \"property\": \"end_x\",\r\n              \"measured\": true,\r\n              \"requested\": 13.123359580052494,\r\n              \"found_in_committed_model\": 13.123359580052494,\r\n              \"matches\": true,\r\n              \"unit\": \"feet\",\r\n              \"tolerance\": 1E-06,\r\n              \"method\": \"Revit parameter/location/sketch/face readback\"\r\n            },\r\n            {\r\n              \"property\": \"end_y\",\r\n              \"measured\": true,\r\n              \"requested\": 0.0,\r\n              \"found_in_committed_model\": 0.0,\r\n              \"matches\": true,\r\n              \"unit\": \"feet\",\r\n              \"tolerance\": 1E-06,\r\n              \"method\": \"Revit parameter/location/sketch/face readback\"\r\n            },\r\n            {\r\n              \"property\": \"end_z\",\r\n              \"measured\": true,\r\n              \"requested\": 0.0,\r\n              \"found_in_committed_model\": 0.0,\r\n              \"matches\": true,\r\n              \"unit\": \"feet\",\r\n              \"tolerance\": 1E-06,\r\n              \"method\": \"Revit parameter/location/sketch/face readback\"\r\n            },\r\n            {\r\n              \"property\": \"height\",\r\n              \"measured\": true,\r\n              \"requested\": 9.84251968503937,\r\n              \"found_in_committed_model\": 9.84251968503937,\r\n              \"matches\": true,\r\n              \"unit\": \"feet\",\r\n              \"tolerance\": 1E-06,\r\n              \"method\": \"Revit parameter/location/sketch/face readback\"\r\n            },\r\n            {\r\n              \"property\": \"offset\",\r\n              \"measured\": true,\r\n              \"requested\": 0.0,\r\n              \"found_in_committed_model\": 0.0,\r\n              \"matches\": true,\r\n              \"unit\": \"feet\",\r\n              \"tolerance\": 1E-06,\r\n              \"method\": \"Revit parameter/location/sketch/face readback\"\r\n            },\r\n            {\r\n              \"property\": \"flip\",\r\n              \"measured\": true,\r\n              \"requested\": false,\r\n              \"found_in_committed_model\": false,\r\n              \"matches\": true\r\n            },\r\n            {\r\n              \"property\": \"structural\",\r\n              \"measured\": true,\r\n              \"requested\": false,\r\n              \"found_in_committed_model\": false,\r\n              \"matches\": true\r\n            },\r\n            {\r\n              \"property\": \"parameters.ALL_MODEL_MARK\",\r\n              \"measured\": true,\r\n              \"requested\": \"LIVE-WALL-3\",\r\n              \"found_in_committed_model\": \"LIVE-WALL-3\",\r\n              \"matches\": true\r\n            },\r\n            {\r\n              \"property\": \"parameters.ALL_MODEL_INSTANCE_COMMENTS\",\r\n              \"measured\": true,\r\n              \"requested\": \"amanda:revit.create_wall\",\r\n              \"found_in_committed_model\": \"amanda:revit.create_wall\",\r\n              \"matches\": true\r\n            }\r\n          ]\r\n        },\r\n        \"source_comparison\": null,\r\n        \"geometry_base_z_feet\": 0.0,\r\n        \"geometry_top_z_feet\": 9.84251968503937,\r\n        \"kind_verified\": true,\r\n        \"type_verified\": true,\r\n        \"structural_type_verified\": true,\r\n        \"actual_class\": \"Wall\",\r\n        \"actual_category\": \"Paredes\"\r\n      }\r\n    ]\r\n  },\r\n  \"note\": \"Provisional elements were verified after an inner commit and the entire group was rolled back. No provisional elements remain.\",\r\n  \"application\": {\r\n    \"state\": \"rehearsed\",\r\n    \"fully_applied\": false,\r\n    \"transaction_status\": \"not_started\",\r\n    \"requested\": 1,\r\n    \"applied\": 0,\r\n    \"verified\": 0,\r\n    \"unresolved\": 0,\r\n    \"failed\": 0,\r\n    \"unknown\": 0,\r\n    \"state_means\": \"rehearsed: a valid dry run. Everything resolved and NOTHING was written.\"\r\n  },\r\n  \"document\": \"LAB_ROUTE_PROBE [C:\\\\Users\\\\slvma\\\\Downloads\\\\Github\\\\Projeto Amanda\\\\revit\\\\lab\\\\probe\\\\LAB_ROUTE_PROBE.rvt]\",\r\n  \"document_fingerprint\": \"a1692d2c4d42770e\",\r\n  \"change_preview\": {\r\n    \"fingerprint\": \"11dfece866f7e0de1c6369eb1827d01fdffc32fb1b6498744474b50bddc189bd\",\r\n    \"total\": 1,\r\n    \"shown\": 1,\r\n    \"truncated\": false,\r\n    \"expected_cascade\": 0,\r\n    \"rows\": [\r\n      {\r\n        \"unique_id\": \"create:0\",\r\n        \"element_id\": null,\r\n        \"action\": \"create\",\r\n        \"category\": \"wall\",\r\n        \"type\": \"Interior - 138 mm Divisória (1-hr)\",\r\n        \"captured_state\": {\r\n          \"host_uid\": \"\",\r\n          \"level\": \"Nível 1\",\r\n          \"level_elev_mm\": \"0\",\r\n          \"level_uid\": \"e3e052f9-0156-11d5-9301-0000863f27ad-00000137\",\r\n          \"system_type\": \"\",\r\n          \"system_type_uid\": \"\",\r\n          \"top_level_elev_mm\": \"\",\r\n          \"top_level_uid\": \"\",\r\n          \"type_uid\": \"e3e052f9-0156-11d5-9301-0000863f27ad-0000018c\"\r\n        },\r\n        \"proposed_values\": null,\r\n        \"values_truncated\": false\r\n      }\r\n    ],\r\n    \"note\": \"Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values.\"\r\n  },\r\n  \"plan_resolved\": {\r\n    \"elements\": 1,\r\n    \"create\": 1,\r\n    \"modify\": 0,\r\n    \"delete\": 0,\r\n    \"expected_cascade\": 0,\r\n    \"fingerprint\": \"11dfece866f7e0de1c6369eb1827d01fdffc32fb1b6498744474b50bddc189bd\"\r\n  },\r\n  \"confirmation_token\": \"hz-ee6999d92dad3e6df3c5e668355fcada\",\r\n  \"confirmation_expires_utc\": \"2026-09-15 21:35:13Z\",\r\n  \"confirmation_note\": \"To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds this ordered heterogeneous batch, its units, AND what its names resolved to right now - the types, system types and levels, including each level's measured elevation. A type renamed, a name re-pointed or a level moved before you apply refuses as a stale plan instead of creating something else under the approved words.\",\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 40\r\n  }\r\n}"
+      }
+    ],
+    "isError": false,
+    "structuredContent": {
+      "dry_run": true,
+      "tabular": null,
+      "transaction_status": "not_started",
+      "requested": 1,
+      "valid": 1,
+      "invalid": 0,
+      "errors": [],
+      "plan": [
+        {
+          "index": 0,
+          "kind": "wall",
+          "references_resolved": true
+        }
+      ],
+      "validation_level": "revit_construction_rolled_back",
+      "api_rehearsal": {
+        "dry_run": true,
+        "transaction_status": "RolledBack",
+        "changes_applied": false,
+        "provisional_elements_absent": true,
+        "provisional_verification": [
+          {
+            "index": 0,
+            "kind": "wall",
+            "element_id": 328665,
+            "unique_id": "4c348be7-e24f-4fb8-956d-9697124289fa-000503d9",
+            "present_after_commit": true,
+            "verified": true,
+            "postconditions": {
+              "all_verified": true,
+              "checked": 16,
+              "all_measured": true,
+              "required": [
+                "end_x",
+                "end_y",
+                "end_z",
+                "flip",
+                "height",
+                "kind",
+                "level_elevation",
+                "level_id",
+                "offset",
+                "parameters.ALL_MODEL_INSTANCE_COMMENTS",
+                "parameters.ALL_MODEL_MARK",
+                "start_x",
+                "start_y",
+                "start_z",
+                "structural",
+                "type_id"
+              ],
+              "missing": [],
+              "unexpected": [],
+              "verified_means": "true only when EXACTLY the required properties were checked - each once, none missing, none substituted - and every one of them was RE-READ from the committed model and matched. A property that could not be read counts as unmeasured, never as agreement, and an empty checklist is not a pass.",
+              "properties": [
+                {
+                  "property": "kind",
+                  "measured": true,
+                  "requested": "wall",
+                  "found_in_committed_model": "wall",
+                  "matches": true
+                },
+                {
+                  "property": "type_id",
+                  "measured": true,
+                  "requested": 396,
+                  "found_in_committed_model": 396,
+                  "matches": true
+                },
+                {
+                  "property": "level_id",
+                  "measured": true,
+                  "requested": 311,
+                  "found_in_committed_model": 311,
+                  "matches": true
+                },
+                {
+                  "property": "level_elevation",
+                  "measured": true,
+                  "requested": 0.0,
+                  "found_in_committed_model": 0.0,
+                  "matches": true,
+                  "unit": "feet",
+                  "tolerance": 1e-06,
+                  "method": "Revit parameter/location/sketch/face readback"
+                },
+                {
+                  "property": "start_x",
+                  "measured": true,
+                  "requested": 0.0,
+                  "found_in_committed_model": 0.0,
+                  "matches": true,
+                  "unit": "feet",
+                  "tolerance": 1e-06,
+                  "method": "Revit parameter/location/sketch/face readback"
+                },
+                {
+                  "property": "start_y",
+                  "measured": true,
+                  "requested": 0.0,
+                  "found_in_committed_model": 0.0,
+                  "matches": true,
+                  "unit": "feet",
+                  "tolerance": 1e-06,
+                  "method": "Revit parameter/location/sketch/face readback"
+                },
+                {
+                  "property": "start_z",
+                  "measured": true,
+                  "requested": 0.0,
+                  "found_in_committed_model": 0.0,
+                  "matches": true,
+                  "unit": "feet",
+                  "tolerance": 1e-06,
+                  "method": "Revit parameter/location/sketch/face readback"
+                },
+                {
+                  "property": "end_x",
+                  "measured": true,
+                  "requested": 13.123359580052494,
+                  "found_in_committed_model": 13.123359580052494,
+                  "matches": true,
+                  "unit": "feet",
+                  "tolerance": 1e-06,
+                  "method": "Revit parameter/location/sketch/face readback"
+                },
+                {
+                  "property": "end_y",
+                  "measured": true,
+                  "requested": 0.0,
+                  "found_in_committed_model": 0.0,
+                  "matches": true,
+                  "unit": "feet",
+                  "tolerance": 1e-06,
+                  "method": "Revit parameter/location/sketch/face readback"
+                },
+                {
+                  "property": "end_z",
+                  "measured": true,
+                  "requested": 0.0,
+                  "found_in_committed_model": 0.0,
+                  "matches": true,
+                  "unit": "feet",
+                  "tolerance": 1e-06,
+                  "method": "Revit parameter/location/sketch/face readback"
+                },
+                {
+                  "property": "height",
+                  "measured": true,
+                  "requested": 9.84251968503937,
+                  "found_in_committed_model": 9.84251968503937,
+                  "matches": true,
+                  "unit": "feet",
+                  "tolerance": 1e-06,
+                  "method": "Revit parameter/location/sketch/face readback"
+                },
+                {
+                  "property": "offset",
+                  "measured": true,
+                  "requested": 0.0,
+                  "found_in_committed_model": 0.0,
+                  "matches": true,
+                  "unit": "feet",
+                  "tolerance": 1e-06,
+                  "method": "Revit parameter/location/sketch/face readback"
+                },
+                {
+                  "property": "flip",
+                  "measured": true,
+                  "requested": false,
+                  "found_in_committed_model": false,
+                  "matches": true
+                },
+                {
+                  "property": "structural",
+                  "measured": true,
+                  "requested": false,
+                  "found_in_committed_model": false,
+                  "matches": true
+                },
+                {
+                  "property": "parameters.ALL_MODEL_MARK",
+                  "measured": true,
+                  "requested": "LIVE-WALL-3",
+                  "found_in_committed_model": "LIVE-WALL-3",
+                  "matches": true
+                },
+                {
+                  "property": "parameters.ALL_MODEL_INSTANCE_COMMENTS",
+                  "measured": true,
+                  "requested": "amanda:revit.create_wall",
+                  "found_in_committed_model": "amanda:revit.create_wall",
+                  "matches": true
+                }
+              ]
+            },
+            "source_comparison": null,
+            "geometry_base_z_feet": 0.0,
+            "geometry_top_z_feet": 9.84251968503937,
+            "kind_verified": true,
+            "type_verified": true,
+            "structural_type_verified": true,
+            "actual_class": "Wall",
+            "actual_category": "Paredes"
+          }
+        ]
+      },
+      "note": "Provisional elements were verified after an inner commit and the entire group was rolled back. No provisional elements remain.",
+      "application": {
+        "state": "rehearsed",
+        "fully_applied": false,
+        "transaction_status": "not_started",
+        "requested": 1,
+        "applied": 0,
+        "verified": 0,
+        "unresolved": 0,
+        "failed": 0,
+        "unknown": 0,
+        "state_means": "rehearsed: a valid dry run. Everything resolved and NOTHING was written."
+      },
+      "document": "LAB_ROUTE_PROBE [C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\probe\\LAB_ROUTE_PROBE.rvt]",
+      "document_fingerprint": "a1692d2c4d42770e",
+      "change_preview": {
+        "fingerprint": "11dfece866f7e0de1c6369eb1827d01fdffc32fb1b6498744474b50bddc189bd",
+        "total": 1,
+        "shown": 1,
+        "truncated": false,
+        "expected_cascade": 0,
+        "rows": [
+          {
+            "unique_id": "create:0",
+            "element_id": null,
+            "action": "create",
+            "category": "wall",
+            "type": "Interior - 138 mm Divisória (1-hr)",
+            "captured_state": {
+              "host_uid": "",
+              "level": "Nível 1",
+              "level_elev_mm": "0",
+              "level_uid": "e3e052f9-0156-11d5-9301-0000863f27ad-00000137",
+              "system_type": "",
+              "system_type_uid": "",
+              "top_level_elev_mm": "",
+              "top_level_uid": "",
+              "type_uid": "e3e052f9-0156-11d5-9301-0000863f27ad-0000018c"
+            },
+            "proposed_values": null,
+            "values_truncated": false
+          }
+        ],
+        "note": "Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values."
+      },
+      "plan_resolved": {
+        "elements": 1,
+        "create": 1,
+        "modify": 0,
+        "delete": 0,
+        "expected_cascade": 0,
+        "fingerprint": "11dfece866f7e0de1c6369eb1827d01fdffc32fb1b6498744474b50bddc189bd"
+      },
+      "confirmation_token": "hz-ee6999d92dad3e6df3c5e668355fcada",
+      "confirmation_expires_utc": "2026-09-15 21:35:13Z",
+      "confirmation_note": "To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds this ordered heterogeneous batch, its units, AND what its names resolved to right now - the types, system types and levels, including each level's measured elevation. A type renamed, a name re-pointed or a level moved before you apply refuses as a stale plan instead of creating something else under the approved words.",
+      "bridge_queue": {
+        "queued": false,
+        "ahead_at_admission": 0,
+        "waited_ms": 1,
+        "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+        "capacity": 16,
+        "execution_and_wait_ms": 40
+      }
+    }
+  }
+}

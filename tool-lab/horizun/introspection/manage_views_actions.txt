@@ -1,0 +1,260 @@
+{
+  "type": "array",
+  "minItems": 1,
+  "maxItems": 500,
+  "items": {
+    "type": "object",
+    "required": [
+      "operation"
+    ],
+    "properties": {
+      "operation": {
+        "type": "string",
+        "enum": [
+          "create_floor_plan",
+          "create_ceiling_plan",
+          "create_structural_plan",
+          "create_area_plan",
+          "create_3d",
+          "create_drafting",
+          "create_section",
+          "create_elevation",
+          "create_callout",
+          "duplicate_view",
+          "apply_template",
+          "set_phase",
+          "assign_scope_box",
+          "set_view_range",
+          "set_crop",
+          "set_annotation_crop",
+          "create_sheet",
+          "create_placeholder_sheet",
+          "convert_placeholder_sheet",
+          "duplicate_sheet",
+          "place_view",
+          "place_schedule",
+          "set_viewport_type",
+          "align_viewports"
+        ]
+      },
+      "key": {
+        "type": "string",
+        "description": "Unique alias for an object this action creates."
+      },
+      "name": {
+        "type": "string"
+      },
+      "number": {
+        "type": "string"
+      },
+      "level_id": {
+        "type": "integer"
+      },
+      "view_family_type_id": {
+        "type": "integer"
+      },
+      "plan_view_id": {
+        "type": "integer"
+      },
+      "source_view_id": {
+        "type": "integer"
+      },
+      "source_view_key": {
+        "type": "string"
+      },
+      "duplicate_option": {
+        "type": "string",
+        "enum": [
+          "Duplicate",
+          "WithDetailing",
+          "AsDependent"
+        ],
+        "default": "Duplicate"
+      },
+      "view_id": {
+        "type": "integer"
+      },
+      "view_key": {
+        "type": "string"
+      },
+      "template_view_id": {
+        "type": "integer"
+      },
+      "title_block_type_id": {
+        "type": "integer"
+      },
+      "sheet_id": {
+        "type": "integer"
+      },
+      "sheet_key": {
+        "type": "string"
+      },
+      "schedule_id": {
+        "type": "integer"
+      },
+      "schedule_key": {
+        "type": "string"
+      },
+      "point": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 3,
+        "items": {
+          "type": "number"
+        }
+      },
+      "start": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 3,
+        "items": {
+          "type": "number"
+        }
+      },
+      "end": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 3,
+        "items": {
+          "type": "number"
+        }
+      },
+      "area_scheme_id": {
+        "type": "integer",
+        "description": "create_area_plan: the AreaScheme the plan belongs to."
+      },
+      "parent_view_id": {
+        "type": "integer",
+        "description": "create_callout: the view the callout is drawn in."
+      },
+      "parent_view_key": {
+        "type": "string"
+      },
+      "phase_id": {
+        "type": "integer",
+        "description": "set_phase: the Phase the view shows."
+      },
+      "scope_box_id": {
+        "type": "integer",
+        "description": "assign_scope_box: a Volume of Interest element."
+      },
+      "cut_level_id": {
+        "type": "integer"
+      },
+      "cut_offset": {
+        "type": "number"
+      },
+      "top_level_id": {
+        "type": "integer"
+      },
+      "top_offset": {
+        "type": "number",
+        "default": 3000
+      },
+      "bottom_level_id": {
+        "type": "integer"
+      },
+      "bottom_offset": {
+        "type": "number",
+        "default": -1000
+      },
+      "view_depth_level_id": {
+        "type": "integer"
+      },
+      "view_depth_offset": {
+        "type": "number"
+      },
+      "box": {
+        "type": "array",
+        "minItems": 4,
+        "maxItems": 4,
+        "items": {
+          "type": "number"
+        },
+        "description": "set_crop: [min_x, min_y, max_x, max_y] in the view's own plane, in units."
+      },
+      "active": {
+        "type": "boolean",
+        "description": "set_annotation_crop: on or off."
+      },
+      "annotation_offset": {
+        "type": "number",
+        "minimum": 0,
+        "description": "set_annotation_crop: uniform offset applied to all four annotation crop edges, in units."
+      },
+      "source_sheet_id": {
+        "type": "integer",
+        "description": "duplicate_sheet: the sheet to copy."
+      },
+      "with_content": {
+        "type": "boolean",
+        "default": false,
+        "description": "duplicate_sheet: also duplicate every placed view WithDetailing and place each copy at the same paper position with the same viewport type. Refused when the source carries placed schedules - one schedule cannot live on two sheets."
+      },
+      "viewport_id": {
+        "type": "integer",
+        "description": "set_viewport_type: the viewport to retype."
+      },
+      "viewport_type_id": {
+        "type": "integer",
+        "description": "set_viewport_type: must be in the viewport's own GetValidTypes."
+      },
+      "viewport_ids": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 100,
+        "items": {
+          "type": "integer"
+        },
+        "description": "align_viewports: the viewports that MOVE."
+      },
+      "anchor_viewport_id": {
+        "type": "integer",
+        "description": "align_viewports: the viewport that holds still; must not appear in viewport_ids."
+      },
+      "mode": {
+        "type": "string",
+        "enum": [
+          "center",
+          "center_x",
+          "center_y",
+          "left",
+          "right",
+          "top",
+          "bottom"
+        ],
+        "description": "align_viewports: which edge or center aligns to the anchor."
+      },
+      "depth": {
+        "type": "number",
+        "exclusiveMinimum": 0,
+        "default": 5000
+      },
+      "elevation_index": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 3,
+        "default": 0
+      },
+      "rotation": {
+        "type": "number",
+        "exclusiveMinimum": -360,
+        "exclusiveMaximum": 360,
+        "description": "create_elevation: rotate the elevation marker about the vertical axis through its point, in degrees CCW - how a room elevation faces its principal wall. Verified by re-reading the view direction after commit."
+      },
+      "marker_scale": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 24000,
+        "default": 100
+      },
+      "view_scale": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 24000,
+        "description": "Explicit scale for every operation whose result has a drawing scale: create_floor_plan, create_ceiling_plan, create_structural_plan, create_area_plan, create_drafting, create_3d (isometric), create_callout, create_section, create_elevation, duplicate_view and apply_template. The value is checked with View.IsValidViewScale before any transaction opens. A view whose template controls View Scale refuses the batch by name instead of letting the template silently win; a sheet, schedule or perspective refuses because it has no scale. The scale is re-read after commit and reported per row as view_scale / view_scale_verified; on any other operation the argument is refused rather than ignored."
+      }
+    },
+    "additionalProperties": false
+  }
+}

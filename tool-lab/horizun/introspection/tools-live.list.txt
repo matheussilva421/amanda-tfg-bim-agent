@@ -1,0 +1,163 @@
+server: horizun-mcp 1.3.3
+protocol: 2024-11-05
+tools: 80
+  get_document_info
+      Basic facts about the active Revit document: title, path, version, element count. Read-only. Full installed co
+  horizun_health
+      Is this bridge alive, and WHICH Revit is on the other end. Reports the Revit year and build, the process id, e
+  horizun_save_document
+      Save the ACTIVE document and prove it landed: the file's timestamp and size are read from disk before and afte
+  horizun_open_document
+      Open a .rvt/.rfa by PATH, or a model in ACC / BIM 360 by GUID, and make it active. It runs THE SAME GUARDS as 
+  horizun_relinquish_all
+      Relinquish every workset and element this user owns in the ACTIVE workshared document, then MEASURE it at both
+  horizun_capture_view
+      Export a view as a PNG and hand the IMAGE back, so you can actually look at the model rather than only read it
+  horizun_create_schedule
+      Create one native Revit schedule for one category, optionally including elements from loaded RVT links. Dry-ru
+  horizun_navigate
+      Hand query results back to the Revit UI: select host elements, clear the selection, ask Revit to frame element
+  horizun_create_elements
+      Create a heterogeneous batch of architectural, structural and MEP elements in one atomic transaction: levels, 
+  horizun_create_family
+      Compile a loadable parametric RFA from an absolute Revit family-template (.rft) path. The typed specification 
+  horizun_manage_system_types
+      Create project-resident system-family types by duplicating explicit source ElementType ids in one atomic trans
+  horizun_list_elements
+      List elements of one category in the active model and loaded RVT links. Totals are exact and independent of ma
+  horizun_query_model
+      Composable, read-only model query across the host and loaded RVT links: filter by categories, family, type, na
+  horizun_transform_elements
+      Apply an atomic batch of move, copy, rotate, pin, unpin or type-change operations to explicit host ElementIds.
+  horizun_list_schedules
+      List native schedules with their real fields, linked-file setting, itemization, body dimensions and host/link 
+  horizun_manage_views
+      Create and compose documentation in one atomic batch: floor/ceiling/structural/area plans, sections, elevation
+  horizun_get_schedule_data
+      Read the displayed cells of one native schedule, including rows produced from RVT links. Returns bounded heade
+  horizun_export
+      Export verified deliverables from the active document: combined PDF, one-view DWG, configurable IFC, model/vie
+  horizun_get_dimension_references
+      Discover DIMENSIONABLE references without guessing faces from element ids: for explicit elements or a reproduc
+  horizun_query_dimensions
+      Read existing dimensions completely: linear, angular, radial, diameter, arc-length and spot elevation/coordina
+  horizun_edit_dimensions
+      Edit existing dimensions atomically and prove every edit from the model: change the dimension type (same style
+  horizun_plan_from_cad
+      Read a linked or imported DWG through a VERSIONED REQUIREMENT SET and return an ordered BIM plan without build
+  horizun_manage_cad_links
+      List, add, reload and repoint CAD (DWG/DXF) links - the typed first step of a DWG-to-BIM conversion, which unt
+  horizun_apply_cad_update
+      Carry out a horizun_plan_cad_update plan through the typed commands that already rehearse, confirm and re-read
+  horizun_plan_cad_update
+      Revision A is in the model, revision B is on screen: plan the difference. READ-ONLY, and it emits ready calls 
+  horizun_audit_cad_model
+      Does this model still agree with this drawing? Reads the DWG exactly as horizun_plan_from_cad does - same harv
+  horizun_apply_cad_plan
+      Build a plan from horizun_plan_from_cad THROUGH the same typed horizun_create_elements this bridge already reh
+  horizun_query_cad
+      Read the CAD (DWG) surface of the ACTIVE document, read-only, in four modes. mode=instances lists every Import
+  horizun_query_detail_2d
+      Read the 2D-detail surface of ONE view. mode=resources answers what can be drawn WITH: line styles (from a rea
+  horizun_audit_reinforcement
+      Compare the reinforcement in the model against a structural requirement set. Read-only. Bars are matched to ru
+  horizun_plan_reinforcement
+      Resolve a structural requirement set against the model and report what it WOULD build, without opening a trans
+  horizun_apply_reinforcement
+      Build the cover and reinforcement a structural requirement set declares, in ONE transaction, and re-read every
+  horizun_query_structure
+      Read STRUCTURE from the model: steel members, reinforcement hosts, cover, rebar, reinforcement systems and ste
+  horizun_query_planimetry
+      Read the DOCUMENTATION surface of the active model, from the database rather than from a PDF: six explicit mod
+  horizun_audit_planimetry
+      Audit the documentation surface DIRECTLY FROM THE MODEL and return findings, not prose. It reads through the s
+  horizun_fix_planimetry
+      Turn findings from horizun_audit_planimetry into TYPED, rehearsed, confirmed, atomic and re-read corrections. 
+  horizun_pack_sheets
+      Automatically pack an ORDERED set of unplaced views/schedules and existing viewport/schedule placements onto o
+  horizun_plan_annotations
+      Read-only production planner. auto_tags takes explicit elements and chooses deterministic collision-aware tag-
+  horizun_manage_schedules
+      Create material takeoffs, sheet lists, view lists, revision schedules and keynote legends, and edit any schedu
+  horizun_plan_views
+      Read-only planner for per-room deliverable views. room_views measures the placed, enclosed rooms of one plan v
+  horizun_manage_revisions
+      Create or update revisions, add them to or WITHDRAW them from explicit sheets, and create revision clouds in e
+  horizun_detail_2d
+      Draw verified 2D detail in one atomic batch: detail lines, arcs (two unambiguous forms), polylines (one action
+  horizun_annotate
+      Create text notes, host-element tags and DIMENSIONS - linear (simple and chains of up to 32 references), angul
+  horizun_submit_job
+      Submit any installed Revit-side tool except execute_python, request_python_access or submit_job itself to the 
+  horizun_execute_plan
+      Compose up to 100 typed Revit write commands into one ordered, atomic plan. Alternatively supply a named workf
+  horizun_request_python_access
+      REQUEST, NEVER SELF-GRANT, persistent arbitrary-Python permission. Opens a visible consent dialog inside Revit
+  horizun_execute_python
+      Run Python directly against the Revit API on the UI thread - THE EXECUTION FALLBACK for everything the typed c
+  horizun_model_scan
+      One deep native pass over the active model: cleanliness (CAD imported vs linked, IMPORT-* patterns, unused tem
+  horizun_write_params_verified
+      Apply an explicit batch of parameter writes to elements, types or Project Information in ONE named transaction
+  horizun_delete_verified
+      Delete an explicit list of ElementIds, or purge unused elements to a real fixed point, and report only what th
+  horizun_document_session
+      Open / save / save_as / close a Revit document, guarded against the irreversible. Before opening it reads the 
+  horizun_file_info
+      Read Revit files' headers off disk - format/saved version, is_workshared, is_central, is_local, central path -
+  horizun_acc_upload_status
+      Has each of these files been assigned an ACC cloud folder yet, or is its upload still pending? Copying into th
+  horizun_audit_model
+      Pre-delivery audit of the NAMED model: warnings, orphan group types, in-place families, imported (not linked) 
+  horizun_apply_corrections
+      THE CORRECTION CYCLE for horizun_audit_model: select findings by finding_id from an audit taken in this sessio
+  horizun_quantities
+      Volume takeoff in m3 from all three sources Revit offers â€” the Volume parameter, the real solid geometry, an
+  horizun_clash
+      Clash detection between two category sets, across the host model AND loaded Revit links (link geometry is tran
+  horizun_plan_mep
+      Plan a multi-segment pipe or duct run along an explicit polyline, deterministically and READ-ONLY. Collinear v
+  horizun_manage_links
+      List, unload, reload, pin and unpin Revit links, typed and verified. Load-state changes (unload/reload) cannot
+  horizun_plan_structure
+      Plan structural columns on grid intersections, or framing between consecutive intersections along each grid, d
+  horizun_coordination
+      List, update and export the durable clash-finding ledger that horizun_clash record_findings=true maintains per
+  horizun_set_keynote
+      Set the Keynote code on elements, reporting exactly what it touched. In Revit the Keynote parameter normally l
+  horizun_family_apply
+      Homologate the ACTIVE family document (.rfa) in ONE transaction: collapse surplus types down to one and rename
+  horizun_bind_shared_param
+      Bind a shared parameter from an SPF (by GUID, or by name) to a set of categories as an Instance or Type bindin
+  horizun_split_floor_loops
+      Split each multi-loop floor into ONE FLOOR PER LOOP. A slab sketched with several closed loops is a single ele
+  horizun_split_multilayer_walls
+      Split compound walls into ONE SINGLE-LAYER WALL PER MATERIAL LAYER, each at the physical position its layer oc
+  horizun_split_multilayer_slabs
+      Split compound FLOORS AND CEILINGS into one element per material layer. Each layer keeps the ORIGINAL PROFILE 
+  horizun_ungroup_and_mark
+      Ungroup model groups AND record where every element came from, so the operation is reversible. Ungrouping dest
+  horizun_regroup_by_param
+      Rebuild model groups from the stamp horizun_ungroup_and_mark left behind: collect every LOOSE element in the m
+  horizun_copy_slab_elevations
+      Copy the SHAPE of one warped floor onto other floors. Reads the source's triangulated top face and, for each d
+  horizun_embed_floors_in_toposolid
+      Embed floors INTO a toposolid: the slab's top face ends flush with the terrain and its body goes into the grou
+  horizun_grade_toposolid_around_floors
+      Grade a toposolid around one or more path slabs, Civil 3D style: a CONSTANT SIDE SLOPE run outward from the pa
+  horizun_rectangularize_walls
+      Rebuild walls whose elevation profile has been edited into irregular steps as simple RECTANGULAR fragments, re
+  horizun_job_status
+      How a long run is going - answered WITHOUT touching Revit. While a long command executes, Revit's UI thread is
+  horizun_catalog_lookup
+      Resolve whether a hierarchical code is a LEAF of a catalog you pass at call time. Generic: the catalog is a fi
+  horizun_excel_read_rows
+      Read rows from an .xlsx worksheet through the same minimal OPC reader the writer uses - no new dependency, no 
+  horizun_excel_write_rows
+      Append rows to a worksheet of an existing .xlsx, preserving the rest of the workbook (every other sheet, all s
+  horizun_budget_compare
+      Compare a horizun_quantities TAKEOFF (mode 'takeoff' rows, inline or from a JSON file) against a budget baseli
+  horizun_power_bi_push
+      Push a bounded batch of primitive rows directly into a Power BI push semantic-model table, optionally inside a
+  horizun_target
+      Which Revit these tools are talking to, and how to change it - answered WITHOUT touching Revit. With no argume

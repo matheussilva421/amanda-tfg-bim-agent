@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "solution_id": "AMANDA-RUN-001-F01",
+  "resolution_checks": {
+    "BLOCK": [
+      {
+        "code": "gross_area_budget",
+        "message": "gross-area budget is unavailable at this resolution",
+        "severity": "INFO",
+        "status": "NOT_EVALUATED",
+        "resolution": "BLOCK",
+        "expected": null,
+        "actual": null,
+        "evidence": [],
+        "penalty": 0.0
+      },
+      {
+        "code": "required_rooms",
+        "message": "expanded room instances are unavailable at this resolution",
+        "severity": "INFO",
+        "status": "NOT_EVALUATED",
+        "resolution": "BLOCK",
+        "expected": null,
+        "actual": null,
+        "evidence": [],
+        "penalty": 0.0
+      },
+      {
+        "code": "accessible_rooms",
+        "message": "expanded accessible rooms are unavailable at this resolution",
+        "severity": "INFO",
+        "status": "NOT_EVALUATED",
+        "resolution": "BLOCK",
+        "expected": null,
+        "actual": null,
+        "evidence": [],
+        "penalty": 0.0
+      }
+    ],
+    "ROOM": []
+  },
+  "hard_violations": [],
+  "status": "PASS"
+}

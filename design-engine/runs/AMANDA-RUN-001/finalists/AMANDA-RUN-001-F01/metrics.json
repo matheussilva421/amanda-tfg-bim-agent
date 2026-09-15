@@ -1,0 +1,455 @@
+{
+  "schema_version": 1,
+  "solution_id": "AMANDA-RUN-001-F01",
+  "raw_metrics": {
+    "program_compliance": 1.0,
+    "privacy_security": 0.5,
+    "adjacency": 0.9415912467362131,
+    "circulation": 0.8333333333333334,
+    "accessibility": 1.0,
+    "solar_heuristic": null,
+    "ventilation_heuristic": null,
+    "green_integration": 1.0,
+    "compactness": 0.06141644628426339,
+    "constructability": 1.0,
+    "concept_fidelity": 1.0
+  },
+  "normalized_metrics": {
+    "program_compliance": 1.0,
+    "privacy_security": 0.5,
+    "adjacency": 0.9415912467362131,
+    "circulation": 0.8333333333333334,
+    "accessibility": 1.0,
+    "solar_heuristic": null,
+    "ventilation_heuristic": null,
+    "green_integration": 1.0,
+    "compactness": 0.06141644628426339,
+    "constructability": 1.0,
+    "concept_fidelity": 1.0
+  },
+  "contributions": {
+    "program_compliance": 0.20454545454545453,
+    "privacy_security": 0.07954545454545456,
+    "adjacency": 0.1069990053109333,
+    "circulation": 0.09469696969696971,
+    "accessibility": 0.13636363636363635,
+    "green_integration": 0.06818181818181818,
+    "compactness": 0.0034895708116058745,
+    "constructability": 0.09090909090909091,
+    "concept_fidelity": 0.05681818181818182
+  },
+  "weighted_total": 0.8415491821831452,
+  "rebalanced_weight_total": 0.8415491821831452,
+  "not_evaluated": [
+    "solar_heuristic",
+    "ventilation_heuristic"
+  ],
+  "weights_version": 1,
+  "weights": {
+    "program_compliance": 0.18,
+    "privacy_security": 0.14,
+    "adjacency": 0.1,
+    "circulation": 0.1,
+    "accessibility": 0.12,
+    "solar_heuristic": 0.06,
+    "ventilation_heuristic": 0.06,
+    "green_integration": 0.06,
+    "compactness": 0.05,
+    "constructability": 0.08,
+    "concept_fidelity": 0.05
+  },
+  "weight_config": {
+    "version": 1,
+    "units": {
+      "ratio": "normalized_0_1",
+      "percentage": "percent"
+    },
+    "dimensions": {
+      "program_compliance": {
+        "unit": "ratio",
+        "bounds": [
+          0,
+          1
+        ],
+        "direction": "higher",
+        "weight": 0.18,
+        "missing_data": "exclude_and_rebalance",
+        "evidence_source": "canonical program and hard-constraint report"
+      },
+      "privacy_security": {
+        "unit": "ratio",
+        "bounds": [
+          0,
+          1
+        ],
+        "direction": "higher",
+        "weight": 0.14,
+        "missing_data": "exclude_and_rebalance",
+        "evidence_source": "privacy transition evidence"
+      },
+      "adjacency": {
+        "unit": "ratio",
+        "bounds": [
+          0,
+          1
+        ],
+        "direction": "higher",
+        "weight": 0.1,
+        "missing_data": "exclude_and_rebalance",
+        "evidence_source": "Shapely relation evaluation"
+      },
+      "circulation": {
+        "unit": "ratio",
+        "bounds": [
+          0,
+          1
+        ],
+        "direction": "higher",
+        "weight": 0.1,
+        "missing_data": "exclude_and_rebalance",
+        "evidence_source": "traversable flow graph"
+      },
+      "accessibility": {
+        "unit": "ratio",
+        "bounds": [
+          0,
+          1
+        ],
+        "direction": "higher",
+        "weight": 0.12,
+        "missing_data": "exclude_and_rebalance",
+        "evidence_source": "accessible room and route checks"
+      },
+      "solar_heuristic": {
+        "unit": "ratio",
+        "bounds": [
+          0,
+          1
+        ],
+        "direction": "higher",
+        "weight": 0.06,
+        "missing_data": "exclude_and_rebalance",
+        "evidence_source": "project-labeled environmental heuristic"
+      },
+      "ventilation_heuristic": {
+        "unit": "ratio",
+        "bounds": [
+          0,
+          1
+        ],
+        "direction": "higher",
+        "weight": 0.06,
+        "missing_data": "exclude_and_rebalance",
+        "evidence_source": "project-labeled environmental heuristic"
+      },
+      "green_integration": {
+        "unit": "ratio",
+        "bounds": [
+          0,
+          1
+        ],
+        "direction": "higher",
+        "weight": 0.06,
+        "missing_data": "exclude_and_rebalance",
+        "evidence_source": "first-class external program geometry"
+      },
+      "compactness": {
+        "unit": "ratio",
+        "bounds": [
+          0,
+          1
+        ],
+        "direction": "higher",
+        "weight": 0.05,
+        "missing_data": "exclude_and_rebalance",
+        "evidence_source": "footprint and perimeter metrics"
+      },
+      "constructability": {
+        "unit": "ratio",
+        "bounds": [
+          0,
+          1
+        ],
+        "direction": "higher",
+        "weight": 0.08,
+        "missing_data": "exclude_and_rebalance",
+        "evidence_source": "block and room geometry checks"
+      },
+      "concept_fidelity": {
+        "unit": "ratio",
+        "bounds": [
+          0,
+          1
+        ],
+        "direction": "higher",
+        "weight": 0.05,
+        "missing_data": "exclude_and_rebalance",
+        "evidence_source": "configured archetype relationship evidence"
+      }
+    }
+  },
+  "evidence": {
+    "privacy": {
+      "transition_sequence": [
+        0,
+        1,
+        2,
+        2,
+        3,
+        5
+      ],
+      "node_ids": [
+        "SEC-01",
+        "SEC-03",
+        "SEC-04",
+        "SEC-05",
+        "SEC-06",
+        "SEC-02"
+      ],
+      "direct_public_to_residential": false
+    },
+    "circulation": {
+      "resident": {
+        "start": "REQ-01-01",
+        "goal": "REQ-02-01#1",
+        "path": [
+          "REQ-01-01",
+          "REQ-01-02",
+          "REQ-01-03",
+          "REQ-01-04",
+          "REQ-01-05",
+          "REQ-03-01",
+          "REQ-03-02",
+          "REQ-03-03",
+          "REQ-03-04",
+          "REQ-04-01",
+          "REQ-04-02",
+          "REQ-04-03",
+          "REQ-04-04",
+          "REQ-04-05",
+          "REQ-04-06",
+          "REQ-05-01",
+          "REQ-05-02",
+          "REQ-05-03",
+          "REQ-05-04",
+          "REQ-06-01",
+          "REQ-06-02",
+          "REQ-06-03",
+          "REQ-06-04",
+          "REQ-06-05",
+          "REQ-06-06",
+          "REQ-06-07",
+          "REQ-06-08",
+          "REQ-06-09",
+          "REQ-06-10",
+          "REQ-06-11",
+          "REQ-06-12",
+          "REQ-06-13",
+          "REQ-06-14",
+          "REQ-06-15",
+          "REQ-02-01#1"
+        ],
+        "distance_m": 328.63157506165516,
+        "crossings": 0,
+        "ok": true,
+        "violations": [],
+        "evidence": [
+          "path derived from actual traversable edges"
+        ]
+      },
+      "child": {
+        "start": "REQ-01-01",
+        "goal": "REQ-03-01",
+        "path": [
+          "REQ-01-01",
+          "REQ-01-02",
+          "REQ-01-03",
+          "REQ-01-04",
+          "REQ-01-05",
+          "REQ-03-01"
+        ],
+        "distance_m": 62.80034871513778,
+        "crossings": 0,
+        "ok": true,
+        "violations": [],
+        "evidence": [
+          "path derived from actual traversable edges"
+        ]
+      },
+      "staff": {
+        "start": "REQ-01-01",
+        "goal": "REQ-06-01",
+        "path": [
+          "REQ-01-01",
+          "REQ-01-02",
+          "REQ-01-03",
+          "REQ-01-04",
+          "REQ-01-05",
+          "REQ-03-01",
+          "REQ-03-02",
+          "REQ-03-03",
+          "REQ-03-04",
+          "REQ-04-01",
+          "REQ-04-02",
+          "REQ-04-03",
+          "REQ-04-04",
+          "REQ-04-05",
+          "REQ-04-06",
+          "REQ-05-01",
+          "REQ-05-02",
+          "REQ-05-03",
+          "REQ-05-04",
+          "REQ-06-01"
+        ],
+        "distance_m": 202.5526119524705,
+        "crossings": 0,
+        "ok": true,
+        "violations": [],
+        "evidence": [
+          "path derived from actual traversable edges"
+        ]
+      },
+      "visitor": {
+        "start": "REQ-01-01",
+        "goal": "REQ-05-01",
+        "path": [
+          "REQ-01-01",
+          "REQ-01-02",
+          "REQ-01-03",
+          "REQ-01-04",
+          "REQ-01-05",
+          "REQ-03-01",
+          "REQ-03-02",
+          "REQ-03-03",
+          "REQ-03-04",
+          "REQ-04-01",
+          "REQ-04-02",
+          "REQ-04-03",
+          "REQ-04-04",
+          "REQ-04-05",
+          "REQ-04-06",
+          "REQ-05-01"
+        ],
+        "distance_m": 153.84378578216896,
+        "crossings": 0,
+        "ok": true,
+        "violations": [],
+        "evidence": [
+          "path derived from actual traversable edges"
+        ]
+      },
+      "service": {
+        "start": "REQ-01-01",
+        "goal": "REQ-06-01",
+        "path": [
+          "REQ-01-01",
+          "REQ-01-02",
+          "REQ-01-03",
+          "REQ-01-04",
+          "REQ-01-05",
+          "REQ-03-01",
+          "REQ-03-02",
+          "REQ-03-03",
+          "REQ-03-04",
+          "REQ-04-01",
+          "REQ-04-02",
+          "REQ-04-03",
+          "REQ-04-04",
+          "REQ-04-05",
+          "REQ-04-06",
+          "REQ-05-01",
+          "REQ-05-02",
+          "REQ-05-03",
+          "REQ-05-04",
+          "REQ-06-01"
+        ],
+        "distance_m": 202.5526119524705,
+        "crossings": 0,
+        "ok": true,
+        "violations": [],
+        "evidence": [
+          "path derived from actual traversable edges"
+        ]
+      },
+      "emergency": {
+        "start": "REQ-01-01",
+        "goal": "REQ-02-10",
+        "path": [
+          "REQ-01-01",
+          "REQ-01-02",
+          "REQ-01-03",
+          "REQ-01-04",
+          "REQ-01-05",
+          "REQ-03-01",
+          "REQ-03-02",
+          "REQ-03-03",
+          "REQ-03-04",
+          "REQ-04-01",
+          "REQ-04-02",
+          "REQ-04-03",
+          "REQ-04-04",
+          "REQ-04-05",
+          "REQ-04-06",
+          "REQ-05-01",
+          "REQ-05-02",
+          "REQ-05-03",
+          "REQ-05-04",
+          "REQ-06-01",
+          "REQ-06-02",
+          "REQ-06-03",
+          "REQ-06-04",
+          "REQ-06-05",
+          "REQ-06-06",
+          "REQ-06-07",
+          "REQ-06-08",
+          "REQ-06-09",
+          "REQ-06-10",
+          "REQ-06-11",
+          "REQ-06-12",
+          "REQ-06-13",
+          "REQ-06-14",
+          "REQ-06-15",
+          "REQ-02-01#1",
+          "REQ-02-01#2",
+          "REQ-02-02#1",
+          "REQ-02-02#2",
+          "REQ-02-02#3",
+          "REQ-02-03#1",
+          "REQ-02-03#2",
+          "REQ-02-04",
+          "REQ-02-05",
+          "REQ-02-06#1",
+          "REQ-02-06#2",
+          "REQ-02-06#3",
+          "REQ-02-06#4",
+          "REQ-02-06#5",
+          "REQ-02-07",
+          "REQ-02-08",
+          "REQ-02-09",
+          "REQ-02-10"
+        ],
+        "distance_m": 364.8676431648442,
+        "crossings": 17,
+        "ok": false,
+        "violations": [
+          "FlowViolation(code='private_residential_access', message='route crosses a private residential node forbidden by policy', severity=<FlowViolationSeverity.HARD: 'HARD'>, penalty=0.0)"
+        ],
+        "evidence": [
+          "path derived from actual traversable edges"
+        ]
+      }
+    },
+    "accessibility": {
+      "required_accessible_rooms": 3,
+      "generated_accessible_rooms": 3
+    },
+    "environment": {
+      "status": "NOT_EVALUATED",
+      "reason": "site.true_north is null; P08-T07 owns source-backed environmental heuristics"
+    },
+    "green_integration": {
+      "required_external_area_m2": 260.0,
+      "generated_external_area_m2": 260.00000000000006
+    }
+  }
+}

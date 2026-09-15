@@ -2362,8 +2362,18 @@ tasks:
     title: Generate production candidate run 001
     depends_on:
     - P08-T04
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - python -m pytest tests/unit/test_design_cli.py -q -p no:cacheprovider --basetemp=.tmp-pytest-daenerys-01
+      -> 7 passed, 0 failed; python -m pytest tests/unit tests/solver -q -p no:cacheprovider
+      --basetemp=.tmp-pytest-daenerys-02 -> 616 passed, 0 failed
+    - design-engine/runs/AMANDA-RUN-001/run.json -> counts {macro:144, initial_attempts:144,
+      valid:2, duplicate:142, unknown:0, invalid:0, hard_invalid_ranked:0}; 6 archetypes
+      x 24 seeds; ranking=2; pareto_frontier_ids=[COURTYARD:0,COURTYARD:1]; sector_missing=0;
+      invalid predecessors preserved at design-engine/runs/AMANDA-RUN-001-invalid-2026-09-15{,-rooms}/run.json
+    - 'docs/notes/2026-09-15-p08-t05-run-001.md records routing: no hard-invalid attempt
+      entered ranking or Pareto; the 142 duplicates are reported as a real solver-diversity
+      limitation, not hidden'
   P08-T06:
     id: P08-T06
     phase: PHASE_08
@@ -2371,8 +2381,13 @@ tasks:
     title: Refine/rank top candidates
     depends_on:
     - P08-T05
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - python -m pytest tests/unit/test_design_refine.py tests/unit/test_design_cli.py
+      -q -p no:cacheprovider --basetemp=.tmp-pytest-t2 -> 8 passed, 0 failed
+    - run.json sha256 09cb06cc0a3dcfc9dacad04e8263c72f6cc6fdc2aa8cf56c196a4542c57f54b4
+      regenerates finalists AMANDA-RUN-001-F01 and AMANDA-RUN-001-F02 and stays byte-identical
+    - docs/notes/2026-09-15-p08-t06-refine-rank.md
   P08-T07:
     id: P08-T07
     phase: PHASE_08

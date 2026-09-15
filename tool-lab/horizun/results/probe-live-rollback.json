@@ -1,0 +1,30 @@
+{
+  "reported_success": false,
+  "error": null,
+  "read_payload": {
+    "code": "revit_creation_failed",
+    "tool": "horizun_create_elements",
+    "operation": "create",
+    "index": 0,
+    "phase": "create",
+    "exception_type": "System.ArgumentException",
+    "exception_message": "parameters.AMANDA_LOGICAL_ID: no exact parameter name matched",
+    "exception_stack_trace": "   at Horizun.Revit.Commands.CreateElementsCommand.ApplyInstanceParameters(Element element, Plan p)\r\n   at Horizun.Revit.Commands.CreateElementsCommand.ApplyPlans(Document doc, JObject request, List`1 plans, Int32 requested, Boolean rehearsal)",
+    "write_started": true,
+    "changes_applied": false,
+    "transaction_status": "RolledBack",
+    "rollback_status": "RolledBack",
+    "rollback_error": null,
+    "verification": []
+  },
+  "levels_after": [
+    {
+      "element_id": 311,
+      "name": "Nível 1"
+    },
+    {
+      "element_id": 694,
+      "name": "Nível 2"
+    }
+  ]
+}

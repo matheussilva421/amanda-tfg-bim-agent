@@ -14,9 +14,10 @@ from typing import Any
 
 import yaml
 
-from ..design.geometry import validate_polygon
 from ..design.archetypes import list_archetypes
+from ..design.geometry import validate_polygon
 from ..design.pipeline import PipelineResult, run_pipeline
+from ..design.refinement import refine_run
 from ..ingest.manifest import SourceManifest, sha256_file
 from ..site.models import BoundaryPolygon, Topography
 from .doctor import project_root
@@ -446,12 +447,29 @@ def design_command(run_id: str, root: Path | None = None) -> dict[str, Any]:
     return run_design(root or project_root(), run_id=run_id)
 
 
+def refine_design_run(root: Path, *, run_id: str) -> dict[str, Any]:
+    """Refine the immutable macro run and publish P08-T06 finalist artifacts."""
+
+    safe_run_id = validate_run_id(run_id)
+    root = Path(root).resolve()
+    inputs = load_canonical_inputs(root)
+    return refine_run(
+        root,
+        run_id=safe_run_id,
+        requirements=inputs["requirements"],
+        site=inputs["site"],
+        requirements_sha256=inputs["requirements_sha256"],
+        site_sha256=inputs["site_sha256"],
+    )
+
+
 __all__ = [
     "ENGINE_VERSION",
     "RUNS_ROOT",
     "DesignInputError",
     "design_command",
     "load_canonical_inputs",
+    "refine_design_run",
     "run_design",
     "validate_run_id",
 ]

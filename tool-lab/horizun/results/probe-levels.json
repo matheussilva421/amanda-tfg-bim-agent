@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Error: return_fields 'element_id' is not a row field. Known: category, family, host_category, host_id, is_element_type, is_view_template, level, link_instance_id, name, source_kind, source_model, source_reference, type, type_id, unique_id, view_template_id, view_type. element_id is always present."
+      }
+    ],
+    "isError": true
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "nodes": [
+    {
+      "logical_id": "SEC-01-block-1",
+      "kind": "block",
+      "sector_id": "SEC-01"
+    },
+    {
+      "logical_id": "SEC-03-block-1",
+      "kind": "block",
+      "sector_id": "SEC-03"
+    },
+    {
+      "logical_id": "SEC-04-block-1",
+      "kind": "block",
+      "sector_id": "SEC-04"
+    },
+    {
+      "logical_id": "SEC-05-block-1",
+      "kind": "block",
+      "sector_id": "SEC-05"
+    },
+    {
+      "logical_id": "SEC-06-block-1",
+      "kind": "block",
+      "sector_id": "SEC-06"
+    },
+    {
+      "logical_id": "SEC-02-block-1",
+      "kind": "block",
+      "sector_id": "SEC-02"
+    },
+    {
+      "logical_id": "REQ-07-01",
+      "kind": "external_space",
+      "sector_id": "SEC-07"
+    },
+    {
+      "logical_id": "REQ-07-02",
+      "kind": "external_space",
+      "sector_id": "SEC-07"
+    },
+    {
+      "logical_id": "REQ-07-03",
+      "kind": "external_space",
+      "sector_id": "SEC-07"
+    },
+    {
+      "logical_id": "REQ-07-04",
+      "kind": "external_space",
+      "sector_id": "SEC-07"
+    },
+    {
+      "logical_id": "REQ-07-05",
+      "kind": "external_space",
+      "sector_id": "SEC-07"
+    }
+  ],
+  "edges": [
+    {
+      "source": "SEC-01-block-1",
+      "target": "SEC-03-block-1",
+      "relation": "DERIVED_NEAREST_BLOCK",
+      "distance_m": 41.64839925593206,
+      "evidence": "actual block polygons evaluated with Shapely"
+    },
+    {
+      "source": "SEC-03-block-1",
+      "target": "SEC-04-block-1",
+      "relation": "DERIVED_NEAREST_BLOCK",
+      "distance_m": 19.140411699077557,
+      "evidence": "actual block polygons evaluated with Shapely"
+    },
+    {
+      "source": "SEC-04-block-1",
+      "target": "SEC-05-block-1",
+      "relation": "DERIVED_NEAREST_BLOCK",
+      "distance_m": 18.802341858274517,
+      "evidence": "actual block polygons evaluated with Shapely"
+    },
+    {
+      "source": "SEC-05-block-1",
+      "target": "SEC-06-block-1",
+      "relation": "DERIVED_NEAREST_BLOCK",
+      "distance_m": 18.170397766730282,
+      "evidence": "actual block polygons evaluated with Shapely"
+    },
+    {
+      "source": "SEC-06-block-1",
+      "target": "SEC-02-block-1",
+      "relation": "DERIVED_NEAREST_BLOCK",
+      "distance_m": 83.71962488424742,
+      "evidence": "actual block polygons evaluated with Shapely"
+    }
+  ],
+  "score": 0.9415912467362131,
+  "mean_interblock_distance_m": 36.29623509285237,
+  "evidence": "No canonical relation list is present in program.json; score uses actual nearest block distances."
+}

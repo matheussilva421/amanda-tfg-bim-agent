@@ -1,0 +1,78 @@
+{
+  "raised": "HorizunRequestError: horizun_create_elements mutation requires the orchestrator idempotency_key",
+  "levels": {
+    "document": "LAB_ROUTE_PROBE",
+    "scope": "model",
+    "view_id": null,
+    "include_links": true,
+    "matched_total": 2,
+    "returned": 2,
+    "offset": 0,
+    "truncated": false,
+    "next_cursor": null,
+    "result_set_fingerprint": "056bf50a067b8fed",
+    "coverage_complete": true,
+    "unreadable_total": 0,
+    "unreadable_shown": 0,
+    "unreadable_truncated": false,
+    "unreadable": [],
+    "federated_coverage": {
+      "coverage_complete": true,
+      "include_links": true,
+      "link_instances_total": 0,
+      "link_instances_loaded": 0,
+      "link_instances_unavailable": 0,
+      "sources": [
+        {
+          "source_kind": "host",
+          "source_model": "LAB_ROUTE_PROBE",
+          "link_instance_id": null,
+          "visibility_coverage": {
+            "coverage_complete": true,
+            "is_workshared": false,
+            "worksets_total": null,
+            "worksets_open": null,
+            "worksets_closed": null,
+            "worksets_read_error": null,
+            "note": "This model is not workshared, so every element in it is loaded and this answer covers all of it."
+          }
+        }
+      ],
+      "unavailable_links": [],
+      "note": "Every considered source was loaded with all user worksets open."
+    },
+    "summary": {
+      "by_category": {
+        "Níveis": 2
+      },
+      "by_level": {
+        "(no level)": 2
+      },
+      "by_source": {
+        "host:LAB_ROUTE_PROBE": 2
+      }
+    },
+    "rows": [
+      {
+        "element_id": 311,
+        "unique_id": "e3e052f9-0156-11d5-9301-0000863f27ad-00000137",
+        "category": "Níveis",
+        "name": "Nível 1"
+      },
+      {
+        "element_id": 694,
+        "unique_id": "458c0e49-01bb-11d5-9302-0000863f27ad-000002b6",
+        "category": "Níveis",
+        "name": "Nível 2"
+      }
+    ],
+    "bridge_queue": {
+      "queued": false,
+      "ahead_at_admission": 0,
+      "waited_ms": 6,
+      "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+      "capacity": 16,
+      "execution_and_wait_ms": 12
+    }
+  }
+}

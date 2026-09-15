@@ -1,0 +1,130 @@
+== horizun_query_model | required: None
+   - element_ids | array | Name EXACTLY the rows you want - the verification read for write paths. Ids resolve directly (never via category collect
+   - response_mode | string enum=['full', 'compact', 'summary'] | summary accumulates whole-set counts without row JSON or pagination (MEP detail uses the detailed collector); cannot com
+   - cache_mode | string enum=['bypass', 'reuse'] | reuse opts into bounded DTO caching for complete, non-workshared host-only model queries. Other scopes always remeasure.
+   - include_diagnostics | boolean | Return per-call collection and shaping/cache milliseconds and data bytes, excluding queue and transport. Reports cache h
+   - categories | array | BuiltInCategory tokens or localized Revit category names. Omit for all non-type elements.
+   - family | string | Case-insensitive substring.
+   - type | string | Case-insensitive substring of the type name.
+   - name | string | Case-insensitive substring of the element name.
+   - level | string | Case-insensitive substring of the level name. Matches the level the element is ASSOCIATED with, wherever its category ke
+   - parameters | array | All predicates must match. Names may be BuiltInParameter tokens, shared-parameter GUIDs or display names; an ambiguous d
+   - bounding_box | object | 
+   - scope | string enum=['model', 'current_view', 'view'] | 
+   - view_id | integer | Required for scope=view. View scope is host-only; combine links with model scope.
+   - include_links | boolean | 
+   - return_parameters | array | Specific parameters to project into each row.
+   - include_bounding_box | boolean | 
+   - include_mep | boolean | Attach per-row connector facts (id, domain, shape/size, open or connected, partners, system membership) for elements wit
+   - coordinate_units | string enum=['mm', 'm', 'feet'] | 
+   - include_types | boolean | 
+   - cursor | string | next_cursor from the previous page. It is refused if the query or result set changed.
+   - max_rows | integer | 
+   - group_by | array enum_items=['category', 'level', 'type', 'family', 'source_model', 'source_kind'] | Aggregate instead of listing: returns groups with counts over the WHOLE matched set in one call, no rows and no cursor. 
+   - parameter_format | string enum=['full', 'compact'] | compact returns each readable parameter as name:raw-value instead of the five-field object (~5x smaller per parameter). 
+   - return_fields | array enum_items=['source_reference', 'unique_id', 'category', 'name', 'family', 'type', 'type_id', 'level', 'is_element_type', 'source_kind', 'source_model', 'link_instance_id', 'is_view_template', 'view_template_id' | Row fields to include besides element_id, which is always present. View metadata is opt-in and null on other elements; u
+   - sum_parameters | array | With group_by: numeric parameters to sum per group. Each sum reports summed/absent/unreadable/non_numeric counts and a c
+== horizun_list_elements | required: ['category']
+   - category | string | BuiltInCategory token such as OST_Walls, or the Revit display name.
+   - include_links | boolean | 
+   - offset | integer | 
+   - max_rows | integer | 
+== horizun_target | required: None
+   - pid | integer | Process id of a SPECIFIC Revit instance to direct calls to. Use this when two instances of the same year are running - a
+   - year | string | Four-digit Revit year to direct all later calls to, e.g. '2026'. Pass 'auto' to clear the choice and go back to the most
+== horizun_save_document | required: None
+   - target_document | string | REQUIRED. Title or full path of the document to change. It must be the document ACTIVE in Revit; this never switches doc
+   - expected_document | string | GUARD. If given, the save is refused unless the ACTIVE document's title matches it. Cheap insurance against saving the w
+   - require_gate | object | OPTIONAL PREVENTION GATE. Omit it and this call behaves exactly as before. With it, horizun_audit_model's checks run on 
+   - idempotency_key | string | REQUIRED whenever this call will mutate or change the Revit session. A retry with the same key and identical operation r
+== horizun_export | required: ['target_document', 'format', 'output_path']
+   - target_document | string | 
+   - format | string enum=['pdf', 'dwg', 'ifc', 'nwc', 'fbx', 'image', 'schedule_csv'] | 
+   - output_path | string | Absolute target file with an extension matching format (.pdf/.dwg/.ifc/.nwc/.fbx; an image extension; or .csv/.txt). Ima
+   - view_ids | array | PDF: one or more printable views/sheets. DWG/image: exactly one. FBX: one or more 3D views. NWC view scope: exactly one.
+   - schedule_id | integer | 
+   - image_pixels | integer | 
+   - pdf_combine | boolean | PDF: true produces one combined file; false produces deterministic stem-ordinal-viewId.pdf files. All PDFs are reopened 
+   - emit_manifest | boolean | PDF only: write output_path.manifest.json with SHA256, page counts, source views and revision IDs. Same overwrite policy
+   - units | string enum=['mm', 'm', 'feet'] | Units of pdf_print.origin_offset_x/y. Nothing else in this tool carries a length.
+   - delivery_id | string | PDF only: publish as the publish stage of a ledgered delivery (horizun_plan_views delivery_open). Before any file is tou
+   - pdf_print | object | PDF only: the PRINT POLICY, a closed field set over the options Revit's PDFExportOptions exposes - the same 21 in 2023-2
+   - preset | object | A NAMED, HASHED option bundle handed in as an argument (organisation-neutral: nothing ships compiled in). Its options ov
+   - acad_version | string enum=['2013', '2018'] | dwg: the file version; verified from the produced file's signature.
+   - ifc_version | string enum=['Default', 'IFC2x2', 'IFC2x3', 'IFC2x3CV2', 'IFC2x3BFM', 'IFC2x3FM', 'IFCBCA', 'IFCCOBIE', 'IFC4', 'IFC4DTV', 'IFC4RV'] | 
+   - ifc_filter_view_id | integer | Optional non-template view whose visibility filters the IFC export.
+   - ifc_export_base_quantities | boolean | 
+   - ifc_split_walls_and_columns | boolean | 
+   - ifc_space_boundary_level | integer | 
+   - nwc_scope | string enum=['model', 'view'] | 
+   - nwc_coordinates | string enum=['Shared', 'Internal'] | 
+   - nwc_parameters | string enum=['All', 'Elements', 'None'] | 
+   - nwc_export_links | boolean | 
+   - nwc_export_element_ids | boolean | 
+   - nwc_export_room_geometry | boolean | 
+   - nwc_export_parts | boolean | 
+   - fbx_without_boundary_edges | boolean | 
+   - fbx_use_lod | boolean | 
+   - fbx_lod | integer | 
+   - fbx_stop_on_error | boolean | 
+   - overwrite | boolean | 
+   - dry_run | boolean | 
+   - confirmation_token | string | 
+   - require_gate | object | OPTIONAL PREVENTION GATE. Omit it and this call behaves exactly as before. With it, horizun_audit_model's checks run on 
+   - idempotency_key | string | REQUIRED whenever this call will mutate or change the Revit session. A retry with the same key and identical operation r
+== horizun_capture_view | required: None
+   - view_name | string | Name of the view to capture. Omitted together with view_id: the ACTIVE view.
+   - view_id | integer | Element id of the view. Takes precedence over view_name.
+   - pixel_size | integer | Requested width in pixels (64-8192). Revit fits to the view's aspect, so the result may differ - the response reports th
+   - target_document | string | Required when using temporary view options; must identify the active document.
+   - element_ids | array | Frame these model elements, using crop/section box temporarily. Restores and verifies the view after export, including o
+   - margin_ratio | number | 
+   - hide_category_ids | array | 
+   - hide_annotations | boolean | 
+   - calibrate_world_to_pixel | boolean | Plans/sections with rectangular unsplit active crop only, requires hide_annotations=true; max 4096 pixels per axis. Crea
+   - display_style | string enum=['Wireframe', 'HLR', 'Shading', 'ShadingWithEdges', 'FlatColors', 'Realistic', 'RealisticWithEdges'] | 
+   - orientation | string enum=['top', 'front', 'right', 'isometric'] | Temporary orientation, orthographic 3D only. Spatial output contains measured model crop and axes; exact world-to-pixel 
+== horizun_quantities | required: None
+   - target_document_title | string | Title of the document you believe is active. When present, the takeoff ABORTS if the active document differs - the same 
+   - element_ids | array | Elements to measure. Omit and pass 'category' instead to sweep a whole category.
+   - category | string | BuiltInCategory name, e.g. OST_StructuralFraming, OST_Walls, OST_Floors. Used when element_ids is omitted.
+   - detail_level | string enum=['Coarse', 'Medium', 'Fine'] | Geometry detail level. Fine is the default here on purpose: Coarse geometry under-reports, and this number gets billed.
+   - tolerance_pct | number | Relative disagreement above which sources are flagged as not agreeing.
+   - top | integer | Max element rows returned. Totals and coverage are EXACT and independent of this; a shortened list sets truncated=true a
+   - code_parameter | string | Parameter carrying each element's budget/classification code (instance first, then type). Supplied per call - no organis
+   - only_disagreements | boolean | List only the elements whose sources disagree. Totals still cover everything.
+   - mode | string enum=['volume', 'takeoff'] | volume: the three-source reconciliation above (default). takeoff: measure the caller-named 'quantities' per element with
+   - quantities | array | takeoff only. Each: {name, source, parameter?, unit}. source parameter reads a named parameter (instance first, then typ
+   - classification_parameter | string | takeoff only, required. The parameter (instance first, then type) carrying each element's budget code. Each row's classi
+   - include_links | boolean | takeoff only. Also sweep every LOADED RevitLinkInstance for 'category' (needs category, not element_ids: an id is only u
+== horizun_manage_views | required: ['target_document', 'actions']
+   - target_document | string | 
+   - units | string enum=['mm', 'm', 'feet'] | 
+   - actions | array | 
+   - dry_run | boolean | 
+   - confirmation_token | string | 
+   - transaction_name | string | 
+   - idempotency_key | string | REQUIRED whenever this call will mutate or change the Revit session. A retry with the same key and identical operation r
+== horizun_create_schedule | required: ['category', 'name', 'target_document']
+   - category | string | BuiltInCategory token such as OST_Walls, or the Revit category display name.
+   - name | string | Name of the new schedule. An existing name is refused, never overwritten.
+   - fields | array | Fields to add: localized Revit display names, Count/Family/Type aliases, or BuiltInParameter tokens. Defaults to Count, 
+   - include_links | boolean | Set Revit's Include elements in links option.
+   - itemized | boolean | List every element when true; otherwise group by the requested non-Count fields.
+   - dry_run | boolean | Validate category and scope without opening a transaction.
+   - confirmation_token | string | Required when dry_run=false; returned by the exact dry run.
+   - target_document | string | REQUIRED. Title or full path of the ACTIVE document to change.
+   - idempotency_key | string | REQUIRED whenever this call will mutate or change the Revit session. A retry with the same key and identical operation r
+== horizun_audit_model | required: ['target_document']
+   - target_document | string | REQUIRED: the exact title of the document to audit. This command acts on the ACTIVE document and will NOT switch for you
+   - top | integer | How many items to list per finding. Totals are always exact regardless of this.
+   - requirement_set | object | A declarative pre-delivery gate over what the audit measured - the standard arrives here, nothing is compiled in. NUMBER
+   - tolerances | object | Configuration for the checks, NOT assertions - a tolerance cannot pass or fail, so it lives here rather than in requirem
+   - readiness_roles | array | What 4D/5D readiness MEANS for this project. No parameter name is compiled in, so with nothing declared readiness report
+   - warning_profile | object | Optional. Your triage for Revit warnings, keyed by FailureDefinitionId GUID ONLY - a profile keyed on the description te
+   - propose_corrections | boolean | Opt-in. Adds a 'corrections' block of TYPED PROPOSALS beside the findings - proposal_id, the typed tool, its arguments, 
+   - store_snapshot | boolean | Opt-in. Stores this read-only audit measurement under the local Horizun data root, never beside the RVT, and compares it
+   - health_profile | object | Opt-in, versioned weights for a transparent health index. No weights are compiled in. Fields: id, version, context, weig
+   - prevention_gate | object | Opt-in. Asks whether an operation may proceed GIVEN THIS AUDIT. Answers allow, block, requires_override or not_assessabl
+   - workset_rules | object | Optional. Which workset each category belongs on, plus the names YOUR session calls an un-renamed default - Revit's own 
+== get_document_info | required: None

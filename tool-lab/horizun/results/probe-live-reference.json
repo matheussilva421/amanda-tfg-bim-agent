@@ -1,0 +1,46 @@
+{
+  "reported_success": false,
+  "error": null,
+  "read_payload": {
+    "dialogs": [],
+    "failures": [],
+    "revit_raised_observed": true,
+    "revit_raised_note": "Everything Revit raised while this script ran. A dialog means Revit stopped for a human and the bridge answered it - by default Cancel, which is why an open comes back to the script as 'Opening was canceled' with no other clue. 'while' is the script's OWN last checkpoint() label at that instant: the bridge cannot see which API call was in flight and does not pretend to, so checkpoint per item if you want each dialog attributed. From inside the script, revit_raised(since) returns the same records DURING the run - take len(revit_raised()) before an open and pass it back after to get exactly what that open raised. To let an open continue past its dialog instead of cancelling: `with dialog_answer('dismiss'): doc = app.OpenDocumentFile(...)` - around THAT call only.",
+    "dialogs_observed": true,
+    "failures_observed": true,
+    "observation_complete": true,
+    "dialogs_subscribed": true,
+    "failures_subscribed": true,
+    "dialogs_processing_complete": true,
+    "failures_processing_complete": true,
+    "observer_errors": [],
+    "observation_note": "Both Revit dialog and failure-processing channels were observed.",
+    "stdout_capture_error": null,
+    "warning_delta": {
+      "before": {
+        "observed": true,
+        "count": 0,
+        "truncated": false,
+        "signatures": []
+      },
+      "after": {
+        "observed": true,
+        "count": 0,
+        "truncated": false,
+        "signatures": []
+      },
+      "persistent_warning_comparison_complete": true,
+      "new": [],
+      "resolved": [],
+      "suppressed_warning_coverage": "unknown",
+      "note": "GetWarnings compares persistent warnings on the captured document. A script may suppress transient failures; an empty delta does not prove no warnings were raised."
+    },
+    "code": "python_execution_failed",
+    "tool": "horizun_execute_python",
+    "write_started": null,
+    "changes_applied": null,
+    "transaction_status": "not_modifiable"
+  },
+  "query_matched_total": 0,
+  "query_rows": []
+}

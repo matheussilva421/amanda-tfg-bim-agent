@@ -1,0 +1,186 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\r\n  \"status\": \"healthy\",\r\n  \"horizun_version\": \"1.3.3\",\r\n  \"contract_hash\": \"8b9600f5274d7dffb6e5bd5f\",\r\n  \"python_runtime\": {\r\n    \"state\": \"cold\",\r\n    \"initialization_attempts\": 0,\r\n    \"initialization_elapsed_ms\": null,\r\n    \"last_error\": null,\r\n    \"first_call_requires_initialization\": true\r\n  },\r\n  \"horizun_hub\": {\r\n    \"product\": \"Horizun Revit MCP\",\r\n    \"part_of\": \"Horizun Hub\",\r\n    \"url\": \"https://horizunhub.com\",\r\n    \"note\": \"This bridge is the generic, organisation-neutral half: transport, safety guards and a tool surface over the Revit API. The delivery workflows built on it - model audits, classification catalogues, family homologation, pre-delivery QA - live in Horizun Hub, not in this add-in.\"\r\n  },\r\n  \"horizun_commit\": \"cc4ea04e9ecfe547ad349f22e0864019ce1ead1f\",\r\n  \"built_from_clean_tree\": true,\r\n  \"addin_assembly\": {\r\n    \"path\": \"C:\\\\Users\\\\slvma\\\\AppData\\\\Roaming\\\\Autodesk\\\\Revit\\\\Addins\\\\2027\\\\Horizun\\\\Horizun.Revit.dll\",\r\n    \"sha256\": \"3f70b2d5929d345573e039f47858b3d51b23a82ccf67cb03d0ab0116671a7218\",\r\n    \"bytes\": 4827648,\r\n    \"written_utc\": \"2026-09-15T11:34:11.762552Z\",\r\n    \"means\": \"the add-in assembly Revit loaded in THIS process, hashed here rather than guessed from a deployment path. A null field could not be read and is not a zero.\"\r\n  },\r\n  \"log_file\": \"C:\\\\Users\\\\slvma\\\\.horizun\\\\logs\\\\revit-2027.log\",\r\n  \"data_paths\": {\r\n    \"data_root\": \"C:\\\\Users\\\\slvma\\\\.horizun\",\r\n    \"resolved_from\": \"SpecialFolder.UserProfile\",\r\n    \"settings_path\": \"C:\\\\Users\\\\slvma\\\\.horizun\\\\settings.json\",\r\n    \"discovery_path\": \"C:\\\\Users\\\\slvma\\\\.horizun\\\\discovery\",\r\n    \"jobs_path\": \"C:\\\\Users\\\\slvma\\\\.horizun\\\\jobs\",\r\n    \"logs_path\": \"C:\\\\Users\\\\slvma\\\\.horizun\\\\logs\",\r\n    \"access\": {\r\n      \"data_root\": {\r\n        \"path\": \"C:\\\\Users\\\\slvma\\\\.horizun\",\r\n        \"exists\": true,\r\n        \"readable\": true,\r\n        \"writable\": true\r\n      },\r\n      \"settings_path\": {\r\n        \"path\": \"C:\\\\Users\\\\slvma\\\\.horizun\\\\settings.json\",\r\n        \"exists\": true,\r\n        \"readable\": true,\r\n        \"writable\": true\r\n      },\r\n      \"discovery_path\": {\r\n        \"path\": \"C:\\\\Users\\\\slvma\\\\.horizun\\\\discovery\",\r\n        \"exists\": true,\r\n        \"readable\": true,\r\n        \"writable\": true\r\n      },\r\n      \"jobs_path\": {\r\n        \"path\": \"C:\\\\Users\\\\slvma\\\\.horizun\\\\jobs\",\r\n        \"exists\": true,\r\n        \"readable\": true,\r\n        \"writable\": true\r\n      },\r\n      \"logs_path\": {\r\n        \"path\": \"C:\\\\Users\\\\slvma\\\\.horizun\\\\logs\",\r\n        \"exists\": true,\r\n        \"readable\": true,\r\n        \"writable\": true\r\n      }\r\n    },\r\n    \"why_not_localappdata\": \"LocalApplicationData is redirected per-package under MSIX/AppContainer, and is a different folder outright under a different user or elevation context. The MCP server is launched by the MCP client and Revit is launched by the user, so the two can resolve it differently and neither is told - the server then writes jobs Revit never sees and reads a discovery directory the add-in never wrote to, and reports 'no Revit has published a bridge' with Revit running. The user profile is not package-redirected, so both halves reach one folder.\",\r\n    \"legacy_data_root\": \"C:\\\\Users\\\\slvma\\\\AppData\\\\Local\\\\Horizun\",\r\n    \"legacy_file_count\": 3,\r\n    \"legacy_note\": \"State from before 0.3 is still in the old %LOCALAPPDATA% location. NOTHING READS IT - it is named here so a machine with old discovery files does not look like a machine with a broken bridge. Delete it when you are satisfied nothing is missing.\"\r\n  },\r\n  \"revit_version\": \"2027\",\r\n  \"revit_build\": \"27.2.0.39\",\r\n  \"revit_name\": \"Autodesk Revit 2027\",\r\n  \"revit_language\": \"Brazilian_Portuguese\",\r\n  \"username\": \"matheussilva421NWUNZ\",\r\n  \"process_id\": 30736,\r\n  \"tool_packs\": {\r\n    \"source\": \"default\",\r\n    \"restricting\": false,\r\n    \"active\": null,\r\n    \"chosen\": null,\r\n    \"added_by_dependency\": null,\r\n    \"problem\": null,\r\n    \"tools_visible\": 80,\r\n    \"tools_total\": 80,\r\n    \"known_packs\": [\r\n      \"administration\",\r\n      \"architecture\",\r\n      \"audit\",\r\n      \"coordination\",\r\n      \"core\",\r\n      \"documentation\",\r\n      \"family\",\r\n      \"interoperability\",\r\n      \"mep\",\r\n      \"model\",\r\n      \"planimetry\",\r\n      \"powerbi\",\r\n      \"read\",\r\n      \"schedules\",\r\n      \"structure\",\r\n      \"unsafe_code\"\r\n    ]\r\n  },\r\n  \"operational_controls\": {\r\n    \"permission_profile\": \"full_write\",\r\n    \"mcp_paused\": false,\r\n    \"force_read_only_on_workshared\": false,\r\n    \"note\": \"These are local machine controls shared by the ribbon and MCP server. When MCP is paused only horizun_health remains callable; central protection refuses potential writes to a workshared active document.\"\r\n  },\r\n  \"current_action\": \"Revit is executing 'horizun_health' (0 s elapsed).\",\r\n  \"registry\": {\r\n    \"clean\": true,\r\n    \"registered\": 73,\r\n    \"contract_commands\": 73,\r\n    \"missing\": [],\r\n    \"unadvertised\": [],\r\n    \"duplicates\": [],\r\n    \"case_mismatches\": [],\r\n    \"means\": \"every plugin command the contract advertises is registered exactly once, and nothing is registered that the contract does not name.\"\r\n  },\r\n  \"jobs\": {\r\n    \"jobs_path\": \"C:\\\\Users\\\\slvma\\\\.horizun\\\\jobs\",\r\n    \"records\": 9,\r\n    \"examined\": 9,\r\n    \"truncated\": false,\r\n    \"queued\": 0,\r\n    \"running\": 0,\r\n    \"interrupted\": 0,\r\n    \"running_or_died\": 0,\r\n    \"finished_ok\": 5,\r\n    \"finished_failed\": 4,\r\n    \"unreadable\": 0,\r\n    \"note\": null\r\n  },\r\n  \"timings\": {\r\n    \"scope\": \"this process session only; resets when Revit restarts\",\r\n    \"tools_tracked\": 0,\r\n    \"tools_dropped\": 0,\r\n    \"tools\": {}\r\n  },\r\n  \"clients\": {\r\n    \"other_clients_connected\": 0,\r\n    \"distinct_clients_in_window\": 1,\r\n    \"unidentified_connections_in_window\": 0,\r\n    \"window_seconds\": 600,\r\n    \"clients_seen\": [\r\n      {\r\n        \"pid\": 26284,\r\n        \"process_name\": \"horizun-mcp\",\r\n        \"seconds_since_last_request\": 0,\r\n        \"process_alive\": true\r\n      }\r\n    ],\r\n    \"note\": \"APPROXIMATE by design: the transport is one connection per request, so 'connected' means 'sent at least one request in the last 10 minutes'. The count excludes this call's own client, whose connection was recorded when this request arrived. If this is not 0 while you believed you were alone on this Revit, you are not: another MCP client is sending commands to the same instance, and anything it does - closing documents, recompiling the add-in, killing the process - lands on you too.\"\r\n  },\r\n  \"no_active_document\": true,\r\n  \"active_document\": null,\r\n  \"open_document_count\": 0,\r\n  \"open_documents\": [],\r\n  \"active_document_identified_by\": null,\r\n  \"active_document_match\": null,\r\n  \"note\": \"The bridge is alive but NO document is active. Commands that need a document will refuse; open one in this Revit first.\",\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 3,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 249\r\n  }\r\n}"
+      }
+    ],
+    "isError": false,
+    "structuredContent": {
+      "status": "healthy",
+      "horizun_version": "1.3.3",
+      "contract_hash": "8b9600f5274d7dffb6e5bd5f",
+      "python_runtime": {
+        "state": "cold",
+        "initialization_attempts": 0,
+        "initialization_elapsed_ms": null,
+        "last_error": null,
+        "first_call_requires_initialization": true
+      },
+      "horizun_hub": {
+        "product": "Horizun Revit MCP",
+        "part_of": "Horizun Hub",
+        "url": "https://horizunhub.com",
+        "note": "This bridge is the generic, organisation-neutral half: transport, safety guards and a tool surface over the Revit API. The delivery workflows built on it - model audits, classification catalogues, family homologation, pre-delivery QA - live in Horizun Hub, not in this add-in."
+      },
+      "horizun_commit": "cc4ea04e9ecfe547ad349f22e0864019ce1ead1f",
+      "built_from_clean_tree": true,
+      "addin_assembly": {
+        "path": "C:\\Users\\slvma\\AppData\\Roaming\\Autodesk\\Revit\\Addins\\2027\\Horizun\\Horizun.Revit.dll",
+        "sha256": "3f70b2d5929d345573e039f47858b3d51b23a82ccf67cb03d0ab0116671a7218",
+        "bytes": 4827648,
+        "written_utc": "2026-09-15T11:34:11.762552Z",
+        "means": "the add-in assembly Revit loaded in THIS process, hashed here rather than guessed from a deployment path. A null field could not be read and is not a zero."
+      },
+      "log_file": "C:\\Users\\slvma\\.horizun\\logs\\revit-2027.log",
+      "data_paths": {
+        "data_root": "C:\\Users\\slvma\\.horizun",
+        "resolved_from": "SpecialFolder.UserProfile",
+        "settings_path": "C:\\Users\\slvma\\.horizun\\settings.json",
+        "discovery_path": "C:\\Users\\slvma\\.horizun\\discovery",
+        "jobs_path": "C:\\Users\\slvma\\.horizun\\jobs",
+        "logs_path": "C:\\Users\\slvma\\.horizun\\logs",
+        "access": {
+          "data_root": {
+            "path": "C:\\Users\\slvma\\.horizun",
+            "exists": true,
+            "readable": true,
+            "writable": true
+          },
+          "settings_path": {
+            "path": "C:\\Users\\slvma\\.horizun\\settings.json",
+            "exists": true,
+            "readable": true,
+            "writable": true
+          },
+          "discovery_path": {
+            "path": "C:\\Users\\slvma\\.horizun\\discovery",
+            "exists": true,
+            "readable": true,
+            "writable": true
+          },
+          "jobs_path": {
+            "path": "C:\\Users\\slvma\\.horizun\\jobs",
+            "exists": true,
+            "readable": true,
+            "writable": true
+          },
+          "logs_path": {
+            "path": "C:\\Users\\slvma\\.horizun\\logs",
+            "exists": true,
+            "readable": true,
+            "writable": true
+          }
+        },
+        "why_not_localappdata": "LocalApplicationData is redirected per-package under MSIX/AppContainer, and is a different folder outright under a different user or elevation context. The MCP server is launched by the MCP client and Revit is launched by the user, so the two can resolve it differently and neither is told - the server then writes jobs Revit never sees and reads a discovery directory the add-in never wrote to, and reports 'no Revit has published a bridge' with Revit running. The user profile is not package-redirected, so both halves reach one folder.",
+        "legacy_data_root": "C:\\Users\\slvma\\AppData\\Local\\Horizun",
+        "legacy_file_count": 3,
+        "legacy_note": "State from before 0.3 is still in the old %LOCALAPPDATA% location. NOTHING READS IT - it is named here so a machine with old discovery files does not look like a machine with a broken bridge. Delete it when you are satisfied nothing is missing."
+      },
+      "revit_version": "2027",
+      "revit_build": "27.2.0.39",
+      "revit_name": "Autodesk Revit 2027",
+      "revit_language": "Brazilian_Portuguese",
+      "username": "matheussilva421NWUNZ",
+      "process_id": 30736,
+      "tool_packs": {
+        "source": "default",
+        "restricting": false,
+        "active": null,
+        "chosen": null,
+        "added_by_dependency": null,
+        "problem": null,
+        "tools_visible": 80,
+        "tools_total": 80,
+        "known_packs": [
+          "administration",
+          "architecture",
+          "audit",
+          "coordination",
+          "core",
+          "documentation",
+          "family",
+          "interoperability",
+          "mep",
+          "model",
+          "planimetry",
+          "powerbi",
+          "read",
+          "schedules",
+          "structure",
+          "unsafe_code"
+        ]
+      },
+      "operational_controls": {
+        "permission_profile": "full_write",
+        "mcp_paused": false,
+        "force_read_only_on_workshared": false,
+        "note": "These are local machine controls shared by the ribbon and MCP server. When MCP is paused only horizun_health remains callable; central protection refuses potential writes to a workshared active document."
+      },
+      "current_action": "Revit is executing 'horizun_health' (0 s elapsed).",
+      "registry": {
+        "clean": true,
+        "registered": 73,
+        "contract_commands": 73,
+        "missing": [],
+        "unadvertised": [],
+        "duplicates": [],
+        "case_mismatches": [],
+        "means": "every plugin command the contract advertises is registered exactly once, and nothing is registered that the contract does not name."
+      },
+      "jobs": {
+        "jobs_path": "C:\\Users\\slvma\\.horizun\\jobs",
+        "records": 9,
+        "examined": 9,
+        "truncated": false,
+        "queued": 0,
+        "running": 0,
+        "interrupted": 0,
+        "running_or_died": 0,
+        "finished_ok": 5,
+        "finished_failed": 4,
+        "unreadable": 0,
+        "note": null
+      },
+      "timings": {
+        "scope": "this process session only; resets when Revit restarts",
+        "tools_tracked": 0,
+        "tools_dropped": 0,
+        "tools": {}
+      },
+      "clients": {
+        "other_clients_connected": 0,
+        "distinct_clients_in_window": 1,
+        "unidentified_connections_in_window": 0,
+        "window_seconds": 600,
+        "clients_seen": [
+          {
+            "pid": 26284,
+            "process_name": "horizun-mcp",
+            "seconds_since_last_request": 0,
+            "process_alive": true
+          }
+        ],
+        "note": "APPROXIMATE by design: the transport is one connection per request, so 'connected' means 'sent at least one request in the last 10 minutes'. The count excludes this call's own client, whose connection was recorded when this request arrived. If this is not 0 while you believed you were alone on this Revit, you are not: another MCP client is sending commands to the same instance, and anything it does - closing documents, recompiling the add-in, killing the process - lands on you too."
+      },
+      "no_active_document": true,
+      "active_document": null,
+      "open_document_count": 0,
+      "open_documents": [],
+      "active_document_identified_by": null,
+      "active_document_match": null,
+      "note": "The bridge is alive but NO document is active. Commands that need a document will refuse; open one in this Revit first.",
+      "bridge_queue": {
+        "queued": false,
+        "ahead_at_admission": 0,
+        "waited_ms": 3,
+        "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+        "capacity": 16,
+        "execution_and_wait_ms": 249
+      }
+    }
+  }
+}

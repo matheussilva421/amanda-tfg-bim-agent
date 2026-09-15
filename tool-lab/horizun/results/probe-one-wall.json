@@ -1,0 +1,124 @@
+{
+  "out": {
+    "tag": "75E2E6",
+    "reported_success": true,
+    "tool": "horizun_create_elements",
+    "error": null,
+    "payload_keys": [
+      "api_rehearsal",
+      "application",
+      "bridge_queue",
+      "change_preview",
+      "confirmation_expires_utc",
+      "confirmation_note",
+      "confirmation_token",
+      "document",
+      "document_fingerprint",
+      "dry_run",
+      "errors",
+      "invalid",
+      "note",
+      "plan",
+      "plan_resolved",
+      "requested",
+      "tabular",
+      "transaction_status",
+      "valid",
+      "validation_level"
+    ],
+    "state": null,
+    "transaction_status": "not_started",
+    "confirmation_state": null,
+    "created_verified": null,
+    "element_id": null,
+    "unique_id": null,
+    "readback_verified": null,
+    "readback_error": null,
+    "readback_tool": null,
+    "logical_id": null,
+    "rows": null,
+    "readback_rows": null
+  },
+  "payload": {
+    "dry_run": true,
+    "tabular": null,
+    "transaction_status": "not_started",
+    "requested": 1,
+    "valid": 1,
+    "invalid": 0,
+    "errors": [],
+    "plan": [
+      {
+        "index": 0,
+        "kind": "wall",
+        "references_resolved": true
+      }
+    ],
+    "validation_level": "arguments_and_references",
+    "api_rehearsal": null,
+    "note": "No transaction opened; API construction and instance parameters are not rehearsed. Correct every invalid row before apply.",
+    "application": {
+      "state": "rehearsed",
+      "fully_applied": false,
+      "transaction_status": "not_started",
+      "requested": 1,
+      "applied": 0,
+      "verified": 0,
+      "unresolved": 0,
+      "failed": 0,
+      "unknown": 0,
+      "state_means": "rehearsed: a valid dry run. Everything resolved and NOTHING was written."
+    },
+    "document": "LAB_ROUTE_PROBE [C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\probe\\LAB_ROUTE_PROBE.rvt]",
+    "document_fingerprint": "a1692d2c4d42770e",
+    "change_preview": {
+      "fingerprint": "11dfece866f7e0de1c6369eb1827d01fdffc32fb1b6498744474b50bddc189bd",
+      "total": 1,
+      "shown": 1,
+      "truncated": false,
+      "expected_cascade": 0,
+      "rows": [
+        {
+          "unique_id": "create:0",
+          "element_id": null,
+          "action": "create",
+          "category": "wall",
+          "type": "Interior - 138 mm Divisória (1-hr)",
+          "captured_state": {
+            "host_uid": "",
+            "level": "Nível 1",
+            "level_elev_mm": "0",
+            "level_uid": "e3e052f9-0156-11d5-9301-0000863f27ad-00000137",
+            "system_type": "",
+            "system_type_uid": "",
+            "top_level_elev_mm": "",
+            "top_level_uid": "",
+            "type_uid": "e3e052f9-0156-11d5-9301-0000863f27ad-0000018c"
+          },
+          "proposed_values": null,
+          "values_truncated": false
+        }
+      ],
+      "note": "Captured state contains facts read by the command; proposed_values are populated where supported. Null proposed_values means no standardized value preview is available. This bounded sample does not replace each command's full plan/errors. Confirmation covers the entire resolved plan, including omitted rows and full values."
+    },
+    "plan_resolved": {
+      "elements": 1,
+      "create": 1,
+      "modify": 0,
+      "delete": 0,
+      "expected_cascade": 0,
+      "fingerprint": "11dfece866f7e0de1c6369eb1827d01fdffc32fb1b6498744474b50bddc189bd"
+    },
+    "confirmation_token": "hz-283d5d0c2ed09aaec417642ec28ad4fe",
+    "confirmation_expires_utc": "2026-09-15 21:47:56Z",
+    "confirmation_note": "To execute this, call again with dry_run=false and this confirmation_token. It is SINGLE USE, it expires, and it is bound to this document and this request - if either changes it is refused and nothing is written. It is ALSO bound to the elements resolved above: if the model moves before you spend it, the apply is refused as a stale plan rather than applied to a different set. STATED LIMIT: the token binds this ordered heterogeneous batch, its units, AND what its names resolved to right now - the types, system types and levels, including each level's measured elevation. A type renamed, a name re-pointed or a level moved before you apply refuses as a stale plan instead of creating something else under the approved words.",
+    "bridge_queue": {
+      "queued": false,
+      "ahead_at_admission": 0,
+      "waited_ms": 1,
+      "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+      "capacity": 16,
+      "execution_and_wait_ms": 5
+    }
+  }
+}

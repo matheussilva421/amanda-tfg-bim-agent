@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "stage": "P08-T06",
+  "run_id": "AMANDA-RUN-001",
+  "run_json_sha256": "09cb06cc0a3dcfc9dacad04e8263c72f6cc6fdc2aa8cf56c196a4542c57f54b4",
+  "considered_macro_candidates": 2,
+  "refined_candidates": 2,
+  "feasible_refined_candidates": 2,
+  "rejected_after_refinement": 0,
+  "rejected": [],
+  "pareto_frontier_candidate_ids": [
+    "COURTYARD:0",
+    "COURTYARD:1"
+  ],
+  "pareto_frontier_ids": [
+    "AMANDA-RUN-001-F01",
+    "AMANDA-RUN-001-F02"
+  ],
+  "finalist_ids": [
+    "AMANDA-RUN-001-F01",
+    "AMANDA-RUN-001-F02"
+  ],
+  "selection_limit": 5,
+  "selection_reason": "Selected 2 distinct feasible finalist(s), with the complete refined Pareto set retained first. Only 2 refined feasible candidate(s) were available for up to 5 finalist slots; the macro run reports 142 duplicate attempts and no additional distinct geometry was fabricated or obtained by relaxing hard constraints.",
+  "low_diversity_limitation": "Only 2 refined feasible candidate(s) were available for up to 5 finalist slots; the macro run reports 142 duplicate attempts and no additional distinct geometry was fabricated or obtained by relaxing hard constraints.",
+  "weights_version": 1,
+  "weights": {
+    "program_compliance": 0.18,
+    "privacy_security": 0.14,
+    "adjacency": 0.1,
+    "circulation": 0.1,
+    "accessibility": 0.12,
+    "solar_heuristic": 0.06,
+    "ventilation_heuristic": 0.06,
+    "green_integration": 0.06,
+    "compactness": 0.05,
+    "constructability": 0.08,
+    "concept_fidelity": 0.05
+  },
+  "environmental_score_status": "NOT_EVALUATED; P08-T07 owns source-backed solar/ventilation heuristics",
+  "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+  "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+}

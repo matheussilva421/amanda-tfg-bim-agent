@@ -1,0 +1,19 @@
+{
+  "reported_success": false,
+  "error": null,
+  "read_payload": {
+    "state": "refused",
+    "confirmation_state": "Unknown"
+  },
+  "levels_after": [
+    {
+      "element_id": 311,
+      "name": "Nível 1"
+    },
+    {
+      "element_id": 694,
+      "name": "Nível 2"
+    }
+  ],
+  "levels_total": 2
+}

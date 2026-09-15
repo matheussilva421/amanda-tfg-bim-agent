@@ -1,0 +1,49 @@
+{
+  "viewschedule_create": [
+    "CreateKeySchedule",
+    "CreateKeynoteLegend",
+    "CreateMaterialTakeoff",
+    "CreateNoteBlock",
+    "CreateRevisionSchedule",
+    "CreateSchedule",
+    "CreateSheetList",
+    "CreateViewList",
+    "CreateViewTemplate",
+    "CreatedPhaseId"
+  ],
+  "viewplan_create": [
+    "Create",
+    "CreateAreaPlan",
+    "CreateViewTemplate",
+    "CreatedPhaseId"
+  ],
+  "ff_create": [
+    "Create",
+    "CreatedPhaseId"
+  ],
+  "material_create": [
+    "Create",
+    "CreatedPhaseId"
+  ],
+  "viewsheet_create": [
+    "Create",
+    "CreatePlaceholder",
+    "CreateViewTemplate",
+    "CreatedPhaseId"
+  ],
+  "directshape_create": [
+    "CreateElement",
+    "CreateElementInstance",
+    "CreateGeometryInstance",
+    "CreatedPhaseId"
+  ],
+  "create_methods": [
+    "CreatedPhaseId"
+  ],
+  "topo_create": [
+    "Create",
+    "CreateFromTopographySurface",
+    "CreateSubDivision",
+    "CreatedPhaseId"
+  ]
+}
