@@ -86,3 +86,29 @@ entries:
     Fase 03 (inteligencia de projeto) nao depende dela.
   recorded_utc: '2026-09-15T11:19:43Z'
   note: advanced to PHASE_03
+- task_id: P07-T01
+  status: PASS
+  evidence:
+  - pytest tests/policy -q -> 1 passed; AGENTS.md created with the 14 production rules
+  recorded_utc: '2026-09-15T11:25:16Z'
+  note: null
+- task_id: P07-T02
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_task_graph.py -q -> 8 passed; state/task-graph.yaml has
+    159 tasks across PHASE_00..09
+  recorded_utc: '2026-09-15T11:25:16Z'
+  note: null
+- task_id: P07-T10
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_security_redaction.py -q -> 4 passed, including EventLog
+    persistence
+  recorded_utc: '2026-09-15T11:25:17Z'
+  note: null
+- task_id: P07-T16
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_human_gate.py -q -> 11 passed
+  recorded_utc: '2026-09-15T11:25:17Z'
+  note: null

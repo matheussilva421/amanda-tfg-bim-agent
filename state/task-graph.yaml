@@ -1016,8 +1016,10 @@ tasks:
     plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
     title: Production `AGENTS.md`
     depends_on: []
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/policy -q -> 1 passed; AGENTS.md created with the 14 production
+      rules
   P07-T02:
     id: P07-T02
     phase: PHASE_07A
@@ -1025,8 +1027,10 @@ tasks:
     title: Task dependency graph
     depends_on:
     - P07-T01
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_task_graph.py -q -> 8 passed; state/task-graph.yaml has
+      159 tasks across PHASE_00..09
   P07-T03:
     id: P07-T03
     phase: PHASE_07A
@@ -1097,8 +1101,10 @@ tasks:
     title: Security redaction
     depends_on:
     - P07-T06
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_security_redaction.py -q -> 4 passed, including EventLog
+      persistence
   P07-T11:
     id: P07-T11
     phase: PHASE_07A
@@ -1151,8 +1157,9 @@ tasks:
     title: Human-intervention state machine
     depends_on:
     - P07-T13
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - pytest tests/unit/test_human_gate.py -q -> 11 passed
   P07-T17:
     id: P07-T17
     phase: PHASE_07B

@@ -36,7 +36,8 @@ _NORMALIZED_KEY_MARKERS = tuple(
 )
 _FIELD_NAMES = (
     "authorization",
-    "proxy-authorization",
+    "proxy[-_]?authorization",
+    "x[-_]?api[-_]?key",
     "api[-_]?key",
     "apikey",
     "access[-_]?token",
@@ -62,7 +63,7 @@ _SENSITIVE_FIELD_RE = re.compile(
     r"(?P<value>"
     r"\"(?:\\.|[^\"\\])*\""
     r"|'(?:\\.|[^'\\])*'"
-    r"|(?:bearer|basic)\s+[a-z0-9][a-z0-9._~+/=-]{7,}"
+    r"|(?:bearer|basic)\s+[^\s,;\}\]]+"
     r"|\[REDACTED\]"
     r"|[^\s,;\}\]]+"
     r")"
@@ -70,7 +71,7 @@ _SENSITIVE_FIELD_RE = re.compile(
 
 _AUTH_SCHEME_RE = re.compile(
     r"(?i)(?P<scheme>\b(?:bearer|basic)\s+)"
-    r"(?P<token>[a-z0-9][a-z0-9._~+/=-]{7,})"
+    r"(?P<token>[^\s,;\}\]]+)"
 )
 
 _KNOWN_TOKEN_RE = re.compile(
@@ -93,6 +94,9 @@ _PRIVATE_KEY_BLOCK_RE = re.compile(
 )
 _PRIVATE_KEY_HEADER_RE = re.compile(
     r"(?i)-----BEGIN [A-Z0-9 ]*PRIVATE KEY-----"
+)
+_PRIVATE_KEY_UNCLOSED_RE = re.compile(
+    r"(?is)-----BEGIN [A-Z0-9 ]*PRIVATE KEY-----.*\Z"
 )
 
 
@@ -122,6 +126,7 @@ def redact_text(text: str) -> str:
         return text
 
     result = _PRIVATE_KEY_BLOCK_RE.sub(MASK, text)
+    result = _PRIVATE_KEY_UNCLOSED_RE.sub(MASK, result)
     result = _SENSITIVE_FIELD_RE.sub(_replace_sensitive_field, result)
     result = _AUTH_SCHEME_RE.sub(
         lambda match: match.group("scheme") + MASK,
@@ -172,6 +177,7 @@ def _value_contains_secret(value: Any, *, _depth: int = 0) -> bool:
         return (
             _PRIVATE_KEY_BLOCK_RE.search(value) is not None
             or _PRIVATE_KEY_HEADER_RE.search(value) is not None
+            or _PRIVATE_KEY_UNCLOSED_RE.search(value) is not None
             or any(
                 _field_match_contains_secret(match)
                 for match in _SENSITIVE_FIELD_RE.finditer(value)
