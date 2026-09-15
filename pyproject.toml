@@ -11,7 +11,9 @@ dependencies = [
   "typer>=0.16,<1",
   "pydantic>=2.11,<3",
   "PyYAML>=6,<7",
-  "rich>=14,<15"
+  "rich>=14,<15",
+  "shapely==2.1.2",
+  "pypdf==6.0.0"
 ]
 
 [project.optional-dependencies]
