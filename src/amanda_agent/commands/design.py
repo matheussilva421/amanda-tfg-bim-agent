@@ -15,6 +15,7 @@ from typing import Any
 import yaml
 
 from ..design.geometry import validate_polygon
+from ..design.archetypes import list_archetypes
 from ..design.pipeline import PipelineResult, run_pipeline
 from ..ingest.manifest import SourceManifest, sha256_file
 from ..site.models import BoundaryPolygon, Topography
@@ -366,8 +367,9 @@ def run_design(root: Path, *, run_id: str) -> dict[str, Any]:
         site_for_engine.pop("buildable_area", None)
         site_for_engine["boundary"] = boundary.get("coordinates")
 
+    configured_archetypes = list(list_archetypes())
     settings = {
-        "macro_candidates": len(DEFAULT_SEEDS),
+        "macro_candidates": len(DEFAULT_SEEDS) * len(configured_archetypes),
         "top_macro": min(15, len(DEFAULT_SEEDS)),
         "top_rooms": min(5, len(DEFAULT_SEEDS)),
         "top_finalists": 3,
@@ -378,12 +380,32 @@ def run_design(root: Path, *, run_id: str) -> dict[str, Any]:
             site_for_engine,
             seeds=list(DEFAULT_SEEDS),
             config=settings,
+            archetypes=configured_archetypes,
+            input_versions={
+                "requirements_sha256": inputs["requirements_sha256"],
+                "site_sha256": inputs["site_sha256"],
+            },
         )
     except (TypeError, ValueError, KeyError, IndexError, RuntimeError) as exc:
         raise DesignInputError(f"design pipeline refused canonical inputs: {exc}") from exc
 
     _assert_inputs_unchanged(Path(root), inputs)
     finalists = _finalist_records(pipeline, safe_run_id)
+    run_counts = dict(pipeline.counts)
+    run_counts.update(
+        {
+            "macro": len(pipeline.stages.get("macro", [])),
+            "top_macro": len(pipeline.stages.get("top_macro", [])),
+            "rooms": len(pipeline.stages.get("rooms", [])),
+            "finalists": len(finalists),
+            "initial_attempts": len(pipeline.attempts),
+            "valid": sum(item["outcome"] == "valid" for item in pipeline.attempts),
+            "invalid": sum(item["outcome"] == "invalid" for item in pipeline.attempts),
+            "unknown": sum(item["outcome"] == "unknown" for item in pipeline.attempts),
+            "duplicate": sum(item["outcome"] == "duplicate" for item in pipeline.attempts),
+            "hard_invalid_ranked": sum(item["hard_invalid"] for item in pipeline.ranking),
+        }
+    )
     run_payload = {
         "schema_version": 1,
         "run_id": safe_run_id,
@@ -394,13 +416,19 @@ def run_design(root: Path, *, run_id: str) -> dict[str, Any]:
         "requirements_sha256": inputs["requirements_sha256"],
         "site_sha256": inputs["site_sha256"],
         "seeds": list(DEFAULT_SEEDS),
-        "counts": _json_safe(pipeline.counts),
+        "archetypes": [str(item.value) for item in configured_archetypes],
+        "counts": _json_safe(run_counts),
         "stage_order": list(pipeline.stage_order),
         "revit_calls": pipeline.revit_calls,
         "inputs": {
             "requirements": inputs["requirements"],
             "site": inputs["site"],
         },
+        "attempts": _json_safe(pipeline.attempts),
+        "hard_rejections_by_rule": _json_safe(pipeline.hard_rejections_by_rule),
+        "ranking": _json_safe(pipeline.ranking),
+        "pareto_frontier": _json_safe(pipeline.pareto_frontier),
+        "pareto_frontier_ids": list(pipeline.pareto_frontier_ids),
         "finalists": finalists,
         "rejected": _json_safe(pipeline.rejected),
     }
@@ -410,7 +438,7 @@ def run_design(root: Path, *, run_id: str) -> dict[str, Any]:
         "run_id": safe_run_id,
         "run_directory": run_directory,
         "finalist_count": len(finalists),
-        "candidate_count": len(DEFAULT_SEEDS),
+        "candidate_count": len(pipeline.attempts),
     }
 
 

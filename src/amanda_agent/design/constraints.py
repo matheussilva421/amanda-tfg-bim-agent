@@ -409,11 +409,20 @@ def _check_sector_capacity(
 ) -> list[ConstraintViolation]:
     del site
     required_by_id: dict[str, float] = {}
-    for requirement in _requirements_spaces(requirements):
-        sector = str(_requirement_value(requirement, "sector", ""))
-        area = float(_requirement_value(requirement, "target_area_m2", 0) or 0)
-        quantity = int(_requirement_value(requirement, "quantity", 1) or 1)
-        required_by_id[sector] = required_by_id.get(sector, 0.0) + area * quantity
+    requirement_sectors = (
+        requirements.get("sectors", [])
+        if isinstance(requirements, Mapping)
+        else getattr(requirements, "sectors", [])
+    )
+    for requirement_sector in requirement_sectors or []:
+        sector_id = str(_requirement_value(requirement_sector, "logical_id", ""))
+        if not sector_id:
+            continue
+        required_by_id[sector_id] = sum(
+            float(_requirement_value(space, "target_area_m2", 0) or 0)
+            * int(_requirement_value(space, "quantity", 1) or 1)
+            for space in (_requirement_value(requirement_sector, "spaces", []) or [])
+        )
     results: list[ConstraintViolation] = []
     for sector_id, required_area in required_by_id.items():
         matches = [item for item in sectors if _identifier(item) == sector_id]

@@ -10,6 +10,7 @@ from typing import Any
 
 from shapely.geometry import mapping  # type: ignore[import-untyped]
 
+from .archetypes import get_archetype
 from .macrozones import solve_macrozones
 
 
@@ -22,17 +23,27 @@ class GeneratedCandidate:
     geometry_hash: str
     solver_status: str
     hard_violations: list[str] = field(default_factory=list)
+    archetype: str = "DEFAULT"
+    archetype_initialization: dict[str, Any] = field(default_factory=dict)
+    archetype_relationships: list[Any] = field(default_factory=list)
+    exploration_tags: list[str] = field(default_factory=list)
+    solver_seed: int = 0
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "run_id": self.run_id,
             "seed": self.seed,
+            "archetype": self.archetype,
+            "archetype_initialization": self.archetype_initialization,
+            "archetype_relationships": self.archetype_relationships,
+            "exploration_tags": self.exploration_tags,
             "status": self.status,
             "resolution": "MACRO",
             "geometry": self.geometry,
             "sectors": self.geometry.get("sectors", []),
             "geometry_hash": self.geometry_hash,
             "solver_status": self.solver_status,
+            "solver_seed": self.solver_seed,
             "hard_violations": self.hard_violations,
         }
 
@@ -44,6 +55,7 @@ class GenerationResult:
     generated_count: int
     seed_list: list[int]
     engine_version: str
+    archetype_list: list[str] = field(default_factory=list)
 
 
 _VOLATILE_KEYS = {"run_id", "timestamp", "generated_at", "duration_s", "solver_duration_s", "paths", "path"}
@@ -81,27 +93,47 @@ def generate_designs(
     run_id: str,
     seeds: list[int],
     engine_version: str = "design-engine-v1",
+    archetypes: list[Any] | tuple[Any, ...] | None = None,
 ) -> GenerationResult:
-    """Generate one ordered macro candidate per requested seed."""
+    """Generate one ordered macro candidate per archetype and requested seed."""
 
     if not run_id:
         raise ValueError("run_id is required")
     seed_list = [int(seed) for seed in seeds]
+    configured_archetypes = ["DEFAULT"] if archetypes is None else [
+        str(getattr(item, "value", item)) for item in archetypes
+    ]
+    if not configured_archetypes:
+        raise ValueError("at least one archetype is required")
     candidates: list[GeneratedCandidate] = []
-    for seed in seed_list:
-        result = solve_macrozones(requirements, site, seed=seed)
-        geometry = {"sectors": result.sectors, "assignment": result.assignment, "assignment_order": result.assignment_order}
-        candidate = GeneratedCandidate(
-            run_id=run_id,
-            seed=seed,
-            status=result.status,
-            geometry=geometry,
-            geometry_hash=canonical_geometry_hash(geometry),
-            solver_status=result.solver_status,
-            hard_violations=list(result.infeasibility_evidence),
-        )
-        candidates.append(candidate)
-    return GenerationResult(candidates=candidates, candidate_count=len({item.geometry_hash for item in candidates}), generated_count=len(candidates), seed_list=seed_list, engine_version=engine_version)
+    for archetype in configured_archetypes:
+        configuration = {} if archetype == "DEFAULT" else get_archetype(archetype)
+        for seed in seed_list:
+            result = solve_macrozones(requirements, site, seed=seed)
+            geometry = {"sectors": result.sectors, "assignment": result.assignment, "assignment_order": result.assignment_order}
+            candidate = GeneratedCandidate(
+                run_id=run_id,
+                seed=seed,
+                status=result.status,
+                geometry=geometry,
+                geometry_hash=canonical_geometry_hash(geometry),
+                solver_status=result.solver_status,
+                hard_violations=list(result.infeasibility_evidence),
+                archetype=archetype,
+                archetype_initialization=dict(configuration.get("initialization", {})),
+                archetype_relationships=list(configuration.get("relationships", [])),
+                exploration_tags=list(configuration.get("exploration_tags", [])),
+                solver_seed=result.solver_seed,
+            )
+            candidates.append(candidate)
+    return GenerationResult(
+        candidates=candidates,
+        candidate_count=len({item.geometry_hash for item in candidates}),
+        generated_count=len(candidates),
+        seed_list=seed_list,
+        engine_version=engine_version,
+        archetype_list=configured_archetypes,
+    )
 
 
 generate_candidates = generate_designs

@@ -207,3 +207,128 @@ def test_compare_prints_and_saves_the_finalist_matrix(
     assert matrix["run_id"] == "RUN-001"
     assert matrix["finalists"][0]["finalist_id"] == "RUN-001-F01"
     assert matrix["finalists"][0]["metrics"]["program_compliance"] == 1.0
+
+
+def test_macro_capacity_uses_the_parent_sector_when_spaces_have_no_sector_field():
+    from shapely.geometry import box, mapping
+
+    from amanda_agent.design.constraints import hard_violations_only, validate_candidate
+
+    requirements = {
+        "sectors": [
+            {
+                "logical_id": "SEC-01",
+                "spaces": [{"logical_id": "REQ-01", "quantity": 1, "target_area_m2": 20.0}],
+            }
+        ]
+    }
+    candidate = {
+        "resolution": "MACRO",
+        "sectors": [{"logical_id": "SEC-01", "geometry": mapping(box(0, 0, 20, 20))}],
+    }
+
+    assert hard_violations_only(
+        validate_candidate(candidate, requirements, mapping(box(0, 0, 20, 20)))
+    ) == []
+
+
+def test_macro_capacity_still_rejects_a_missing_sector_with_its_real_id():
+    from shapely.geometry import box, mapping
+
+    from amanda_agent.design.constraints import hard_violations_only, validate_candidate
+
+    requirements = {
+        "sectors": [
+            {
+                "logical_id": "SEC-01",
+                "spaces": [{"logical_id": "REQ-01", "quantity": 1, "target_area_m2": 20.0}],
+            }
+        ]
+    }
+    candidate = {
+        "resolution": "MACRO",
+        "sectors": [{"logical_id": "SEC-99", "geometry": mapping(box(0, 0, 20, 20))}],
+    }
+
+    violations = hard_violations_only(
+        validate_candidate(candidate, requirements, mapping(box(0, 0, 20, 20)))
+    )
+
+    assert [item.code for item in violations] == ["sector_missing"]
+    assert violations[0].message == "required sector SEC-01 is missing"
+
+
+def test_production_design_records_all_archetype_seed_attempts_and_safety_sets(
+    tmp_path: Path, monkeypatch
+):
+    write_canonical_state(tmp_path)
+    monkeypatch.setenv("AMANDA_PROJECT_ROOT", str(tmp_path))
+
+    result = runner.invoke(app, ["design", "--run-id", "AMANDA-RUN-001"])
+
+    assert result.exit_code == 0, result.output
+    run = json.loads(
+        (
+            tmp_path
+            / "design-engine"
+            / "runs"
+            / "AMANDA-RUN-001"
+            / "run.json"
+        ).read_text(encoding="utf-8")
+    )
+    attempts = run["attempts"]
+    counts = run["counts"]
+    outcome_counts = {key: counts[key] for key in ("valid", "invalid", "unknown", "duplicate")}
+
+    assert len(attempts) == 144
+    assert counts["initial_attempts"] == 144
+    assert sum(outcome_counts.values()) == 144
+    assert {item["archetype"] for item in attempts} == {
+        "COURTYARD",
+        "LINEAR_SPINE",
+        "CLUSTER",
+        "PRIVACY_GRADIENT",
+        "DOUBLE_COURTYARD",
+        "COMB",
+    }
+    assert all(item["seed"] in range(24) for item in attempts)
+    assert all(item["engine_version"] for item in attempts)
+    assert all(item["input_versions"] for item in attempts)
+    assert isinstance(run["hard_rejections_by_rule"], dict)
+    assert counts["hard_invalid_ranked"] == 0
+    assert all(not item["hard_invalid"] for item in run["ranking"])
+    assert all(not item["hard_invalid"] for item in run["pareto_frontier"])
+    assert run["pareto_frontier_ids"] == [item["candidate_id"] for item in run["pareto_frontier"]]
+
+
+def test_room_refinement_closes_a_float_strip_inside_its_block():
+    from shapely.geometry import box
+
+    from amanda_agent.design.rooms import refine_rooms
+
+    spaces = [
+        {"logical_id": "room-a", "quantity": 2, "target_area_m2": 10.0},
+        {"logical_id": "room-b", "quantity": 3, "target_area_m2": 12.0},
+        {"logical_id": "room-c", "quantity": 2, "target_area_m2": 15.0},
+        {"logical_id": "room-d", "quantity": 1, "target_area_m2": 18.0},
+        {"logical_id": "room-e", "quantity": 1, "target_area_m2": 16.0},
+        {"logical_id": "room-f", "quantity": 5, "target_area_m2": 3.5},
+        {"logical_id": "room-g", "quantity": 1, "target_area_m2": 4.5},
+        {"logical_id": "room-h", "quantity": 1, "target_area_m2": 30.0},
+        {"logical_id": "room-i", "quantity": 1, "target_area_m2": 25.0},
+        {"logical_id": "room-j", "quantity": 1, "target_area_m2": 12.0},
+    ]
+
+    result = refine_rooms(
+        {
+            "geometry": box(
+                119.33211322965829,
+                58.55262523805047,
+                124.79628222934551,
+                96.80180823586105,
+            )
+        },
+        spaces,
+    )
+
+    assert result.ok is True

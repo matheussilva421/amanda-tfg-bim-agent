@@ -1,0 +1,3380 @@
+{
+  "schema_version": 1,
+  "run_id": "AMANDA-RUN-001",
+  "engine_version": "design-engine-v1",
+  "source_state": "VALID",
+  "requirements_path": "project/requirements/program.json",
+  "site_path": "project/site/site.json",
+  "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+  "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23
+  ],
+  "archetypes": [
+    "COURTYARD",
+    "LINEAR_SPINE",
+    "CLUSTER",
+    "PRIVACY_GRADIENT",
+    "DOUBLE_COURTYARD",
+    "COMB"
+  ],
+  "counts": {
+    "macro": 144,
+    "top_macro": 2,
+    "rooms": 0,
+    "finalists": 0,
+    "initial_attempts": 144,
+    "valid": 2,
+    "invalid": 0,
+    "unknown": 0,
+    "duplicate": 142,
+    "hard_invalid_ranked": 0
+  },
+  "stage_order": [
+    "macro",
+    "hard_filter",
+    "top_macro",
+    "rooms",
+    "finalists",
+    "detailed"
+  ],
+  "revit_calls": 0,
+  "inputs": {
+    "requirements": {
+      "schema_version": 1,
+      "generated_from": "src/amanda_agent/requirements/program.py",
+      "baseline": {
+        "source_id": "SRC-PROGRAM-001",
+        "source_filename": "programa_necessidades.pdf",
+        "source_sha256": "11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17",
+        "source_pages": [
+          1,
+          2
+        ],
+        "person_capacity": 20,
+        "adoption_status": "ACCEPTED",
+        "selection_authority": "AGENT_DELEGATED",
+        "selection_date": "2026-09-15",
+        "evidence": "Explicit user selection of '20 pessoas, conforme o PDF' on 2026-09-15; the source hash was re-checked during ingestion."
+      },
+      "totals": {
+        "internal_useful_m2": 626.0,
+        "external_programmed_m2": 260.0,
+        "enclosed_estimate_m2": [
+          783.0,
+          814.0
+        ],
+        "covered_estimate_m2": [
+          850.0,
+          950.0
+        ]
+      },
+      "reconciliation": {
+        "ok": true,
+        "mismatches": [],
+        "internal_useful_m2": 626.0,
+        "external_programmed_m2": 260.0
+      },
+      "sectors": [
+        {
+          "logical_id": "SEC-01",
+          "name": "Acolhimento e chegada",
+          "area_kind": "INTERNAL",
+          "subtotal_m2": 53.0,
+          "spaces": [
+            {
+              "logical_id": "REQ-01-01",
+              "name": "Recepcao",
+              "quantity": 1,
+              "target_area_m2": 10.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 10.0
+            },
+            {
+              "logical_id": "REQ-01-02",
+              "name": "Espera protegida",
+              "quantity": 1,
+              "target_area_m2": 15.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 15.0
+            },
+            {
+              "logical_id": "REQ-01-03",
+              "name": "Acolhimento e triagem",
+              "quantity": 1,
+              "target_area_m2": 12.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 12.0
+            },
+            {
+              "logical_id": "REQ-01-04",
+              "name": "Registro e entrevista inicial",
+              "quantity": 1,
+              "target_area_m2": 10.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 10.0
+            },
+            {
+              "logical_id": "REQ-01-05",
+              "name": "Controle de acesso",
+              "quantity": 1,
+              "target_area_m2": 6.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 6.0
+            }
+          ]
+        },
+        {
+          "logical_id": "SEC-02",
+          "name": "Setor residencial",
+          "area_kind": "INTERNAL",
+          "subtotal_m2": 209.0,
+          "spaces": [
+            {
+              "logical_id": "REQ-02-01",
+              "name": "Quarto individual",
+              "quantity": 2,
+              "target_area_m2": 10.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": 1,
+              "source_page": 1,
+              "total_area_m2": 20.0
+            },
+            {
+              "logical_id": "REQ-02-02",
+              "name": "Quarto duplo",
+              "quantity": 3,
+              "target_area_m2": 12.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": 2,
+              "source_page": 1,
+              "total_area_m2": 36.0
+            },
+            {
+              "logical_id": "REQ-02-03",
+              "name": "Quarto triplo familiar",
+              "quantity": 2,
+              "target_area_m2": 15.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": 3,
+              "source_page": 1,
+              "total_area_m2": 30.0
+            },
+            {
+              "logical_id": "REQ-02-04",
+              "name": "Quarto familiar ampliado",
+              "quantity": 1,
+              "target_area_m2": 18.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": 1,
+              "source_page": 1,
+              "total_area_m2": 18.0
+            },
+            {
+              "logical_id": "REQ-02-05",
+              "name": "Quarto acessivel",
+              "quantity": 1,
+              "target_area_m2": 16.0,
+              "area_kind": "INTERNAL",
+              "accessible": true,
+              "beds_per_unit": 1,
+              "source_page": 1,
+              "total_area_m2": 16.0
+            },
+            {
+              "logical_id": "REQ-02-06",
+              "name": "Banheiro comum",
+              "quantity": 5,
+              "target_area_m2": 3.5,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 17.5
+            },
+            {
+              "logical_id": "REQ-02-07",
+              "name": "Banheiro acessivel",
+              "quantity": 1,
+              "target_area_m2": 4.5,
+              "area_kind": "INTERNAL",
+              "accessible": true,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 4.5
+            },
+            {
+              "logical_id": "REQ-02-08",
+              "name": "Sala de convivencia",
+              "quantity": 1,
+              "target_area_m2": 30.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 30.0
+            },
+            {
+              "logical_id": "REQ-02-09",
+              "name": "Refeitorio residencial",
+              "quantity": 1,
+              "target_area_m2": 25.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 25.0
+            },
+            {
+              "logical_id": "REQ-02-10",
+              "name": "Copa de apoio residencial",
+              "quantity": 1,
+              "target_area_m2": 12.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 12.0
+            }
+          ]
+        },
+        {
+          "logical_id": "SEC-03",
+          "name": "Setor infantil",
+          "area_kind": "INTERNAL",
+          "subtotal_m2": 52.0,
+          "spaces": [
+            {
+              "logical_id": "REQ-03-01",
+              "name": "Brinquedoteca",
+              "quantity": 1,
+              "target_area_m2": 24.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 24.0
+            },
+            {
+              "logical_id": "REQ-03-02",
+              "name": "Apoio pedagogico e estudos",
+              "quantity": 1,
+              "target_area_m2": 18.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 18.0
+            },
+            {
+              "logical_id": "REQ-03-03",
+              "name": "Banheiro infantil",
+              "quantity": 1,
+              "target_area_m2": 6.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 6.0
+            },
+            {
+              "logical_id": "REQ-03-04",
+              "name": "Deposito de brinquedos",
+              "quantity": 1,
+              "target_area_m2": 4.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 4.0
+            }
+          ]
+        },
+        {
+          "logical_id": "SEC-04",
+          "name": "Atendimento tecnico",
+          "area_kind": "INTERNAL",
+          "subtotal_m2": 80.0,
+          "spaces": [
+            {
+              "logical_id": "REQ-04-01",
+              "name": "Psicologia",
+              "quantity": 1,
+              "target_area_m2": 10.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 10.0
+            },
+            {
+              "logical_id": "REQ-04-02",
+              "name": "Servico social",
+              "quantity": 1,
+              "target_area_m2": 10.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 10.0
+            },
+            {
+              "logical_id": "REQ-04-03",
+              "name": "Atendimento juridico",
+              "quantity": 1,
+              "target_area_m2": 10.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 10.0
+            },
+            {
+              "logical_id": "REQ-04-04",
+              "name": "Sala de reuniao",
+              "quantity": 1,
+              "target_area_m2": 15.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 15.0
+            },
+            {
+              "logical_id": "REQ-04-05",
+              "name": "Sala multiuso e grupos",
+              "quantity": 1,
+              "target_area_m2": 30.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 30.0
+            },
+            {
+              "logical_id": "REQ-04-06",
+              "name": "Arquivo e apoio tecnico",
+              "quantity": 1,
+              "target_area_m2": 5.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 5.0
+            }
+          ]
+        },
+        {
+          "logical_id": "SEC-05",
+          "name": "Comunitario e capacitacao",
+          "area_kind": "INTERNAL",
+          "subtotal_m2": 81.0,
+          "spaces": [
+            {
+              "logical_id": "REQ-05-01",
+              "name": "Salao multiuso",
+              "quantity": 1,
+              "target_area_m2": 60.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 60.0
+            },
+            {
+              "logical_id": "REQ-05-02",
+              "name": "Deposito de cadeiras e material",
+              "quantity": 1,
+              "target_area_m2": 8.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 1,
+              "total_area_m2": 8.0
+            },
+            {
+              "logical_id": "REQ-05-03",
+              "name": "Copa de apoio comunitario",
+              "quantity": 1,
+              "target_area_m2": 8.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 8.0
+            },
+            {
+              "logical_id": "REQ-05-04",
+              "name": "Sanitario acessivel",
+              "quantity": 1,
+              "target_area_m2": 5.0,
+              "area_kind": "INTERNAL",
+              "accessible": true,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 5.0
+            }
+          ]
+        },
+        {
+          "logical_id": "SEC-06",
+          "name": "Administracao e servicos",
+          "area_kind": "INTERNAL",
+          "subtotal_m2": 151.0,
+          "spaces": [
+            {
+              "logical_id": "REQ-06-01",
+              "name": "Coordenacao",
+              "quantity": 1,
+              "target_area_m2": 10.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 10.0
+            },
+            {
+              "logical_id": "REQ-06-02",
+              "name": "Secretaria e administrativo",
+              "quantity": 1,
+              "target_area_m2": 12.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 12.0
+            },
+            {
+              "logical_id": "REQ-06-03",
+              "name": "Sala de equipe",
+              "quantity": 1,
+              "target_area_m2": 15.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 15.0
+            },
+            {
+              "logical_id": "REQ-06-04",
+              "name": "Refeitorio e copa de funcionarios",
+              "quantity": 1,
+              "target_area_m2": 15.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 15.0
+            },
+            {
+              "logical_id": "REQ-06-05",
+              "name": "Sanitario e vestiario de funcionarios",
+              "quantity": 1,
+              "target_area_m2": 10.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 10.0
+            },
+            {
+              "logical_id": "REQ-06-06",
+              "name": "Cozinha de producao",
+              "quantity": 1,
+              "target_area_m2": 25.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 25.0
+            },
+            {
+              "logical_id": "REQ-06-07",
+              "name": "Despensa seca",
+              "quantity": 1,
+              "target_area_m2": 6.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 6.0
+            },
+            {
+              "logical_id": "REQ-06-08",
+              "name": "Freezer e refrigerados",
+              "quantity": 1,
+              "target_area_m2": 4.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 4.0
+            },
+            {
+              "logical_id": "REQ-06-09",
+              "name": "Lavanderia",
+              "quantity": 1,
+              "target_area_m2": 12.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 12.0
+            },
+            {
+              "logical_id": "REQ-06-10",
+              "name": "Rouparia",
+              "quantity": 1,
+              "target_area_m2": 6.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 6.0
+            },
+            {
+              "logical_id": "REQ-06-11",
+              "name": "Almoxarifado",
+              "quantity": 1,
+              "target_area_m2": 8.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 8.0
+            },
+            {
+              "logical_id": "REQ-06-12",
+              "name": "Deposito geral",
+              "quantity": 1,
+              "target_area_m2": 6.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 6.0
+            },
+            {
+              "logical_id": "REQ-06-13",
+              "name": "DML",
+              "quantity": 1,
+              "target_area_m2": 3.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 3.0
+            },
+            {
+              "logical_id": "REQ-06-14",
+              "name": "Carga e descarga",
+              "quantity": 1,
+              "target_area_m2": 15.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 15.0
+            },
+            {
+              "logical_id": "REQ-06-15",
+              "name": "Residuos",
+              "quantity": 1,
+              "target_area_m2": 4.0,
+              "area_kind": "INTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 4.0
+            }
+          ]
+        },
+        {
+          "logical_id": "SEC-07",
+          "name": "Areas externas",
+          "area_kind": "EXTERNAL",
+          "subtotal_m2": 260.0,
+          "spaces": [
+            {
+              "logical_id": "REQ-07-01",
+              "name": "Patio interno protegido",
+              "quantity": 1,
+              "target_area_m2": 80.0,
+              "area_kind": "EXTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 80.0
+            },
+            {
+              "logical_id": "REQ-07-02",
+              "name": "Jardim terapeutico",
+              "quantity": 1,
+              "target_area_m2": 80.0,
+              "area_kind": "EXTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 80.0
+            },
+            {
+              "logical_id": "REQ-07-03",
+              "name": "Horta comunitaria",
+              "quantity": 1,
+              "target_area_m2": 30.0,
+              "area_kind": "EXTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 30.0
+            },
+            {
+              "logical_id": "REQ-07-04",
+              "name": "Exercicios e alongamento",
+              "quantity": 1,
+              "target_area_m2": 30.0,
+              "area_kind": "EXTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 30.0
+            },
+            {
+              "logical_id": "REQ-07-05",
+              "name": "Playground",
+              "quantity": 1,
+              "target_area_m2": 40.0,
+              "area_kind": "EXTERNAL",
+              "accessible": null,
+              "beds_per_unit": null,
+              "source_page": 2,
+              "total_area_m2": 40.0
+            }
+          ]
+        }
+      ],
+      "unselected_hypotheses": [
+        {
+          "source_id": "SRC-SUP-011",
+          "source_locator": "TFG_Amanda_2026/4_PROJETO_E_CALCULOS/01_programa_de_necessidades.xlsx Premissas!C27",
+          "person_capacity": 42,
+          "adoption_status": "REJECTED",
+          "reason_not_adopted": "The 42-person spreadsheet scenario is explicitly hypothetical and was not selected; its rows are never summed into the PDF baseline."
+        }
+      ]
+    },
+    "site": {
+      "schema_version": 1,
+      "site_name": "Terreno da Companhia de Policia de Choque (CPChoque)",
+      "location": "Lagoa Nova, Natal/RN",
+      "site_version": 1,
+      "boundary": {
+        "kind": "STUDY_PLACEHOLDER",
+        "coordinates": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            155.3544334739115,
+            0.0
+          ],
+          [
+            155.3544334739115,
+            155.3544334739115
+          ],
+          [
+            0.0,
+            155.3544334739115
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "placeholder_area_m2": 24135.0,
+        "geojson": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                155.3544334739115,
+                0.0
+              ],
+              [
+                155.3544334739115,
+                155.3544334739115
+              ],
+              [
+                0.0,
+                155.3544334739115
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          ]
+        },
+        "disclaimer": "equal-area planar study reference; not the cadastral boundary and not a survey"
+      },
+      "design_coordinate_origin": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "convention": "LOCAL_DESIGN_PLANE"
+      },
+      "true_north": null,
+      "frontages": [
+        {
+          "name": "Avenida Prudente de Morais",
+          "source_ref": "SRC-TFG-001#page 60-61, section 5.3",
+          "sha256": "16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e"
+        },
+        {
+          "name": "Avenida Miguel Castro",
+          "source_ref": "SRC-TFG-001#page 60-61, section 5.3",
+          "sha256": "16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e"
+        },
+        {
+          "name": "Avenida Romualdo Galvao",
+          "source_ref": "SRC-TFG-001#page 60-61, section 5.3",
+          "sha256": "16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e"
+        },
+        {
+          "name": "Rua Professor Otto de Brito Guerra",
+          "source_ref": "SRC-TFG-001#page 60-61, section 5.3",
+          "sha256": "16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e"
+        }
+      ],
+      "frontage_conflict": {
+        "roads": [
+          "Avenida Prudente de Morais",
+          "Avenida Miguel Castro",
+          "Avenida Romualdo Galvao",
+          "Rua Professor Otto de Brito Guerra"
+        ],
+        "three_frontage_locator": "page 60, section 5.3",
+        "four_frontage_locator": "page 61, section 5.3",
+        "resolution": "UNRESOLVED_PENDING_SURVEY_OR_CADASTRAL_DOCUMENT: the source states three and four frontages in the same section; the count is not settled by counting names in prose",
+        "impact": "frontage count changes corner conditions, access points and setback obligations"
+      },
+      "candidate_access_points": [],
+      "buildable_area": null,
+      "setbacks": [],
+      "topography": {
+        "source_state": "MISSING",
+        "representation": "PLANAR_PLACEHOLDER",
+        "elevation_points": []
+      },
+      "reported_area": {
+        "value_m2": 24135.0,
+        "fact_type": "SOURCE_ASSERTION",
+        "source_ref": "SRC-TFG-001#page 60, section 5.3",
+        "verification_status": "UNVERIFIED_AGAINST_CADASTRAL_DOCUMENT"
+      },
+      "provenance": [
+        {
+          "source_id": "SRC-TFG-001",
+          "locator": "page 60, section 5.3",
+          "sha256": "16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e"
+        },
+        {
+          "source_id": "SRC-SUP-006",
+          "locator": "chapter 5 verification",
+          "sha256": "b493c7a8f84b9410a07aba34bb1ac6c88f86b6bc64755d4cec63f62299a01043"
+        }
+      ]
+    }
+  },
+  "attempts": [
+    {
+      "candidate_id": "COURTYARD:0",
+      "archetype": "COURTYARD",
+      "seed": 0,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 0,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "valid",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:1",
+      "archetype": "COURTYARD",
+      "seed": 1,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 1,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "valid",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:2",
+      "archetype": "COURTYARD",
+      "seed": 2,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 2,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:3",
+      "archetype": "COURTYARD",
+      "seed": 3,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 3,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:4",
+      "archetype": "COURTYARD",
+      "seed": 4,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 4,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:5",
+      "archetype": "COURTYARD",
+      "seed": 5,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 5,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:6",
+      "archetype": "COURTYARD",
+      "seed": 6,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 6,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:7",
+      "archetype": "COURTYARD",
+      "seed": 7,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 7,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:8",
+      "archetype": "COURTYARD",
+      "seed": 8,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 8,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:9",
+      "archetype": "COURTYARD",
+      "seed": 9,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 9,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:10",
+      "archetype": "COURTYARD",
+      "seed": 10,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 10,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:11",
+      "archetype": "COURTYARD",
+      "seed": 11,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 11,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:12",
+      "archetype": "COURTYARD",
+      "seed": 12,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 12,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:13",
+      "archetype": "COURTYARD",
+      "seed": 13,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 13,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:14",
+      "archetype": "COURTYARD",
+      "seed": 14,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 14,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:15",
+      "archetype": "COURTYARD",
+      "seed": 15,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 15,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:16",
+      "archetype": "COURTYARD",
+      "seed": 16,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 16,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:17",
+      "archetype": "COURTYARD",
+      "seed": 17,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 17,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:18",
+      "archetype": "COURTYARD",
+      "seed": 18,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 18,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:19",
+      "archetype": "COURTYARD",
+      "seed": 19,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 19,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:20",
+      "archetype": "COURTYARD",
+      "seed": 20,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 20,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:21",
+      "archetype": "COURTYARD",
+      "seed": 21,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 21,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:22",
+      "archetype": "COURTYARD",
+      "seed": 22,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 22,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:23",
+      "archetype": "COURTYARD",
+      "seed": 23,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 23,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:0",
+      "archetype": "LINEAR_SPINE",
+      "seed": 0,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 0,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:1",
+      "archetype": "LINEAR_SPINE",
+      "seed": 1,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 1,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:2",
+      "archetype": "LINEAR_SPINE",
+      "seed": 2,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 2,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:3",
+      "archetype": "LINEAR_SPINE",
+      "seed": 3,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 3,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:4",
+      "archetype": "LINEAR_SPINE",
+      "seed": 4,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 4,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:5",
+      "archetype": "LINEAR_SPINE",
+      "seed": 5,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 5,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:6",
+      "archetype": "LINEAR_SPINE",
+      "seed": 6,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 6,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:7",
+      "archetype": "LINEAR_SPINE",
+      "seed": 7,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 7,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:8",
+      "archetype": "LINEAR_SPINE",
+      "seed": 8,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 8,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:9",
+      "archetype": "LINEAR_SPINE",
+      "seed": 9,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 9,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:10",
+      "archetype": "LINEAR_SPINE",
+      "seed": 10,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 10,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:11",
+      "archetype": "LINEAR_SPINE",
+      "seed": 11,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 11,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:12",
+      "archetype": "LINEAR_SPINE",
+      "seed": 12,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 12,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:13",
+      "archetype": "LINEAR_SPINE",
+      "seed": 13,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 13,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:14",
+      "archetype": "LINEAR_SPINE",
+      "seed": 14,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 14,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:15",
+      "archetype": "LINEAR_SPINE",
+      "seed": 15,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 15,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:16",
+      "archetype": "LINEAR_SPINE",
+      "seed": 16,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 16,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:17",
+      "archetype": "LINEAR_SPINE",
+      "seed": 17,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 17,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:18",
+      "archetype": "LINEAR_SPINE",
+      "seed": 18,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 18,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:19",
+      "archetype": "LINEAR_SPINE",
+      "seed": 19,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 19,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:20",
+      "archetype": "LINEAR_SPINE",
+      "seed": 20,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 20,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:21",
+      "archetype": "LINEAR_SPINE",
+      "seed": 21,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 21,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:22",
+      "archetype": "LINEAR_SPINE",
+      "seed": 22,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 22,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "LINEAR_SPINE:23",
+      "archetype": "LINEAR_SPINE",
+      "seed": 23,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 23,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:0",
+      "archetype": "CLUSTER",
+      "seed": 0,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 0,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:1",
+      "archetype": "CLUSTER",
+      "seed": 1,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 1,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:2",
+      "archetype": "CLUSTER",
+      "seed": 2,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 2,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:3",
+      "archetype": "CLUSTER",
+      "seed": 3,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 3,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:4",
+      "archetype": "CLUSTER",
+      "seed": 4,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 4,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:5",
+      "archetype": "CLUSTER",
+      "seed": 5,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 5,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:6",
+      "archetype": "CLUSTER",
+      "seed": 6,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 6,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:7",
+      "archetype": "CLUSTER",
+      "seed": 7,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 7,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:8",
+      "archetype": "CLUSTER",
+      "seed": 8,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 8,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:9",
+      "archetype": "CLUSTER",
+      "seed": 9,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 9,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:10",
+      "archetype": "CLUSTER",
+      "seed": 10,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 10,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:11",
+      "archetype": "CLUSTER",
+      "seed": 11,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 11,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:12",
+      "archetype": "CLUSTER",
+      "seed": 12,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 12,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:13",
+      "archetype": "CLUSTER",
+      "seed": 13,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 13,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:14",
+      "archetype": "CLUSTER",
+      "seed": 14,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 14,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:15",
+      "archetype": "CLUSTER",
+      "seed": 15,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 15,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:16",
+      "archetype": "CLUSTER",
+      "seed": 16,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 16,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:17",
+      "archetype": "CLUSTER",
+      "seed": 17,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 17,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:18",
+      "archetype": "CLUSTER",
+      "seed": 18,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 18,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:19",
+      "archetype": "CLUSTER",
+      "seed": 19,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 19,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:20",
+      "archetype": "CLUSTER",
+      "seed": 20,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 20,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:21",
+      "archetype": "CLUSTER",
+      "seed": 21,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 21,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:22",
+      "archetype": "CLUSTER",
+      "seed": 22,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 22,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "CLUSTER:23",
+      "archetype": "CLUSTER",
+      "seed": 23,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 23,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:0",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 0,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 0,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:1",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 1,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 1,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:2",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 2,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 2,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:3",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 3,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 3,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:4",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 4,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 4,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:5",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 5,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 5,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:6",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 6,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 6,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:7",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 7,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 7,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:8",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 8,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 8,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:9",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 9,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 9,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:10",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 10,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 10,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:11",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 11,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 11,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:12",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 12,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 12,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:13",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 13,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 13,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:14",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 14,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 14,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:15",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 15,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 15,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:16",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 16,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 16,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:17",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 17,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 17,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:18",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 18,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 18,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:19",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 19,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 19,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:20",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 20,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 20,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:21",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 21,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 21,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:22",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 22,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 22,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "PRIVACY_GRADIENT:23",
+      "archetype": "PRIVACY_GRADIENT",
+      "seed": 23,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 23,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:0",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 0,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 0,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:1",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 1,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 1,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:2",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 2,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 2,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:3",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 3,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 3,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:4",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 4,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 4,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:5",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 5,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 5,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:6",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 6,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 6,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:7",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 7,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 7,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:8",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 8,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 8,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:9",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 9,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 9,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:10",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 10,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 10,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:11",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 11,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 11,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:12",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 12,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 12,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:13",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 13,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 13,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:14",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 14,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 14,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:15",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 15,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 15,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:16",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 16,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 16,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:17",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 17,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 17,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:18",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 18,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 18,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:19",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 19,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 19,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:20",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 20,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 20,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:21",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 21,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 21,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:22",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 22,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 22,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "DOUBLE_COURTYARD:23",
+      "archetype": "DOUBLE_COURTYARD",
+      "seed": 23,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 23,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:0",
+      "archetype": "COMB",
+      "seed": 0,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 0,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:1",
+      "archetype": "COMB",
+      "seed": 1,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 1,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:2",
+      "archetype": "COMB",
+      "seed": 2,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 2,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:3",
+      "archetype": "COMB",
+      "seed": 3,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 3,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:4",
+      "archetype": "COMB",
+      "seed": 4,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 4,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:5",
+      "archetype": "COMB",
+      "seed": 5,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 5,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:6",
+      "archetype": "COMB",
+      "seed": 6,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 6,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:7",
+      "archetype": "COMB",
+      "seed": 7,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 7,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:8",
+      "archetype": "COMB",
+      "seed": 8,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 8,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:9",
+      "archetype": "COMB",
+      "seed": 9,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 9,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:10",
+      "archetype": "COMB",
+      "seed": 10,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 10,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:11",
+      "archetype": "COMB",
+      "seed": 11,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 11,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:12",
+      "archetype": "COMB",
+      "seed": 12,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 12,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:13",
+      "archetype": "COMB",
+      "seed": 13,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 13,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:14",
+      "archetype": "COMB",
+      "seed": 14,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 14,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:15",
+      "archetype": "COMB",
+      "seed": 15,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 15,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:16",
+      "archetype": "COMB",
+      "seed": 16,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 16,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:17",
+      "archetype": "COMB",
+      "seed": 17,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 17,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:18",
+      "archetype": "COMB",
+      "seed": 18,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 18,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:19",
+      "archetype": "COMB",
+      "seed": 19,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 19,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:20",
+      "archetype": "COMB",
+      "seed": 20,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 20,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:21",
+      "archetype": "COMB",
+      "seed": 21,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 21,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:22",
+      "archetype": "COMB",
+      "seed": 22,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 22,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COMB:23",
+      "archetype": "COMB",
+      "seed": 23,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 23,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "duplicate",
+      "hard_invalid": false,
+      "rejection_codes": []
+    }
+  ],
+  "hard_rejections_by_rule": {},
+  "ranking": [
+    {
+      "candidate_id": "COURTYARD:0",
+      "archetype": "COURTYARD",
+      "seed": 0,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 0,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "valid",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:1",
+      "archetype": "COURTYARD",
+      "seed": 1,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 1,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "valid",
+      "hard_invalid": false,
+      "rejection_codes": []
+    }
+  ],
+  "pareto_frontier": [
+    {
+      "candidate_id": "COURTYARD:0",
+      "archetype": "COURTYARD",
+      "seed": 0,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 0,
+      "geometry_hash": "d54a4643ffbcface9a68c81ad31119d3d5b04ce144c0dda6c2d3aef4cbd86187",
+      "outcome": "valid",
+      "hard_invalid": false,
+      "rejection_codes": []
+    },
+    {
+      "candidate_id": "COURTYARD:1",
+      "archetype": "COURTYARD",
+      "seed": 1,
+      "engine_version": "design-engine-v1",
+      "input_versions": {
+        "requirements_sha256": "67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf",
+        "site_sha256": "b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631"
+      },
+      "status": "OPTIMAL",
+      "solver_status": "OPTIMAL",
+      "solver_seed": 1,
+      "geometry_hash": "550eaf9ded80176a5cd4e65cf82d2e9a028c58ef0a03d610318f5193423cc923",
+      "outcome": "valid",
+      "hard_invalid": false,
+      "rejection_codes": []
+    }
+  ],
+  "pareto_frontier_ids": [
+    "COURTYARD:0",
+    "COURTYARD:1"
+  ],
+  "finalists": [],
+  "rejected": [
+    {
+      "candidate_id": "0",
+      "reason": "room_outside_block: room REQ-02-10 is outside block",
+      "codes": [
+        "room_outside_block"
+      ]
+    },
+    {
+      "candidate_id": "1",
+      "reason": "room_outside_block: room REQ-03-04 is outside block",
+      "codes": [
+        "room_outside_block"
+      ]
+    }
+  ]
+}

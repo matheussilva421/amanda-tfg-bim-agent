@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -10,6 +11,7 @@ from shapely.geometry import mapping  # type: ignore[import-untyped]
 from .blocks import generate_blocks
 from .constraints import hard_violations_only, validate_candidate
 from .generate import GeneratedCandidate, generate_designs
+from .pareto import pareto_frontier
 from .rooms import refine_rooms
 
 
@@ -27,6 +29,11 @@ class PipelineResult:
     rejected: list[PipelineRejection]
     stage_order: list[str]
     revit_calls: int = 0
+    attempts: list[dict[str, Any]] = field(default_factory=list)
+    hard_rejections_by_rule: dict[str, int] = field(default_factory=dict)
+    ranking: list[dict[str, Any]] = field(default_factory=list)
+    pareto_frontier: list[dict[str, Any]] = field(default_factory=list)
+    pareto_frontier_ids: list[str] = field(default_factory=list)
 
 
 def run_pipeline(
@@ -35,6 +42,8 @@ def run_pipeline(
     *,
     seeds: list[int] | None = None,
     config: dict[str, int] | None = None,
+    archetypes: list[Any] | tuple[Any, ...] | None = None,
+    input_versions: Mapping[str, Any] | None = None,
 ) -> PipelineResult:
     """Run configured progressive filtering and keep exact hard rejection text."""
 
@@ -47,24 +56,71 @@ def run_pipeline(
     settings.update(config or {})
     if seeds is None:
         seeds = list(range(settings["macro_candidates"]))
-    generation = generate_designs(requirements, site, run_id="pipeline-run", seeds=list(seeds))
+    generation = generate_designs(
+        requirements,
+        site,
+        run_id="pipeline-run",
+        seeds=list(seeds),
+        archetypes=archetypes,
+    )
     macro = list(generation.candidates[: settings["macro_candidates"]])
     valid: list[GeneratedCandidate] = []
     rejected: list[PipelineRejection] = []
+    attempts: list[dict[str, Any]] = []
+    hard_rejections_by_rule: dict[str, int] = {}
+    seen_geometry_hashes: set[str] = set()
     for candidate in macro:
+        candidate_id = f"{candidate.archetype}:{candidate.seed}"
         values = candidate.to_dict()
         constraint_site = mapping(site) if hasattr(site, "__geo_interface__") else site
         violations = hard_violations_only(validate_candidate(values, requirements, constraint_site)) if candidate.status in {"OPTIMAL", "FEASIBLE"} else []
+        hard_invalid = False
+        rejection_codes: list[str] = []
         if candidate.status not in {"OPTIMAL", "FEASIBLE"}:
-            codes = ["solver_infeasible"]
+            outcome = "unknown" if candidate.status == "UNKNOWN" else "invalid"
+            codes = ["solver_unknown"] if outcome == "unknown" else ["solver_infeasible"]
             reason = "; ".join(candidate.hard_violations) or "solver did not produce a feasible candidate"
-            rejected.append(PipelineRejection(str(candidate.seed), reason, codes))
+            rejection_codes = codes
+            hard_invalid = outcome == "invalid"
+            rejected.append(PipelineRejection(candidate_id, reason, codes))
+            if hard_invalid:
+                for code in codes:
+                    hard_rejections_by_rule[code] = hard_rejections_by_rule.get(code, 0) + 1
         elif violations:
             codes = [item.code for item in violations]
             reason = "; ".join(f"{item.code}: {item.message}" for item in violations)
-            rejected.append(PipelineRejection(str(candidate.seed), reason, codes))
+            rejection_codes = codes
+            hard_invalid = True
+            rejected.append(PipelineRejection(candidate_id, reason, codes))
+            for code in codes:
+                hard_rejections_by_rule[code] = hard_rejections_by_rule.get(code, 0) + 1
         else:
-            valid.append(candidate)
+            if candidate.geometry_hash in seen_geometry_hashes:
+                outcome = "duplicate"
+            else:
+                outcome = "valid"
+                seen_geometry_hashes.add(candidate.geometry_hash)
+                valid.append(candidate)
+        if candidate.status in {"OPTIMAL", "FEASIBLE"} and violations:
+            outcome = "invalid"
+        elif candidate.status not in {"OPTIMAL", "FEASIBLE"}:
+            outcome = "unknown" if candidate.status == "UNKNOWN" else "invalid"
+        attempts.append(
+            {
+                "candidate_id": candidate_id,
+                "archetype": candidate.archetype,
+                "seed": candidate.seed,
+                "engine_version": generation.engine_version,
+                "input_versions": dict(input_versions or {"engine_version": generation.engine_version}),
+                "status": candidate.status,
+                "solver_status": candidate.solver_status,
+                "solver_seed": candidate.solver_seed,
+                "geometry_hash": candidate.geometry_hash,
+                "outcome": outcome,
+                "hard_invalid": hard_invalid,
+                "rejection_codes": rejection_codes,
+            }
+        )
     top_macro = valid[: settings["top_macro"]]
     top_rooms: list[dict[str, Any]] = []
     requirement_sectors = requirements.get("sectors", []) if isinstance(requirements, dict) else getattr(requirements, "sectors", [])
@@ -97,12 +153,22 @@ def run_pipeline(
             continue
         top_rooms.append({"candidate": candidate, "blocks": blocks.blocks, "rooms": rooms, "accounting": accounting})
     finalists = top_rooms[: settings["top_finalists"]]
+    ranking = [
+        next(item for item in attempts if item["candidate_id"] == f"{candidate.archetype}:{candidate.seed}")
+        for candidate in valid
+    ]
+    frontier = pareto_frontier(ranking, dimensions=[])
     return PipelineResult(
         counts={"macro": settings["macro_candidates"], "top_macro": settings["top_macro"], "rooms": settings["top_rooms"], "finalists": settings["top_finalists"]},
         stages={"macro": macro, "hard_filter": valid, "top_macro": top_macro, "rooms": top_rooms, "finalists": finalists, "detailed": finalists},
         rejected=rejected,
         stage_order=["macro", "hard_filter", "top_macro", "rooms", "finalists", "detailed"],
         revit_calls=0,
+        attempts=attempts,
+        hard_rejections_by_rule=hard_rejections_by_rule,
+        ranking=ranking,
+        pareto_frontier=frontier,
+        pareto_frontier_ids=[str(item["candidate_id"]) for item in frontier],
     )
 
 

@@ -164,6 +164,8 @@ def refine_rooms(
         y = min_y
         for instance in instances:
             room_height = instance["target_area_m2"] / width
+            if abs((y + room_height) - max_y) <= 1e-9:
+                room_height = max_y - y
             geometry = box(min_x, y, max_x, y + room_height)
             if not polygon.covers(geometry):
                 return RoomRefinementResult(violations=[RoomViolation("room_outside_block", f"room {instance['logical_id']} is outside block", instance["logical_id"])])
