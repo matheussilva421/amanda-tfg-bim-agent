@@ -1,0 +1,157 @@
+schema_version: 1
+
+decisions:
+  - decision_id: DEC-P03-T15-TYPOLOGY-001
+    topic: TYPOLOGY
+    alternatives:
+      - "RESEARCH_PENDING"
+      - "PROVISIONAL_ASSUMPTION: temporary shelter with controlled access and privacy"
+    selected_option: "PROVISIONAL_ASSUMPTION: temporary shelter with controlled access and privacy"
+    rationale: "The brief supports a temporary shelter with controlled access and privacy, but no institutional reference has been verified here; this option is study-only and revisable."
+    source_refs:
+      - "2026-09-11-amanda-tfg-bim-agent-design.md#1.1"
+      - "2026-09-11-amanda-tfg-bim-agent-design.md#6.15"
+    confidence: 0.4
+    affected_requirements:
+      - TYPOLOGY
+      - project/requirements/program.json
+    selection_authority: AGENT_DELEGATED
+    timestamp: "2026-09-15"
+    approval_hash: a3c68b072ca30c993d542d14edd8488cdc6fbe49393010841f410a605b499eb0
+    validation_status: PENDING_VERIFICATION
+    revision_procedure: "Record a new decision revision with the new evidence or feedback, set supersedes to this decision_id, and revalidate affected study outputs."
+    review_status: AMANDA_REVIEW_PENDING
+    fact_class: DESIGN_HYPOTHESIS
+    scenario: STUDY
+    selection_kind: PROVISIONAL_ASSUMPTION
+    verification_required: true
+
+  - decision_id: DEC-P03-T15-PROGRAM-BASELINE-001
+    topic: PROGRAM_BASELINE
+    alternatives:
+      - "20 pessoas, conforme programa_necessidades.pdf"
+      - "42 pessoas, conforme hipotese da planilha (SRC-SUP-011)"
+    selected_option: "20 pessoas, conforme programa_necessidades.pdf"
+    rationale: "The adopted program JSON records the explicit 20-person selection and the checked PDF hash. The 42-person spreadsheet scenario remains a rejected hypothesis and is not merged into the baseline."
+    source_refs:
+      - "project/requirements/program.json#baseline"
+      - "SRC-PROGRAM-001 sha256:11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17"
+      - "SRC-SUP-011 TFG_Amanda_2026/4_PROJETO_E_CALCULOS/01_programa_de_necessidades.xlsx Premissas!C27"
+    confidence: 1.0
+    affected_requirements:
+      - PROGRAM_BASELINE
+      - project/requirements/program.json
+    selection_authority: AGENT_DELEGATED
+    timestamp: "2026-09-15"
+    approval_hash: 11b9189a382750fca4720b95edbf31c99dc774975ab5d656acc19b3dd3eaae8c
+    validation_status: VERIFIED
+    revision_procedure: "A changed baseline requires a new decision_id and source reconciliation; preserve this accepted PDF baseline and the rejected spreadsheet hypothesis."
+    review_status: AMANDA_REVIEW_PENDING
+    fact_class: SOURCE_FACT
+    scenario: STUDY
+    selection_kind: EVIDENCE_BACKED
+    verification_required: false
+    adoption_status: ACCEPTED
+    rejected_options:
+      - "42 pessoas, conforme hipotese da planilha (SRC-SUP-011)"
+    source_sha256: 11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17
+
+  - decision_id: DEC-P03-T15-SITE-BOUNDARY-001
+    topic: SITE_BOUNDARY
+    alternatives:
+      - "VERIFIED_BOUNDARY_PENDING"
+      - "PROVISIONAL_ASSUMPTION: boundary remains unresolved; use a labeled schematic only"
+    selected_option: "PROVISIONAL_ASSUMPTION: boundary remains unresolved; use a labeled schematic only"
+    rationale: "The available record reports an area and a frontage discrepancy but does not verify a polygon, confrontations, north or usable area; a schematic boundary may support STUDY only."
+    source_refs:
+      - "2026-09-11-amanda-tfg-bim-agent-design.md#1.1"
+      - "2026-09-11-amanda-tfg-bim-agent-design.md#6.15"
+    confidence: 0.3
+    affected_requirements:
+      - SITE_BOUNDARY
+      - project/requirements/site-boundary
+    selection_authority: AGENT_DELEGATED
+    timestamp: "2026-09-15"
+    approval_hash: 1590ff47f73071900e357da7da0860e3abdcedcac2e01cb25d46c12318dac02c
+    validation_status: PENDING_VERIFICATION
+    revision_procedure: "Replace the study assumption with a new source-backed decision after the polygon, confrontations, north and usable area are verified."
+    review_status: AMANDA_REVIEW_PENDING
+    fact_class: DESIGN_HYPOTHESIS
+    scenario: STUDY
+    selection_kind: PROVISIONAL_ASSUMPTION
+    verification_required: true
+
+  - decision_id: DEC-P03-T15-SITE-OCCUPANCY-001
+    topic: SITE_OCCUPANCY
+    alternatives:
+      - "OCCUPANCY_CONFIRMATION_PENDING"
+      - "PROVISIONAL_ASSUMPTION: CPChoque occupancy and possible relocation require confirmation"
+    selected_option: "PROVISIONAL_ASSUMPTION: CPChoque occupancy and possible relocation require confirmation"
+    rationale: "The source material mentions current occupancy and possible relocation, but no confirmation of vacancy or real availability is recorded; the study must keep this premise explicit."
+    source_refs:
+      - "2026-09-11-amanda-tfg-bim-agent-design.md#1.1"
+      - "2026-09-11-amanda-tfg-bim-agent-design.md#6.15"
+    confidence: 0.3
+    affected_requirements:
+      - SITE_OCCUPANCY
+      - project/requirements/site-occupancy
+    selection_authority: AGENT_DELEGATED
+    timestamp: "2026-09-15"
+    approval_hash: 37f53bfb2536ba25a75c49110152156f11fd8b3d43974cccd54342f2363a4d62
+    validation_status: PENDING_VERIFICATION
+    revision_procedure: "Record the confirming source or a later correction as a new revision and keep this occupancy premise in the history."
+    review_status: AMANDA_REVIEW_PENDING
+    fact_class: DESIGN_HYPOTHESIS
+    scenario: STUDY
+    selection_kind: PROVISIONAL_ASSUMPTION
+    verification_required: true
+
+  - decision_id: DEC-P03-T15-SITE-TOPOGRAPHY-001
+    topic: SITE_TOPOGRAPHY
+    alternatives:
+      - "VERIFIED_TOPOGRAPHY_PENDING"
+      - "PROVISIONAL_ASSUMPTION: PLANAR_PLACEHOLDER for STUDY only"
+    selected_option: "PROVISIONAL_ASSUMPTION: PLANAR_PLACEHOLDER for STUDY only"
+    rationale: "Verified elevation points are absent. A planar placeholder can support a clearly labeled schematic study and does not establish real topography."
+    source_refs:
+      - "2026-09-11-amanda-tfg-bim-agent-design.md#1.1"
+      - "2026-09-11-amanda-tfg-bim-agent-design.md#6.15"
+    confidence: 0.2
+    affected_requirements:
+      - SITE_TOPOGRAPHY
+      - project/requirements/site-topography
+    selection_authority: AGENT_DELEGATED
+    timestamp: "2026-09-15"
+    approval_hash: c97c93649fa45f13bb44c6e5053fd68604fff30cecb04f7a6758784c99019dce
+    validation_status: PENDING_VERIFICATION
+    revision_procedure: "Replace the placeholder only through a new revision after surveyed elevation evidence is independently checked; never rewrite it as verified history."
+    review_status: AMANDA_REVIEW_PENDING
+    fact_class: DESIGN_HYPOTHESIS
+    scenario: STUDY
+    selection_kind: PROVISIONAL_ASSUMPTION
+    verification_required: true
+
+  - decision_id: DEC-P03-T15-REGULATION-APPLICABILITY-001
+    topic: REGULATION_APPLICABILITY
+    alternatives:
+      - "PRIMARY_SOURCE_RESEARCH_PENDING"
+      - "PROVISIONAL_ASSUMPTION: applicability is unresolved pending primary rules and annexes"
+    selected_option: "PROVISIONAL_ASSUMPTION: applicability is unresolved pending primary rules and annexes"
+    rationale: "Applicable consolidated rules, maps and annexes have not been verified in this record; no normative number or compliance conclusion is selected."
+    source_refs:
+      - "2026-09-11-amanda-tfg-bim-agent-design.md#1.1"
+      - "2026-09-11-amanda-tfg-bim-agent-design.md#6.15"
+    confidence: 0.2
+    affected_requirements:
+      - REGULATION_APPLICABILITY
+      - project/requirements/regulation-applicability
+    selection_authority: AGENT_DELEGATED
+    timestamp: "2026-09-15"
+    approval_hash: 6df9a3e9693fda8995279855cf03e22e372ef78ff2bcdeb2cc9f28e4c2eabdb3
+    validation_status: PENDING_VERIFICATION
+    revision_procedure: "Create a new source-backed revision for each applicable rule set and rerun only the affected checks before any FINAL claim."
+    review_status: AMANDA_REVIEW_PENDING
+    fact_class: DESIGN_HYPOTHESIS
+    scenario: STUDY
+    selection_kind: PROVISIONAL_ASSUMPTION
+    verification_required: true

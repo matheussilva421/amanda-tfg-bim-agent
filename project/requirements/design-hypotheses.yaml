@@ -1,0 +1,29 @@
+schema_version: 1
+hypotheses:
+  - statement_id: P03-T09-H-001
+    statement: "Hipotese de adjacencia: o setor residencial deve ficar proximo aos jardins internos e em uma faixa de maior privacidade, conectado a convivencia por percursos graduais."
+    fact_class: DESIGN_HYPOTHESIS
+    hypothesis: true
+    verification_status: UNVERIFIED
+    adoption_status: PROPOSED
+
+  - statement_id: P03-T09-H-002
+    statement: "Hipotese de adjacencia: o atendimento psicossocial deve ocupar uma faixa intermediaria entre o abrigo residencial e os espacos de convivencia, permitindo acesso gradual conforme a privacidade necessaria."
+    fact_class: DESIGN_HYPOTHESIS
+    hypothesis: true
+    verification_status: UNVERIFIED
+    adoption_status: PROPOSED
+
+  - statement_id: P03-T09-H-003
+    statement: "Hipotese de adjacencia: capacitacao e atendimento institucional devem se aproximar do acesso urbano e manter conexao controlada com a camada de transicao, com separacao do setor residencial."
+    fact_class: DESIGN_HYPOTHESIS
+    hypothesis: true
+    verification_status: UNVERIFIED
+    adoption_status: PROPOSED
+
+  - statement_id: P03-T09-H-004
+    statement: "Hipotese de interpretacao: jardins e patios devem funcionar como espacos intermediarios entre os blocos, apoiando encontros espontaneos sem impor um percurso unico."
+    fact_class: DESIGN_HYPOTHESIS
+    hypothesis: true
+    verification_status: UNVERIFIED
+    adoption_status: PROPOSED

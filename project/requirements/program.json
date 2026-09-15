@@ -1,0 +1,642 @@
+{
+  "schema_version": 1,
+  "generated_from": "src/amanda_agent/requirements/program.py",
+  "baseline": {
+    "source_id": "SRC-PROGRAM-001",
+    "source_filename": "programa_necessidades.pdf",
+    "source_sha256": "11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17",
+    "source_pages": [
+      1,
+      2
+    ],
+    "person_capacity": 20,
+    "adoption_status": "ACCEPTED",
+    "selection_authority": "AGENT_DELEGATED",
+    "selection_date": "2026-09-15",
+    "evidence": "Explicit user selection of '20 pessoas, conforme o PDF' on 2026-09-15; the source hash was re-checked during ingestion."
+  },
+  "totals": {
+    "internal_useful_m2": 626.0,
+    "external_programmed_m2": 260.0,
+    "enclosed_estimate_m2": [
+      783.0,
+      814.0
+    ],
+    "covered_estimate_m2": [
+      850.0,
+      950.0
+    ]
+  },
+  "reconciliation": {
+    "ok": true,
+    "mismatches": [],
+    "internal_useful_m2": 626.0,
+    "external_programmed_m2": 260.0
+  },
+  "sectors": [
+    {
+      "logical_id": "SEC-01",
+      "name": "Acolhimento e chegada",
+      "area_kind": "INTERNAL",
+      "subtotal_m2": 53.0,
+      "spaces": [
+        {
+          "logical_id": "REQ-01-01",
+          "name": "Recepcao",
+          "quantity": 1,
+          "target_area_m2": 10.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 10.0
+        },
+        {
+          "logical_id": "REQ-01-02",
+          "name": "Espera protegida",
+          "quantity": 1,
+          "target_area_m2": 15.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 15.0
+        },
+        {
+          "logical_id": "REQ-01-03",
+          "name": "Acolhimento e triagem",
+          "quantity": 1,
+          "target_area_m2": 12.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 12.0
+        },
+        {
+          "logical_id": "REQ-01-04",
+          "name": "Registro e entrevista inicial",
+          "quantity": 1,
+          "target_area_m2": 10.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 10.0
+        },
+        {
+          "logical_id": "REQ-01-05",
+          "name": "Controle de acesso",
+          "quantity": 1,
+          "target_area_m2": 6.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 6.0
+        }
+      ]
+    },
+    {
+      "logical_id": "SEC-02",
+      "name": "Setor residencial",
+      "area_kind": "INTERNAL",
+      "subtotal_m2": 209.0,
+      "spaces": [
+        {
+          "logical_id": "REQ-02-01",
+          "name": "Quarto individual",
+          "quantity": 2,
+          "target_area_m2": 10.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": 1,
+          "source_page": 1,
+          "total_area_m2": 20.0
+        },
+        {
+          "logical_id": "REQ-02-02",
+          "name": "Quarto duplo",
+          "quantity": 3,
+          "target_area_m2": 12.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": 2,
+          "source_page": 1,
+          "total_area_m2": 36.0
+        },
+        {
+          "logical_id": "REQ-02-03",
+          "name": "Quarto triplo familiar",
+          "quantity": 2,
+          "target_area_m2": 15.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": 3,
+          "source_page": 1,
+          "total_area_m2": 30.0
+        },
+        {
+          "logical_id": "REQ-02-04",
+          "name": "Quarto familiar ampliado",
+          "quantity": 1,
+          "target_area_m2": 18.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": 1,
+          "source_page": 1,
+          "total_area_m2": 18.0
+        },
+        {
+          "logical_id": "REQ-02-05",
+          "name": "Quarto acessivel",
+          "quantity": 1,
+          "target_area_m2": 16.0,
+          "area_kind": "INTERNAL",
+          "accessible": true,
+          "beds_per_unit": 1,
+          "source_page": 1,
+          "total_area_m2": 16.0
+        },
+        {
+          "logical_id": "REQ-02-06",
+          "name": "Banheiro comum",
+          "quantity": 5,
+          "target_area_m2": 3.5,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 17.5
+        },
+        {
+          "logical_id": "REQ-02-07",
+          "name": "Banheiro acessivel",
+          "quantity": 1,
+          "target_area_m2": 4.5,
+          "area_kind": "INTERNAL",
+          "accessible": true,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 4.5
+        },
+        {
+          "logical_id": "REQ-02-08",
+          "name": "Sala de convivencia",
+          "quantity": 1,
+          "target_area_m2": 30.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 30.0
+        },
+        {
+          "logical_id": "REQ-02-09",
+          "name": "Refeitorio residencial",
+          "quantity": 1,
+          "target_area_m2": 25.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 25.0
+        },
+        {
+          "logical_id": "REQ-02-10",
+          "name": "Copa de apoio residencial",
+          "quantity": 1,
+          "target_area_m2": 12.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 12.0
+        }
+      ]
+    },
+    {
+      "logical_id": "SEC-03",
+      "name": "Setor infantil",
+      "area_kind": "INTERNAL",
+      "subtotal_m2": 52.0,
+      "spaces": [
+        {
+          "logical_id": "REQ-03-01",
+          "name": "Brinquedoteca",
+          "quantity": 1,
+          "target_area_m2": 24.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 24.0
+        },
+        {
+          "logical_id": "REQ-03-02",
+          "name": "Apoio pedagogico e estudos",
+          "quantity": 1,
+          "target_area_m2": 18.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 18.0
+        },
+        {
+          "logical_id": "REQ-03-03",
+          "name": "Banheiro infantil",
+          "quantity": 1,
+          "target_area_m2": 6.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 6.0
+        },
+        {
+          "logical_id": "REQ-03-04",
+          "name": "Deposito de brinquedos",
+          "quantity": 1,
+          "target_area_m2": 4.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 4.0
+        }
+      ]
+    },
+    {
+      "logical_id": "SEC-04",
+      "name": "Atendimento tecnico",
+      "area_kind": "INTERNAL",
+      "subtotal_m2": 80.0,
+      "spaces": [
+        {
+          "logical_id": "REQ-04-01",
+          "name": "Psicologia",
+          "quantity": 1,
+          "target_area_m2": 10.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 10.0
+        },
+        {
+          "logical_id": "REQ-04-02",
+          "name": "Servico social",
+          "quantity": 1,
+          "target_area_m2": 10.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 10.0
+        },
+        {
+          "logical_id": "REQ-04-03",
+          "name": "Atendimento juridico",
+          "quantity": 1,
+          "target_area_m2": 10.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 10.0
+        },
+        {
+          "logical_id": "REQ-04-04",
+          "name": "Sala de reuniao",
+          "quantity": 1,
+          "target_area_m2": 15.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 15.0
+        },
+        {
+          "logical_id": "REQ-04-05",
+          "name": "Sala multiuso e grupos",
+          "quantity": 1,
+          "target_area_m2": 30.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 30.0
+        },
+        {
+          "logical_id": "REQ-04-06",
+          "name": "Arquivo e apoio tecnico",
+          "quantity": 1,
+          "target_area_m2": 5.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 5.0
+        }
+      ]
+    },
+    {
+      "logical_id": "SEC-05",
+      "name": "Comunitario e capacitacao",
+      "area_kind": "INTERNAL",
+      "subtotal_m2": 81.0,
+      "spaces": [
+        {
+          "logical_id": "REQ-05-01",
+          "name": "Salao multiuso",
+          "quantity": 1,
+          "target_area_m2": 60.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 60.0
+        },
+        {
+          "logical_id": "REQ-05-02",
+          "name": "Deposito de cadeiras e material",
+          "quantity": 1,
+          "target_area_m2": 8.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 1,
+          "total_area_m2": 8.0
+        },
+        {
+          "logical_id": "REQ-05-03",
+          "name": "Copa de apoio comunitario",
+          "quantity": 1,
+          "target_area_m2": 8.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 8.0
+        },
+        {
+          "logical_id": "REQ-05-04",
+          "name": "Sanitario acessivel",
+          "quantity": 1,
+          "target_area_m2": 5.0,
+          "area_kind": "INTERNAL",
+          "accessible": true,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 5.0
+        }
+      ]
+    },
+    {
+      "logical_id": "SEC-06",
+      "name": "Administracao e servicos",
+      "area_kind": "INTERNAL",
+      "subtotal_m2": 151.0,
+      "spaces": [
+        {
+          "logical_id": "REQ-06-01",
+          "name": "Coordenacao",
+          "quantity": 1,
+          "target_area_m2": 10.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 10.0
+        },
+        {
+          "logical_id": "REQ-06-02",
+          "name": "Secretaria e administrativo",
+          "quantity": 1,
+          "target_area_m2": 12.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 12.0
+        },
+        {
+          "logical_id": "REQ-06-03",
+          "name": "Sala de equipe",
+          "quantity": 1,
+          "target_area_m2": 15.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 15.0
+        },
+        {
+          "logical_id": "REQ-06-04",
+          "name": "Refeitorio e copa de funcionarios",
+          "quantity": 1,
+          "target_area_m2": 15.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 15.0
+        },
+        {
+          "logical_id": "REQ-06-05",
+          "name": "Sanitario e vestiario de funcionarios",
+          "quantity": 1,
+          "target_area_m2": 10.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 10.0
+        },
+        {
+          "logical_id": "REQ-06-06",
+          "name": "Cozinha de producao",
+          "quantity": 1,
+          "target_area_m2": 25.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 25.0
+        },
+        {
+          "logical_id": "REQ-06-07",
+          "name": "Despensa seca",
+          "quantity": 1,
+          "target_area_m2": 6.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 6.0
+        },
+        {
+          "logical_id": "REQ-06-08",
+          "name": "Freezer e refrigerados",
+          "quantity": 1,
+          "target_area_m2": 4.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 4.0
+        },
+        {
+          "logical_id": "REQ-06-09",
+          "name": "Lavanderia",
+          "quantity": 1,
+          "target_area_m2": 12.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 12.0
+        },
+        {
+          "logical_id": "REQ-06-10",
+          "name": "Rouparia",
+          "quantity": 1,
+          "target_area_m2": 6.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 6.0
+        },
+        {
+          "logical_id": "REQ-06-11",
+          "name": "Almoxarifado",
+          "quantity": 1,
+          "target_area_m2": 8.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 8.0
+        },
+        {
+          "logical_id": "REQ-06-12",
+          "name": "Deposito geral",
+          "quantity": 1,
+          "target_area_m2": 6.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 6.0
+        },
+        {
+          "logical_id": "REQ-06-13",
+          "name": "DML",
+          "quantity": 1,
+          "target_area_m2": 3.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 3.0
+        },
+        {
+          "logical_id": "REQ-06-14",
+          "name": "Carga e descarga",
+          "quantity": 1,
+          "target_area_m2": 15.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 15.0
+        },
+        {
+          "logical_id": "REQ-06-15",
+          "name": "Residuos",
+          "quantity": 1,
+          "target_area_m2": 4.0,
+          "area_kind": "INTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 4.0
+        }
+      ]
+    },
+    {
+      "logical_id": "SEC-07",
+      "name": "Areas externas",
+      "area_kind": "EXTERNAL",
+      "subtotal_m2": 260.0,
+      "spaces": [
+        {
+          "logical_id": "REQ-07-01",
+          "name": "Patio interno protegido",
+          "quantity": 1,
+          "target_area_m2": 80.0,
+          "area_kind": "EXTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 80.0
+        },
+        {
+          "logical_id": "REQ-07-02",
+          "name": "Jardim terapeutico",
+          "quantity": 1,
+          "target_area_m2": 80.0,
+          "area_kind": "EXTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 80.0
+        },
+        {
+          "logical_id": "REQ-07-03",
+          "name": "Horta comunitaria",
+          "quantity": 1,
+          "target_area_m2": 30.0,
+          "area_kind": "EXTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 30.0
+        },
+        {
+          "logical_id": "REQ-07-04",
+          "name": "Exercicios e alongamento",
+          "quantity": 1,
+          "target_area_m2": 30.0,
+          "area_kind": "EXTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 30.0
+        },
+        {
+          "logical_id": "REQ-07-05",
+          "name": "Playground",
+          "quantity": 1,
+          "target_area_m2": 40.0,
+          "area_kind": "EXTERNAL",
+          "accessible": null,
+          "beds_per_unit": null,
+          "source_page": 2,
+          "total_area_m2": 40.0
+        }
+      ]
+    }
+  ],
+  "unselected_hypotheses": [
+    {
+      "source_id": "SRC-SUP-011",
+      "source_locator": "TFG_Amanda_2026/4_PROJETO_E_CALCULOS/01_programa_de_necessidades.xlsx Premissas!C27",
+      "person_capacity": 42,
+      "adoption_status": "REJECTED",
+      "reason_not_adopted": "The 42-person spreadsheet scenario is explicitly hypothetical and was not selected; its rows are never summed into the PDF baseline."
+    }
+  ]
+}

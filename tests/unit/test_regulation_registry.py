@@ -5,6 +5,7 @@ from __future__ import annotations
 import pytest
 
 from amanda_agent.requirements.regulations import (
+    RegulationRegistry,
     RegulationRule,
     RegulationStatus,
     compile_derived_constraint,
@@ -85,3 +86,48 @@ def test_verified_numeric_rule_compiles_as_explicit_derived_constraint():
     assert compiled.extracted_rule == "The synthetic limit is 1.25 units."
     assert compiled.source_refs == ["synthetic-primary-source:page-1"]
     assert compiled.verification_evidence == ["synthetic-evidence:page-1"]
+
+
+def test_registry_compiles_numeric_rows_and_leaves_non_numeric_rows_alone():
+    umbrella = RegulationRule(
+        logical_id="synthetic-umbrella-law",
+        title="Synthetic umbrella law without an acquired primary text",
+        status=RegulationStatus.IDENTIFIED,
+        primary_source="synthetic-primary-source",
+        extracted_rule="Names the law; asserts no parameter.",
+        source_refs=["synthetic-primary-source:page-1"],
+    )
+    classification = RegulationRule(
+        logical_id="synthetic-classification-rule",
+        title="Synthetic classification rule",
+        status=RegulationStatus.VERIFIED,
+        primary_source="synthetic-primary-source",
+        source_version="synthetic-v1",
+        source_date="2031-04-05",
+        article="synthetic-art-2",
+        map_reference="synthetic-map-2",
+        extracted_rule="Classifies the undertaking; asserts no parameter.",
+        unit="not applicable (classification rule)",
+        scope="synthetic-scope",
+        verification_evidence=["synthetic-evidence:page-2"],
+        source_refs=["synthetic-primary-source:page-2"],
+    )
+    registry = RegulationRegistry()
+    for rule in (umbrella, classification, _rule()):
+        registry.add(rule)
+
+    compiled = registry.compile_derived_constraints()
+
+    assert [item.logical_id for item in compiled] == ["synthetic-rule-01"]
+
+
+def test_registry_still_refuses_to_compile_an_unverified_numeric_row():
+    pending = _rule(
+        logical_id="synthetic-unverified-number",
+        status=RegulationStatus.SOURCE_ACQUIRED,
+    )
+    registry = RegulationRegistry()
+    registry.add(pending)
+
+    with pytest.raises(ValueError, match="VERIFIED"):
+        registry.compile_derived_constraints()

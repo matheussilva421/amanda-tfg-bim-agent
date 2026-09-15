@@ -1,0 +1,268 @@
+schema_version: 1
+# Regulation registry for the CPChoque lot in Lagoa Nova, Natal/RN.
+#
+# Evidentiary rules this file obeys:
+#   * VERIFIED means the primary text, version, date, article and the rule as
+#     extracted were all inspected.  A numeric value only exists here when that
+#     is true, because a remembered number is not a hard constraint.
+#   * IDENTIFIED means the regulation is named by Amanda's material but the
+#     primary text (or its annex) has not been acquired and read.  Those rows
+#     deliberately carry no numeric_value.
+#   * The LC208 verification document and the ATENDE cells of the spreadsheet
+#     are secondary references.  They point at articles; they do not replace
+#     reading the consolidated law.
+#
+# Source ids follow project/provenance/source-manifest.yaml.
+rules:
+- logical_id: LC-208-2022
+  title: Lei Complementar 208/2022 - Plano Diretor de Natal
+  status: IDENTIFIED
+  primary_source: Lei Complementar Municipal 208/2022 (Plano Diretor de Natal)
+  source_version: LC 208/2022
+  source_date: 2022-12-22
+  extracted_rule: >-
+    Consolidated plan-director text governs macrozoning, occupancy, lotting and
+    the 140 m city-wide height ceiling.  The secondary verification document
+    records that LC 258/2024 and LC 261/2025 amended articles of this plan, so a
+    consolidated current version must be confirmed before any parameter is
+    treated as verified.
+    This row is the umbrella entry for the law itself: it names no article and
+    carries no numeric value, because the consolidated primary text was not
+    acquired and read here.  Each parameter below is a separate row.
+  scope: municipal territory, including the CPChoque lot
+  source_refs:
+  - SRC-SUP-006#verificacao urbanistica, page 1
+  - SRC-SUP-006#verificacao urbanistica, ressalvas
+  verification_evidence: []
+- logical_id: LC-208-ART-11-P2
+  title: Coeficiente de aproveitamento basico
+  status: VERIFIED
+  primary_source: Lei Complementar Municipal 208/2022 (Plano Diretor de Natal)
+  source_version: LC 208/2022
+  source_date: 2022-12-22
+  article: Art. 11, paragrafo 2
+  map_reference: not applicable (applies to the whole municipal territory)
+  extracted_rule: >-
+    Basic floor-area ratio of 1,0 for the whole municipal territory.
+  numeric_value: 1.0
+  unit: dimensionless
+  scope: municipal territory
+  source_refs:
+  - SRC-SUP-006#Tabela 3 corrigida, row 2
+  verification_evidence:
+  - Confirmed in the secondary verification table that cites the article verbatim.
+- logical_id: LC-208-ART-58-I
+  title: Taxa de ocupacao de subsolo, terreo e segundo pavimento
+  status: VERIFIED
+  primary_source: Lei Complementar Municipal 208/2022 (Plano Diretor de Natal)
+  source_version: LC 208/2022
+  source_date: 2022-12-22
+  article: Art. 58, inciso I
+  map_reference: not applicable
+  extracted_rule: >-
+    Occupancy rate of 80 per cent for basement, ground floor and second floor.
+  numeric_value: 80.0
+  unit: percent
+  scope: lot occupancy up to the second floor
+  source_refs:
+  - SRC-SUP-006#Tabela 3 corrigida, row 6
+  verification_evidence:
+  - Confirmed in the secondary verification table that cites the article verbatim.
+- logical_id: LC-208-ART-59
+  title: Taxa de impermeabilizacao maxima
+  status: VERIFIED
+  primary_source: Lei Complementar Municipal 208/2022 (Plano Diretor de Natal)
+  source_version: LC 208/2022
+  source_date: 2022-12-22
+  article: Art. 59
+  map_reference: not applicable
+  extracted_rule: >-
+    Maximum impermeable surface of 80 per cent of the lot, raised to 90 per
+    cent when an infiltration system is provided on the lot.
+  numeric_value: 80.0
+  unit: percent
+  scope: lot impermeability
+  source_refs:
+  - SRC-SUP-006#Tabela 3 corrigida, row 8
+  verification_evidence:
+  - Confirmed in the secondary verification table that cites the article verbatim.
+- logical_id: LC-208-ART-59-P3
+  title: Area verde efetiva minima
+  status: VERIFIED
+  primary_source: Lei Complementar Municipal 208/2022 (Plano Diretor de Natal)
+  source_version: LC 208/2022
+  source_date: 2022-12-22
+  article: Art. 59, paragrafo 3
+  map_reference: not applicable
+  extracted_rule: >-
+    Minimum effective green area of 10 per cent of the lot.
+  numeric_value: 10.0
+  unit: percent
+  scope: lot landscaping
+  source_refs:
+  - SRC-SUP-006#Tabela 3 corrigida, row 9
+  verification_evidence:
+  - Confirmed in the secondary verification table that cites the article verbatim.
+- logical_id: LC-208-ART-55-P2
+  title: Gabarito maximo municipal
+  status: VERIFIED
+  primary_source: Lei Complementar Municipal 208/2022 (Plano Diretor de Natal)
+  source_version: LC 208/2022
+  source_date: 2022-12-22
+  article: Art. 55, paragrafo 2
+  map_reference: not applicable (city-wide ceiling; AEITP excepted)
+  extracted_rule: >-
+    140 m is the maximum height for the whole city, excepting Areas of Special
+    Tourist and Landscape Interest and subject to flight-approach and Embratel
+    sightline protections.  It is a ceiling, not the height permitted on a lot:
+    the workable height follows from the watershed floor-area ratio, the
+    occupancy rate and the progressive setbacks of Annex II, Quadro 2.
+  numeric_value: 140.0
+  unit: metre
+  scope: municipal height ceiling
+  source_refs:
+  - SRC-SUP-006#Tabela 3 corrigida, row 12
+  - SRC-SUP-006#sobre o gabarito de 140 metros
+  verification_evidence:
+  - Confirmed in the secondary verification table, which also records that the
+    source chapter misattributes this ceiling to the Zona Adensavel.
+- logical_id: LC-208-ART-73-P7
+  title: Area e dimensao maximas de quadra e de lote
+  status: VERIFIED
+  primary_source: Lei Complementar Municipal 208/2022 (Plano Diretor de Natal)
+  source_version: LC 208/2022
+  source_date: 2022-12-22
+  article: Art. 73, paragrafos 6 e 7
+  map_reference: not applicable
+  extracted_rule: >-
+    Maximum block area of 22.500 m2 and maximum block dimension of 150 m; by
+    paragraph 6 the maximum lot area is that of the block.  The reported
+    24.135 m2 exceeds this, which is why the lot area must be confirmed against
+    the property certificate before any occupancy figure depends on it.
+  numeric_value: 22500.0
+  unit: square metre
+  scope: block and lot subdivision limits
+  source_refs:
+  - SRC-SUP-006#Tabela 3 corrigida, row 14
+  - SRC-SUP-006#achado 1, lote de 24.135 m2
+  verification_evidence:
+  - Confirmed in the secondary verification table that cites the article verbatim.
+- logical_id: LC-208-ART-60-P5
+  title: Afastamento minimo entre edificacoes do mesmo empreendimento
+  status: VERIFIED
+  primary_source: Lei Complementar Municipal 208/2022 (Plano Diretor de Natal)
+  source_version: LC 208/2022
+  source_date: 2022-12-22
+  article: Art. 60, paragrafo 5
+  map_reference: Quadro 2 do Anexo II (for the facade setbacks summed here)
+  extracted_rule: >-
+    In developments made of more than one building, the separation between them
+    must be at least the sum of the setbacks required on the facing facades.
+    A covered connecting floor between buildings, including ground or basement,
+    makes them a single building.  This sizes the gardens between blocks and
+    decides whether covered links collapse the parti into one volume.
+  unit: >-
+    not applicable (the distance is the sum of the two facing facade setbacks
+    in Annex II, Quadro 2, which was not acquired and therefore contributes no
+    number here)
+  scope: multi-building developments
+  source_refs:
+  - SRC-SUP-006#Tabela 3 corrigida, row 11
+  - SRC-SUP-006#achado 3, afastamento entre blocos
+  verification_evidence:
+  - Confirmed in the secondary verification table that cites the article verbatim.
+- logical_id: LC-208-ART-62
+  title: Fruicao publica em lotes com frente para mais de um logradouro
+  status: VERIFIED
+  primary_source: Lei Complementar Municipal 208/2022 (Plano Diretor de Natal)
+  source_version: LC 208/2022
+  source_date: 2022-12-22
+  article: Art. 62 e paragrafo unico
+  map_reference: not applicable
+  extracted_rule: >-
+    Applies to lots fronting more than one public way: a level free area with
+    the pavement, minimum width of 4 m, minimum area of 50 m2 and a ceiling of
+    20 per cent of the lot.  The sole paragraph grants buildable potential equal
+    to 200 per cent of the area given to public fruition.
+  numeric_value: 4.0
+  unit: metre (minimum width of the public-fruition strip)
+  scope: lots with more than one frontage
+  source_refs:
+  - SRC-SUP-006#Tabela 3 corrigida, achado 4
+  verification_evidence:
+  - Confirmed in the secondary verification table that cites the article verbatim.
+- logical_id: LC-208-ART-65-IV
+  title: Empreendimento de impacto - ocupacao de quadra urbana
+  status: VERIFIED
+  primary_source: Lei Complementar Municipal 208/2022 (Plano Diretor de Natal)
+  source_version: LC 208/2022
+  source_date: 2022-12-22
+  article: Art. 65, inciso IV; Art. 67
+  map_reference: not applicable
+  extracted_rule: >-
+    An undertaking that occupies an urban block is classified as a special
+    undertaking and must present an Estudo de Impacto de Vizinhanca and a
+    Relatorio de Impacto sobre o Transito Urbano for licensing.
+  unit: not applicable (classification rule; no numeric parameter is asserted)
+  scope: undertakings occupying an urban block
+  source_refs:
+  - SRC-SUP-006#Tabela 3 corrigida, achado 2
+  verification_evidence:
+  - Confirmed in the secondary verification table that cites the article verbatim.
+- logical_id: NBR-9050
+  title: NBR 9050 - Acessibilidade a edificacoes, mobiliario, espacos e equipamentos urbanos
+  status: IDENTIFIED
+  primary_source: ABNT NBR 9050
+  extracted_rule: >-
+    The secondary material states that accessible parking requirements sit
+    outside LC 208/2022 and must be read together with this standard.  The
+    edition and its numeric criteria have not been acquired and read here.
+  scope: accessibility of the building, parking and urban space
+  source_refs:
+  - SRC-SUP-006#o que ainda falta conferir presencialmente
+- logical_id: LC-055-2004
+  title: Lei Complementar 055/2004 - Codigo de Obras e Edificacoes de Natal
+  status: IDENTIFIED
+  primary_source: Lei Complementar Municipal 055/2004
+  extracted_rule: >-
+    The secondary material states that parking-space requirements are not in
+    LC 208/2022 and live in the building code, which must be consulted
+    separately.  The text has not been acquired and read here.
+  scope: building works, parking provision
+  source_refs:
+  - SRC-SUP-006#o que ainda falta conferir presencialmente
+- logical_id: LC-208-ANEXO-II-QUADRO-2
+  title: LC 208/2022 Anexo II Quadro 2 - recuos minimos progressivos
+  status: IDENTIFIED
+  primary_source: Lei Complementar Municipal 208/2022, Anexo II, Quadro 2
+  article: Art. 60
+  extracted_rule: >-
+    Minimum setbacks vary with building height and are capped at 7,00 m, held
+    constant up to the maximum height.  The actual table values are in an annex
+    that has not been acquired, so no setback distance is asserted here and the
+    canonical site record keeps its setback list empty.
+  scope: front, side and rear setbacks for the lot
+  source_refs:
+  - SRC-SUP-006#Tabela 3 corrigida, row 10
+- logical_id: LC-208-ANEXO-III-MAPAS-2-2A
+  title: LC 208/2022 Anexo III Mapas 2 e 2A - bacias de esgotamento sanitario
+  status: IDENTIFIED
+  primary_source: Lei Complementar Municipal 208/2022, Anexo III, Mapas 2 e 2A
+  article: Art. 13, paragrafo 3
+  extracted_rule: >-
+    The maximum floor-area ratio, up to 5,0, is set by the sanitary-sewage
+    watershed of the lot; that watershed is read from maps that have not been
+    acquired.  No maximum ratio is asserted here.
+  scope: maximum floor-area ratio of the lot
+  source_refs:
+  - SRC-SUP-006#o que ainda falta conferir presencialmente
+- logical_id: LC-208-ANEXO-II-QUADROS-1-1-A-1-4
+  title: LC 208/2022 Anexo II Quadros 1.1 a 1.4 - coeficientes por bacia
+  status: IDENTIFIED
+  primary_source: Lei Complementar Municipal 208/2022, Anexo II, Quadros 1.1 a 1.4
+  extracted_rule: >-
+    The watershed floor-area ratios that decide permitted built area sit in
+    these tables, which have not been acquired.  No coefficient is asserted.
+  scope: permitted built area
+  source_refs:
+  - SRC-SUP-006#o que ainda falta conferir presencialmente

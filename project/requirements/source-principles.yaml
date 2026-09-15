@@ -1,0 +1,141 @@
+schema_version: 1
+principles:
+  - statement_id: P03-T09-SP-001
+    statement: "O conceito articula a relacao entre abrigo e cidade como uma passagem da protecao e privacidade para a convivencia gradual e o retorno autonomo a vida urbana."
+    fact_class: SOURCE_FACT
+    source_refs:
+      - source_id: SRC-TFG-001
+        source_hash: 16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e
+        locator: "PDF PAGE 54; secao 4.4.1 Conceito"
+        page: 54
+        extraction_method: selectable_pdf_text
+        confidence: 0.99
+        note: "Parafrase do conceito declarado no TFG."
+        verification_status: UNVERIFIED
+        adoption_status: PROPOSED
+    verification_status: UNVERIFIED
+    adoption_status: PROPOSED
+
+  - statement_id: P03-T09-SP-002
+    statement: "O conceito e organizado em tres camadas espaciais interpenetradas: abrigo de uso privado e intimo, transicao com percursos, jardins e convivencia, e cidade com capacitacao, atendimento e acesso a rede de protecao social."
+    fact_class: SOURCE_FACT
+    source_refs:
+      - source_id: SRC-TFG-001
+        source_hash: 16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e
+        locator: "PDF PAGE 54; secao 4.4.1 Conceito"
+        page: 54
+        extraction_method: selectable_pdf_text
+        confidence: 0.99
+        note: "Parafrase das tres camadas espaciais descritas no TFG."
+        verification_status: UNVERIFIED
+        adoption_status: PROPOSED
+    verification_status: UNVERIFIED
+    adoption_status: PROPOSED
+
+  - statement_id: P03-T09-SP-003
+    statement: "O partido arquitetonico organiza o programa em blocos separados conectados por percursos e jardins, com identidade, escala e grau de privacidade especificos para cada nucleo."
+    fact_class: SOURCE_FACT
+    source_refs:
+      - source_id: SRC-TFG-001
+        source_hash: 16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e
+        locator: "PDF PAGE 54; secao 4.4.2 Partido"
+        page: 54
+        extraction_method: selectable_pdf_text
+        confidence: 0.99
+        note: "Parafrase do partido arquitetonico declarado no TFG."
+        verification_status: UNVERIFIED
+        adoption_status: PROPOSED
+    verification_status: UNVERIFIED
+    adoption_status: PROPOSED
+
+  - statement_id: P03-T09-SP-004
+    statement: "No partido declarado, jardins e areas verdes sao elementos centrais: a vegetacao e tratada como estrategia para orientar deslocamentos, criar microclimas e mediar as relacoes entre blocos, usuarias e cidade."
+    fact_class: SOURCE_FACT
+    source_refs:
+      - source_id: SRC-TFG-001
+        source_hash: 16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e
+        locator: "PDF PAGE 54; secao 4.4.2 Partido"
+        page: 54
+        extraction_method: selectable_pdf_text
+        confidence: 0.99
+        note: "Parafrase do papel da vegetacao descrito no TFG."
+        verification_status: UNVERIFIED
+        adoption_status: PROPOSED
+    verification_status: UNVERIFIED
+    adoption_status: PROPOSED
+
+  - statement_id: P03-T09-SP-005
+    statement: "O anteprojeto declara que deve produzir seguranca, privacidade e conforto emocional por meio da organizacao espacial, do controle da iluminacao natural, da escolha de materiais e cores e da integracao com areas verdes e espacos de contemplacao."
+    fact_class: SOURCE_FACT
+    source_refs:
+      - source_id: SRC-TFG-001
+        source_hash: 16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e
+        locator: "PDF PAGE 9; secao 1.3 Area de estudo"
+        page: 9
+        extraction_method: selectable_pdf_text
+        confidence: 0.99
+        note: "Parafrase das estrategias de seguranca, privacidade e conforto declaradas no TFG."
+        verification_status: UNVERIFIED
+        adoption_status: PROPOSED
+    verification_status: UNVERIFIED
+    adoption_status: PROPOSED
+
+  - statement_id: P03-T09-SP-006
+    statement: "Para o clima quente e umido de Natal, o TFG declara como estrategias passivas prioritarias a ventilacao natural cruzada, o sombreamento das aberturas e a protecao contra radiacao solar direta."
+    fact_class: SOURCE_FACT
+    source_refs:
+      - source_id: SRC-TFG-001
+        source_hash: 16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e
+        locator: "PDF PAGE 64; secao 5.4.1 Analise bioclimatica"
+        page: 64
+        extraction_method: selectable_pdf_text
+        confidence: 0.99
+        note: "Parafrase das estrategias bioclimaticas declaradas no TFG."
+        verification_status: UNVERIFIED
+        adoption_status: PROPOSED
+    verification_status: UNVERIFIED
+    adoption_status: PROPOSED
+
+  - statement_id: P03-T09-SP-007
+    statement: "A analise de ventilacao declara que os dados de vento orientam o posicionamento das aberturas, a organizacao dos blocos e a localizacao de jardins e espacos abertos para favorecer a ventilacao cruzada e o conforto termico."
+    fact_class: SOURCE_FACT
+    source_refs:
+      - source_id: SRC-TFG-001
+        source_hash: 16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e
+        locator: "PDF PAGE 66; secao 5.4.2 Analise de ventilacao"
+        page: 66
+        extraction_method: selectable_pdf_text
+        confidence: 0.99
+        note: "Parafrase da orientacao de ventilacao declarada no TFG."
+        verification_status: UNVERIFIED
+        adoption_status: PROPOSED
+    verification_status: UNVERIFIED
+    adoption_status: PROPOSED
+
+  - statement_id: P03-T09-SP-008
+    statement: "A carta solar declara maior incidencia na fachada Norte, incidencia matinal na fachada Leste e vespertina na fachada Oeste, enquanto a fachada Sul permanece protegida da incidencia direta durante a maior parte do ano."
+    fact_class: SOURCE_FACT
+    source_refs:
+      - source_id: SRC-TFG-001
+        source_hash: 16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e
+        locator: "PDF PAGE 73; secao 5.4.4 Estudo de Carta Solar"
+        page: 73
+        extraction_method: selectable_pdf_text
+        confidence: 0.99
+        note: "Parafrase dos achados de orientacao solar declarados no TFG."
+        verification_status: UNVERIFIED
+        adoption_status: PROPOSED
+
+  - statement_id: P03-T09-SP-009
+    statement: "A orientacao solar declarada recomenda protecao horizontal para a fachada Norte, beirais ou marquises horizontais na fachada Sul, protecao especifica para a fachada Oeste e orientacao adequada das aberturas na fachada Leste."
+    fact_class: SOURCE_FACT
+    source_refs:
+      - source_id: SRC-TFG-001
+        source_hash: 16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e
+        locator: "PDF PAGE 73; secao 5.4.4 Estudo de Carta Solar"
+        page: 73
+        extraction_method: selectable_pdf_text
+        confidence: 0.99
+        note: "Parafrase das recomendacoes de protecao solar declaradas no TFG."
+        verification_status: UNVERIFIED
+        adoption_status: PROPOSED

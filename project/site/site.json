@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "site_name": "Terreno da Companhia de Policia de Choque (CPChoque)",
+  "location": "Lagoa Nova, Natal/RN",
+  "site_version": 1,
+  "boundary": {
+    "kind": "STUDY_PLACEHOLDER",
+    "coordinates": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        155.3544334739115,
+        0.0
+      ],
+      [
+        155.3544334739115,
+        155.3544334739115
+      ],
+      [
+        0.0,
+        155.3544334739115
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ],
+    "placeholder_area_m2": 24135.0,
+    "geojson": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            155.3544334739115,
+            0.0
+          ],
+          [
+            155.3544334739115,
+            155.3544334739115
+          ],
+          [
+            0.0,
+            155.3544334739115
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ]
+      ]
+    },
+    "disclaimer": "equal-area planar study reference; not the cadastral boundary and not a survey"
+  },
+  "design_coordinate_origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0,
+    "convention": "LOCAL_DESIGN_PLANE"
+  },
+  "true_north": null,
+  "frontages": [
+    {
+      "name": "Avenida Prudente de Morais",
+      "source_ref": "SRC-TFG-001#page 60-61, section 5.3",
+      "sha256": "16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e"
+    },
+    {
+      "name": "Avenida Miguel Castro",
+      "source_ref": "SRC-TFG-001#page 60-61, section 5.3",
+      "sha256": "16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e"
+    },
+    {
+      "name": "Avenida Romualdo Galvao",
+      "source_ref": "SRC-TFG-001#page 60-61, section 5.3",
+      "sha256": "16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e"
+    },
+    {
+      "name": "Rua Professor Otto de Brito Guerra",
+      "source_ref": "SRC-TFG-001#page 60-61, section 5.3",
+      "sha256": "16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e"
+    }
+  ],
+  "frontage_conflict": {
+    "roads": [
+      "Avenida Prudente de Morais",
+      "Avenida Miguel Castro",
+      "Avenida Romualdo Galvao",
+      "Rua Professor Otto de Brito Guerra"
+    ],
+    "three_frontage_locator": "page 60, section 5.3",
+    "four_frontage_locator": "page 61, section 5.3",
+    "resolution": "UNRESOLVED_PENDING_SURVEY_OR_CADASTRAL_DOCUMENT: the source states three and four frontages in the same section; the count is not settled by counting names in prose",
+    "impact": "frontage count changes corner conditions, access points and setback obligations"
+  },
+  "candidate_access_points": [],
+  "buildable_area": null,
+  "setbacks": [],
+  "topography": {
+    "source_state": "MISSING",
+    "representation": "PLANAR_PLACEHOLDER",
+    "elevation_points": []
+  },
+  "reported_area": {
+    "value_m2": 24135.0,
+    "fact_type": "SOURCE_ASSERTION",
+    "source_ref": "SRC-TFG-001#page 60, section 5.3",
+    "verification_status": "UNVERIFIED_AGAINST_CADASTRAL_DOCUMENT"
+  },
+  "provenance": [
+    {
+      "source_id": "SRC-TFG-001",
+      "locator": "page 60, section 5.3",
+      "sha256": "16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e"
+    },
+    {
+      "source_id": "SRC-SUP-006",
+      "locator": "chapter 5 verification",
+      "sha256": "b493c7a8f84b9410a07aba34bb1ac6c88f86b6bc64755d4cec63f62299a01043"
+    }
+  ]
+}

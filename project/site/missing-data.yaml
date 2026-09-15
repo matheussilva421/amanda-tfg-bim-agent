@@ -1,0 +1,77 @@
+schema_version: 1
+site_name: Terreno da Companhia de Policia de Choque (CPChoque)
+entries:
+- id: SITE_TOPOGRAPHY
+  state: MISSING
+  what_is_missing: verified survey or topographic elevations for the lot
+  blocks:
+  - final_grading
+  - final_altimetric_accessibility_validation
+  allows:
+  - 2d_macrozoning
+  - schematic_massing_on_planar_reference
+  resolution_action: supply and validate a survey or topographic file with a known
+    datum
+  source_refs:
+  - SRC-TFG-001#page 61, section 5.3
+  evidence: section 5.3 states elevations as the placeholders [X], [Y], [Z] and [W];
+    no numeric elevation is asserted
+- id: SITE_BOUNDARY
+  state: MISSING
+  what_is_missing: surveyed or cadastral polygon in a stated coordinate system
+  blocks:
+  - final_area_verification
+  - legal_frontage_and_setback_verification
+  - final_construction_permitting_check
+  allows:
+  - study_massing_on_planar_reference
+  - schematic_sectorization
+  resolution_action: obtain the lot certificate or a georeferenced survey and re-import
+    the boundary as VERIFIED_CADASTRAL
+  source_refs:
+  - SRC-TFG-001#page 60, section 5.3
+  evidence: only a reported area of 24135 m2 is available; no polygon vertex list
+    was supplied
+- id: SITE_OCCUPANCY
+  state: MISSING
+  what_is_missing: confirmation of the current use of the lot and of the relocation
+    premise for the police company unit
+  blocks:
+  - final_site_availability_claim
+  - institutional_relocation_assumption_verification
+  allows:
+  - study_scenario_development
+  resolution_action: confirm the current use and the relocation premise with the responsible
+    public body
+  source_refs:
+  - SRC-SUP-002#phase 2, closing the research
+  evidence: the plan of accompaniment lists closing the research on visits, sources
+    and verifications as a pending phase
+- id: SITE_FRONTAGE_COUNT
+  state: CONFLICTING
+  what_is_missing: whether the lot has three or four frontages
+  blocks:
+  - final_corner_and_setback_designation
+  allows:
+  - study_massing_with_independent_flows
+  - preliminary_access_split
+  resolution_action: settle the frontage count against a survey or cadastral document;
+    do not resolve it by counting names in prose
+  source_refs:
+  - SRC-TFG-001#page 60, section 5.3
+  - SRC-TFG-001#page 61, section 5.3
+  - SRC-SUP-002#phase 1, standardise the frontage count
+  evidence: the plan of accompaniment records that the source text asserts both, and
+    notes that Otto de Brito Guerra is a street rather than an avenue
+- id: SITE_TRUE_NORTH
+  state: PARTIAL
+  what_is_missing: a verified true-north bearing with a source drawing datum
+  blocks:
+  - final_orientation_compliance_statement
+  allows:
+  - study_orientation_reasoning_from_stated_findings
+  resolution_action: supply a source drawing or survey that fixes true north
+  source_refs:
+  - SRC-TFG-001#page 68, section 5.4.3
+  evidence: solar findings are stated narratively; no north azimuth for the source
+    drawing was supplied

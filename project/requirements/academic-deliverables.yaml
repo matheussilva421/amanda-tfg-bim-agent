@@ -1,0 +1,151 @@
+# Canonical academic scope consumed by AcademicDeliverableScope.
+# Dates remain null until the official institutional calendar is verified.
+schema_version: 1
+
+deliverables:
+  - deliverable_id: academic-caderno-revision
+    name: Caderno revision
+    owner: Amanda
+    source_refs:
+      - "TFG_Amanda Fernandes_ENTREGA 15.06.2026.pdf#chapters-3-and-5"
+      - "TFG_Amanda_2026/1_COMECE_AQUI/02_plano_de_acompanhamento.pdf#pages-2-5"
+    status: PENDING
+    status_reason: "Academic work remains to be authored and validated by Amanda."
+    evidence: []
+    date: null
+    production_role: HUMAN_AUTHORED_VALIDATED
+    requires_human_action: true
+    required_for_tfg_complete: true
+
+  - deliverable_id: academic-visits
+    name: Field visits and survey
+    owner: Amanda
+    source_refs:
+      - "TFG_Amanda_2026/1_COMECE_AQUI/01_COMECE_AQUI.pdf#pages-1-2"
+      - "TFG_Amanda_2026/1_COMECE_AQUI/02_plano_de_acompanhamento.pdf#pages-2-5"
+    status: PENDING
+    status_reason: "Field work cannot be performed or attested by software."
+    evidence: []
+    date: null
+    production_role: HUMAN_REQUIRED
+    requires_human_action: true
+    required_for_tfg_complete: true
+
+  - deliverable_id: academic-metaprojeto
+    name: Metaprojeto
+    owner: Amanda
+    source_refs:
+      - "TFG_Amanda_2026/1_COMECE_AQUI/02_plano_de_acompanhamento.pdf#pages-2-5"
+    status: PENDING
+    status_reason: "The author must produce and validate the academic metaproject."
+    evidence: []
+    date: null
+    production_role: HUMAN_AUTHORED_VALIDATED
+    requires_human_action: true
+    required_for_tfg_complete: true
+
+  - deliverable_id: academic-preliminary-study
+    name: Preliminary study
+    owner: Amanda
+    source_refs:
+      - "TFG_Amanda_2026/1_COMECE_AQUI/02_plano_de_acompanhamento.pdf#pages-2-5"
+    status: PENDING
+    status_reason: "BIM output requires Amanda's academic review and validation."
+    evidence: []
+    date: null
+    production_role: BIM_GENERATED_WITH_HUMAN_VALIDATION
+    requires_human_action: true
+    required_for_tfg_complete: true
+
+  - deliverable_id: academic-anteprojeto
+    name: Anteprojeto
+    owner: Amanda
+    source_refs:
+      - "TFG_Amanda_2026/1_COMECE_AQUI/02_plano_de_acompanhamento.pdf#pages-2-5"
+    status: PENDING
+    status_reason: "BIM output requires Amanda's academic review and validation."
+    evidence: []
+    date: null
+    production_role: BIM_GENERATED_WITH_HUMAN_VALIDATION
+    requires_human_action: true
+    required_for_tfg_complete: true
+
+  - deliverable_id: academic-pranchas
+    name: Landscape synthesis boards
+    owner: Amanda
+    source_refs:
+      - "TFG_Amanda_2026/1_COMECE_AQUI/02_plano_de_acompanhamento.pdf#pages-2-5"
+    status: PROVISIONAL
+    status_reason: "The support-plan quantity claim remains provisional until institutional regulation is acquired; the date is unknown."
+    evidence: []
+    expected_quantity: "4-6 A1"
+    date: null
+    production_role: HUMAN_AUTHORED_VALIDATED
+    requires_human_action: true
+    required_for_tfg_complete: true
+
+  - deliverable_id: academic-descriptive-memorial
+    name: Descriptive memorial
+    owner: Amanda
+    source_refs:
+      - "TFG_Amanda_2026/1_COMECE_AQUI/02_plano_de_acompanhamento.pdf#pages-2-5"
+    status: PENDING
+    status_reason: "The memorial must be authored and validated for the academic submission."
+    evidence: []
+    date: null
+    production_role: HUMAN_AUTHORED_VALIDATED
+    requires_human_action: true
+    required_for_tfg_complete: true
+
+  - deliverable_id: academic-calculation-memorial
+    name: Calculation memorial
+    owner: Amanda
+    source_refs:
+      - "TFG_Amanda_2026/1_COMECE_AQUI/02_plano_de_acompanhamento.pdf#pages-2-5"
+    status: PENDING
+    status_reason: "The memorial must be authored and validated for the academic submission."
+    evidence: []
+    date: null
+    production_role: HUMAN_AUTHORED_VALIDATED
+    requires_human_action: true
+    required_for_tfg_complete: true
+
+  - deliverable_id: academic-defense
+    name: Defense
+    owner: Amanda
+    source_refs:
+      - "TFG_Amanda_2026/1_COMECE_AQUI/02_plano_de_acompanhamento.pdf#pages-2-5"
+    status: PENDING
+    status_reason: "Defense is a human academic activity."
+    evidence: []
+    date: null
+    production_role: HUMAN_REQUIRED
+    requires_human_action: true
+    required_for_tfg_complete: true
+
+  - deliverable_id: academic-authorship
+    name: Authorship and author declaration
+    owner: Amanda
+    source_refs:
+      - "TFG_Amanda Fernandes_ENTREGA 15.06.2026.pdf#chapters-3-and-5"
+      - "TFG_Amanda_2026/1_COMECE_AQUI/02_plano_de_acompanhamento.pdf#pages-2-5"
+    status: PENDING
+    status_reason: "Authorship and any declaration require Amanda's human action."
+    evidence: []
+    date: null
+    production_role: HUMAN_REQUIRED
+    requires_human_action: true
+    required_for_tfg_complete: true
+
+  - deliverable_id: academic-institutional-submission
+    name: Institutional submission
+    owner: Amanda
+    source_refs:
+      - "TFG_Amanda_2026/1_COMECE_AQUI/02_plano_de_acompanhamento.pdf#pages-2-5"
+    status: PENDING
+    status_reason: "Institutional submission cannot be performed by software."
+    evidence: []
+    date: null
+    production_role: HUMAN_REQUIRED
+    requires_human_action: true
+    required_for_tfg_complete: true

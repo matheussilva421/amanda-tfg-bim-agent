@@ -141,7 +141,19 @@ class RegulationRegistry(BaseModel):
         self.rules.append(rule)
 
     def compile_derived_constraints(self) -> list[DerivedConstraint]:
-        return [compile_derived_constraint(rule) for rule in self.rules]
+        """Compile every numeric rule; non-numeric rows stay non-constraints.
+
+        A registry legitimately mixes an umbrella law entry, identified
+        regulations awaiting their primary text and verified numeric
+        parameters.  Only the numeric rows can become a hard constraint, so
+        only they are compiled here; a numeric row that is not verified still
+        raises.
+        """
+        return [
+            compile_derived_constraint(rule)
+            for rule in self.rules
+            if rule.numeric_value is not None
+        ]
 
 
 __all__ = [
