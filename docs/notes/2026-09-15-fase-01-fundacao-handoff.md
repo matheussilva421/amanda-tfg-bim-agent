@@ -2,7 +2,8 @@
 
 Data: 2026-09-15
 Projeto: Amanda TFG BIM Agent
-Status: implementacao local verificada e commitada. Runtime Revit: NOT_RUN.
+Status: implementacao local verificada e commitada; arvore Git limpa. Runtime Revit: NOT_RUN.
+Commit deste handoff: a2c7566 (58 arquivos). Estado anterior: 2d33935.
 Handoff anterior (revisao dos planos): docs/notes/2026-09-15-revisao-planos-handoff.md
 
 ## 1. Objetivo e autorizacao
@@ -20,8 +21,8 @@ Git:
 
 - 3162381 chore(repo): initialize Amanda TFG BIM agent repository
 - 2d33935 feat: complete Phase 01 foundation, environment and durable state
-- Branch main em 2d33935. Nenhum remote configurado (git remote -v vazio): nao houve push.
-- 40 arquivos versionados: src 22, tests 13, bootstrap 2, project 1, .gitignore, pyproject.toml.
+- a2c7566 docs: add phase 01 handoff and version reviewed plans
+- Branch main em a2c7566, arvore limpa (git status --short sem saida). Nenhum remote configurado (git remote -v vazio): nao houve push. Os comandos de publicacao estao na secao 8.
 
 Testes: 64 executados, 64 aprovados, 0 falhados (6,36s).
 
@@ -44,9 +45,9 @@ resume: todas as fases executaveis (PHASE_01 a PHASE_09).
 
 bootstrap (execucao ao vivo) criou/confirmou: PROJECT_STATE.yaml, state/environment-report.json, state/bim-environment.lock.yaml, state/blockers.yaml, state/tool-health.yaml, state/revit-metadata.json. O diretorio state/snapshots/ existe e esta vazio (nenhum backup privado gravado ainda).
 
-Inconsistencia de estado registrada como pendencia P-1: o PROJECT_STATE.yaml permanece com phase_status PENDING, next_task P01-T01, last_completed_task null, last_verified_commit null e state_revision 1, embora P01-T01..T13 estejam implementadas, testadas e commitadas em 2d33935. Ainda nao existe comando para marcar tarefa concluida ou gravar checkpoint; decidir a reconciliacao antes de declarar o gate da Fase 01 fechado.
+Inconsistencia de estado registrada como pendencia P-1: o PROJECT_STATE.yaml permanece com phase_status PENDING, next_task P01-T01, last_completed_task null, last_verified_commit null e state_revision 1, embora P01-T01..T13 estejam implementadas, testadas e commitadas. O estado registrado continua sendo o da criacao inicial (revision 1); o commit 2d33935 nao o atualizou, e isso e esperado, porque ainda nao existe comando para marcar tarefa concluida ou gravar checkpoint. Decidir a reconciliacao antes de declarar o gate da Fase 01 fechado. Este e o unico item que impede fechar o gate da secao 8.
 
-## 3. O que foi implementado (P01-T01..T13, commit 2d33935)
+## 3. O que foi implementado (P01-T01..T13)
 
 Nucleo:
 
@@ -75,19 +76,23 @@ Tarefas do plano cobertas: T01 a T13 de docs/superpowers/plans/01-foundation-env
 
 ## 4. Arquivos criados e alterados
 
-Versionados em 2d33935: pyproject.toml, .gitignore, os 22 arquivos de src/amanda_agent, os 13 arquivos de tests/unit e tests/bootstrap, bootstrap/get-source-inventory.ps1, project/provenance/source-inventory.json.
 
-Nao versionados no momento deste handoff:
+
+Versionados em 2d33935: pyproject.toml, .gitignore, os 22 arquivos de src/amanda_agent, os 13 arquivos de tests/unit e tests/bootstrap, bootstrap/get-source-inventory.ps1, project/provenance/source-inventory.json. Total: 40 arquivos.
+
+Versionados em a2c7566 (58 arquivos, 28.682 insercoes):
 
 - PROJECT_STATE.yaml
-- state/ (blockers.yaml, bim-environment.lock.yaml, environment-report.json, revit-metadata.json, tool-health.yaml, snapshots/)
-- docs/ (notes, review, superpowers/plans)
+- state/ (blockers.yaml, bim-environment.lock.yaml, environment-report.json, revit-metadata.json, tool-health.yaml; snapshots/ esta vazio)
+- docs/notes/ (este handoff e o da revisao dos planos), docs/review/ (scripts, validacoes, comparacoes, originals-2026-09-15, previews e os diretorios before-*) e docs/superpowers/plans/ (00 a 09)
 - 2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md, 2026-09-11-amanda-tfg-bim-agent-design.md, PLAN_SELF_REVIEW.md, START_HERE_FOR_CODEX.md
 - amanda-tfg-bim-agent-planos-REVISADOS-2026-09-15.zip (15 entradas) e amanda-tfg-bim-agent-superpowers-plan.zip (copia parcial dos planos), ambos duplicatas dos documentos ja presentes no repositorio.
 
+Permanecem fora do Git, de proposito: docs/review/source-extracts/, TFG_Amanda_2026/, programa_necessidades.pdf, os PDFs de entrega, state/snapshots/private/ e logs/raw/. Verificado apos o commit: 0 arquivos de docs/review/source-extracts e 0 de TFG_Amanda_2026 rastreados.
+
 Docs privados: docs/review/source-extracts/ esta no .gitignore e nao deve ser publicado.
 
-Artefatos temporarios a limpar: .git-commit-msg.tmp (1.706 bytes) e .tmp-pytest/ (51 entradas, basetemp do pytest).
+Artefatos temporarios: .git-commit-msg.tmp e .tmp-pytest/ foram removidos nesta sessao e agora constam no .gitignore na secao "Local scratch".
 
 ## 5. Decisoes tecnicas
 
@@ -105,13 +110,20 @@ Comando:
 
     .venv\Scripts\python.exe -m pytest tests/unit tests/bootstrap -q -p no:cacheprovider --basetemp=".tmp-pytest"
 
-Resultado: 64 executados, 64 aprovados, 0 falhados. Status: verde (6,36s).
+
+
+
+Resultado: 64 executados, 64 aprovados, 0 falhados. Status: verde (6,36s antes do commit; 6,22s depois do commit a2c7566).
 
 As duas opcoes extras (-p no:cacheprovider e --basetemp) sao obrigatorias hoje por causa do blocker B-001.
 
 Validados tambem por execucao real: doctor, status, resume e bootstrap idempotente.
 
-Nao validado: licenciamento e inicializacao do Revit, instalacao de add-in, qualquer modelagem. Nenhum add-in ou MCP Revit instalado (C:\Users\slvma\AppData\Autodesk\Revit\Addins\2027 existe e esta vazio).
+Verificacao de proveniencia pos-commit: project/provenance/source-inventory.json consistente (entry_count 28, 28 entradas listadas) e SHA-256 conferido com MATCH nos seis arquivos criticos (os quatro Markdown canonicos, programa_necessidades.pdf e TFG_Amanda Fernandes_ENTREGA 15.06.2026.pdf).
+
+Verificacao de privacidade pos-commit: 0 arquivos de docs/review/source-extracts/ e 0 de TFG_Amanda_2026/ rastreados pelo Git.
+
+Nao validado: licenciamento e inicializacao do Revit, instalacao de add-in, qualquer modelagem. Nenhum add-in ou MCP Revit instalado (pasta Addins 2027 sob o perfil do usuario existe e esta vazia).
 
 ## 7. Problemas encontrados
 
@@ -128,12 +140,17 @@ B-002 (resolvido) - commit rejeitado por erro 400 do revisor; resolvido apos a d
 ## 8. Pendencias e proximos passos
 
 1. Gravar e commitar este handoff.
-2. Commitar o restante nao versionado (PROJECT_STATE.yaml, state/, docs/, documentos canonicos da raiz e os dois ZIPs).
-3. Limpar .git-commit-msg.tmp e .tmp-pytest/, ou ignora-los no .gitignore.
-4. Reconciliar o PROJECT_STATE.yaml com a Fase 01 concluida (pendencia P-1 da secao 2).
-5. Reconferir project/provenance/source-inventory.json (28 entradas, gerado em 2026-09-15T10:23:44Z) e os SHA-256 canonicos apos o commit final.
-6. Gate da Fase 01: pytest completo, doctor, status, git status limpo, nenhum lease obsoleto.
-7. Seguir o grafo: 07A (autonomia, recuperacao e seguranca) e 03 (inteligencia de projeto) nao dependem do Revit; 02 (Tool Lab) depende de escritor unico e de ambiente Revit.
+2. Commitar o restante nao versionado (PROJECT_STATE.yaml, state/, docs/, documentos canonicos da raiz e os dois ZIPs) - CONCLUIDO em a2c7566.
+3. Limpar .git-commit-msg.tmp e .tmp-pytest/, ou ignora-los no .gitignore - CONCLUIDO: arquivos removidos e ambos adicionados ao .gitignore.
+4. Reconciliar o PROJECT_STATE.yaml com a Fase 01 concluida (pendencia P-1 da secao 2). EM ABERTO - e o item mais importante antes de declarar o gate da Fase 01.
+5. Reconferir project/provenance/source-inventory.json e os SHA-256 canonicos apos o commit final - CONCLUIDO, tudo MATCH.
+6. Gate da Fase 01: pytest completo (64/64 verde), doctor (exit 0), status (0 blockers, lease livre), git status limpo (arvore limpa em a2c7566). Falta apenas a reconciliacao do item 4.
+7. Publicar no GitHub. Nao ha remote configurado; o usuario precisa criar o repositorio remoto. Comandos sugeridos:
+
+    git remote add origin <URL-DO-REPOSITORIO>
+    git push -u origin main
+
+8. Seguir o grafo: 07A (autonomia, recuperacao e seguranca) e 03 (inteligencia de projeto) nao dependem do Revit; 02 (Tool Lab) depende de escritor unico e de ambiente Revit.
 
 ## 9. Instrucoes de retomada
 
@@ -150,4 +167,3 @@ B-002 (resolvido) - commit rejeitado por erro 400 do revisor; resolvido apos a d
 - Nao commitar state/snapshots/private/ nem logs/raw/ (privacidade; ja constam no .gitignore).
 - Nao declarar validacao nao ocorrida: o Revit esta detectado, nao licenciado nem inicializado.
 - Baseline do programa fixada em 20 pessoas, 626 m2 internos, 260 m2 externos, 783-814 m2 fechados e 850-950 m2 cobertos, conforme o PDF, confirmada por hash no handoff de revisao dos planos e nao por medicao nova.
-
