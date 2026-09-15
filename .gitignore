@@ -1,0 +1,50 @@
+# Python
+.venv/
+.venv-*/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Tooling / vendors
+.tools/
+vendor/
+.dotnet/
+
+# Secrets and environment
+.env
+.env.*
+!.env.example
+
+# Private academic sources (never published)
+docs/source/
+docs/review/source-extracts/
+TFG_Amanda_2026/
+/programa_necessidades.pdf
+/TFG_Amanda*.pdf
+project/provenance/extracted/
+
+# Private runtime state
+state/snapshots/private/
+state/locks/
+logs/raw/
+
+# Revit / BIM binaries
+*.rvt
+*.rfa
+*.rte
+*.slog
+*.rws
+*.rws.backup
+
+# Local build output
+build/
+dist/
+*.egg-info/
+
+# Generated local artifacts
+artifacts/local/
+deliverables/local/
