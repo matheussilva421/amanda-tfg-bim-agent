@@ -101,6 +101,43 @@ def test_resume_lists_only_unblocked_work(tmp_path: Path, monkeypatch):
     assert "PHASE_03" in result.stdout
 
 
+def test_status_surfaces_the_task_level_ready_set(tmp_path: Path, monkeypatch):
+    """The phase graph is coarse; status must name the real next task."""
+    from amanda_agent.state.tasks import TaskRecord, TaskRegistry
+
+    monkeypatch.setenv("AMANDA_PROJECT_ROOT", str(tmp_path))
+    StateStore(tmp_path / "PROJECT_STATE.yaml").save(
+        ProjectState(next_task="P01-T01")
+    )
+    (tmp_path / "state").mkdir(exist_ok=True)
+    registry = TaskRegistry()
+    registry.add(
+        TaskRecord(id="P01-T01", phase="PHASE_01", plan_path="p.md", status="PASS")
+    )
+    registry.add(
+        TaskRecord(
+            id="P01-T02", phase="PHASE_01", plan_path="p.md", depends_on=["P01-T01"]
+        )
+    )
+    registry.save(tmp_path / "state" / "task-graph.yaml")
+
+    result = runner.invoke(app, ["status"])
+
+    assert result.exit_code == 0
+    assert "ready tasks  P01-T02" in result.stdout
+
+
+def test_status_still_works_without_a_task_registry(tmp_path: Path, monkeypatch):
+    """Reporting must never crash on a missing optional artefact."""
+    monkeypatch.setenv("AMANDA_PROJECT_ROOT", str(tmp_path))
+    StateStore(tmp_path / "PROJECT_STATE.yaml").save(ProjectState())
+
+    result = runner.invoke(app, ["status"])
+
+    assert result.exit_code == 0
+    assert "ready tasks  (registry missing)" in result.stdout
+
+
 def test_rollback_copies_to_a_new_filename(tmp_path: Path):
     checkpoint = tmp_path / "checkpoints" / "R00-lab.rvt"
     checkpoint.parent.mkdir(parents=True)

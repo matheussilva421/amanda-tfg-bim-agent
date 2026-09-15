@@ -39,6 +39,44 @@ def load_blockers(state_dir: Path) -> list:
     return blockers
 
 
+def load_ready_tasks(root: Path) -> dict:
+    """Task-level readiness, which the coarse phase graph cannot express.
+
+    A missing registry is reported as missing instead of being invented: the
+    point of a status call is to tell the truth about an incomplete checkout.
+    """
+    from ..state.tasks import load_registry
+
+    path = Path(root) / "state" / "task-graph.yaml"
+    if not path.exists():
+        return {"available": False, "ready": [], "blocked": [], "total": 0}
+    try:
+        registry = load_registry(path)
+        registry.validate()
+    except Exception as exc:  # a broken registry is data, not a crash
+        return {
+            "available": False,
+            "ready": [],
+            "blocked": [],
+            "total": 0,
+            "problem": str(exc),
+        }
+    ready = registry.ready_tasks()
+    ready_set = set(ready)
+    blocked = sorted(
+        task_id
+        for task_id in registry.tasks
+        if task_id not in ready_set
+        and str(registry.tasks[task_id].status) == "PENDING"
+    )
+    return {
+        "available": True,
+        "ready": ready,
+        "blocked": blocked,
+        "total": len(registry.tasks),
+    }
+
+
 def status_snapshot(root: Path) -> dict:
     paths = ProjectPaths.from_root(root)
     state = StateStore(paths.project_state).load()
@@ -47,11 +85,18 @@ def status_snapshot(root: Path) -> dict:
     lease_info = WriterLock(lease_path, owner="status-probe").inspect()
     graph = phase_graph()
     blocked = graph.blocked_tasks(blockers)
+    tasks = load_ready_tasks(root)
+    next_task = state.next_task
+    if tasks["available"] and tasks["ready"]:
+        if next_task not in tasks["ready"]:
+            next_task = tasks["ready"][0]
     return {
         "phase_id": state.phase_id,
         "phase_name": state.phase_name,
         "phase_status": str(state.phase_status),
-        "next_task": state.next_task,
+        "next_task": next_task,
+        "ready_tasks": tasks["ready"],
+        "task_registry": tasks,
         "last_completed_task": state.last_completed_task,
         "revit_stage": state.revit_stage,
         "current_checkpoint": state.current_checkpoint,
@@ -74,6 +119,18 @@ def render_status(snapshot: dict) -> None:
     )
     typer.echo("status       " + snapshot["phase_status"])
     typer.echo("next task    " + snapshot["next_task"])
+    tasks = snapshot.get("task_registry") or {}
+    if tasks.get("available"):
+        typer.echo("ready tasks  " + (" ".join(tasks["ready"]) or "(none)"))
+        blocked = tasks["blocked"]
+        preview = blocked[:8]
+        suffix = "" if len(blocked) <= 8 else " (+%d more)" % (len(blocked) - 8)
+        typer.echo(
+            "pending      "
+            + ((" ".join(preview) + suffix) if blocked else "(none)")
+        )
+    else:
+        typer.echo("ready tasks  (registry missing)")
     if snapshot["last_completed_task"]:
         typer.echo("last task    " + snapshot["last_completed_task"])
     typer.echo("revit stage  " + str(snapshot["revit_stage"]))

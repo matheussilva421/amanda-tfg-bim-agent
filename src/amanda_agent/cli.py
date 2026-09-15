@@ -68,6 +68,118 @@ def status() -> None:
     render_status(status_snapshot(project_root()))
 
 
+@app.command(name="task-graph")
+def task_graph() -> None:
+    """Show task-level progress and the exact READY tasks. Read-only."""
+    from .commands.advance import render_task_graph, task_graph_report
+    from .commands.doctor import project_root
+    from .state.advance import AdvanceRefused
+
+    try:
+        report = task_graph_report(project_root())
+    except AdvanceRefused as exc:
+        typer.echo("task-graph: " + str(exc), err=True)
+        raise typer.Exit(code=2)
+    render_task_graph(report)
+
+
+@app.command()
+def advance(
+    task: str = typer.Option(..., "--task", help="Task id such as P01-T01."),
+    status: str = typer.Option(..., "--status", help="Outcome to record."),
+    evidence: list[str] = typer.Option(
+        None, "--evidence", help="Command and result. Repeat for each."
+    ),
+    next_task: str = typer.Option(
+        None, "--next-task", help="Override the computed next READY task."
+    ),
+    expected_revision: int = typer.Option(
+        None, "--expected-revision", help="Refuse if the state moved on."
+    ),
+) -> None:
+    """Record a finished task. Requires evidence: green without proof is a lie."""
+    from .commands.advance import run_advance
+    from .commands.doctor import project_root
+    from .state.advance import AdvanceRefused
+
+    try:
+        result = run_advance(
+            project_root(),
+            task_id=task,
+            status=status,
+            evidence=list(evidence or []),
+            next_task=next_task,
+            expected_revision=expected_revision,
+        )
+    except AdvanceRefused as exc:
+        typer.echo("advance refused: " + str(exc), err=True)
+        raise typer.Exit(code=2)
+    typer.echo("recorded     " + result["task_id"] + " " + result["status"])
+    typer.echo("next task    " + str(result["next_task"]))
+    typer.echo("revision     " + str(result["state_revision"]))
+
+
+@app.command(name="phase-gate")
+def phase_gate(
+    gate: str = typer.Option(..., "--gate", help="GO, GO_WITH_LIMITATIONS or NO_GO."),
+    reason: str = typer.Option(..., "--reason", help="Why this gate was chosen."),
+    verified_commit: str = typer.Option(
+        None, "--verified-commit", help="Commit hash the gate was checked against."
+    ),
+) -> None:
+    """Record the phase gate decision on PROJECT_STATE.yaml."""
+    from .commands.advance import run_phase_gate
+    from .commands.doctor import project_root
+    from .state.advance import AdvanceRefused
+
+    try:
+        result = run_phase_gate(
+            project_root(),
+            gate=gate,
+            reason=reason,
+            verified_commit=verified_commit,
+        )
+    except AdvanceRefused as exc:
+        typer.echo("phase-gate refused: " + str(exc), err=True)
+        raise typer.Exit(code=2)
+    typer.echo("phase gate   " + result["phase_gate"])
+    typer.echo("reason       " + result["reason"])
+    typer.echo("revision     " + str(result["state_revision"]))
+
+
+@app.command(name="advance-phase")
+def advance_phase(
+    gate: str = typer.Option(..., "--gate", help="GO, GO_WITH_LIMITATIONS or NO_GO."),
+    next_phase: str = typer.Option(..., "--next-phase", help="Phase id to open."),
+    next_phase_name: str = typer.Option(
+        ..., "--next-phase-name", help="Human name of the phase to open."
+    ),
+    next_task: str = typer.Option(..., "--next-task", help="First task of that phase."),
+    reason: str = typer.Option(..., "--reason", help="Why the gate is defensible."),
+) -> None:
+    """Close the current phase. Refuses while its tasks are still open."""
+    from .commands.advance import run_advance_phase
+    from .commands.doctor import project_root
+    from .state.advance import AdvanceRefused
+
+    try:
+        result = run_advance_phase(
+            project_root(),
+            gate=gate,
+            next_phase_id=next_phase,
+            next_phase_name=next_phase_name,
+            next_task=next_task,
+            reason=reason,
+        )
+    except AdvanceRefused as exc:
+        typer.echo("advance-phase refused: " + str(exc), err=True)
+        raise typer.Exit(code=2)
+    typer.echo("phase        " + result["phase_id"])
+    typer.echo("phase gate   " + result["phase_gate"])
+    typer.echo("next task    " + result["next_task"])
+    typer.echo("revision     " + str(result["state_revision"]))
+
+
 @app.command()
 def resume() -> None:
     """Show what can be resumed now, honouring typed blocker severity."""

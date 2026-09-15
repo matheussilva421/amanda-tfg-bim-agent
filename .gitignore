@@ -52,3 +52,4 @@ deliverables/local/
 # Local scratch
 .git-commit-msg.tmp
 .tmp-pytest/
+.tmp-pytest-*/

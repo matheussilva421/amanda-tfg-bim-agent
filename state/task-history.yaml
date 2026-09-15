@@ -1,0 +1,88 @@
+schema_version: 1
+entries:
+- task_id: P01-T01
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_cli.py -q -> 2 passed
+  recorded_utc: '2026-09-15T11:18:18Z'
+  note: null
+- task_id: P01-T02
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_paths.py -q -> 2 passed
+  recorded_utc: '2026-09-15T11:18:18Z'
+  note: null
+- task_id: P01-T03
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_state_models.py -q -> 3 passed
+  recorded_utc: '2026-09-15T11:18:19Z'
+  note: null
+- task_id: P01-T04
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_state_store.py -q -> 7 passed
+  recorded_utc: '2026-09-15T11:18:19Z'
+  note: null
+- task_id: P01-T05
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_writer_lock.py -q -> 6 passed
+  recorded_utc: '2026-09-15T11:18:20Z'
+  note: null
+- task_id: P01-T06
+  status: PASS
+  evidence:
+  - pytest tests/bootstrap/test_revit_detection.py -q -> 5 passed
+  recorded_utc: '2026-09-15T11:18:20Z'
+  note: null
+- task_id: P01-T07
+  status: PASS
+  evidence:
+  - pytest tests/bootstrap/test_environment_detection.py -q -> 5 passed
+  recorded_utc: '2026-09-15T11:18:21Z'
+  note: null
+- task_id: P01-T08
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_snapshots.py -q -> 6 passed
+  recorded_utc: '2026-09-15T11:18:21Z'
+  note: null
+- task_id: P01-T09
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_logging.py -q -> 6 passed
+  recorded_utc: '2026-09-15T11:18:21Z'
+  note: null
+- task_id: P01-T10
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_doctor.py -q -> 6 passed
+  recorded_utc: '2026-09-15T11:18:22Z'
+  note: null
+- task_id: P01-T11
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_status_resume_rollback.py -q -> 13 passed
+  recorded_utc: '2026-09-15T11:18:22Z'
+  note: null
+- task_id: P01-T12
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_bootstrap_cli.py -q -> 5 passed
+  recorded_utc: '2026-09-15T11:18:23Z'
+  note: null
+- task_id: P01-T13
+  status: PASS
+  evidence:
+  - pytest tests/unit/test_bootstrap_cli.py -q -> 5 passed
+  recorded_utc: '2026-09-15T11:18:23Z'
+  note: null
+- task_id: PHASE_GATE
+  status: GO_WITH_LIMITATIONS
+  evidence:
+  - Fase 01 implementada, testada e commitada; Revit detectado mas licenca e inicializacao
+    nao verificadas, entao a Fase 02 (Tool Lab) fica bloqueada no proprio ramo e a
+    Fase 03 (inteligencia de projeto) nao depende dela.
+  recorded_utc: '2026-09-15T11:19:43Z'
+  note: advanced to PHASE_03
