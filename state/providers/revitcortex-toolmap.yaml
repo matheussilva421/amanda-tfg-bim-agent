@@ -1,0 +1,875 @@
+schema_version: 1
+provider: revitcortex
+generated_by: tool-lab/revitcortex/generate_toolmap.py
+generated_utc: '2026-09-15T16:18:30Z'
+rule: every tool name and every input field is copied from the catalog captured from the published server;
+  every effect flag is copied from the [ToolSafety] parse of the pinned source, because the Cortex catalog
+  publishes no annotations block. Regenerate instead of editing by hand
+provenance:
+  catalog_path: tool-lab/revitcortex/tool-catalog.json
+  tool_safety_path: tool-lab/revitcortex/tool-safety.json
+  tool_safety_extractor: tool-lab/revitcortex/extract_tool_safety.py
+  tool_safety_declared_count: 288
+  catalog_sha256: fd4413890a8555bbc15bbefdfdf6ea2d4a0fb4d7039f2a9d752c0db6e9439ef3
+  catalog_tool_count: 288
+  tools_listed_by_client: 288
+  protocol_version: '2024-11-05'
+  server_version: 2.0.0
+  server_name: RevitCortex
+  transport: stdio JSON-RPC 2.0 to the published RevitCortex.Server.exe
+  source_url: https://github.com/LuDattilo/RevitCortex.git
+  source_commit: 8b2556daefb2bf88f0a7a17bf28f2352fe0b0e33
+  source_commit_verified_by: tool-lab/revitcortex/extract_tool_safety.py
+  note: the README of the pinned source advertises 173 tools while the published server lists 288 over
+    MCP; the binary and its 288-tool listing are the authority, and the documentation count is recorded
+    here only so the divergence is not mistaken for a capture error
+capabilities:
+  health:
+    semantic: health
+    availability: AVAILABLE
+    tools:
+    - say_hello
+    - check_model_health
+    effect_flags:
+      say_hello:
+        read_only: true
+        destructive: false
+        declared: true
+      check_model_health:
+        read_only: true
+        destructive: false
+        declared: true
+    tool_schemas:
+      check_model_health:
+        required: []
+        properties: []
+        enums: {}
+      say_hello:
+        required: []
+        properties: []
+        enums: {}
+    note: say_hello reports the server and bridge handshake; check_model_health returns a health score
+      for the ACTIVE document, so call it before a write
+  document_info:
+    semantic: document_info
+    availability: AVAILABLE
+    tool: get_project_info
+    alternatives:
+    - get_current_view_info
+    effect_flags:
+      get_project_info:
+        read_only: true
+        destructive: false
+        declared: true
+      get_current_view_info:
+        read_only: true
+        destructive: false
+        declared: true
+    tool_schemas:
+      get_current_view_info:
+        required: []
+        properties: []
+        enums: {}
+      get_project_info:
+        required: []
+        properties:
+        - includeLevels
+        - includeLinks
+        - includePhases
+        - includeWorksets
+        enums: {}
+    note: project name, address, levels, phases, worksets and links of the active document; the levels
+      list is what the creation tools resolve against
+  document_query:
+    semantic: document_query
+    availability: AVAILABLE
+    tools:
+    - ai_element_filter
+    - get_elements_by_unique_id
+    - get_current_view_elements
+    - filter_by_parameter_value
+    effect_flags:
+      ai_element_filter:
+        read_only: true
+        destructive: false
+        declared: true
+      get_elements_by_unique_id:
+        read_only: true
+        destructive: false
+        declared: true
+      get_current_view_elements:
+        read_only: true
+        destructive: false
+        declared: true
+      filter_by_parameter_value:
+        read_only: true
+        destructive: false
+        declared: true
+    tool_schemas:
+      ai_element_filter:
+        required: []
+        properties:
+        - combineWith
+        - filterCategory
+        - includeInstances
+        - includeTypes
+        - invert
+        - levelFilter
+        - maxElements
+        enums: {}
+      filter_by_parameter_value:
+        required: []
+        properties:
+        - category
+        - condition
+        - conditions
+        - logic
+        - parameterName
+        - parameterType
+        - scope
+        - value
+        enums: {}
+      get_current_view_elements:
+        required: []
+        properties:
+        - annotationCategoryList
+        - categoryFilter
+        - fields
+        - limit
+        - modelCategoryList
+        enums: {}
+      get_elements_by_unique_id:
+        required:
+        - uniqueIds
+        properties:
+        - uniqueIds
+        enums: {}
+    note: element queries by category, class, family, bounding box, level and parameter value with combineWith/invert
+      for AND/OR/NOT
+  model_scan:
+    semantic: model_scan
+    availability: AVAILABLE
+    tools:
+    - workflow_model_audit
+    - analyze_model_statistics
+    - audit_families
+    effect_flags:
+      workflow_model_audit:
+        read_only: true
+        destructive: false
+        declared: true
+      analyze_model_statistics:
+        read_only: true
+        destructive: false
+        declared: true
+      audit_families:
+        read_only: true
+        destructive: false
+        declared: true
+    tool_schemas:
+      analyze_model_statistics:
+        required: []
+        properties:
+        - compact
+        enums: {}
+      audit_families:
+        required: []
+        properties:
+        - categoryFilter
+        - compact
+        - includeSystemFamilies
+        - includeUnused
+        - sortBy
+        enums: {}
+      workflow_model_audit:
+        required: []
+        properties:
+        - compact
+        - includeFamilies
+        - includeWarnings
+        - maxWarnings
+        enums: {}
+    note: workflow_model_audit carries warnings and families; analyze_model_statistics is the cheapest
+      whole-model census
+  level:
+    semantic: level
+    availability: AVAILABLE
+    tool: create_level
+    required_fields:
+    - name
+    - elevation
+    actions:
+    - create
+    - set
+    - rename
+    - delete
+    units: mm
+    dry_run_default: true
+    effect_flags:
+      create_level:
+        read_only: false
+        destructive: true
+        declared: true
+    tool_schemas:
+      create_level:
+        required: []
+        properties:
+        - action
+        - dryRun
+        - elevation
+        - isBuildingStory
+        - levelId
+        - name
+        - newName
+        enums: {}
+    note: 'preview-first: dryRun defaults to true, so a real level needs dryRun=false in the same call.
+      One tool carries create/set/rename/delete; there is no separate element_kind field the way the Horizun
+      provider has. Elevation is read and written in mm'
+  wall:
+    semantic: wall
+    availability: AVAILABLE
+    tool: create_line_based_element
+    required_fields:
+    - specs
+    spec_required_fields:
+    - category
+    - locationLine
+    units: mm
+    dry_run_default: false
+    effect_flags:
+      create_line_based_element:
+        read_only: false
+        destructive: false
+        declared: true
+    tool_schemas:
+      create_line_based_element:
+        required:
+        - specs
+        properties:
+        - specs
+        enums: {}
+    note: 'specs is a JSON array carried as a string: [{category, locationLine:{p0,p1,pMid?}, typeId?,
+      height?, baseLevel?, baseOffset?}]. height defaults to 3000 mm and baseLevel is an elevation in
+      mm used to pick the nearest level, not an element id'
+  floor:
+    semantic: floor
+    availability: AVAILABLE
+    tool: create_floor
+    alternatives:
+    - create_surface_based_element
+    required_fields:
+    - boundaryPoints
+    units: mm
+    dry_run_default: false
+    effect_flags:
+      create_floor:
+        read_only: false
+        destructive: false
+        declared: true
+      create_surface_based_element:
+        read_only: false
+        destructive: false
+        declared: true
+    tool_schemas:
+      create_floor:
+        required: []
+        properties:
+        - boundaryPoints
+        - floorTypeName
+        - holes
+        - levelElevation
+        - roomId
+        enums: {}
+      create_surface_based_element:
+        required:
+        - specs
+        properties:
+        - specs
+        enums: {}
+    note: boundaryPoints is a JSON array of {x,y} in mm with at least three points, or pass roomId to
+      take the boundary from an existing room; holes is a JSON array of inner loops and levelElevation
+      in mm picks the nearest level
+  room:
+    semantic: room
+    availability: AVAILABLE
+    tool: create_room
+    required_fields:
+    - levelId
+    - x
+    - y
+    units: mm
+    schema_divergence: the published schema documents levelId/x/y as three flat arguments, but CreateRoomTool.cs
+      reads input[location] as an {x, y, z} object in mm and only levelId by name; a call built from the
+      schema alone fails with 'location {x, y, z} in mm is required'
+    dry_run_default: false
+    effect_flags:
+      create_room:
+        read_only: false
+        destructive: false
+        declared: true
+    tool_schemas:
+      create_room:
+        required:
+        - levelId
+        - x
+        - y
+        properties:
+        - levelId
+        - name
+        - x
+        - y
+        enums: {}
+    note: the room needs bounding walls in place first, otherwise the documented failure is 'location
+      may not be inside enclosed walls'
+  door:
+    semantic: door
+    availability: AVAILABLE
+    tool: create_point_based_element
+    required_fields:
+    - specs
+    - hostWallId
+    - locationPoint
+    spec_required_fields:
+    - hostWallId
+    - locationPoint
+    - typeId
+    units: mm
+    hosted: true
+    dry_run_default: false
+    effect_flags:
+      create_point_based_element:
+        read_only: false
+        destructive: false
+        declared: true
+    tool_schemas:
+      create_point_based_element:
+        required:
+        - specs
+        properties:
+        - specs
+        enums: {}
+    note: 'no door-specific tool exists: a door is a wall-hosted family instance. Set hostWallId to the
+      wall element id and pass locationPoint; the tool then calls NewFamilyInstance(locationPoint, symbol,
+      hostWall, level, ...) and auto-detects door/window facing, with facingFlipped and rotation available'
+  window:
+    semantic: window
+    availability: AVAILABLE
+    tool: create_point_based_element
+    required_fields:
+    - specs
+    - hostWallId
+    - locationPoint
+    spec_required_fields:
+    - hostWallId
+    - locationPoint
+    - typeId
+    units: mm
+    hosted: true
+    dry_run_default: false
+    effect_flags:
+      create_point_based_element:
+        read_only: false
+        destructive: false
+        declared: true
+    tool_schemas:
+      create_point_based_element:
+        required:
+        - specs
+        properties:
+        - specs
+        enums: {}
+    note: 'same hosted path as a door: without hostWallId the tool falls back to NewFamilyInstance(locationPoint,
+      symbol, level, ...), which places an unhosted instance rather than a window in a wall'
+  views:
+    semantic: views
+    availability: AVAILABLE
+    tool: create_view
+    required_fields:
+    - viewType
+    view_types:
+    - FloorPlan
+    - CeilingPlan
+    - Section
+    - Elevation
+    - Drafting
+    - ThreeD
+    units: mm
+    dry_run_default: false
+    effect_flags:
+      create_view:
+        read_only: false
+        destructive: false
+        declared: true
+    tool_schemas:
+      create_view:
+        required:
+        - viewType
+        properties:
+        - cropActive
+        - cropMax
+        - cropMin
+        - detailLevel
+        - direction
+        - levelId
+        - levelName
+        - name
+        - originX
+        - originY
+        - originZ
+        - scale
+        - templateId
+        - templateName
+        - viewType
+        enums: {}
+    note: one tool covers floor, ceiling, section, elevation, drafting and 3D views; levelName is preferred
+      over levelId for plans and originX/Y/Z in mm position the view
+  section_elevation:
+    semantic: section_elevation
+    availability: AVAILABLE
+    tool: create_view
+    alternatives:
+    - section_box_from_selection
+    required_fields:
+    - viewType
+    units: mm
+    dry_run_default: false
+    effect_flags:
+      create_view:
+        read_only: false
+        destructive: false
+        declared: true
+      section_box_from_selection:
+        read_only: false
+        destructive: false
+        declared: true
+    tool_schemas:
+      create_view:
+        required:
+        - viewType
+        properties:
+        - cropActive
+        - cropMax
+        - cropMin
+        - detailLevel
+        - direction
+        - levelId
+        - levelName
+        - name
+        - originX
+        - originY
+        - originZ
+        - scale
+        - templateId
+        - templateName
+        - viewType
+        enums: {}
+      section_box_from_selection:
+        required: []
+        properties:
+        - elementIds
+        enums: {}
+    note: sections and elevations are viewType values of create_view, not separate tools; section_box_from_selection
+      crops an existing 3D view around a selection instead of creating a section view
+  sheets:
+    semantic: sheets
+    availability: AVAILABLE
+    tools:
+    - create_sheet
+    - batch_create_sheets
+    - place_viewport
+    alternatives:
+    - create_placeholder_sheets
+    units: mm
+    dry_run_default: false
+    effect_flags:
+      create_sheet:
+        read_only: false
+        destructive: false
+        declared: true
+      batch_create_sheets:
+        read_only: false
+        destructive: false
+        declared: true
+      place_viewport:
+        read_only: false
+        destructive: false
+        declared: true
+      create_placeholder_sheets:
+        read_only: false
+        destructive: true
+        declared: true
+    tool_schemas:
+      batch_create_sheets:
+        required:
+        - sheets
+        properties:
+        - defaultTitleBlockName
+        - sheets
+        enums: {}
+      create_placeholder_sheets:
+        required: []
+        properties:
+        - action
+        - sheetIds
+        - sheets
+        - titleBlockId
+        enums: {}
+      create_sheet:
+        required:
+        - sheetNumber
+        - sheetName
+        properties:
+        - sheetName
+        - sheetNumber
+        - titleBlockId
+        enums: {}
+      place_viewport:
+        required:
+        - sheetId
+        - viewId
+        properties:
+        - positionX
+        - positionY
+        - rotation
+        - sheetId
+        - viewId
+        - viewportTypeId
+        enums: {}
+    note: create_sheet takes sheetNumber and sheetName; batch_create_sheets carries a JSON array of {number,
+      name, titleBlockName?, viewIds?} and can place views in the same call; place_viewport positions
+      a viewport with positionX/Y in mm
+  schedules:
+    semantic: schedules
+    availability: AVAILABLE
+    tools:
+    - create_schedule
+    - create_preset_schedule
+    alternatives:
+    - export_schedule
+    - get_schedule_data
+    presets:
+    - RoomFinish
+    - DoorHardware
+    - WallQuantities
+    - WindowSchedule
+    dry_run_default: false
+    effect_flags:
+      create_schedule:
+        read_only: false
+        destructive: false
+        declared: true
+      create_preset_schedule:
+        read_only: false
+        destructive: false
+        declared: true
+      export_schedule:
+        read_only: true
+        destructive: false
+        declared: true
+      get_schedule_data:
+        read_only: true
+        destructive: false
+        declared: true
+    tool_schemas:
+      create_preset_schedule:
+        required:
+        - preset
+        properties:
+        - name
+        - preset
+        enums: {}
+      create_schedule:
+        required:
+        - name
+        - category
+        properties:
+        - category
+        - fields
+        - name
+        - scheduleType
+        enums: {}
+      export_schedule:
+        required:
+        - scheduleId
+        properties:
+        - format
+        - scheduleId
+        enums: {}
+      get_schedule_data:
+        required:
+        - scheduleId
+        properties:
+        - maxRows
+        - scheduleId
+        enums: {}
+    note: create_schedule takes one category plus fields; create_preset_schedule covers the four room/door/wall/window
+      presets, which is the shorter route for the core fixture
+  dimensions:
+    semantic: dimensions
+    availability: AVAILABLE
+    tool: create_dimensions
+    alternatives:
+    - find_undimensioned_elements
+    required_fields:
+    - dimensions
+    units: mm
+    dry_run_default: false
+    effect_flags:
+      create_dimensions:
+        read_only: false
+        destructive: false
+        declared: true
+      find_undimensioned_elements:
+        read_only: true
+        destructive: false
+        declared: true
+    tool_schemas:
+      create_dimensions:
+        required:
+        - dimensions
+        properties:
+        - dimensions
+        enums: {}
+      find_undimensioned_elements:
+        required: []
+        properties:
+        - category
+        - viewId
+        enums: {}
+    note: dimensions is a JSON array carried as a string; element mode uses referenceIds and point-to-point
+      mode uses startPoint/endPoint, both with viewId and an optional linePoint in mm
+  site_toposolid:
+    semantic: site_toposolid
+    availability: NOT_AVAILABLE
+    justification: 'No published Cortex tool mentions a toposolid, topographic surface, site, grading,
+      terrain or mass in its name or description: a scan of all 288 tool names and descriptions returns
+      zero matches. The only surface-based creation tool, create_surface_based_element, is documented
+      as floors and ceilings. The project site data is also MISSING for topography, so no surface could
+      be validated even if one were created.'
+    verified_alternative: 'Ask the machine owner to create or grade the surface by hand in Revit, then
+      use the Cortex tools that already work on levels, walls, floors and rooms, or use the Horizun route
+      that is PROVEN on this machine (P02-T12, 2026-09-15): horizun_execute_python called the Revit API
+      Toposolid.Create for a synthetic 20x20 m surface and the result survived save/close/reopen (tool-lab/horizun/results/t12-toposolid.json).
+      Cortex has no Python surface of its own, so this capability is owned by the Horizun provider.'
+    catalog_scan:
+      tools_matching_topo_site_grading_terrain_mass: []
+      surface_based_tool_documented_for: floors and ceilings
+  save:
+    semantic: save
+    availability: NOT_AVAILABLE
+    justification: 'The published catalog has no document save tool. Every tool name and description was
+      searched for save and close words: the only matches are save_selection, which stores a named selection
+      filter, and sync_csv_parameters, which writes parameter values into the model. The pinned source
+      confirms it: the only SaveAs calls in RevitCortex.Tools write family documents in a temporary folder
+      (ExportFamiliesTool, ListFamilySizesTool) or an Excel workbook (ExportToExcelTool, WorkflowDataRoundtripTool);
+      no tool calls Document.Save on the project, so a session through Cortex alone cannot prove disk
+      persistence.'
+    verified_alternative: 'The Horizun provider owns save and document session on this machine: horizun_save_document
+      preserves the file and re-reads the on-disk timestamp and size, and horizun_document_session carries
+      open, save_as, close and inspect. Both are already proven in tool-lab/horizun/results/ (P02-T08,
+      P02-T12). A Cortex-only fixture must stay in memory and therefore cannot be used to claim persistence;
+      the A/B smoke in P02-T15 has to record save and reopen as an explicit Cortex limitation rather than
+      pick a lookalike tool.'
+    catalog_scan:
+      tools_matching_save_or_close:
+      - save_selection
+      - sync_csv_parameters
+      project_save_calls_in_pinned_source: 0
+  export_pdf:
+    semantic: export_pdf
+    availability: AVAILABLE
+    tool: batch_export
+    format: PDF
+    dry_run_default: false
+    effect_flags:
+      batch_export:
+        read_only: true
+        destructive: false
+        declared: true
+    tool_schemas:
+      batch_export:
+        required:
+        - outputDirectory
+        properties:
+        - format
+        - outputDirectory
+        - sheetIds
+        - viewIds
+        enums: {}
+    note: batch_export exports views or sheets by element id into outputDirectory; format PDF prints the
+      sheet set the caller names
+  export_ifc:
+    semantic: export_ifc
+    availability: AVAILABLE
+    tools:
+    - ifc_export_basic
+    - ifc_export_with_configuration
+    format: ifc
+    dry_run_default: false
+    effect_flags:
+      ifc_export_basic:
+        read_only: false
+        destructive: false
+        declared: true
+      ifc_export_with_configuration:
+        read_only: false
+        destructive: false
+        declared: true
+    tool_schemas:
+      ifc_export_basic:
+        required:
+        - outputDirectory
+        properties:
+        - exportBaseQuantities
+        - fileName
+        - fileVersion
+        - filterViewId
+        - outputDirectory
+        - overrides
+        - spaceBoundaryLevel
+        - wallAndColumnSplitting
+        enums: {}
+      ifc_export_with_configuration:
+        required:
+        - outputDirectory
+        - configurationName
+        properties:
+        - configurationName
+        - fileName
+        - filterViewId
+        - outputDirectory
+        - overrides
+        enums: {}
+    note: ifc_export_basic takes outputDirectory plus an optional fileVersion and base-quantity flags;
+      ifc_export_with_configuration selects a named configuration with key/value overrides
+  export_dwg:
+    semantic: export_dwg
+    availability: AVAILABLE
+    tool: batch_export
+    format: DWG
+    dry_run_default: false
+    effect_flags:
+      batch_export:
+        read_only: true
+        destructive: false
+        declared: true
+    tool_schemas:
+      batch_export:
+        required:
+        - outputDirectory
+        properties:
+        - format
+        - outputDirectory
+        - sheetIds
+        - viewIds
+        enums: {}
+    note: same tool as the PDF route; the format field selects DWG, DXF or DGN
+  export_image:
+    semantic: export_image
+    availability: AVAILABLE
+    tool: batch_export
+    format: IMAGE
+    dry_run_default: false
+    effect_flags:
+      batch_export:
+        read_only: true
+        destructive: false
+        declared: true
+    tool_schemas:
+      batch_export:
+        required:
+        - outputDirectory
+        properties:
+        - format
+        - outputDirectory
+        - sheetIds
+        - viewIds
+        enums: {}
+    note: batch_export with format IMAGE writes PNG; there is no live-view capture tool comparable to
+      the Horizun capture_view
+  export_excel:
+    semantic: export_excel
+    availability: AVAILABLE
+    tools:
+    - export_to_excel
+    - export_elements_data
+    - export_room_data
+    dry_run_default: false
+    effect_flags:
+      export_to_excel:
+        read_only: true
+        destructive: false
+        declared: true
+      export_elements_data:
+        read_only: true
+        destructive: false
+        declared: true
+      export_room_data:
+        read_only: true
+        destructive: false
+        declared: true
+    tool_schemas:
+      export_elements_data:
+        required: []
+        properties:
+        - categories
+        - filterOperator
+        - filterParameterName
+        - filterValue
+        - includeElementId
+        - includeTypeParameters
+        - maxElements
+        - outputFormat
+        - parameterNames
+        enums: {}
+      export_room_data:
+        required: []
+        properties:
+        - compact
+        - maxResults
+        enums: {}
+      export_to_excel:
+        required: []
+        properties:
+        - categories
+        - category
+        - filePath
+        - includeElementId
+        - includeTypeParameters
+        - maxElements
+        - outputPath
+        - parameterNames
+        - sheetName
+        enums: {}
+    note: export_to_excel is read-classified and writes a workbook; export_room_data covers the room schedule
+      the program brief needs
+  python:
+    semantic: python
+    availability: NOT_AVAILABLE
+    justification: There is no Python surface. A scan of all 288 names and descriptions for python, code
+      or script returns exactly one tool, send_code_to_revit, which executes C# through a sandbox rather
+      than Python. RevitCortex.Core also carries no IronPython or Python runtime reference. The nearest
+      surface is therefore not equivalent, and CodeSandboxV2 additionally strips comments and string literals
+      before matching a denylist of System.IO, System.Net, System.Diagnostics.Process, Microsoft.Win32,
+      System.Reflection, System.Runtime.InteropServices, dynamic, Invoke( and GetTypes(.
+    verified_alternative: 'The Horizun provider owns arbitrary-code execution on this machine: horizun_execute_python
+      is granted and was exercised for real in P02-T12 (tool-lab/horizun/results/t12-toposolid.json).
+      For Cortex, an equivalent capability would be send_code_to_revit, which is disabled by decision
+      (EnableCodeExecution is false in the settings file) and must stay disabled; it also cannot be reached
+      through the settings file without the owner. The P02-T15 A/B smoke must therefore compare the typed
+      Cortex tools against the typed Horizun tools and record that the Python route has no Cortex twin.'
+    disabled_nearest_surface: send_code_to_revit
+    catalog_scan:
+      tools_matching_python_code_script:
+      - send_code_to_revit
+      language: C#
+      sandbox_denylist:
+      - System.IO
+      - System.Net
+      - System.Diagnostics.Process
+      - Microsoft.Win32
+      - System.Reflection
+      - System.Runtime.InteropServices
+      - dynamic
+      - Invoke(
+      - GetTypes(

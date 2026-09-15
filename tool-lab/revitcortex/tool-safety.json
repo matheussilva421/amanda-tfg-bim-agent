@@ -1,0 +1,2048 @@
+{
+  "schema_version": 1,
+  "extracted_utc": "2026-09-15T16:38:17Z",
+  "source_root": "vendor/RevitCortex",
+  "source_url": "https://github.com/LuDattilo/RevitCortex.git",
+  "source_commit": "8b2556daefb2bf88f0a7a17bf28f2352fe0b0e33",
+  "attribute_definition": "src/RevitCortex.Core/Tools/ToolSafetyAttribute.cs",
+  "router_resolution": "CortexRouter.ResolveToolSafety: IToolSafetyAware, then [ToolSafety], then IsReadOnlyTool(name) with destructive false",
+  "prefix_read_only_rules": [
+    "get_",
+    "list_",
+    "find_",
+    "analyze_",
+    "check_",
+    "measure_",
+    "audit_",
+    "export_"
+  ],
+  "resolution_rule": "a declared [ToolSafety] wins; a catalog tool without a declaration uses the prefix fallback exactly as CortexRouter does",
+  "declared_tool_count": 288,
+  "catalog_tool_count": 288,
+  "catalog_tools_without_declaration": [],
+  "source_tools_absent_from_catalog": [
+    "failing_tool",
+    "pbi_trigger_refresh",
+    "throwing_tool"
+  ],
+  "conflicting_declarations": [],
+  "ambiguous_files": [],
+  "tools": {
+    "add_linked_file": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/LinkedFiles/AddLinkedFileTool.cs",
+      "source_line": 15
+    },
+    "add_prefix_suffix": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Parameters/AddPrefixSuffixTool.cs",
+      "source_line": 17
+    },
+    "add_shared_parameter": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Parameters/AddSharedParameterTool.cs",
+      "source_line": 18
+    },
+    "add_steel_fabrication_info": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelFabricationTools.cs",
+      "source_line": 38
+    },
+    "add_steel_instance_void_cut": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelCutTools.cs",
+      "source_line": 276
+    },
+    "add_steel_solid_cut": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelCutTools.cs",
+      "source_line": 37
+    },
+    "ai_element_filter": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/AIElementFilterTool.cs",
+      "source_line": 19
+    },
+    "align_link_to_host": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/LinkedFiles/AlignLinkToHostTool.cs",
+      "source_line": 14
+    },
+    "align_viewports": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Sheets/AlignViewportsTool.cs",
+      "source_line": 16
+    },
+    "analyze_model_statistics": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/AnalyzeModelStatisticsTool.cs",
+      "source_line": 15
+    },
+    "analyze_structural_steel_model": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelDiscoveryTools.cs",
+      "source_line": 752
+    },
+    "apply_view_template": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Views/ApplyViewTemplateTool.cs",
+      "source_line": 16
+    },
+    "audit_families": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/AuditFamiliesTool.cs",
+      "source_line": 17
+    },
+    "batch_create_sheets": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Sheets/BatchCreateSheetsTool.cs",
+      "source_line": 16
+    },
+    "batch_export": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/BatchExportTool.cs",
+      "source_line": 17
+    },
+    "batch_modify_view_range": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Views/BatchModifyViewRangeTool.cs",
+      "source_line": 16
+    },
+    "batch_rename": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/BatchRenameTool.cs",
+      "source_line": 17
+    },
+    "bulk_modify_parameter_values": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Parameters/BulkModifyParameterValuesTool.cs",
+      "source_line": 16
+    },
+    "cad_link_cleanup": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/CadLinkCleanupTool.cs",
+      "source_line": 16
+    },
+    "change_element_type": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/ChangeElementTypeTool.cs",
+      "source_line": 13
+    },
+    "check_model_health": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/CheckModelHealthTool.cs",
+      "source_line": 16
+    },
+    "check_steel_cut_eligibility": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelCutTools.cs",
+      "source_line": 112
+    },
+    "clash_detection": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/ClashDetectionTool.cs",
+      "source_line": 16
+    },
+    "clear_cache": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Meta/ClearCacheTool.cs",
+      "source_line": 13
+    },
+    "clear_parameter_values": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Parameters/ClearParameterValuesTool.cs",
+      "source_line": 16
+    },
+    "color_elements": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/ColorElementsTool.cs",
+      "source_line": 19
+    },
+    "convert_rebar_system_to_rebars": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSystemTools.cs",
+      "source_line": 433
+    },
+    "copy_elements": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/CopyElementsTool.cs",
+      "source_line": 18
+    },
+    "create_area_reinforcement": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSystemTools.cs",
+      "source_line": 18
+    },
+    "create_array": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/CreateArrayTool.cs",
+      "source_line": 16
+    },
+    "create_color_legend": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Annotations/CreateColorLegendTool.cs",
+      "source_line": 17
+    },
+    "create_default_steel_connection_handler_type": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTypeTools.cs",
+      "source_line": 220
+    },
+    "create_dimensions": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Annotations/CreateDimensionsTool.cs",
+      "source_line": 16
+    },
+    "create_fabric_area": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/FabricReinforcementTools.cs",
+      "source_line": 18
+    },
+    "create_fabric_sheet": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/FabricReinforcementTools.cs",
+      "source_line": 134
+    },
+    "create_filled_region": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/CreateFilledRegionTool.cs",
+      "source_line": 16
+    },
+    "create_floor": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/CreateFloorTool.cs",
+      "source_line": 17
+    },
+    "create_free_form_rebar": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarCreationTools.cs",
+      "source_line": 256
+    },
+    "create_generic_steel_connection": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTools.cs",
+      "source_line": 44
+    },
+    "create_grid": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/CreateGridTool.cs",
+      "source_line": 16
+    },
+    "create_level": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/CreateLevelTool.cs",
+      "source_line": 16
+    },
+    "create_line_based_element": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/CreateLineBasedElementTool.cs",
+      "source_line": 18
+    },
+    "create_material": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/CreateMaterialTool.cs",
+      "source_line": 15
+    },
+    "create_path_reinforcement": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSystemTools.cs",
+      "source_line": 146
+    },
+    "create_placeholder_sheets": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Sheets/CreatePlaceholderSheetsTool.cs",
+      "source_line": 16
+    },
+    "create_point_based_element": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/CreatePointBasedElementTool.cs",
+      "source_line": 19
+    },
+    "create_preset_schedule": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/CreatePresetScheduleTool.cs",
+      "source_line": 17
+    },
+    "create_rebar_bending_detail": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSettingsTools.cs",
+      "source_line": 541
+    },
+    "create_rebar_coupler": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarAdvancedTools.cs",
+      "source_line": 86
+    },
+    "create_rebar_from_curves": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarCreationTools.cs",
+      "source_line": 128
+    },
+    "create_rebar_from_shape": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarCreationTools.cs",
+      "source_line": 19
+    },
+    "create_revision": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/CreateRevisionTool.cs",
+      "source_line": 16
+    },
+    "create_room": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/CreateRoomTool.cs",
+      "source_line": 17
+    },
+    "create_schedule": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/CreateScheduleTool.cs",
+      "source_line": 16
+    },
+    "create_sheet": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/CreateSheetTool.cs",
+      "source_line": 15
+    },
+    "create_steel_connection": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTools.cs",
+      "source_line": 113
+    },
+    "create_steel_connection_handler_type": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTypeTools.cs",
+      "source_line": 143
+    },
+    "create_steel_structural_connection_type": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTypeTools.cs",
+      "source_line": 60
+    },
+    "create_structural_framing_system": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/CreateStructuralFramingSystemTool.cs",
+      "source_line": 17
+    },
+    "create_surface_based_element": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/CreateSurfaceBasedElementTool.cs",
+      "source_line": 17
+    },
+    "create_text_note": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Annotations/CreateTextNoteTool.cs",
+      "source_line": 16
+    },
+    "create_view": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Views/CreateViewTool.cs",
+      "source_line": 16
+    },
+    "create_view_filter": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Views/CreateViewFilterTool.cs",
+      "source_line": 16
+    },
+    "create_views_from_rooms": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Views/CreateViewsFromRoomsTool.cs",
+      "source_line": 18
+    },
+    "cross_app_selection": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Interop/CrossAppSelectionTool.cs",
+      "source_line": 148
+    },
+    "delete_element": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/DeleteElementTool.cs",
+      "source_line": 18
+    },
+    "delete_material": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/DeleteMaterialTool.cs",
+      "source_line": 15
+    },
+    "delete_schedule": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/DeleteScheduleTool.cs",
+      "source_line": 15
+    },
+    "delete_selection": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/DeleteSelectionTool.cs",
+      "source_line": 15
+    },
+    "delete_steel_connection": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTools.cs",
+      "source_line": 653
+    },
+    "duplicate_family_type": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/DuplicateFamilyTypeTool.cs",
+      "source_line": 17
+    },
+    "duplicate_material": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/DuplicateMaterialTool.cs",
+      "source_line": 15
+    },
+    "duplicate_schedule": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/DuplicateScheduleTool.cs",
+      "source_line": 15
+    },
+    "duplicate_sheet_with_content": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Sheets/DuplicateSheetWithContentTool.cs",
+      "source_line": 17
+    },
+    "duplicate_sheet_with_views": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Sheets/DuplicateSheetWithViewsTool.cs",
+      "source_line": 17
+    },
+    "duplicate_system_type": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/DuplicateSystemTypeTool.cs",
+      "source_line": 15
+    },
+    "duplicate_view": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Views/DuplicateViewTool.cs",
+      "source_line": 16
+    },
+    "export_elements_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/ExportElementsDataTool.cs",
+      "source_line": 20
+    },
+    "export_families": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/ExportFamiliesTool.cs",
+      "source_line": 16
+    },
+    "export_room_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/ExportRoomDataTool.cs",
+      "source_line": 17
+    },
+    "export_schedule": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/ExportScheduleTool.cs",
+      "source_line": 17
+    },
+    "export_shared_parameter_file": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/ExportSharedParameterFileTool.cs",
+      "source_line": 16
+    },
+    "export_to_excel": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/ExportToExcelTool.cs",
+      "source_line": 18
+    },
+    "filter_by_parameter_value": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/FilterByParameterValueTool.cs",
+      "source_line": 19
+    },
+    "find_undimensioned_elements": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/FindUndimensionedElementsTool.cs",
+      "source_line": 16
+    },
+    "find_untagged_elements": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/FindUntaggedElementsTool.cs",
+      "source_line": 17
+    },
+    "get_area_reinforcement_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSystemTools.cs",
+      "source_line": 579
+    },
+    "get_available_family_types": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/GetAvailableFamilyTypesTool.cs",
+      "source_line": 16
+    },
+    "get_cache_stats": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Meta/GetCacheStatsTool.cs",
+      "source_line": 15
+    },
+    "get_compound_structure": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/GetCompoundStructureTool.cs",
+      "source_line": 17
+    },
+    "get_coordination_models": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/LinkedFiles/GetCoordinationModelsTool.cs",
+      "source_line": 20
+    },
+    "get_current_view_elements": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/GetCurrentViewElementsTool.cs",
+      "source_line": 16
+    },
+    "get_current_view_info": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/GetCurrentViewInfoTool.cs",
+      "source_line": 13
+    },
+    "get_element_parameters": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/GetElementParametersTool.cs",
+      "source_line": 11
+    },
+    "get_element_solid_geometry": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/GetElementSolidGeometryTool.cs",
+      "source_line": 22
+    },
+    "get_elements_by_unique_id": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/ResolveElementsByUniqueIdTool.cs",
+      "source_line": 19
+    },
+    "get_elements_in_spatial_volume": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/GetElementsInSpatialVolumeTool.cs",
+      "source_line": 19
+    },
+    "get_fabric_area_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/FabricReinforcementTools.cs",
+      "source_line": 423
+    },
+    "get_fabric_rounding": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSettingsTools.cs",
+      "source_line": 219
+    },
+    "get_fabric_sheet_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/FabricReinforcementTools.cs",
+      "source_line": 470
+    },
+    "get_fabric_wire_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/FabricReinforcementTools.cs",
+      "source_line": 512
+    },
+    "get_instance_void_cut_relationships": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelCutTools.cs",
+      "source_line": 465
+    },
+    "get_link_transform": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/LinkedFiles/GetLinkTransformTool.cs",
+      "source_line": 13
+    },
+    "get_linked_elements": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/GetLinkedElementsTool.cs",
+      "source_line": 18
+    },
+    "get_linked_file_instances": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/LinkedFiles/GetLinkedFileInstancesTool.cs",
+      "source_line": 18
+    },
+    "get_material_properties": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/GetMaterialPropertiesTool.cs",
+      "source_line": 16
+    },
+    "get_material_quantities": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/GetMaterialQuantitiesTool.cs",
+      "source_line": 18
+    },
+    "get_materials": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/GetMaterialsTool.cs",
+      "source_line": 16
+    },
+    "get_path_reinforcement_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSystemTools.cs",
+      "source_line": 623
+    },
+    "get_phases": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/GetPhasesTool.cs",
+      "source_line": 16
+    },
+    "get_project_info": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/GetProjectInfoTool.cs",
+      "source_line": 17
+    },
+    "get_rebar_api_capabilities": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarDiscoveryTools.cs",
+      "source_line": 473
+    },
+    "get_rebar_bending_detail_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSettingsTools.cs",
+      "source_line": 699
+    },
+    "get_rebar_constraint_candidates": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarAdvancedTools.cs",
+      "source_line": 750
+    },
+    "get_rebar_constraints": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarDiscoveryTools.cs",
+      "source_line": 351
+    },
+    "get_rebar_coupler_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarAdvancedTools.cs",
+      "source_line": 693
+    },
+    "get_rebar_element_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarDiscoveryTools.cs",
+      "source_line": 252
+    },
+    "get_rebar_geometry": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarDiscoveryTools.cs",
+      "source_line": 304
+    },
+    "get_rebar_host_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarDiscoveryTools.cs",
+      "source_line": 179
+    },
+    "get_rebar_numbering": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSettingsTools.cs",
+      "source_line": 363
+    },
+    "get_rebar_rounding": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSettingsTools.cs",
+      "source_line": 185
+    },
+    "get_rebar_splice_candidates": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarAdvancedTools.cs",
+      "source_line": 1040
+    },
+    "get_rebar_splice_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarAdvancedTools.cs",
+      "source_line": 977
+    },
+    "get_rebar_varying_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarCreationTools.cs",
+      "source_line": 1016
+    },
+    "get_reinforcement_settings": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarDiscoveryTools.cs",
+      "source_line": 393
+    },
+    "get_room_openings": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/GetRoomOpeningsTool.cs",
+      "source_line": 17
+    },
+    "get_schedule_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/GetScheduleDataTool.cs",
+      "source_line": 15
+    },
+    "get_selected_elements": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/GetSelectedElementsTool.cs",
+      "source_line": 17
+    },
+    "get_selected_linked_elements": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/LinkedFiles/GetSelectedLinkedElementsTool.cs",
+      "source_line": 19
+    },
+    "get_shared_parameters": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/GetSharedParametersTool.cs",
+      "source_line": 16
+    },
+    "get_solid_cut_relationships": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelCutTools.cs",
+      "source_line": 409
+    },
+    "get_steel_connection_applicability": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTypeTools.cs",
+      "source_line": 589
+    },
+    "get_steel_connection_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelDiscoveryTools.cs",
+      "source_line": 354
+    },
+    "get_steel_connection_input_points": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTypeTools.cs",
+      "source_line": 527
+    },
+    "get_steel_connection_settings": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelDiscoveryTools.cs",
+      "source_line": 480
+    },
+    "get_steel_connection_type_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelDiscoveryTools.cs",
+      "source_line": 423
+    },
+    "get_steel_connection_validation": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTypeTools.cs",
+      "source_line": 664
+    },
+    "get_steel_cut_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelDiscoveryTools.cs",
+      "source_line": 689
+    },
+    "get_steel_element_fabrication_properties": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelFabricationTools.cs",
+      "source_line": 101
+    },
+    "get_steel_element_properties": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelDiscoveryTools.cs",
+      "source_line": 517
+    },
+    "get_steel_element_warnings": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelDiscoveryTools.cs",
+      "source_line": 644
+    },
+    "get_steel_external_id_map": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelDiscoveryTools.cs",
+      "source_line": 567
+    },
+    "get_steel_fabrication_unique_id": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelFabricationTools.cs",
+      "source_line": 227
+    },
+    "get_steel_material_links": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelDiscoveryTools.cs",
+      "source_line": 607
+    },
+    "get_steel_reference_by_fabrication_id": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelFabricationTools.cs",
+      "source_line": 270
+    },
+    "get_structural_connection_provider_data": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelProviderTools.cs",
+      "source_line": 76
+    },
+    "get_structural_connection_provider_registry": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelProviderTools.cs",
+      "source_line": 45
+    },
+    "get_structural_connection_validation_info": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelProviderTools.cs",
+      "source_line": 104
+    },
+    "get_structural_steel_api_capabilities": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelDiscoveryTools.cs",
+      "source_line": 56
+    },
+    "get_warnings": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/GetWarningsTool.cs",
+      "source_line": 16
+    },
+    "get_worksets": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/GetWorksetsTool.cs",
+      "source_line": 17
+    },
+    "highlight_linked_element": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/LinkedFiles/HighlightLinkedElementTool.cs",
+      "source_line": 18
+    },
+    "ifc_analyze_rebuildability": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcAnalyzeRebuildabilityTool.cs",
+      "source_line": 17
+    },
+    "ifc_compare_original_vs_rebuilt": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcCompareOriginalVsRebuiltTool.cs",
+      "source_line": 15
+    },
+    "ifc_export_basic": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcExportBasicTool.cs",
+      "source_line": 16
+    },
+    "ifc_export_with_configuration": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcExportWithConfigurationTool.cs",
+      "source_line": 18
+    },
+    "ifc_get_capabilities": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcGetCapabilitiesTool.cs",
+      "source_line": 16
+    },
+    "ifc_get_export_configuration": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcGetExportConfigurationTool.cs",
+      "source_line": 13
+    },
+    "ifc_link": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcLinkTool.cs",
+      "source_line": 16
+    },
+    "ifc_list_export_configurations": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcListExportConfigurationsTool.cs",
+      "source_line": 14
+    },
+    "ifc_list_rebuild_candidates": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcListRebuildCandidatesTool.cs",
+      "source_line": 17
+    },
+    "ifc_open_or_import": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcOpenOrImportTool.cs",
+      "source_line": 16
+    },
+    "ifc_rebuild_family_instances": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcRebuildFamilyInstancesTool.cs",
+      "source_line": 18
+    },
+    "ifc_rebuild_floors": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcRebuildFloorsTool.cs",
+      "source_line": 17
+    },
+    "ifc_rebuild_openings": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcRebuildOpeningsTool.cs",
+      "source_line": 18
+    },
+    "ifc_rebuild_roofs": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcRebuildRoofsTool.cs",
+      "source_line": 17
+    },
+    "ifc_rebuild_structural_members": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcRebuildStructuralMembersTool.cs",
+      "source_line": 18
+    },
+    "ifc_rebuild_walls": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcRebuildWallsTool.cs",
+      "source_line": 17
+    },
+    "ifc_reload_link": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcReloadLinkTool.cs",
+      "source_line": 15
+    },
+    "ifc_set_family_mapping_file": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcSetFamilyMappingFileTool.cs",
+      "source_line": 15
+    },
+    "ifc_tag_unreconstructable_elements": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcTagUnreconstructableElementsTool.cs",
+      "source_line": 17
+    },
+    "ifc_validate_request": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/IFC/IfcValidateRequestTool.cs",
+      "source_line": 14
+    },
+    "import_from_excel": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/ImportFromExcelTool.cs",
+      "source_line": 19
+    },
+    "import_from_powerbi": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/ImportFromPowerBiTool.cs",
+      "source_line": 29
+    },
+    "import_table": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Annotations/ImportTableTool.cs",
+      "source_line": 17
+    },
+    "include_exclude_rebar_bars": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarCreationTools.cs",
+      "source_line": 768
+    },
+    "lines_per_view_count": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/LinesPerViewCountTool.cs",
+      "source_line": 17
+    },
+    "list_family_sizes": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/ListFamilySizesTool.cs",
+      "source_line": 18
+    },
+    "list_rebar_bar_types": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarDiscoveryTools.cs",
+      "source_line": 15
+    },
+    "list_rebar_cover_types": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarDiscoveryTools.cs",
+      "source_line": 112
+    },
+    "list_rebar_fabric_types": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarDiscoveryTools.cs",
+      "source_line": 144
+    },
+    "list_rebar_hook_types": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarDiscoveryTools.cs",
+      "source_line": 48
+    },
+    "list_rebar_shapes": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarDiscoveryTools.cs",
+      "source_line": 81
+    },
+    "list_rebar_splice_types": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarDiscoveryTools.cs",
+      "source_line": 426
+    },
+    "list_schedulable_fields": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/ListSchedulableFieldsTool.cs",
+      "source_line": 17
+    },
+    "list_steel_approval_types": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelDiscoveryTools.cs",
+      "source_line": 283
+    },
+    "list_steel_connection_handler_types": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelDiscoveryTools.cs",
+      "source_line": 227
+    },
+    "list_steel_connection_handlers": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelDiscoveryTools.cs",
+      "source_line": 114
+    },
+    "list_steel_connection_providers": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelDiscoveryTools.cs",
+      "source_line": 329
+    },
+    "list_steel_connection_types": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelDiscoveryTools.cs",
+      "source_line": 168
+    },
+    "load_family": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/LoadFamilyTool.cs",
+      "source_line": 16
+    },
+    "load_selection": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/LoadSelectionTool.cs",
+      "source_line": 16
+    },
+    "manage_additional_settings": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/ManageAdditionalSettingsTool.cs",
+      "source_line": 18
+    },
+    "manage_custom_steel_connection_type": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTypeTools.cs",
+      "source_line": 463
+    },
+    "manage_fabric_rounding": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSettingsTools.cs",
+      "source_line": 316
+    },
+    "manage_global_parameters": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Parameters/ManageGlobalParametersTool.cs",
+      "source_line": 17
+    },
+    "manage_links": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/ManageLinksTool.cs",
+      "source_line": 16
+    },
+    "manage_phase_filters": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/ManagePhaseFiltersTool.cs",
+      "source_line": 29
+    },
+    "manage_project_parameters": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Parameters/ManageProjectParametersTool.cs",
+      "source_line": 17
+    },
+    "manage_project_units": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/ManageProjectUnitsTool.cs",
+      "source_line": 16
+    },
+    "manage_rebar_constraints": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarAdvancedTools.cs",
+      "source_line": 244
+    },
+    "manage_rebar_numbering": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSettingsTools.cs",
+      "source_line": 452
+    },
+    "manage_rebar_rounding": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSettingsTools.cs",
+      "source_line": 245
+    },
+    "manage_steel_approval_type": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTypeTools.cs",
+      "source_line": 354
+    },
+    "manage_unplaced_views": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Views/ManageUnplacedViewsTool.cs",
+      "source_line": 16
+    },
+    "manage_view_templates": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Views/ManageViewTemplatesTool.cs",
+      "source_line": 16
+    },
+    "manage_worksets": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/ManageWorksetsTool.cs",
+      "source_line": 17
+    },
+    "match_element_properties": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/MatchElementPropertiesTool.cs",
+      "source_line": 18
+    },
+    "measure_between_elements": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/MeasureBetweenElementsTool.cs",
+      "source_line": 15
+    },
+    "modify_element": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/ModifyElementTool.cs",
+      "source_line": 13
+    },
+    "modify_rebar_bending_detail": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSettingsTools.cs",
+      "source_line": 635
+    },
+    "modify_schedule": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/ModifyScheduleTool.cs",
+      "source_line": 16
+    },
+    "modify_steel_connection_inputs": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTools.cs",
+      "source_line": 224
+    },
+    "move_link_instance": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/LinkedFiles/MoveLinkInstanceTool.cs",
+      "source_line": 14
+    },
+    "move_rebar_in_set": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarCreationTools.cs",
+      "source_line": 704
+    },
+    "operate_element": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/OperateElementTool.cs",
+      "source_line": 19
+    },
+    "override_graphics": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Views/OverrideGraphicsTool.cs",
+      "source_line": 16
+    },
+    "pbi_check_auth": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Plugin/PowerBiLive/Tools/PbiCheckAuthTool.cs",
+      "source_line": 23
+    },
+    "pbi_create_dataset": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Plugin/PowerBiLive/Tools/PbiCreateDatasetTool.cs",
+      "source_line": 26
+    },
+    "pbi_get_binding": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Plugin/PowerBiLive/Tools/PbiGetBindingTool.cs",
+      "source_line": 20
+    },
+    "pbi_list_datasets": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Plugin/PowerBiLive/Tools/PbiListDatasetsTool.cs",
+      "source_line": 17
+    },
+    "pbi_list_workspaces": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Plugin/PowerBiLive/Tools/PbiListWorkspacesTool.cs",
+      "source_line": 14
+    },
+    "pbi_publish_elements": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Plugin/PowerBiLive/Tools/PbiPublishElementsTool.cs",
+      "source_line": 41
+    },
+    "pbi_publish_schedules": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Plugin/PowerBiLive/Tools/PbiPublishSchedulesTool.cs",
+      "source_line": 33
+    },
+    "pbi_publish_selection": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Plugin/PowerBiLive/Tools/PbiPublishSelectionTool.cs",
+      "source_line": 27
+    },
+    "pbi_query": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Plugin/PowerBiLive/Tools/PbiQueryTool.cs",
+      "source_line": 38
+    },
+    "pbi_sign_out": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Plugin/PowerBiLive/Tools/PbiSignOutTool.cs",
+      "source_line": 21
+    },
+    "pin_unpin_link_instance": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/LinkedFiles/PinUnpinLinkInstanceTool.cs",
+      "source_line": 16
+    },
+    "place_fabric_sheet": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/FabricReinforcementTools.cs",
+      "source_line": 222
+    },
+    "place_viewport": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Views/PlaceViewportTool.cs",
+      "source_line": 14
+    },
+    "propagate_rebar": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarAdvancedTools.cs",
+      "source_line": 484
+    },
+    "purge_unused": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/PurgeUnusedTool.cs",
+      "source_line": 16
+    },
+    "push_table_to_powerbi": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/PushTableToPowerBiTool.cs",
+      "source_line": 27
+    },
+    "push_to_powerbi": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/PushToPowerBiTool.cs",
+      "source_line": 20
+    },
+    "reload_linked_file_from": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/LinkedFiles/ReloadLinkedFileFromTool.cs",
+      "source_line": 15
+    },
+    "remove_fabric_reinforcement_system": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/FabricReinforcementTools.cs",
+      "source_line": 364
+    },
+    "remove_rebar_splice": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarAdvancedTools.cs",
+      "source_line": 927
+    },
+    "remove_rebar_system": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSystemTools.cs",
+      "source_line": 509
+    },
+    "remove_steel_instance_void_cut": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelCutTools.cs",
+      "source_line": 348
+    },
+    "remove_steel_solid_cut": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelCutTools.cs",
+      "source_line": 158
+    },
+    "rename_families": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/RenameFamiliesTool.cs",
+      "source_line": 16
+    },
+    "rename_views": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Views/RenameViewsTool.cs",
+      "source_line": 16
+    },
+    "renumber_elements": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/RenumberElementsTool.cs",
+      "source_line": 20
+    },
+    "save_selection": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/SaveSelectionTool.cs",
+      "source_line": 16
+    },
+    "say_hello": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Meta/SayHelloTool.cs",
+      "source_line": 8
+    },
+    "section_box_from_selection": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Views/SectionBoxFromSelectionTool.cs",
+      "source_line": 16
+    },
+    "select_from_powerbi": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/SelectFromPowerBiTool.cs",
+      "source_line": 19
+    },
+    "send_code_to_revit": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/SendCodeToRevitTool.cs",
+      "source_line": 23
+    },
+    "set_area_reinforcement_layers": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSystemTools.cs",
+      "source_line": 251
+    },
+    "set_compound_structure": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/SetCompoundStructureTool.cs",
+      "source_line": 18
+    },
+    "set_element_parameters": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/SetElementParametersTool.cs",
+      "source_line": 13
+    },
+    "set_element_phase": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/SetElementPhaseTool.cs",
+      "source_line": 18
+    },
+    "set_element_workset": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/SetElementWorksetTool.cs",
+      "source_line": 18
+    },
+    "set_fabric_sheet_bend_profile": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/FabricReinforcementTools.cs",
+      "source_line": 289
+    },
+    "set_material_properties": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Elements/SetMaterialPropertiesTool.cs",
+      "source_line": 18
+    },
+    "set_path_reinforcement_options": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSystemTools.cs",
+      "source_line": 328
+    },
+    "set_project_info": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Project/SetProjectInfoTool.cs",
+      "source_line": 16
+    },
+    "set_rebar_coupler_visibility": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarAdvancedTools.cs",
+      "source_line": 180
+    },
+    "set_rebar_hooks": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarCreationTools.cs",
+      "source_line": 577
+    },
+    "set_rebar_host": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarCreationTools.cs",
+      "source_line": 469
+    },
+    "set_rebar_layout": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarCreationTools.cs",
+      "source_line": 356
+    },
+    "set_rebar_shape": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarCreationTools.cs",
+      "source_line": 416
+    },
+    "set_rebar_terminations": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarCreationTools.cs",
+      "source_line": 641
+    },
+    "set_rebar_varying": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarCreationTools.cs",
+      "source_line": 936
+    },
+    "set_rebar_visibility": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarCreationTools.cs",
+      "source_line": 521
+    },
+    "set_reinforcement_settings": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarSettingsTools.cs",
+      "source_line": 46
+    },
+    "set_steel_connection_approval": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTools.cs",
+      "source_line": 456
+    },
+    "set_steel_connection_default_order": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTools.cs",
+      "source_line": 609
+    },
+    "set_steel_connection_status": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTools.cs",
+      "source_line": 551
+    },
+    "set_steel_connection_type": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTools.cs",
+      "source_line": 311
+    },
+    "set_steel_connection_type_family_symbol": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelConnectionTypeTools.cs",
+      "source_line": 274
+    },
+    "set_steel_fabrication_unique_id": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelFabricationTools.cs",
+      "source_line": 146
+    },
+    "set_steel_solid_cut_face_splitting": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/StructuralSteel/StructuralSteelCutTools.cs",
+      "source_line": 218
+    },
+    "show_cross_model_elements": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/LinkedFiles/ShowCrossModelElementsTool.cs",
+      "source_line": 21
+    },
+    "splice_rebar": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarAdvancedTools.cs",
+      "source_line": 825
+    },
+    "split_rebar": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarCreationTools.cs",
+      "source_line": 829
+    },
+    "sync_csv_parameters": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Parameters/SyncCsvParametersTool.cs",
+      "source_line": 16
+    },
+    "tag_rooms": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Annotations/TagRoomsTool.cs",
+      "source_line": 17
+    },
+    "tag_walls": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Annotations/TagWallsTool.cs",
+      "source_line": 16
+    },
+    "transfer_parameters": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Parameters/TransferParametersTool.cs",
+      "source_line": 16
+    },
+    "transfer_rebar_annotations": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarAdvancedTools.cs",
+      "source_line": 590
+    },
+    "unify_rebars": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Rebar/RebarAdvancedTools.cs",
+      "source_line": 512
+    },
+    "wipe_empty_tags": {
+      "read_only": false,
+      "destructive": true,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Annotations/WipeEmptyTagsTool.cs",
+      "source_line": 16
+    },
+    "workflow_clash_review": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Workflows/WorkflowClashReviewTool.cs",
+      "source_line": 16
+    },
+    "workflow_data_roundtrip": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Workflows/WorkflowDataRoundtripTool.cs",
+      "source_line": 20
+    },
+    "workflow_model_audit": {
+      "read_only": true,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Workflows/WorkflowModelAuditTool.cs",
+      "source_line": 15
+    },
+    "workflow_room_documentation": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Workflows/WorkflowRoomDocumentationTool.cs",
+      "source_line": 17
+    },
+    "workflow_sheet_set": {
+      "read_only": false,
+      "destructive": false,
+      "declared": true,
+      "source_file": "vendor/RevitCortex/src/RevitCortex.Tools/Workflows/WorkflowSheetSetTool.cs",
+      "source_line": 16
+    }
+  }
+}

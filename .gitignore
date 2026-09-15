@@ -45,6 +45,10 @@ build/
 dist/
 *.egg-info/
 
+# C# tooling under the lab (NuGet restore and compiled tables are local)
+tool-lab/**/bin/
+tool-lab/**/obj/
+
 # Generated local artifacts
 artifacts/local/
 deliverables/local/

@@ -1,0 +1,16 @@
+﻿{
+    "captured_utc":  "2026-09-15T16:36:15.3918380Z",
+    "key_path":  "HKCU\\Software\\Autodesk\\Revit\\Autodesk Revit 2027\\CodeSigning",
+    "action":  "pre-registered Always Load trust for the RevitCortex add-in id",
+    "reason":  "Revit shows the Security (NotSigned) dialog on every start for the pinned-source add-in; the registry entry is exactly what the dialog writes when the user picks Always Load.",
+    "values_before":  {
+                          "b8e5a2f0-3c1d-4e6a-9f2b-7a4c8d1e5f30":  1
+                      },
+    "values_after":  {
+                         "b8e5a2f0-3c1d-4e6a-9f2b-7a4c8d1e5f30":  1,
+                         "A1B2C3D4-E5F6-7890-ABCD-EF1234567890":  1
+                     },
+    "rollback":  "Remove-ItemProperty -Path \u0027HKCU:\\Software\\Autodesk\\Revit\\Autodesk Revit 2027\\CodeSigning\u0027 -Name \u0027A1B2C3D4-E5F6-7890-ABCD-EF1234567890\u0027",
+    "addin_id":  "A1B2C3D4-E5F6-7890-ABCD-EF1234567890",
+    "addin_manifest":  "C:\\Users\\slvma\\AppData\\Roaming\\Autodesk\\Revit\\Addins\\2027\\RevitCortex.addin"
+}
