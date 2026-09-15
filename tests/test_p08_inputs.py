@@ -10,7 +10,6 @@ import yaml
 
 from amanda_agent.requirements.decisions import load_decision_register
 
-
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = ROOT / "project" / "provenance" / "source-manifest.yaml"
 SOURCE_VERSIONS_PATH = ROOT / "project" / "provenance" / "source-versions.yaml"

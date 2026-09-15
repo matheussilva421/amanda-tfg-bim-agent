@@ -75,3 +75,28 @@ entries:
   - SRC-TFG-001#page 68, section 5.4.3
   evidence: solar findings are stated narratively; no north azimuth for the source
     drawing was supplied
+
+resolution:
+  resolution_id: P08-T03-SITE-001
+  resolved_at_utc: '2026-09-15T19:11:16Z'
+  verification_level: PLANAR_PLACEHOLDER
+  confidence: 0.95
+  inspected_scopes:
+  - project/site/**
+  - TFG_Amanda_2026/**
+  - docs/source/**
+  inspected_file_count: 48
+  verified_topography_found: false
+  verified_cadastral_boundary_found: false
+  finding: No user-supplied survey, topographic file with a stated datum, cadastral
+    certificate, or georeferenced parcel polygon was found in the scoped files.
+    The DXF and IFC are explicitly named HIPOTESE and do not establish a survey.
+  decision: Keep site.json at STUDY_PLACEHOLDER with PLANAR_PLACEHOLDER topography.
+    This supports schematic study massing only.
+  retained_blockers:
+  - SITE_TOPOGRAPHY
+  - SITE_BOUNDARY
+  - SITE_FRONTAGE_COUNT
+  - SITE_TRUE_NORTH
+  - final_grading
+  - final_altimetric_accessibility_validation

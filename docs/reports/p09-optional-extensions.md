@@ -151,3 +151,19 @@ The following remain explicitly outside the verified set:
 
 These boundaries do not alter the current local provider selection or authorize
 any paid installation.
+
+## Validation record
+
+The changed lock and the two existing YAML registries loaded successfully in an
+isolated PyYAML check. The focused project tests returned:
+
+```text
+tests/project/test_deliverable_scope.py: 7 passed, 0 failed
+tests/providers/test_toolmaps.py: 11 passed, 0 failed
+```
+
+`docs/review/validate_documents.py` returned
+`DOCUMENT_STATIC_CHECKS total=21 passed=21 failed=0`. The final write-set
+check found no missing file, trailing whitespace, secret-pattern match or
+`BLOCKED_BY_TOOL` match; `git diff --check -- state/bim-environment.lock.yaml`
+returned exit 0.

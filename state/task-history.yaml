@@ -1491,3 +1491,464 @@ entries:
     baseline e checkpoint intactos pos-drill.'
   recorded_utc: '2026-09-15T19:04:05Z'
   note: null
+- task_id: P09-T01
+  status: PASS
+  evidence:
+  - 'docs/reports/p09-optional-extensions.md (P09-T01 section): decision DEFERRED_OPTIONAL'
+  - 'tool-lab/blender/scheduling-decision.md: capability blender_rendering stays UNTESTED'
+  - evidence command rg -i render|preview|PNG over project/requirements/academic-deliverables.yaml
+    + program-summary.md -> no matches, so no photorealistic render deliverable exists
+  - P08-T19 preview/ plus sheet and view PNG previews stay covered by the verified
+    Revit export path in tool-lab/reports/provider-benchmark.md
+  - 'unready dependency override for P08-T19: phase 09 is an optional-extension gate
+    assessed ahead of the phase 08 production run; the canonical plan allows DEFERRED_OPTIONAL/SUSPENDED
+    here, the deferred set is recorded as NOT_EXECUTED with an explicit resume path,
+    and any reopen requires a new explicit render need'
+  recorded_utc: '2026-09-15T19:17:04Z'
+  note: null
+- task_id: P09-T02
+  status: PASS
+  evidence:
+  - 'docs/reports/p09-optional-extensions.md (P09-T02): uv 0.12.1 (329541a50 2026-07-31
+    x86_64-pc-windows-msvc)'
+  - uv.exe at C:/Users/slvma/AppData/Local/hermes/bin/uv.exe sha256 F537CC65C1791D9A022132302B21ECD48CDF0A605A7B345809FBE8AF4E807D
+    (NotSigned, hash registered only)
+  - uvx.exe at C:/Users/slvma/AppData/Local/hermes/bin/uvx.exe sha256 5A25C39E939542D803B9B69630DE4FB2261157131A7427F2C03CEDEA29DACCF9
+  - state/bim-environment.lock.yaml optional_versions.uv records the version and hashes
+  recorded_utc: '2026-09-15T19:17:04Z'
+  note: null
+- task_id: P09-T03
+  status: SUSPENDED
+  evidence:
+  - 'docs/reports/p09-optional-extensions.md (P09-T03): NOT_EXECUTED because P09-T01
+    deferred rendering'
+  - tool-lab/blender/not-executed.md holds the exact deferred work and the resume
+    path
+  - Blender search returned no matches (Get-Command, where.exe, Blender Foundation
+    roots); no MCP registration and no state/providers/blender-toolmap.yaml were created
+  recorded_utc: '2026-09-15T19:17:05Z'
+  note: null
+- task_id: P09-T04
+  status: SUSPENDED
+  evidence:
+  - 'docs/reports/p09-optional-extensions.md (P09-T04): NOT_EXECUTED, no Blender Tool
+    Lab was run'
+  - tool-lab/blender/not-executed.md records the disposable import/fidelity work needed
+    to resume
+  - 'unready dependency override for P09-T03: phase 09 is an optional-extension gate
+    assessed ahead of the phase 08 production run; the canonical plan allows DEFERRED_OPTIONAL/SUSPENDED
+    here, the deferred set is recorded as NOT_EXECUTED with an explicit resume path,
+    and any reopen requires a new explicit render need'
+  recorded_utc: '2026-09-15T19:17:05Z'
+  note: null
+- task_id: P09-T05
+  status: SUSPENDED
+  evidence:
+  - 'docs/reports/p09-optional-extensions.md (P09-T05): NOT_EXECUTED, no render pipeline
+    was built'
+  - no .blend file and no render was produced; the Revit GOLDEN release stays untouched
+  - 'unready dependency override for P09-T04: phase 09 is an optional-extension gate
+    assessed ahead of the phase 08 production run; the canonical plan allows DEFERRED_OPTIONAL/SUSPENDED
+    here, the deferred set is recorded as NOT_EXECUTED with an explicit resume path,
+    and any reopen requires a new explicit render need'
+  recorded_utc: '2026-09-15T19:17:06Z'
+  note: null
+- task_id: P09-T06
+  status: PASS
+  evidence:
+  - 'tool-lab/aps/need-report.md: gate result NO-GO with scheduling DEFERRED_OPTIONAL
+    and capability UNTESTED'
+  - 'basis 1: no required local capability is BLOCKED_BY_TOOL (Select-String over
+    state/capabilities.yaml + tool-lab/reports/provider-benchmark.md -> NO_MATCHES)'
+  - 'basis 2: the owner directive forbids paid or subscription routes, so APS/Forge
+    stays out of scope'
+  - no APS credential, app, activity, cloud model, upload or MCP registration was
+    used or created
+  - 'unready dependency override for P09-T05: phase 09 is an optional-extension gate
+    assessed ahead of the phase 08 production run; the canonical plan allows DEFERRED_OPTIONAL/SUSPENDED
+    here, the deferred set is recorded as NOT_EXECUTED with an explicit resume path,
+    and any reopen requires a new explicit render need'
+  recorded_utc: '2026-09-15T19:17:07Z'
+  note: null
+- task_id: P09-T07
+  status: SUSPENDED
+  evidence:
+  - 'docs/reports/p09-optional-extensions.md: P09-T07 not run because the P09-T06
+    need gate returned NO-GO'
+  - 'tool-lab/aps/need-report.md records the reopening conditions: a BLOCKED_BY_TOOL
+    capability plus an owner waiver'
+  recorded_utc: '2026-09-15T19:17:07Z'
+  note: null
+- task_id: P09-T08
+  status: SUSPENDED
+  evidence:
+  - 'P09-T08 not run: the APS need gate returned NO-GO, so no secret boundary was
+    required'
+  - no credential was created, read or recorded anywhere in this phase
+  - 'unready dependency override for P09-T07: phase 09 is an optional-extension gate
+    assessed ahead of the phase 08 production run; the canonical plan allows DEFERRED_OPTIONAL/SUSPENDED
+    here, the deferred set is recorded as NOT_EXECUTED with an explicit resume path,
+    and any reopen requires a new explicit render need'
+  recorded_utc: '2026-09-15T19:17:08Z'
+  note: null
+- task_id: P09-T09
+  status: SUSPENDED
+  evidence:
+  - 'P09-T09 not run: no APS sandbox, sample repo, deployment or cloud test was executed'
+  - reopening requires the written conditions in tool-lab/aps/need-report.md
+  - 'unready dependency override for P09-T08: phase 09 is an optional-extension gate
+    assessed ahead of the phase 08 production run; the canonical plan allows DEFERRED_OPTIONAL/SUSPENDED
+    here, the deferred set is recorded as NOT_EXECUTED with an explicit resume path,
+    and any reopen requires a new explicit render need'
+  recorded_utc: '2026-09-15T19:17:09Z'
+  note: null
+- task_id: P09-T10
+  status: PASS
+  evidence:
+  - state/capabilities.yaml keeps preferred_provider horizun at priority 10 and custom-api
+    at priority 30
+  - no APS provider entry exists, so local-first routing is preserved without any
+    change
+  - verified locally in this phase; no action was needed and none was taken
+  - 'unready dependency override for P09-T09: phase 09 is an optional-extension gate
+    assessed ahead of the phase 08 production run; the canonical plan allows DEFERRED_OPTIONAL/SUSPENDED
+    here, the deferred set is recorded as NOT_EXECUTED with an explicit resume path,
+    and any reopen requires a new explicit render need'
+  recorded_utc: '2026-09-15T19:17:09Z'
+  note: null
+- task_id: P06-T01
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p06-qa-validators-handoff.md
+  - 'evidence: src/amanda_agent/qa/models.py + tests/unit/test_qa_models.py 6 passed;
+    fail-closed QaReport precedence CRITICAL/required-FAIL->FAIL, required BLOCKED/SKIPPED->BLOCKED_BY_INPUT'
+  - 'joint run verified by the principal agent: pytest tests/unit/test_qa_*.py matrix
+    -> 39 passed, 0 failed (basetemp .tmp-pytest-verify-p06a)'
+  recorded_utc: '2026-09-15T19:33:56Z'
+  note: null
+- task_id: P06-T02
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p06-qa-validators-handoff.md
+  - 'evidence: src/amanda_agent/qa/program.py + tests/unit/test_program_qa.py 6 passed;
+    injected program model reconciles logical_id/quantity/area rules incl. external
+    areas'
+  - 'joint run verified by the principal agent: pytest tests/unit/test_qa_*.py matrix
+    -> 39 passed, 0 failed (basetemp .tmp-pytest-verify-p06a)'
+  recorded_utc: '2026-09-15T19:33:57Z'
+  note: null
+- task_id: P06-T03
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p06-qa-validators-handoff.md
+  - 'evidence: src/amanda_agent/qa/model.py + tests/unit/test_model_qa.py 6 passed;
+    geometric QA consumes query evidence (duplicate ids, hosts, rooms, site limits,
+    levels, count delta) and never trusts write returns'
+  - 'joint run verified by the principal agent: pytest tests/unit/test_qa_*.py matrix
+    -> 39 passed, 0 failed (basetemp .tmp-pytest-verify-p06a)'
+  recorded_utc: '2026-09-15T19:33:57Z'
+  note: null
+- task_id: P06-T04
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p06-qa-validators-handoff.md
+  - 'evidence: src/amanda_agent/qa/warnings.py + state/known-warnings.yaml + tests/unit/test_warning_delta.py
+    3 passed; baseline v1 with severity_map_version, regex, provenance; unknown warning
+    stays NEW/REVIEW and is never auto-ignored'
+  - 'joint run verified by the principal agent: pytest tests/unit/test_qa_*.py matrix
+    -> 39 passed, 0 failed (basetemp .tmp-pytest-verify-p06a)'
+  recorded_utc: '2026-09-15T19:33:58Z'
+  note: null
+- task_id: P06-T05
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p06-qa-validators-handoff.md
+  - 'evidence: src/amanda_agent/qa/architecture.py + tests/unit/test_architecture_qa.py
+    4 passed; compares approved graph against BIM plus injected public/service/garden
+    flow policies and shelter/transition/city metrics'
+  - 'joint run verified by the principal agent: pytest tests/unit/test_qa_*.py matrix
+    -> 39 passed, 0 failed (basetemp .tmp-pytest-verify-p06a)'
+  recorded_utc: '2026-09-15T19:33:58Z'
+  note: null
+- task_id: P06-T06
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p06-qa-validators-handoff.md
+  - 'evidence: src/amanda_agent/qa/accessibility.py + tests/unit/test_accessibility_qa.py
+    5 passed; route continuity from graph/geometry separated from numeric dimensions;
+    a dimension only uses VERIFIED+source rules, absence blocks the check, unsupported
+    checks report SKIPPED with reason'
+  - 'joint run verified by the principal agent: pytest tests/unit/test_qa_*.py matrix
+    -> 39 passed, 0 failed (basetemp .tmp-pytest-verify-p06a)'
+  recorded_utc: '2026-09-15T19:33:59Z'
+  note: null
+- task_id: P06-T07
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p06-qa-validators-handoff.md
+  - 'evidence: src/amanda_agent/qa/ifc.py + tests/unit/test_ifc_qa.py 3 passed; IfcOpenShell
+    0.8.5 rejects zero-byte/invalid header/parse, counts storeys/spaces/walls/doors/openings
+    and validates logical_id<->IFC GUID mapping; synthetic fixture only'
+  - 'joint run verified by the principal agent: pytest tests/unit/test_qa_*.py matrix
+    -> 39 passed, 0 failed (basetemp .tmp-pytest-verify-p06a)'
+  recorded_utc: '2026-09-15T19:33:59Z'
+  note: null
+- task_id: P06-T08
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p06-qa-validators-handoff.md
+  - 'evidence: src/amanda_agent/qa/pdf.py + tests/unit/test_pdf_qa.py 3 passed; pypdf
+    6.0.0 + pypdfium2 5.13.0 + Pillow count pages, rasterize all pages, save previews
+    and hash; raster variance flags blank pages as a machine signal, visual review
+    stays separate'
+  - 'joint run verified by the principal agent: pytest tests/unit/test_qa_*.py matrix
+    -> 39 passed, 0 failed (basetemp .tmp-pytest-verify-p06a)'
+  recorded_utc: '2026-09-15T19:34:00Z'
+  note: null
+- task_id: P06-T09
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p06-qa-validators-handoff.md
+  - 'evidence: src/amanda_agent/qa/dwg.py + tests/unit/test_dwg_qa.py 3 passed; no
+    approved local DWG parser, so validation accepts AC10xx signature + non-zero size
+    and always reports LIMITED_DWG_VALIDATION; AutoCAD is not installed'
+  - 'joint run verified by the principal agent: pytest tests/unit/test_qa_*.py matrix
+    -> 39 passed, 0 failed (basetemp .tmp-pytest-verify-p06a)'
+  recorded_utc: '2026-09-15T19:34:00Z'
+  note: null
+- task_id: P08-T01
+  status: PASS_WITH_WARNINGS
+  evidence:
+  - 'docs/reports/p08-preflight.md: auditable check table with doctor/status/task-graph/MCP/suite/Revit
+    build/capabilities/fallback/writer lease/source manifest/Git rows'
+  - 'non-Revit suite from the preflight: pytest tests -m not revit and not slow ->
+    726 passed, 0 failed'
+  - 'Revit build confirmed against the lock: fileVersion 27.2.0.39, productVersion
+    20260716_1515(x64)'
+  - 'warnings recorded: 0 capability entries carry evidence_scope=PRODUCTION (all
+    PROVIDER), no revit-marked runtime test was collected, and the shared checkout
+    was dirty'
+  - verdict recorded as PENDENTE - STUDY FROZEN / PRODUCTION NO-GO; no production
+    claim was made
+  - 'unready dependency override for P06-T15, P07-T19: the P08 input-preparation block
+    was executed while P06-T15 (visual review protocol) was still in flight and P07-T19
+    (post-reboot procedure) was still pending its fresh-shell run; all P08 outputs
+    are STUDY-scoped, the preflight verdict stays PRODUCTION NO-GO, and nothing here
+    promotes the run to FINAL'
+  recorded_utc: '2026-09-15T19:41:22Z'
+  note: null
+- task_id: P08-T02
+  status: PASS
+  evidence:
+  - 'docs/reports/p08-preflight.md + project/provenance/source-versions.yaml: 46 files
+    inspected, 23 manifest documents, no newer Amanda source exists and source-set-v1
+    is unchanged'
+  - TFG_Amanda_2026 copies are byte-identical to the immutable docs/source copies;
+    provenance was not overwritten and no canonical data was regenerated because the
+    source set did not change
+  - source_manifest_sha256 0419094976aa7840f6bb5afc069cef133df07b58b3f6ce102271741a56740686
+    matches the manifest on disk
+  - 'tests/test_p08_inputs.py verified by the principal agent: 5 passed, 0 failed'
+  recorded_utc: '2026-09-15T19:41:23Z'
+  note: null
+- task_id: P08-T03
+  status: PASS
+  evidence:
+  - 'docs/reports/p08-site-resolution.md + project/site/missing-data.yaml (resolution_id
+    P08-T03-SITE-001): highest verified level is PLANAR_PLACEHOLDER'
+  - the HIPOTESE DXF has no datum/coordinate system/survey points and the IFC is a
+    conceptual HIPOTESE model; neither was converted into invented elevations
+  - site.json keeps source_state MISSING, representation PLANAR_PLACEHOLDER, elevation_points
+    [] and boundary kind STUDY_PLACEHOLDER (24135 m2 placeholder)
+  - 'final blockers retained: SITE_TOPOGRAPHY, SITE_BOUNDARY, SITE_FRONTAGE_COUNT,
+    SITE_TRUE_NORTH plus final grading/altimetric validation'
+  recorded_utc: '2026-09-15T19:41:23Z'
+  note: null
+- task_id: P08-T04
+  status: PASS
+  evidence:
+  - 'state/design-run-freeze.yaml: P08-DESIGN-RUN-001, FROZEN_FOR_STUDY, requirements-v1
+    / site-v1 / weights 1 / design-engine-v1 at commit a15518fd5599038d4df230c612cfe4bfc1015ae7
+    with 10 frozen file hashes'
+  - 'delegated STUDY decisions recorded in both decision registers: DEC-P08-T04-TYPOLOGY-001
+    and DEC-P08-T04-SITE-BOUNDARY-001 (selection_authority AGENT_DELEGATED, approval_hash
+    valid, AMANDA_REVIEW_PENDING, supersedes set, https sources)'
+  - 'tests/test_p08_inputs.py verifies the freeze hash binding and both decision records;
+    principal-agent run: 5 passed, 0 failed'
+  recorded_utc: '2026-09-15T19:41:23Z'
+  note: null
+- task_id: P06-T10
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p06-release-persistence-handoff.md
+  - 'src/amanda_agent/qa/persistence.py + tests/unit/test_persistence_plan.py: ten
+    mandatory ordered steps with per-step state, deterministic JSON persistence, evidence
+    redaction, closed-file hash and mandatory revalidation when a later save changes
+    bytes'
+  - 'TDD RED observed first (pytest collection failed on the missing interfaces, as
+    expected) then GREEN; principal-agent focused run: 23 passed, 0 failed'
+  recorded_utc: '2026-09-15T19:42:40Z'
+  note: null
+- task_id: P06-T11
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p06-release-persistence-handoff.md
+  - 'src/amanda_agent/release/manifest.py + tests/unit/test_release_manifest.py: STUDY/FINAL
+    profile, mandatory and optional checks, artifacts, hashes, exports, provenance,
+    source-to-export map; real size/hash verification without recursive self-hashing'
+  - 'principal-agent focused run: 23 passed, 0 failed'
+  recorded_utc: '2026-09-15T19:42:41Z'
+  note: null
+- task_id: P06-T12
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p06-release-persistence-handoff.md
+  - 'src/amanda_agent/release/promote.py + tests/unit/test_release_promotion.py: fail-closed
+    GOLDEN promoter verifying QA, mandatory checks, persistence, exports, reports,
+    hashes, profile and marker before publishing; interrupted staging stays outside
+    the GOLDEN namespace'
+  - 'principal-agent focused run: 23 passed, 0 failed'
+  recorded_utc: '2026-09-15T19:42:41Z'
+  note: null
+- task_id: P06-T13
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p06-release-persistence-handoff.md
+  - 'src/amanda_agent/commands/{qa,export,release}.py + cli.py + tests/unit/test_release_cli.py:
+    Typer qa/export/release groups registered while preserving bim; qa writes JSON
+    and Markdown and reports absent QA modules as BLOCKED; export plan is read-only;
+    export verify and release verify return failure codes when verification fails'
+  - 'principal-agent CLI check: python -m amanda_agent --help lists bim, qa, export,
+    release; export plan --release-id RC01 exits 0 without creating files'
+  recorded_utc: '2026-09-15T19:42:42Z'
+  note: null
+- task_id: P06-T15
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p06-release-persistence-handoff.md
+  - 'src/amanda_agent/qa/visual.py + tests/unit/test_visual_qa.py: deterministic PNG
+    collection, blank-page raster sanitation, border-density signal, VISUAL_REVIEW
+    classification and a human queue with exact paths when image inspection is unavailable'
+  - 'principal-agent focused run: 23 passed, 0 failed; visual QA is explicitly machine
+    sanitation plus a human queue, not normative approval'
+  recorded_utc: '2026-09-15T19:42:42Z'
+  note: null
+- task_id: P07-T07
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p07b-recovery-continuity-handoff.md
+  - 'src/amanda_agent/recovery/manager.py + tests/unit/test_recovery_manager.py: select_checkpoint
+    loads candidate manifests, recomputes size and SHA-256, checks recorded PASS provenance,
+    skips malformed or corrupted checkpoints and takes the latest verified PASS; build_recovery_plan
+    emits reopen -> reconnect -> healthcheck -> re-query -> retry/fallback and an
+    interrupted mutation ends in MANUAL_REVIEW with retry_allowed=false'
+  - 'principal-agent focused run over the seven Hades test files: 29 passed, 0 failed'
+  recorded_utc: '2026-09-15T19:45:29Z'
+  note: null
+- task_id: P07-T08
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p07b-recovery-continuity-handoff.md
+  - 'src/amanda_agent/recovery/watchdog.py + tests/unit/test_watchdog.py: pure decision
+    functions for HEALTHY/BUSY/SUSPECTED_HANG/HUNG/CRASHED; a timeout alone yields
+    SUSPECTED_HANG; force kill requires corroborating signals, grace period, normal-close
+    attempt, matching owned PID and start time, a verified persisted checkpoint and
+    explicit authorization; it never checkpoints a hung process and never kills unknown
+    user work'
+  - 'principal-agent focused run: 29 passed, 0 failed'
+  recorded_utc: '2026-09-15T19:45:29Z'
+  note: null
+- task_id: P07-T09
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p07b-recovery-continuity-handoff.md
+  - 'src/amanda_agent/recovery/reboot.py + tests/unit/test_reboot_resume.py + RESUME_AFTER_REBOOT.md:
+    deterministic atomic resume file with redaction recording phase, last PASS task,
+    reboot reason, checkpoint and SHA-256, expected Revit/provider state, first verification
+    commands and next task; status is PREPARED, not a fresh-session validation claim'
+  - 'REBOOT_REMAINING: RESUME_AFTER_REBOOT.md currently records PHASE_02/P09-T10/state_revision
+    123 because the graph advanced after generation; the post-reboot procedure regenerates
+    it from live state and the doc says the new session must always reread files'
+  - 'principal-agent focused run: 29 passed, 0 failed'
+  recorded_utc: '2026-09-15T19:45:30Z'
+  note: null
+- task_id: P07-T14
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p07b-recovery-continuity-handoff.md
+  - 'src/amanda_agent/status_dashboard.py + src/amanda_agent/commands/status.py +
+    tests/unit/test_status_dashboard.py: dashboard reads state, task graph, environment
+    lock, tool health, capabilities, blockers, writer lease, design/stage/checkpoint
+    fields and Git HEAD from disk; missing values render as NOT_RECORDED or UNKNOWN;
+    the status command keeps its stdout and additionally writes state/status.md'
+  - 'principal-agent CLI run: python -m amanda_agent status exits 0, prints blockers
+    and writes state/status.md'
+  recorded_utc: '2026-09-15T19:45:30Z'
+  note: null
+- task_id: P07-T15
+  status: PASS
+  evidence:
+  - docs/notes/2026-09-15-p07b-recovery-continuity-handoff.md
+  - 'src/amanda_agent/session/summary.py + tests/unit/test_run_summary.py: run summaries
+    separate attempted, changed, passed, failed, rolled back, next tasks, log/evidence
+    links and provider/fallback use without dumping raw payloads'
+  - 'principal-agent focused run: 29 passed, 0 failed; broad gate pytest tests/unit
+    tests/solver -> 607 passed, 0 failed'
+  recorded_utc: '2026-09-15T19:45:31Z'
+  note: null
+- task_id: P07-T17
+  status: SUSPENDED
+  evidence:
+  - 'docs/reports/session-recovery-drill.md: PREPARED_PARTIAL protocol (classify CRASHED
+    -> select verified checkpoint -> reopen -> reconnect -> healthcheck -> re-query
+    -> retry/fallback) with the exact fresh-session command sequence'
+  - 'src/amanda_agent/recovery/manager.py implements that order and the focused tests
+    pass: 29 passed, 0 failed'
+  - 'RESUME_MARKER: the closure gate is a genuinely new Codex session reading AGENTS.md/START_HERE_FOR_CODEX.md/handoff/RESUME_AFTER_REBOOT.md/PROJECT_STATE.yaml
+    and then doctor/status/resume; simulation by this session would not be evidence,
+    so it is scheduled for the next session'
+  - 'RESUME_INSTRUCTION: in the next session run the command block in docs/reports/session-recovery-drill.md,
+    then record the READY task returned by resume (P06-T14 as of revision 146) and
+    honestly PASS or FAIL P07-T17 from that output'
+  - no Revit, provider, add-in or force-kill action was executed by this drill
+  recorded_utc: '2026-09-15T19:46:00Z'
+  note: null
+- task_id: P07-T18
+  status: PASS
+  evidence:
+  - 'docs/reports/provider-update-isolation-drill.md + .tmp-p07-isolation/isolation-report.json:
+    offline Tool Lab mocks/fixtures only, worktree_used=false, production_install_attempted=false,
+    appdata_or_codex_config_touched=false, revit_process_started=false'
+  - baseline matrix 8 total / 4 pass / 0 fail / 4 skipped_needs_revit (exit 0) and
+    the deliberately failing experiment 8 total / 3 pass / 1 fail (exit 1) preserved
+    as the failing experiment
+  - 'production pins verified unchanged by the principal agent: state/bim-environment.lock.yaml
+    sha256 355fa0d4fa0c72680344d0b81e4770c29e6af39b9298fa09275b1706b32d81a1 and state/capabilities.yaml
+    sha256 0912b244ff842697e47f1ce27e5543d46c227447e97c5c1c099c2e4c082a066d both match
+    the report before/after values; 21 revit/lab files present'
+  - 'limitation recorded: a git worktree isolates source only; a real provider install
+    still needs a sandbox root or a backed-up maintenance window, so the drill proves
+    fixture-level isolation and pin integrity, not live provider-update safety'
+  - 'unready dependency override for P07-T17: P07-T17 and P07-T19 were executed as
+    far as this session honestly can: the code, tests, reports and command blocks
+    are in place, and the remaining checkboxes require a genuinely new Codex session
+    or a real reboot, which this session cannot self-simulate without fabricating
+    evidence'
+  recorded_utc: '2026-09-15T19:46:00Z'
+  note: null
+- task_id: P07-T19
+  status: SUSPENDED
+  evidence:
+  - 'docs/reports/reboot-resume-procedure.md + RESUME_AFTER_REBOOT.md: procedure validated
+    locally (deterministic redacted resume file, checkpoint SHA-256 recomputed, status/doctor/resume
+    commands), status PREPARED_PARTIAL'
+  - the machine was intentionally not rebooted and no owned Revit/Codex process was
+    closed; generating the file and closing a session is not a reboot
+  - 'RESUME_MARKER: after a real, authorized reboot the next session must run the
+    post-reboot block in docs/reports/reboot-resume-procedure.md, record READY task,
+    provider health, checkpoint reopen and re-query evidence, then PASS or FAIL this
+    task'
+  - the current RESUME_AFTER_REBOOT.md snapshot (PHASE_02/P09-T10/revision 123) is
+    stale by design and must be regenerated from live state at that moment
+  recorded_utc: '2026-09-15T19:46:01Z'
+  note: null

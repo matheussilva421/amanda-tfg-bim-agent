@@ -7,7 +7,7 @@ from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
-import yaml
+import yaml  # type: ignore[import-untyped]
 
 from .models import QaCheck, QaCheckStatus, QaIssue, QaReport, Severity
 
@@ -37,8 +37,17 @@ def _endpoints(edge: Any) -> tuple[str, str] | None:
 
 def _continuous(route: Mapping[str, Any]) -> bool:
     path = route.get("path")
-    edges = [_endpoints(edge) for edge in route.get("edges", []) or []]
-    edges = [edge for edge in edges if edge is not None]
+    raw_edges = list(route.get("edges", []) or [])
+    geometry = route.get("geometry")
+    if isinstance(geometry, Mapping):
+        raw_edges.extend(geometry.get("edges", geometry.get("segments", [])) or [])
+    elif isinstance(geometry, Sequence) and not isinstance(geometry, (str, bytes)):
+        raw_edges.extend(geometry)
+    edges: list[tuple[str, str]] = []
+    for raw_edge in raw_edges:
+        endpoint = _endpoints(raw_edge)
+        if endpoint is not None:
+            edges.append(endpoint)
     if path is not None:
         path_values = [str(item) for item in path]
         edge_set = {tuple(edge) for edge in edges} | {(target, source) for source, target in edges}
@@ -130,7 +139,7 @@ def qa_accessibility(
             and str(rule.get("status", "")).upper() == "VERIFIED"
             and str(rule.get("source", "")).strip()
         )
-        if not verified:
+        if not verified or rule is None:
             issues.append(
                 QaIssue(
                     code="MISSING_VERIFIED_RULE",
@@ -154,9 +163,34 @@ def qa_accessibility(
             )
             continue
 
-        value = float(dimension["value"])
-        minimum = rule.get("minimum", rule.get("min"))
-        maximum = rule.get("maximum", rule.get("max"))
+        verified_rule = rule
+        try:
+            value = float(dimension["value"])
+        except (KeyError, TypeError, ValueError) as exc:
+            issues.append(
+                QaIssue(
+                    code="MISSING_INPUT_DIMENSION",
+                    message=f"dimension {check_id!r} cannot be checked: {exc}",
+                    severity=Severity.HIGH,
+                    scope="accessibility",
+                    mandatory=True,
+                    evidence={"check_id": check_id, "value": dimension.get("value")},
+                    check_id=check_id,
+                    missing_input=True,
+                )
+            )
+            checks.append(
+                QaCheck(
+                    check_id=check_id,
+                    mandatory=True,
+                    status=QaCheckStatus.BLOCKED,
+                    severity_if_failed=Severity.HIGH,
+                    scope="accessibility",
+                )
+            )
+            continue
+        minimum = verified_rule.get("minimum", verified_rule.get("min"))
+        maximum = verified_rule.get("maximum", verified_rule.get("max"))
         passes = (minimum is None or value >= float(minimum)) and (
             maximum is None or value <= float(maximum)
         )
@@ -168,7 +202,7 @@ def qa_accessibility(
                     severity=Severity.HIGH,
                     scope="accessibility",
                     mandatory=True,
-                    evidence={"value": value, "rule_id": rule_id, "rule": dict(rule)},
+                    evidence={"value": value, "rule_id": rule_id, "rule": dict(verified_rule)},
                     check_id=check_id,
                 )
             )

@@ -54,7 +54,9 @@ O inventário completo está em `t15-close-reopen-summary.json`. Os arquivos `.0
 
 1. Consumir este resultado no grafo do orquestrador como close/reopen concluído.
 2. Manter T15 geral como `PASS_WITH_WARNINGS` enquanto o ambiente 328668 continuar sem região fechada; não declarar a geometria do ambiente como 16 m².
-3. Prosseguir para o drill P02-T18 em uma cópia descartável e manter todos os resultados de crash/recovery separados deste documento.
+3. O drill P02-T18 já foi concluído separadamente; consumir
+   `tool-lab/custom-api/results/t18-drill-report.md` e
+   `t18-drill-summary.json` como `PASS_WITH_WARNINGS`.
 
 ## Git
 

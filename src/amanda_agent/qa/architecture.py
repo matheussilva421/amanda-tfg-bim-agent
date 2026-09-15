@@ -41,12 +41,20 @@ def _has_relation(
 ) -> bool:
     expected = _edge(relation)
     for actual in edges:
-        if actual[0] == expected[0] and actual[1] == expected[1] and actual[3] == expected[3]:
-            if "flow" not in relation or actual[2] == expected[2]:
-                return True
-        if actual[0] == expected[1] and actual[1] == expected[0] and actual[3] == expected[3]:
-            if "flow" not in relation or actual[2] == expected[2]:
-                return True
+        if (
+            actual[0] == expected[0]
+            and actual[1] == expected[1]
+            and actual[3] == expected[3]
+            and ("flow" not in relation or actual[2] == expected[2])
+        ):
+            return True
+        if (
+            actual[0] == expected[1]
+            and actual[1] == expected[0]
+            and actual[3] == expected[3]
+            and ("flow" not in relation or actual[2] == expected[2])
+        ):
+            return True
     return False
 
 
@@ -93,7 +101,14 @@ def qa_architecture(
             )
         )
 
-    missing_approved = sorted(approved_edges - bim_edges)
+    missing_approved = sorted(
+        edge
+        for edge in approved_edges
+        if not _has_relation(
+            bim_edges,
+            {"source": edge[0], "target": edge[1], "flow": edge[2], "relation": edge[3]},
+        )
+    )
     for source, target, flow, relation in missing_approved:
         issues.append(
             _issue(

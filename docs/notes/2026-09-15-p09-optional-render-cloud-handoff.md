@@ -66,7 +66,7 @@ Intentionally untouched:
 - `state/capabilities.yaml` and `state/providers/blender-toolmap.yaml` (the
   latter was not created because P09-T04 did not run)
 
-## Verification run before handoff update
+## Final verification
 
 Commands already run:
 
@@ -93,16 +93,37 @@ Select-String -LiteralPath state/capabilities.yaml,tool-lab/reports/provider-ben
 
 Observed: no command records and `capability_scan=NO_MATCHES`.
 
-Focused project tests and final document/lock checks remain to be run before
-marking this handoff final.
+Focused project tests:
+
+```text
+tests/project/test_deliverable_scope.py: 7 passed, 0 failed
+tests/providers/test_toolmaps.py: 11 passed, 0 failed
+```
+
+The isolated YAML check loaded `state/bim-environment.lock.yaml`,
+`state/capabilities.yaml` and `project/requirements/academic-deliverables.yaml`
+and returned `YAML_OK` for all three plus `OPTIONAL_UV_LOCK_OK`.
+
+The static documentation validator returned:
+
+```text
+DOCUMENT_STATIC_CHECKS total=21 passed=21 failed=0
+```
+
+The final write-set check returned zero missing files, zero trailing-whitespace
+matches, zero secret-pattern matches and zero `BLOCKED_BY_TOOL` matches.
+`git diff --check -- state/bim-environment.lock.yaml` returned exit 0.
 
 ## GitHub and worktree
 
-The live repository is on `main...origin/main` with a dirty worktree containing
-parallel-agent edits and untracked work. No `git add`, commit, push, reset,
-checkout or worktree operation was performed, per the owner instruction. The
-main agent must review this write set and publish it with the other accepted
-changes.
+The live repository is on branch `main`, tracking `origin/main`, with a dirty
+worktree containing parallel-agent edits and untracked work. The final status
+snapshot showed `PROJECT_STATE.yaml` and `state/task-graph.yaml` already
+modified, and the six write-set files present as added/modified entries. No
+`git add`, commit, push, reset, checkout or worktree operation was performed by
+this worker, per the owner instruction; any index state is therefore left for
+the principal/concurrent agent to reconcile. The main agent must review this
+write set and publish it with the other accepted changes.
 
 ## Resume instructions
 

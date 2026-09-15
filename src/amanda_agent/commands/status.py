@@ -34,7 +34,7 @@ def load_blockers(state_dir: Path) -> list:
             entry.setdefault("severity", Severity.BLOCKING)
             try:
                 blockers.append(Blocker(**entry))
-            except Exception:
+            except (TypeError, ValueError):
                 continue
     return blockers
 
@@ -53,7 +53,7 @@ def load_ready_tasks(root: Path) -> dict:
     try:
         registry = load_registry(path)
         registry.validate()
-    except Exception as exc:  # a broken registry is data, not a crash
+    except (OSError, TypeError, ValueError, yaml.YAMLError) as exc:  # a broken registry is data, not a crash
         return {
             "available": False,
             "ready": [],
@@ -87,9 +87,8 @@ def status_snapshot(root: Path) -> dict:
     blocked = graph.blocked_tasks(blockers)
     tasks = load_ready_tasks(root)
     next_task = state.next_task
-    if tasks["available"] and tasks["ready"]:
-        if next_task not in tasks["ready"]:
-            next_task = tasks["ready"][0]
+    if tasks["available"] and tasks["ready"] and next_task not in tasks["ready"]:
+        next_task = tasks["ready"][0]
     snapshot = {
         "phase_id": state.phase_id,
         "phase_name": state.phase_name,
@@ -133,7 +132,7 @@ def render_status(snapshot: dict) -> None:
         typer.echo("ready tasks  " + (" ".join(tasks["ready"]) or "(none)"))
         blocked = tasks["blocked"]
         preview = blocked[:8]
-        suffix = "" if len(blocked) <= 8 else " (+%d more)" % (len(blocked) - 8)
+        suffix = "" if len(blocked) <= 8 else f" (+{len(blocked) - 8} more)"
         typer.echo(
             "pending      "
             + ((" ".join(preview) + suffix) if blocked else "(none)")

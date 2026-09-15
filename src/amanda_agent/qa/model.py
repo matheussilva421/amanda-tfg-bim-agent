@@ -140,7 +140,11 @@ def qa_model(
         str(value).casefold()
         for value in settings.get("room_categories", ("room", "rooms"))
     }
-    room_failures = {"positioned": [], "enclosed": [], "redundant": []}
+    room_failures: dict[str, list[dict[str, Any]]] = {
+        "positioned": [],
+        "enclosed": [],
+        "redundant": [],
+    }
     for row in managed:
         is_room = bool(row.get("is_room")) or str(row.get("category", "")).casefold() in room_categories
         if not is_room:

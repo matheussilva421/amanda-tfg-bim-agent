@@ -12,7 +12,6 @@ from typing import Any
 
 import yaml
 
-from .bim.checkpoints import sha256_file
 from .models.capability import CapabilityRegistry
 from .security.redaction import redact_text
 from .state.locks import WriterLock
@@ -53,7 +52,7 @@ def _task_data(root: Path) -> dict[str, Any]:
     try:
         registry: TaskRegistry = load_registry(path)
         registry.validate()
-    except Exception as exc:
+    except (OSError, TypeError, ValueError, yaml.YAMLError) as exc:
         return {"available": False, "error": "task registry could not be read: " + str(exc)}
     records = list(registry.tasks.values())
     statuses = Counter(str(record.status) for record in records)
@@ -78,7 +77,7 @@ def _capability_data(root: Path) -> dict[str, Any]:
         return {"available": False, "counts": {"PASS": 0, "FAIL": 0, "UNTESTED": 0}}
     try:
         registry = CapabilityRegistry.load(path)
-    except Exception as exc:
+    except (OSError, TypeError, ValueError, yaml.YAMLError) as exc:
         return {
             "available": False,
             "counts": {"PASS": 0, "FAIL": 0, "UNTESTED": 0},
@@ -163,7 +162,7 @@ def build_status_dashboard(root: Path) -> dict[str, Any]:
     try:
         state = StateStore(state_path).load()
         state_data = state.model_dump(mode="json")
-    except Exception as exc:
+    except (OSError, TypeError, ValueError, yaml.YAMLError) as exc:
         state = None
         state_data = {}
         state_error = "project state could not be read: " + str(exc)

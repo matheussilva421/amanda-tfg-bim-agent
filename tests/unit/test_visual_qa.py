@@ -19,7 +19,12 @@ def _visual():
 
 def _png(path: Path, pixels: list[tuple[int, int, int, int]], width: int = 2, height: int = 2):
     raw = b"".join(
-        b"\x00" + bytes(sum((list(pixel) for pixel in pixels[row * width : (row + 1) * width]), []))
+        b"\x00"
+        + bytes(
+            channel
+            for pixel in pixels[row * width : (row + 1) * width]
+            for channel in pixel
+        )
         for row in range(height)
     )
 

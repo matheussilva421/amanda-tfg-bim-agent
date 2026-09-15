@@ -5,9 +5,9 @@ import pytest
 from amanda_agent.bim.checkpoints import CheckpointManager
 from amanda_agent.recovery.manager import (
     RecoveryDecision,
+    RecoveryPlanningError,
     RecoveryState,
     RecoveryStepKind,
-    RecoveryPlanningError,
     build_recovery_plan,
     select_checkpoint,
 )

@@ -62,3 +62,6 @@ deliverables/local/
 .git-commit-msg.tmp
 .tmp-pytest/
 .tmp-pytest-*/
+# Local scratch: transient scripts, logs, JSON probes and isolated drill roots
+.tmp-*
+System.Collections.Specialized.OrderedDictionary

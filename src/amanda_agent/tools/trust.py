@@ -8,12 +8,11 @@ separate gates.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass, field, replace
 from enum import StrEnum
 from math import isfinite
-from collections.abc import Mapping
 from typing import Any
-
 
 TRUST_DIMENSIONS: tuple[str, ...] = (
     "maintainer_source_reputation",
@@ -66,7 +65,7 @@ class Evidence:
         object.__setattr__(self, "status", normalized)
 
     @classmethod
-    def unknown(cls, note: str = "") -> "Evidence":
+    def unknown(cls, note: str = "") -> Evidence:
         return cls(score=None, status="UNKNOWN", note=note)
 
     @property
@@ -101,7 +100,7 @@ class TrustEvidence:
     sample_code: bool = False
 
     @classmethod
-    def from_mapping(cls, values: Mapping[str, Any]) -> "TrustEvidence":
+    def from_mapping(cls, values: Mapping[str, Any]) -> TrustEvidence:
         """Build a fixture-friendly typed record from a mapping.
 
         A numeric dimension is accepted as shorthand for supported evidence;
@@ -269,4 +268,3 @@ __all__ = [
     "promote_trust",
     "score_trust",
 ]
-

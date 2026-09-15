@@ -1,7 +1,7 @@
 from amanda_agent.recovery.watchdog import (
     WatchdogAction,
-    WatchdogState,
     WatchdogInputs,
+    WatchdogState,
     decide,
 )
 

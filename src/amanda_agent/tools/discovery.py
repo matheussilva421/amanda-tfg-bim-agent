@@ -2,11 +2,10 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from math import isfinite
-from collections.abc import Mapping
 from typing import Any
-
 
 REQUIRED_REPORT_FIELDS: tuple[str, ...] = (
     "repository_url",
@@ -60,7 +59,7 @@ class ToolDiscoveryReport:
         object.__setattr__(self, "risk_score", value)
 
     @classmethod
-    def from_mapping(cls, values: Mapping[str, Any]) -> "ToolDiscoveryReport":
+    def from_mapping(cls, values: Mapping[str, Any]) -> ToolDiscoveryReport:
         if not isinstance(values, Mapping):
             raise DiscoveryReportError("discovery report must be a mapping")
         missing = [field for field in REQUIRED_REPORT_FIELDS if field not in values]
@@ -128,7 +127,7 @@ class ToolLabValidation:
         *,
         result: str,
         evidence_ref: str,
-    ) -> "ToolLabValidation":
+    ) -> ToolLabValidation:
         return cls(
             submission=submission,
             result=result,
@@ -167,7 +166,7 @@ class ProductionInstallPlan:
     @classmethod
     def from_tool_lab_validation(
         cls, validation: ToolLabValidation
-    ) -> "ProductionInstallPlan":
+    ) -> ProductionInstallPlan:
         if not validation.passed:
             raise ToolLabRequiredError("Tool Lab validation did not pass")
         return cls(
@@ -188,4 +187,3 @@ __all__ = [
     "ToolLabSubmission",
     "ToolLabValidation",
 ]
-

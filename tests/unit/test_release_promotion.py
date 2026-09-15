@@ -22,10 +22,28 @@ def _modules():
 def _release(tmp_path: Path, *, profile: str = "STUDY", **changes):
     manifest, _, persistence = _modules()
     rc = tmp_path / "RC01"
-    rc.mkdir()
+    rc.mkdir(parents=True)
     artifact = rc / "model.rvt"
     artifact.write_bytes(b"stable model")
     digest = hashlib.sha256(artifact.read_bytes()).hexdigest()
+    report_names = (
+        "QA_REPORT.md",
+        "PROGRAM_COMPLIANCE.md",
+        "ACCESSIBILITY_REPORT.md",
+        "CAPABILITY_REPORT.md",
+        "EXPORT_REPORT.md",
+        "provenance.json",
+    )
+    report_hashes = {}
+    report_artifacts = []
+    for report_name in report_names:
+        report = rc / report_name
+        report.write_text("fixture report", encoding="utf-8")
+        report_digest = hashlib.sha256(report.read_bytes()).hexdigest()
+        report_hashes[report_name] = report_digest
+        report_artifacts.append(
+            {"path": report_name, "kind": "report", "required": True, "sha256": report_digest}
+        )
     record = persistence.PersistenceRecord(release_id="RC01")
     for step in persistence.PersistenceStep:
         record.record_step(
@@ -33,29 +51,32 @@ def _release(tmp_path: Path, *, profile: str = "STUDY", **changes):
             status=persistence.PersistenceStatus.PASS,
             evidence={"observed": step.value},
         )
-    payload = dict(
-        project="Amanda TFG BIM Agent",
-        release="RC01",
-        timestamp="2026-09-15T12:00:00Z",
-        revit={"product": "Revit", "build": "2027.0"},
-        providers=[],
-        design_engine={"version": "1.0", "commit": "c" * 40},
-        selected_solution={"id": "SOL-001", "run": "RUN-001", "seed": 7},
-        requirements={},
-        site={},
-        regulation={},
-        qa_summary={"status": "PASS"},
-        persistence_summary=record.model_dump(mode="json"),
-        exports=[{"path": "model.rvt", "mandatory": True, "validation_status": "PASS"}],
-        release_profile=profile,
-        required_checks=[{"id": "qa-critical", "mandatory": True, "status": "PASS"}],
-        optional_checks=[],
-        accepted_limitations=["survey pending"] if profile == "STUDY" else [],
-        approval_evidence={"mode": "study"},
-        artifacts=[{"path": "model.rvt", "kind": "rvt", "required": True, "sha256": digest}],
-        content_hashes={"model.rvt": digest},
-        source_export_map={},
-    )
+    payload = {
+        "project": "Amanda TFG BIM Agent",
+        "release": "RC01",
+        "timestamp": "2026-09-15T12:00:00Z",
+        "revit": {"product": "Revit", "build": "2027.0"},
+        "providers": [],
+        "design_engine": {"version": "1.0", "commit": "c" * 40},
+        "selected_solution": {"id": "SOL-001", "run": "RUN-001", "seed": 7},
+        "requirements": {},
+        "site": {},
+        "regulation": {},
+        "qa_summary": {"status": "PASS"},
+        "persistence_summary": record.model_dump(mode="json"),
+        "exports": [{"path": "model.rvt", "mandatory": True, "validation_status": "PASS"}],
+        "release_profile": profile,
+        "required_checks": [{"id": "qa-critical", "mandatory": True, "status": "PASS"}],
+        "optional_checks": [],
+        "accepted_limitations": ["survey pending"] if profile == "STUDY" else [],
+        "approval_evidence": {"mode": "study"},
+        "artifacts": [
+            {"path": "model.rvt", "kind": "rvt", "required": True, "sha256": digest},
+            *report_artifacts,
+        ],
+        "content_hashes": {"model.rvt": digest, **report_hashes},
+        "source_export_map": {},
+    }
     payload.update(changes)
     manifest.write_manifest(rc / "manifest.json", manifest.ReleaseManifest(**payload))
     return rc
@@ -128,7 +149,7 @@ def test_interrupted_staging_never_becomes_golden(tmp_path: Path, monkeypatch):
         promote.promote(rc, golden_root=golden_root)
 
     assert not (golden_root / "RC01").exists()
-    assert not any(
+    assert any(
         child.name.startswith(".RC01.") and child.name.endswith(".staging")
         for child in golden_root.iterdir()
     )

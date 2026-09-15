@@ -10,9 +10,7 @@ from amanda_agent.state.tasks import TaskRecord, TaskRegistry
 from amanda_agent.status_dashboard import (
     build_status_dashboard,
     render_status_markdown,
-    write_status_markdown,
 )
-
 
 runner = CliRunner()
 

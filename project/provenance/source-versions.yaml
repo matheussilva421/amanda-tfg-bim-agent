@@ -1,0 +1,157 @@
+schema_version: 1
+source_version: source-set-v1
+resolved_at_utc: '2026-09-15T19:11:16Z'
+source_manifest: project/provenance/source-manifest.yaml
+source_manifest_sha256: 0419094976aa7840f6bb5afc069cef133df07b58b3f6ce102271741a56740686
+source_set_status: UNCHANGED
+new_sources: []
+scan:
+  roots:
+  - TFG_Amanda_2026
+  - docs/source
+  inspected_file_count: 46
+  manifest_document_count: 23
+  finding: The 23 files in TFG_Amanda_2026 are byte-identical to the 23 immutable
+    docs/source copies; no newer Amanda source was found.
+  evidence:
+  - TFG_Amanda_2026 recursive listing and SHA-256 comparison captured on 2026-09-15
+  - docs/source recursive listing and SHA-256 comparison captured on 2026-09-15
+documents:
+- source_id: SRC-PROGRAM-001
+  source_revision: 1
+  filename: programa_necessidades.pdf
+  immutable_path: docs/source/programa_necessidades.pdf
+  bytes: 31004
+  sha256: 11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17
+- source_id: SRC-TFG-001
+  source_revision: 1
+  filename: TFG_Amanda Fernandes_ENTREGA 15.06.2026.pdf
+  immutable_path: docs/source/TFG_Amanda Fernandes_ENTREGA 15.06.2026.pdf
+  bytes: 54553582
+  sha256: 16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e
+- source_id: SRC-SUP-001
+  source_revision: 1
+  filename: 01_COMECE_AQUI.pdf
+  immutable_path: docs/source/01_COMECE_AQUI.pdf
+  bytes: 91767
+  sha256: e2a3ecd5cdd27654d803fd4bf4f62dd3db0ea6e8320ae50ce7154d5b6a523d0c
+- source_id: SRC-SUP-002
+  source_revision: 1
+  filename: 02_plano_de_acompanhamento.pdf
+  immutable_path: docs/source/02_plano_de_acompanhamento.pdf
+  bytes: 123518
+  sha256: 81c7d97f7b2aff2fa0eafaa81ce3db8eafb836164cef194b9932656d84b8127d
+- source_id: SRC-SUP-003
+  source_revision: 1
+  filename: 01_textos_prontos_para_colar.docx
+  immutable_path: docs/source/01_textos_prontos_para_colar.docx
+  bytes: 18184
+  sha256: 96eb193ac05284f1398ff60a928213ec22b350cd7c5142f2dd472a971248626f
+- source_id: SRC-SUP-004
+  source_revision: 1
+  filename: 02_reescrita_voz_propria.docx
+  immutable_path: docs/source/02_reescrita_voz_propria.docx
+  bytes: 12705
+  sha256: e3cdad1e6535da6614064542a170d95cac3293d683f48a69e56472c78610551d
+- source_id: SRC-SUP-005
+  source_revision: 1
+  filename: 03_oficios_visitas_tecnicas.docx
+  immutable_path: docs/source/03_oficios_visitas_tecnicas.docx
+  bytes: 12416
+  sha256: 26bdc10088db94b6723e216c7b1f29b815107c46822a8b20a22d36bb30f084fd
+- source_id: SRC-SUP-006
+  source_revision: 1
+  filename: 01_verificacao_urbanistica_LC208.docx
+  immutable_path: docs/source/01_verificacao_urbanistica_LC208.docx
+  bytes: 12884
+  sha256: b493c7a8f84b9410a07aba34bb1ac6c88f86b6bc64755d4cec63f62299a01043
+- source_id: SRC-SUP-007
+  source_revision: 1
+  filename: 02_dados_estatisticos_e_fontes.docx
+  immutable_path: docs/source/02_dados_estatisticos_e_fontes.docx
+  bytes: 12226
+  sha256: 4229242a7f0b7f97d66cbe587b64c239a4f520c12c31674b7fca047921bd9311
+- source_id: SRC-SUP-008
+  source_revision: 1
+  filename: 03_rede_de_protecao.docx
+  immutable_path: docs/source/03_rede_de_protecao.docx
+  bytes: 10982
+  sha256: 72f6c41544ff26c7d13e9e0b685b8c19e5d764d157e40cc421fc65754b94e85a
+- source_id: SRC-SUP-009
+  source_revision: 1
+  filename: 04_mapa_rede_protecao.svg
+  immutable_path: docs/source/04_mapa_rede_protecao.svg
+  bytes: 5728
+  sha256: 357dcbf6fdda251d3ff67f2c023e705f4e8242ae5247ceb772490e11436b7619
+- source_id: SRC-SUP-010
+  source_revision: 1
+  filename: 05_carta_solar.svg
+  immutable_path: docs/source/05_carta_solar.svg
+  bytes: 30334
+  sha256: 3bf8df95a040c16fff50f51e3cf0e4ce6315fdba4447973ab5e710483a3b0ad3
+- source_id: SRC-SUP-011
+  source_revision: 1
+  filename: 01_programa_de_necessidades.xlsx
+  immutable_path: docs/source/01_programa_de_necessidades.xlsx
+  bytes: 14710
+  sha256: bc68d08bd974254fd06e023c146ce4f3ae798f5b08711d31c78911939c15134a
+- source_id: SRC-SUP-012
+  source_revision: 1
+  filename: 02_memorial_de_calculo.xlsx
+  immutable_path: docs/source/02_memorial_de_calculo.xlsx
+  bytes: 12221
+  sha256: 3e1acbda80062d34bfe051b31dd91948b408f780d52d44d477cb3c79556dc31a
+- source_id: SRC-SUP-013
+  source_revision: 1
+  filename: 03_diagrama_tres_camadas.svg
+  immutable_path: docs/source/03_diagrama_tres_camadas.svg
+  bytes: 4250
+  sha256: 194149c0f849a98fde6128ef155a54ea2236623dffd9342dcfe8e4f667132a50
+- source_id: SRC-SUP-014
+  source_revision: 1
+  filename: 04_funcionograma_fluxos.svg
+  immutable_path: docs/source/04_funcionograma_fluxos.svg
+  bytes: 8479
+  sha256: 3c3ea99d840001aceaa8b80959469fabb225f83672a6f398e818d3bafa045295
+- source_id: SRC-SUP-015
+  source_revision: 1
+  filename: 05_axonometria_explodida.svg
+  immutable_path: docs/source/05_axonometria_explodida.svg
+  bytes: 5347
+  sha256: 31c0e70c42d00db8d29ae790556139e2e2a482b29d37581c7167453e868d0aaa
+- source_id: SRC-SUP-016
+  source_revision: 1
+  filename: 06_implantacao_HIPOTESE.dxf
+  immutable_path: docs/source/06_implantacao_HIPOTESE.dxf
+  bytes: 79183
+  sha256: e1b4f5ebbd26a03142a058860b459483651ba17248b29ca2018d2d2ff8e2739c
+- source_id: SRC-SUP-017
+  source_revision: 1
+  filename: 07_modelo_BIM_HIPOTESE.ifc
+  immutable_path: docs/source/07_modelo_BIM_HIPOTESE.ifc
+  bytes: 23410
+  sha256: d2dd1c9769ff2df83d7ce6ea0c610f16845383a3a168b35f21cd3f0e67ef5f66
+- source_id: SRC-SUP-018
+  source_revision: 1
+  filename: 01_deck_defesa.pptx
+  immutable_path: docs/source/01_deck_defesa.pptx
+  bytes: 218257
+  sha256: 73c000af8470c483d7e7adbad781003682fd516150833da0552ee76dd87b577e
+- source_id: SRC-SUP-019
+  source_revision: 1
+  filename: 02_quadro_roteiro_e_memorial.docx
+  immutable_path: docs/source/02_quadro_roteiro_e_memorial.docx
+  bytes: 12880
+  sha256: a1a839b4e2f6e2115752f10bad07e5a5dbd1528477441915d099686cc8b4a5e0
+- source_id: SRC-SUP-020
+  source_revision: 1
+  filename: 01_volumetria_3d.html
+  immutable_path: docs/source/01_volumetria_3d.html
+  bytes: 37517
+  sha256: a39ab77d6e3e490cd0ee4e50c773a21d944afedff40ad97e4569e0248f78a68c
+- source_id: SRC-SUP-021
+  source_revision: 1
+  filename: 02_roteiro_navegavel.html
+  immutable_path: docs/source/02_roteiro_navegavel.html
+  bytes: 31282
+  sha256: 90f8317b37c665f9386fc266da82b2b0eee800e5192b01e74db48323ec559ba3

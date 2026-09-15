@@ -1,0 +1,59 @@
+schema_version: 1
+freeze_id: P08-DESIGN-RUN-001
+status: FROZEN_FOR_STUDY
+frozen_at_utc: '2026-09-15T19:14:47.131Z'
+requirements_version: requirements-v1
+site_version: site-v1
+weights_version: 1
+design_engine_version: design-engine-v1
+design_engine_commit: a15518fd5599038d4df230c612cfe4bfc1015ae7
+design_engine_worktree_clean: true
+program_baseline:
+  decision_id: DEC-P03-T15-PROGRAM-BASELINE-001
+  source_id: SRC-PROGRAM-001
+  source_sha256: 11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17
+  source_filename: programa_necessidades.pdf
+  person_capacity: 20
+  internal_useful_m2: 626.0
+  external_programmed_m2: 260.0
+  applicability: VERIFIED_SOURCE_BASELINE
+  review_status: AMANDA_REVIEW_PENDING
+decisions:
+  typology: DEC-P08-T04-TYPOLOGY-001
+  site_boundary: DEC-P08-T04-SITE-BOUNDARY-001
+  site_topography: DEC-P03-T15-SITE-TOPOGRAPHY-001
+  decision_scope: STUDY
+  amanda_review: AMANDA_REVIEW_PENDING
+frozen_files:
+- path: project/requirements/program.json
+  sha256: 67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf
+- path: project/requirements/source-principles.yaml
+  sha256: 91bcb06865e3c62ff0a75df7fbd8bc2a8e4a868fa2b4bc19eaec183a0dad4bbd
+- path: project/requirements/design-hypotheses.yaml
+  sha256: 3a3b5a95f3d77fcaef9eaeb7532d43b067d8071aa05ef215291e2bd30650e8ed
+- path: project/requirements/decision-register.yaml
+  sha256: 7cedb929fb20e6b40559687ca0a958f0995530bbe8cdcbf90a226a74586510d8
+- path: project/site/site.json
+  sha256: b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631
+- path: project/site/missing-data.yaml
+  sha256: 92bb9e5955b366f589454aad906e9fcd61aea467e04da63aae150f67cf3e7740
+- path: design-engine/config/weights.yaml
+  sha256: 6241e7109c5cee13fdfd3bdb39bbb95545f40ed1c2896a29020ad182db4cf2b0
+- path: design-engine/config/profiles.yaml
+  sha256: 8a1426f732f5eb5a0878930b9c9f778aee9d6f4941d296c7fb91ed108162b2df
+- path: design-engine/config/archetypes.yaml
+  sha256: 6254daebe99ededabe1d3117c9e825d861986b0fa75aca1f7aa2e4825716a5f4
+- path: design-engine/config/tolerances.yaml
+  sha256: 51b0042dee081fb352e863717775c1c94b6aa71ff6fcf5a0f0532d32c0d7cffb
+freeze_rules:
+  source_requirements_read_only: true
+  final_claim_allowed: false
+  final_blockers:
+  - SITE_TOPOGRAPHY
+  - SITE_BOUNDARY
+  - SITE_OCCUPANCY
+  - SITE_FRONTAGE_COUNT
+  - SITE_TRUE_NORTH
+  - final_grading
+  - final_altimetric_accessibility_validation
+  - amanda_review

@@ -9,8 +9,11 @@ from pathlib import Path
 
 import typer
 
-from .commands.tool_lab import tool_lab_app
 from .commands.bim import bim_app
+from .commands.export import export_app
+from .commands.qa import qa_app
+from .commands.release import release_app
+from .commands.tool_lab import tool_lab_app
 
 app = typer.Typer(
     no_args_is_help=True,
@@ -20,6 +23,9 @@ app = typer.Typer(
 
 app.add_typer(tool_lab_app, name="tool-lab")
 app.add_typer(bim_app, name="bim")
+app.add_typer(qa_app, name="qa")
+app.add_typer(export_app, name="export")
+app.add_typer(release_app, name="release")
 
 
 @app.command()

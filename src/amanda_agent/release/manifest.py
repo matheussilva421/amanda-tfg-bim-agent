@@ -12,7 +12,7 @@ import json
 from collections.abc import Mapping
 from enum import StrEnum
 from pathlib import Path
-from typing import Any, overload
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -123,7 +123,7 @@ class ReleaseManifest(BaseModel):
         if value is None:
             return {}
         if not isinstance(value, Mapping):
-            raise ValueError("manifest metadata must be an object")
+            raise TypeError("manifest metadata must be an object")
         return dict(value)
 
     @field_validator("timestamp", mode="before")
@@ -166,18 +166,6 @@ def _manifest_and_path(
         first if isinstance(first, ReleaseManifest) else ReleaseManifest.model_validate(first),
         Path(second),
     )
-
-
-@overload
-def write_manifest(
-    path: str | Path, manifest: ReleaseManifest | Mapping[str, Any]
-) -> Path: ...
-
-
-@overload
-def write_manifest(
-    manifest: ReleaseManifest | Mapping[str, Any], path: str | Path
-) -> Path: ...
 
 
 def write_manifest(
@@ -265,21 +253,28 @@ def verify_manifest(
             continue
         declared[artifact.path] = artifact
 
-    for relative, expected in manifest.content_hashes.items():
+    for relative, declared_hash in manifest.content_hashes.items():
         if relative in self_names:
             errors.append("manifest must not hash itself: " + relative)
             continue
         if relative not in declared:
-            declared[relative] = ArtifactRecord(path=relative, sha256=expected)
+            declared[relative] = ArtifactRecord(path=relative, sha256=declared_hash)
 
     required_names = set(manifest.required_artifacts)
     for artifact in manifest.artifacts:
         if artifact.required or artifact.mandatory:
             required_names.add(artifact.path)
+    for export in manifest.exports:
+        if export.get("mandatory", export.get("required", False)) and export.get("path"):
+            required_names.add(str(export["path"]))
+    for required in sorted(required_names):
+        if required not in declared:
+            missing_hashes.append(required)
+            errors.append("required artifact has no declaration or hash: " + required)
 
     for relative in sorted(declared):
         artifact = declared[relative]
-        expected = artifact.sha256 or manifest.content_hashes.get(relative)
+        expected: str | None = artifact.sha256 or manifest.content_hashes.get(relative)
         if not expected:
             if relative in required_names:
                 missing_hashes.append(relative)

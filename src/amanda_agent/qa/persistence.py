@@ -92,11 +92,12 @@ def _empty_steps() -> list[PersistenceStepRecord]:
 class PersistenceRecord(BaseModel):
     """Complete ordered persistence evidence for one release candidate."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="ignore")
 
     schema_version: int = Field(default=1, ge=1)
     release_id: str = Field(min_length=1)
     steps: list[PersistenceStepRecord] = Field(default_factory=_empty_steps)
+    complete: bool = False
     saved_file_sha256: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
     final_file_sha256: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
     later_save_changed_bytes: bool = False
@@ -109,6 +110,7 @@ class PersistenceRecord(BaseModel):
         if not isinstance(values, Mapping):
             return values
         normalized = dict(values)
+        normalized.pop("complete", None)
         supplied = normalized.get("steps")
         if isinstance(supplied, Mapping):
             normalized["steps"] = [
@@ -143,7 +145,18 @@ class PersistenceRecord(BaseModel):
             by_step.get(step, PersistenceStepRecord(step=step))
             for step in REQUIRED_SEQUENCE
         ]
+        self.complete = self._calculate_complete()
         return self
+
+    def _calculate_complete(self) -> bool:
+        return (
+            self.sequence_valid
+            and not self.missing_steps
+            and not (
+                self.later_save_changed_bytes
+                and not self.revalidated_after_later_save
+            )
+        )
 
     def record_step(
         self,
@@ -168,6 +181,7 @@ class PersistenceRecord(BaseModel):
                 break
         else:
             raise ValueError("unknown persistence step: " + str(step))
+        self.complete = self._calculate_complete()
         return replacement
 
     def step(self, step: PersistenceStep | str) -> PersistenceStepRecord:
@@ -208,14 +222,7 @@ class PersistenceRecord(BaseModel):
 
     @property
     def is_complete(self) -> bool:
-        return (
-            self.sequence_valid
-            and not self.missing_steps
-            and not (
-                self.later_save_changed_bytes
-                and not self.revalidated_after_later_save
-            )
-        )
+        return self._calculate_complete()
 
     @property
     def promotion_ready(self) -> bool:
@@ -240,6 +247,7 @@ class PersistenceRecord(BaseModel):
 
         self.later_save_changed_bytes = changed_bytes
         self.revalidated_after_later_save = revalidated
+        self.complete = self._calculate_complete()
         if final_file_sha256 is not None:
             self.final_file_sha256 = final_file_sha256
 
@@ -343,7 +351,7 @@ class PersistenceCoordinator:
                 break
             try:
                 status, evidence, detail = _typed_result(step, action())
-            except Exception as exc:
+            except Exception as exc:  # noqa: BLE001
                 status, evidence, detail = (
                     PersistenceStatus.FAIL,
                     {},
@@ -368,13 +376,13 @@ class PersistenceCoordinator:
 
 
 __all__ = [
+    "REQUIRED_SEQUENCE",
     "PersistenceCoordinator",
     "PersistenceIncompleteError",
     "PersistenceRecord",
     "PersistenceStatus",
     "PersistenceStep",
     "PersistenceStepRecord",
-    "REQUIRED_SEQUENCE",
     "load_record",
     "persist_record",
     "sha256_file",

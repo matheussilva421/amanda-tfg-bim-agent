@@ -4,9 +4,11 @@ Data: 2026-09-15
 
 ## Veredito
 
-`PASS_WITH_WARNINGS`: a mutação interrompida não foi salva nem marcada como
-PASS, e uma instância própria nova recuperou o último checkpoint PASS e fez
-health/read smoke. O aviso é operacional: o checkpoint já continha a parede
+`PASS_WITH_WARNINGS`: a mutação interrompida não foi salva nem recebeu um
+resultado final `outcome=PASS`, e uma instância própria nova recuperou o último
+checkpoint PASS e fez health/read smoke. O marcador interno
+`invoke-external-command: PASS` foi somente o gatilho para interromper o fluxo;
+não houve resultado final persistido. O aviso é operacional: o checkpoint já continha a parede
 328658, portanto a tentativa interrompida criou uma parede sobreposta e o
 Revit exibiu o diálogo de paredes sobrepostas; o diálogo foi aceito somente
 na janela do PID próprio. O runner de recovery também registrou tentativas de

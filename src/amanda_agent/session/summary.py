@@ -64,7 +64,7 @@ class RunSummary:
             )
 
     @classmethod
-    def from_mapping(cls, values: Mapping[str, Any]) -> "RunSummary":
+    def from_mapping(cls, values: Mapping[str, Any]) -> RunSummary:
         if not isinstance(values, Mapping):
             raise TypeError("run summary must be a mapping")
         payload = dict(values)

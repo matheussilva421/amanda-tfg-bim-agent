@@ -6,9 +6,9 @@ from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
-import yaml
+import yaml  # type: ignore[import-untyped]
 
-from .models import QaCheck, QaCheckStatus, QaIssue, QaReport, QaResult, Severity
+from .models import QaCheck, QaCheckStatus, QaIssue, QaReport, Severity
 
 
 async def load_program_config(source: Mapping[str, Any] | str | Path) -> dict[str, Any]:
@@ -55,7 +55,13 @@ def _observed_spaces(observed: Any) -> dict[str, dict[str, Any]]:
     if observed is None:
         return {}
     if isinstance(observed, Mapping):
-        rows = observed.get("spaces", observed.get("rooms", []))
+        rows = observed.get("spaces", observed.get("rooms"))
+        if rows is None:
+            return {
+                str(key): dict(value)
+                for key, value in observed.items()
+                if isinstance(value, Mapping)
+            }
         if isinstance(rows, Mapping):
             return {str(key): dict(value) for key, value in rows.items()}
         result = {str(item["logical_id"]): dict(item) for item in rows or [] if "logical_id" in item}
@@ -74,9 +80,20 @@ def _area_limits(spec: Mapping[str, Any]) -> tuple[float, float, float, float]:
         if target is None:
             raise ValueError(f"space {spec.get('logical_id')} has no area rule")
         configured_range = [target, target]
-    low, high = float(configured_range[0]), float(configured_range[1])
-    soft = float(spec.get("soft_tolerance_m2", spec.get("soft_tolerance", 0)))
-    hard_minimum = float(spec.get("hard_minimum_m2", spec.get("hard_minimum", low)))
+    if isinstance(configured_range, Mapping):
+        low = float(configured_range.get("min", configured_range.get("minimum")))
+        high = float(configured_range.get("max", configured_range.get("maximum")))
+    else:
+        low, high = float(configured_range[0]), float(configured_range[1])
+    soft = float(
+        spec.get(
+            "soft_tolerance_m2",
+            spec.get("soft_tolerance", spec.get("area_tolerance_soft", 0)),
+        )
+    )
+    hard_minimum = float(
+        spec.get("hard_minimum_m2", spec.get("hard_minimum", spec.get("hard_min", low)))
+    )
     return low, high, soft, hard_minimum
 
 
@@ -132,7 +149,12 @@ async def reconcile_program(
     are interpreted by this validator; ``logical_id`` is the only identity key.
     """
 
-    configured = await load_program_config(config) if config is not None else _as_mapping(program)
+    if config is not None:
+        configured = await load_program_config(config)
+    elif isinstance(program, (str, Path)):
+        configured = await load_program_config(program)
+    else:
+        configured = _as_mapping(program)
     expected_spaces = _configured_spaces(configured)
     observed_by_id = _observed_spaces(observed)
     issues: list[QaIssue] = []
@@ -142,21 +164,24 @@ async def reconcile_program(
     for spec in expected_spaces:
         logical_id = str(spec["logical_id"])
         check_id = f"program.{logical_id}"
-        required_ids.append(check_id)
+        is_required = bool(spec.get("required", True))
+        if is_required:
+            required_ids.append(check_id)
         row = observed_by_id.get(logical_id)
         status = QaCheckStatus.PASS
         if row is None:
-            status = QaCheckStatus.FAIL
-            issues.append(
-                _issue(
-                    "MISSING_REQUIRED_SPACE",
-                    f"required programmed space {logical_id!r} is missing",
-                    check_id=check_id,
-                    spec=spec,
-                    mandatory=True,
-                    severity=Severity.HIGH,
+            status = QaCheckStatus.FAIL if is_required else QaCheckStatus.SKIPPED
+            if is_required:
+                issues.append(
+                    _issue(
+                        "MISSING_REQUIRED_SPACE",
+                        f"required programmed space {logical_id!r} is missing",
+                        check_id=check_id,
+                        spec=spec,
+                        mandatory=True,
+                        severity=Severity.HIGH,
+                    )
                 )
-            )
         else:
             expected_quantity = int(spec.get("quantity", 1))
             actual_quantity = int(row.get("quantity", 1))
@@ -168,7 +193,7 @@ async def reconcile_program(
                         f"space {logical_id!r} has quantity {actual_quantity}, expected {expected_quantity}",
                         check_id=check_id,
                         spec=spec,
-                        mandatory=True,
+                        mandatory=is_required,
                         severity=Severity.HIGH,
                         observed=row,
                     )
@@ -199,7 +224,7 @@ async def reconcile_program(
                             f"space {logical_id!r} area {area:g} m2 is below hard minimum {hard_minimum:g} m2",
                             check_id=check_id,
                             spec=spec,
-                            mandatory=True,
+                            mandatory=is_required,
                             severity=Severity.HIGH,
                             observed=row,
                         )
@@ -219,7 +244,7 @@ async def reconcile_program(
         checks.append(
             QaCheck(
                 check_id=check_id,
-                mandatory=True,
+                mandatory=is_required,
                 status=status,
                 severity_if_failed=Severity.HIGH,
                 scope="program",

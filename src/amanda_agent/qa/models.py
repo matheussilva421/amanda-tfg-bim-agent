@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Iterable
 from datetime import UTC, datetime
 from enum import StrEnum
-from typing import Any, Iterable
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
@@ -117,6 +118,8 @@ def aggregate_result(
         for check in check_list
     ):
         return QaResult.BLOCKED_BY_INPUT
+    if any(issue.mandatory for issue in issue_list):
+        return QaResult.FAIL
     if any(check_id not in present for check_id in required):
         return QaResult.BLOCKED_BY_INPUT
     if any(check.status is QaCheckStatus.FAIL for check in check_list):
