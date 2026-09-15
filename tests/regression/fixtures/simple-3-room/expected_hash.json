@@ -1,0 +1,7 @@
+{
+  "status": "STABLE",
+  "algorithm": "sha256",
+  "engine_version": "design-engine-v1",
+  "canonical_hash": "566ea0c9adc790d2b6b47d75f1caa391ca1dd19f38d43136f8cd2478326f8a60",
+  "note": "Canonicalized pipeline result: stage order, configured counts, per-seed macro candidate geometry hashes and the finalist room payload. Reproduced across repeated runs with the same seed list on the pinned environment; the underlying geometry hashes depend on the locked OR-Tools/Shapely builds."
+}

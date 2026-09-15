@@ -1,0 +1,4 @@
+{
+  "archetype_seed": 7,
+  "note": "Archetype initialization is seeded; the same seed must reproduce the same sector and courtyard geometry."
+}

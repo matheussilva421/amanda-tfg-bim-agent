@@ -1,0 +1,26 @@
+{
+  "fixture": "privacy-gradient",
+  "scenario": "privacy",
+  "description": "Privacy transition sequences: a direct public-to-residential jump must be invalid and strongly penalized, a staged gradient must score better while keeping the raw transition sequence as evidence.",
+  "exercises": ["privacy"],
+  "sequences": [
+    {
+      "id": "direct",
+      "sequence": [
+        {"id": "street", "privacy_level": 0},
+        {"id": "home", "privacy_level": 5}
+      ]
+    },
+    {
+      "id": "staged",
+      "sequence": [
+        {"id": "street", "privacy_level": 0},
+        {"id": "gate", "privacy_level": 1},
+        {"id": "technical", "privacy_level": 3},
+        {"id": "transition", "privacy_level": 4},
+        {"id": "home", "privacy_level": 5}
+      ]
+    },
+    {"id": "stepwise", "sequence": [0, 1, 2, 3, 4, 5]}
+  ]
+}

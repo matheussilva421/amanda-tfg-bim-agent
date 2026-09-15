@@ -1,0 +1,7 @@
+{
+  "status": "STABLE",
+  "algorithm": "sha256",
+  "engine_version": "design-engine-v1",
+  "canonical_hash": "f564618b080f316f2f13c2b76f525968e42be590da43d5367cd69b46d314fc2c",
+  "note": "Canonicalized privacy report: validity, penalty, score and the raw transition sequence with node identifiers for each fixture sequence. Pure function, no seed input."
+}

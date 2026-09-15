@@ -1,0 +1,4 @@
+{
+  "seeds": [],
+  "note": "Flow routing is deterministic graph search with no seed input; reproducibility is asserted by identical repeated evaluation."
+}

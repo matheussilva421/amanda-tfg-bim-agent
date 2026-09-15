@@ -1,0 +1,47 @@
+{
+  "fixture": "courtyard",
+  "scenario": "courtyard",
+  "description": "COURTYARD archetype macro seed with first-class external program geometry, project-labeled environmental heuristics, versioned scoring, Pareto filtering and explainability.",
+  "exercises": ["archetypes", "external_spaces", "environmental", "scoring", "pareto", "explain"],
+  "site": {"bounds": [0.0, 0.0, 40.0, 30.0]},
+  "archetype": "COURTYARD",
+  "external_spaces": [
+    {"logical_id": "courtyard", "target_area_m2": 80, "kind": "protected_courtyard", "privacy_level": 4},
+    {"logical_id": "therapeutic", "target_area_m2": 60, "kind": "therapeutic_garden", "privacy_level": 4},
+    {"logical_id": "playground", "target_area_m2": 40, "kind": "playground"}
+  ],
+  "privacy_policy": {"protected_min_privacy_level": 3, "child_relation_max_distance_m": 10},
+  "environmental": {
+    "facade_orientation_deg": 180,
+    "true_north_deg": 0,
+    "preferred_solar_orientation_deg": 180,
+    "wind_direction_deg": 90
+  },
+  "metrics": {
+    "program_compliance": 0.95,
+    "privacy_security": 0.9,
+    "adjacency": 0.8,
+    "circulation": 0.75,
+    "accessibility": 1.0,
+    "compactness": 0.7,
+    "constructability": 0.85,
+    "concept_fidelity": 0.9
+  },
+  "pareto_dimensions": ["program_compliance", "privacy_security"],
+  "pareto_candidates": [
+    {"id": "A", "metrics": {"program_compliance": 0.9, "privacy_security": 0.9}},
+    {"id": "B", "metrics": {"program_compliance": 0.8, "privacy_security": 0.8}},
+    {"id": "C", "metrics": {"program_compliance": 0.95, "privacy_security": 0.7}},
+    {"id": "D", "metrics": {"program_compliance": 0.6, "privacy_security": 0.95}}
+  ],
+  "explanation_candidate": {
+    "id": "courtyard-A",
+    "metrics": {"program_compliance": 0.95, "privacy_security": 0.9, "circulation": 0.5},
+    "soft_penalties": {"adjacency": 0.4},
+    "hard_violations": [],
+    "provenance": {
+      "source_principles": ["privacy gradient"],
+      "hypotheses": ["courtyard depth is a design hypothesis, not a modelled result"]
+    }
+  }
+}

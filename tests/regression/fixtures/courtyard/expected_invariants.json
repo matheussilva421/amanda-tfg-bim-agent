@@ -1,0 +1,44 @@
+{
+  "archetype": "COURTYARD",
+  "archetype_seed": 7,
+  "sector_ids": ["public", "controlled", "residential"],
+  "sector_privacy_levels": [0, 1, 5],
+  "courtyard_count": 1,
+  "courtyard_ids": ["courtyard"],
+  "sectors_inside_site": true,
+  "courtyards_inside_site": true,
+  "external_space_ids": ["courtyard", "therapeutic", "playground"],
+  "external_space_kinds": ["protected_courtyard", "therapeutic_garden", "playground"],
+  "external_space_areas_m2": [80.0, 60.0, 40.0],
+  "external_violation_codes": [],
+  "external_validation_codes": [],
+  "used_leftover_as_garden": false,
+  "heuristic_labels": {"solar": "HEURISTIC", "ventilation": "HEURISTIC"},
+  "solar_score": 1.0,
+  "ventilation_score": 0.5,
+  "weighted_total": 0.819,
+  "not_evaluated_dimensions": [],
+  "scored_dimensions": [
+    "accessibility",
+    "adjacency",
+    "circulation",
+    "compactness",
+    "concept_fidelity",
+    "constructability",
+    "green_integration",
+    "privacy_security",
+    "program_compliance",
+    "solar_heuristic",
+    "ventilation_heuristic"
+  ],
+  "pareto_frontier_ids": ["A", "C", "D"],
+  "explanation_strengths": [
+    "privacy_security=0.900 is a high raw metric",
+    "program_compliance=0.950 is a high raw metric"
+  ],
+  "explanation_tradeoffs": [
+    "adjacency incurs soft penalty 0.400",
+    "circulation=0.500 is a lower raw metric"
+  ],
+  "explanation_hard_violations": []
+}

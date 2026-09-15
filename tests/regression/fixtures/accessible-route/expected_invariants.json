@@ -1,0 +1,45 @@
+{
+  "block_count": 1,
+  "block_violation_codes": [],
+  "room_ids": ["consult", "therapy"],
+  "room_count": 2,
+  "accessible_room_ids": ["consult"],
+  "room_net_area_total_m2": 48.0,
+  "room_refinement_violation_codes": [],
+  "room_hard_violation_codes": [],
+  "routes": {
+    "to-consult": {
+      "min_width_m": 1.5,
+      "flow": "resident",
+      "connected": true,
+      "ok": true,
+      "path": ["entrance", "lobby", "consult"],
+      "distance_m": 8.0,
+      "crossings": 0,
+      "violation_codes": [],
+      "soft_penalty": 0.0
+    },
+    "to-therapy-accessible-width": {
+      "min_width_m": 1.5,
+      "flow": "resident",
+      "connected": false,
+      "ok": false,
+      "path": [],
+      "distance_m": null,
+      "crossings": 0,
+      "violation_codes": ["disconnected_route"],
+      "soft_penalty": 0.0
+    },
+    "to-therapy-standard-width": {
+      "min_width_m": 0.9,
+      "flow": "resident",
+      "connected": true,
+      "ok": true,
+      "path": ["entrance", "lobby", "therapy"],
+      "distance_m": 8.0,
+      "crossings": 0,
+      "violation_codes": [],
+      "soft_penalty": 0.0
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "stage_order": ["macro", "hard_filter", "top_macro", "rooms", "finalists", "detailed"],
+  "counts": {"macro": 3, "top_macro": 3, "rooms": 2, "finalists": 1},
+  "revit_calls": 0,
+  "macro_candidate_statuses": ["OPTIMAL"],
+  "macro_candidate_hash_count": 2,
+  "rejected_count": 0,
+  "rejections_all_have_reason": true,
+  "finalist_count": 1,
+  "finalist_room_ids": ["office", "reception", "dorm"],
+  "finalist_room_count": 3,
+  "finalist_accessible_room_ids": ["reception"],
+  "finalist_hard_violation_codes": [],
+  "net_area_total_m2": 150.0,
+  "seeds": [1, 2, 3]
+}

@@ -1,0 +1,34 @@
+{
+  "fixture": "accessible-route",
+  "scenario": "accessible",
+  "description": "Accessible room accounting plus a route that is only traversable at the accessible corridor width, proving the width gate is enforced.",
+  "exercises": ["blocks", "rooms", "constraints", "flows"],
+  "site": {"bounds": [0.0, 0.0, 20.0, 12.0]},
+  "sector": {
+    "logical_id": "care",
+    "demand_m2": 48,
+    "spaces": [
+      {"logical_id": "consult", "sector": "care", "quantity": 1, "target_area_m2": 24, "accessible": true},
+      {"logical_id": "therapy", "sector": "care", "quantity": 1, "target_area_m2": 24}
+    ]
+  },
+  "layout": {
+    "nodes": [
+      {"id": "entrance", "privacy_level": 0},
+      {"id": "lobby", "privacy_level": 1},
+      {"id": "consult", "privacy_level": 1},
+      {"id": "therapy", "privacy_level": 1}
+    ],
+    "corridors": [
+      {"id": "acc-1", "from": "entrance", "to": "lobby", "geometry": [[0, 0], [4, 0]], "width_m": 1.6},
+      {"id": "acc-2", "from": "lobby", "to": "consult", "geometry": [[4, 0], [8, 0]], "width_m": 1.6},
+      {"id": "acc-narrow", "from": "lobby", "to": "therapy", "geometry": [[4, 2], [8, 2]], "width_m": 1.0}
+    ],
+    "obstacles": []
+  },
+  "accessible_routes": [
+    {"id": "to-consult", "flow": "resident", "start": "entrance", "goal": "consult", "min_width_m": 1.5},
+    {"id": "to-therapy-accessible-width", "flow": "resident", "start": "entrance", "goal": "therapy", "min_width_m": 1.5},
+    {"id": "to-therapy-standard-width", "flow": "resident", "start": "entrance", "goal": "therapy", "min_width_m": 0.9}
+  ]
+}

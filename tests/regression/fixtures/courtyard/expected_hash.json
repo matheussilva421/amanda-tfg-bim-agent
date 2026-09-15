@@ -1,0 +1,7 @@
+{
+  "status": "STABLE",
+  "algorithm": "sha256",
+  "engine_version": "design-engine-v1",
+  "canonical_hash": "d9bf5ba43b5a997f54fc6b278b8e443c4b1aa30437034960f66c9cfe91d31d93",
+  "note": "Canonicalized archetype seed, first-class external space geometry, labeled environmental heuristics, weighted total and Pareto frontier ids. Reproduced across repeated runs for archetype seed 7; rotation/partition geometry is seeded, so a seed change is expected to change the digest."
+}

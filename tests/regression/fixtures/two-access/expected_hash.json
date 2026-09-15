@@ -1,0 +1,7 @@
+{
+  "status": "STABLE",
+  "algorithm": "sha256",
+  "engine_version": "design-engine-v1",
+  "canonical_hash": "a9973b4d5924ef8a4baedfff8b31a80871a045190d7a046957b091f47599cb26",
+  "note": "Canonicalized per-route report: flow, connectivity, chosen path, distance, private crossings, violation codes and soft penalty. Route search is deterministic graph search with no seed input."
+}

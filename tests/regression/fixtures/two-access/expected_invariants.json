@@ -1,0 +1,47 @@
+{
+  "entry_nodes": ["main-entry", "service-entry"],
+  "entry_node_count": 2,
+  "route_ids": ["resident", "service-default-policy", "service-weighted-policy", "visitor"],
+  "routes": {
+    "visitor": {
+      "flow": "visitor",
+      "connected": true,
+      "ok": true,
+      "path": ["main-entry", "public-hall", "visitor-room"],
+      "distance_m": 10.0,
+      "crossings": 0,
+      "violation_codes": [],
+      "soft_penalty": 0.0
+    },
+    "service-default-policy": {
+      "flow": "service",
+      "connected": true,
+      "ok": false,
+      "path": ["service-entry", "private-dorm", "service-yard"],
+      "distance_m": 10.0,
+      "crossings": 1,
+      "violation_codes": ["private_residential_access"],
+      "soft_penalty": 0.0
+    },
+    "service-weighted-policy": {
+      "flow": "service",
+      "connected": true,
+      "ok": true,
+      "path": ["service-entry", "private-dorm", "service-yard"],
+      "distance_m": 10.0,
+      "crossings": 1,
+      "violation_codes": ["service_resident_crossing"],
+      "soft_penalty": 4.0
+    },
+    "resident": {
+      "flow": "resident",
+      "connected": true,
+      "ok": true,
+      "path": ["main-entry", "public-hall", "visitor-room"],
+      "distance_m": 10.0,
+      "crossings": 0,
+      "violation_codes": [],
+      "soft_penalty": 0.0
+    }
+  }
+}

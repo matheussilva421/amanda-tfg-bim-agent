@@ -1,0 +1,36 @@
+{
+  "fixture": "two-access",
+  "scenario": "flows",
+  "description": "Two independent building accesses; the visitor route must avoid private residential space and the service route crossing must be either a hard failure or a configured soft penalty.",
+  "exercises": ["flows"],
+  "layout": {
+    "nodes": [
+      {"id": "main-entry", "privacy_level": 0},
+      {"id": "service-entry", "privacy_level": 0},
+      {"id": "public-hall", "privacy_level": 1},
+      {"id": "visitor-room", "privacy_level": 1},
+      {"id": "service-yard", "privacy_level": 3},
+      {"id": "private-dorm", "privacy_level": 5, "private_residential": true}
+    ],
+    "corridors": [
+      {"id": "c-visitor-1", "from": "main-entry", "to": "public-hall", "geometry": [[0, 0], [5, 0]], "width_m": 1.6},
+      {"id": "c-visitor-2", "from": "public-hall", "to": "visitor-room", "geometry": [[5, 0], [10, 0]], "width_m": 1.6},
+      {"id": "c-service-1", "from": "service-entry", "to": "private-dorm", "geometry": [[20, 0], [15, 0]], "width_m": 1.6},
+      {"id": "c-service-2", "from": "private-dorm", "to": "service-yard", "geometry": [[15, 0], [10, 0]], "width_m": 1.6}
+    ],
+    "obstacles": []
+  },
+  "entry_nodes": ["main-entry", "service-entry"],
+  "routes": [
+    {"id": "visitor", "flow": "visitor", "start": "main-entry", "goal": "visitor-room"},
+    {"id": "service-default-policy", "flow": "service", "start": "service-entry", "goal": "service-yard"},
+    {
+      "id": "service-weighted-policy",
+      "flow": "service",
+      "start": "service-entry",
+      "goal": "service-yard",
+      "policy": {"forbid_private_residential": false, "service_resident_crossing_penalty": 4.0}
+    },
+    {"id": "resident", "flow": "resident", "start": "main-entry", "goal": "visitor-room"}
+  ]
+}

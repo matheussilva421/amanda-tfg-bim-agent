@@ -1,0 +1,7 @@
+{
+  "status": "STABLE",
+  "algorithm": "sha256",
+  "engine_version": "design-engine-v1",
+  "canonical_hash": "88669a2f579800ed502d3099a33d38adef2919bc641876b60dadbf4033d893a7",
+  "note": "Canonicalized refined room payload (logical id, net area, accessible flag, geometry) plus the three width-constrained route reports. Block and room refinement are deterministic geometry operations with no seed input."
+}

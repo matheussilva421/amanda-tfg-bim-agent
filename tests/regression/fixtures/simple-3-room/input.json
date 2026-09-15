@@ -1,0 +1,34 @@
+{
+  "fixture": "simple-3-room",
+  "scenario": "pipeline",
+  "description": "Three program sectors with one room each, driven through seeded generation, CP-SAT macrozones, block polygons, room refinement, hard constraints and the progressive pipeline.",
+  "exercises": ["generation", "pipeline", "macrozones", "blocks", "rooms", "constraints"],
+  "site": {"bounds": [0.0, 0.0, 30.0, 20.0]},
+  "config": {"macro_candidates": 3, "top_macro": 3, "top_rooms": 2, "top_finalists": 1},
+  "requirements": {
+    "sectors": [
+      {
+        "logical_id": "controlled",
+        "spaces": [
+          {"logical_id": "office", "sector": "controlled", "quantity": 1, "target_area_m2": 50}
+        ]
+      },
+      {
+        "logical_id": "public",
+        "spaces": [
+          {"logical_id": "reception", "sector": "public", "quantity": 1, "target_area_m2": 50, "accessible": true}
+        ]
+      },
+      {
+        "logical_id": "residential",
+        "spaces": [
+          {"logical_id": "dorm", "sector": "residential", "quantity": 1, "target_area_m2": 50}
+        ]
+      }
+    ],
+    "relations": [
+      {"source_logical_id": "public", "target_logical_id": "controlled", "relation": "MUST_ADJOIN", "weight": 1},
+      {"source_logical_id": "controlled", "target_logical_id": "residential", "relation": "MUST_ADJOIN", "weight": 1}
+    ]
+  }
+}

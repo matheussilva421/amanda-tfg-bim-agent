@@ -1039,8 +1039,43 @@ tasks:
     title: Core regression fixtures
     depends_on:
     - P04-T18
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'five core regression fixtures created as pure data under tests/regression/fixtures/:
+      simple-3-room, courtyard, two-access, privacy-gradient and accessible-route,
+      each with input.json, seed.json, expected_invariants.json and expected_hash.json
+      (20 fixture files); fixtures are data only and carry no re-implementation of
+      the engine'
+    - 'the fixtures are executed against the REAL design engine in src/amanda_agent/design
+      through tests/regression/regression_support.py: the harness loads the fixture,
+      runs the pipeline, and compares observed values with the recorded invariants,
+      so a drift fails loudly instead of being restated by a stub'
+    - pytest tests/regression -q -p no:cacheprovider --basetemp=.tmp-amos-r3 -> 47
+      passed in 1.87s, reproduced in this session on the committed tree
+    - declared engine coverage is the required set - macrozones, blocks, rooms, external
+      spaces, scoring, pareto, environmental, generation, pipeline and explain - and
+      test_regression_set_exercises_the_whole_core_engine asserts the union of fixtures
+      actually reaches every one of those areas
+    - 'per-fixture semantic tests: test_fixture_simple_3_room, test_fixture_courtyard,
+      test_fixture_two_access, test_fixture_privacy_gradient and test_fixture_accessible_route
+      each assert the behaviour its scenario exists to protect (seeded pipeline, archetype
+      plus external spaces plus heuristics, independent circulations, privacy transitions,
+      accessible rooms with the width gate)'
+    - 'expected canonical hash is recorded per fixture (status STABLE, sha256) rather
+      than assumed: every fixture was evaluated twice and both the observed values
+      and the canonical digests were identical, so the hashes are asserted as reproducibility
+      evidence and are not presented as a frozen API'
+    - 'RED demonstrated before the record was trusted: removing accessible:true from
+      simple-3-room/input.json made test_fixture_matches_its_expected_invariants[simple-3-room]
+      fail on finalist_accessible_room_ids (expected 1, got 0) and drifted the canonical
+      digest; the edit was reverted and the suite returned to green'
+    - regression_support.py also asserts artefact completeness, same-seed determinism
+      across runs, engine-area evidence non-empty per declared area and the presence
+      of substantive invariants, so an empty or vacuous fixture is rejected by the
+      suite
+    - ruff check tests/regression --line-length 120 clean
+    - handoff docs/notes/2026-09-15-p04-t19-regression-fixtures-handoff.md records
+      the files, the commands, the RED demo and the determinism result
   P04-T20:
     id: P04-T20
     phase: PHASE_04

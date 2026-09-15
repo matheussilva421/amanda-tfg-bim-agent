@@ -1,0 +1,29 @@
+{
+  "sequence_ids": ["direct", "staged", "stepwise"],
+  "sequences": {
+    "direct": {
+      "valid": false,
+      "penalty": 116.0,
+      "score": 0.008547,
+      "transition_sequence": [0, 5],
+      "node_ids": ["street", "home"],
+      "direct_public_to_residential": true
+    },
+    "staged": {
+      "valid": true,
+      "penalty": 1.0,
+      "score": 0.5,
+      "transition_sequence": [0, 1, 3, 4, 5],
+      "node_ids": ["street", "gate", "technical", "transition", "home"],
+      "direct_public_to_residential": false
+    },
+    "stepwise": {
+      "valid": true,
+      "penalty": 0.0,
+      "score": 1.0,
+      "transition_sequence": [0, 1, 2, 3, 4, 5],
+      "node_ids": [],
+      "direct_public_to_residential": false
+    }
+  }
+}
