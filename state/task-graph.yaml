@@ -256,8 +256,15 @@ tasks:
     title: Create immutable disposable Revit baseline fixture
     depends_on:
     - P02-T04
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - created revit/lab/baseline/LAB_R00_EMPTY.rvt from Default_M_PTB.rte via horizun_document_session
+      save_as; 4366336 bytes; sha256 15E0F70DF13A9AD0635A7651B3FEDFF59E76DCFE582C25A7EA759A4B0698299D
+    - close returned object-identity evidence with disk_changed=false and bytes_before=bytes_after=4366336;
+      reopen via horizun_open_document with version_guard=checked upgraded_on_open=false
+      path_matches_request=true; re-hash after the cycle identical (Get-FileHash)
+    - independent pre-stat proved the path did not exist before the save; metadata
+      in tool-lab/fixtures/baseline-fixture.yaml and tool-lab/fixtures/baseline-manifest.json
   P02-T06:
     id: P02-T06
     phase: PHASE_02
@@ -289,8 +296,17 @@ tasks:
     title: Horizun read-only smoke
     depends_on:
     - P02-T06
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - read smoke against disposable copy revit/lab/horizun/LAB_HORIZUN_READ.rvt (sha256
+      identical to baseline 15E0F70D...8299D at copy time); horizun_open_document
+      reported path_matches_request=true version_guard=checked upgraded_on_open=false
+    - horizun_health, get_document_info, horizun_model_scan(target_document_title=LAB_HORIZUN_READ),
+      horizun_query_model and a re-read of get_document_info all ok; scan reported
+      document_verified=true element_count=3316 warnings_total=0 levels=2 (Nivel 1
+      at 0.0 m, Nivel 2 at 4.0 m) views=24
+    - 'mutation check after the reads: disk sha256 unchanged, bytes unchanged, mtime
+      unchanged; evidence recorded in tool-lab/horizun/results/read-smoke.json'
   P02-T08:
     id: P02-T08
     phase: PHASE_02
@@ -298,8 +314,22 @@ tasks:
     title: Horizun `create_level` persistence test
     depends_on:
     - P02-T07
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - fresh disposable copy revit/lab/horizun/LAB_HORIZUN_LEVEL.rvt (sha256 equal
+      to baseline at copy time); dry-run of horizun_create_elements kind=level returned
+      valid=1 invalid=0 with a single-use confirmation_token; apply with dry_run=false
+      plus idempotency_key committed inside one transaction
+    - 'commit readback: element_id 328657 unique_id 1c402664-1839-4d4d-8f4b-6759130ef626-000503d1
+      present_after_commit=true verified=true all_measured=true; elevation re-read
+      13.123359580052492 ft = exactly 4.0 m against a requested 4.0 m, conversion
+      evenly exact'
+    - level count delta exactly +1 (Nivel 1 at 0.0 m, Nivel 2 at 4.0 m, LAB_LEVEL_TEST
+      at 4.0 m), element_count 3316 -> 3317, warnings 0 before and after; persistence
+      proved by horizun_save_document (saved=true) then close (disk_changed=false
+      bytes 4370432) then reopen then a full Revit process restart and reopen with
+      version_guard=checked, and the level is still there at 4.0 m; evidence in tool-lab/horizun/results/t08-apply.json
+      t08-persistence2.json t08-restart.json
   P02-T09:
     id: P02-T09
     phase: PHASE_02
@@ -706,8 +736,14 @@ tasks:
     title: OR-Tools macrozone solver
     depends_on:
     - P04-T08
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - src/amanda_agent/design/macrozones.py with tests/solver/test_macrozones.py;
+      CP-SAT seed fixed and num_search_workers=1; UNKNOWN separated from INFEASIBLE
+      by a monkeypatched timeout test; pytest tests/solver tests/geometry -q = 63
+      passed
+    - pytest tests -q (excluding the pre-existing tests/unit/test_destructive_threshold.py
+      failure in another agent area) = 436 passed, 1 skipped
   P04-T10:
     id: P04-T10
     phase: PHASE_04
@@ -715,8 +751,13 @@ tasks:
     title: Block polygon generator
     depends_on:
     - P04-T09
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'src/amanda_agent/design/blocks.py + tests/solver/test_blocks.py: blocks stay
+      inside their sector, never overlap, respect the area band, split only when configuration
+      says so and reject slivers'
+    - green under pytest tests/solver tests/geometry -q = 63 passed and pytest tests
+      -q = 436 passed, 1 skipped (commit dd40b88)
   P04-T11:
     id: P04-T11
     phase: PHASE_04
@@ -724,8 +765,13 @@ tasks:
     title: Room refinement
     depends_on:
     - P04-T10
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'src/amanda_agent/design/rooms.py + tests/solver/test_rooms.py: room IDs preserved
+      (room#k, @Lk), min/max area honoured, orphans flagged, net vs gross vs circulation
+      separated per storey and net_to_gross_is_hypothesis=true'
+    - green under pytest tests/solver tests/geometry -q = 63 passed and pytest tests
+      -q = 436 passed, 1 skipped (commit dd40b88)
   P04-T12:
     id: P04-T12
     phase: PHASE_04
@@ -733,8 +779,13 @@ tasks:
     title: External spaces as first-class geometry
     depends_on:
     - P04-T11
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'src/amanda_agent/design/external_spaces.py + tests/solver/test_external_spaces.py:
+      unique ids, area targets, privacy policy tied to the programme, playground only
+      next to the children zone and used_leftover_as_garden=false'
+    - green under pytest tests/solver tests/geometry -q = 63 passed and pytest tests
+      -q = 436 passed, 1 skipped (commit dd40b88)
   P04-T13:
     id: P04-T13
     phase: PHASE_04
@@ -742,8 +793,14 @@ tasks:
     title: Versioned scoring
     depends_on:
     - P04-T12
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'src/amanda_agent/design/scoring.py + design-engine/config/weights.yaml + tests/solver/test_scoring.py:
+      weights file declares unit, direction, bounds, missing-value rule and evidence;
+      an unknown dimension and beauty are refused; changing a weight moves the total
+      without touching raw scores'
+    - green under pytest tests/solver tests/geometry -q = 63 passed and pytest tests
+      -q = 436 passed, 1 skipped (commit dd40b88)
   P04-T14:
     id: P04-T14
     phase: PHASE_04
@@ -751,8 +808,13 @@ tasks:
     title: Pareto frontier
     depends_on:
     - P04-T13
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'src/amanda_agent/design/pareto.py + tests/solver/test_pareto.py: dominated
+      vectors removed, minimum-total tradeoff preserved, an absent dimension is skipped
+      and never becomes a value'
+    - green under pytest tests/solver tests/geometry -q = 63 passed and pytest tests
+      -q = 436 passed, 1 skipped (commit dd40b88)
   P04-T15:
     id: P04-T15
     phase: PHASE_04
@@ -760,8 +822,13 @@ tasks:
     title: Fast solar/ventilation heuristics
     depends_on:
     - P04-T14
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'src/amanda_agent/design/environmental.py + tests/solver/test_environmental_heuristics.py:
+      true north honoured, labels HEURISTIC, east/west and wind exposure carry the
+      expected signs'
+    - green under pytest tests/solver tests/geometry -q = 63 passed and pytest tests
+      -q = 436 passed, 1 skipped (commit dd40b88)
   P04-T16:
     id: P04-T16
     phase: PHASE_04
@@ -769,8 +836,13 @@ tasks:
     title: Deterministic generation
     depends_on:
     - P04-T15
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'src/amanda_agent/design/generate.py + tests/solver/test_generation_reproducibility.py:
+      canonical hash excludes run_id, durations and paths and rounds floats; the same
+      seed gives the same hash; different seeds give deduplicated diversity'
+    - green under pytest tests/solver tests/geometry -q = 63 passed and pytest tests
+      -q = 436 passed, 1 skipped (commit dd40b88)
   P04-T17:
     id: P04-T17
     phase: PHASE_04
@@ -778,8 +850,13 @@ tasks:
     title: Progressive pipeline
     depends_on:
     - P04-T16
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'src/amanda_agent/design/pipeline.py + tests/solver/test_pipeline.py: counts
+      configurable, rejections carry their exact reason, block-to-room changes show
+      up, revit_calls=0 in the pipeline'
+    - green under pytest tests/solver tests/geometry -q = 63 passed and pytest tests
+      -q = 436 passed, 1 skipped (commit dd40b88)
   P04-T18:
     id: P04-T18
     phase: PHASE_04
@@ -787,8 +864,13 @@ tasks:
     title: Explainability
     depends_on:
     - P04-T17
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'src/amanda_agent/design/explain.py + tests/solver/test_explain.py: strengths
+      and tradeoffs come only from real data, hard violations listed, source principle
+      kept separate from hypothesis, WHY_THIS_OPTION.md built from structure only'
+    - green under pytest tests/solver tests/geometry -q = 63 passed and pytest tests
+      -q = 436 passed, 1 skipped (commit dd40b88)
   P04-T19:
     id: P04-T19
     phase: PHASE_04
