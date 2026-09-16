@@ -97,13 +97,13 @@ rg --files -g 'AGENTS.md' -g 'START_HERE_FOR_CODEX.md' -g 'docs/superpowers/plan
 rg -n --glob '0[0-9]-*.md' '^#|^##|^###' docs/superpowers/plans
 rg -n -C 3 --glob '08-amanda-production-run.md' 'P08-T01|P08-T08|P08-T09|P08-T10|P08-T15|P08-T16|P08-T17|P08-T18|P08-T19|Production Completion Gate' docs/superpowers/plans
 rg -n -C 3 'create_grid|create_roof|registered_entry|revit_build|evidence_scope' state/providers/semantic-crosswalk.yaml state/capabilities.yaml
-rg -n --glob '*.py' 'load_with_crosswalk|CapabilityRegistry\\.load|semantic-crosswalk|crosswalk' src/amanda_agent
+rg -n --glob '*.py' 'load_with_crosswalk|CapabilityRegistry\.load|semantic-crosswalk|crosswalk' src/amanda_agent
 ```
 
 Comando usado para reconfirmar a contagem do grafo:
 
 ```powershell
-$lines = Get-Content -LiteralPath 'state/task-graph.yaml'; $current = $null; $items = @(); foreach ($line in $lines) { if ($line -match '^  (P\\d{2}-T\\d{2}):$') { $current = $Matches[1] } elseif ($current -and $line -match '^    status: (\\S+)$') { $items += [pscustomobject]@{Id=$current;Status=$Matches[1]}; $current = $null } }; $items | Group-Object Status | Sort-Object Name | Select-Object Name,Count | Format-Table -AutoSize; "TOTAL=$($items.Count)"
+$lines = Get-Content -LiteralPath 'state/task-graph.yaml'; $current = $null; $items = @(); foreach ($line in $lines) { if ($line -match '^  (P\d{2}-T\d{2}):$') { $current = $Matches[1] } elseif ($current -and $line -match '^    status: (\S+)$') { $items += [pscustomobject]@{Id=$current;Status=$Matches[1]}; $current = $null } }; $items | Group-Object Status | Sort-Object Name | Select-Object Name,Count | Format-Table -AutoSize; "TOTAL=$($items.Count)"
 ```
 
 Resultado observado: `PASS 136`, `PASS_WITH_WARNINGS 2`, `PENDING 13`, `SUSPENDED 8`, `TOTAL=159`. Não apareceu outro status de tarefa.
