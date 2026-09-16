@@ -6,16 +6,16 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `PHASE_06` — qa-release-exports
 - Phase status: `PENDING`
-- Next task: `P06-T14`
-- Last PASS task: `P08-T07`
-- Tasks: 159 total; READY: P06-T14, P08-T08
+- Next task: `P08-T08`
+- Last PASS task: `P06-T14`
+- Tasks: 159 total; READY: P08-T08
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
 - `PHASE_03`: 15/15 PASS
 - `PHASE_04`: 22/22 PASS
 - `PHASE_05`: 23/23 PASS
-- `PHASE_06`: 14/15 PASS
+- `PHASE_06`: 15/15 PASS
 - `PHASE_07A`: 11/11 PASS
 - `PHASE_07B`: 6/8 PASS
 - `PHASE_08`: 7/19 PASS
@@ -62,4 +62,4 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 ## Git verification
 
 - Last verified commit: `NOT_RECORDED`
-- Observed HEAD: `abe34c2bb62377caa78ba5f2aa56a0980f16ed37`
+- Observed HEAD: `d20dc44bcdd0abdb46131ffd54d7f259522a3051`
