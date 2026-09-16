@@ -1,0 +1,61 @@
+{
+  "target": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+  "elements": {
+    "grid": 328777,
+    "roof": 328780
+  },
+  "sha256_before": "6a1544d3075f86219cec609010c2446608916f2be7b917386836e93b051d829c",
+  "save": {
+    "saved": true,
+    "outcome": "saved_verified",
+    "outcome_means": "The file's bytes changed between before and after, so a write demonstrably happened.",
+    "document": "LAB_HORIZUN_DOC",
+    "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\horizun\\LAB_HORIZUN_DOC.rvt",
+    "is_workshared": false,
+    "what_this_did": "Saved the file in place.",
+    "was_modified_before": true,
+    "is_modified_after": false,
+    "modified_flags_note": "null means Document.IsModified could not be read, which is UNKNOWN and never false.",
+    "bytes_changed_on_disk": true,
+    "verified_by": "sha256 of the file, read before and after",
+    "sha256_before": "6a1544d3075f86219cec609010c2446608916f2be7b917386836e93b051d829c",
+    "sha256_after": "28cfc5434482f7e62239e7048f62fbe248f3fa7721f51bcd51648139d45ee02e",
+    "file_before": {
+      "modified_utc": "2026-09-15T14:39:13.2666277Z",
+      "size_bytes": 4427776
+    },
+    "file_after": {
+      "modified_utc": "2026-09-16T18:20:02.8407223Z",
+      "size_bytes": 4435968
+    },
+    "idempotency": {
+      "key": "xw-save-2c152ecc86",
+      "status": "executed_once",
+      "command_executed_in_this_call": true,
+      "note": "The durable claim and result were recorded; an identical retry will replay this answer."
+    },
+    "bridge_queue": {
+      "queued": false,
+      "ahead_at_admission": 0,
+      "waited_ms": 4,
+      "waited_on": "revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)",
+      "capacity": 16,
+      "execution_and_wait_ms": 1045
+    }
+  },
+  "sha256_after_save": "28cfc5434482f7e62239e7048f62fbe248f3fa7721f51bcd51648139d45ee02e",
+  "close": {
+    "closed": null,
+    "disk_changed": null
+  },
+  "reopen": {
+    "opened": true,
+    "path_matches_request": true,
+    "upgraded_on_open": false
+  },
+  "after_reopen": {
+    "grid": 1,
+    "roof": 1
+  },
+  "persisted": true
+}

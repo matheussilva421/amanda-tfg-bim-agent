@@ -1,8 +1,8 @@
 schema_version: 1
 generated_utc: '2026-09-16'
-rule: one row per semantic operation the BIM stages require. A row may claim a
-  registered entry only when the evidence file below proves that exact semantic
-  name; an unproven row stays a gap instead of being guessed.
+rule: one row per semantic operation the BIM stages require. A row may claim a registered
+  entry only when the evidence file below proves that exact semantic name; an unproven
+  row stays a gap instead of being guessed.
 provenance:
   source: tool-lab/horizun/results/probe-routes-2026-09-15-live10-13.json
   sha256: 4777dbcac7890c4f847d08731b50b4beacfccf5cd73f793bffdd833f7fbcc19a
@@ -10,8 +10,8 @@ provenance:
   revit_version: '2027'
   revit_build: 27.2.0.39
   contract_hash: 8b9600f5274d7dffb6e5bd5f
-  note: LAB/STUDY evidence only. An alias moves a proven provider route into the
-    semantic vocabulary; it never promotes the evidence scope to PRODUCTION.
+  note: LAB/STUDY evidence only. An alias moves a proven provider route into the semantic
+    vocabulary; it never promotes the evidence scope to PRODUCTION.
 rows:
 - semantic: revit.create_project
   route: horizun_document_session
@@ -23,9 +23,8 @@ rows:
   writes: true
 - semantic: revit.create_grid
   route: horizun_create_elements
-  registered_entry: null
+  registered_entry: grid
   writes: true
-  gap: no registered entry for grids; the route is proven but unregistered
 - semantic: revit.create_wall
   route: horizun_create_elements
   registered_entry: wall
@@ -40,9 +39,8 @@ rows:
   writes: true
 - semantic: revit.create_roof
   route: horizun_create_elements
-  registered_entry: null
+  registered_entry: roof
   writes: true
-  gap: no registered entry for roofs; the route is proven but unregistered
 - semantic: revit.create_internal_wall
   route: horizun_create_elements
   registered_entry: wall

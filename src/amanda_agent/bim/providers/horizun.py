@@ -67,11 +67,20 @@ _MARKLESS_READBACK_CATEGORIES = {
     "grid": "OST_Grids",
     "room": "OST_Rooms",
 }
+
+#: Categories the python routes create that CAN be re-queried.  The query filter
+#: resolves these against the model's own localised category names (a Brazilian
+#: Portuguese model reports "Massa", not "OST_Mass"), which is why the same
+#: identifier works on an English and a localised document.
+_PYTHON_READBACK_CATEGORIES = {
+    "revit.create_mass": "OST_Mass",
+}
 _WALL_OPENING_READBACK_UNAVAILABLE = {
     "type": "HorizunReadbackUnavailable",
     "code": "wall_opening_no_reliable_query_filter",
     "message": "horizun_query_model has no reliable logical_id filter for wall_opening",
 }
+
 
 _ELEMENT_FIELDS = {
     "level": ("name", "elevation", "parameters"),
@@ -1121,6 +1130,25 @@ else:
                 {"category": category, "include_links": False, "max_rows": 2000},
             )
             rows = self._rows(raw)
+            # horizun_list_elements answers with instances, and a wall TYPE is
+            # not an instance, so on a real model that listing answers zero rows
+            # for a type the template really has.  When it comes back empty the
+            # type-aware query is asked instead, which the live bridge answers
+            # with the type of each element in the category.  Nothing about the
+            # declared-catalog check above changes.
+            if not rows and category != "OST_Levels":
+                raw = self._read_tool(
+                    "horizun_query_model",
+                    {
+                        "categories": [category],
+                        "response_mode": "compact",
+                        "cache_mode": "bypass",
+                        "include_links": False,
+                        "include_types": True,
+                        "max_rows": 2000,
+                    },
+                )
+                rows = self._rows(raw)
             stage_cache[category] = rows
         matches = [row for row in rows if self._row_matches(row, value)]
         if len(matches) != 1:

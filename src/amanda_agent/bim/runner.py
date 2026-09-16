@@ -10,6 +10,7 @@ from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, field
 from enum import StrEnum
 from typing import Any
+import uuid
 
 from .models import BimStage
 from .providers import HorizunRequestError, McpTransportError
@@ -378,12 +379,21 @@ def execute_stage(plan: Any, *, invoker: Any) -> StageRunResult:
     _validate_plan(plan)
     records: list[OperationRunRecord] = []
     warnings = list(getattr(plan, "warnings", ()) or ())
+    # The bridge keeps an idempotency key for exactly one operation and refuses
+    # to reuse it for different work, so a stage that is deliberately re-run
+    # needs its own namespace rather than replaying the previous attempt.
+    run_token = uuid.uuid4().hex[:12]
     for operation in plan.operations:
         provider = _selected_provider(operation)
         payload = dict(operation.payload)
         payload.setdefault(
-            "idempotency_key", f"bim:{plan.stage.name}:{operation.logical_id}"
+            "idempotency_key",
+            f"bim:{plan.stage.name}:{operation.logical_id}:{run_token}",
         )
+        # These are real writes, and the invoker only plans its independent READ
+        # when the call says so: without an explicit dry_run=False the bridge
+        # rehearses instead of writing, and no readback is scheduled.
+        payload.setdefault("dry_run", False)
         call = StageToolCall(
             stage=operation.stage,
             logical_id=operation.logical_id,

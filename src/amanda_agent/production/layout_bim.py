@@ -86,6 +86,30 @@ DEFAULT_TEMPLATE_ROOTS: tuple[Path, ...] = (
 #: The Brazilian Portuguese architectural template of the installed build.
 DEFAULT_TEMPLATE_NAME = "Default_M_PTB.rte"
 
+#: The level the plan builds on.  It is the logical id the level carries in the
+#: model, which is what the bridge resolves a level reference against.
+LEVEL_LOGICAL_ID = "LEVEL-01"
+
+#: The wall types the installed Brazilian template ships, as the ElementIds the
+#: model reports for them.  The layout decides thicknesses (250 mm external,
+#: 138 mm internal partition) and these are the matching template types, read
+#: from the model rather than invented.  The id form is used because a type
+#: reference is resolved by the bridge against an instance listing, which cannot
+#: hold a type, so resolving a name there always finds nothing.
+EXTERNAL_WALL_TYPE_ID = 250  # "Genérico - 250 mm"
+INTERNAL_WALL_TYPE_ID = 220  # "Interior - 138 mm Divisória (1-hr)"
+
+#: Operations that Revit refuses unless they name their level.
+_NEEDS_LEVEL = (
+    "revit.create_wall",
+    "revit.create_floor",
+    "revit.create_slab",
+    "revit.create_roof",
+    "revit.create_internal_wall",
+    "revit.create_room",
+    "revit.create_opening",
+)
+
 _STAGE_ORDER: tuple[BimStage, ...] = (
     BimStage.R01,
     BimStage.R02,
@@ -398,7 +422,10 @@ def _plan_r03(request, layout):
         )
     level = levels_stage.LevelReference(
         logical_id="LEVEL-01",
-        name="Terreo",
+        # A level is read back by the name it carries in the model, so the name
+        # is the logical id.  A display name such as "Térreo" would be matched
+        # against nothing and the write would be reported as unverified.
+        name="LEVEL-01",
         elevation_m=0.0,
         evidence=[
             "the adopted layout is single storey by construction "
@@ -411,37 +438,57 @@ def _plan_r03(request, layout):
     )
     grids = [
         levels_stage.GridAxis(
-            logical_id="GRID-%02d" % index,
+            logical_id=name,
+            # Same contract as the level: the grid's name in the model is what
+            # the independent read matches, so the logical id travels as the
+            # name and a letter alone would not identify it.
             name=name,
             start=(position, bounds[1]),
             end=(position, bounds[3]),
             assumption="PROVISIONAL_ASSUMPTION",
         )
-        for index, (name, position) in enumerate(
-            (("A", bounds[0]), ("B", bounds[2])), start=1
+        for name, position in (
+            ("GRID-01", bounds[0]),
+            ("GRID-02", bounds[2]),
         )
     ]
-    reference = levels_stage.ReferenceMarker(
-        logical_id="REF-PROJECT-ORIGIN",
-        name="Project Origin",
-        kind="PROJECT_ORIGIN",
-        coordinate=(0.0, 0.0, 0.0),
-        evidence=["PROVISIONAL_ASSUMPTION: local design origin; no survey datum"],
-        is_provisional=True,
-    )
+    # A project-origin reference plane is deliberately NOT planned yet.
+    #
+    # Measured against the installed contract (Horizun 1.3.3, build 27.2.0.39):
+    # the create_reference python route commits the plane but returns
+    # host_verified=false with evidence_status "completed_unverified", and
+    # horizun_query_model answers OST_ReferencePlanes with no matched_total at
+    # all, so there is no independent read that could verify it.  Planning it
+    # anyway would either fail the stage on a missing read or force the
+    # verification contract to be weakened, and a write nobody can re-read is
+    # exactly what this project refuses to call verified.
+    #
+    # It is not needed for the architecture: the level datum at 0.00 is carried
+    # by LEVEL-01, which is written and independently re-read.  The origin plane
+    # returns when the contract can query it.
     return levels_stage.plan_levels_stage(
-        request, levels=[level], grids=grids, references=[reference]
+        request, levels=[level], grids=grids, references=[]
     )
 
 
 def _plan_r04(request, layout):
+    # The footprint polygon repeats its first point to close the ring, and the
+    # massing script closes the loop itself by wrapping to index 0.  Passing the
+    # repeated point would append a zero-length line, which Revit refuses with
+    # "Curve length is too small for Revit's tolerance", so the duplicate is
+    # dropped here.
+    ring = [
+        (float(x), float(y)) for x, y in layout.footprint.exterior.coords[:-1]
+    ]
     blocks = [
         massing_stage.MassingBlock(
             logical_id="MASS-01",
-            name="Bloco principal",
-            footprint=[
-                (float(x), float(y)) for x, y in layout.footprint.exterior.coords
-            ],
+            # The independent read matches a created element by the name it
+            # carries in the model, so the name is the logical id.  A display
+            # name would leave the mass unverifiable, exactly as it did for the
+            # level and the grids.
+            name="MASS-01",
+            footprint=ring,
             base_elevation_m=0.0,
             height_m=FLOOR_HEIGHT_M + 0.30,
             source_area_m2=float(layout.footprint.area),
@@ -476,6 +523,22 @@ def _plan_r05(request, layout):
         floor_loops=loops,
         slab_loops=[*loops, {"type": "Polygon", "coordinates": [veranda_ring]}],
         roof=roof,
+        # The wall type is a template asset, so the plan names the ones this
+        # installed template actually carries.  The ids are written as decimal
+        # strings because the stage catalog is typed as text, and the provider
+        # translation turns a numeric string back into the integer ElementId it
+        # resolves directly.
+        wall_types={
+            "external": str(EXTERNAL_WALL_TYPE_ID),
+            "internal": str(INTERNAL_WALL_TYPE_ID),
+        },
+        # These are real ids read off the installed template, and the stage asks
+        # a caller that supplies real types to say where they came from.
+        wall_type_source=(
+            "read from the installed template Default_M_PTB.rte on Revit 2027 "
+            "build 27.2.0.39: element 250 is 'Generico - 250 mm', element 220 is "
+            "'Interior - 138 mm Divisoria (1-hr)'"
+        ),
     )
 
 
@@ -770,6 +833,74 @@ def _plan_r13(request):
 def _stamp(plan, solution_id, approval_hash):
     """Bind every operation to the solution that produced it."""
 
+    def _bridge_fields(operation):
+        """The provider fields the bridge reads, derived from the element.
+
+        The stage payload speaks the compiler's vocabulary: geometry holds a
+        GeoJSON LineString or Polygon.  The bridge reads start/end/height for a
+        wall and profile for a floor, slab or roof, so those are derived here
+        from the geometry the stage already fixed rather than invented.
+        """
+
+        geometry = operation.payload.get("geometry")
+        if not isinstance(geometry, Mapping):
+            return {}
+        kind = geometry.get("type")
+        coordinates = geometry.get("coordinates")
+        capability = operation.semantic_capability
+        if kind == "LineString" and capability in {
+            "revit.create_wall",
+            "revit.create_internal_wall",
+        }:
+            if not isinstance(coordinates, list) or len(coordinates) < 2:
+                return {}
+            start = [float(v) for v in coordinates[0]]
+            end = [float(v) for v in coordinates[1]]
+            while len(start) < 3:
+                start.append(0.0)
+            while len(end) < 3:
+                end.append(0.0)
+            fields = {
+                "start": start,
+                "end": end,
+                "height": float(FLOOR_HEIGHT_M),
+            }
+            # The provider resolves a wall type by NAME through the type_id
+            # field, so the template's real type name travels there.  The stage
+            # keeps its own wall_type_id for the accounting, and the bridge is
+            # given the field it reads.
+            properties = operation.payload.get("properties")
+            properties = dict(properties) if isinstance(properties, Mapping) else {}
+            # The shell stage names the wall's type in properties.type_id.
+            type_name = properties.get("type_id")
+            if isinstance(type_name, str) and type_name.strip():
+                # A numeric string is an ElementId and travels as an int, which
+                # the bridge resolves directly instead of searching by name.
+                fields["type_id"] = (
+                    int(type_name) if type_name.strip().isdigit() else type_name
+                )
+            elif isinstance(type_name, int):
+                fields["type_id"] = type_name
+            return fields
+        if kind == "Polygon" and capability in {
+            "revit.create_floor",
+            "revit.create_slab",
+            "revit.create_roof",
+        }:
+            ring = coordinates[0] if isinstance(coordinates, list) and coordinates else None
+            if not isinstance(ring, list) or len(ring) < 4:
+                return {}
+            fields = {"profile": [[float(p[0]), float(p[1])] for p in ring]}
+            properties = operation.payload.get("properties")
+            properties = dict(properties) if isinstance(properties, Mapping) else {}
+            type_name = properties.get("slab_type_id") or properties.get("type_id")
+            if isinstance(type_name, str) and type_name.strip():
+                fields["type_id"] = (
+                    int(type_name) if type_name.strip().isdigit() else type_name
+                )
+            return fields
+        return {}
+
     operations = [
         operation.model_copy(
             update={
@@ -777,6 +908,19 @@ def _stamp(plan, solution_id, approval_hash):
                     **operation.payload,
                     "solution_id": solution_id,
                     "approval_hash": approval_hash,
+                    **_bridge_fields(operation),
+                    # Revit refuses a wall, floor, slab, roof, room or opening
+                    # that does not name the level it belongs to, and the bridge
+                    # resolves that reference by the logical id the level
+                    # carries in the model. R03 has already written LEVEL-01 by
+                    # the time these stages run, so the reference is attached for
+                    # every operation that needs one and does not carry it yet.
+                    **(
+                        {"level_id": LEVEL_LOGICAL_ID}
+                        if operation.semantic_capability in _NEEDS_LEVEL
+                        and operation.payload.get("level_id") is None
+                        else {}
+                    ),
                 }
             }
         )

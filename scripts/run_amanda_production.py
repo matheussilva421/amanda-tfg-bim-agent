@@ -16,6 +16,8 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
+import uuid
 from pathlib import Path
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
@@ -160,30 +162,89 @@ def run(rvt: Path, *, execute: bool, max_stage: str) -> int:
 
     EVIDENCE_ROOT.mkdir(parents=True, exist_ok=True)
     rvt.parent.mkdir(parents=True, exist_ok=True)
+    # The bridge addresses documents by absolute rooted path, so the target is
+    # resolved once here and every stage call carries that same string.
+    rvt = rvt.resolve()
+
+    # Every run starts from the installed template into a NEW file.  The
+    # production stages name their elements deterministically (LEVEL-01,
+    # GRID-01, and so on), and Revit refuses a duplicate level or grid name, so
+    # reusing a file that already holds a previous attempt would fail on names
+    # rather than on the work.  A run number keeps each attempt its own model and
+    # never overwrites a build that may already hold reviewed evidence.
+    if rvt.exists():
+        stamp = time.strftime("%Y%m%d-%H%M%S")
+        rvt = rvt.with_name(f"{rvt.stem}.{stamp}{rvt.suffix}")
+        print("target already exists; writing a new attempt:", rvt.name)
 
     lock = WriterLock(LOCK_PATH, owner="amanda-production-run")
     lock.acquire(reclaim_abandoned=True)
     print("lease acquired:", lock.owner_token)
     try:
         with McpProbeTransport(timeout=900.0) as transport:
+            # Each attempt is new work, so it gets its own idempotency keys: the
+            # bridge keeps a key for exactly one operation and replays the
+            # recorded answer for an identical retry, which would silently
+            # return the previous attempt's reply instead of opening the file.
+            run_key = uuid.uuid4().hex[:12]
             transport.call(
                 "horizun_document_session",
                 {
                     "operation": "open",
                     "file_path": str(template),
                     "expected_version": "2027",
-                    "idempotency_key": "amanda-open-template-1",
+                    "idempotency_key": f"amanda-open-template-{run_key}",
                 },
             )
             info = _document_info(transport)
             print("after open:", json.dumps(info, ensure_ascii=False)[:300])
 
+            # The template may already be open behind another document, in which
+            # case opening it does not make it active.  Activating it explicitly
+            # is what the safety check then sees, and it is also what makes the
+            # save_as act on the template rather than on whatever was in front.
+            active_now = _active_path(info)
+            if not active_now or Path(active_now).resolve() != Path(template).resolve():
+                transport.call(
+                    "horizun_document_session",
+                    {
+                        "operation": "open",
+                        "file_path": str(template),
+                        "expected_version": "2027",
+                        "activate": True,
+                        "idempotency_key": f"amanda-activate-template-{run_key}",
+                    },
+                )
+                info = _document_info(transport)
+                print("after activate:", json.dumps(info, ensure_ascii=False)[:250])
+
+            # Opening the template is asynchronous enough that an immediate
+            # save_as can arrive while the source document is still settling,
+            # and the bridge then reports success without switching the active
+            # document.  The open is therefore confirmed before the save.
+            if not _active_path(info) or not str(_active_path(info)).casefold().endswith(
+                ".rte"
+            ):
+                for _ in range(20):
+                    time.sleep(0.5)
+                    info = _document_info(transport)
+                    if _active_path(info):
+                        break
+                print("re-read after open:", json.dumps(info, ensure_ascii=False)[:200])
+
+            # save_as refuses to guess which open document it is saving, and it
+            # addresses that document by the path the bridge itself reports
+            # rather than by the path this script asked for.
+            source = _active_path(info) or str(template)
             transport.call(
                 "horizun_document_session",
                 {
                     "operation": "save_as",
-                    "file_path": str(rvt),
-                    "idempotency_key": "amanda-save-as-1",
+                    "target_document": source,
+                    # The destination travels in save_as_path; file_path is an
+                    # alias of target_document for this operation, not the target.
+                    "save_as_path": str(rvt),
+                    "idempotency_key": f"amanda-save-as-{run_key}",
                 },
             )
             info = _document_info(transport)

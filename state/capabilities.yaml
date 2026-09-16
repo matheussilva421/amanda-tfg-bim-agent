@@ -204,4 +204,43 @@ entries:
   - tool-lab/custom-api/results/t16-host-create.json::sha256=8cd174f15826303ffe3274f4bac94720aa75126a23a6e99f81101e729685a0fa
   limitations:
   - 'fallback path only: prefer a typed provider when its evidence is equal or better'
-  - 'schema hash was not measured for this local source path; the value is local, not a provider contract hash'
+  - schema hash was not measured for this local source path; the value is local, not
+    a provider contract hash
+- provider: horizun
+  status: PASS
+  priority: 10
+  provider_commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+  transport_provider: horizun-revit-mcp
+  tool_schema_hash: sha256:8b9600f5274d7dffb6e5bd5f
+  tested_scope:
+    operation: grid
+    writes: true
+  evidence_scope: PROVIDER
+  revit_build: 27.2.0.39
+  save_reopen: true
+  independent_query: true
+  transport_healthy: true
+  warnings_delta: 0
+  evidence:
+  - tool-lab/horizun/results/crosswalk-grid-roof-persistence.json::sha256=d4f19a3c1e57621c7a1f8acd77c3a8219ef5d02ff2e642941d41c4a5b938675b
+  - tool-lab/horizun/results/probe-routes-2026-09-15-live10-13.json::sha256=4777dbcac7890c4f847d08731b50b4beacfccf5cd73f793bffdd833f7fbcc19a
+  limitations: []
+- provider: horizun
+  status: PASS
+  priority: 10
+  provider_commit: cc4ea04e9ecfe547ad349f22e0864019ce1ead1f
+  transport_provider: horizun-revit-mcp
+  tool_schema_hash: sha256:8b9600f5274d7dffb6e5bd5f
+  tested_scope:
+    operation: roof
+    writes: true
+  evidence_scope: PROVIDER
+  revit_build: 27.2.0.39
+  save_reopen: true
+  independent_query: true
+  transport_healthy: true
+  warnings_delta: 0
+  evidence:
+  - tool-lab/horizun/results/crosswalk-grid-roof-persistence.json::sha256=d4f19a3c1e57621c7a1f8acd77c3a8219ef5d02ff2e642941d41c4a5b938675b
+  - tool-lab/horizun/results/probe-routes-2026-09-15-live10-13.json::sha256=4777dbcac7890c4f847d08731b50b4beacfccf5cd73f793bffdd833f7fbcc19a
+  limitations: []

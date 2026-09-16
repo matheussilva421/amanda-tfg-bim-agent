@@ -49,6 +49,13 @@ SHELL_CAPABILITIES = (
 )
 
 DEFAULT_WALL_TYPES = {"external": "EXT_WALL_01", "internal": "INT_WALL_01"}
+#: The placeholder names above are the compiler's own vocabulary.  A real model
+#: carries whatever types its template ships, and a wall type that does not
+#: exist is refused by the provider, so a caller that has read the template's
+#: real types must be able to name them.  The catalog below is therefore the set
+#: of REGISTRY-PLACEHOLDER names, not a whitelist of permitted real types.
+_PLACEHOLDER_WALL_TYPES = frozenset(DEFAULT_WALL_TYPES.values())
+_WALL_TYPE_KEYS = frozenset(DEFAULT_WALL_TYPES)
 DEFAULT_WALL_THICKNESSES = {"external": 0.20, "internal": 0.12}
 DEFAULT_WALL_MATERIALS = {
     "external": "EXT_WALL_MATERIAL",
@@ -197,6 +204,7 @@ def plan_shell_stage(
     roof: Mapping[str, Any] | None = None,
     openings: Sequence[Any] | None = None,
     wall_types: Mapping[str, str] | None = None,
+    wall_type_source: str | None = None,
     wall_thicknesses_m: Mapping[str, float] | None = None,
     wall_materials: Mapping[str, str] | None = None,
     design_option: str | None = None,
@@ -231,10 +239,25 @@ def plan_shell_stage(
     )
     types = dict(DEFAULT_WALL_TYPES)
     types.update(wall_types or {})
-    if set(types) - {"external", "internal"}:
+    if set(types) - _WALL_TYPE_KEYS:
         raise StageError("wall type catalog accepts only external and internal entries")
-    if any(value not in {"EXT_WALL_01", "INT_WALL_01"} for value in types.values()):
-        raise StageError("wall type catalog contains an uncontrolled type")
+    # A type is either the compiler's own placeholder or a real type the caller
+    # READ OFF the target model.  The difference matters: a placeholder is the
+    # stage's vocabulary, while a real type is a fact about a document, and a
+    # name that exists in no document is refused by the provider after the
+    # transaction has already begun.  A caller that supplies anything other than
+    # the placeholders must therefore also say where those names came from, so
+    # an invented type cannot pass as a verified one.
+    observed = {str(value).strip() for value in (wall_types or {}).values()}
+    if not observed <= _PLACEHOLDER_WALL_TYPES:
+        if not str(wall_type_source or "").strip():
+            raise StageError(
+                "wall type catalog contains an uncontrolled type: a type other "
+                "than the built-in placeholders requires wall_type_source naming "
+                "the target document or catalog it was read from"
+            )
+    if any(not str(value).strip() for value in types.values()):
+        raise StageError("wall type catalog contains an empty type name")
     thicknesses = dict(DEFAULT_WALL_THICKNESSES)
     thicknesses.update(wall_thicknesses_m or {})
     materials = dict(DEFAULT_WALL_MATERIALS)
