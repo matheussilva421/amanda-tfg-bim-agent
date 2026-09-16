@@ -62,6 +62,16 @@ _MARKLESS_KINDS = {"level", "grid", "wall_opening"}
 # A room carries comments but no mark: the bridge refuses the whole batch when a
 # category is offered a parameter it does not own, and a room owns no mark.
 _MARK_ONLY_KINDS = {"level", "grid", "room", "wall_opening"}
+_MARKLESS_READBACK_CATEGORIES = {
+    "level": "OST_Levels",
+    "grid": "OST_Grids",
+    "room": "OST_Rooms",
+}
+_WALL_OPENING_READBACK_UNAVAILABLE = {
+    "type": "HorizunReadbackUnavailable",
+    "code": "wall_opening_no_reliable_query_filter",
+    "message": "horizun_query_model has no reliable logical_id filter for wall_opening",
+}
 
 _ELEMENT_FIELDS = {
     "level": ("name", "elevation", "parameters"),
@@ -901,20 +911,45 @@ else:
             return
         parameters = translated_elements[0].get("parameters")
         mark = parameters.get("ALL_MODEL_MARK") if isinstance(parameters, Mapping) else None
-        if not isinstance(mark, str) or not mark.strip():
+        if isinstance(mark, str) and mark.strip():
+            self._pending_readbacks[key] = {
+                "logical_id": call.logical_id,
+                "tool": "horizun_query_model",
+                "arguments": {
+                    "parameters": [
+                        {"name": "ALL_MODEL_MARK", "operator": "equals", "value": mark}
+                    ],
+                    "return_fields": list(self._READBACK_FIELDS),
+                    "response_mode": "compact",
+                    "cache_mode": "bypass",
+                },
+            }
             return
-        self._pending_readbacks[key] = {
-            "logical_id": call.logical_id,
-            "tool": "horizun_query_model",
-            "arguments": {
-                "parameters": [
-                    {"name": "ALL_MODEL_MARK", "operator": "equals", "value": mark}
-                ],
-                "return_fields": list(self._READBACK_FIELDS),
-                "response_mode": "compact",
-                "cache_mode": "bypass",
-            },
-        }
+        kind = translated_elements[0].get("kind")
+        category = _MARKLESS_READBACK_CATEGORIES.get(kind)
+        if category is not None:
+            self._pending_readbacks[key] = {
+                "logical_id": call.logical_id,
+                "tool": "horizun_query_model",
+                "arguments": {
+                    "categories": [category],
+                    "return_fields": list(self._READBACK_FIELDS),
+                    "response_mode": "compact",
+                    "cache_mode": "bypass",
+                },
+                "match_by_logical_id": True,
+            }
+            return
+        if kind == "wall_opening":
+            # The accepted query filters (including category, level and bounding
+            # box) cannot identify a newly created opening by its logical ID. The
+            # opening also cannot carry mark or comments, so an invented query
+            # would make verification look stronger than the evidence permits.
+            self._pending_readbacks[key] = {
+                "logical_id": call.logical_id,
+                "readback_unavailable": dict(_WALL_OPENING_READBACK_UNAVAILABLE),
+            }
+            return
 
     def _resolve_confirmation(
         self, tool: str, arguments: Mapping[str, Any]
@@ -980,15 +1015,20 @@ else:
         memo: dict[str, Any] = {
             "write_tool": result.get("tool"),
             "logical_id": plan["logical_id"],
-            "readback_tool": plan["tool"],
-            "readback_query": plan["arguments"],
         }
+        unavailable_reason = plan.get("readback_unavailable")
+        if unavailable_reason is None:
+            memo["readback_tool"] = plan["tool"]
+            memo["readback_query"] = plan["arguments"]
         confirmation = self._plan_evidence.pop(key, None)
         if confirmation is not None:
             memo["plan"] = confirmation
         if not result.reported_success:
             memo["readback_verified"] = False
             memo["readback_error"] = "write did not report success; the model was not read back"
+        elif unavailable_reason is not None:
+            memo["readback_verified"] = False
+            memo["readback_error"] = dict(unavailable_reason)
         else:
             try:
                 payload = self._read_tool(plan["tool"], plan["arguments"])
@@ -998,17 +1038,33 @@ else:
             else:
                 rows = self._rows(payload)
                 memo["readback_rows"] = rows
-                element_id = self._row_element_id(rows[0]) if len(rows) == 1 else None
+                matching_rows = rows
+                if plan.get("match_by_logical_id"):
+                    matching_rows = [
+                        row
+                        for row in rows
+                        if self._row_matches(row, plan["logical_id"])
+                    ]
+                element_id = (
+                    self._row_element_id(matching_rows[0])
+                    if len(matching_rows) == 1
+                    else None
+                )
                 if element_id is not None:
                     memo["element_id"] = element_id
                     self._logical_ids[plan["logical_id"]] = element_id
-                if len(rows) == 1:
+                if len(matching_rows) == 1:
                     for field in self._READBACK_FIELDS:
-                        value = rows[0].get(field)
+                        value = matching_rows[0].get(field)
                         if value is not None:
                             memo.setdefault(field, value)
+                unique_id = memo.get("unique_id")
+                stable_unique_id = isinstance(unique_id, str) and bool(unique_id.strip())
                 memo["readback_verified"] = bool(
-                    len(rows) == 1 and memo.get("unique_id") and element_id is not None
+                    len(matching_rows) == 1
+                    and (not plan.get("match_by_logical_id") or stable_unique_id)
+                    and memo.get("unique_id")
+                    and element_id is not None
                 )
         payload = result.read_payload
         merged = dict(payload) if isinstance(payload, Mapping) else {}

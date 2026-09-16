@@ -219,6 +219,7 @@ class EvidenceRecord(BaseModel):
     writes: bool | None = None
     evidence_scope: EvidenceScope = EvidenceScope.SYNTHETIC
     revit_build: str | None = None
+    transport_healthy: bool = True
     limitations: list[str] = Field(default_factory=list)
 
     @field_validator("model_query_evidence", mode="before")
@@ -384,6 +385,7 @@ class EvidenceRecord(BaseModel):
             revit_build=self.revit_build,
             save_reopen=self.save_reopen,
             independent_query=self.independent_query,
+            transport_healthy=self.transport_healthy,
             warnings_delta=self.warnings_delta,
             evidence=list(self.evidence_references),
             limitations=list(self.limitations),

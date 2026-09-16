@@ -292,3 +292,38 @@ def test_registry_loads_the_repository_capability_file_when_present() -> None:
 
     registry = CapabilityRegistry.load(repo_file)
     assert isinstance(registry.entries, list)
+
+
+def test_semantic_operation_is_selectable_when_the_record_uses_the_short_name(
+    tmp_path: Path,
+) -> None:
+    """The stage vocabulary and the provider vocabulary must not drift apart.
+
+    bim.stages asks for semantic names such as revit.create_wall while the Tool
+    Lab records the provider's own short name (wall) plus the semantic name it
+    maps to. Selection has to read both spellings, otherwise every stage
+    preflight refuses with 'no capability recorded' even though the capability
+    was proven on the live build.
+    """
+
+    record = capability(
+        tmp_path,
+        tested_scope={"operation": "wall", "writes": True},
+        tested_scope_aliases=("revit.create_wall",),
+        save_reopen=True,
+        independent_query=True,
+    )
+    registry = CapabilityRegistry(entries=[record])
+
+    assert [entry.operation for entry in registry.for_operation("revit.create_wall")] == [
+        "wall"
+    ]
+    selected = select(registry, operation="revit.create_wall")
+    assert selected.provider == "horizun"
+
+    # The provider's own spelling keeps working.
+    assert len(registry.for_operation("wall")) == 1
+
+    # An operation that no record claims is still refused.
+    with pytest.raises(SelectionRefused):
+        select(registry, operation="revit.link_model")

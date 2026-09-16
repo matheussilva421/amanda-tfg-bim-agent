@@ -159,6 +159,30 @@ class PreflightRequest(BaseModel):
     evidence_scope: EvidenceScope = EvidenceScope.PRODUCTION
     generation_run: str = Field(default="RUN-0001", min_length=1)
     last_checkpoint_verified: bool | None = None
+    registry_warnings: tuple[str, ...] = ()
+
+    @classmethod
+    def from_production_state(
+        cls,
+        project_root: str | Path,
+        **overrides: Any,
+    ) -> PreflightRequest:
+        """Build a request from the on-disk production state.
+
+        The registry is loaded through the declared crosswalk so semantic
+        operation names resolve to recorded provider evidence. The measured
+        build and the expected schema hash come from the state files; nothing
+        here invents a value. Warnings from the loader are kept on the request
+        so the preflight can name a declared gap.
+        """
+
+        root = Path(project_root)
+        registry, warnings = CapabilityRegistry.load_for_production(root)
+        payload = dict(overrides)
+        payload.setdefault("registry", registry)
+        payload.setdefault("registry_warnings", warnings)
+        request = cls(**payload)
+        return request
 
 
 class StageOperation(BaseModel):
@@ -257,6 +281,9 @@ def capability_is_selectable(
 
     candidates = registry.for_operation(operation)
     if not candidates:
+        gap = registry.gap_note(operation)
+        if gap is not None:
+            return False, [f"gap declarado no crosswalk: {gap}"]
         return False, [f"{operation}: no capability recorded"]
     reasons = registry.refusals(
         operation,

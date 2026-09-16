@@ -4,11 +4,11 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Phase and task progress
 
-- Phase: `PHASE_02` — revit-tool-lab-providers
+- Phase: `PHASE_06` — qa-release-exports
 - Phase status: `PENDING`
 - Next task: `P06-T14`
-- Last PASS task: `P08-T06`
-- Tasks: 159 total; READY: P06-T14, P08-T07
+- Last PASS task: `P08-T07`
+- Tasks: 159 total; READY: P06-T14, P08-T08
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -18,7 +18,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `PHASE_06`: 14/15 PASS
 - `PHASE_07A`: 11/11 PASS
 - `PHASE_07B`: 6/8 PASS
-- `PHASE_08`: 6/19 PASS
+- `PHASE_08`: 7/19 PASS
 - `PHASE_09`: 4/10 PASS
 
 ## Environment
@@ -62,4 +62,4 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 ## Git verification
 
 - Last verified commit: `NOT_RECORDED`
-- Observed HEAD: `eda4c3d4ac3670612180e75d9675ef6fd0c4a536`
+- Observed HEAD: `abe34c2bb62377caa78ba5f2aa56a0980f16ed37`

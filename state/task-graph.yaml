@@ -1979,8 +1979,25 @@ tasks:
     title: Synthetic R14→R16 release drill
     depends_on:
     - P06-T15
-    status: PENDING
-    evidence: []
+    status: PASS_WITH_WARNINGS
+    evidence:
+    - 'scripts/bim_release_drill.py --release-root .\revit\lab\exports\p06t14 --release-id
+      RC01 --execute: exit 0, status PASS; manifest=PASS, exports=PASS, persistence=PASS,
+      second promotion refused=True'
+    - 'revit/lab/exports/p06t14/RC01 + GOLDEN/RC01: 71 artifacts sealed (model.rvt,
+      exports/model.ifc, documentation.pdf, documentation.dwg, previews/page-0001.png,
+      QA_REPORT.md, EXPORT_REPORT.md, persistence.json, manifest.json, plan-evidence/
+      20 files, qa-reports/)'
+    - GOLDEN/RC01/RELEASE_COMPLETE.json status=SEALED; verify_manifest, verify_exports(root,RC01)
+      and verify_release(require_sealed=True) all valid=True
+    - 'focused pytest tests/unit/test_bim_release_drill.py test_release_manifest.py
+      test_release_promotion.py test_persistence_plan.py test_release_cli.py: 26 passed,
+      0 failed'
+    - 'WARNING: this task is the synthetic lab drill by design; the synthetic R13
+      fixture is a 53-byte marker file plus the Plan 05 fixture plans, and close/restart/reopen/reconnect
+      are recorded synthetic persistence boundaries (simulated=True). No Revit process
+      and no MCP provider were started, so a real Revit cold restart, real IFC export
+      and real PDF render remain to be proven on the production run (P08-T15/P08-T16).'
   P06-T15:
     id: P06-T15
     phase: PHASE_06
@@ -2395,8 +2412,11 @@ tasks:
     title: Environmental finalist pass
     depends_on:
     - P08-T06
-    status: PENDING
-    evidence: []
+    status: PASS
+    evidence:
+    - 'environmental-pass.json/md: 2 finalistas HEURISTIC; solar=0.5; ventilation=0.3055456351736995;
+      weighted=0.7888960184315897; 79 design tests passed; no environmental simulation
+      capability; SITE_TRUE_NORTH DEGRADING'
   P08-T08:
     id: P08-T08
     phase: PHASE_08

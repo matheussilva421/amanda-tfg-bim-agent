@@ -2,85 +2,23 @@
 
 from __future__ import annotations
 
-import hashlib
 from pathlib import Path
-
-from shapely.geometry import box
 
 from amanda_agent.bim.checkpoints import CheckpointManager
 from amanda_agent.bim.current_state import CurrentElement, CurrentState
 from amanda_agent.bim.diff import DiffAction, diff_states
-from amanda_agent.bim.models import BimStage, DesiredElement, DesiredState
-from amanda_agent.bim.stages import ExecutionMode, PreflightRequest
-from amanda_agent.bim.stages.accessibility import (
-    AccessibilityInput,
-    AccessibleRoute,
-    plan_accessibility_stage,
+from amanda_agent.bim.lab_fixture import (
+    BUILD,
+    RUN,
+    SCHEMA,
+    build_lab_fixture_plans,
+    build_lab_fixture_registry,
 )
-from amanda_agent.bim.stages.documentation import plan_documentation_stage
-from amanda_agent.bim.stages.furniture import plan_furniture_stage
-from amanda_agent.bim.stages.landscape import plan_landscape_stage
-from amanda_agent.bim.stages.layout import plan_layout_stage
-from amanda_agent.bim.stages.levels import (
-    GridAxis,
-    LevelReference,
-    ReferenceMarker,
-    plan_levels_stage,
-)
-from amanda_agent.bim.stages.massing import MassingBlock, plan_massing_stage
-from amanda_agent.bim.stages.materials import (
-    MaterialAssignment,
-    MaterialCatalogEntry,
-    plan_materials_stage,
-)
-from amanda_agent.bim.stages.openings import plan_openings_stage
-from amanda_agent.bim.stages.project import plan_project_initialization
-from amanda_agent.bim.stages.rooms import plan_rooms_stage
-from amanda_agent.bim.stages.shell import plan_shell_stage
-from amanda_agent.bim.stages.site import plan_site_stage
+from amanda_agent.bim.models import BimStage, DesiredState
+from amanda_agent.bim.runner import RunStatus, execute_chain
 from amanda_agent.bim.verification import verify_write
-from amanda_agent.models.capability import (
-    CapabilityRegistry,
-    EvidenceScope,
-    ProviderCapability,
-)
-from amanda_agent.requirements.decisions import DecisionScenario
-from amanda_agent.site.models import (
-    BoundaryKind,
-    BoundaryPolygon,
-    SiteModel,
-    SourceReference,
-    SourceTopographyState,
-    SurveyedElevationPoint,
-    Topography,
-    TopographyRepresentation,
-)
 
-SCHEMA = "synthetic-schema-1"
-BUILD = "2027"
-RUN = "synthetic-courtyard-run"
 DOCUMENT = "synthetic-courtyard"
-
-CAPABILITIES = (
-    "revit.create_project",
-    "revit.create_toposolid",
-    "revit.create_level",
-    "revit.create_grid",
-    "revit.create_reference",
-    "revit.create_mass",
-    "revit.create_wall",
-    "revit.create_floor",
-    "revit.create_slab",
-    "revit.create_roof",
-    "revit.create_internal_wall",
-    "revit.create_opening",
-    "revit.create_room",
-    "revit.create_accessibility_element",
-    "revit.create_furniture_element",
-    "revit.create_landscape_element",
-    "revit.assign_material",
-    "revit.create_documentation_element",
-)
 
 
 class DeterministicInvoker:
@@ -91,291 +29,40 @@ class DeterministicInvoker:
 
     def invoke(self, call):
         self.calls.append(call)
-        return {
-            "reported_success": True,
+        read_payload = {
             "unique_id": f"uid:{call.stage.name}:{call.logical_id}",
+            "readback_verified": True,
+        }
+        for field in ("geometry", "properties"):
+            if field in call.payload:
+                read_payload[field] = call.payload[field]
+        return {
+            "provider": "synthetic-provider",
+            "tool": "synthetic-write",
+            "reported_success": True,
+            "read_payload": read_payload,
         }
 
 
-def _registry(root: Path) -> CapabilityRegistry:
-    root.mkdir(parents=True, exist_ok=True)
-    entries = []
-    for operation in CAPABILITIES:
-        evidence = root / (operation.replace(".", "-") + ".json")
-        evidence.write_text(operation, encoding="utf-8")
-        entries.append(
-            ProviderCapability(
-                provider="synthetic-provider",
-                status="PASS",
-                priority=1,
-                provider_commit="synthetic-commit",
-                transport_provider="fixture",
-                tool_schema_hash=SCHEMA,
-                tested_scope={"operation": operation, "writes": True},
-                evidence_scope=EvidenceScope.SYNTHETIC,
-                revit_build=BUILD,
-                save_reopen=True,
-                independent_query=True,
-                evidence=[
-                    f"{evidence}::sha256={hashlib.sha256(evidence.read_bytes()).hexdigest()}"
-                ],
-            )
-        )
-    return CapabilityRegistry(entries=entries)
-
-
-def _request(
-    root: Path, registry: CapabilityRegistry, stage: BimStage, **overrides
-) -> PreflightRequest:
-    values = {
-        "mode": ExecutionMode.SYNTHETIC_LAB,
-        "stage": stage,
-        "scenario": DecisionScenario.STUDY,
-        "registry": registry,
-        "revit_build": BUILD,
-        "tool_schema_hash": SCHEMA,
-        "expected_build": BUILD,
-        "expected_tool_schema_hash": SCHEMA,
-        "fixture": True,
-        "evidence_scope": EvidenceScope.SYNTHETIC,
-        "generation_run": RUN,
-    }
-    values.update(overrides)
-    return PreflightRequest(**values)
-
-
-def _site() -> SiteModel:
-    boundary = BoundaryPolygon(
-        coordinates=[(0.0, 0.0), (8.0, 0.0), (8.0, 4.0), (0.0, 4.0), (0.0, 0.0)],
-        kind=BoundaryKind.STUDY_PLACEHOLDER,
-        placeholder_area_m2=32.0,
-    )
-    source = SourceReference(
-        source_id="SYNTHETIC-TOPO",
-        locator="fixture:topography",
-        sha256="a" * 64,
-    )
-    points = [
-        (0.0, 0.0, 0.0),
-        (8.0, 0.0, 0.2),
-        (8.0, 4.0, 0.4),
-        (0.0, 4.0, 0.1),
-    ]
-    return SiteModel(
-        boundary=boundary,
-        topography=Topography(
-            source_state=SourceTopographyState.VERIFIED_TOPOGRAPHY,
-            representation=TopographyRepresentation.VERIFIED_TOPOGRAPHY,
-            elevation_points=[
-                SurveyedElevationPoint(coordinate=point, source_ref=source)
-                for point in points
-            ],
-            provenance=[source],
-        ),
-    )
-
-
-def _program() -> dict:
-    return {
-        "baseline": {"person_capacity": 20},
-        "sectors": [
-            {
-                "logical_id": "SEC-COURTYARD",
-                "name": "Pátio sintético",
-                "spaces": [
-                    {
-                        "logical_id": "ROOM-A",
-                        "name": "Quarto",
-                        "quantity": 1,
-                        "target_area_m2": 16.0,
-                        "area_kind": "INTERNAL",
-                        "privacy": 4,
-                        "accessible": True,
-                        "source_page": 1,
-                    },
-                    {
-                        "logical_id": "ROOM-B",
-                        "name": "Refeitório",
-                        "quantity": 1,
-                        "target_area_m2": 16.0,
-                        "area_kind": "INTERNAL",
-                        "privacy": 2,
-                        "accessible": True,
-                        "source_page": 1,
-                    },
-                ],
-            }
-        ],
-    }
-
-
 def _plans(root: Path):
-    registry = _registry(root)
-    template = root / "synthetic-template.rte"
-    template.write_bytes(b"synthetic architectural template")
-    site = _site()
-    rooms = [
-        {"logical_id": "ROOM-A", "geometry": box(0, 0, 4, 4)},
-        {"logical_id": "ROOM-B", "geometry": box(4, 0, 8, 4)},
-    ]
-    shell = box(0, 0, 8, 4)
-    plans = [
-        plan_project_initialization(
-            _request(root, registry, BimStage.R01),
-            amanda_template=template,
-            amanda_template_tested=True,
-            project_code="SYNTHETIC",
-        ),
-        plan_site_stage(
-            _request(root, registry, BimStage.R02, site=site),
-            toposolid_planner=lambda footprint, *, elevation, name: DesiredElement(
-                logical_id=name,
-                category="Toposolid",
-                geometry={"footprint": footprint, "elevation_m": elevation},
-                properties={"name": name},
-                requirement_id="SYNTHETIC-TOPO",
-                design_option="SYNTHETIC",
-                generation_run=RUN,
-            ),
-        ),
-        plan_levels_stage(
-            _request(root, registry, BimStage.R03),
-            levels=[
-                LevelReference(
-                    logical_id="LEVEL-01",
-                    name="Térreo",
-                    elevation_m=0.0,
-                    evidence=["synthetic:level"],
-                )
-            ],
-            grids=[
-                GridAxis(
-                    logical_id="GRID-A",
-                    name="A",
-                    start=(0.0, 0.0),
-                    end=(8.0, 0.0),
-                    assumption="PROVISIONAL_ASSUMPTION",
-                )
-            ],
-            references=[
-                ReferenceMarker(
-                    logical_id="REF-ORIGIN",
-                    name="Project Origin",
-                    kind="PROJECT_ORIGIN",
-                    coordinate=(0.0, 0.0, 0.0),
-                )
-            ],
-        ),
-        plan_massing_stage(
-            _request(root, registry, BimStage.R04),
-            blocks=[
-                MassingBlock(
-                    logical_id="MASS-01",
-                    name="Courtyard block",
-                    footprint=[(0.0, 0.0), (8.0, 0.0), (8.0, 4.0), (0.0, 4.0)],
-                    height_m=3.2,
-                )
-            ],
-        ),
-        plan_shell_stage(
-            _request(root, registry, BimStage.R05),
-            rooms=rooms,
-            gross_shell=shell,
-            floor_loops=[shell],
-            slab_loops=[shell],
-            roof={"geometry": shell, "type": "synthetic-roof"},
-        ),
-    ]
-    wall = next(
-        element for element in plans[-1].desired_state.elements if element.category == "WALL"
+    registry = build_lab_fixture_registry(
+        root=root,
+        revit_build=BUILD,
+        tool_schema_hash=SCHEMA,
     )
-    plans.extend(
-        [
-            plan_layout_stage(
-                _request(root, registry, BimStage.R06),
-                rooms=rooms,
-            ),
-            plan_openings_stage(
-                _request(root, registry, BimStage.R07),
-                openings=[
-                    {
-                        "logical_id": "DOOR-01",
-                        "kind": "DOOR",
-                        "host_logical_id": wall.logical_id,
-                        "family_type": "DOOR_INT_01",
-                        "position": (1.0, 0.0),
-                        "width_m": 0.9,
-                        "height_m": 2.1,
-                        "connects": ["ROOM-A", "ROOM-B"],
-                    }
-                ],
-                hosts=[
-                    {
-                        "logical_id": wall.logical_id,
-                        "category": "WALL",
-                        "geometry": wall.geometry,
-                    }
-                ],
-                family_catalog={
-                    "DOOR_INT_01": {
-                        "kind": "DOOR",
-                        "family": "Door-Interior",
-                        "type": "Single-090",
-                    }
-                },
-            ),
-            plan_rooms_stage(
-                _request(root, registry, BimStage.R08),
-                program=_program(),
-                room_geometries={"ROOM-A": box(0, 0, 4, 4), "ROOM-B": box(4, 0, 8, 4)},
-            ),
-            plan_accessibility_stage(
-                _request(root, registry, BimStage.R09),
-                inputs=AccessibilityInput(
-                    entrance_id="ROOM-A",
-                    required_space_ids=["ROOM-A", "ROOM-B"],
-                    routes=[
-                        AccessibleRoute(
-                            logical_id="ROUTE-A-B",
-                            from_node="ROOM-A",
-                            to_node="ROOM-B",
-                        )
-                    ],
-                ),
-            ),
-            plan_furniture_stage(_request(root, registry, BimStage.R10), program=_program()),
-            plan_landscape_stage(_request(root, registry, BimStage.R11)),
-            plan_materials_stage(
-                _request(root, registry, BimStage.R12),
-                assignments=[
-                    MaterialAssignment(
-                        element_logical_id=wall.logical_id,
-                        material_name="MAT-WALL",
-                        material_type="paint",
-                        requirement_id="SYNTHETIC-MATERIAL",
-                        design_intent="washable courtyard interior",
-                    )
-                ],
-                catalog=[
-                    MaterialCatalogEntry(
-                        material_name="MAT-WALL",
-                        material_type="paint",
-                        source_ref="synthetic:material",
-                        justification="fixture material",
-                    )
-                ],
-            ),
-            plan_documentation_stage(_request(root, registry, BimStage.R13)),
-        ]
+    return build_lab_fixture_plans(
+        root=root,
+        registry=registry,
+        revit_build=BUILD,
+        tool_schema_hash=SCHEMA,
     )
-    return plans
 
 
 def _execute_and_verify(plans, invoker: DeterministicInvoker):
     all_verifications = []
     for plan in plans:
-        # Stage dispatchers are called through their public module functions in
-        # the test below; this helper performs only generic write verification.
+        # This helper performs only generic write verification for the existing
+        # stage dispatcher assertions below.
         if hasattr(plan, "desired_state"):
             elements = plan.desired_state.by_logical_id()
             for operation in plan.operations:
@@ -447,11 +134,16 @@ def test_synthetic_pipeline_runs_r01_to_r13_in_order_and_is_idempotent(tmp_path:
     first_records = []
     second_records = []
     for first, second in zip(first_plans, second_plans):
-        first_records.extend(execute_by_stage[first.stage](first, invoker=first_invoker))
-        second_records.extend(execute_by_stage[second.stage](second, invoker=second_invoker))
+        first_records.extend(
+            execute_by_stage[first.stage](first, invoker=first_invoker)
+        )
+        second_records.extend(
+            execute_by_stage[second.stage](second, invoker=second_invoker)
+        )
 
     assert [record.stage for record in first_records] == sorted(
-        (record.stage for record in first_records), key=lambda stage: list(BimStage).index(stage)
+        (record.stage for record in first_records),
+        key=lambda stage: list(BimStage).index(stage),
     )
     assert [
         (record.stage, record.logical_id, record.semantic_capability, record.provider)
@@ -462,6 +154,16 @@ def test_synthetic_pipeline_runs_r01_to_r13_in_order_and_is_idempotent(tmp_path:
     ]
     verification = _execute_and_verify(first_plans, first_invoker)
     assert verification and all(result.passed for result in verification)
+
+    runner_invoker = DeterministicInvoker()
+    runner_results = execute_chain(first_plans, invoker=runner_invoker)
+    assert [result.stage for result in runner_results] == list(BimStage)[1:14]
+    assert all(result.status is RunStatus.VERIFIED for result in runner_results)
+    assert all(
+        record.status is RunStatus.VERIFIED
+        for result in runner_results
+        for record in result.records
+    )
 
     manager = CheckpointManager()
     source = tmp_path / "model.rvt"

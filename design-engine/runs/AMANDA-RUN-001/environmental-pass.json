@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "stage": "P08-T07",
+  "run_id": "AMANDA-RUN-001",
+  "classification": "HEURISTIC",
+  "method": "amanda_agent.design.environmental.evaluate_environmental_heuristics",
+  "source_run": {
+    "run_json": "design-engine/runs/AMANDA-RUN-001/run.json",
+    "run_json_sha256": "09cb06cc0a3dcfc9dacad04e8263c72f6cc6fdc2aa8cf56c196a4542c57f54b4",
+    "refinement_summary": "design-engine/runs/AMANDA-RUN-001/refinement-summary.json",
+    "refinement_summary_sha256": "b6dc5a5ba31f164e9cbd96997b20a201ab75fb1690fc36fb8e8e21f688277550"
+  },
+  "candidate_set": {
+    "requested_limit": 5,
+    "available_finalists": 2,
+    "evaluated_finalists": 2,
+    "selection_note": "O run publicado possui apenas 2 finalistas refinados viaveis; nenhum candidato foi fabricado para preencher cinco vagas."
+  },
+  "capability_check": {
+    "path": "state/capabilities.yaml",
+    "inspected_terms": [
+      "environment",
+      "solar",
+      "ventilation",
+      "simulation",
+      "CFD",
+      "Radiance",
+      "Ladybug",
+      "Honeybee"
+    ],
+    "environmental_simulation_registered": false,
+    "finding": "Nenhuma capability ambiental ou de simulacao detalhada correspondente foi registrada em state/capabilities.yaml; as entradas encontradas sao de operacoes Revit/provider."
+  },
+  "inputs": {
+    "true_north_deg": {
+      "value": 0.0,
+      "unit": "deg",
+      "status": "PLANAR_PLACEHOLDER",
+      "origin": [
+        "project/site/site.json#true_north = null",
+        "project/site/missing-data.yaml#SITE_TRUE_NORTH",
+        "state/blockers.yaml#SITE_TRUE_NORTH"
+      ],
+      "note": "O dado do site nao tem azimute verificavel. O valor 0.0 e usado somente como PLANAR_PLACEHOLDER para o plano local do estudo; nao representa norte verdadeiro medido."
+    },
+    "preferred_solar_orientation_deg": {
+      "value": 90.0,
+      "unit": "deg",
+      "status": "SOURCE_DERIVED_CARDINAL",
+      "origin": [
+        "docs/review/source-extracts/TFG_Amanda Fernandes_ENTREGA 15.06.2026.pdf.txt#PDF PAGE 69: fachada Leste recebe sol matinal considerado favoravel e recomendada para dormitorios e permanencia prolongada",
+        "project/requirements/source-principles.yaml#P03-T09-SP-008: incidencia matinal na fachada Leste"
+      ],
+      "derivation": "Leste (E) foi convertido para 90.0 graus na convencao cardeal usada pelo avaliador. E uma preferencia heuristica de estudo para permanencia prolongada, nao um azimute cadastral."
+    },
+    "wind_direction_deg": {
+      "value": 135.0,
+      "unit": "deg",
+      "status": "SOURCE_DERIVED_CARDINAL",
+      "origin": [
+        "docs/review/source-extracts/TFG_Amanda_2026__2_TEXTOS_PARA_O_CADERNO__01_textos_prontos_para_colar.docx.txt#P41: predominancia dos ventos de Sudeste e afastamento entre blocos para favorecer ventilacao cruzada",
+        "docs/review/source-extracts/TFG_Amanda Fernandes_ENTREGA 15.06.2026.pdf.txt#PDF PAGE 66: ventos noturnos de Leste e Sudeste; ventos diurnos predominantes de Nordeste"
+      ],
+      "derivation": "Sudeste (SE) foi convertido para 135.0 graus. O texto-fonte registra variacao temporal, portanto este valor e uma direcao de projeto escolhida para a heuristica, nao uma serie anemometrica anual."
+    },
+    "finalist_geometry_defaults": {
+      "facade_orientation_deg": {
+        "value": 0.0,
+        "unit": "deg",
+        "status": "EVALUATOR_DEFAULT",
+        "origin": "evaluate_environmental_heuristics: geometry nao contem facade_orientation_deg/orientation_deg; default implementado = 0.0",
+        "note": "Nao e uma orientacao medida do finalista."
+      },
+      "opening_ratio": {
+        "value": 0.5,
+        "unit": "ratio",
+        "status": "EVALUATOR_DEFAULT",
+        "origin": "evaluate_environmental_heuristics: geometry nao contem opening_ratio; default implementado = 0.5",
+        "note": "Nao e uma taxa de abertura extraida de esquadrias ou de um modelo BIM."
+      },
+      "wind_exposure": {
+        "value": 1.0,
+        "unit": "ratio",
+        "status": "EVALUATOR_DEFAULT",
+        "origin": "evaluate_environmental_heuristics: geometry nao contem wind_exposure; default implementado = 1.0",
+        "note": "Nao representa exposicao calibrada contra entorno, rugosidade ou obstrucoes."
+      }
+    }
+  },
+  "scoring": {
+    "weights_version": 1,
+    "weights_path": "design-engine/config/weights.yaml",
+    "missing_data_rule": "exclude_and_rebalance",
+    "note": "Com as duas dimensoes ambientais avaliadas, as 11 dimensoes entram no total e os pesos congelados somam 1.0."
+  },
+  "finalists": [
+    {
+      "solution_id": "AMANDA-RUN-001-F01",
+      "seed": 0,
+      "geometry_hash": "5bc3622ee6887108f29d5bcf13f3ec56bec3790d1e0d15f517e161a21c9803ca",
+      "geometry_path": "design-engine/runs/AMANDA-RUN-001/finalists/AMANDA-RUN-001-F01/solution.json#geometry",
+      "geometry_fields_missing": [
+        "facade_orientation_deg",
+        "orientation_deg",
+        "opening_ratio",
+        "wind_exposure"
+      ],
+      "effective_inputs": {
+        "facade_orientation_deg": 0.0,
+        "opening_ratio": 0.5,
+        "wind_exposure": 1.0,
+        "true_north_deg": 0.0,
+        "preferred_solar_orientation_deg": 90.0,
+        "wind_direction_deg": 135.0
+      },
+      "classification": "HEURISTIC",
+      "labels": {
+        "solar": "HEURISTIC",
+        "ventilation": "HEURISTIC"
+      },
+      "raw_metrics": {
+        "program_compliance": 1.0,
+        "privacy_security": 0.5,
+        "adjacency": 0.9415912467362131,
+        "circulation": 0.8333333333333334,
+        "accessibility": 1.0,
+        "solar_heuristic": 0.5,
+        "ventilation_heuristic": 0.3055456351736995,
+        "green_integration": 1.0,
+        "compactness": 0.06141644628426339,
+        "constructability": 1.0,
+        "concept_fidelity": 1.0
+      },
+      "weighted_contributions": {
+        "program_compliance": 0.18,
+        "privacy_security": 0.07,
+        "adjacency": 0.09415912467362131,
+        "circulation": 0.08333333333333334,
+        "accessibility": 0.12,
+        "solar_heuristic": 0.03,
+        "ventilation_heuristic": 0.018332738110421968,
+        "green_integration": 0.06,
+        "compactness": 0.0030708223142131698,
+        "constructability": 0.08,
+        "concept_fidelity": 0.05
+      },
+      "weighted_total": 0.7888960184315897,
+      "prior_weighted_total_before_environmental_pass": 0.8415491821831452,
+      "environmental_metrics": {
+        "solar_heuristic": {
+          "value": 0.5,
+          "label": "HEURISTIC"
+        },
+        "ventilation_heuristic": {
+          "value": 0.3055456351736995,
+          "label": "HEURISTIC"
+        }
+      },
+      "evaluator_evidence": [
+        "true-north-aware facade orientation",
+        "Amanda source orientation and wind findings are applied as project heuristics",
+        "detailed environmental simulation was not run"
+      ]
+    },
+    {
+      "solution_id": "AMANDA-RUN-001-F02",
+      "seed": 1,
+      "geometry_hash": "f76d48ca8d5624450a2f91e61850b0193608b55b0ae31cb46b41c978d6ef495e",
+      "geometry_path": "design-engine/runs/AMANDA-RUN-001/finalists/AMANDA-RUN-001-F02/solution.json#geometry",
+      "geometry_fields_missing": [
+        "facade_orientation_deg",
+        "orientation_deg",
+        "opening_ratio",
+        "wind_exposure"
+      ],
+      "effective_inputs": {
+        "facade_orientation_deg": 0.0,
+        "opening_ratio": 0.5,
+        "wind_exposure": 1.0,
+        "true_north_deg": 0.0,
+        "preferred_solar_orientation_deg": 90.0,
+        "wind_direction_deg": 135.0
+      },
+      "classification": "HEURISTIC",
+      "labels": {
+        "solar": "HEURISTIC",
+        "ventilation": "HEURISTIC"
+      },
+      "raw_metrics": {
+        "program_compliance": 1.0,
+        "privacy_security": 0.5,
+        "adjacency": 0.9415912467362131,
+        "circulation": 0.8333333333333334,
+        "accessibility": 1.0,
+        "solar_heuristic": 0.5,
+        "ventilation_heuristic": 0.3055456351736995,
+        "green_integration": 1.0,
+        "compactness": 0.06141644628426339,
+        "constructability": 1.0,
+        "concept_fidelity": 1.0
+      },
+      "weighted_contributions": {
+        "program_compliance": 0.18,
+        "privacy_security": 0.07,
+        "adjacency": 0.09415912467362131,
+        "circulation": 0.08333333333333334,
+        "accessibility": 0.12,
+        "solar_heuristic": 0.03,
+        "ventilation_heuristic": 0.018332738110421968,
+        "green_integration": 0.06,
+        "compactness": 0.0030708223142131698,
+        "constructability": 0.08,
+        "concept_fidelity": 0.05
+      },
+      "weighted_total": 0.7888960184315897,
+      "prior_weighted_total_before_environmental_pass": 0.8415491821831452,
+      "environmental_metrics": {
+        "solar_heuristic": {
+          "value": 0.5,
+          "label": "HEURISTIC"
+        },
+        "ventilation_heuristic": {
+          "value": 0.3055456351736995,
+          "label": "HEURISTIC"
+        }
+      },
+      "evaluator_evidence": [
+        "true-north-aware facade orientation",
+        "Amanda source orientation and wind findings are applied as project heuristics",
+        "detailed environmental simulation was not run"
+      ]
+    }
+  ],
+  "comparison_matrix": {
+    "path": "solutions/finalists/comparison.md",
+    "status": "MISSING",
+    "updated": false,
+    "note": "solutions/finalists/comparison.md nao existe neste checkout; a ausencia foi registrada para o proximo passe P08-T09."
+  },
+  "limitations": [
+    "Todos os resultados ambientais deste arquivo sao HEURISTIC; nenhum resultado e SIMULATED.",
+    "Nao existe capability ambiental de simulacao detalhada registrada em state/capabilities.yaml; o workflow detalhado nao foi executado.",
+    "Nao houve validacao CFD nem Radiance; o passe nao prova iluminancia, ganhos solares, velocidades de vento, conforto adaptativo ou desempenho anual.",
+    "SITE_TRUE_NORTH permanece DEGRADING em state/blockers.yaml. Como o site nao tem azimute, true_north_deg=0 foi usado somente como PLANAR_PLACEHOLDER.",
+    "Os dois finalistas nao carregam azimute de fachada, taxa de abertura ou exposicao ao vento. Os valores 0.0, 0.5 e 1.0 sao defaults do avaliador e foram mantidos explicitos como fallback, nao como dados medidos.",
+    "A fonte do TFG registra variacao temporal dos ventos (Nordeste de dia; Leste/Sudeste a noite). Sudeste foi escolhido como direcao de projeto documentada para esta heuristica; isso nao substitui uma serie anemometrica.",
+    "A geometria continua sendo plano local de estudo e nao comprova orientacao cadastral, topografia, implantacao final ou desempenho fisico em campo."
+  ]
+}

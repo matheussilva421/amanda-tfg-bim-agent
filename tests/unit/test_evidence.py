@@ -90,6 +90,54 @@ def test_complete_record_bridges_all_registry_evidence_fields(tmp_path: Path) ->
     assert capability.tested_scope == {"operation": "create_wall", "writes": True}
 
 
+def test_bridge_carries_transport_health_into_the_registry_entry(tmp_path: Path) -> None:
+    """A record that measured a dead transport must not bridge as healthy.
+
+    The selector refuses an unhealthy transport, so the bridge has to carry the
+    measurement; leaving it out would silently report every record as healthy.
+    """
+
+    from amanda_agent.tools.evidence import EvidenceRecord
+
+    fixture = _reference(tmp_path / "fixture.json", '{"wall_type": "basic"}')
+    raw_output = _reference(tmp_path / "raw-output.json", '{"success": true}')
+    query = _reference(tmp_path / "query.json", '{"wall_id": 42}')
+    persistence = _reference(tmp_path / "reopen.json", '{"wall_id": 42}')
+
+    def _record(**overrides: object) -> EvidenceRecord:
+        values: dict[str, object] = {
+            "provider": "horizun",
+            "tool": "create_wall",
+            "input_fixture_reference": fixture,
+            "raw_output_path": raw_output,
+            "model_query_evidence": {
+                "independent": True,
+                "references": [query],
+                "result": {"wall_id": 42},
+            },
+            "duration_seconds": 1.5,
+            "save_reopen_result": {"success": True, "references": [persistence]},
+            "success": True,
+            "provider_commit": "cc4ea04e9ecfe547ad349f22e0864019ce1ead1f",
+            "transport_provider": "horizun-revit",
+            "tool_schema_hash": "sha256:" + "a" * 64,
+            "tested_scope": {"operation": "create_wall", "writes": True},
+            "evidence_scope": "PROVIDER",
+            "revit_build": "20260716_1515(x64)",
+        }
+        values.update(overrides)
+        return EvidenceRecord(**values)
+
+    healthy = _record(transport_healthy=True).to_provider_capability()
+    assert healthy.transport_healthy is True
+
+    unhealthy = _record(transport_healthy=False).to_provider_capability()
+    assert unhealthy.transport_healthy is False
+
+    defaulted = _record().to_provider_capability()
+    assert defaulted.transport_healthy is True
+
+
 def test_successful_read_requires_hashed_evidence_references(tmp_path: Path) -> None:
     from amanda_agent.tools.evidence import EvidenceRecord, EvidenceValidationError
 

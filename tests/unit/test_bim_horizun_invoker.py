@@ -186,6 +186,162 @@ def test_typed_create_readback_reports_unverified_when_the_mark_matches_many_row
     ]
 
 
+@pytest.mark.parametrize(
+    ("capability", "stage", "geometry", "category"),
+    (
+        ("revit.create_level", BimStage.R01, {"elevation_m": 0.0}, "OST_Levels"),
+        (
+            "revit.create_grid",
+            BimStage.R01,
+            {"start": [0.0, 0.0], "end": [5.0, 0.0]},
+            "OST_Grids",
+        ),
+        (
+            "revit.create_room",
+            BimStage.R08,
+            {"point": [1.0, 1.0], "level_id": 311},
+            "OST_Rooms",
+        ),
+    ),
+)
+def test_markless_typed_create_readback_matches_one_logical_id_row(
+    capability: str,
+    stage: BimStage,
+    geometry: dict[str, Any],
+    category: str,
+):
+    logical_id = f"{capability}-MARKLESS"
+    replies = [_reply({"title": "LAB_AMANDA"})]
+    if capability == "revit.create_room":
+        replies.append(_reply({"rows": [{"element_id": 311}]}))
+    replies.extend(
+        (
+            _reply({"created_ids": [901]}),
+            _reply(
+                {
+                    "rows": [
+                        {"element_id": 900, "unique_id": "uid-unrelated", "name": "OTHER"},
+                        {"element_id": 901, "unique_id": "uid-markless", "name": logical_id},
+                    ]
+                }
+            ),
+        )
+    )
+    transport = FakeMcpTransport(*replies)
+    invoker = HorizunInvoker(transport=transport)
+    call = StageToolCall(
+        stage=stage,
+        logical_id=logical_id,
+        semantic_capability=capability,
+        provider="horizun",
+        payload={
+            "target_document": "LAB_AMANDA",
+            "geometry": geometry,
+            "properties": {"name": logical_id},
+            "idempotency_key": f"{capability}-markless",
+            "dry_run": False,
+            "confirmation_token": "confirm-markless",
+        },
+    )
+
+    result = invoker.invoke(call)
+
+    assert transport.calls[-1] == (
+        "horizun_query_model",
+        {
+            "categories": [category],
+            "return_fields": list(HorizunInvoker._READBACK_FIELDS),
+            "response_mode": "compact",
+            "cache_mode": "bypass",
+        },
+    )
+    assert result.read_payload["readback_verified"] is True
+    assert result.read_payload["element_id"] == 901
+    assert result.read_payload["unique_id"] == "uid-markless"
+
+
+@pytest.mark.parametrize(
+    "rows",
+    (
+        [],
+        [
+            {"element_id": 901, "unique_id": "uid-a", "name": "ROOM-AMBIGUOUS"},
+            {"element_id": 902, "unique_id": "uid-b", "name": "ROOM-AMBIGUOUS"},
+        ],
+        [{"element_id": 901, "name": "ROOM-AMBIGUOUS"}],
+        [{"unique_id": "uid-room", "name": "ROOM-AMBIGUOUS"}],
+    ),
+)
+def test_markless_typed_create_requires_one_row_with_stable_identity(rows: list[dict[str, Any]]):
+    transport = FakeMcpTransport(
+        _reply({"title": "LAB_AMANDA"}),
+        _reply({"rows": [{"element_id": 311}]}),
+        _reply({"created_ids": [901]}),
+        _reply({"rows": rows}),
+    )
+    invoker = HorizunInvoker(transport=transport)
+    call = StageToolCall(
+        stage=BimStage.R08,
+        logical_id="ROOM-AMBIGUOUS",
+        semantic_capability="revit.create_room",
+        provider="horizun",
+        payload={
+            "target_document": "LAB_AMANDA",
+            "geometry": {"point": [1.0, 1.0], "level_id": 311},
+            "properties": {"name": "ROOM-AMBIGUOUS"},
+            "idempotency_key": "room-markless-ambiguous",
+            "dry_run": False,
+            "confirmation_token": "confirm-markless",
+        },
+    )
+
+    result = invoker.invoke(call)
+
+    assert result.read_payload["readback_verified"] is False
+
+
+def test_wall_opening_readback_reports_typed_unavailable_reason_without_query():
+    transport = FakeMcpTransport(
+        _reply({"title": "LAB_AMANDA"}),
+        _reply({"rows": [{"element_id": 901}]}),
+        _reply({"created_ids": [903]}),
+    )
+    invoker = HorizunInvoker(transport=transport)
+    call = StageToolCall(
+        stage=BimStage.R07,
+        logical_id="OPENING-001",
+        semantic_capability="revit.create_opening",
+        provider="horizun",
+        payload={
+            "target_document": "LAB_AMANDA",
+            "geometry": {
+                "corner_1": [1.0, 0.0, 0.1],
+                "corner_2": [1.9, 0.0, 2.1],
+                "host_id": 901,
+            },
+            "properties": {},
+            "idempotency_key": "opening-readback-001",
+            "dry_run": False,
+            "confirmation_token": "confirm-opening",
+        },
+    )
+
+    result = invoker.invoke(call)
+
+    assert result.read_payload["readback_verified"] is False
+    assert result.read_payload["readback_error"] == {
+        "type": "HorizunReadbackUnavailable",
+        "code": "wall_opening_no_reliable_query_filter",
+        "message": "horizun_query_model has no reliable logical_id filter for wall_opening",
+    }
+    create_index = next(
+        index
+        for index, (name, _) in enumerate(transport.calls)
+        if name == "horizun_create_elements"
+    )
+    assert [name for name, _ in transport.calls[create_index + 1 :]] == []
+
+
 def test_mutating_horizun_call_requires_or_propagates_orchestrator_key():
     transport = FakeMcpTransport(_reply({"created_ids": [1]}))
     invoker = HorizunInvoker(transport=transport)
@@ -998,11 +1154,17 @@ def test_level_and_grid_never_write_a_mark_that_their_category_does_not_carry():
     ):
         transport = FakeMcpTransport(
             _reply({"title": "LAB_AMANDA", "path": "LAB_AMANDA.rvt", "version": "2027"}),
-            _reply({"rows": []}),
             _reply({"created_ids": [900], "all_verified": True}),
+            _reply(
+                {
+                    "rows": [
+                        {"element_id": 900, "unique_id": "uid-markless", "logical_id": "PROBE-001"}
+                    ]
+                }
+            ),
         )
         invoker = HorizunInvoker(transport=transport)
-        invoker.invoke(
+        result = invoker.invoke(
             StageToolCall(
                 stage=stage,
                 logical_id="PROBE-001",
@@ -1020,6 +1182,7 @@ def test_level_and_grid_never_write_a_mark_that_their_category_does_not_carry():
         )
         element = _created_elements(transport)[0]
         assert "parameters" not in element, capability
+        assert result.read_payload["readback_verified"] is True
 
 
 def test_room_keeps_comments_but_never_offers_a_mark_it_does_not_carry():
@@ -1030,9 +1193,16 @@ def test_room_keeps_comments_but_never_offers_a_mark_it_does_not_carry():
         _reply({"title": "LAB_AMANDA", "path": "LAB_AMANDA.rvt", "version": "2027"}),
         _reply({"rows": [{"element_id": 311}]}),
         _reply({"created_ids": [905], "all_verified": True}),
+        _reply(
+            {
+                "rows": [
+                    {"element_id": 905, "unique_id": "uid-room", "logical_id": "PROBE-001"}
+                ]
+            }
+        ),
     )
     invoker = HorizunInvoker(transport=transport)
-    invoker.invoke(
+    result = invoker.invoke(
         _python_call(
             "revit.create_room",
             BimStage.R08,
@@ -1046,6 +1216,7 @@ def test_room_keeps_comments_but_never_offers_a_mark_it_does_not_carry():
     parameters = _created_elements(transport)[0].get("parameters") or {}
     assert "ALL_MODEL_MARK" not in parameters
     assert "ALL_MODEL_INSTANCE_COMMENTS" in parameters
+    assert result.read_payload["readback_verified"] is True
 
 
 def test_python_route_reads_parameters_through_a_guarded_helper():
