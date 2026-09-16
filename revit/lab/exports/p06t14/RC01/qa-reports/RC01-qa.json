@@ -1,0 +1,74 @@
+{
+  "checks": [
+    {
+      "detail": "synthetic Plan 05 evidence and R14 validator result",
+      "id": "accessibility",
+      "mandatory": true,
+      "status": "PASS"
+    },
+    {
+      "detail": "synthetic Plan 05 evidence and R14 validator result",
+      "id": "architecture",
+      "mandatory": true,
+      "status": "PASS"
+    },
+    {
+      "detail": "synthetic Plan 05 evidence and R14 validator result",
+      "id": "dwg",
+      "mandatory": true,
+      "status": "PASS"
+    },
+    {
+      "detail": "synthetic Plan 05 evidence and R14 validator result",
+      "id": "ifc",
+      "mandatory": true,
+      "status": "PASS"
+    },
+    {
+      "detail": "synthetic Plan 05 evidence and R14 validator result",
+      "id": "model",
+      "mandatory": true,
+      "status": "PASS"
+    },
+    {
+      "detail": "synthetic Plan 05 evidence and R14 validator result",
+      "id": "pdf",
+      "mandatory": true,
+      "status": "PASS"
+    },
+    {
+      "detail": "synthetic Plan 05 evidence and R14 validator result",
+      "id": "program",
+      "mandatory": true,
+      "status": "PASS"
+    }
+  ],
+  "limitations": [],
+  "model_manifest": "model-manifest.json",
+  "profile": "FINAL",
+  "qa_modules_available": [
+    "amanda_agent.qa.models",
+    "amanda_agent.qa.program",
+    "amanda_agent.qa.model",
+    "amanda_agent.qa.warnings",
+    "amanda_agent.qa.architecture",
+    "amanda_agent.qa.accessibility",
+    "amanda_agent.qa.ifc",
+    "amanda_agent.qa.pdf",
+    "amanda_agent.qa.dwg"
+  ],
+  "qa_modules_missing": [],
+  "release_id": "RC01",
+  "schema_version": 1,
+  "source_keys": [
+    "elements",
+    "fixture",
+    "model_id",
+    "plan_05",
+    "qa_checks",
+    "schema_version",
+    "source_plan",
+    "stage"
+  ],
+  "status": "PASS"
+}

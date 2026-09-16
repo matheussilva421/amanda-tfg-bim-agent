@@ -1,0 +1,108 @@
+{
+  "complete": true,
+  "final_file_sha256": null,
+  "later_save_changed_bytes": false,
+  "notes": [],
+  "release_id": "RC01",
+  "revalidated_after_later_save": false,
+  "saved_file_sha256": "01b7426e32c162ede4249417a4735e699601a654c2738ed450f6c09b705b0744",
+  "schema_version": 1,
+  "steps": [
+    {
+      "detail": "synthetic R15 candidate save recorded",
+      "evidence": {
+        "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\exports\\p06t14\\RC01\\model.rvt",
+        "runtime": "synthetic-lab",
+        "saved": true
+      },
+      "status": "PASS",
+      "step": "save_rc"
+    },
+    {
+      "detail": "synthetic save completion observed",
+      "evidence": {
+        "completed": true,
+        "runtime": "synthetic-lab"
+      },
+      "status": "PASS",
+      "step": "wait_save_completion"
+    },
+    {
+      "detail": "synthetic candidate closed and hashed",
+      "evidence": {
+        "closed": true,
+        "runtime": "synthetic-lab",
+        "sha256": "01b7426e32c162ede4249417a4735e699601a654c2738ed450f6c09b705b0744"
+      },
+      "status": "PASS",
+      "step": "close_and_hash"
+    },
+    {
+      "detail": "synthetic process exit boundary recorded",
+      "evidence": {
+        "exited": true,
+        "runtime": "synthetic-lab"
+      },
+      "status": "PASS",
+      "step": "process_exit"
+    },
+    {
+      "detail": "synthetic cold-start boundary recorded; Revit was not started",
+      "evidence": {
+        "cold_start": true,
+        "runtime": "synthetic-lab",
+        "simulated": true
+      },
+      "status": "PASS",
+      "step": "start_revit_2027"
+    },
+    {
+      "detail": "synthetic candidate reopen boundary recorded",
+      "evidence": {
+        "reopened": true,
+        "runtime": "synthetic-lab",
+        "simulated": true
+      },
+      "status": "PASS",
+      "step": "open_rc"
+    },
+    {
+      "detail": "synthetic provider reconnect boundary recorded",
+      "evidence": {
+        "reconnected": true,
+        "runtime": "synthetic-lab",
+        "simulated": true
+      },
+      "status": "PASS",
+      "step": "reconnect_provider"
+    },
+    {
+      "detail": "synthetic provider health boundary recorded",
+      "evidence": {
+        "healthy": true,
+        "runtime": "synthetic-lab",
+        "simulated": true
+      },
+      "status": "PASS",
+      "step": "provider_health"
+    },
+    {
+      "detail": "synthetic critical QA boundary recorded",
+      "evidence": {
+        "passed": true,
+        "runtime": "synthetic-lab"
+      },
+      "status": "PASS",
+      "step": "critical_qa"
+    },
+    {
+      "detail": "synthetic semantic state comparison recorded",
+      "evidence": {
+        "matched": true,
+        "runtime": "synthetic-lab"
+      },
+      "status": "PASS",
+      "step": "semantic_state"
+    }
+  ]
+}

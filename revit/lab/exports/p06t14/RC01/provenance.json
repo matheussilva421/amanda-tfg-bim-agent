@@ -1,0 +1,10 @@
+{
+  "mcp_invoked": false,
+  "project": "Amanda TFG BIM Agent",
+  "qa_stage": "R14",
+  "release_id": "RC01",
+  "revit_started": false,
+  "runtime": "synthetic-lab",
+  "source_plan": "P05",
+  "source_stage": "R13_DOCUMENTATION"
+}

@@ -1,0 +1,1057 @@
+{
+  "accepted_limitations": [],
+  "approval_evidence": {
+    "mcp_invoked": false,
+    "mode": "synthetic-lab",
+    "revit_started": false
+  },
+  "artifacts": [
+    {
+      "kind": "report",
+      "mandatory": false,
+      "path": "ACCESSIBILITY_REPORT.md",
+      "required": true,
+      "sha256": "e30110ed0f24d6b57f0a66cad71ae339f10ccaf70f82fbfd11a2a71cd30764f3",
+      "signature": null,
+      "size_bytes": 299,
+      "validation_status": null
+    },
+    {
+      "kind": "report",
+      "mandatory": false,
+      "path": "CAPABILITY_REPORT.md",
+      "required": true,
+      "sha256": "78bdb9e602143be5affff86de5342b81123fe5ce1ac65d586e86e817d5517cd8",
+      "signature": null,
+      "size_bytes": 90,
+      "validation_status": null
+    },
+    {
+      "kind": "report",
+      "mandatory": false,
+      "path": "EXPORT_REPORT.md",
+      "required": true,
+      "sha256": "b54ad59c1396c035ae6e3155faafa66e7164313af33024d2326fe4e5b88d3b01",
+      "signature": null,
+      "size_bytes": 311,
+      "validation_status": null
+    },
+    {
+      "kind": "dwg",
+      "mandatory": false,
+      "path": "exports/documentation.dwg",
+      "required": true,
+      "sha256": "c3af262f5bf80334f383c9c159d3cf5514188ac03d7167c245dd1f4271bca415",
+      "signature": null,
+      "size_bytes": 28,
+      "validation_status": null
+    },
+    {
+      "kind": "pdf",
+      "mandatory": false,
+      "path": "exports/documentation.pdf",
+      "required": true,
+      "sha256": "b3e44df802e407df3d586bb3d4b3a7db17bc868565f04a061077f7d8de3e44bd",
+      "signature": null,
+      "size_bytes": 431,
+      "validation_status": null
+    },
+    {
+      "kind": "ifc",
+      "mandatory": false,
+      "path": "exports/model.ifc",
+      "required": true,
+      "sha256": "12c27947c4c707e22cbb512b3a78deb53e35f3365d31ba000a98fbf2fb929458",
+      "signature": null,
+      "size_bytes": 1131,
+      "validation_status": null
+    },
+    {
+      "kind": "preview",
+      "mandatory": false,
+      "path": "exports/previews/page-0001.png",
+      "required": true,
+      "sha256": "1239057a405055b1ab1756b7318cc0bbe1dba36d1d3d77bca33a530f8d58ebcd",
+      "signature": null,
+      "size_bytes": 3244,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "model-manifest.json",
+      "required": true,
+      "sha256": "f7231bd93dd8d4f7736be3aa43cce4a13f2fbf33e2455d6fa0b5bd4b7ec98f02",
+      "signature": null,
+      "size_bytes": 2178,
+      "validation_status": null
+    },
+    {
+      "kind": "model",
+      "mandatory": false,
+      "path": "model.rvt",
+      "required": true,
+      "sha256": "01b7426e32c162ede4249417a4735e699601a654c2738ed450f6c09b705b0744",
+      "signature": null,
+      "size_bytes": 53,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "persistence.json",
+      "required": true,
+      "sha256": "b09cea54807ba3a80f3bbc84d91fe841db34bce3a98ea90bda52e62041e366b8",
+      "signature": null,
+      "size_bytes": 2911,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-assign_material.json",
+      "required": true,
+      "sha256": "38f980a8381843bb5d19737b86d4f4deb818df0ccb8f1b0b99c55ade9b9f1de7",
+      "signature": null,
+      "size_bytes": 21,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_accessibility_element.json",
+      "required": true,
+      "sha256": "2ceb37dca81f5cfaa47d8cce8a1d7cf034460bd468dae4a0f3f1878909f9eff8",
+      "signature": null,
+      "size_bytes": 34,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_documentation_element.json",
+      "required": true,
+      "sha256": "eeb4c229e9c480cddfb5d7d055ea8c6d1ce4b36f3115ec4b829bdc949d61d020",
+      "signature": null,
+      "size_bytes": 34,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_floor.json",
+      "required": true,
+      "sha256": "7b5f9b8b0c9f193654a3df14303455659fda6679b91efa8be4dd791b5febed11",
+      "signature": null,
+      "size_bytes": 18,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_furniture_element.json",
+      "required": true,
+      "sha256": "cc1b7f9ea21c89c5595ce0e87a8c84463dd37f87a4abcf343a8112201e3f1046",
+      "signature": null,
+      "size_bytes": 30,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_grid.json",
+      "required": true,
+      "sha256": "151ab0df42135e2e46644c4658123705df9c99272cdf4e1682e8c757ed3981d9",
+      "signature": null,
+      "size_bytes": 17,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_internal_wall.json",
+      "required": true,
+      "sha256": "c985a65edf71ea4f1cf5da7ade6219adc43850519b1b55416909c4a32a7d093a",
+      "signature": null,
+      "size_bytes": 26,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_landscape_element.json",
+      "required": true,
+      "sha256": "123676dbefe5d05ff9b82d5f496d1c56ef76ef87487468262145c779da12298a",
+      "signature": null,
+      "size_bytes": 30,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_level.json",
+      "required": true,
+      "sha256": "be1238fcdc52da935568b2ab38c6b749b3e3b4b36936a3dfbf7e91730c61e496",
+      "signature": null,
+      "size_bytes": 18,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_mass.json",
+      "required": true,
+      "sha256": "81789c62e524971f8a579170d5c3090db1569dd2ce314137a39a8691ae5aff64",
+      "signature": null,
+      "size_bytes": 17,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_opening.json",
+      "required": true,
+      "sha256": "59292583dab0d588aa368105503a973a739e09c88cf386749b056b192f2ae6aa",
+      "signature": null,
+      "size_bytes": 20,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_project.json",
+      "required": true,
+      "sha256": "cddc6cf6f9e1d259d9e0fe5d456016d3a7350ea40cc70cd9664b57dd254388f1",
+      "signature": null,
+      "size_bytes": 20,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_reference.json",
+      "required": true,
+      "sha256": "fd0b8473e6725fdab798d477e4249170fdc2a162565d6180a1e72d56b65bbdcb",
+      "signature": null,
+      "size_bytes": 22,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_roof.json",
+      "required": true,
+      "sha256": "1a40f8e44f38a5e80b7d4f130761d0881d901df418a2f1ada6f21640d8454034",
+      "signature": null,
+      "size_bytes": 17,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_room.json",
+      "required": true,
+      "sha256": "f826494b8a7e048370f8d4aaf86084b006eb3e279fbe804b850031ebea4d4019",
+      "signature": null,
+      "size_bytes": 17,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_slab.json",
+      "required": true,
+      "sha256": "1d1f26131f79fc5b82bbcb10396a954b4c81cd9a9c286a4efdd4d1eae1b47099",
+      "signature": null,
+      "size_bytes": 17,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_toposolid.json",
+      "required": true,
+      "sha256": "89f9ad32bb6fc94aea262fbe7d4ef55e3818586c216cc7497cd820143dbf54df",
+      "signature": null,
+      "size_bytes": 22,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "plan-evidence/revit-create_wall.json",
+      "required": true,
+      "sha256": "594123396267f89e1aec91cab291b879f3ef1bfb6c95464aefe5aa910478e308",
+      "signature": null,
+      "size_bytes": 17,
+      "validation_status": null
+    },
+    {
+      "kind": "artifact",
+      "mandatory": false,
+      "path": "plan-evidence/synthetic-template.rte",
+      "required": true,
+      "sha256": "4b0e3f80d5a29c2ea112b58416e80138a7c81f4796fa6e1243d10ead04ea1dee",
+      "signature": null,
+      "size_bytes": 32,
+      "validation_status": null
+    },
+    {
+      "kind": "report",
+      "mandatory": false,
+      "path": "PROGRAM_COMPLIANCE.md",
+      "required": true,
+      "sha256": "9992f5fef9f51343a2fdf2aeb71553941707ba8c62094b1c67010cd4ae307df9",
+      "signature": null,
+      "size_bytes": 76,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "provenance.json",
+      "required": true,
+      "sha256": "df72395cddf98ca97a41b96cca1f735f359448b7892d8280d577ce348e5f0ca4",
+      "signature": null,
+      "size_bytes": 228,
+      "validation_status": null
+    },
+    {
+      "kind": "evidence",
+      "mandatory": false,
+      "path": "qa-reports/RC01-qa.json",
+      "required": true,
+      "sha256": "089f21b6b587bc5ec1e0bd7323937bedd904a28a91ecb95255241f607631740e",
+      "signature": null,
+      "size_bytes": 1822,
+      "validation_status": null
+    },
+    {
+      "kind": "report",
+      "mandatory": false,
+      "path": "qa-reports/RC01-qa.md",
+      "required": true,
+      "sha256": "cf56eabf37f692a7a351b5760b650ed6b744175681384f3cc75200c58ea3e57e",
+      "signature": null,
+      "size_bytes": 669,
+      "validation_status": null
+    },
+    {
+      "kind": "report",
+      "mandatory": false,
+      "path": "QA_REPORT.md",
+      "required": true,
+      "sha256": "53ea04a89f0341ca2f1623d813579af01da544d3bf57483bbf68a9bc638f14bf",
+      "signature": null,
+      "size_bytes": 297,
+      "validation_status": null
+    }
+  ],
+  "content_hashes": {
+    "ACCESSIBILITY_REPORT.md": "e30110ed0f24d6b57f0a66cad71ae339f10ccaf70f82fbfd11a2a71cd30764f3",
+    "CAPABILITY_REPORT.md": "78bdb9e602143be5affff86de5342b81123fe5ce1ac65d586e86e817d5517cd8",
+    "EXPORT_REPORT.md": "b54ad59c1396c035ae6e3155faafa66e7164313af33024d2326fe4e5b88d3b01",
+    "PROGRAM_COMPLIANCE.md": "9992f5fef9f51343a2fdf2aeb71553941707ba8c62094b1c67010cd4ae307df9",
+    "QA_REPORT.md": "53ea04a89f0341ca2f1623d813579af01da544d3bf57483bbf68a9bc638f14bf",
+    "exports/documentation.dwg": "c3af262f5bf80334f383c9c159d3cf5514188ac03d7167c245dd1f4271bca415",
+    "exports/documentation.pdf": "b3e44df802e407df3d586bb3d4b3a7db17bc868565f04a061077f7d8de3e44bd",
+    "exports/model.ifc": "12c27947c4c707e22cbb512b3a78deb53e35f3365d31ba000a98fbf2fb929458",
+    "exports/previews/page-0001.png": "1239057a405055b1ab1756b7318cc0bbe1dba36d1d3d77bca33a530f8d58ebcd",
+    "model-manifest.json": "f7231bd93dd8d4f7736be3aa43cce4a13f2fbf33e2455d6fa0b5bd4b7ec98f02",
+    "model.rvt": "01b7426e32c162ede4249417a4735e699601a654c2738ed450f6c09b705b0744",
+    "persistence.json": "b09cea54807ba3a80f3bbc84d91fe841db34bce3a98ea90bda52e62041e366b8",
+    "plan-evidence/revit-assign_material.json": "38f980a8381843bb5d19737b86d4f4deb818df0ccb8f1b0b99c55ade9b9f1de7",
+    "plan-evidence/revit-create_accessibility_element.json": "2ceb37dca81f5cfaa47d8cce8a1d7cf034460bd468dae4a0f3f1878909f9eff8",
+    "plan-evidence/revit-create_documentation_element.json": "eeb4c229e9c480cddfb5d7d055ea8c6d1ce4b36f3115ec4b829bdc949d61d020",
+    "plan-evidence/revit-create_floor.json": "7b5f9b8b0c9f193654a3df14303455659fda6679b91efa8be4dd791b5febed11",
+    "plan-evidence/revit-create_furniture_element.json": "cc1b7f9ea21c89c5595ce0e87a8c84463dd37f87a4abcf343a8112201e3f1046",
+    "plan-evidence/revit-create_grid.json": "151ab0df42135e2e46644c4658123705df9c99272cdf4e1682e8c757ed3981d9",
+    "plan-evidence/revit-create_internal_wall.json": "c985a65edf71ea4f1cf5da7ade6219adc43850519b1b55416909c4a32a7d093a",
+    "plan-evidence/revit-create_landscape_element.json": "123676dbefe5d05ff9b82d5f496d1c56ef76ef87487468262145c779da12298a",
+    "plan-evidence/revit-create_level.json": "be1238fcdc52da935568b2ab38c6b749b3e3b4b36936a3dfbf7e91730c61e496",
+    "plan-evidence/revit-create_mass.json": "81789c62e524971f8a579170d5c3090db1569dd2ce314137a39a8691ae5aff64",
+    "plan-evidence/revit-create_opening.json": "59292583dab0d588aa368105503a973a739e09c88cf386749b056b192f2ae6aa",
+    "plan-evidence/revit-create_project.json": "cddc6cf6f9e1d259d9e0fe5d456016d3a7350ea40cc70cd9664b57dd254388f1",
+    "plan-evidence/revit-create_reference.json": "fd0b8473e6725fdab798d477e4249170fdc2a162565d6180a1e72d56b65bbdcb",
+    "plan-evidence/revit-create_roof.json": "1a40f8e44f38a5e80b7d4f130761d0881d901df418a2f1ada6f21640d8454034",
+    "plan-evidence/revit-create_room.json": "f826494b8a7e048370f8d4aaf86084b006eb3e279fbe804b850031ebea4d4019",
+    "plan-evidence/revit-create_slab.json": "1d1f26131f79fc5b82bbcb10396a954b4c81cd9a9c286a4efdd4d1eae1b47099",
+    "plan-evidence/revit-create_toposolid.json": "89f9ad32bb6fc94aea262fbe7d4ef55e3818586c216cc7497cd820143dbf54df",
+    "plan-evidence/revit-create_wall.json": "594123396267f89e1aec91cab291b879f3ef1bfb6c95464aefe5aa910478e308",
+    "plan-evidence/synthetic-template.rte": "4b0e3f80d5a29c2ea112b58416e80138a7c81f4796fa6e1243d10ead04ea1dee",
+    "provenance.json": "df72395cddf98ca97a41b96cca1f735f359448b7892d8280d577ce348e5f0ca4",
+    "qa-reports/RC01-qa.json": "089f21b6b587bc5ec1e0bd7323937bedd904a28a91ecb95255241f607631740e",
+    "qa-reports/RC01-qa.md": "cf56eabf37f692a7a351b5760b650ed6b744175681384f3cc75200c58ea3e57e"
+  },
+  "design_engine": {},
+  "exports": [
+    {
+      "kind": "ifc",
+      "mandatory": true,
+      "path": "exports/model.ifc",
+      "validation_status": "PASS"
+    },
+    {
+      "kind": "pdf",
+      "mandatory": true,
+      "path": "exports/documentation.pdf",
+      "validation_status": "PASS"
+    },
+    {
+      "kind": "dwg",
+      "mandatory": true,
+      "path": "exports/documentation.dwg",
+      "validation_status": "PASS"
+    }
+  ],
+  "optional_artifacts": [],
+  "optional_checks": [],
+  "persistence_summary": {
+    "complete": true,
+    "final_file_sha256": null,
+    "later_save_changed_bytes": false,
+    "notes": [],
+    "release_id": "RC01",
+    "revalidated_after_later_save": false,
+    "saved_file_sha256": "01b7426e32c162ede4249417a4735e699601a654c2738ed450f6c09b705b0744",
+    "schema_version": 1,
+    "steps": [
+      {
+        "detail": "synthetic R15 candidate save recorded",
+        "evidence": {
+          "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\exports\\p06t14\\RC01\\model.rvt",
+          "runtime": "synthetic-lab",
+          "saved": true
+        },
+        "status": "PASS",
+        "step": "save_rc"
+      },
+      {
+        "detail": "synthetic save completion observed",
+        "evidence": {
+          "completed": true,
+          "runtime": "synthetic-lab"
+        },
+        "status": "PASS",
+        "step": "wait_save_completion"
+      },
+      {
+        "detail": "synthetic candidate closed and hashed",
+        "evidence": {
+          "closed": true,
+          "runtime": "synthetic-lab",
+          "sha256": "01b7426e32c162ede4249417a4735e699601a654c2738ed450f6c09b705b0744"
+        },
+        "status": "PASS",
+        "step": "close_and_hash"
+      },
+      {
+        "detail": "synthetic process exit boundary recorded",
+        "evidence": {
+          "exited": true,
+          "runtime": "synthetic-lab"
+        },
+        "status": "PASS",
+        "step": "process_exit"
+      },
+      {
+        "detail": "synthetic cold-start boundary recorded; Revit was not started",
+        "evidence": {
+          "cold_start": true,
+          "runtime": "synthetic-lab",
+          "simulated": true
+        },
+        "status": "PASS",
+        "step": "start_revit_2027"
+      },
+      {
+        "detail": "synthetic candidate reopen boundary recorded",
+        "evidence": {
+          "reopened": true,
+          "runtime": "synthetic-lab",
+          "simulated": true
+        },
+        "status": "PASS",
+        "step": "open_rc"
+      },
+      {
+        "detail": "synthetic provider reconnect boundary recorded",
+        "evidence": {
+          "reconnected": true,
+          "runtime": "synthetic-lab",
+          "simulated": true
+        },
+        "status": "PASS",
+        "step": "reconnect_provider"
+      },
+      {
+        "detail": "synthetic provider health boundary recorded",
+        "evidence": {
+          "healthy": true,
+          "runtime": "synthetic-lab",
+          "simulated": true
+        },
+        "status": "PASS",
+        "step": "provider_health"
+      },
+      {
+        "detail": "synthetic critical QA boundary recorded",
+        "evidence": {
+          "passed": true,
+          "runtime": "synthetic-lab"
+        },
+        "status": "PASS",
+        "step": "critical_qa"
+      },
+      {
+        "detail": "synthetic semantic state comparison recorded",
+        "evidence": {
+          "matched": true,
+          "runtime": "synthetic-lab"
+        },
+        "status": "PASS",
+        "step": "semantic_state"
+      }
+    ]
+  },
+  "project": "Amanda TFG BIM Agent",
+  "providers": [
+    {
+      "evidence_scope": "SYNTHETIC",
+      "provider": "synthetic-lab",
+      "status": "PASS"
+    }
+  ],
+  "qa_summary": {
+    "command_report": {
+      "checks": [
+        {
+          "detail": "synthetic Plan 05 evidence and R14 validator result",
+          "id": "accessibility",
+          "mandatory": true,
+          "status": "PASS"
+        },
+        {
+          "detail": "synthetic Plan 05 evidence and R14 validator result",
+          "id": "architecture",
+          "mandatory": true,
+          "status": "PASS"
+        },
+        {
+          "detail": "synthetic Plan 05 evidence and R14 validator result",
+          "id": "dwg",
+          "mandatory": true,
+          "status": "PASS"
+        },
+        {
+          "detail": "synthetic Plan 05 evidence and R14 validator result",
+          "id": "ifc",
+          "mandatory": true,
+          "status": "PASS"
+        },
+        {
+          "detail": "synthetic Plan 05 evidence and R14 validator result",
+          "id": "model",
+          "mandatory": true,
+          "status": "PASS"
+        },
+        {
+          "detail": "synthetic Plan 05 evidence and R14 validator result",
+          "id": "pdf",
+          "mandatory": true,
+          "status": "PASS"
+        },
+        {
+          "detail": "synthetic Plan 05 evidence and R14 validator result",
+          "id": "program",
+          "mandatory": true,
+          "status": "PASS"
+        }
+      ],
+      "limitations": [],
+      "model_manifest": "model-manifest.json",
+      "profile": "FINAL",
+      "qa_modules_available": [
+        "amanda_agent.qa.models",
+        "amanda_agent.qa.program",
+        "amanda_agent.qa.model",
+        "amanda_agent.qa.warnings",
+        "amanda_agent.qa.architecture",
+        "amanda_agent.qa.accessibility",
+        "amanda_agent.qa.ifc",
+        "amanda_agent.qa.pdf",
+        "amanda_agent.qa.dwg"
+      ],
+      "qa_modules_missing": [],
+      "release_id": "RC01",
+      "schema_version": 1,
+      "source_keys": [
+        "elements",
+        "fixture",
+        "model_id",
+        "plan_05",
+        "qa_checks",
+        "schema_version",
+        "source_plan",
+        "stage"
+      ],
+      "status": "PASS"
+    },
+    "stage": "R14",
+    "status": "PASS",
+    "validators": {
+      "accessibility": {
+        "checks": [
+          {
+            "check_id": "accessibility.route.ROOM-A-ROOM-B",
+            "mandatory": true,
+            "scope": "accessibility",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          }
+        ],
+        "details": {
+          "verified_rule_ids": []
+        },
+        "generated_at": "2026-09-16T07:38:27.212298Z",
+        "issues": [],
+        "profile": "R14",
+        "required_check_ids": [
+          "accessibility.route.ROOM-A-ROOM-B"
+        ],
+        "result": "PASS",
+        "scope": "accessibility"
+      },
+      "architecture": {
+        "checks": [
+          {
+            "check_id": "architecture.adjacency",
+            "mandatory": true,
+            "scope": "architecture",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          },
+          {
+            "check_id": "architecture.private_public_flow",
+            "mandatory": true,
+            "scope": "architecture",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          },
+          {
+            "check_id": "architecture.service_flow",
+            "mandatory": true,
+            "scope": "architecture",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          },
+          {
+            "check_id": "architecture.gardens",
+            "mandatory": true,
+            "scope": "architecture",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          },
+          {
+            "check_id": "architecture.sequence_metrics",
+            "mandatory": true,
+            "scope": "architecture",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          }
+        ],
+        "details": {
+          "approved_edge_count": 1,
+          "bim_edge_count": 1
+        },
+        "generated_at": "2026-09-16T07:38:27.212298Z",
+        "issues": [],
+        "profile": "R14",
+        "required_check_ids": [
+          "architecture.adjacency",
+          "architecture.private_public_flow",
+          "architecture.service_flow",
+          "architecture.gardens",
+          "architecture.sequence_metrics"
+        ],
+        "result": "PASS",
+        "scope": "architecture"
+      },
+      "dwg": {
+        "checks": [
+          {
+            "check_id": "dwg.signature",
+            "mandatory": true,
+            "scope": "dwg",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          }
+        ],
+        "details": {
+          "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\exports\\p06t14\\RC01\\exports\\documentation.dwg",
+          "signature": "AC1032",
+          "size_bytes": 28,
+          "validation": "LIMITED_DWG_VALIDATION"
+        },
+        "generated_at": "2026-09-16T07:38:27.212298Z",
+        "issues": [
+          {
+            "check_id": "dwg.signature",
+            "code": "LIMITED_DWG_VALIDATION",
+            "evidence": {
+              "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\exports\\p06t14\\RC01\\exports\\documentation.dwg",
+              "signature": "AC1032",
+              "size_bytes": 28
+            },
+            "mandatory": false,
+            "message": "only DWG signature and nonzero size were verified; no local parser is registered",
+            "missing_input": false,
+            "scope": "dwg",
+            "severity": "LOW"
+          }
+        ],
+        "profile": "R14",
+        "required_check_ids": [
+          "dwg.signature"
+        ],
+        "result": "PASS_WITH_WARNINGS",
+        "scope": "dwg"
+      },
+      "ifc": {
+        "checks": [
+          {
+            "check_id": "ifc.parse",
+            "mandatory": true,
+            "scope": "ifc",
+            "severity_if_failed": "CRITICAL",
+            "status": "PASS"
+          },
+          {
+            "check_id": "ifc.counts",
+            "mandatory": true,
+            "scope": "ifc",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          }
+        ],
+        "details": {
+          "all_counts": {
+            "doors": 1,
+            "openings": 0,
+            "spaces": 1,
+            "storeys": 1,
+            "walls": 1
+          },
+          "counts": {
+            "doors": 1,
+            "spaces": 1,
+            "storeys": 1,
+            "walls": 1
+          },
+          "logical_id_map": {
+            "door-01": "36Cq7mEP10aP6hDL$HIWtW",
+            "space-01": "3v7PeqimH0r82nJbVweaE9",
+            "storey-01": "1swkteklv75g$Bxs6sG54p",
+            "wall-01": "04lX6paxPEnhFOkfeyQW3R"
+          },
+          "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\exports\\p06t14\\RC01\\exports\\model.ifc",
+          "size_bytes": 1131,
+          "units": "METRE"
+        },
+        "generated_at": "2026-09-16T07:38:27.158276Z",
+        "issues": [],
+        "profile": "R14",
+        "required_check_ids": [
+          "ifc.parse",
+          "ifc.counts"
+        ],
+        "result": "PASS",
+        "scope": "ifc"
+      },
+      "model": {
+        "checks": [
+          {
+            "check_id": "model.unique_ids",
+            "mandatory": true,
+            "scope": "model",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          },
+          {
+            "check_id": "model.hosts",
+            "mandatory": true,
+            "scope": "model",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          },
+          {
+            "check_id": "model.rooms.positioned",
+            "mandatory": true,
+            "scope": "model",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          },
+          {
+            "check_id": "model.rooms.enclosed",
+            "mandatory": true,
+            "scope": "model",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          },
+          {
+            "check_id": "model.rooms.redundant",
+            "mandatory": true,
+            "scope": "model",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          },
+          {
+            "check_id": "model.site_bounds",
+            "mandatory": true,
+            "scope": "model",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          },
+          {
+            "check_id": "model.levels",
+            "mandatory": true,
+            "scope": "model",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          },
+          {
+            "check_id": "model.count_delta",
+            "mandatory": true,
+            "scope": "model",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          }
+        ],
+        "details": {
+          "duplicate_logical_ids": [],
+          "managed_count": 2
+        },
+        "generated_at": "2026-09-16T07:38:27.212298Z",
+        "issues": [],
+        "profile": "R14",
+        "required_check_ids": [
+          "model.unique_ids",
+          "model.hosts",
+          "model.rooms.positioned",
+          "model.rooms.enclosed",
+          "model.rooms.redundant",
+          "model.site_bounds",
+          "model.levels",
+          "model.count_delta"
+        ],
+        "result": "PASS",
+        "scope": "model"
+      },
+      "pdf": {
+        "checks": [
+          {
+            "check_id": "pdf.parse",
+            "mandatory": true,
+            "scope": "pdf",
+            "severity_if_failed": "CRITICAL",
+            "status": "PASS"
+          },
+          {
+            "check_id": "pdf.page_count",
+            "mandatory": true,
+            "scope": "pdf",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          },
+          {
+            "check_id": "pdf.render",
+            "mandatory": true,
+            "scope": "pdf",
+            "severity_if_failed": "HIGH",
+            "status": "PASS"
+          },
+          {
+            "check_id": "pdf.blank_pages",
+            "mandatory": false,
+            "scope": "pdf",
+            "severity_if_failed": "MEDIUM",
+            "status": "PASS"
+          }
+        ],
+        "details": {
+          "metrics": {
+            "blank_pages": [
+              1
+            ],
+            "file_sha256": "b3e44df802e407df3d586bb3d4b3a7db17bc868565f04a061077f7d8de3e44bd",
+            "pages": 1,
+            "sha256": [
+              "1239057a405055b1ab1756b7318cc0bbe1dba36d1d3d77bca33a530f8d58ebcd"
+            ],
+            "sizes": [
+              [
+                595,
+                842
+              ]
+            ]
+          },
+          "preview_root": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\lab\\exports\\p06t14\\RC01\\exports\\previews"
+        },
+        "generated_at": "2026-09-16T07:38:27.211298Z",
+        "issues": [
+          {
+            "check_id": "pdf.blank_pages",
+            "code": "PDF_BLANK_PAGE_SIGNAL",
+            "evidence": {
+              "page": 1,
+              "variance_threshold": 1.0
+            },
+            "mandatory": false,
+            "message": "page 1 has near-zero raster variance; visual review is required",
+            "missing_input": false,
+            "scope": "pdf",
+            "severity": "MEDIUM"
+          }
+        ],
+        "profile": "R14",
+        "required_check_ids": [
+          "pdf.parse",
+          "pdf.page_count",
+          "pdf.render",
+          "pdf.blank_pages"
+        ],
+        "result": "PASS_WITH_WARNINGS",
+        "scope": "pdf"
+      }
+    }
+  },
+  "regulation": {},
+  "release": "RC01",
+  "release_profile": "FINAL",
+  "required_artifacts": [
+    "ACCESSIBILITY_REPORT.md",
+    "CAPABILITY_REPORT.md",
+    "EXPORT_REPORT.md",
+    "PROGRAM_COMPLIANCE.md",
+    "QA_REPORT.md",
+    "exports/documentation.dwg",
+    "exports/documentation.pdf",
+    "exports/model.ifc",
+    "exports/previews/page-0001.png",
+    "model-manifest.json",
+    "model.rvt",
+    "persistence.json",
+    "plan-evidence/revit-assign_material.json",
+    "plan-evidence/revit-create_accessibility_element.json",
+    "plan-evidence/revit-create_documentation_element.json",
+    "plan-evidence/revit-create_floor.json",
+    "plan-evidence/revit-create_furniture_element.json",
+    "plan-evidence/revit-create_grid.json",
+    "plan-evidence/revit-create_internal_wall.json",
+    "plan-evidence/revit-create_landscape_element.json",
+    "plan-evidence/revit-create_level.json",
+    "plan-evidence/revit-create_mass.json",
+    "plan-evidence/revit-create_opening.json",
+    "plan-evidence/revit-create_project.json",
+    "plan-evidence/revit-create_reference.json",
+    "plan-evidence/revit-create_roof.json",
+    "plan-evidence/revit-create_room.json",
+    "plan-evidence/revit-create_slab.json",
+    "plan-evidence/revit-create_toposolid.json",
+    "plan-evidence/revit-create_wall.json",
+    "plan-evidence/synthetic-template.rte",
+    "provenance.json",
+    "qa-reports/RC01-qa.json",
+    "qa-reports/RC01-qa.md"
+  ],
+  "required_checks": [
+    {
+      "evidence": [
+        "QA_REPORT.md",
+        "qa-reports/"
+      ],
+      "id": "accessibility",
+      "mandatory": true,
+      "status": "PASS",
+      "waiver": null
+    },
+    {
+      "evidence": [
+        "QA_REPORT.md",
+        "qa-reports/"
+      ],
+      "id": "architecture",
+      "mandatory": true,
+      "status": "PASS",
+      "waiver": null
+    },
+    {
+      "evidence": [
+        "QA_REPORT.md",
+        "qa-reports/"
+      ],
+      "id": "dwg",
+      "mandatory": true,
+      "status": "PASS",
+      "waiver": null
+    },
+    {
+      "evidence": [
+        "QA_REPORT.md",
+        "qa-reports/"
+      ],
+      "id": "ifc",
+      "mandatory": true,
+      "status": "PASS",
+      "waiver": null
+    },
+    {
+      "evidence": [
+        "QA_REPORT.md",
+        "qa-reports/"
+      ],
+      "id": "model",
+      "mandatory": true,
+      "status": "PASS",
+      "waiver": null
+    },
+    {
+      "evidence": [
+        "QA_REPORT.md",
+        "qa-reports/"
+      ],
+      "id": "pdf",
+      "mandatory": true,
+      "status": "PASS",
+      "waiver": null
+    },
+    {
+      "evidence": [
+        "QA_REPORT.md",
+        "qa-reports/"
+      ],
+      "id": "program",
+      "mandatory": true,
+      "status": "PASS",
+      "waiver": null
+    }
+  ],
+  "requirements": {},
+  "revit": {
+    "build": "2027",
+    "runtime": "synthetic-lab",
+    "stage": "R15_RELEASE_CANDIDATE",
+    "started": false
+  },
+  "schema_version": 1,
+  "selected_solution": {},
+  "site": {},
+  "source_export_map": {
+    "model.rvt": [
+      "exports/model.ifc",
+      "exports/documentation.pdf",
+      "exports/documentation.dwg"
+    ]
+  },
+  "timestamp": "2026-09-16T07:38:27.324457+00:00"
+}

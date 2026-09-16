@@ -1,0 +1,105 @@
+{
+  "elements": [
+    {
+      "category": "room",
+      "enclosed": true,
+      "is_room": true,
+      "level": "LEVEL-01",
+      "logical_id": "ROOM-A",
+      "positioned": true,
+      "within_site": true
+    },
+    {
+      "category": "room",
+      "enclosed": true,
+      "is_room": true,
+      "level": "LEVEL-01",
+      "logical_id": "ROOM-B",
+      "positioned": true,
+      "within_site": true
+    }
+  ],
+  "fixture": true,
+  "model_id": "synthetic-RC01",
+  "plan_05": {
+    "final_stage": "DOCUMENTATION",
+    "operation_counts": [
+      1,
+      1,
+      3,
+      1,
+      10,
+      1,
+      1,
+      2,
+      1,
+      3,
+      25,
+      1,
+      57
+    ],
+    "plan_count": 13,
+    "stages": [
+      "PROJECT_INITIALIZED",
+      "SITE",
+      "LEVELS_AND_REFERENCES",
+      "MASSING",
+      "ARCHITECTURAL_SHELL",
+      "INTERNAL_LAYOUT",
+      "OPENINGS",
+      "ROOMS",
+      "ACCESSIBILITY",
+      "FURNITURE",
+      "LANDSCAPE",
+      "MATERIALS",
+      "DOCUMENTATION"
+    ]
+  },
+  "qa_checks": [
+    {
+      "detail": "synthetic Plan 05 evidence and R14 validator result",
+      "id": "program",
+      "mandatory": true,
+      "status": "PASS"
+    },
+    {
+      "detail": "synthetic Plan 05 evidence and R14 validator result",
+      "id": "model",
+      "mandatory": true,
+      "status": "PASS"
+    },
+    {
+      "detail": "synthetic Plan 05 evidence and R14 validator result",
+      "id": "architecture",
+      "mandatory": true,
+      "status": "PASS"
+    },
+    {
+      "detail": "synthetic Plan 05 evidence and R14 validator result",
+      "id": "accessibility",
+      "mandatory": true,
+      "status": "PASS"
+    },
+    {
+      "detail": "synthetic Plan 05 evidence and R14 validator result",
+      "id": "ifc",
+      "mandatory": true,
+      "status": "PASS"
+    },
+    {
+      "detail": "synthetic Plan 05 evidence and R14 validator result",
+      "id": "pdf",
+      "mandatory": true,
+      "status": "PASS"
+    },
+    {
+      "detail": "synthetic Plan 05 evidence and R14 validator result",
+      "id": "dwg",
+      "mandatory": true,
+      "status": "PASS"
+    }
+  ],
+  "schema_version": 1,
+  "source_plan": "P05",
+  "stage": "R13_DOCUMENTATION"
+}
