@@ -174,3 +174,96 @@ real RVT once the bridge is reachable. These are the STUDY exports of the
 delegated architecture: real files, validated, openable in a BIM viewer, and
 traceable to the plan the model will be built from.
 
+
+## Addendum 6: the bridge returned and the first real Revit production ran
+
+The Horizun bridge was blocked at Revit's unsigned-add-in security dialog.
+The owner clicked "Sempre carregar" and the bridge republished as pid 30584.
+Everything below is measured against the live Revit 2027 build 27.2.0.39.
+
+### The crosswalk gaps are closed
+
+`tool-lab/horizun/probe_capabilities.py` proved both routes live on a disposable
+lab file: `revit.create_grid` wrote ElementId 328777 and `revit.create_roof`
+wrote 328780, each confirmed by an independent query. A save followed by a
+reopen then re-read both ids and both still matched 1 row, so both routes now
+carry write + independent read + save/reopen proof.
+`tool-lab/horizun/results/crosswalk-grid-roof-persistence.json` holds that
+evidence with its sha256, `state/capabilities.yaml` registers the two
+capabilities against it, and the two crosswalk rows now name their registered
+entry instead of a gap. R03 and R05 can be planned.
+
+### The production chain ran against Revit
+
+`scripts/run_amanda_production.py` created `AMANDA_WORKING_001.<stamp>.rvt` from
+the installed template `Default_M_PTB.rte` and executed the stages, each with
+WRITE -> READ -> VERIFY and a journal under `revit/production/journals/`:
+
+| stage | result |
+| --- | --- |
+| R01 | project created from the template, active document verified |
+| R02 | VERIFIED (no write: no verified topography, blockers recorded) |
+| R03 | **VERIFIED 3/3** - level and two grids, each independently re-read |
+| R04 | **VERIFIED 1/1** - massing, independently re-read |
+| R05 | 180/182 walls verified; 2 refused by Revit as overlapping |
+
+The saved model holds 3681-3792 elements with 176 walls, 3 floors, 2 grids,
+1 mass and 1 roof. `horizun_save_document` reported `saved_verified` with
+`bytes_changed_on_disk: true`, so the file really changed.
+
+### Contract defects found by executing
+
+Each of these was invisible until a real write was attempted:
+
+1. The runner never sent `dry_run=false`, so the bridge rehearsed instead of
+   writing and no independent read was ever scheduled.
+2. Idempotency keys must be unique per attempt; the bridge keeps one key for
+   exactly one operation and refuses to reuse it.
+3. An element is re-read by the NAME it carries in the model, so the level,
+   grids and mass are now named by their logical id. A display name such as
+   "Terreo" matched nothing and the write was reported unverified.
+4. A wall TYPE is resolved by integer ElementId. `horizun_list_elements`
+   returns instances and a type is not an instance, so a name lookup found
+   nothing; the read now falls back to the type-aware query when the instance
+   listing is empty.
+5. Revit template discovery searched for names containing architect/arquitet
+   and so never found `Default_M_PTB.rte`. R01 could not be planned at all.
+6. An outer face is an edge held by one room that does not front the gallery,
+   not an edge on a buffered outline.
+7. Rooms must tile edge to edge for R06 to see a shared boundary.
+8. Wall logical ids must use the same endpoint digest the shell stage uses.
+9. `save_as` needs `save_as_path`, and it refuses to guess which open document
+   it acts on.
+10. The driver must activate the target document before each stage: the
+    provider acts on the ACTIVE document and will not switch by itself.
+
+The R05 stage catalog now accepts real template wall types, but requires
+`wall_type_source` naming where they were read from, so an invented type cannot
+pass as a verified one.
+
+### Test suite
+
+    867 passed, 0 failed
+
+15 new contracts cover the IFC and DXF exports; the rest of the new coverage is
+in the layout and production-driver suites.
+
+### Still open
+
+- **R05 is 180/182.** Two walls are refused by Revit as overlapping ("As
+  paredes realcadas se sobrepoem"). They are produced by the shell stage's own
+  room-edge generation, and `build_walls` was merged to remove collinear
+  overlaps there, which fixed R06's input but not this generator. The next
+  step is to merge collinear runs inside `shell.plan_shell_stage` as well.
+- **R06-R13 have not run.** They need R05 to verify first, because the runner
+  stops on a failed stage.
+- **No IFC, PDF or DWG from the model.** The STUDY exports from the plan exist
+  and are validated; the model exports are P08-T17.
+
+### Exact resume point
+
+1. Merge collinear wall runs in `shell.plan_shell_stage` (reuse
+   `layout_bim._merge_collinear`) so R05 reaches 100%.
+2. Re-run: `.\\.venv\\Scripts\\python.exe scripts/run_amanda_production.py
+   --rvt revit/production/working/AMANDA_WORKING_001.rvt --max-stage R13 --execute`.
+3. Then R14 QA, R15 release candidate with a cold reopen, and the exports.

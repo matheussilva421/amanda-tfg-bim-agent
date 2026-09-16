@@ -68,6 +68,13 @@ _MARKLESS_READBACK_CATEGORIES = {
     "room": "OST_Rooms",
 }
 
+#: Categories the python routes create that CAN be re-queried by name.  The
+#: filter resolves against the model's own localised category names, which is why
+#: one identifier works on an English and a localised document.
+_PYTHON_READBACK_CATEGORIES = {
+    "revit.create_mass": "OST_Mass",
+}
+
 #: Categories the python routes create that CAN be re-queried.  The query filter
 #: resolves these against the model's own localised category names (a Brazilian
 #: Portuguese model reports "Massa", not "OST_Mass"), which is why the same
@@ -400,6 +407,27 @@ class HorizunInvoker:
         key = payload.get("idempotency_key")
         if not isinstance(key, str) or not key.strip():
             raise HorizunRequestError("horizun_execute_python requires idempotency_key")
+        # A python route answers with its own execution evidence and no
+        # ElementId, so the independent read has to find the element by the
+        # category and the name it carries.  Scheduling it here is what lets the
+        # stage verify what it wrote instead of trusting the write; a route with
+        # no queryable category is left to report a missing read, which is
+        # honest, rather than being declared verified without a read.
+        readback_category = _PYTHON_READBACK_CATEGORIES.get(call.semantic_capability)
+        if readback_category is not None and payload.get("dry_run") is False:
+            self._pending_readbacks[key] = {
+                "logical_id": call.logical_id,
+                "tool": "horizun_query_model",
+                "arguments": {
+                    "categories": [readback_category],
+                    # unique_id proves the read found one specific element
+                    # rather than a name, and the default field set omits it.
+                    "return_fields": list(self._READBACK_FIELDS),
+                    "response_mode": "compact",
+                    "cache_mode": "bypass",
+                },
+                "match_by_logical_id": True,
+            }
         request = dict(payload)
         request.setdefault("logical_id", call.logical_id)
         request.setdefault("semantic_capability", call.semantic_capability)

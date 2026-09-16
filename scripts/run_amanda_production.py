@@ -75,6 +75,10 @@ def _document_info(transport):
 def _active_path(info):
     if not isinstance(info, dict):
         return None
+    for key in ("document_path", "file_path", "full_path"):
+        value = info.get(key)
+        if isinstance(value, str) and value:
+            return value
     for key in ("file_path", "path", "document_path", "full_path"):
         value = info.get(key)
         if isinstance(value, str) and value:
@@ -83,6 +87,52 @@ def _active_path(info):
     if isinstance(nested, dict):
         return _active_path(nested)
     return None
+
+
+def _open_documents(transport):
+    """Return every document the bridge reports as open, by path and title."""
+
+    payload = _read_tool(transport, "horizun_document_session", {"operation": "inspect"})
+    if not isinstance(payload, dict):
+        return []
+    for key in ("documents", "open_documents", "open"):
+        value = payload.get(key)
+        if isinstance(value, list):
+            return value
+    return []
+
+
+def _activate(transport, rvt: Path) -> None:
+    """Make the target document active, which the provider requires.
+
+    The provider acts on the ACTIVE document and deliberately refuses to switch
+    documents by itself, because activating one changes what a person is looking
+    at.  This driver owns the lease, so it makes the switch explicitly and
+    verifies it took effect instead of writing into the wrong model.
+    """
+
+    target = Path(rvt).resolve()
+    info = _document_info(transport)
+    active = _active_path(info)
+    if active and Path(active).resolve() == target:
+        return
+    # Opening an already-open document activates it in the installed bridge, and
+    # the call is idempotent for a document that is already open.
+    transport.call(
+        "horizun_document_session",
+        {
+            "operation": "open",
+            "file_path": str(target),
+            "expected_version": "2027",
+            "idempotency_key": f"amanda-activate-{uuid.uuid4().hex[:12]}",
+        },
+    )
+    for _ in range(10):
+        info = _document_info(transport)
+        active = _active_path(info)
+        if active and Path(active).resolve() == target:
+            return
+        time.sleep(0.4)
 
 
 def run(rvt: Path, *, execute: bool, max_stage: str) -> int:
@@ -259,6 +309,11 @@ def run(rvt: Path, *, execute: bool, max_stage: str) -> int:
                 if plan.stage.name == "R01":
                     print("R01 handled by the document session above")
                     continue
+                # Several attempts are open at once, and Revit's active document
+                # moves between them.  The provider acts on the ACTIVE document
+                # and refuses to switch by itself, so the target is activated
+                # before each stage rather than left to whatever was in front.
+                _activate(transport, rvt)
                 result = execute_stage(plan, invoker=invoker)
                 journal = EVIDENCE_ROOT / "journals" / (plan.stage.name + ".json")
                 journal.parent.mkdir(parents=True, exist_ok=True)

@@ -235,6 +235,84 @@ def _on_boundary(edge, boundary) -> bool:
     return line.intersection(boundary).length >= line.length - 1e-6
 
 
+def _merge_collinear(walls: list[_Wall]) -> list[_Wall]:
+    """Merge wall runs that lie on the same line and overlap.
+
+    Two rooms whose faces step by a few centimetres put two exterior walls on
+    the same line, and Revit joins them into a T that it then warns about as an
+    overlap and refuses to verify.  Merging the runs into one wall is the same
+    boundary stated once, and it is what a person would model.
+    """
+
+    merged: list[_Wall] = []
+    used = [False] * len(walls)
+    ordered = sorted(walls, key=lambda wall: wall.logical_id)
+    for index, first in enumerate(ordered):
+        if used[index]:
+            continue
+        group = [first]
+        used[index] = True
+        for other_index in range(index + 1, len(ordered)):
+            if used[other_index]:
+                continue
+            other = ordered[other_index]
+            if other.kind != first.kind or other.thickness_m != first.thickness_m:
+                continue
+            if not _same_line(first, other):
+                continue
+            if _runs_overlap(first, other):
+                group.append(other)
+                used[other_index] = True
+        if len(group) == 1:
+            merged.append(first)
+            continue
+        points = [point for wall in group for point in (wall.start, wall.end)]
+        axis = 0 if abs(first.start[0] - first.end[0]) < 1e-6 else 1
+        low = min(point[axis] for point in points)
+        high = max(point[axis] for point in points)
+        fixed = first.start[1 - axis]
+        start = (fixed, low) if axis == 0 else (low, fixed)
+        end = (fixed, high) if axis == 0 else (high, fixed)
+        rooms = tuple(sorted({room for wall in group for room in wall.rooms}))
+        merged.append(
+            _Wall(
+                logical_id=_wall_id(
+                    "WALL" if first.exterior else "PARTITION", start, end
+                ),
+                start=start,
+                end=end,
+                thickness_m=first.thickness_m,
+                kind=first.kind,
+                rooms=rooms,
+                exterior=first.exterior,
+                on_gallery=any(wall.on_gallery for wall in group),
+            )
+        )
+    merged.sort(key=lambda wall: wall.logical_id)
+    return merged
+
+
+def _same_line(first: _Wall, second: _Wall) -> bool:
+    for axis in (0, 1):
+        if (
+            abs(first.start[axis] - first.end[axis]) < 1e-6
+            and abs(second.start[axis] - second.end[axis]) < 1e-6
+            and abs(first.start[axis] - second.start[axis]) < 1e-6
+        ):
+            return True
+    return False
+
+
+def _runs_overlap(first: _Wall, second: _Wall) -> bool:
+    if abs(first.start[0] - first.end[0]) < 1e-6:
+        axis = 1
+    else:
+        axis = 0
+    first_low, first_high = sorted((first.start[axis], first.end[axis]))
+    second_low, second_high = sorted((second.start[axis], second.end[axis]))
+    return second_low < first_high - 1e-6 and first_low < second_high - 1e-6
+
+
 def build_walls(layout: CourtyardLayout) -> tuple[list[_Wall], list[_Wall]]:
     """Return the exterior envelope and the partitions of a plan.
 
@@ -287,7 +365,7 @@ def build_walls(layout: CourtyardLayout) -> tuple[list[_Wall], list[_Wall]]:
             )
         )
     exterior.sort(key=lambda wall: wall.logical_id)
-    return exterior, partitions
+    return _merge_collinear(exterior), _merge_collinear(partitions)
 
 
 def _request(
