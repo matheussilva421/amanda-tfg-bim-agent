@@ -37,7 +37,8 @@
         "status": "PARTIAL"
       },
       "path": "tool-lab\\topologic\\results\\space.obj",
-      "status": "PASS",
+      "reason": "TypeError: can only concatenate str (not \"NoneType\") to str",
+      "status": "BLOCKED",
       "vertex_records": 12
     },
     "topology_json": {
@@ -83,7 +84,7 @@
   },
   "spike": "topologicpy_space_from_2d_contour",
   "status": "PASS",
-  "timestamp_utc": "2026-09-16T07:24:38Z",
+  "timestamp_utc": "2026-09-16T18:06:39Z",
   "topologicpy": {
     "core_version": "8.0.4",
     "imported": true,

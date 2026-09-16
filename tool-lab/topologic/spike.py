@@ -160,15 +160,26 @@ def _export_geometry(cell: Any) -> dict[str, dict[str, Any]]:
     from topologicpy.Topology import Topology
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-    obj_ok = bool(
-        Topology.ExportToOBJ(
-            cell,
-            path=str(OBJ_PATH),
-            overwrite=True,
-            triangulate=True,
-            silent=True,
+    # Topology.ExportToOBJ stamps the file with Helper.Version(), which resolves
+    # the package version by asking PyPI.  With no network that lookup returns
+    # None and the writer raises TypeError while assembling its header, so the
+    # geometry is fine and only the header fails.  The spike names that
+    # condition instead of reporting a geometry error it did not measure, and
+    # the topology JSON export below still proves the geometry independently.
+    obj_error: str | None = None
+    try:
+        obj_ok = bool(
+            Topology.ExportToOBJ(
+                cell,
+                path=str(OBJ_PATH),
+                overwrite=True,
+                triangulate=True,
+                silent=True,
+            )
         )
-    )
+    except (TypeError, AttributeError, OSError) as exc:
+        obj_ok = False
+        obj_error = f"{type(exc).__name__}: {exc}"
     topology_json_ok = bool(
         Topology.ExportToJSON(
             [cell],
@@ -194,7 +205,14 @@ def _export_geometry(cell: Any) -> dict[str, dict[str, Any]]:
         RESULTS_DIR / material_reference if material_reference is not None else None
     )
     if not obj_ok or obj_vertex_count == 0 or obj_face_count == 0:
-        raise RuntimeError("TopologicPy OBJ export did not produce vertices and faces")
+        # A refused write is reported as its own status.  It is not silently
+        # turned into a pass, and it does not hide the geometry measurement that
+        # already succeeded above.
+        obj_status = "BLOCKED"
+        obj_reason = obj_error or "TopologicPy OBJ export produced no vertices or faces"
+    else:
+        obj_status = "PASS"
+        obj_reason = None
 
     if not topology_json_ok or not TOPOLOGY_JSON_PATH.is_file():
         raise RuntimeError("TopologicPy topology JSON export did not produce a file")
@@ -202,7 +220,8 @@ def _export_geometry(cell: Any) -> dict[str, dict[str, Any]]:
 
     return {
         "obj": {
-            "status": "PASS",
+            "status": obj_status,
+            "reason": obj_reason,
             "path": str(OBJ_PATH.relative_to(SCRIPT_DIR.parent.parent)),
             "bytes": len(obj_text),
             "vertex_records": obj_vertex_count,
@@ -240,6 +259,10 @@ def _export_geometry(cell: Any) -> dict[str, dict[str, Any]]:
 
 def run_spike() -> dict[str, Any]:
     report = _base_report()
+    # Library diagnostics go to stderr: the report is the only thing on stdout,
+    # so a caller can parse it even when topologicpy warns about the network.
+    original_stdout = sys.stdout
+    sys.stdout = sys.stderr
     try:
         import topologicpy
 
@@ -290,6 +313,8 @@ def run_spike() -> dict[str, Any]:
             "type": type(exc).__name__,
             "message": str(exc),
         }
+    finally:
+        sys.stdout = original_stdout
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     REPORT_PATH.write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n",
@@ -299,8 +324,14 @@ def run_spike() -> dict[str, Any]:
 
 
 def main() -> int:
+    # topologicpy writes diagnostics such as its PyPI lookup warning to stdout,
+    # which would sit in front of the report and make it unparseable.  The real
+    # stdout is kept first and every library diagnostic is redirected away from
+    # it for the duration of the run, so the report is the only thing published.
+    report_stream = sys.stdout
     report = run_spike()
-    print(json.dumps(report, indent=2, sort_keys=True))
+    report_stream.write(json.dumps(report, indent=2, sort_keys=True) + "\n")
+    report_stream.flush()
     return 0 if report["status"] == "PASS" else 1
 
 

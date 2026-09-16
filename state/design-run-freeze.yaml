@@ -24,6 +24,13 @@ decisions:
   site_topography: DEC-P03-T15-SITE-TOPOGRAPHY-001
   decision_scope: STUDY
   amanda_review: AMANDA_REVIEW_PENDING
+  typology_layout: DEC-P08-T08-TYPOLOGY-001
+  site_boundary_implantation: DEC-P08-T08-SITE-BOUNDARY-001
+  production_layout_revision:
+    revision_id: P08-LAYOUT-REVISION-001
+    reason: the delegated T08 typology and implantation decisions added two records
+      to the decision register, so the frozen decision-register hash changed
+    rebound_utc: '2026-09-16T15:10:00Z'
 frozen_files:
 - path: project/requirements/program.json
   sha256: 67fb2b39aad795bdb54344d6dd75eb24ef9279118797257d701ae007792575cf
@@ -32,7 +39,7 @@ frozen_files:
 - path: project/requirements/design-hypotheses.yaml
   sha256: 3a3b5a95f3d77fcaef9eaeb7532d43b067d8071aa05ef215291e2bd30650e8ed
 - path: project/requirements/decision-register.yaml
-  sha256: 7cedb929fb20e6b40559687ca0a958f0995530bbe8cdcbf90a226a74586510d8
+  sha256: 61865b3e7884a5dd12a88086091ed9fac7e53ec160c80fdb9cf40c10e9553344
 - path: project/site/site.json
   sha256: b305cb055b2ce7cd77f05d23837438322c71cf269e336310d76588e558809631
 - path: project/site/missing-data.yaml
@@ -57,3 +64,4 @@ freeze_rules:
   - final_grading
   - final_altimetric_accessibility_validation
   - amanda_review
+rebound_at_utc: '2026-09-16T15:10:00Z'

@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "scope": "STUDY",
+  "layout_content_hash": "9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d",
+  "pdf": "Amanda_TFG_ESTUDO_pranchas.pdf",
+  "pdf_bytes": 10081645,
+  "page_count": 7,
+  "expected_page_count": 7,
+  "pages": [
+    {
+      "sheet": "01-implantacao",
+      "title": "IMPLANTAÇÃO - divisa de estudo, recuos de 5,00 m",
+      "preview": "previews/page-01.png",
+      "preview_px": [
+        9933,
+        7016
+      ],
+      "ink_fraction": 0.0567,
+      "nonblank": true
+    },
+    {
+      "sheet": "02-planta-terreo",
+      "title": "PLANTA BAIXA - pavimento térreo",
+      "preview": "previews/page-02.png",
+      "preview_px": [
+        9933,
+        7016
+      ],
+      "ink_fraction": 0.2201,
+      "nonblank": true
+    },
+    {
+      "sheet": "03-elevacao-sul",
+      "title": "ELEVAÇÃO SUL - face da rua",
+      "preview": "previews/page-03.png",
+      "preview_px": [
+        9933,
+        7016
+      ],
+      "ink_fraction": 0.0322,
+      "nonblank": true
+    },
+    {
+      "sheet": "04-elevacao-norte",
+      "title": "ELEVAÇÃO NORTE - face do pátio",
+      "preview": "previews/page-04.png",
+      "preview_px": [
+        9933,
+        7016
+      ],
+      "ink_fraction": 0.0329,
+      "nonblank": true
+    },
+    {
+      "sheet": "05-elevacao-oeste",
+      "title": "ELEVAÇÃO OESTE - empena",
+      "preview": "previews/page-05.png",
+      "preview_px": [
+        9933,
+        7016
+      ],
+      "ink_fraction": 0.0347,
+      "nonblank": true
+    },
+    {
+      "sheet": "06-elevacao-leste",
+      "title": "ELEVAÇÃO LESTE - empena",
+      "preview": "previews/page-06.png",
+      "preview_px": [
+        9933,
+        7016
+      ],
+      "ink_fraction": 0.0346,
+      "nonblank": true
+    },
+    {
+      "sheet": "07-corte-transversal",
+      "title": "CORTE TRANSVERSAL AA",
+      "preview": "previews/page-07.png",
+      "preview_px": [
+        9933,
+        7016
+      ],
+      "ink_fraction": 0.1861,
+      "nonblank": true
+    }
+  ],
+  "all_blank_check": "PASS"
+}

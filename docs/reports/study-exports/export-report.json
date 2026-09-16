@@ -1,0 +1,43 @@
+{
+  "dxf": {
+    "path": "docs\\reports\\study-exports\\AMANDA_ESTUDO.dxf",
+    "bytes": 27020,
+    "format": "AutoCAD R12 ASCII DXF",
+    "units": "METRE",
+    "layers": 7,
+    "layout_content_hash": "9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d",
+    "scope": "STUDY",
+    "source": "delegated architectural layout, not the Revit model",
+    "counts": {
+      "rooms": 52,
+      "labels": 52,
+      "openings": 87
+    },
+    "limitation": "DXF is written, not DWG: a DWG needs Revit or a licensed CAD kernel. The project's DWG validator judges a DWG only when a real one exists, so this export is not reported as a DWG."
+  },
+  "ifc": {
+    "path": "docs\\reports\\study-exports\\AMANDA_ESTUDO.ifc",
+    "bytes": 121496,
+    "schema": "IFC4",
+    "units": "METRE",
+    "project_name": "Amanda TFG - Centro de Acolhimento Temporario",
+    "layout_content_hash": "9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d",
+    "scope": "STUDY",
+    "source": "delegated architectural layout, not the Revit model",
+    "counts": {
+      "spaces": 52,
+      "walls": 48,
+      "doors": 52,
+      "windows": 35,
+      "slabs": 2,
+      "storeys": 1
+    },
+    "program": {
+      "person_capacity": 20,
+      "net_internal_m2": 626.0,
+      "gross_enclosed_m2": 784.8814285714286,
+      "covered_total_m2": 918.562857142857
+    }
+  },
+  "layout_content_hash": "9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d"
+}

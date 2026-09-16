@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1450" height="1450" viewBox="0 0 1450 1450">
+<rect width="100%" height="100%" fill="#fcfcf9"/>
+<polygon points="82.69,1367.31 1367.31,1367.31 1367.31,82.69 82.69,82.69" fill="#f7f7f2" stroke="#787878" stroke-width="2"/>
+<polygon points="125.07,1230.67 125.07,1164.51 862.01,1164.51 862.01,1230.67 125.07,1230.67" fill="#e9f5e9" stroke="#2e7d32" stroke-width="2"/>
+<polygon points="862.01,1243.07 862.01,1230.67 125.07,1230.67 125.07,1243.07 862.01,1243.07" fill="#eeece2" stroke="#96948a" stroke-width="1"/>
+<polygon points="576.76,1324.31 564.36,1324.31 564.36,1325.97 391.00,1325.97 391.00,1318.80 380.67,1318.80 380.67,1325.97 228.97,1325.97 228.97,1324.31 218.64,1324.31 218.64,1325.97 124.03,1325.97 124.03,1242.04 362.36,1242.04 362.36,1257.47 422.31,1257.47 422.31,1251.96 434.71,1251.96 434.71,1242.04 651.38,1242.04 651.38,1243.69 663.78,1243.69 663.78,1254.71 674.12,1254.71 674.12,1242.04 823.85,1242.04 823.85,1249.20 836.25,1249.20 836.25,1276.77 863.04,1276.77 863.04,1291.24 707.69,1291.24 707.69,1313.29 695.28,1313.29 695.28,1325.97 663.68,1325.97 663.68,1307.77 653.35,1307.77 653.35,1324.31 640.94,1324.31 640.94,1325.97 623.13,1325.97 623.13,1324.31 612.79,1324.31 612.79,1325.97 587.10,1325.97 587.10,1313.29 576.76,1313.29 576.76,1324.31" fill="#d6d6d0" stroke="#c0392b" stroke-width="3"/>
+<polygon points="862.01,1290.20 862.01,1277.80 125.07,1277.80 125.07,1290.20 862.01,1290.20" fill="#f7e3b2" stroke="#8a6a1a" stroke-width="1"/>
+<text x="493.54" y="1167.61" font-family="Segoe UI,Arial" font-size="15" text-anchor="middle" fill="#19232d">BLOCO PRINCIPAL - pavimento térreo</text>
+<text x="493.54" y="1383.85" font-family="Segoe UI,Arial" font-size="12" text-anchor="middle" fill="#19232d">face da rua - serviços, chegada e uso comunitário</text>
+<text x="493.54" y="1098.36" font-family="Segoe UI,Arial" font-size="13" text-anchor="middle" fill="#19232d">pátio protegido 713 m2</text>
+<text x="107.50" y="1342.50" font-family="Segoe UI,Arial" font-size="11" text-anchor="start" fill="#19232d">divisa de estudo: 24.135 m2 (não verificada)</text>
+<text x="107.50" y="115.77" font-family="Segoe UI,Arial" font-size="11" text-anchor="start" fill="#19232d">quadrado de área equivalente - sem polígono cadastral</text>
+<text x="8.27" y="11.58" font-family="Segoe UI,Arial" font-size="19" text-anchor="start" fill="#19232d">Implantação sobre divisa de estudo - recuos de 5,00 m</text>
+<text x="12" y="1428" font-family="Segoe UI,Arial" font-size="12" fill="#5a5a5a">STUDY - delegated layout - hash 9410f296b0d3a258 - implantação sobre base de estudo; recuos de 5,00 m</text>
+</svg>

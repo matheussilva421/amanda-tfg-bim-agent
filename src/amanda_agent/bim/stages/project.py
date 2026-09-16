@@ -39,7 +39,18 @@ PROJECT_TEMPLATE_SUFFIX = ".rte"
 PROJECT_CREATE_CAPABILITY = "revit.create_project"
 PROJECT_LOGICAL_ID = "PRJ-0001"
 
-_ARCHITECTURAL_HINTS = ("architect", "arquitet")
+#: Stock Revit project templates are named for the unit system and the locale,
+#: not for "architectural": the installer ships Default_M_PTB.rte (metric,
+#: Brazilian Portuguese) and Default_I_ENU.rte (imperial, English) with no word
+#: in the filename that says what they contain.  Without these prefixes the
+#: discovery below finds nothing at all on a machine that only has the stock
+#: templates, and R01 can never be planned.
+_ARCHITECTURAL_HINTS = ("architect", "arquitet", "default_m_", "default_i_")
+
+#: Metric templates are preferred, because the project is metric and the
+#: programme is metric.  Order is explicit rather than alphabetical so the
+#: imperial Imperial template cannot win by sorting first.
+_TEMPLATE_PREFERENCE = ("default_m_ptb", "default_m_", "default_a", "architect", "arquitet")
 
 
 class TemplateOrigin(StrEnum):
@@ -79,7 +90,7 @@ def default_template_roots(program_files: str | None = None) -> list[Path]:
 def discover_architectural_templates(
     roots: Iterable[Path] | None = None,
 ) -> list[Path]:
-    """Find installed architectural templates in a deterministic order."""
+    """Find installed project templates in a deterministic preference order."""
 
     selected: list[Path] = []
     for root in roots if roots is not None else default_template_roots():
@@ -89,7 +100,15 @@ def discover_architectural_templates(
         for path in base.rglob(f"*{PROJECT_TEMPLATE_SUFFIX}"):
             if any(hint in path.name.casefold() for hint in _ARCHITECTURAL_HINTS):
                 selected.append(path)
-    return sorted(selected, key=lambda path: (path.name.casefold(), str(path).casefold()))
+
+    def rank(path: Path) -> tuple[int, str, str]:
+        name = path.name.casefold()
+        for index, hint in enumerate(_TEMPLATE_PREFERENCE):
+            if hint in name:
+                return (index, name, str(path).casefold())
+        return (len(_TEMPLATE_PREFERENCE), name, str(path).casefold())
+
+    return sorted(selected, key=rank)
 
 
 def select_project_template(

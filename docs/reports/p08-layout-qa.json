@@ -1,0 +1,239 @@
+{
+  "schema_version": 1,
+  "scope": "STUDY",
+  "stage": "R14_PRE_MODEL",
+  "layout_content_hash": "9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d",
+  "verdict": "PASS",
+  "checked": 25,
+  "failed": 0,
+  "model_pending": 5,
+  "checks": [
+    {
+      "check": "program.every_room_placed",
+      "scope": "PROGRAM",
+      "status": "PASS",
+      "detail": "todos os 52 ambientes do programa foram colocados",
+      "evidence": {
+        "expected": 52,
+        "placed": 52
+      }
+    },
+    {
+      "check": "program.areas_are_exact",
+      "scope": "PROGRAM",
+      "status": "PASS",
+      "detail": "cada área líquida é exatamente a do programa",
+      "evidence": {
+        "divergent": 0
+      }
+    },
+    {
+      "check": "program.reconciliation",
+      "scope": "PROGRAM",
+      "status": "PASS",
+      "detail": "reconciliação do programa: profile='STUDY' scope='program' checks=[QaCheck(check_id='program.REQ-01-01', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-01-02', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-01-03', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-01-04', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-01-05', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-02-01', mandatory=True, status=<QaCheckStatus.FAIL: 'FAIL'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-02-02', mandatory=True, status=<QaCheckStatus.FAIL: 'FAIL'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-02-03', mandatory=True, status=<QaCheckStatus.FAIL: 'FAIL'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-02-04', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-02-05', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-02-06', mandatory=True, status=<QaCheckStatus.FAIL: 'FAIL'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-02-07', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-02-08', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-02-09', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-02-10', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-03-01', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-03-02', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-03-03', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-03-04', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-04-01', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-04-02', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-04-03', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-04-04', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-04-05', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-04-06', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-05-01', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-05-02', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-05-03', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-05-04', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-06-01', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-06-02', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-06-03', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-06-04', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-06-05', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-06-06', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-06-07', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-06-08', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-06-09', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-06-10', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-06-11', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-06-12', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-06-13', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-06-14', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-06-15', mandatory=True, status=<QaCheckStatus.PASS: 'PASS'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-07-01', mandatory=True, status=<QaCheckStatus.FAIL: 'FAIL'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-07-02', mandatory=True, status=<QaCheckStatus.FAIL: 'FAIL'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-07-03', mandatory=True, status=<QaCheckStatus.FAIL: 'FAIL'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-07-04', mandatory=True, status=<QaCheckStatus.FAIL: 'FAIL'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program'), QaCheck(check_id='program.REQ-07-05', mandatory=True, status=<QaCheckStatus.FAIL: 'FAIL'>, severity_if_failed=<Severity.HIGH: 'HIGH'>, scope='program')] issues=[QaIssue(code='MISSING_REQUIRED_SPACE', message=\"required programmed space 'REQ-02-01' is missing\", severity=<Severity.HIGH: 'HIGH'>, scope='program', mandatory=True, evidence={'logical_id': 'REQ-02-01', 'area_kind': 'INTERNAL', 'required_quantity': 2}, check_id='program.REQ-02-01', missing_input=False), QaIssue(code='MISSING_REQUIRED_SPACE', message=\"required programmed space 'REQ-02-02' is missing\", severity=<Severity.HIGH: 'HIGH'>, scope='program', mandatory=True, evidence={'logical_id': 'REQ-02-02', 'area_kind': 'INTERNAL', 'required_quantity': 3}, check_id='program.REQ-02-02', missing_input=False), QaIssue(code='MISSING_REQUIRED_SPACE', message=\"required programmed space 'REQ-02-03' is missing\", severity=<Severity.HIGH: 'HIGH'>, scope='program', mandatory=True, evidence={'logical_id': 'REQ-02-03', 'area_kind': 'INTERNAL', 'required_quantity': 2}, check_id='program.REQ-02-03', missing_input=False), QaIssue(code='MISSING_REQUIRED_SPACE', message=\"required programmed space 'REQ-02-06' is missing\", severity=<Severity.HIGH: 'HIGH'>, scope='program', mandatory=True, evidence={'logical_id': 'REQ-02-06', 'area_kind': 'INTERNAL', 'required_quantity': 5}, check_id='program.REQ-02-06', missing_input=False), QaIssue(code='MISSING_REQUIRED_SPACE', message=\"required programmed space 'REQ-07-01' is missing\", severity=<Severity.HIGH: 'HIGH'>, scope='program', mandatory=True, evidence={'logical_id': 'REQ-07-01', 'area_kind': 'EXTERNAL', 'required_quantity': 1}, check_id='program.REQ-07-01', missing_input=False), QaIssue(code='MISSING_REQUIRED_SPACE', message=\"required programmed space 'REQ-07-02' is missing\", severity=<Severity.HIGH: 'HIGH'>, scope='program', mandatory=True, evidence={'logical_id': 'REQ-07-02', 'area_kind': 'EXTERNAL', 'required_quantity': 1}, check_id='program.REQ-07-02', missing_input=False), QaIssue(code='MISSING_REQUIRED_SPACE', message=\"required programmed space 'REQ-07-03' is missing\", severity=<Severity.HIGH: 'HIGH'>, scope='program', mandatory=True, evidence={'logical_id': 'REQ-07-03', 'area_kind': 'EXTERNAL', 'required_quantity': 1}, check_id='program.REQ-07-03', missing_input=False), QaIssue(code='MISSING_REQUIRED_SPACE', message=\"required programmed space 'REQ-07-04' is missing\", severity=<Severity.HIGH: 'HIGH'>, scope='program', mandatory=True, evidence={'logical_id': 'REQ-07-04', 'area_kind': 'EXTERNAL', 'required_quantity': 1}, check_id='program.REQ-07-04', missing_input=False), QaIssue(code='MISSING_REQUIRED_SPACE', message=\"required programmed space 'REQ-07-05' is missing\", severity=<Severity.HIGH: 'HIGH'>, scope='program', mandatory=True, evidence={'logical_id': 'REQ-07-05', 'area_kind': 'EXTERNAL', 'required_quantity': 1}, check_id='program.REQ-07-05', missing_input=False)] result=<QaResult.FAIL: 'FAIL'> generated_at=datetime.datetime(2026, 9, 16, 17, 51, 45, 38294, tzinfo=datetime.timezone.utc) required_check_ids=['program.REQ-01-01', 'program.REQ-01-02', 'program.REQ-01-03', 'program.REQ-01-04', 'program.REQ-01-05', 'program.REQ-02-01', 'program.REQ-02-02', 'program.REQ-02-03', 'program.REQ-02-04', 'program.REQ-02-05', 'program.REQ-02-06', 'program.REQ-02-07', 'program.REQ-02-08', 'program.REQ-02-09', 'program.REQ-02-10', 'program.REQ-03-01', 'program.REQ-03-02', 'program.REQ-03-03', 'program.REQ-03-04', 'program.REQ-04-01', 'program.REQ-04-02', 'program.REQ-04-03', 'program.REQ-04-04', 'program.REQ-04-05', 'program.REQ-04-06', 'program.REQ-05-01', 'program.REQ-05-02', 'program.REQ-05-03', 'program.REQ-05-04', 'program.REQ-06-01', 'program.REQ-06-02', 'program.REQ-06-03', 'program.REQ-06-04', 'program.REQ-06-05', 'program.REQ-06-06', 'program.REQ-06-07', 'program.REQ-06-08', 'program.REQ-06-09', 'program.REQ-06-10', 'program.REQ-06-11', 'program.REQ-06-12', 'program.REQ-06-13', 'program.REQ-06-14', 'program.REQ-06-15', 'program.REQ-07-01', 'program.REQ-07-02', 'program.REQ-07-03', 'program.REQ-07-04', 'program.REQ-07-05'] details={'configured_space_count': 49, 'observed_space_count': 52, 'external_space_ids': ['REQ-07-01', 'REQ-07-02', 'REQ-07-03', 'REQ-07-04', 'REQ-07-05']}",
+      "evidence": {}
+    },
+    {
+      "check": "program.enclosed_estimate",
+      "scope": "PROGRAM",
+      "status": "PASS",
+      "detail": "área fechada 784.88 m2 dentro de 783-814 m2",
+      "evidence": {
+        "measured": 784.8814285714286,
+        "range": [
+          783.0,
+          814.0
+        ]
+      }
+    },
+    {
+      "check": "program.covered_estimate",
+      "scope": "PROGRAM",
+      "status": "PASS",
+      "detail": "área coberta 918.56 m2 dentro de 850-950 m2",
+      "evidence": {
+        "measured": 918.562857142857,
+        "range": [
+          850.0,
+          950.0
+        ]
+      }
+    },
+    {
+      "check": "program.capacity_is_20",
+      "scope": "PROGRAM",
+      "status": "PASS",
+      "detail": "capacidade fixada em 20 pessoas",
+      "evidence": {
+        "person_capacity": 20
+      }
+    },
+    {
+      "check": "program.external_total_is_260",
+      "scope": "PROGRAM",
+      "status": "PASS",
+      "detail": "programa externo de 260 m2 preservado",
+      "evidence": {
+        "external_programmed_m2": 260.0
+      }
+    },
+    {
+      "check": "plan.no_room_overlap",
+      "scope": "PLAN",
+      "status": "PASS",
+      "detail": "nenhuma sobreposição entre ambientes",
+      "evidence": {
+        "overlaps": 0
+      }
+    },
+    {
+      "check": "plan.gallery_is_clear",
+      "scope": "PLAN",
+      "status": "PASS",
+      "detail": "a galeria não invade nenhum ambiente",
+      "evidence": {
+        "clashes": 0
+      }
+    },
+    {
+      "check": "plan.every_room_on_the_gallery",
+      "scope": "PLAN",
+      "status": "PASS",
+      "detail": "todos os 52 ambientes abrem para a galeria",
+      "evidence": {
+        "unreachable": 0
+      }
+    },
+    {
+      "check": "plan.gallery_width",
+      "scope": "PLAN",
+      "status": "PASS",
+      "detail": "galeria com 1.50 m, acima do mínimo acessível de 1,50 m",
+      "evidence": {
+        "corridor_width_m": 1.5
+      }
+    },
+    {
+      "check": "plan.room_minimum_dimension",
+      "scope": "PLAN",
+      "status": "PASS",
+      "detail": "nenhum ambiente abaixo de 1,00 m no menor lado",
+      "evidence": {
+        "narrow": 0
+      }
+    },
+    {
+      "check": "plan.patio_is_open_ground",
+      "scope": "PLAN",
+      "status": "PASS",
+      "detail": "pátio protegido de 712.97 m2, sem sobreposição com a construção",
+      "evidence": {
+        "patio_m2": 712.967619047619,
+        "minimum_m2": 80.0
+      }
+    },
+    {
+      "check": "plan.rooms_inside_the_plate",
+      "scope": "PLAN",
+      "status": "PASS",
+      "detail": "todos os ambientes estão dentro da projeção construída",
+      "evidence": {}
+    },
+    {
+      "check": "plan.privacy_gradient_recorded",
+      "scope": "PLAN",
+      "status": "PASS",
+      "detail": "o gradiente de privacidade está registrado em todos os ambientes",
+      "evidence": {
+        "violations": 0
+      }
+    },
+    {
+      "check": "plan.residential_faces_the_patio",
+      "scope": "PLAN",
+      "status": "PASS",
+      "detail": "os 18 ambientes residenciais voltam-se ao pátio",
+      "evidence": {
+        "residential_rooms": 18
+      }
+    },
+    {
+      "check": "plan.services_on_the_street_face",
+      "scope": "PLAN",
+      "status": "PASS",
+      "detail": "os 15 ambientes de serviço ficam na face da rua",
+      "evidence": {
+        "service_rooms": 15
+      }
+    },
+    {
+      "check": "plan.deterministic_hash",
+      "scope": "PLAN",
+      "status": "PASS",
+      "detail": "o plano carrega hash de conteúdo 9410f296b0d3a258",
+      "evidence": {
+        "content_hash": "9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d"
+      }
+    },
+    {
+      "check": "site.building_inside_the_study_boundary",
+      "scope": "PLAN",
+      "status": "PASS",
+      "detail": "a construção está dentro do quadrado de estudo de 24.135 m2",
+      "evidence": {
+        "footprint_bounds": [
+          5.0,
+          4.999999999999999,
+          94.37095238095237,
+          15.149999999999999
+        ]
+      }
+    },
+    {
+      "check": "site.setback_from_the_boundary",
+      "scope": "PLAN",
+      "status": "PASS",
+      "detail": "recuos de 5.00 m e 5.00 m a partir das divisas oeste e sul",
+      "evidence": {
+        "west_m": 5.0,
+        "south_m": 4.999999999999999
+      }
+    },
+    {
+      "check": "model.elements_exist_in_revit",
+      "scope": "MODEL_PENDING",
+      "status": "FAIL",
+      "detail": "requer o modelo Revit; não avaliado nesta passagem",
+      "evidence": {}
+    },
+    {
+      "check": "model.rooms_bounded_and_placed",
+      "scope": "MODEL_PENDING",
+      "status": "FAIL",
+      "detail": "requer o modelo Revit; não avaliado nesta passagem",
+      "evidence": {}
+    },
+    {
+      "check": "model.sheet_set_published",
+      "scope": "MODEL_PENDING",
+      "status": "FAIL",
+      "detail": "requer o modelo Revit; não avaliado nesta passagem",
+      "evidence": {}
+    },
+    {
+      "check": "model.exports_ifc_pdf_dwg",
+      "scope": "MODEL_PENDING",
+      "status": "FAIL",
+      "detail": "requer o modelo Revit; não avaliado nesta passagem",
+      "evidence": {}
+    },
+    {
+      "check": "model.cold_reopen_verified",
+      "scope": "MODEL_PENDING",
+      "status": "FAIL",
+      "detail": "requer o modelo Revit; não avaliado nesta passagem",
+      "evidence": {}
+    }
+  ]
+}
