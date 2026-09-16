@@ -35,7 +35,7 @@ O que não existe: **nenhum modelo Revit de produção**, nenhum `revit/producti
 
 Três fatos medidos agora que qualquer continuação precisa absorver antes de agir:
 
-1. **As 34 entradas versionadas de `revit/lab/exports/p06t14/GOLDEN/RC01` estão inacessíveis por ACL** e aparecem como deletadas no `git status`. Não é perda de dado do RC: a cópia-fonte `RC01/` está intacta e legível (35 arquivos em disco, incluindo `model.rvt`), e o pacote selado tem 67 arquivos versionados (33 em `RC01/` + 34 em `GOLDEN/RC01`). É um diretório criado com DACL quebrada, o mesmo padrão B-001 já registrado. **Não commite essa deleção.**
+1. **`revit/lab/exports/p06t14/GOLDEN/RC01` tem herança de ACL quebrada** (a DACL ficou só com `SISTEMA`, `Administradores` e `DIREITOS DO PROPRIETÁRIO`, sem ACE para `slvma` nem para `CodexSandboxUsers`). Para o dono o pacote está íntegro — 36 arquivos legíveis e `model.ifc` idêntico à cópia `RC01/` —, mas **toda sessão em sandbox não consegue listar o diretório e vê 34 deleções fantasma no `git status`**. Nunca commite essas deleções.
 2. **A suíte só fica 100% verde com rede.** Offline ela é 822/823: `tests/unit/test_topologic_spike.py` falha porque `topologicpy` consulta o PyPI para montar o cabeçalho do OBJ; sem rede, `Helper.Version()` devolve `None` e `OBJString` estoura `TypeError`. Falha pré-existente, já documentada em handoffs anteriores, confirmada hoje com traceback.
 3. **O Revit não está em execução nesta sessão.** Existem apenas `RevitAccelerator` e seis processos MCP órfãos (`horizun-mcp` ×3, `RevitCortex.Server` ×3, iniciados 09:40 e 10:57 de hoje). Sem Revit vivo e sem confirmação humana na tela, `P08-T08` em diante não pode executar escrita.
 
@@ -123,14 +123,15 @@ Ordem e critérios extraídos de `docs/superpowers/plans/08-amanda-production-ru
 
 ## 6. Problemas encontrados (com evidência)
 
-### P-01 — [CRÍTICO, ambiente] GOLDEN/RC01 inacessível: 34 entradas versionadas marcadas como deletadas no Git
+### P-01 — [MÉDIO-ALTO, ambiente/ACL] herança de ACL quebrada em GOLDEN/RC01: sessões em sandbox veem 34 deleções fantasma
 
-- `git status --short` mostra **34** entradas ` D` sob `revit/lab/exports/p06t14/GOLDEN/RC01/` — a árvore versionada inteira daquele diretório (`.md`, `.json`, `.ifc`, `.pdf`, `.dwg`, `.png`, `plan-evidence/*`) — e o aviso `could not open directory 'revit/lab/exports/p06t14/GOLDEN/RC01/'`.
-- `Get-ChildItem`/`icacls`/`Get-Acl` no diretório retornam `Acesso negado` / `Attempted to perform an unauthorized operation`; o diretório-pai `GOLDEN` tem ACL herdada normal (`Dell-G15-5530\CodexSandboxUsers:(I)(OI)(CI)(M,DC)`).
-- `RELEASE_COMPLETE.json` no HEAD mostra `{"manifest":"manifest.json","release":"RC01","status":"SEALED"}`; a promoção ocorreu hoje às 04:38 local (07:38 UTC), coerente com o registro de `P06-T14` em `state/task-history.yaml` (07:40:24Z).
-- **A cópia-fonte `revit/lab/exports/p06t14/RC01/` está intacta e legível** (model.rvt, exports/, qa-reports/, plan-evidence/ com 20 arquivos). O dano é de acesso, não necessariamente de conteúdo.
-- **Impacto:** o `git status` de qualquer sessão nova parece "sujo por deleção" e induz a dois erros opostos — commitar a deleção (quebra o selo do ensaio) ou tentar `git restore` (bloqueado pela ACL do `.git`, ver P-03).
-- **Ação recomendada:** primeiro reparar a ACL em processo elevado (`takeown /f "<dir>" /r /d y` e `icacls "<dir>" /reset /T /C`), reabrir a listagem e só então reavaliar `git status`. Só restaurar do Git se os arquivos realmente não existirem mais. Enquanto isso, tratar esse ` D` como **pré-existente e não relacionado** a qualquer trabalho novo, e nunca incluí-lo em `git add`.
+- Medido **fora do sandbox**, com o token do dono: o diretório tem **36 arquivos legíveis** (11 no nível raiz, mais `exports/`, `plan-evidence/` e `qa-reports/`); `exports/model.ifc` tem o mesmo SHA-256 da cópia-fonte (`12C27947C4C707E22CBB512B3A78DEB53E35F3365D31BA000A98FBF2FB929458`); `git status` não acusa nenhuma deleção nesses caminhos.
+- Medido **dentro do sandbox**: `Get-ChildItem`, `Get-Acl` e `icacls` retornam `Acesso negado` / `Attempted to perform an unauthorized operation`; `git status --short` mostra **34** entradas ` D` (a árvore versionada inteira do diretório) e o aviso `could not open directory`. O pacote selado tem 67 arquivos versionados: 33 em `RC01/` + 34 em `GOLDEN/RC01`.
+- Causa: a DACL perdeu a herança e ficou reduzida a `AUTORIDADE NT\SISTEMA:(OI)(CI)(F)`, `BUILTIN\Administradores:(OI)(CI)(F)` e `DIREITOS DO PROPRIETÁRIO:(OI)(CI)(F)` — sem ACE para `slvma` e sem ACE para `CodexSandboxUsers`. É o mesmo padrão B-001 (diretórios criados sob o sandbox ficam sem ACE para o usuário e para o grupo do sandbox).
+- `RELEASE_COMPLETE.json` no HEAD mostra `{"manifest":"manifest.json","release":"RC01","status":"SEALED"}`; a promoção ocorreu às 04:38 local (07:38 UTC) de hoje, coerente com o registro de `P06-T14` em `state/task-history.yaml` (07:40:24Z).
+- **Não há perda de dado nem defeito no ensaio:** a cópia-fonte `RC01/` e a cópia `GOLDEN/RC01/` estão ambas íntegras e legíveis para o dono. O dano é de acesso, e apenas para processos sandbox.
+- **Impacto prático:** um agente em sandbox não consegue hashear nem validar o pacote selado, e todo `git status` parece sujo com 34 deleções — o erro provável é `git add -A`/`git commit -a` publicando a deleção fantasma. O relatório v16 não registrou esse efeito.
+- **Ação recomendada:** manter como está (o dono lê normalmente) e nunca fazer `git add` desses caminhos a partir de uma sessão sandbox. Se agentes sandbox precisarem validar o pacote, conceder leitura num processo elevado: `icacls "revit\lab\exports\p06t14\GOLDEN\RC01" /grant "Dell-G15-5530\CodexSandboxUsers:(OI)(CI)(RX)" /T`. Em nenhum caso usar `git restore` nesses caminhos.
 
 ### P-02 — [ALTO, teste/fiabilidade] a suíte não é verde offline: `test_topologic_spike` depende de rede
 
@@ -151,7 +152,7 @@ TypeError: can only concatenate str (not "NoneType") to str
 
   Ou seja: a geometria é construída corretamente (12 vértices, 30 arestas, 20 faces, 24 m², 72 m³) e só a exportação OBJ quebra, porque `topologicpy.Helper.CheckVersion` busca `https://pypi.org/pypi/topologicpy/json` (timeout 10 s) e devolve `None` sem rede.
 - É **pré-existente e conhecida**: já registrada em `docs/notes/2026-09-15-luna-plans-analysis-and-cleanup-handoff.md:21`, `2026-09-15-luna-v3-analysis-and-runner-integration-handoff.md:18` e `2026-09-15-luna-v7-e-compilador-handoff.md:79-80`. A afirmação "822 testes passando" do v16 vale apenas com rede disponível.
-- **Efeito colateral:** o teste reescreve o arquivo rastreado `tool-lab/topologic/results/topologic-spike.json`. Nesta sessão o arquivo foi restaurado byte a byte a partir do HEAD e o `git diff` voltou a ficar vazio (mesma prática dos handoffs anteriores).
+- **Efeito colateral:** o teste reescreve o arquivo rastreado `tool-lab/topologic/results/topologic-spike.json`. Nesta sessão o arquivo foi restaurado byte a byte a partir do HEAD; `git hash-object` e `git rev-parse HEAD:<path>` devolvem o mesmo blob (`0687547c4bc4270cebedcf6410bbd322e8af9681`) e `git diff` é vazio. O ` M` que continua aparecendo no `git status` é artefato de stat/CRLF do índice, não alteração de conteúdo — não persiga esse ` M`.
 - **Ação recomendada:** manter o teste fora do caminho de release (ou marcar `slow`/`network`), e abrir correção própria: injetar a versão/atualizar `Helper._version`, stubar `Helper.CheckVersion`, ou exportar OBJ sem material — sempre em branch de manutenção, com regressão antes de promoção (AGENTS.md §"no mid-production dependency updates").
 
 ### P-03 — [ALTO, ambiente] `.git` tem `Deny Write` para o grupo do sandbox
@@ -230,7 +231,7 @@ TypeError: can only concatenate str (not "NoneType") to str
 
 ## 7. Travas e proibições para o próximo agente
 
-1. **Não commite a deleção de `GOLDEN/RC01`** (` D` no `git status`) e não tente `git restore` antes de reparar a ACL. Isso é P-01.
+1. **Não commite as deleções fantasma de `GOLDEN/RC01`** (os ` D` que só aparecem no `git status` de sessões sandbox) e não use `git restore` nesses caminhos: o pacote está íntegro e legível fora do sandbox (P-01).
 2. Não escreva em `GOLDEN`, `baseline`, `MASTER`, `source` nem nos originais em `docs/source/` e nos PDFs da raiz.
 3. Um escritor por vez: adquira `state/locks/revit-writer.lock` (hoje ausente = livre) antes de qualquer escrita; cada escrita é `WRITE → READ → VERIFY`; sucesso reportado pela ferramenta não é prova de mutação.
 4. P08-T17 e P08-T18 não podem ser declarados PASS sem IFC/PDF/DWG reais do modelo de produção, com hashes e previews não vazios.
@@ -245,7 +246,7 @@ TypeError: can only concatenate str (not "NoneType") to str
 
 ## 8. Roteiro recomendado (ordem sugerida)
 
-1. **Saneamento de ambiente (dono):** reparar ACL de `revit/lab/exports/p06t14/GOLDEN/RC01` (`takeown` + `icacls /reset /T /C`) e conferir `git status`; encerrar os processos MCP órfãos; confirmar o estado do `.git` (P-03).
+1. **Saneamento de ambiente (dono):** conferir `git status` **fora** do sandbox (as deleções de `GOLDEN/RC01` são fantasma); se agentes sandbox precisarem ler o pacote selado, conceder `RX` ao grupo do sandbox nesse diretório (P-01); encerrar os processos MCP órfãos; tratar a ACL do `.git` (P-03).
 2. **Reconciliação de estado:** abrir sessão nova lendo `AGENTS.md`, `PROJECT_STATE.yaml`, `state/status.md`, v16 e este relatório; regenerar `status`/`task-graph`; registrar em handoff as divergências de P-04 resolvidas ou mantidas.
 3. **Fechar o crosswalk:** provar `revit.create_grid` e `revit.create_roof` ao vivo com WRITE→READ→VERIFY + sha256 em RVT descartável; preencher `registered_entry` com evidência (P-06).
 4. **Fechar a dívida de teste:** decidir e executar a correção de `test_topologic_spike` (marcar como opcional/rede ou corrigir a exportação) e registrar o resultado da suíte com e sem rede (P-02).

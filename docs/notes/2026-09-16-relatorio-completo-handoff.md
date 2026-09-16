@@ -30,11 +30,11 @@ Não executei `doctor`, `status`, `advance`, `phase-gate` nem qualquer comando q
 
 ## Efeito colateral tratado
 
-A suíte reescreve o arquivo rastreado `tool-lab/topologic/results/topologic-spike.json` (o spike grava `BLOCKED` sem rede). O arquivo foi **restaurado byte a byte a partir do HEAD** nesta sessão e `git diff` para ele voltou a ficar vazio — mesma prática registrada em `2026-09-15-luna-v7-e-compilador-handoff.md:85`.
+A suíte reescreve o arquivo rastreado `tool-lab/topologic/results/topologic-spike.json` (o spike grava `BLOCKED` sem rede). O arquivo foi **restaurado byte a byte a partir do HEAD** nesta sessão: `git hash-object` = `git rev-parse HEAD:<path>` = `0687547c4bc4270cebedcf6410bbd322e8af9681` e `git diff` vazio; o ` M` residual no `git status` é apenas stat/CRLF do índice. Mesma prática registrada em `2026-09-15-luna-v7-e-compilador-handoff.md:85`.
 
 ## Problemas encontrados (resumo; detalhe no relatório)
 
-1. **P-01 [CRÍTICO]** 34 entradas versionadas de `GOLDEN/RC01` ilegíveis por ACL e marcadas como deletadas no Git. Reparar ACL em processo elevado antes de qualquer `git restore`; **nunca commitar essa deleção**.
+1. **P-01 [MÉDIO-ALTO]** `revit/lab/exports/p06t14/GOLDEN/RC01` perdeu a herança de ACL: fora do sandbox o dono lê os 36 arquivos normalmente (integridade conferida por SHA-256) e o `git status` é limpo; dentro do sandbox o diretório é ilegível e o `git status` mostra **34 deleções fantasma**. **Nunca commitar essa deleção** nem usar `git restore` nesses caminhos.
 2. **P-02 [ALTO]** suíte não é verde offline (1 falha em `test_topologic_spike`, dependência de PyPI dentro do `topologicpy`).
 3. **P-03 [ALTO]** `.git` com `Deny Write` para o grupo do sandbox: `git add/commit/push` exigem escalação.
 4. **P-04 [MÉDIO]** `PROJECT_STATE.yaml` (PHASE_06/PENDING) e `RESUME_AFTER_REBOOT.md` (PHASE_02, next P06-T01) divergem do grafo vivo (next `P08-T08`).
@@ -46,11 +46,11 @@ A suíte reescreve o arquivo rastreado `tool-lab/topologic/results/topologic-spi
 
 ## Status do GitHub
 
-Commit e push desta sessão: ver a mensagem final do agente. Antes da entrega, o worktree tinha `main...origin/main` com 34 deleções pré-existentes em `GOLDEN/RC01`, `state/environment-report.json` e `state/status.md` modificados — **todos preservados como estavam**, fora do commit deste relatório.
+Commit e push desta sessão: ver a mensagem final do agente. Antes da entrega, o worktree (visto do sandbox) mostrava 34 deleções em `GOLDEN/RC01` — **fantasma**, o diretório está íntegro fora do sandbox —, além de `state/environment-report.json`, `state/status.md` e um ` M` cosmético em `tool-lab/topologic/results/topologic-spike.json`. Tudo preservado como estava, fora do commit deste relatório.
 
 ## Pendências e próximos passos
 
-1. Reparar a ACL de `revit/lab/exports/p06t14/GOLDEN/RC01` (processo elevado) e reavaliar `git status`.
+1. Decidir sobre a ACL de `revit/lab/exports/p06t14/GOLDEN/RC01`: se agentes sandbox precisarem ler o pacote selado, conceder `RX` a `CodexSandboxUsers` em processo elevado (o dono já lê normalmente).
 2. Reconciliar `PROJECT_STATE.yaml`/`RESUME_AFTER_REBOOT.md` com o grafo e decidir sobre os dois arquivos de estado modificados (`doctor`/`status` os reescrevem; commitar junto ou reverter com decisão registrada).
 3. Fechar o crosswalk (`grid`, `roof`) com prova viva e `registered_entry`.
 4. Abrir o Revit 2027 em documento descartável e executar `P08-T08` (teste RED do driver + `scripts/bim_concept_candidates.py`).
@@ -59,4 +59,3 @@ Commit e push desta sessão: ver a mensagem final do agente. Antes da entrega, o
 ## Como retomar
 
 Ler nesta ordem: `AGENTS.md` → `PROJECT_STATE.yaml` → `state/status.md` → `docs/notes/2026-09-16-o-que-falta-simples-v16.md` → `docs/reports/2026-09-16-relatorio-completo-para-proximo-agente.md` → último handoff desta cadeia. Os comandos de verificação de início de sessão estão na seção 9 do relatório.
-
