@@ -1,5 +1,7 @@
 # O que falta para concluir — ARYA
 
+> SUPERSEDED 2026-09-15: retrato atual em `docs/notes/2026-09-15-o-que-falta-simples-v5.md`; esta análise fica como histórico.
+
 Data: 2026-09-15.
 
 ## Onde estamos

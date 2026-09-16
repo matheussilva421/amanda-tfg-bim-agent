@@ -1,14 +1,19 @@
-blockers: []
+blockers:
+- SITE_TOPOGRAPHY:BLOCKING
+- SITE_BOUNDARY:BLOCKING
+- SITE_OCCUPANCY:BLOCKING
+- SITE_FRONTAGE_COUNT:DEGRADING
+- SITE_TRUE_NORTH:DEGRADING
 current_checkpoint: null
-last_completed_task: P08-T06
+last_completed_task: P06-T14
 last_verified_commit: null
-next_task: P06-T14
+next_task: P08-T08
 phase_gate: GO_WITH_LIMITATIONS
-phase_id: PHASE_02
-phase_name: revit-tool-lab-providers
+phase_id: PHASE_06
+phase_name: qa-release-exports
 phase_status: PENDING
 project: Amanda TFG BIM Agent
 revit_stage: null
 schema_version: 1
 selected_design: null
-state_revision: 151
+state_revision: 155

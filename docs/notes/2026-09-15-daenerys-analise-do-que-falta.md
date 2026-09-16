@@ -1,5 +1,7 @@
 # Análise do que falta — 15/09/2026
 
+> SUPERSEDED 2026-09-15: retrato atual em `docs/notes/2026-09-15-o-que-falta-simples-v5.md`; esta análise fica como histórico.
+
 ## Onde estamos
 
 `PROJECT_STATE.yaml` aponta `PHASE_02` (`revit-tool-lab-providers`), status `PENDING`, gate `GO_WITH_LIMITATIONS`, próxima tarefa `P06-T14` e última tarefa concluída `P08-T05`.

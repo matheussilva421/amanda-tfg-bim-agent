@@ -1,5 +1,7 @@
 # O que falta — análise Artemis
 
+> SUPERSEDED 2026-09-15: retrato atual em `docs/notes/2026-09-15-o-que-falta-simples-v5.md`; esta análise fica como histórico.
+
 ## Onde o projeto está hoje
 
 O projeto já tem a base de código, o grafo com 159 tarefas, o programa adotado de 20 pessoas, o estudo `AMANDA-RUN-001` com duas finalistas e vários arquivos de laboratório Revit. O grafo conta 134 `PASS`, 2 `PASS_WITH_WARNINGS`, 15 `PENDING` e 8 `SUSPENDED`. `PROJECT_STATE.yaml` aponta `PHASE_02`, próxima tarefa `P06-T14`, gate `GO_WITH_LIMITATIONS`, sem projeto selecionado e sem checkpoint. O Revit 2027 foi detectado, o provider Horizun e seus adaptadores existem, e a sondagem ao Revit está salva; suas rotas novas continuam marcadas `UNPROVEN`, portanto ainda não provam uma escrita de produção.
