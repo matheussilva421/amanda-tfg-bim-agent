@@ -13,4 +13,6 @@ Arquivos criados nesta rodada:
 
 Não executei Revit/MCP/testes e não alterei código, `state/` ou planos. O checkout já estava sujo antes desta rodada, com alterações e arquivos de outros trabalhos; isso precisa ser preservado e conferido pelo agente principal antes de qualquer commit amplo.
 
+GitHub: o commit `e187d65` contendo os dois documentos foi enviado com sucesso para `origin/main`; a branch ficou sincronizada. Esta atualização do handoff será registrada no commit seguinte.
+
 Pendências para retomada: executar os ensaios reais nas sessões autorizadas; reconciliar `create_grid`/`create_roof`, os dois nomes do build, o escopo `PRODUCTION`, o preflight de runtime, o fallback completo e a aplicação do crosswalk; depois avançar a produção somente com evidência.
