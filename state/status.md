@@ -4,7 +4,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Phase and task progress
 
-- Phase: `PHASE_06` — qa-release-exports
+- Phase: `PHASE_08` — amanda-production-run
 - Phase status: `PENDING`
 - Next task: `P08-T08`
 - Last PASS task: `P06-T14`
@@ -35,7 +35,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Capability counts
 
-- PASS: 11
+- PASS: 13
 - FAIL: 0
 - UNTESTED: 0
 
@@ -49,7 +49,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Design and Revit recovery
 
-- Selected design: `NOT_RECORDED`
+- Selected design: `AMANDA-RUN-001-S01`
 - Revit stage: `NOT_RECORDED`
 - Current checkpoint: `NOT_RECORDED`
 
@@ -62,4 +62,4 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 ## Git verification
 
 - Last verified commit: `NOT_RECORDED`
-- Observed HEAD: `1e10f7c0008cc630006b56849104666673379cbe`
+- Observed HEAD: `722d2668d1cc30af713a47458d00c22e5b0c482d`

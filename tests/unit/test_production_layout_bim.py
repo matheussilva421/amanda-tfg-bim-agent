@@ -308,6 +308,31 @@ def test_openings_are_hosted_on_real_walls_with_diagonal_corners(registry, progr
     assert {"DOOR", "WINDOW"} <= kinds
 
 
+def test_later_wall_consumers_reference_ids_created_by_r05_or_r06(
+    registry, program, layout, tmp_path
+):
+    plans = _plans(registry, program, layout, tmp_path)
+    by_stage = {plan.stage: plan for plan in plans}
+    created_wall_ids = {
+        operation.logical_id
+        for stage in (BimStage.R05, BimStage.R06)
+        for operation in by_stage[stage].operations
+        if operation.semantic_capability
+        in {"revit.create_wall", "revit.create_internal_wall"}
+    }
+
+    opening_hosts = {
+        str(operation.payload["properties"]["host_logical_id"])
+        for operation in by_stage[BimStage.R07].operations
+    }
+    material_targets = {
+        operation.logical_id for operation in by_stage[BimStage.R12].operations
+    }
+
+    assert opening_hosts <= created_wall_ids
+    assert material_targets <= created_wall_ids
+
+
 def test_rooms_stage_reconciles_the_program_area_exactly(registry, program, layout, tmp_path):
     plans = _plans(registry, program, layout, tmp_path)
     stage = next(plan for plan in plans if plan.stage is BimStage.R08)

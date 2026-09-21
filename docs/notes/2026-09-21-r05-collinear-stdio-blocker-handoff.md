@@ -136,3 +136,40 @@ R05`) was created after `git diff --check` and the 869-test gate, and pushed to
 `origin/main`. The commit contains only the seven relevant files listed above.
 The pre-existing unrelated output changes and known phantom GOLDEN paths remain
 outside the commit and must not be staged or restored during continuation.
+
+## Addendum - referential wall IDs and stdio environment (2026-09-21)
+
+The session-start revalidation found Revit 2027 running as PID 15608, no
+`state/locks/revit-writer.lock`, and an existing working RVT
+`revit/production/working/AMANDA_WORKING_001.20260921-200931.rvt`. This is an
+observation only; no BIM write was performed by this addendum.
+
+The local production compiler had a deterministic chain-integrity defect:
+R05 shell walls used `WALL-*`, R06 shared room boundaries used
+`LAYOUT-WALL-*`, while R07/R12 consumers used a mixture of `PARTITION-*` and
+wall IDs that were not produced by either stage. The fix in
+`src/amanda_agent/production/layout_bim.py` now preserves the producer
+namespace, keeps R06 shared segments individual, and uses a transitive
+overlap merge consistent with the committed shell semantics. The regression
+test `test_later_wall_consumers_reference_ids_created_by_r05_or_r06` proves
+that every opening host and material target is created by R05 or R06.
+
+The stdio transport now passes a copied controller environment to the MCP
+child. `tests/unit/test_bim_transport_env.py` proves the complete environment
+is preserved, including `USERPROFILE` and a sentinel variable.
+
+Validation after the fixes:
+
+```text
+tests/unit/test_production_layout_bim.py tests/unit/test_stage_shell.py
+tests/unit/test_stage_openings.py tests/unit/test_stage_layout.py: 33 passed
+transport/provider tests: 56 passed
+tests -m "not revit and not slow": 871 passed
+```
+
+The durable project state remains revision 159, `PHASE_08`, `P08-T08`,
+`GO_WITH_LIMITATIONS`; the site blockers and `CROSSWALK_GRID_ROOF_GAP` remain
+open. The next live gate is a fresh R01-R05 run from a normal-user PowerShell
+with PID 15608 (or a freshly verified published PID), stopping on any failed
+record. Do not advance `PROJECT_STATE.yaml` or claim production completion
+until the independent save/close/reopen evidence exists.

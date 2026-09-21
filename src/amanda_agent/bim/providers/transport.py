@@ -89,6 +89,7 @@ class McpProbeTransport:
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            env=os.environ.copy(),
             text=True,
             encoding="utf-8",
             errors="replace",

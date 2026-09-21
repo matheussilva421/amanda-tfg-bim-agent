@@ -219,6 +219,26 @@ def _wall_id(prefix: str, a: tuple[float, float], b: tuple[float, float]) -> str
     return "%s-%s" % (prefix, _edge_digest(a, b))
 
 
+def _producer_wall_id(
+    *,
+    start: tuple[float, float],
+    end: tuple[float, float],
+    rooms: tuple[str, ...],
+    on_gallery: bool,
+    exterior: bool,
+) -> str:
+    """Return the logical id owned by the stage that creates this wall.
+
+    R05 creates the shell wall namespace, including faces exposed to the
+    gallery.  R06 owns only shared boundaries between two rooms.  Consumers
+    must use those producer namespaces verbatim because the provider resolves
+    logical references by exact string equality.
+    """
+
+    prefix = "LAYOUT-WALL" if not exterior and len(rooms) > 1 and not on_gallery else "WALL"
+    return _wall_id(prefix, start, end)
+
+
 def _edges(polygon: Polygon) -> list[tuple[tuple[float, float], tuple[float, float]]]:
     coordinates = [_key(point) for point in polygon.exterior.coords]
     return [
@@ -252,17 +272,22 @@ def _merge_collinear(walls: list[_Wall]) -> list[_Wall]:
             continue
         group = [first]
         used[index] = True
-        for other_index in range(index + 1, len(ordered)):
-            if used[other_index]:
-                continue
-            other = ordered[other_index]
-            if other.kind != first.kind or other.thickness_m != first.thickness_m:
-                continue
-            if not _same_line(first, other):
-                continue
-            if _runs_overlap(first, other):
-                group.append(other)
-                used[other_index] = True
+        changed = True
+        while changed:
+            changed = False
+            for other_index in range(index + 1, len(ordered)):
+                if used[other_index]:
+                    continue
+                other = ordered[other_index]
+                if other.kind != first.kind or other.thickness_m != first.thickness_m:
+                    continue
+                if any(
+                    _same_line(existing, other) and _runs_overlap(existing, other)
+                    for existing in group
+                ):
+                    group.append(other)
+                    used[other_index] = True
+                    changed = True
         if len(group) == 1:
             merged.append(first)
             continue
@@ -279,10 +304,15 @@ def _merge_collinear(walls: list[_Wall]) -> list[_Wall]:
         start = (fixed, low) if varying_axis == 1 else (low, fixed)
         end = (fixed, high) if varying_axis == 1 else (high, fixed)
         rooms = tuple(sorted({room for wall in group for room in wall.rooms}))
+        on_gallery = any(wall.on_gallery for wall in group)
         merged.append(
             _Wall(
-                logical_id=_wall_id(
-                    "WALL" if first.exterior else "PARTITION", start, end
+                logical_id=_producer_wall_id(
+                    start=start,
+                    end=end,
+                    rooms=rooms,
+                    on_gallery=on_gallery,
+                    exterior=first.exterior,
                 ),
                 start=start,
                 end=end,
@@ -290,7 +320,7 @@ def _merge_collinear(walls: list[_Wall]) -> list[_Wall]:
                 kind=first.kind,
                 rooms=rooms,
                 exterior=first.exterior,
-                on_gallery=any(wall.on_gallery for wall in group),
+                on_gallery=on_gallery,
             )
         )
     merged.sort(key=lambda wall: wall.logical_id)
@@ -359,7 +389,13 @@ def build_walls(layout: CourtyardLayout) -> tuple[list[_Wall], list[_Wall]]:
             continue
         partitions.append(
             _Wall(
-                logical_id=_wall_id("PARTITION", key[0], key[1]),
+                logical_id=_producer_wall_id(
+                    start=key[0],
+                    end=key[1],
+                    rooms=tuple(room_ids),
+                    on_gallery=gallery_frontage,
+                    exterior=False,
+                ),
                 start=key[0],
                 end=key[1],
                 thickness_m=PARTITION_M,
@@ -370,7 +406,18 @@ def build_walls(layout: CourtyardLayout) -> tuple[list[_Wall], list[_Wall]]:
             )
         )
     exterior.sort(key=lambda wall: wall.logical_id)
-    return _merge_collinear(exterior), _merge_collinear(partitions)
+    gallery_partitions = [wall for wall in partitions if wall.on_gallery]
+    shared_partitions = [wall for wall in partitions if not wall.on_gallery]
+    # R05 owns the gallery frontage and applies the same collinear merge as the
+    # shell stage.  R06 owns each shared room boundary as an individual element;
+    # preserving those exact segments keeps its LAYOUT-WALL ids referentially
+    # stable for later material assignments.
+    merged_partitions = [
+        *_merge_collinear(gallery_partitions),
+        *shared_partitions,
+    ]
+    merged_partitions.sort(key=lambda wall: wall.logical_id)
+    return _merge_collinear(exterior), merged_partitions
 
 
 def _request(
@@ -664,7 +711,7 @@ def _diagonal_corners(wall, properties):
 
 def _gallery_host(room, by_id):
     for edge in _edges(room.polygon):
-        candidate = by_id.get(_wall_id("PARTITION", edge[0], edge[1]))
+        candidate = by_id.get(_wall_id("WALL", edge[0], edge[1]))
         if candidate is not None and candidate.on_gallery:
             return candidate
     return None
