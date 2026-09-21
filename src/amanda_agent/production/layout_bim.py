@@ -267,12 +267,17 @@ def _merge_collinear(walls: list[_Wall]) -> list[_Wall]:
             merged.append(first)
             continue
         points = [point for wall in group for point in (wall.start, wall.end)]
-        axis = 0 if abs(first.start[0] - first.end[0]) < 1e-6 else 1
-        low = min(point[axis] for point in points)
-        high = max(point[axis] for point in points)
-        fixed = first.start[1 - axis]
-        start = (fixed, low) if axis == 0 else (low, fixed)
-        end = (fixed, high) if axis == 0 else (high, fixed)
+        # The constant coordinate identifies the line; the other coordinate
+        # is the interval that can be merged.  Using the constant coordinate
+        # here creates zero-length walls and diverges from the shell stage.
+        varying_axis = (
+            1 if abs(first.start[0] - first.end[0]) < 1e-6 else 0
+        )
+        low = min(point[varying_axis] for point in points)
+        high = max(point[varying_axis] for point in points)
+        fixed = first.start[1 - varying_axis]
+        start = (fixed, low) if varying_axis == 1 else (low, fixed)
+        end = (fixed, high) if varying_axis == 1 else (high, fixed)
         rooms = tuple(sorted({room for wall in group for room in wall.rooms}))
         merged.append(
             _Wall(

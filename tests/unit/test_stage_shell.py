@@ -116,6 +116,29 @@ def test_shell_derives_one_shared_wall_and_reconciles_net_area(tmp_path: Path):
     }
 
 
+def test_shell_merges_only_overlapping_collinear_runs_and_preserves_diagonals():
+    api = _api()
+    first = ((0.0, 0.0), (5.0, 0.0))
+    second = ((4.0, 0.0), (8.0, 0.0))
+    separated = ((20.0, 0.0), (22.0, 0.0))
+    diagonal = ((0.0, 4.0), (2.0, 6.0))
+    occurrences = {
+        first: ["room-a"],
+        second: ["room-b"],
+        separated: ["room-c"],
+        diagonal: ["room-a"],
+    }
+
+    merged = api._merge_collinear_edges(occurrences, {key: key for key in occurrences})
+
+    assert ((0.0, 0.0), (8.0, 0.0)) in merged
+    assert first not in merged
+    assert second not in merged
+    assert separated in merged
+    assert diagonal in merged
+    assert merged[((0.0, 0.0), (8.0, 0.0))][0] == ("room-a", "room-b")
+
+
 def test_shell_rejects_an_uncontrolled_wall_type(tmp_path: Path):
     api = _api()
 

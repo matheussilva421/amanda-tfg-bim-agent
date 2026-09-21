@@ -72,6 +72,17 @@ def _document_info(transport):
     return _read_tool(transport, "get_document_info", {})
 
 
+def _select_revit_target(transport, revit_pid: int) -> dict:
+    """Select one Revit process inside this MCP session and verify the result."""
+
+    payload = _read_tool(transport, "horizun_target", {"pid": revit_pid})
+    if not isinstance(payload, dict) or payload.get("selected_pid") != revit_pid:
+        raise RuntimeError(
+            f"Horizun did not select requested Revit PID {revit_pid}: {payload!r}"
+        )
+    return payload
+
+
 def _active_path(info):
     if not isinstance(info, dict):
         return None
@@ -135,7 +146,9 @@ def _activate(transport, rvt: Path) -> None:
         time.sleep(0.4)
 
 
-def run(rvt: Path, *, execute: bool, max_stage: str) -> int:
+def run(
+    rvt: Path, *, execute: bool, max_stage: str, revit_pid: int | None = None
+) -> int:
     from amanda_agent.bim.models import BimStage
 
     program = json.loads(
@@ -232,6 +245,9 @@ def run(rvt: Path, *, execute: bool, max_stage: str) -> int:
     print("lease acquired:", lock.owner_token)
     try:
         with McpProbeTransport(timeout=900.0) as transport:
+            if revit_pid is not None:
+                selected = _select_revit_target(transport, revit_pid)
+                print("selected Revit PID:", selected["selected_pid"])
             # Each attempt is new work, so it gets its own idempotency keys: the
             # bridge keeps a key for exactly one operation and replays the
             # recorded answer for an identical retry, which would silently
@@ -368,8 +384,19 @@ def main(argv=None) -> int:
     parser.add_argument("--rvt", type=Path, required=True)
     parser.add_argument("--execute", action="store_true")
     parser.add_argument("--max-stage", default="R13")
+    parser.add_argument(
+        "--revit-pid",
+        type=int,
+        default=None,
+        help="select this Revit process inside the production MCP session",
+    )
     args = parser.parse_args(argv)
-    return run(args.rvt, execute=args.execute, max_stage=args.max_stage)
+    return run(
+        args.rvt,
+        execute=args.execute,
+        max_stage=args.max_stage,
+        revit_pid=args.revit_pid,
+    )
 
 
 if __name__ == "__main__":

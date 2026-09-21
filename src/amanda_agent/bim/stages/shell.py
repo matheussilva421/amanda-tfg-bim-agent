@@ -117,6 +117,101 @@ def _edge_id(key: tuple[tuple[float, float], tuple[float, float]]) -> str:
     return f"WALL-{digest}"
 
 
+def _merge_collinear_edges(
+    edge_occurrences: dict[tuple[tuple[float, float], tuple[float, float]], list[str]],
+    edge_points: dict[
+        tuple[tuple[float, float], tuple[float, float]],
+        tuple[tuple[float, float], tuple[float, float]],
+    ],
+) -> dict[
+    tuple[tuple[float, float], tuple[float, float]],
+    tuple[tuple[str, ...], tuple[float, float], tuple[float, float]],
+]:
+    """Merge room edges that lie on one line and overlap into single runs.
+
+    Rooms whose faces step by a few centimetres leave two collinear walls, and
+    Revit refuses the batch with "the highlighted walls overlap".  A person
+    drawing the plan would run one wall along that line, and so does this: the
+    merged run spans both, keeps every room that owned any part of it, and
+    carries a deterministic identity of its own so the result stays reproducible.
+    """
+
+    def axis_of(first, second) -> int | None:
+        if abs(first[0] - second[0]) < 1e-6:
+            return 0
+        if abs(first[1] - second[1]) < 1e-6:
+            return 1
+        return None
+
+    buckets: dict[
+        tuple[int, float],
+        list[
+            tuple[
+                float,
+                float,
+                tuple[tuple[float, float], tuple[float, float]],
+            ]
+        ],
+    ] = defaultdict(list)
+    merged: dict[
+        tuple[tuple[float, float], tuple[float, float]],
+        tuple[tuple[str, ...], tuple[float, float], tuple[float, float]],
+    ] = {}
+    for key, room_ids in edge_occurrences.items():
+        first, second = edge_points[key]
+        axis = axis_of(first, second)
+        if axis is None:
+            # The architectural layout contains a few diagonal corners.  They
+            # cannot be merged by an axis-aligned sweep, but they are still
+            # valid shell edges and must remain part of the desired state.
+            merged[key] = (tuple(sorted(set(room_ids))), first, second)
+            continue
+        # ``axis`` is the coordinate that stays fixed along the segment.  The
+        # interval therefore varies on the other coordinate: y for a vertical
+        # run (axis 0) and x for a horizontal run (axis 1).
+        fixed = round(first[axis], 6)
+        varying_axis = 1 - axis
+        low, high = sorted((first[varying_axis], second[varying_axis]))
+        buckets[(axis, fixed)].append((low, high, key))
+
+    for (axis, fixed), spans in buckets.items():
+        # Sort by interval start so each connected overlap component can be
+        # emitted independently.  Touching runs stay separate: they meet at a
+        # corner and do not create the overlapping wall that Revit rejects.
+        ordered = sorted(spans, key=lambda span: (span[0], span[1], span[2]))
+        component: list[tuple[float, float, tuple[tuple[float, float], tuple[float, float]]]] = []
+
+        def emit(items):
+            if not items:
+                return
+            low = min(item[0] for item in items)
+            high = max(item[1] for item in items)
+            start = (fixed, low) if axis == 0 else (low, fixed)
+            end = (fixed, high) if axis == 0 else (high, fixed)
+            output_key = _edge_key(start, end)
+            owners = sorted(
+                {
+                    room_id
+                    for item in items
+                    for room_id in edge_occurrences[item[2]]
+                }
+            )
+            if len(items) == 1:
+                original_key = items[0][2]
+                start, end = edge_points[original_key]
+                output_key = original_key
+            merged[output_key] = (tuple(owners), start, end)
+
+        for span in ordered:
+            if not component or span[0] < max(item[1] for item in component) - 1e-6:
+                component.append(span)
+                continue
+            emit(component)
+            component = [span]
+        emit(component)
+    return merged
+
+
 def _polygon_geometry(polygon: Polygon) -> dict[str, Any]:
     return {
         "type": "Polygon",
@@ -296,10 +391,18 @@ def plan_shell_stage(
 
     elements: list[DesiredElement] = []
     capabilities: dict[str, str] = {}
-    for key in sorted(edge_occurrences):
-        room_ids = sorted(set(edge_occurrences[key]))
+    # A room edge becomes one wall, but two rooms whose faces step by a few
+    # centimetres put two walls on the same line.  Revit joins them into a T,
+    # warns that the walls overlap, and refuses the batch, so runs that lie on
+    # one line are merged into the single wall a person would draw.  The merge
+    # happens before the desired state is built, which is why it can be
+    # verified: every wall still corresponds to a boundary of the plan.
+    merged_edges = _merge_collinear_edges(
+        edge_occurrences, edge_points
+    )
+    for key in sorted(merged_edges):
+        room_ids, first, second = merged_edges[key]
         kind = "internal" if len(room_ids) > 1 else "external"
-        first, second = edge_points[key]
         logical_id = _edge_id(key)
         opening_ids: set[str] = set(opening_by_host.get(logical_id, []))
         for room_id in room_ids:

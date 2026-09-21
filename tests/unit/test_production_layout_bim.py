@@ -267,6 +267,7 @@ def test_shell_carries_the_envelope_floor_roof_and_partitions(registry, program,
         layout.footprint.area, rel=1e-6
     )
     exterior, partitions = build_walls(layout)
+    assert all(wall.length_m > 1e-6 for wall in [*exterior, *partitions])
     wall_ids = {
         element.logical_id
         for element in shell.desired_state.elements
