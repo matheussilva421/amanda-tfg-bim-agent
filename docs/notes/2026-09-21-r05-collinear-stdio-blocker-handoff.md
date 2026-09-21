@@ -129,9 +129,10 @@ Relevant files for this block are:
    route only with a manually controlled Revit target; do not infer that its
    health proves the sandbox stdio route.
 
-## Commit/push boundary
+## Commit/push result
 
-The relevant files are ready for a narrow commit after `git diff --check` and
-the tests above. Do not stage the pre-existing unrelated output changes or the
-known phantom GOLDEN paths. The next agent must verify the staged diff and
-push only the narrow commit if the repository owner still wants GitHub updated.
+The narrow commit `4c801f1` (`fix(revit): merge collinear shell walls before
+R05`) was created after `git diff --check` and the 869-test gate, and pushed to
+`origin/main`. The commit contains only the seven relevant files listed above.
+The pre-existing unrelated output changes and known phantom GOLDEN paths remain
+outside the commit and must not be staged or restored during continuation.
