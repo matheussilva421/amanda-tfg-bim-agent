@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "task": "P08-T11",
+  "stage": "R01-R04",
+  "status": "PASS_WITH_WARNINGS",
+  "captured_utc": "2026-09-22T11:50:00Z",
+  "verification_scope": "Live R01-R04 readback on the canonical production RVT after P08-T10 promotion; study/provisional evidence only",
+  "target": {
+    "path": "revit/production/working/AMANDA_WORKING_001.rvt",
+    "active_after_reopen": true,
+    "revit_version": "2027",
+    "revit_build": "27.2.0.39",
+    "provider": "horizun 1.3.3",
+    "other_clients": 0
+  },
+  "stages": {
+    "R01_project": {
+      "project_info_rows": 1,
+      "address": "placeholder/provisional",
+      "verified_site_fact": false
+    },
+    "R02_terrain": {
+      "terrain_write": "not performed",
+      "site_mode": "placeholder/provisional",
+      "invented_topography": false,
+      "blockers": ["SITE_TOPOGRAPHY", "SITE_BOUNDARY", "SITE_OCCUPANCY"]
+    },
+    "R03_references": {
+      "levels": 3,
+      "grids": 2,
+      "coverage_complete": true,
+      "unreadable": 0
+    },
+    "R04_massing": {
+      "mass": 1,
+      "site_massing": "placeholder/provisional",
+      "coverage_complete": true,
+      "unreadable": 0
+    }
+  },
+  "persistence": {
+    "close_reopen_requery": "verified",
+    "canonical_path_preserved": true,
+    "upgrade": false
+  },
+  "limitations": [
+    "Site boundary, topography, occupancy, frontage count and true north remain unresolved.",
+    "R01-R04 do not establish final implantation, normative compliance, or final deliverables."
+  ],
+  "next_action": "Execute R08 rooms on the active canonical target with typed WRITE -> READ -> VERIFY and a new checkpoint."
+}

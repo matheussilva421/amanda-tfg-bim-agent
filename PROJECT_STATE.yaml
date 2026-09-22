@@ -5,16 +5,16 @@ blockers:
 - SITE_FRONTAGE_COUNT:DEGRADING
 - SITE_TRUE_NORTH:DEGRADING
 - REVIT_PIPE_SANDBOX_ACCESS:DEGRADING
-current_checkpoint: revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R06-internal-layout-3d-20260922.rvt
-last_completed_task: P08-T09
+current_checkpoint: revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R07-openings-20260922.rvt
+last_completed_task: P08-T11
 last_verified_commit: 2a51cdb
-next_task: P08-T10
+next_task: P08-T12
 phase_gate: GO_WITH_LIMITATIONS
 phase_id: PHASE_08
 phase_name: amanda-production-run
 phase_status: PENDING
 project: Amanda TFG BIM Agent
-revit_stage: R06
+revit_stage: R07
 schema_version: 1
 selected_design: AMANDA-RUN-001-S01
 selection_authority: AGENT_DELEGATED
@@ -27,8 +27,8 @@ layout_covered_total_m2: 918.562857142857
 production_driver: scripts/run_amanda_production.py
 production_plan_stages: R01 R02 R03 R04 R05 R06 R07 R08 R09 R10 R11 R12 R13
 production_plan_operations: 913
-resume_note: LIVE R06 internal layout and AMANDA R06 3D STUDY view saved, closed, reopened and independently re-queried on Horizun/Revit 2027 PID 25996; P08-T08/P08-T09 are PASS_WITH_WARNINGS with site blockers and AMANDA_REVIEW_PENDING retained; next exact action is P08-T10 canonical production promotion, preserving canonical source and GOLDEN artifacts
-state_revision: 164
+resume_note: LIVE canonical AMANDA_WORKING_001.rvt active after P08-T10 promotion and R07 openings; 87 openings (52 doors, 35 windows) saved, closed, reopened and independently re-queried on Horizun/Revit 2027 PID 25996; P08-T10/P08-T11 are PASS_WITH_WARNINGS with site blockers and AMANDA_REVIEW_PENDING retained; next exact action is R08 rooms on the canonical target, preserving the R07 checkpoint and all source/GOLDEN artifacts
+state_revision: 166
 study_ifc: docs/reports/study-exports/AMANDA_ESTUDO.ifc
 study_dxf: docs/reports/study-exports/AMANDA_ESTUDO.dxf
 study_pdf: docs/reports/study-package/Amanda_TFG_ESTUDO_pranchas.pdf

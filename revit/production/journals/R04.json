@@ -1,0 +1,13 @@
+{
+  "records": [
+    {
+      "capability": "revit.create_mass",
+      "error": null,
+      "logical_id": "MASS-01",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f5d"
+    }
+  ],
+  "stage": "R04",
+  "status": "VERIFIED"
+}

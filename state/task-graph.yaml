@@ -2449,8 +2449,13 @@ tasks:
     title: Create production working RVT
     depends_on:
     - P08-T09
-    status: PENDING
-    evidence: []
+    status: PASS_WITH_WARNINGS
+    evidence:
+    - 'P08-T10 live canonical promotion: typed save_as overwrite from timestamped R06 source to revit/production/working/AMANDA_WORKING_001.rvt; the pre-promotion canonical was preserved at revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/P08-T10-canonical-pre-promotion-20260922.rvt'
+    - 'Post-promotion checkpoint revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/P08-T10-production-canonical-20260922.rvt: sha256 2135ac273634994c89ff7535c2dafbafa6236062068094e9a48cfb2189f966bc, 3977216 bytes, manager verify true'
+    - 'Canonical close/reopen and independent readback passed on Revit 2027 build 27.2.0.39/Horizun 1.3.3: 3630 elements, 76 walls, 3 floors, 1 roof, 1 mass, 3 levels, 2 grids, 24 views, coverage complete and 0 unreadable'
+    - 'Real Revit preview preserved at revit/production/previews/P08-T10-canonical-3D-20260922.png; classified STUDY and uncalibrated'
+    - 'Warnings retained: site boundary, topography, occupancy, frontage count and true north remain unresolved; no FINAL/GOLDEN claim'
   P08-T11:
     id: P08-T11
     phase: PHASE_08
@@ -2458,8 +2463,13 @@ tasks:
     title: Compile R01–R04
     depends_on:
     - P08-T10
-    status: PENDING
-    evidence: []
+    status: PASS_WITH_WARNINGS
+    evidence:
+    - 'R01 project readback on the live canonical target returned one project-info row; placeholder address/site metadata is retained as provisional and not treated as verified site fact'
+    - 'R02 terrain/site readback records the placeholder site mode and writes no invented topography; SITE_TOPOGRAPHY, SITE_BOUNDARY and SITE_OCCUPANCY remain explicit blockers'
+    - 'R03 independent readback returned 3 levels and 2 grids; R04 independent readback returned 1 mass; the canonical document remained active and coverage_complete with 0 unreadable'
+    - 'P08-T11 live close/reopen/requery completed on canonical AMANDA_WORKING_001.rvt under the same healthy Horizun/Revit 2027 writer session'
+    - 'Warnings retained: R01-R04 are study/provisional evidence; site-dependent placement, normative compliance and final deliverables remain pending'
   P08-T12:
     id: P08-T12
     phase: PHASE_08

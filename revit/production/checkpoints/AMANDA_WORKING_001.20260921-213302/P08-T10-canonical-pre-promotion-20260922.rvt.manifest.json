@@ -1,0 +1,30 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    49539595901652150
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\P08-T10-canonical-pre-promotion-20260922.rvt",
+  "created_utc": "2026-09-22T11:41:21.083415Z",
+  "document_id": "AMANDA_WORKING_001",
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\P08-T10-canonical-pre-promotion-20260922.rvt.manifest.json",
+  "provenance": {
+    "active_target": "AMANDA_WORKING_001.20260921-213302.rvt",
+    "purpose": "preserve existing canonical candidate before P08-T10 promotion",
+    "source_is_active": false,
+    "source_sha256_before": "4753f638f2b536b6cf0f3b1a5fb30f4b997601ae463a7e826111ca02cd57bf83",
+    "source_size_bytes": 3784704
+  },
+  "schema_version": 1,
+  "sha256": "4753f638f2b536b6cf0f3b1a5fb30f4b997601ae463a7e826111ca02cd57bf83",
+  "size_bytes": 3784704,
+  "source_document_id": "AMANDA_WORKING_001",
+  "source_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_file_id": [
+    9107472496377837229,
+    91479367432092054
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_sha256": "4753f638f2b536b6cf0f3b1a5fb30f4b997601ae463a7e826111ca02cd57bf83",
+  "stage": "P08_T10_CANONICAL_PRE_PROMOTION",
+  "version": 1
+}

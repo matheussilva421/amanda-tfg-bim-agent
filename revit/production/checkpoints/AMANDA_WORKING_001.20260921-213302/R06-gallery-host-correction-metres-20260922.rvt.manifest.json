@@ -1,0 +1,112 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    26740122788088429
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R06-gallery-host-correction-metres-20260922.rvt",
+  "created_utc": "2026-09-22T12:02:43.511148Z",
+  "document_id": "AMANDA-RUN-001-S01",
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R06-gallery-host-correction-metres-20260922.rvt.manifest.json",
+  "provenance": {
+    "close_reopen": {
+      "close_verified": true,
+      "host_version": "2027",
+      "reopen_verified": true,
+      "upgraded": false
+    },
+    "correction": {
+      "created_verified": 2,
+      "geometry_readback_mm": {
+        "wall_1": {
+          "max": [
+            75458.333,
+            9395,
+            3200
+          ],
+          "min": [
+            5125,
+            9255,
+            0
+          ]
+        },
+        "wall_2": {
+          "max": [
+            91005.952,
+            10895,
+            3200
+          ],
+          "min": [
+            5125,
+            10755,
+            0
+          ]
+        }
+      },
+      "marks": [
+        "WALL-19e1e0bd078a",
+        "WALL-a2a72942d980"
+      ],
+      "readback": {
+        "base_offset_mm": 0,
+        "coverage_complete": true,
+        "each_match": 1,
+        "height_mm": 3200,
+        "level": "LEVEL-01",
+        "type_id": 220
+      },
+      "requested": 2,
+      "transaction_status": "Committed",
+      "typed_command": "horizun_create_elements",
+      "units": "m"
+    },
+    "destructive_correction": {
+      "deleted_ids": [
+        221551,
+        221552
+      ],
+      "deleted_verified": 2,
+      "reason": "prior correction was created with units=feet although compiler coordinates are metres",
+      "typed_delete": "horizun_delete_verified"
+    },
+    "preview": {
+      "calibration": "uncalibrated",
+      "path": "revit/production/previews/R06-gallery-host-correction-metres-3D-20260922.png",
+      "pixel_height": 865,
+      "pixel_width": 1400,
+      "sha256": "5e24a3c40d8e221228341d309c847f53bccc4c27c3b49611ff42ce79b05f3bc4",
+      "view_id": 221538,
+      "view_restored": true
+    },
+    "prior_checkpoint": "R06-gallery-host-correction-20260922.rvt",
+    "provider": {
+      "build": "27.2.0.39",
+      "commit": "cc4ea04e9ecfe547ad349f22e0864019ce1ead1f",
+      "contract_hash": "8b9600f5274d7dffb6e5bd5f",
+      "horizun_version": "1.3.3",
+      "other_clients": 0,
+      "revit": "2027"
+    },
+    "purpose": "R06 corrected gallery hosts in metres after independent geometry caught prior feet-scale mismatch",
+    "save": {
+      "outcome": "saved_verified",
+      "sha256_after": "ccdc01f6d52a7d5a1ea91b8ecf29c203948148c6de3e6b0cd7fcf438ec99dcd6",
+      "sha256_before": "228303210fe8766d0aed59463a365dae65891cac5954d4369d699a64f6f139c3",
+      "size_bytes": 4067328
+    },
+    "source_sha256": "ccdc01f6d52a7d5a1ea91b8ecf29c203948148c6de3e6b0cd7fcf438ec99dcd6",
+    "source_stage": "R06"
+  },
+  "schema_version": 1,
+  "sha256": "ccdc01f6d52a7d5a1ea91b8ecf29c203948148c6de3e6b0cd7fcf438ec99dcd6",
+  "size_bytes": 4067328,
+  "source_document_id": "AMANDA-RUN-001-S01",
+  "source_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_file_id": [
+    9107472496377837229,
+    24206847997692545
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_sha256": "ccdc01f6d52a7d5a1ea91b8ecf29c203948148c6de3e6b0cd7fcf438ec99dcd6",
+  "stage": "R06_INTERNAL_LAYOUT_CORRECTION_METRES",
+  "version": 1
+}

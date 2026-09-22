@@ -1,0 +1,29 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    64739244643958207
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R05-pre-save.rvt",
+  "created_utc": "2026-09-22T02:21:12.189676Z",
+  "document_id": null,
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R05-pre-save.rvt.manifest.json",
+  "provenance": {
+    "purpose": "pre-save persistence gate",
+    "revit_build": "27.2.0.39",
+    "revit_pid": 39808,
+    "source_scope": "R05 verified working RVT"
+  },
+  "schema_version": 1,
+  "sha256": "f83d74d0548048eda70fc8bf61e20d8155eeb15eba6048c7c7a052353c9936ca",
+  "size_bytes": 4022272,
+  "source_document_id": null,
+  "source_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.20260921-213302.rvt",
+  "source_file_id": [
+    9107472496377837229,
+    844424932883568
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.20260921-213302.rvt",
+  "source_sha256": "f83d74d0548048eda70fc8bf61e20d8155eeb15eba6048c7c7a052353c9936ca",
+  "stage": "ARCHITECTURAL_SHELL",
+  "version": 1
+}

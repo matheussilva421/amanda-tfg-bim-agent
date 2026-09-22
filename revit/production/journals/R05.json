@@ -1,0 +1,376 @@
+{
+  "records": [
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-a4a7bddab50e",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f5e"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-6b4f092e564a",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f5f"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-19e1e0bd078a",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f60"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-0215378fa71c",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f61"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-a2a72942d980",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f62"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-cd1b1eb193ea",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f63"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-c488a324f823",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f64"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-427851706fef",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f65"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-8085cb9472ac",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f66"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-b51eea4511c4",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f67"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-64c10a369155",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f68"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-e285953d5d83",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f69"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-15a29b5a50f2",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f6a"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-bc37c3a97406",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f6b"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-dcf44045c351",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f6c"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-d1b0874bb463",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f6d"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-c3afd36ea806",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f6e"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-28e920fd2bd6",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f6f"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-0c21ecee72e0",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f70"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-89564f70ab00",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f71"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-737c41e1a874",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f72"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-adc5a924cbe4",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f73"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-ed94c925ecd5",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f74"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-0c3eed3ec1ad",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f75"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-48c6fe2b2344",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f76"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-59d80f48c2c7",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f77"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-0be38fa987c5",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f78"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-e437bbb22a2d",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f79"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-d6f9560bd52b",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f7a"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-dcd452ccc59c",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f7b"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-aa4b869ad287",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f7c"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-f835114db785",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f7d"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-f1d72e2f4590",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f7e"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-8a53e842ebfe",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f7f"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-7aff65c08d50",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f80"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-3dd55202d1a2",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f81"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-5db7b7307a98",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f82"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-ec601ce64f00",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f83"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-9819a4e637d1",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f84"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-550fa5db27b4",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f85"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-0f8bd3f816f4",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f86"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-361d83085752",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f87"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-188f5b6d2620",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f88"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-315114b4f85a",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f89"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-a636c4072e39",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f8a"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-49c25c6f343c",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f8b"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-066acb897cfd",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f8c"
+    },
+    {
+      "capability": "revit.create_wall",
+      "error": null,
+      "logical_id": "WALL-d36dfd3a88d3",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f8d"
+    },
+    {
+      "capability": "revit.create_floor",
+      "error": null,
+      "logical_id": "FLOOR-001",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f90"
+    },
+    {
+      "capability": "revit.create_slab",
+      "error": {
+        "diagnostic": "{\r\n  \"dry_run\": false,\r\n  \"transaction_status\": \"Committed\",\r\n  \"transaction_name\": \"Horizun: create elements\",\r\n  \"requested\": 1,\r\n  \"created_verified\": 1,\r\n  \"rows\": [\r\n    {\r\n      \"index\": 0,\r\n      \"kind\": \"floor\",\r\n      \"element_id\": 221154,\r\n      \"unique_id\": \"5c485571-e261-4442-abd9-3e2de9d9919d-00035fe2\",\r\n      \"present_after_commit\": true,\r\n      \"verified\": true,\r\n      \"postconditions\": {\r\n        \"all_verified\": true,\r\n        \"checked\": 9,\r\n        \"all_measured\": true,\r\n        \"required\": [\r\n          \"kind\",\r\n          \"level_elevation\",\r\n          \"level_id\",\r\n          \"offset\",\r\n          \"parameters.ALL_MODEL_INSTANCE_COMMENTS\",\r\n          \"parameters.ALL_MODEL_MARK\",\r\n          \"profile_xy\",\r\n          \"reference_face_elevation\",\r\n          \"type_id\"\r\n        ],\r\n        \"missing\": [],\r\n        \"unexpected\": [],\r\n        \"verified_means\": \"true only when EXACTLY the required properties were checked - each once, none missing, none substituted - and every one of them was RE-READ from the committed model and matched. A property that could not be read counts as unmeasured, never as agreement, and an empty checklist is not a pass.\",\r\n        \"properties\": [\r\n          {\r\n            \"property\": \"kind\",\r\n            \"measured\": true,\r\n            \"requested\": \"floor\",\r\n            \"found_in_committed_model\": \"floor\",\r\n            \"matches\": true\r\n          },\r\n          {\r\n            \"property\": \"type_id\",\r\n            \"measured\": true,\r\n            \"requested\": 226,\r\n            \"found_in_committed_model\": 226,\r\n            \"matches\": true\r\n          },\r\n          {\r\n            \"property\": \"level_id\",\r\n            \"measured\": true,\r\n            \"requested\": 221018,\r\n            \"found_in_committed_model\": 221018,\r\n            \"matches\": true\r\n          },\r\n          {\r\n            \"property\": \"level_elevation\",\r\n            \"measured\": true,\r\n            \"requested\": 0.0,\r\n            \"found_in_committed_model\": 0.0,\r\n            \"matches\": true,\r\n            \"unit\": \"feet\",\r\n            \"tolerance\": 1E-06,\r\n            \"method\": \"Revit parameter/location/sketch/face readback\"\r\n          },\r\n          {\r\n            \"property\": \"offset\",\r\n            \"measured\": true,\r\n            \"requested\": 0.0,\r\n            \"found_in_committed_model\": 0.0,\r\n            \"matches\": true,\r\n            \"unit\": \"feet\",\r\n            \"tolerance\": 1E-06,\r\n            \"method\": \"Revit parameter/location/sketch/face readback\"\r\n          },\r\n          {\r\n            \"property\": \"profile_xy\",\r\n            \"measured\": true,\r\n            \"requested\": true,\r\n            \"found_in_committed_model\": true,\r\n            \"matches\": true\r\n          },\r\n          {\r\n            \"property\": \"reference_face_elevation\",\r\n            \"measured\": true,\r\n            \"requested\": 0.0,\r\n            \"found_in_committed_model\": 0.0,\r\n            \"matches\": true,\r\n            \"unit\": \"feet\",\r\n            \"tolerance\": 1E-06,\r\n            \"method\": \"Revit parameter/location/sketch/face readback\"\r\n          },\r\n          {\r\n            \"property\": \"parameters.ALL_MODEL_MARK\",\r\n            \"measured\": true,\r\n            \"requested\": \"SLAB-001\",\r\n            \"found_in_committed_model\": \"SLAB-001\",\r\n            \"matches\": true\r\n          },\r\n          {\r\n            \"property\": \"parameters.ALL_MODEL_INSTANCE_COMMENTS\",\r\n            \"measured\": true,\r\n            \"requested\": \"Amanda SLAB-001 (revit.create_slab)\",\r\n            \"found_in_committed_model\": \"Amanda SLAB-001 (revit.create_slab)\",\r\n            \"matches\": true\r\n          }\r\n        ]\r\n      },\r\n      \"source_comparison\": null,\r\n      \"kind_verified\": true,\r\n      \"type_verified\": true,\r\n      \"structural_type_verified\": true,\r\n      \"actual_class\": \"Floor\",\r\n      \"actual_category\": \"Pisos\"\r\n    }\r\n  ],\r\n  \"verification\": {\r\n    \"intended\": 1,\r\n    \"actual\": 1,\r\n    \"verified\": true\r\n  },\r\n  \"application\": {\r\n    \"state\": \"verified_applied\",\r\n    \"fully_applied\": true,\r\n    \"transaction_status\": \"Committed\",\r\n    \"requested\": 1,\r\n    \"applied\": 1,\r\n    \"verified\": 1,\r\n    \"unresolved\": 0,\r\n    \"failed\": 0,\r\n    \"unknown\": 0,\r\n    \"state_means\": \"verified_applied: every requested change is in the model and was re-read after the commit. This is the only state besides no_op that lets a plan keep its work.\"\r\n  },\r\n  \"tabular\": null,\r\n  \"idempotency\": {\r\n    \"key\": \"bim:R05:SLAB-001:214f10caceee\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"The durable claim and result were recorded; an identical retry will replay this answer.\"\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 1,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 97\r\n  }\r\n}\r\n\r\n--- what Revit raised while this ran ---\r\n{\r\n  \"observation_complete\": true,\r\n  \"dialogs_subscribed\": true,\r\n  \"failures_subscribed\": true,\r\n  \"dialogs_processing_complete\": true,\r\n  \"failures_processing_complete\": true,\r\n  \"dialogs_observed\": true,\r\n  \"failures_observed\": true,\r\n  \"observer_errors\": [],\r\n  \"warnings\": 1,\r\n  \"errors\": 0,\r\n  \"dialogs\": 0,\r\n  \"items\": [\r\n    {\r\n      \"kind\": \"warning\",\r\n      \"description\": \"Pisos real\u00e7adas se sobrep\u00f5em.\",\r\n      \"answered\": \"dismissed so the command could finish \u2014 the model still has whatever this describes\",\r\n      \"elements\": [\r\n        221072,\r\n        221154\r\n      ],\r\n      \"while\": null\r\n    }\r\n  ],\r\n  \"note\": \"Revit raised these while this command ran. Warnings were dismissed so it could finish; they describe the model, they are not noise, and nothing about them was fixed. Dialogs were cancelled because no one is at the keyboard. 'while' is the running command's own statement of where it was (for a script, its last checkpoint) - the bridge cannot see which API call was in flight and does not pretend to.\"\r\n}",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "SLAB-001",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035fe2"
+    },
+    {
+      "capability": "revit.create_slab",
+      "error": {
+        "diagnostic": "{\r\n  \"dry_run\": false,\r\n  \"transaction_status\": \"Committed\",\r\n  \"transaction_name\": \"Horizun: create elements\",\r\n  \"requested\": 1,\r\n  \"created_verified\": 1,\r\n  \"rows\": [\r\n    {\r\n      \"index\": 0,\r\n      \"kind\": \"floor\",\r\n      \"element_id\": 221237,\r\n      \"unique_id\": \"5c485571-e261-4442-abd9-3e2de9d9919d-00036035\",\r\n      \"present_after_commit\": true,\r\n      \"verified\": true,\r\n      \"postconditions\": {\r\n        \"all_verified\": true,\r\n        \"checked\": 9,\r\n        \"all_measured\": true,\r\n        \"required\": [\r\n          \"kind\",\r\n          \"level_elevation\",\r\n          \"level_id\",\r\n          \"offset\",\r\n          \"parameters.ALL_MODEL_INSTANCE_COMMENTS\",\r\n          \"parameters.ALL_MODEL_MARK\",\r\n          \"profile_xy\",\r\n          \"reference_face_elevation\",\r\n          \"type_id\"\r\n        ],\r\n        \"missing\": [],\r\n        \"unexpected\": [],\r\n        \"verified_means\": \"true only when EXACTLY the required properties were checked - each once, none missing, none substituted - and every one of them was RE-READ from the committed model and matched. A property that could not be read counts as unmeasured, never as agreement, and an empty checklist is not a pass.\",\r\n        \"properties\": [\r\n          {\r\n            \"property\": \"kind\",\r\n            \"measured\": true,\r\n            \"requested\": \"floor\",\r\n            \"found_in_committed_model\": \"floor\",\r\n            \"matches\": true\r\n          },\r\n          {\r\n            \"property\": \"type_id\",\r\n            \"measured\": true,\r\n            \"requested\": 226,\r\n            \"found_in_committed_model\": 226,\r\n            \"matches\": true\r\n          },\r\n          {\r\n            \"property\": \"level_id\",\r\n            \"measured\": true,\r\n            \"requested\": 221018,\r\n            \"found_in_committed_model\": 221018,\r\n            \"matches\": true\r\n          },\r\n          {\r\n            \"property\": \"level_elevation\",\r\n            \"measured\": true,\r\n            \"requested\": 0.0,\r\n            \"found_in_committed_model\": 0.0,\r\n            \"matches\": true,\r\n            \"unit\": \"feet\",\r\n            \"tolerance\": 1E-06,\r\n            \"method\": \"Revit parameter/location/sketch/face readback\"\r\n          },\r\n          {\r\n            \"property\": \"offset\",\r\n            \"measured\": true,\r\n            \"requested\": 0.0,\r\n            \"found_in_committed_model\": 0.0,\r\n            \"matches\": true,\r\n            \"unit\": \"feet\",\r\n            \"tolerance\": 1E-06,\r\n            \"method\": \"Revit parameter/location/sketch/face readback\"\r\n          },\r\n          {\r\n            \"property\": \"profile_xy\",\r\n            \"measured\": true,\r\n            \"requested\": true,\r\n            \"found_in_committed_model\": true,\r\n            \"matches\": true\r\n          },\r\n          {\r\n            \"property\": \"reference_face_elevation\",\r\n            \"measured\": true,\r\n            \"requested\": 0.0,\r\n            \"found_in_committed_model\": 0.0,\r\n            \"matches\": true,\r\n            \"unit\": \"feet\",\r\n            \"tolerance\": 1E-06,\r\n            \"method\": \"Revit parameter/location/sketch/face readback\"\r\n          },\r\n          {\r\n            \"property\": \"parameters.ALL_MODEL_MARK\",\r\n            \"measured\": true,\r\n            \"requested\": \"SLAB-002\",\r\n            \"found_in_committed_model\": \"SLAB-002\",\r\n            \"matches\": true\r\n          },\r\n          {\r\n            \"property\": \"parameters.ALL_MODEL_INSTANCE_COMMENTS\",\r\n            \"measured\": true,\r\n            \"requested\": \"Amanda SLAB-002 (revit.create_slab)\",\r\n            \"found_in_committed_model\": \"Amanda SLAB-002 (revit.create_slab)\",\r\n            \"matches\": true\r\n          }\r\n        ]\r\n      },\r\n      \"source_comparison\": null,\r\n      \"kind_verified\": true,\r\n      \"type_verified\": true,\r\n      \"structural_type_verified\": true,\r\n      \"actual_class\": \"Floor\",\r\n      \"actual_category\": \"Pisos\"\r\n    }\r\n  ],\r\n  \"verification\": {\r\n    \"intended\": 1,\r\n    \"actual\": 1,\r\n    \"verified\": true\r\n  },\r\n  \"application\": {\r\n    \"state\": \"verified_applied\",\r\n    \"fully_applied\": true,\r\n    \"transaction_status\": \"Committed\",\r\n    \"requested\": 1,\r\n    \"applied\": 1,\r\n    \"verified\": 1,\r\n    \"unresolved\": 0,\r\n    \"failed\": 0,\r\n    \"unknown\": 0,\r\n    \"state_means\": \"verified_applied: every requested change is in the model and was re-read after the commit. This is the only state besides no_op that lets a plan keep its work.\"\r\n  },\r\n  \"tabular\": null,\r\n  \"idempotency\": {\r\n    \"key\": \"bim:R05:SLAB-002:214f10caceee\",\r\n    \"status\": \"executed_once\",\r\n    \"command_executed_in_this_call\": true,\r\n    \"note\": \"The durable claim and result were recorded; an identical retry will replay this answer.\"\r\n  },\r\n  \"bridge_queue\": {\r\n    \"queued\": false,\r\n    \"ahead_at_admission\": 0,\r\n    \"waited_ms\": 2,\r\n    \"waited_on\": \"revit_ui_thread_only (nothing was ahead; a long wait here is Revit not yet idle - add-in warm-up just after start, or a modal dialog)\",\r\n    \"capacity\": 16,\r\n    \"execution_and_wait_ms\": 36\r\n  }\r\n}\r\n\r\n--- what Revit raised while this ran ---\r\n{\r\n  \"observation_complete\": true,\r\n  \"dialogs_subscribed\": true,\r\n  \"failures_subscribed\": true,\r\n  \"dialogs_processing_complete\": true,\r\n  \"failures_processing_complete\": true,\r\n  \"dialogs_observed\": true,\r\n  \"failures_observed\": true,\r\n  \"observer_errors\": [],\r\n  \"warnings\": 2,\r\n  \"errors\": 0,\r\n  \"dialogs\": 0,\r\n  \"items\": [\r\n    {\r\n      \"kind\": \"warning\",\r\n      \"description\": \"Pisos real\u00e7adas se sobrep\u00f5em.\",\r\n      \"answered\": \"dismissed so the command could finish \u2014 the model still has whatever this describes\",\r\n      \"elements\": [\r\n        221072,\r\n        221237\r\n      ],\r\n      \"while\": null\r\n    },\r\n    {\r\n      \"kind\": \"warning\",\r\n      \"description\": \"Pisos real\u00e7adas se sobrep\u00f5em.\",\r\n      \"answered\": \"dismissed so the command could finish \u2014 the model still has whatever this describes\",\r\n      \"elements\": [\r\n        221154,\r\n        221237\r\n      ],\r\n      \"while\": null\r\n    }\r\n  ],\r\n  \"note\": \"Revit raised these while this command ran. Warnings were dismissed so it could finish; they describe the model, they are not noise, and nothing about them was fixed. Dialogs were cancelled because no one is at the keyboard. 'while' is the running command's own statement of where it was (for a script, its last checkpoint) - the bridge cannot see which API call was in flight and does not pretend to.\"\r\n}",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "SLAB-002",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00036035"
+    },
+    {
+      "capability": "revit.create_roof",
+      "error": null,
+      "logical_id": "ROOF-001",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00036043"
+    }
+  ],
+  "stage": "R05",
+  "status": "VERIFIED"
+}

@@ -1,0 +1,306 @@
+{
+  "records": [
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-7b1814b1a55d",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-bd7e007ebad7",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-298d82f3fe2a",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-34a4cfc4d91f",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-371cfd21f67e",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-d929777c0495",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-cd8581db7b72",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-0a66ab0e5239",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-568cf11a35b8",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-05647dc072c8",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-6289803f203f",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-8123a59ff559",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-ba8402fd4f94",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-c4a66d7adf8d",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-0703b3e963a4",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-1ac1bc3bce1b",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-d674d9d6f1a7",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-aabe67f9dbeb",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-c2902408f46e",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-141277f4e573",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-6a0ae6668368",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-79bd995fbe73",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-118ae4f1efeb",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-b794070e5f57",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-6f042d506476",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-60a321511612",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-9e8254bc4ab8",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-cc43ca8df6e3",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-50e894ef1aed",
+      "status": "FAILED",
+      "unique_id": null
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": {
+        "diagnostic": "Error: Atomic creation failed at item 0: Requested properties do not match the committed element.",
+        "type": "PythonExecutionFailed"
+      },
+      "logical_id": "LAYOUT-WALL-d30c7ebe5687",
+      "status": "FAILED",
+      "unique_id": null
+    }
+  ],
+  "stage": "R06",
+  "status": "FAILED"
+}

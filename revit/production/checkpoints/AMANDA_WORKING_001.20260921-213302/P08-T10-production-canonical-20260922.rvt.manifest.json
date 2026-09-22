@@ -1,0 +1,54 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    12666373953134797
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\P08-T10-production-canonical-20260922.rvt",
+  "created_utc": "2026-09-22T11:45:01.009123Z",
+  "document_id": "AMANDA_WORKING_001",
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\P08-T10-production-canonical-20260922.rvt.manifest.json",
+  "provenance": {
+    "close_reopen_verified": true,
+    "operation": "typed_save_as_overwrite_from_live_R06_target",
+    "pre_promotion_canonical_sha256": "4753f638f2b536b6cf0f3b1a5fb30f4b997601ae463a7e826111ca02cd57bf83",
+    "preview": {
+      "calibrated": false,
+      "sha256": "85eef1e6086105f28c37cf7fe189930cf80ca0be256df46c0a9f9a338cc38af8",
+      "view": "AMANDA R06 3D STUDY",
+      "view_id": 221538
+    },
+    "provider": "Horizun",
+    "provider_version": "1.3.3",
+    "readback": {
+      "coverage_complete": true,
+      "element_count": 3630,
+      "floors": 3,
+      "grids": 2,
+      "levels": 3,
+      "mass": 1,
+      "r06_type_id": 220,
+      "r06_walls": 30,
+      "roof": 1,
+      "unreadable": 0,
+      "views": 24,
+      "walls": 76
+    },
+    "revit_build": "27.2.0.39",
+    "revit_version": "2027",
+    "source_path": "revit/production/working/AMANDA_WORKING_001.20260921-213302.rvt",
+    "source_sha256": "ebf18f98a8ac5548e65b677684a1ef467732f2055113bb0c24829db71c0a0d0a"
+  },
+  "schema_version": 1,
+  "sha256": "2135ac273634994c89ff7535c2dafbafa6236062068094e9a48cfb2189f966bc",
+  "size_bytes": 3977216,
+  "source_document_id": "AMANDA_WORKING_001",
+  "source_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_file_id": [
+    9107472496377837229,
+    18858823440341362
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_sha256": "2135ac273634994c89ff7535c2dafbafa6236062068094e9a48cfb2189f966bc",
+  "stage": "P08_T10_PRODUCTION_CANONICAL",
+  "version": 1
+}

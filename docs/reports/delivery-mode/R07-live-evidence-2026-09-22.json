@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "stage": "R07",
+  "status": "PASS_LIVE_VERIFIED_WITH_STUDY_VIEW",
+  "verification_scope": "R07 openings on the canonical production RVT with typed WRITE READ VERIFY, save-close-reopen, independent whole-model count, and real Revit 3D preview; not final site, normative approval, or R16 GOLDEN",
+  "captured_utc": "2026-09-22T12:15:00Z",
+  "provider": {
+    "name": "horizun",
+    "version": "1.3.3",
+    "status": "healthy",
+    "revit_pid": 25996,
+    "revit_version": "2027",
+    "revit_build": "27.2.0.39",
+    "contract_hash": "8b9600f5274d7dffb6e5bd5f",
+    "commit": "cc4ea04e9ecfe547ad349f22e0864019ce1ead1f",
+    "other_clients": 0,
+    "writer_scope": "one live target, one provider writer"
+  },
+  "target": {
+    "relative_path": "revit/production/working/AMANDA_WORKING_001.rvt",
+    "absolute_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+    "active_after_reopen": true,
+    "workshared": false,
+    "expected_version": "2027",
+    "upgrade": false
+  },
+  "selection": {
+    "solution_id": "AMANDA-RUN-001-S01",
+    "authority": "AGENT_DELEGATED",
+    "review": "AMANDA_REVIEW_PENDING",
+    "approval_hash": "bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef",
+    "layout_hash": "9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d"
+  },
+  "write_read_verify": {
+    "requested": 87,
+    "created_verified": 87,
+    "doors": 52,
+    "windows": 35,
+    "units": "m",
+    "host_mapping": {
+      "wall_rows": 78,
+      "unique_marks": 78,
+      "missing_hosts": []
+    },
+    "provider_verification": "Every applied opening returned verified_applied with host_id, kind, and opening_corners postconditions verified.",
+    "special_orientation_variants": {
+      "WINDOW-034": "vertical_cross_c",
+      "WINDOW-038": "vertical_cross_c"
+    },
+    "rolled_back_probes": [
+      "invalid level_id on wall_opening batch",
+      "unsorted/orientation variants that failed opening_corners",
+      "all failed probes reported rollback and were not reused with the same idempotency key"
+    ]
+  },
+  "model_readback_after_reopen": {
+    "element_count": 3719,
+    "opening_category": "Abertura em parede reta retangular",
+    "openings": 87,
+    "walls": 78,
+    "coverage_complete": true,
+    "unreadable": 0,
+    "note": "The localized category filter does not resolve this opening category directly; the independent full-model summary reports the category count of 87."
+  },
+  "save_close_reopen": {
+    "save": {
+      "outcome": "saved_verified",
+      "sha256_before": "ccdc01f6d52a7d5a1ea91b8ecf29c203948148c6de3e6b0cd7fcf438ec99dcd6",
+      "sha256_after": "be46acdde8cba35e301befc36a36bd2d140c8bfb2b4528cfa940830dd36655b8",
+      "size_after": 4198400,
+      "modified_utc": "2026-09-22T12:15:06.1158942Z"
+    },
+    "close": {
+      "outcome": "closed_verified",
+      "activation": "HZ_ANCHOR_2027.rvt",
+      "saved_on_close": false,
+      "discarded_unsaved_changes": false,
+      "disk_changed": false
+    },
+    "reopen": {
+      "outcome": "opened_verified",
+      "active_document_verified": true,
+      "path_is_the_one_requested": true,
+      "file_version_before_open": "2027",
+      "host_version": "2027",
+      "upgraded": false
+    }
+  },
+  "visual_evidence": [
+    {
+      "path": "revit/production/previews/R07-openings-3D-20260922.png",
+      "view": "AMANDA R06 3D STUDY",
+      "view_id": 221538,
+      "kind": "STUDY",
+      "sha256": "d6efb933b04a9c2f1fc6849846f5ac78b86f4523c499d879863fbac07eec4628",
+      "pixel_size": [1400, 865],
+      "calibrated": false,
+      "view_restored": true,
+      "note": "real Revit orthographic isometric capture after R07; uncalibrated STUDY preview"
+    }
+  ],
+  "checkpoint": {
+    "path": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R07-openings-20260922.rvt",
+    "manifest": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R07-openings-20260922.rvt.manifest.json",
+    "sha256": "be46acdde8cba35e301befc36a36bd2d140c8bfb2b4528cfa940830dd36655b8",
+    "size_bytes": 4198400,
+    "manager_verify": true,
+    "provenance": "post-save live canonical model with 87 openings and post-reopen independent model summary"
+  },
+  "limitations": [
+    "Site boundary, topography, occupancy, frontage count, and true north remain unresolved blockers.",
+    "The real preview is uncalibrated STUDY evidence and does not prove final site placement, scale, or normative compliance.",
+    "R08-R16, final sheets, IFC/PDF/DWG release, and GOLDEN remain pending."
+  ],
+  "next_action": "Proceed to R08 rooms on the active canonical target, preserving the R07 checkpoint and prior source/GOLDEN artifacts."
+}

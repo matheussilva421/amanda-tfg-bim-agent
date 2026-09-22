@@ -1,0 +1,84 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    65583669574896954
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R07-openings-20260922.rvt",
+  "created_utc": "2026-09-22T12:16:25.664838Z",
+  "document_id": "AMANDA-RUN-001-S01",
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R07-openings-20260922.rvt.manifest.json",
+  "provenance": {
+    "close_reopen": {
+      "close_verified": true,
+      "host_version": "2027",
+      "reopen_verified": true,
+      "upgraded": false
+    },
+    "geometry_normalization": {
+      "doors": "min/max corners",
+      "horizontal_windows": "min/max corners",
+      "rejected_probes": {
+        "invalid_level_id": 87,
+        "invalid_orientations": "rolled_back",
+        "unsorted_corner_probe": "rolled_back"
+      },
+      "special_variants": {
+        "WINDOW_034": "vertical_cross_c",
+        "WINDOW_038": "vertical_cross_c"
+      },
+      "units": "m",
+      "vertical_windows": "source orientation unless provider postcondition required variant"
+    },
+    "preview": {
+      "calibration": "uncalibrated",
+      "path": "revit/production/previews/R07-openings-3D-20260922.png",
+      "pixel_height": 865,
+      "pixel_width": 1400,
+      "sha256": "d6efb933b04a9c2f1fc6849846f5ac78b86f4523c499d879863fbac07eec4628",
+      "view_id": 221538,
+      "view_restored": true
+    },
+    "prior_checkpoint": "R06-gallery-host-correction-metres-20260922.rvt",
+    "provider": {
+      "build": "27.2.0.39",
+      "commit": "cc4ea04e9ecfe547ad349f22e0864019ce1ead1f",
+      "contract_hash": "8b9600f5274d7dffb6e5bd5f",
+      "horizun_version": "1.3.3",
+      "other_clients": 0,
+      "revit": "2027"
+    },
+    "purpose": "R07 openings production checkpoint after typed WRITE READ VERIFY and close reopen",
+    "result": {
+      "category": "Abertura em parede reta retangular",
+      "coverage_complete": true,
+      "created_verified": 87,
+      "doors": 52,
+      "model_summary_openings": 87,
+      "model_summary_total": 3719,
+      "requested": 87,
+      "unreadable_total": 0,
+      "walls": 78,
+      "windows": 35
+    },
+    "save": {
+      "outcome": "saved_verified",
+      "sha256_after": "be46acdde8cba35e301befc36a36bd2d140c8bfb2b4528cfa940830dd36655b8",
+      "size_bytes": 4198400
+    },
+    "source_sha256": "be46acdde8cba35e301befc36a36bd2d140c8bfb2b4528cfa940830dd36655b8",
+    "source_stage": "R07_OPENINGS"
+  },
+  "schema_version": 1,
+  "sha256": "be46acdde8cba35e301befc36a36bd2d140c8bfb2b4528cfa940830dd36655b8",
+  "size_bytes": 4198400,
+  "source_document_id": "AMANDA-RUN-001-S01",
+  "source_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_file_id": [
+    9107472496377837229,
+    53198770598890121
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_sha256": "be46acdde8cba35e301befc36a36bd2d140c8bfb2b4528cfa940830dd36655b8",
+  "stage": "R07_OPENINGS",
+  "version": 1
+}

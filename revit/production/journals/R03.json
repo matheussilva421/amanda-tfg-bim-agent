@@ -1,0 +1,27 @@
+{
+  "records": [
+    {
+      "capability": "revit.create_level",
+      "error": null,
+      "logical_id": "LEVEL-01",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f5a"
+    },
+    {
+      "capability": "revit.create_grid",
+      "error": null,
+      "logical_id": "GRID-01",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f5b"
+    },
+    {
+      "capability": "revit.create_grid",
+      "error": null,
+      "logical_id": "GRID-02",
+      "status": "VERIFIED",
+      "unique_id": "5c485571-e261-4442-abd9-3e2de9d9919d-00035f5c"
+    }
+  ],
+  "stage": "R03",
+  "status": "VERIFIED"
+}

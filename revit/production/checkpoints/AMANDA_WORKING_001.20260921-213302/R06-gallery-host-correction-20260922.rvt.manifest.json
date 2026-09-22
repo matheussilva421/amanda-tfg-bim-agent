@@ -1,0 +1,74 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    17451448557232317
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R06-gallery-host-correction-20260922.rvt",
+  "created_utc": "2026-09-22T11:58:19.043061Z",
+  "document_id": "AMANDA-RUN-001-S01",
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R06-gallery-host-correction-20260922.rvt.manifest.json",
+  "provenance": {
+    "close_reopen": {
+      "close_verified": true,
+      "host_version": "2027",
+      "reopen_verified": true,
+      "upgraded": false
+    },
+    "correction": {
+      "created_verified": 2,
+      "marks": [
+        "WALL-19e1e0bd078a",
+        "WALL-a2a72942d980"
+      ],
+      "readback": {
+        "base_offset_feet": 0,
+        "coverage_complete": true,
+        "each_match": 1,
+        "height_feet": 3.2,
+        "level": "LEVEL-01",
+        "type_id": 220
+      },
+      "requested": 2,
+      "transaction_status": "Committed",
+      "typed_command": "horizun_create_elements"
+    },
+    "preview": {
+      "calibration": "uncalibrated",
+      "path": "revit/production/previews/R06-gallery-host-correction-3D-20260922.png",
+      "pixel_height": 862,
+      "pixel_width": 1400,
+      "sha256": "97710a54e791d76a41d0956169e245110f1a0607318e060d00d6f17eb86aa028",
+      "view_id": 221538,
+      "view_restored": true
+    },
+    "provider": {
+      "build": "27.2.0.39",
+      "commit": "cc4ea04e9ecfe547ad349f22e0864019ce1ead1f",
+      "contract_hash": "8b9600f5274d7dffb6e5bd5f",
+      "horizun_version": "1.3.3",
+      "other_clients": 0,
+      "revit": "2027"
+    },
+    "purpose": "R06 correction: restore two canonical gallery host walls required by R07 opening plan",
+    "save": {
+      "outcome": "saved_verified",
+      "sha256_after": "228303210fe8766d0aed59463a365dae65891cac5954d4369d699a64f6f139c3",
+      "size_bytes": 3981312
+    },
+    "source_sha256": "228303210fe8766d0aed59463a365dae65891cac5954d4369d699a64f6f139c3",
+    "source_stage": "R06"
+  },
+  "schema_version": 1,
+  "sha256": "228303210fe8766d0aed59463a365dae65891cac5954d4369d699a64f6f139c3",
+  "size_bytes": 3981312,
+  "source_document_id": "AMANDA-RUN-001-S01",
+  "source_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_file_id": [
+    9107472496377837229,
+    7881299349053541
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_sha256": "228303210fe8766d0aed59463a365dae65891cac5954d4369d699a64f6f139c3",
+  "stage": "R06_INTERNAL_LAYOUT_CORRECTION",
+  "version": 1
+}

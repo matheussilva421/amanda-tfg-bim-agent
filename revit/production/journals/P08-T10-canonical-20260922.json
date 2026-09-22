@@ -1,0 +1,28 @@
+{
+  "task": "P08-T10",
+  "stage": "PRODUCTION_CANONICAL_PROMOTION",
+  "status": "PASS_WITH_WARNINGS",
+  "target": "revit/production/working/AMANDA_WORKING_001.rvt",
+  "operation": "typed_save_as_overwrite_from_live_R06_target",
+  "pre_promotion_checkpoint": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/P08-T10-canonical-pre-promotion-20260922.rvt",
+  "post_promotion_checkpoint": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/P08-T10-production-canonical-20260922.rvt",
+  "source_sha256": "ebf18f98a8ac5548e65b677684a1ef467732f2055113bb0c24829db71c0a0d0a",
+  "canonical_sha256": "2135ac273634994c89ff7535c2dafbafa6236062068094e9a48cfb2189f966bc",
+  "checkpoint_manager_verify": true,
+  "close_reopen": "verified",
+  "independent_readback": {
+    "element_count": 3630,
+    "walls": 76,
+    "floors": 3,
+    "roof": 1,
+    "mass": 1,
+    "levels": 3,
+    "grids": 2,
+    "views": 24,
+    "coverage_complete": true,
+    "unreadable": 0
+  },
+  "preview": "revit/production/previews/P08-T10-canonical-3D-20260922.png",
+  "provider": "horizun 1.3.3 / Revit 2027 build 27.2.0.39 / PID 25996 / other_clients 0",
+  "warning_boundary": "Study/provisional site only; blockers remain and no FINAL/GOLDEN claim is made."
+}

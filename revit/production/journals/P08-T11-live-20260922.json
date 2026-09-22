@@ -1,0 +1,25 @@
+{
+  "task": "P08-T11",
+  "stage": "R01-R04",
+  "status": "PASS_WITH_WARNINGS",
+  "target": "revit/production/working/AMANDA_WORKING_001.rvt",
+  "readback": {
+    "R01_project_info_rows": 1,
+    "R02_terrain": "placeholder/provisional; no invented topography",
+    "R03_levels": 3,
+    "R03_grids": 2,
+    "R04_mass": 1,
+    "coverage_complete": true,
+    "unreadable": 0
+  },
+  "persistence": "canonical close/reopen/requery verified",
+  "provider": "horizun 1.3.3 / Revit 2027 build 27.2.0.39 / PID 25996 / other_clients 0",
+  "blockers": [
+    "SITE_TOPOGRAPHY",
+    "SITE_BOUNDARY",
+    "SITE_OCCUPANCY",
+    "SITE_FRONTAGE_COUNT",
+    "SITE_TRUE_NORTH"
+  ],
+  "next_action": "R08 rooms"
+}

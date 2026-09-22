@@ -1,0 +1,43 @@
+{
+  "stage": "R07",
+  "status": "VERIFIED",
+  "target": "revit/production/working/AMANDA_WORKING_001.rvt",
+  "records": [
+    {
+      "capability": "revit.create_opening",
+      "status": "VERIFIED",
+      "requested": 87,
+      "created_verified": 87,
+      "doors": 52,
+      "windows": 35,
+      "units": "m",
+      "host_rows_read": 78,
+      "missing_hosts": [],
+      "postcondition": "host_id + kind + opening_corners",
+      "special_variants": ["WINDOW-034:vertical_cross_c", "WINDOW-038:vertical_cross_c"]
+    }
+  ],
+  "persistence": {
+    "save_outcome": "saved_verified",
+    "sha256": "be46acdde8cba35e301befc36a36bd2d140c8bfb2b4528cfa940830dd36655b8",
+    "size_bytes": 4198400,
+    "close_outcome": "closed_verified",
+    "reopen_outcome": "opened_verified",
+    "requery_openings": 87,
+    "requery_coverage_complete": true,
+    "requery_unreadable": 0
+  },
+  "preview": {
+    "path": "revit/production/previews/R07-openings-3D-20260922.png",
+    "sha256": "d6efb933b04a9c2f1fc6849846f5ac78b86f4523c499d879863fbac07eec4628",
+    "view_id": 221538,
+    "pixel_size": [1400, 865],
+    "view_restored": true,
+    "calibration": "uncalibrated"
+  },
+  "checkpoint": {
+    "path": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R07-openings-20260922.rvt",
+    "manifest": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R07-openings-20260922.rvt.manifest.json",
+    "manager_verify": true
+  }
+}
