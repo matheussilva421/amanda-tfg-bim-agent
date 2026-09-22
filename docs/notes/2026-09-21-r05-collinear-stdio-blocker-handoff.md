@@ -329,3 +329,16 @@ Commit `4e5f045` (`fix(revit): canonicalize shell wall endpoints`) is pushed to
 `origin/main`. The durable project state remains revision 159, `PHASE_08`,
 `P08-T08`, `GO_WITH_LIMITATIONS`; the site blockers and
 `CROSSWALK_GRID_ROOF_GAP` remain open.
+
+## Addendum - resume revalidation (2026-09-21)
+
+The next continuation rechecked the normal-user bridge and received the same
+modal refusal before any request started: Revit still has
+`Projeto não recentemente salvo` open. Even `horizun_health` was removed from
+the queue after the modal probe, so no production write, read, or state change
+was attempted. The native UI is not exposed to the current automation surface.
+
+Resume condition: dismiss the Revit reminder without using Save As or changing
+the saved target, then rerun the post-close `horizun_open_document` and critical
+R05 reads for `AMANDA_WORKING_001.20260921-213302.rvt`. Only after that fresh
+reopen evidence may R06-R13 begin.
