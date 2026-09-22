@@ -81,13 +81,14 @@ Additional checks:
 
 ## Git state
 
-The narrow code/test patch is prepared but still needs commit and push. The
-working tree also contains pre-existing ACL-visible phantom deletions under
+The narrow code/test/handoff patch was published as commit `0c70c2d`
+(`fix(revit): map internal wall template type`) and pushed to `origin/main`.
+The working tree also contains pre-existing ACL-visible phantom deletions under
 `revit/lab/exports/p06t14/GOLDEN/RC01`, generated Topologic result changes,
 untracked package/output trees, `.codex`, and `revit/production` artifacts.
 Do not restore, delete, or stage those paths as part of this block.
 
-Before publication, stage only:
+The publication command was:
 
 ```powershell
 git add -- src/amanda_agent/production/layout_bim.py tests/unit/test_production_layout_bim.py docs/notes/2026-09-22-r06-internal-wall-type-handoff.md
@@ -121,7 +122,6 @@ git push origin main
 
 ## Pending
 
-- Publish the narrow compiler/test/handoff commit and push it to `origin/main`.
 - Clear the human Revit modal boundary.
 - Run a fresh R01→R06 attempt and independently verify persistence.
 - Only after that decide whether R07 is safe to start.
