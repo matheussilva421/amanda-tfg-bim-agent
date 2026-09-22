@@ -61,5 +61,5 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Git verification
 
-- Last verified commit: `NOT_RECORDED`
-- Observed HEAD: `722d2668d1cc30af713a47458d00c22e5b0c482d`
+- Last verified commit: `f26b7f74f54104147b962c7b18203b5948f41efd` (non-Revit regression gate; production gate still pending)
+- Observed HEAD: `f26b7f74f54104147b962c7b18203b5948f41efd`

@@ -227,3 +227,22 @@ controller/stdio route that runs under the same Windows user context as Revit,
 or a manually controlled interactive Horizun route. Do not work around this
 by copying discovery files or by changing `PROJECT_STATE.yaml`; that would not
 prove the real bridge connection.
+
+## Publication and final verification (2026-09-21)
+
+The functional patch and this addendum were committed as `f26b7f7`
+(`fix(revit): preserve shell semantics across merged runs`) and pushed to
+`origin/main`. The final non-Revit gate was rerun after the commit:
+
+```text
+.\.venv\Scripts\python.exe -m pytest tests -m "not revit and not slow" -q --basetemp .tmp-pytest-final-r05
+871 passed, 0 failed
+```
+
+`main` and the local `origin/main` tracking ref both resolve to
+`f26b7f74f54104147b962c7b18203b5948f41efd`. A subsequent `git ls-remote`
+refresh was unavailable because GitHub HTTPS was unreachable at that moment;
+the successful push result is the publication evidence. The working tree still
+shows only the pre-existing ACL-visible `GOLDEN/RC01` deletions, Topologic
+result changes, untracked package/output trees, and timestamped production
+journals; none are part of `f26b7f7`.
