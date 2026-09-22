@@ -61,5 +61,5 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Git verification
 
-- Last verified commit: `NOT_RECORDED`
-- Observed HEAD: `e6f0e4e5637073a04df7975d785e1fc4ec401de0`
+- Last verified commit: `880b0df` (live R06 evidence and state pushed to `origin/main`)
+- Observed HEAD: `880b0df` (unrelated dirty files preserved outside the delivery commit)
