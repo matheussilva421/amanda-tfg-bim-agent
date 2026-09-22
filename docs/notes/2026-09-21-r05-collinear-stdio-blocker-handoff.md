@@ -385,3 +385,11 @@ untracked `.codex`, package/output, and `revit/production` trees. They were not
 restored, deleted, or staged. A repository-wide `git diff --check` is blocked by
 the ACL-denied GOLDEN paths; no new handoff formatting error was found in the
 path edited above.
+
+## Addendum - handoff publication (2026-09-21)
+
+The session-start handoff update was committed as `0f3a62b` (`docs: record
+session-start revalidation`) and pushed successfully to `origin/main`. No code,
+BIM model, project state, protected GOLDEN content, or unrelated working-tree
+artifact was included in that commit. The next continuation still starts at
+the human modal dismissal and fresh R05 reopen/read boundary described above.
