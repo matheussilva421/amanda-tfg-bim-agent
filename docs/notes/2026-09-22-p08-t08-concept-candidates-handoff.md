@@ -77,3 +77,11 @@ git log -1 --oneline
 ```
 
 Then review the diff, commit it on a codex/ branch, push according to project authorization, and keep live work stopped until the Revit UI blocker is cleared.
+
+## Publication addendum (2026-09-22)
+
+- Branch: `codex/p08-t08-concept-offline`.
+- Implementation commit: `e5c9a0e` (`feat(bim): prepare offline conceptual candidates`).
+- Push completed to `origin/codex/p08-t08-concept-offline`.
+- The worktree was clean immediately after the implementation commit; this addendum is the only intended follow-up change.
+- No pull request was created and no merge or main-branch mutation was performed.
