@@ -89,3 +89,16 @@ exportados pelo Revit, persistência ou validação FINAL.
 O working tree já tinha exclusões ACL-visíveis, alterações geradas e artefatos
 não rastreados de blocos anteriores. Eles permaneceram fora deste bloco. O commit
 e push deste escopo devem incluir somente os arquivos listados acima.
+
+## Publicação e limpeza
+
+- Implementação, testes, relatórios e este handoff publicados em `a9457e2`
+  (`fix(qa): reconcile pre-model rooms by logical quantity`) e enviados a
+  `origin/main`.
+- Foram removidos somente os diretórios `.tmp-pytest-layout-*` criados nesta
+  sessão; nenhum artefato de produção, GOLDEN ou fonte foi removido.
+- `ruff check` não ficou verde por 22 achados preexistentes no script legado
+  (principalmente `UP031` e organização de imports); a correção não ampliou o
+  escopo para uma refatoração estilística desse arquivo.
+- O bloqueio live do Revit não mudou: modal nativo ainda impede qualquer
+  chamada Horizun antes de começar.
