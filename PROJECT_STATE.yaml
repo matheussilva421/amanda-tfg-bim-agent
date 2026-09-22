@@ -5,7 +5,6 @@ blockers:
 - SITE_FRONTAGE_COUNT:DEGRADING
 - SITE_TRUE_NORTH:DEGRADING
 - REVIT_PIPE_SANDBOX_ACCESS:DEGRADING
-- CROSSWALK_GRID_ROOF_GAP:BLOCKING
 current_checkpoint: null
 last_completed_task: P06-T14
 last_verified_commit: null
@@ -29,8 +28,8 @@ production_driver: scripts/run_amanda_production.py
 production_plan_stages: R01 R02 R03 R04 R05 R06 R07 R08 R09 R10 R11 R12 R13
 production_plan_operations: 913
 resume_note: STUDY exports exist (IFC 121496 B validator PASS, DXF 27020 B, PDF 7 pages); restart Revit so the add-in republishes the bridge, then run prove_crosswalk_grid_roof.py and run_amanda_production.py with --execute to produce the RVT
-state_revision: 159
+state_revision: 160
 study_ifc: docs/reports/study-exports/AMANDA_ESTUDO.ifc
 study_dxf: docs/reports/study-exports/AMANDA_ESTUDO.dxf
 study_pdf: docs/reports/study-package/Amanda_TFG_ESTUDO_pranchas.pdf
-layout_qa: PASS (25 checks, 5 MODEL_PENDING)
+layout_qa: FAIL (25 checks, 1 failed, 5 MODEL_PENDING)

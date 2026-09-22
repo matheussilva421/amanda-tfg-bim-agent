@@ -75,3 +75,20 @@ The verified QA block was committed as `670b9ae` (`fix(qa): preserve program
 reconciliation failures`) and pushed successfully to `origin/main`. The
 working tree still has only the pre-existing unrelated dirty and untracked
 paths described above.
+
+## Durable state reconciliation
+
+After re-reading the live evidence, `PROJECT_STATE.yaml` was corrected to
+revision `160`:
+
+- removed the stale `CROSSWALK_GRID_ROOF_GAP:BLOCKING` entry; the registered
+  grid/roof capability evidence hashes to
+  `d4f19a3c1e57621c7a1f8acd77c3a8219ef5d02ff2e642941d41c4a5b938675b`, records
+  `persisted: true`, and independently reads one grid and one roof after
+  reopen;
+- changed `layout_qa` to `FAIL (25 checks, 1 failed, 5 MODEL_PENDING)` so the
+  durable summary agrees with the regenerated QA report.
+
+`amanda_agent status` now reports revision `160`, P08-T08 still pending, a
+free writer lease, and the five site blockers. No task was advanced and no
+production claim was made.
