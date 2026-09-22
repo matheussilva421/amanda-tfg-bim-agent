@@ -2493,8 +2493,16 @@ tasks:
     title: Compile R09–R12
     depends_on:
     - P08-T12
-    status: PENDING
-    evidence: []
+    status: RUNNING
+    evidence:
+    - 'R09 compiler dry run completed with planned stages R01 through R09, layout hash 9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539 and approval_hash bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef'
+    - 'R09 normative numeric registry is empty; numeric status is STATUS_NAO_VERIFICADO and no normative compliance claim is emitted. Measured gallery width is 1.5 m and route inputs cover 52 rooms.'
+    - 'Typed capability was not available for revit.create_accessibility_element; registry-approved Horizun Python fallback was used. Final preflight passed for active canonical target with syntax ok and zero warnings.'
+    - 'Two fallback attempts failed before transaction start because of missing imports; health/readback after each showed canonical element count 3824 and 0 GenericModel elements, so no duplicate write was retried. Final fallback execution created 53/53 GenericModel markers, skipped 0, transaction closed.'
+    - 'Independent post-write and post-reopen queries returned 53 GenericModel elements with 53 unique R09 ALL_MODEL_MARK values, 53/53 positive bounding boxes, coverage_complete and 0 unreadable; whole model returned 3877 elements, 52 rooms, 87 openings and 78 walls'
+    - 'Canonical save hash changed from f2a224de1f47dd67844d3a8ad1532934e5d3ba9e906b0ac1a5755ef21812c44c to b8145958ea27e85b232afbc72081f42b47ffcad310ac16f8e8057409d5a9548a at 4247552 bytes; close/reopen verified the exact canonical path and Revit 2027 version'
+    - 'Checkpoint R09-accessibility-20260922.rvt and manifest were created from the reopened canonical source and verify_checkpoint returned true; real 1400x865 STUDY preview hash 69cd003b58f07e5052a352ef74866f0a0ed9d074589da0f0ede5cfcb36d237ab preserved'
+    - 'R09 is PASS_WITH_WARNINGS within running P08-T13. Route envelopes are study geometry, not normative accessibility certification; site boundary, topography, occupancy, frontage count and true north blockers remain; next substage is R10 furniture'
   P08-T14:
     id: P08-T14
     phase: PHASE_08

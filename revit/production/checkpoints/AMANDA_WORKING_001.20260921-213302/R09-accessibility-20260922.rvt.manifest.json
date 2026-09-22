@@ -1,0 +1,24 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    15762598697123677
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R09-accessibility-20260922.rvt",
+  "created_utc": "2026-09-22T12:55:21.058764Z",
+  "document_id": null,
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R09-accessibility-20260922.rvt.manifest.json",
+  "provenance": {},
+  "schema_version": 1,
+  "sha256": "b8145958ea27e85b232afbc72081f42b47ffcad310ac16f8e8057409d5a9548a",
+  "size_bytes": 4247552,
+  "source_document_id": null,
+  "source_document_path": null,
+  "source_file_id": [
+    9107472496377837229,
+    33214047253065410
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_sha256": "b8145958ea27e85b232afbc72081f42b47ffcad310ac16f8e8057409d5a9548a",
+  "stage": "R09_ACCESSIBILITY",
+  "version": 1
+}

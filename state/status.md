@@ -5,10 +5,10 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 ## Phase and task progress
 
 - Phase: `PHASE_08` — amanda-production-run
-- Phase status: `PENDING`
-- Next task: P08-T13
+- Phase status: `RUNNING`
+- Next task: P08-T13 (RUNNING; R09 complete, R10 next)
 - Last PASS task: P08-T12 (PASS_WITH_WARNINGS)
-- Tasks: 159 total; READY: P08-T13
+- Tasks: 159 total; RUNNING: P08-T13
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -50,9 +50,9 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 ## Design and Revit recovery
 
 - Selected design: `AMANDA-RUN-001-S01`
-- Revit stage: R08
-- Current checkpoint: revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R08-rooms-20260922.rvt
-- R08 live: 52 independent rooms, 87 openings (52 doors, 35 windows) and 78 walls, saved/closed/reopened/requeried; real STUDY preview preserved
+- Revit stage: R09
+- Current checkpoint: revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R09-accessibility-20260922.rvt
+- R09 live: 53 study accessibility markers, 52 rooms, 87 openings (52 doors, 35 windows) and 78 walls, saved/closed/reopened/requeried; real STUDY preview preserved
 
 ## Writer lease
 

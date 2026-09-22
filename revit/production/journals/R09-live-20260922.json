@@ -1,0 +1,46 @@
+{
+  "journal_type": "bim_production_stage",
+  "stage": "R09_ACCESSIBILITY",
+  "task_id": "P08-T13",
+  "task_status": "RUNNING",
+  "stage_status": "PASS_WITH_WARNINGS",
+  "date": "2026-09-22",
+  "target": "revit/production/working/AMANDA_WORKING_001.rvt",
+  "provider": "horizun",
+  "revit": {
+    "version": "2027",
+    "build": "27.2.0.39",
+    "pid": 25996,
+    "health": "HEALTHY",
+    "other_writer_clients": 0
+  },
+  "selection": {
+    "design_id": "AMANDA-RUN-001-S01",
+    "authority": "AGENT_DELEGATED",
+    "approval_hash": "bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef"
+  },
+  "write_read_verify": {
+    "write": "Fallback Python created 53/53 OST_GenericModel study markers in one closed transaction; bridge classified this fallback as completed_unverified.",
+    "read": "Independent host query after apply and after reopen returned 53 R09 marks, 53 bounding boxes, coverage_complete and 0 unreadable.",
+    "verify": "Save hash changed, close/reopen reopened the exact canonical 2027 path, checkpoint manifest verified true, and preview capture restored the view."
+  },
+  "program": {
+    "route_inputs": 52,
+    "gallery_width_m": 1.5,
+    "normative_numeric_rules": 0,
+    "numeric_status": "STATUS_NAO_VERIFICADO",
+    "normative_claim": false
+  },
+  "persistence": {
+    "sha256": "b8145958ea27e85b232afbc72081f42b47ffcad310ac16f8e8057409d5a9548a",
+    "bytes": 4247552,
+    "checkpoint": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R09-accessibility-20260922.rvt",
+    "preview": "revit/production/previews/R09-accessibility-3D-20260922.png"
+  },
+  "warnings": [
+    "R09 is study geometry and not normative compliance certification.",
+    "Site blockers and AMANDA_REVIEW_PENDING remain explicit.",
+    "No FINAL or GOLDEN claim."
+  ],
+  "next": "R10_FURNITURE"
+}

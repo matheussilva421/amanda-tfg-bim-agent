@@ -5,16 +5,16 @@ blockers:
 - SITE_FRONTAGE_COUNT:DEGRADING
 - SITE_TRUE_NORTH:DEGRADING
 - REVIT_PIPE_SANDBOX_ACCESS:DEGRADING
-current_checkpoint: revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R08-rooms-20260922.rvt
+current_checkpoint: revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R09-accessibility-20260922.rvt
 last_completed_task: P08-T12
 last_verified_commit: 4eae893
 next_task: P08-T13
 phase_gate: GO_WITH_LIMITATIONS
 phase_id: PHASE_08
 phase_name: amanda-production-run
-phase_status: PENDING
+phase_status: RUNNING
 project: Amanda TFG BIM Agent
-revit_stage: R08
+revit_stage: R09
 schema_version: 1
 selected_design: AMANDA-RUN-001-S01
 selection_authority: AGENT_DELEGATED
@@ -27,8 +27,8 @@ layout_covered_total_m2: 918.562857142857
 production_driver: scripts/run_amanda_production.py
 production_plan_stages: R01 R02 R03 R04 R05 R06 R07 R08 R09 R10 R11 R12 R13
 production_plan_operations: 913
-resume_note: LIVE canonical AMANDA_WORKING_001.rvt is active after R08 rooms; 52 independent rooms, 87 openings (52 doors, 35 windows) and 78 walls saved, closed, reopened and independently re-queried on Horizun/Revit 2027 PID 25996; P08-T12 is PASS_WITH_WARNINGS with site blockers and AMANDA_REVIEW_PENDING retained; next exact action is R09 accessibility on the canonical target, preserving the R08 checkpoint and all source/GOLDEN artifacts
-state_revision: 167
+resume_note: LIVE canonical AMANDA_WORKING_001.rvt is active after R09 accessibility; 53 study accessibility GenericModel markers (52 route envelopes plus gallery-width marker), 52 rooms, 87 openings and 78 walls were saved, closed, reopened and independently re-queried on Horizun/Revit 2027 PID 25996; P08-T13 is RUNNING with R09 PASS_WITH_WARNINGS, normative/site blockers and AMANDA_REVIEW_PENDING retained; next exact action is R10 furniture on the canonical target, preserving the R09 checkpoint and all source/GOLDEN artifacts
+state_revision: 168
 study_ifc: docs/reports/study-exports/AMANDA_ESTUDO.ifc
 study_dxf: docs/reports/study-exports/AMANDA_ESTUDO.dxf
 study_pdf: docs/reports/study-package/Amanda_TFG_ESTUDO_pranchas.pdf
