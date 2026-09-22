@@ -645,3 +645,13 @@ block. The only intended change is this handoff addendum.
 3. Require fresh close/reopen evidence before starting R06. Do not advance
    `PROJECT_STATE.yaml` or infer production PASS from process presence,
    previous journals, or provider health alone.
+
+## Publication after modal revalidation (2026-09-21, 23:31 -03:00)
+
+The handoff revalidation was committed as `807e66a` (`docs: record modal
+revalidation`) and pushed successfully to `origin/main`. Fresh verification
+confirmed `HEAD` and `origin/main` resolve to
+`807e66aa122bb30505fb032eaf6d64658285f9ba`, with no staged files. The working
+tree still contains only the previously preserved dirty reports, ACL-visible
+GOLDEN phantom deletions, Topologic result churn, and untracked package/
+production artifacts; none were included in the publication.
