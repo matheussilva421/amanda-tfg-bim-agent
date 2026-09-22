@@ -295,3 +295,37 @@ state advancement, production PASS, save/close/reopen certification, or export
 promotion is justified yet. The next action is to commit/push the narrow
 precision fix, then rerun a fresh normal-user R01-R05 attempt and require
 `100%` verified records before continuing.
+
+## Addendum - R05 real PASS and persistence modal (2026-09-21)
+
+After the precision fix was published, a fresh normal-user execution created
+`revit/production/working/AMANDA_WORKING_001.20260921-213302.rvt` and passed:
+
+```text
+R02 VERIFIED 0/0 verified
+R03 VERIFIED 3/3 verified
+R04 VERIFIED 1/1 verified
+R05 VERIFIED 82/82 verified
+```
+
+The run saved the file and released the writer lease. An independent read after
+the first reopen observed `78` `OST_Walls`, `3` `OST_Floors`, and `1`
+`OST_Roofs`; each of the eight formerly failing wall marks returned exactly one
+row. The active document path matched the requested RVT.
+
+The persistence close was then repeated with `activate_other=true`. The bridge
+returned `closed=true` with object-identity evidence that the target Document
+was absent from `Application.Documents` and `IsValidObject=false`; the file
+remained on disk at `4,022,272` bytes with `disk_changed=false`.
+
+The subsequent reopen is currently blocked by a Revit human modal:
+`Projeto não recentemente salvo`. The bridge reports that the open request was
+queued and removed without running while this dialog is present. A human must
+answer or close that dialog in Revit; after it disappears, rerun the prepared
+reopen/read check before claiming persistence PASS. Do not mark `PROJECT_STATE`
+complete or proceed to R06-R13 until the reopen and critical reads are fresh.
+
+Commit `4e5f045` (`fix(revit): canonicalize shell wall endpoints`) is pushed to
+`origin/main`. The durable project state remains revision 159, `PHASE_08`,
+`P08-T08`, `GO_WITH_LIMITATIONS`; the site blockers and
+`CROSSWALK_GRID_ROOF_GAP` remain open.
