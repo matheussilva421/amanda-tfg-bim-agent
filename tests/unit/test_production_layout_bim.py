@@ -293,6 +293,16 @@ def test_layout_stage_builds_internal_walls_for_every_partition(registry, progra
         assert operation.semantic_capability == "revit.create_internal_wall"
 
 
+def test_layout_stage_bridges_template_internal_wall_type(
+    registry, program, layout, tmp_path
+):
+    plans = _plans(registry, program, layout, tmp_path)
+    stage = next(plan for plan in plans if plan.stage is BimStage.R06)
+
+    assert stage.operations
+    assert {operation.payload["type_id"] for operation in stage.operations} == {220}
+
+
 def test_shell_does_not_duplicate_shared_boundaries_owned_by_r06(
     registry, program, layout, tmp_path
 ):

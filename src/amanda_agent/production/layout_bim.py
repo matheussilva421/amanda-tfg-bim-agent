@@ -1036,7 +1036,15 @@ def _stamp(plan, solution_id, approval_hash):
             properties = operation.payload.get("properties")
             properties = dict(properties) if isinstance(properties, Mapping) else {}
             # The shell stage names the wall's type in properties.type_id.
-            type_name = properties.get("type_id")
+            # R06 deliberately keeps the compiler-level name in
+            # properties.wall_type_id (INT_WALL_01).  That name is not a Revit
+            # type and cannot be resolved in the installed template, so map
+            # the internal-wall semantic to the verified template ElementId.
+            type_name = (
+                INTERNAL_WALL_TYPE_ID
+                if capability == "revit.create_internal_wall"
+                else properties.get("type_id")
+            )
             if isinstance(type_name, str) and type_name.strip():
                 # A numeric string is an ElementId and travels as an int, which
                 # the bridge resolves directly instead of searching by name.
