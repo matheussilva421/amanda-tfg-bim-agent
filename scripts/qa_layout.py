@@ -121,8 +121,9 @@ def run_checks(program, layout):
             for room in layout.rooms
         ]
         reconciliation = asyncio.run(reconcile_program(program, observed))
-        status = str(getattr(reconciliation, "status", reconciliation))
-        ok = "MATCH" in status.upper() or "PASS" in status.upper()
+        result = getattr(reconciliation, "result", reconciliation)
+        status = str(getattr(result, "value", result))
+        ok = status.upper() in {"PASS", "PASS_WITH_WARNINGS"}
         detail_text = "reconciliação do programa: " + status
     except Exception as exc:  # noqa: BLE001 - the check must report, not crash
         ok = False
