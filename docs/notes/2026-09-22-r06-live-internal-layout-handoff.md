@@ -53,7 +53,7 @@ R06 tem 30 paredes internas verificadas, a vista 3D persistida `AMANDA R06 3D ST
 
 ## Git
 
-O checkout continua com alterações preexistentes não relacionadas (deletions em GOLDEN de lab, tool-lab, .codex, pacote delivery/release e outros). Não restaurar, limpar ou stagear essas alterações automaticamente. O commit desta entrega é `880b0df`, já enviado para `origin/main`; essas alterações continuam fora dele.
+O checkout continua com alterações preexistentes não relacionadas (deletions em GOLDEN de lab, tool-lab, .codex, pacote delivery/release e outros). Não restaurar, limpar ou stagear essas alterações automaticamente. Os commits desta entrega são `880b0df` e `2a51cdb`, já enviados para `origin/main`; essas alterações continuam fora deles.
 
 ## Bloqueios e pendências
 
