@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `PHASE_08` — amanda-production-run
 - Phase status: `RUNNING`
-- Next task: P08-T13 (RUNNING; R09/R10 complete, R11 next)
+- Next task: P08-T13 (RUNNING; R09/R10/R11/R12 complete, R13 next)
 - Last PASS task: P08-T12 (PASS_WITH_WARNINGS)
 - Tasks: 159 total; RUNNING: P08-T13
 - `PHASE_00`: 3/3 PASS
@@ -50,9 +50,9 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 ## Design and Revit recovery
 
 - Selected design: `AMANDA-RUN-001-S01`
-- Revit stage: R11
-- Current checkpoint: revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R11-landscape-20260922.rvt
-- R11 live: 25 provisional landscape study elements (5 zones plus 20 layers), 25 unique marks/comments and positive bounding boxes, 52 rooms, 87 openings, 78 walls, 238 furniture and 78 GenericModels, saved/closed/reopened/requeried; real STUDY preview preserved
+- Revit stage: R12
+- Current checkpoint: revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R12-materials-20260922.rvt
+- R12 live: 78 walls saved/closed/reopened/requeried with 46 external `Alvenaria ceramica revestida` assignments and 32 internal `Divisoria leve` assignments; whole model returned 4142 elements, 52 rooms, 87 openings, 238 furniture, 78 GenericModels and 95 materials; real STUDY preview preserved
 
 ## Writer lease
 

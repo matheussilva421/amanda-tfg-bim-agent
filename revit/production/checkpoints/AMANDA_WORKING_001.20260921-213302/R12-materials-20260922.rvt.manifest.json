@@ -1,0 +1,24 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    25614222881190630
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R12-materials-20260922.rvt",
+  "created_utc": "2026-09-22T13:42:09.895507Z",
+  "document_id": null,
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R12-materials-20260922.rvt.manifest.json",
+  "provenance": {},
+  "schema_version": 1,
+  "sha256": "ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29",
+  "size_bytes": 4345856,
+  "source_document_id": null,
+  "source_document_path": null,
+  "source_file_id": [
+    9107472496377837229,
+    40532396646854429
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_sha256": "ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29",
+  "stage": "R12_MATERIALS",
+  "version": 1
+}

@@ -2517,6 +2517,13 @@ tasks:
     - 'Canonical save changed the hash from d7f899c6dd9b1ce86f0b933cbe51f47728dc61f6df2fe92cb1ffece6c00e8959 to f4dd2d9cf72ccd7fa1703d543d11e6b657ae5893254a3f20e7fee34a7a8b0699 at 4325376 bytes; close/reopen verified the exact canonical path and Revit 2027 version'
     - 'Checkpoint R11-landscape-20260922.rvt and manifest were created from the reopened canonical source and verify_checkpoint returned true; real 1400x855 STUDY preview hash a167fdd7a469f48ee6db7fcdaba17fcfa51b1222508e432d8b0094a7c70c657f preserved'
     - 'R11 is PASS_WITH_WARNINGS within running P08-T13. Landscape is reversible STUDY representation, not verified site/terrain/north or final landscape documentation; site blockers and AMANDA_REVIEW_PENDING remain; next substage is R12 materials'
+    - 'R12 compiler dry run completed with planned stages R01 through R12, layout hash 9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d and approval_hash bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef; 78 wall material assignments were planned as 46 external and 32 internal study assignments'
+    - 'R12 used the registry-approved Horizun Python fallback for revit.assign_material after final preflight passed with syntax ok and zero warnings; submitted source hash 2d5a3e343c61c704d697baf4c6ecea12a27d96ef54116d67f4f6fa3d680199cf and apply key amanda-r12-materials-20260922-v1'
+    - 'R12 material names are Alvenaria ceramica revestida for 46 external walls and Divisoria leve for 32 internal walls; both intents remain PROVISIONAL_ASSUMPTION study decisions rather than final product specifications'
+    - 'Independent post-apply and post-reopen queries proved 78/78 walls with 46 external and 32 internal material assignments and zero failures; whole model after reopen returned 4142 elements, 52 rooms, 87 openings, 78 walls, 238 furniture, 78 GenericModels and 95 Materials with coverage_complete and 0 unreadable'
+    - 'Canonical save changed the hash from f4dd2d9cf72ccd7fa1703d543d11e6b657ae5893254a3f20e7fee34a7a8b0699 to ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29 at 4345856 bytes; exact close/reopen verified the canonical path and Revit 2027 version'
+    - 'Checkpoint R12-materials-20260922.rvt and manifest were created from the reopened canonical source and verify_checkpoint returned true; real 1400x855 STUDY preview hash 438e294422befd8ce9d6000cbab33518843c884ae2b4c0ce903cdaf0c4881d99 preserved'
+    - 'R12 is PASS_WITH_WARNINGS within running P08-T13. Materials are provisional study intents, not final specification; site blockers and AMANDA_REVIEW_PENDING remain; next substage is R13 documentation'
   P08-T14:
     id: P08-T14
     phase: PHASE_08
