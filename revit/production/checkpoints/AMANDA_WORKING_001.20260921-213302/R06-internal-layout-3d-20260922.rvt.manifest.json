@@ -1,0 +1,45 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    27866022695084088
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R06-internal-layout-3d-20260922.rvt",
+  "created_utc": "2026-09-22T11:19:43.710000Z",
+  "document_id": "AMANDA_WORKING_001.20260921-213302",
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R06-internal-layout-3d-20260922.rvt.manifest.json",
+  "provenance": {
+    "provider": "Horizun",
+    "provider_version": "1.3.3",
+    "revit_build": "27.2.0.39",
+    "revit_version": "2027",
+    "save_sha256": "ebf18f98a8ac5548e65b677684a1ef467732f2055113bb0c24829db71c0a0d0a",
+    "source": "live_revit_save_close_reopen",
+    "stage": "R06_INTERNAL_LAYOUT",
+    "view": {
+      "calibrated": false,
+      "capture_sha256": "85eef1e6086105f28c37cf7fe189930cf80ca0be256df46c0a9f9a338cc38af8",
+      "name": "AMANDA R06 3D STUDY",
+      "view_id": 221538
+    },
+    "write_read_verify": {
+      "committed": 30,
+      "level": "LEVEL-01",
+      "readback": 30,
+      "requested": 30,
+      "type_id": 220
+    }
+  },
+  "schema_version": 1,
+  "sha256": "ebf18f98a8ac5548e65b677684a1ef467732f2055113bb0c24829db71c0a0d0a",
+  "size_bytes": 4124672,
+  "source_document_id": "AMANDA_WORKING_001.20260921-213302",
+  "source_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.20260921-213302.rvt",
+  "source_file_id": [
+    9107472496377837229,
+    22236523161371296
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.20260921-213302.rvt",
+  "source_sha256": "ebf18f98a8ac5548e65b677684a1ef467732f2055113bb0c24829db71c0a0d0a",
+  "stage": "R06_INTERNAL_LAYOUT",
+  "version": 1
+}

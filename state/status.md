@@ -6,9 +6,9 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `PHASE_08` — amanda-production-run
 - Phase status: `PENDING`
-- Next task: `P08-T08`
-- Last PASS task: `P06-T14`
-- Tasks: 159 total; READY: P08-T08
+- Next task: `P08-T10`
+- Last PASS task: `P08-T09`
+- Tasks: 159 total; READY: P08-T10
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -18,7 +18,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `PHASE_06`: 15/15 PASS
 - `PHASE_07A`: 11/11 PASS
 - `PHASE_07B`: 6/8 PASS
-- `PHASE_08`: 7/19 PASS
+- `PHASE_08`: 9/19 PASS
 - `PHASE_09`: 4/10 PASS
 
 ## Environment
@@ -50,8 +50,8 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 ## Design and Revit recovery
 
 - Selected design: `AMANDA-RUN-001-S01`
-- Revit stage: `NOT_RECORDED`
-- Current checkpoint: `NOT_RECORDED`
+- Revit stage: `R06`
+- Current checkpoint: `revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R06-internal-layout-3d-20260922.rvt`
 
 ## Writer lease
 
@@ -62,4 +62,4 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 ## Git verification
 
 - Last verified commit: `NOT_RECORDED`
-- Observed HEAD: `f0de3b005dc25a473b3bd1ede486012cad0c6a07`
+- Observed HEAD: `e6f0e4e5637073a04df7975d785e1fc4ec401de0`

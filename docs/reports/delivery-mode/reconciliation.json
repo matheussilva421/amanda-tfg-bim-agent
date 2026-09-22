@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-09-22T10:45:00Z",
+  "mode": "DELIVERY",
+  "evidence_priority": "live_over_snapshot",
+  "git": {
+    "head": "e6f0e4e",
+    "branch": "main",
+    "upstream": "origin/main",
+    "worktree_has_preexisting_changes": true,
+    "preexisting_acl_visible_deletions_preserved": true
+  },
+  "state_before_reconciliation": {
+    "state_revision": 161,
+    "phase": "PHASE_08",
+    "phase_status": "PENDING",
+    "next_task": "P08-T08",
+    "revit_stage": null,
+    "current_checkpoint": null,
+    "selected_design": "AMANDA-RUN-001-S01",
+    "selection_authority": "AGENT_DELEGATED",
+    "selection_review": "AMANDA_REVIEW_PENDING"
+  },
+  "revit_inventory": {
+    "rvt_count_at_scan": 89,
+    "canonical_candidate": {
+      "path": "revit/production/working/AMANDA_WORKING_001.rvt",
+      "bytes": 3784704,
+      "sha256": "4753f638f2b536b6cf0f3b1a5fb30f4b997601ae463a7e826111ca02cd57bf83",
+      "selection": "not selected: no live R05 evidence bound to this file"
+    },
+    "selected_live_target": {
+      "path": "revit/production/working/AMANDA_WORKING_001.20260921-213302.rvt",
+      "bytes": 4112384,
+      "sha256_after_live_save": "10df1cb1be4a147218a822330a9efac5e540513fdee3d95d1173bbab7447228f",
+      "selection": "last known R05 source; reopened and read back live"
+    },
+    "prior_checkpoint": {
+      "path": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R05-pre-save.rvt",
+      "bytes": 4022272,
+      "sha256": "f83d74d0548048eda70fc8bf61e20d8155eeb15eba6048c7c7a052353c9936ca"
+    },
+    "current_checkpoint": {
+      "path": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R05-live-persisted-20260922.rvt",
+      "bytes": 4112384,
+      "sha256": "10df1cb1be4a147218a822330a9efac5e540513fdee3d95d1173bbab7447228f",
+      "manifest": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R05-live-persisted-20260922.rvt.manifest.json"
+    }
+  },
+  "live_provider": {
+    "provider": "horizun",
+    "status": "healthy",
+    "revit_version": "2027",
+    "revit_build": "27.2.0.39",
+    "revit_pid": 25996,
+    "contract_hash": "8b9600f5274d7dffb6e5bd5f",
+    "source_commit": "cc4ea04e9ecfe547ad349f22e0864019ce1ead1f",
+    "user_profile": "C:/Users/slvma/.horizun",
+    "active_document": "revit/production/working/AMANDA_WORKING_001.20260921-213302.rvt",
+    "other_clients": 0,
+    "writer_lease": "FREE before R06 checkpoint; no competing provider client observed"
+  },
+  "selection": {
+    "solution_id": "AMANDA-RUN-001-S01",
+    "decision_id": "DEC-P08-T09-SELECTION-001",
+    "approval_hash": "bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef",
+    "layout_hash": "9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d",
+    "authority": "AGENT_DELEGATED",
+    "review": "AMANDA_REVIEW_PENDING",
+    "status": "APPROVED_FOR_BIM",
+    "official_program": {
+      "people_capacity": 20,
+      "net_internal_m2": 626.0,
+      "external_m2": 260.0,
+      "enclosed_estimate_m2": [783.0, 814.0],
+      "covered_estimate_m2": [850.0, 950.0]
+    }
+  },
+  "blockers_preserved": [
+    "SITE_TOPOGRAPHY",
+    "SITE_BOUNDARY",
+    "SITE_OCCUPANCY",
+    "SITE_FRONTAGE_COUNT",
+    "SITE_TRUE_NORTH"
+  ],
+  "decision": "Use the live-reopened timestamped R05 RVT as the single R06 target; do not overwrite canonical, source, checkpoint, or GOLDEN artifacts."
+}

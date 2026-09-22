@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "stage": "R05",
+  "status": "PASS_LIVE_VERIFIED",
+  "verification_scope": "R05 shell persistence and visual study preview; not final site or normative approval",
+  "provider": {
+    "name": "horizun",
+    "status": "healthy",
+    "revit_pid": 25996,
+    "revit_build": "27.2.0.39",
+    "contract_hash": "8b9600f5274d7dffb6e5bd5f",
+    "other_clients": 0
+  },
+  "target": "revit/production/working/AMANDA_WORKING_001.20260921-213302.rvt",
+  "open": {
+    "expected_version": "2027",
+    "confirmed_active_path": "revit/production/working/AMANDA_WORKING_001.20260921-213302.rvt",
+    "upgrade": false,
+    "workshared": false
+  },
+  "save_close_reopen": {
+    "save_outcome": "saved_verified",
+    "save_bytes_changed": true,
+    "sha256_before_save": "634e8d2c4c40c958f0011db809289b897dcf7dd3677991281a1ebca2e3e9171c",
+    "sha256_after_save": "10df1cb1be4a147218a822330a9efac5e540513fdee3d95d1173bbab7447228f",
+    "close_outcome": "closed_verified",
+    "close_note": "Active document was first moved to the bridge anchor; no unsaved changes were discarded.",
+    "reopen_outcome": "opened_verified",
+    "reopen_readback": "same active path, title, Revit build, element count and category counts"
+  },
+  "model_readback": {
+    "element_count": 3674,
+    "coverage_complete": true,
+    "unreadable": 0,
+    "categories": {
+      "walls": 104,
+      "floors": 3,
+      "roof": 1,
+      "mass": 1,
+      "levels": 3,
+      "grids": 2,
+      "views": 23
+    },
+    "shared_coordinates": {
+      "location": "Terreno padrão",
+      "true_north_degrees": 0.0,
+      "interpretation": "model placeholder; not verified site north"
+    }
+  },
+  "preview": {
+    "path": "revit/production/previews/R05-live-Nivel-1-20260922.png",
+    "view": "Nível 1",
+    "kind": "STUDY",
+    "pixel_size": [1800, 234],
+    "sha256": "bb2d9b7b738c1874baf26ca2809f48d7f29ce98efb8924339decd1bde484ab72",
+    "calibrated": false,
+    "visual_finding": "real Revit floor plan shows the long linear shell and room/gallery rhythm"
+  },
+  "checkpoint": {
+    "path": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R05-live-persisted-20260922.rvt",
+    "manifest": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R05-live-persisted-20260922.rvt.manifest.json",
+    "sha256": "10df1cb1be4a147218a822330a9efac5e540513fdee3d95d1173bbab7447228f",
+    "reopen_verified": true
+  },
+  "limitations": [
+    "The source file remained locked by the active Revit document during a later filesystem hash attempt; the checkpoint manager independently verified identical source/checkpoint bytes after the live save.",
+    "The captured view is uncalibrated and is visual evidence only.",
+    "Site boundary, topography, occupancy, frontage count and true north remain unresolved blockers."
+  ],
+  "next_action": "Run fresh R06 internal-layout plan against this active target after the checkpoint; stop on any non-verified operation."
+}

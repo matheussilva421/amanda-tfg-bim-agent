@@ -1,0 +1,307 @@
+{
+  "stage": "R06",
+  "status": "VERIFIED",
+  "target": "revit/production/working/AMANDA_WORKING_001.20260921-213302.rvt",
+  "records": [
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-7b1814b1a55d",
+      "status": "VERIFIED",
+      "element_id": 221506,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036142",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-bd7e007ebad7",
+      "status": "VERIFIED",
+      "element_id": 221507,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036143",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-298d82f3fe2a",
+      "status": "VERIFIED",
+      "element_id": 221508,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036144",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-34a4cfc4d91f",
+      "status": "VERIFIED",
+      "element_id": 221509,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036145",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-371cfd21f67e",
+      "status": "VERIFIED",
+      "element_id": 221510,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036146",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-d929777c0495",
+      "status": "VERIFIED",
+      "element_id": 221511,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036147",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-cd8581db7b72",
+      "status": "VERIFIED",
+      "element_id": 221512,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036148",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-0a66ab0e5239",
+      "status": "VERIFIED",
+      "element_id": 221513,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036149",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-568cf11a35b8",
+      "status": "VERIFIED",
+      "element_id": 221514,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-0003614a",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-05647dc072c8",
+      "status": "VERIFIED",
+      "element_id": 221515,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-0003614b",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-6289803f203f",
+      "status": "VERIFIED",
+      "element_id": 221516,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-0003614c",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-8123a59ff559",
+      "status": "VERIFIED",
+      "element_id": 221517,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-0003614d",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-ba8402fd4f94",
+      "status": "VERIFIED",
+      "element_id": 221518,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-0003614e",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-c4a66d7adf8d",
+      "status": "VERIFIED",
+      "element_id": 221519,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-0003614f",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-0703b3e963a4",
+      "status": "VERIFIED",
+      "element_id": 221520,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036150",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-1ac1bc3bce1b",
+      "status": "VERIFIED",
+      "element_id": 221521,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036151",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-d674d9d6f1a7",
+      "status": "VERIFIED",
+      "element_id": 221522,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036152",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-aabe67f9dbeb",
+      "status": "VERIFIED",
+      "element_id": 221523,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036153",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-c2902408f46e",
+      "status": "VERIFIED",
+      "element_id": 221524,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036154",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-141277f4e573",
+      "status": "VERIFIED",
+      "element_id": 221525,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036155",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-6a0ae6668368",
+      "status": "VERIFIED",
+      "element_id": 221526,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036156",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-79bd995fbe73",
+      "status": "VERIFIED",
+      "element_id": 221527,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036157",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-118ae4f1efeb",
+      "status": "VERIFIED",
+      "element_id": 221528,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036158",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-b794070e5f57",
+      "status": "VERIFIED",
+      "element_id": 221529,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-00036159",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-6f042d506476",
+      "status": "VERIFIED",
+      "element_id": 221530,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-0003615a",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-60a321511612",
+      "status": "VERIFIED",
+      "element_id": 221531,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-0003615b",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-9e8254bc4ab8",
+      "status": "VERIFIED",
+      "element_id": 221532,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-0003615c",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-cc43ca8df6e3",
+      "status": "VERIFIED",
+      "element_id": 221533,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-0003615d",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-50e894ef1aed",
+      "status": "VERIFIED",
+      "element_id": 221534,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-0003615e",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    },
+    {
+      "capability": "revit.create_internal_wall",
+      "error": null,
+      "logical_id": "LAYOUT-WALL-d30c7ebe5687",
+      "status": "VERIFIED",
+      "element_id": 221535,
+      "unique_id": "81fea52e-d0ff-4ae8-a21b-4a1dae762aa8-0003615f",
+      "type_id": 220,
+      "level": "LEVEL-01"
+    }
+  ]
+}

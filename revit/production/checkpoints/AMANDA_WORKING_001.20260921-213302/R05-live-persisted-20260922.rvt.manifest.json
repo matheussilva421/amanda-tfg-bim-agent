@@ -1,0 +1,29 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    64176294690544886
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R05-live-persisted-20260922.rvt",
+  "created_utc": "2026-09-22T10:41:19.468600Z",
+  "document_id": "AMANDA_WORKING_001.20260921-213302",
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R05-live-persisted-20260922.rvt.manifest.json",
+  "provenance": {
+    "provider": "Horizun",
+    "purpose": "stable pre-R06 checkpoint after live save-close-reopen",
+    "reopen_verified": true,
+    "revit_build": "27.2.0.39"
+  },
+  "schema_version": 1,
+  "sha256": "10df1cb1be4a147218a822330a9efac5e540513fdee3d95d1173bbab7447228f",
+  "size_bytes": 4112384,
+  "source_document_id": "AMANDA_WORKING_001.20260921-213302",
+  "source_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.20260921-213302.rvt",
+  "source_file_id": [
+    9107472496377837229,
+    18577348464112891
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.20260921-213302.rvt",
+  "source_sha256": "10df1cb1be4a147218a822330a9efac5e540513fdee3d95d1173bbab7447228f",
+  "stage": "R05_ARCHITECTURAL_SHELL",
+  "version": 1
+}

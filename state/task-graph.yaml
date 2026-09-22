@@ -2421,11 +2421,15 @@ tasks:
     id: P08-T08
     phase: PHASE_08
     plan_path: docs/superpowers/plans/08-amanda-production-run.md
-    title: Create conceptual Revit massing for top 3
+    title: Create conceptual Revit massing for finalist set
     depends_on:
     - P08-T07
-    status: PENDING
-    evidence: []
+    status: PASS_WITH_WARNINGS
+    evidence:
+    - 'docs/reports/delivery-mode/R05-live-persistence-2026-09-22.json and R06-live-evidence-2026-09-22.json: live Revit 2027/Horizun target AMANDA_WORKING_001.20260921-213302.rvt; R05 shell and R06 internal layout were written through typed commands, independently read back, saved, closed, reopened and re-queried.'
+    - 'R06 WRITE->READ->VERIFY: 30 requested, 30 dry-run valid, 30 committed, 30 matched on LEVEL-01/type 220; stale 26 layout walls and 32 shared shell walls were reconciled before the write with no unknown rows.'
+    - 'Real Revit previews are retained as STUDY only: R06-live-Nivel-1-20260922.png and R06-live-3D-20260922.png; 3D view AMANDA R06 3D STUDY is persisted and view-restored after capture.'
+    - 'Warning boundary: site topology/boundary/occupancy/frontage/true-north remain unresolved, and the captures are uncalibrated; no FINAL or GOLDEN claim is made.'
   P08-T09:
     id: P08-T09
     phase: PHASE_08
@@ -2433,8 +2437,11 @@ tasks:
     title: Delegated architectural selection and later Amanda review
     depends_on:
     - P08-T08
-    status: PENDING
-    evidence: []
+    status: PASS_WITH_WARNINGS
+    evidence:
+    - 'docs/reports/delivery-mode/R05-design-comparison-2026-09-22.md: current compact bar is compared with a two-wing courtyard/pavilion alternative using the official 20-person/626 m2 internal/260 m2 external program; selected bar remains 784.881 m2 enclosed and 918.563 m2 covered, while the ~1050 m2 alternative is rejected for program overrun.'
+    - 'Live selection revalidation: solution AMANDA-RUN-001-S01, selection_authority AGENT_DELEGATED, approval_hash bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef, selection_review AMANDA_REVIEW_PENDING.'
+    - 'Warning boundary: AMANDA_REVIEW_PENDING is nonblocking for delegated development; no site fact was invented and unresolved site blockers remain explicit.'
   P08-T10:
     id: P08-T10
     phase: PHASE_08

@@ -1,0 +1,30 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    7881299349208036
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R06-internal-layout-20260922.rvt",
+  "created_utc": "2026-09-22T11:06:01.266324Z",
+  "document_id": "AMANDA_WORKING_001.20260921-213302",
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R06-internal-layout-20260922.rvt.manifest.json",
+  "provenance": {
+    "provider": "Horizun",
+    "purpose": "post-R06 live verified internal layout checkpoint",
+    "revit_build": "27.2.0.39",
+    "save_sha256": "e10bbae9ba31680a848bbad9f63fa11ca25582a18e17d83fbeae5f9c879712d3",
+    "write_read_verify": "30/30"
+  },
+  "schema_version": 1,
+  "sha256": "e10bbae9ba31680a848bbad9f63fa11ca25582a18e17d83fbeae5f9c879712d3",
+  "size_bytes": 4120576,
+  "source_document_id": "AMANDA_WORKING_001.20260921-213302",
+  "source_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.20260921-213302.rvt",
+  "source_file_id": [
+    9107472496377837229,
+    3659174697885125
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.20260921-213302.rvt",
+  "source_sha256": "e10bbae9ba31680a848bbad9f63fa11ca25582a18e17d83fbeae5f9c879712d3",
+  "stage": "R06_INTERNAL_LAYOUT",
+  "version": 1
+}
