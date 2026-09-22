@@ -42,6 +42,18 @@ A instalação local foi confirmada, sem reinstalação:
 - Preservados RVTs, checkpoints, journals, fontes, artefatos STUDY, GOLDEN e
   temporários históricos de diagnóstico.
 
+O driver de produção foi executado em dry-run até R13:
+
+```text
+planned stages: R01 ... R13
+layout hash: 9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d
+template: C:\\ProgramData\\Autodesk\\RVT 2027\\Templates\\Default_M_PTB.rte
+dry run: nothing written
+```
+
+Esse resultado valida o planejamento local e o template selecionado; não é
+prova de execução no Revit.
+
 ## Retomada exata
 
 1. Uma pessoa deve tornar uma única sessão Revit 2027 visível e operável,
@@ -62,4 +74,3 @@ A instalação local foi confirmada, sem reinstalação:
 - O working tree ainda contém alterações/artefatos anteriores fora deste bloco,
   incluindo exclusões ACL-visíveis em `revit/lab/exports/p06t14/GOLDEN/RC01`,
   resultados Topologic e a árvore `revit/production`.
-
