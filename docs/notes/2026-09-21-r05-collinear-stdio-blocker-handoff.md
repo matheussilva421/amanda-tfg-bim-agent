@@ -342,3 +342,16 @@ Resume condition: dismiss the Revit reminder without using Save As or changing
 the saved target, then rerun the post-close `horizun_open_document` and critical
 R05 reads for `AMANDA_WORKING_001.20260921-213302.rvt`. Only after that fresh
 reopen evidence may R06-R13 begin.
+
+The full production driver was also checked in dry-run mode after this
+revalidation:
+
+```text
+.\.venv\Scripts\python.exe scripts/run_amanda_production.py --rvt revit\production\working\AMANDA_WORKING_001.rvt --max-stage R13
+planned stages: R01 R02 R03 R04 R05 R06 R07 R08 R09 R10 R11 R12 R13
+dry run: nothing written
+```
+
+The layout and approval hashes remained unchanged, and the installed template
+was still `Default_M_PTB.rte` on Revit 2027. No live stage was advanced by this
+dry run.
