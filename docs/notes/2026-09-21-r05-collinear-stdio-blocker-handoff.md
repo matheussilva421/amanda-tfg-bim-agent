@@ -414,7 +414,7 @@ This session performed the repository session-start protocol only; no production
 
 ### Tests and GitHub
 
-No tests were executed in this session because no code or behavior was changed. The status command regenerated `state/status.md` as a side effect; that derived change was reverted because the command is documented as read-only and no state transition was intended. The latest recorded handoff evidence remains the prior non-Revit gate and live-attempt records; it was not reclassified as fresh evidence here. No new commit or push was created by this session-start revalidation.
+No tests were executed in this session because no code or behavior was changed. The status command regenerated `state/status.md` as a side effect; that derived change was reverted because the command is documented as read-only and no state transition was intended. The latest recorded handoff evidence remains the prior non-Revit gate and live-attempt records; it was not reclassified as fresh evidence here. The final publication result for this revalidation is recorded below.
 
 ### Exact resume instructions
 
@@ -422,3 +422,6 @@ No tests were executed in this session because no code or behavior was changed. 
 2. If resuming P08-T08, reconcile the blocker projection first and preserve revision `159` until the evidence supports an explicit state transition.
 3. Before any BIM write, re-query the live Revit build, provider health, active document identity, and writer lease; select one verified Revit target and keep the duplicate processes out of the write path.
 4. For the R05 continuation, use the normal-user bridge route and require fresh R01-R05 journals, independent reads, and save/close/reopen evidence. A healthy process list or prior journal is insufficient.
+## Publication after revalidation
+
+The corrected handoff was committed as `0d5754f` (`docs: record session-start revalidation`) and `git push` returned success for `main -> origin/main` (`6f49873..0d5754f`). A later `git ls-remote` refresh was unavailable because GitHub HTTPS could not connect; no claim beyond the successful push command output is made here.
