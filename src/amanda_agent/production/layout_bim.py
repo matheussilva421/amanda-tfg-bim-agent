@@ -691,12 +691,20 @@ def _plan_r05(request, layout):
             "build 27.2.0.39: element 250 is 'Generico - 250 mm', element 220 is "
             "'Interior - 138 mm Divisoria (1-hr)'"
         ),
+        # R06 owns shared room boundaries.  Keeping them out of R05 prevents
+        # Revit from receiving the same internal wall twice in one production
+        # chain, which otherwise produces overlap warnings and a failed R06.
+        include_shared_walls=False,
     )
 
 
 def _plan_r06(request, layout):
+    exterior, partitions = build_walls(layout)
     return layout_stage.plan_layout_stage(
-        request, layout.rooms, wall_thickness_m=PARTITION_M
+        request,
+        layout.rooms,
+        wall_thickness_m=PARTITION_M,
+        shell_walls=[*exterior, *partitions],
     )
 
 

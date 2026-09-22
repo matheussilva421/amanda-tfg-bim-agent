@@ -317,6 +317,7 @@ def plan_shell_stage(
     wall_type_source: str | None = None,
     wall_thicknesses_m: Mapping[str, float] | None = None,
     wall_materials: Mapping[str, str] | None = None,
+    include_shared_walls: bool = True,
     design_option: str | None = None,
     external_elements: Sequence[DesiredElement | Mapping[str, Any]] = (),
     external_planner: Callable[[], Sequence[DesiredElement | Mapping[str, Any]]]
@@ -330,7 +331,8 @@ def plan_shell_stage(
 
     Every room boundary is collected before elements are created.  Identical
     reversed segments therefore become one managed wall with both room IDs in
-    ``host_dependencies``.
+    ``host_dependencies``.  Production callers may set ``include_shared_walls``
+    to false when R06 owns shared room boundaries.
     """
 
     include_link = (
@@ -417,6 +419,8 @@ def plan_shell_stage(
     )
     for key in sorted(merged_edges):
         room_ids, first, second, is_shared = merged_edges[key]
+        if is_shared and not include_shared_walls:
+            continue
         kind = "internal" if is_shared else "external"
         logical_id = _edge_id(key)
         opening_ids: set[str] = set(opening_by_host.get(logical_id, []))

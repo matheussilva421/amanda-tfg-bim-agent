@@ -425,3 +425,46 @@ No tests were executed in this session because no code or behavior was changed. 
 ## Publication after revalidation
 
 The corrected handoff was committed as `0d5754f` (`docs: record session-start revalidation`) and `git push` returned success for `main -> origin/main` (`6f49873..0d5754f`). A later `git ls-remote` refresh was unavailable because GitHub HTTPS could not connect; no claim beyond the successful push command output is made here.
+
+## Addendum - local R05/R06 overlap repair (2026-09-21)
+
+The next local block addressed the historical R06 overlap failure without
+touching Revit or advancing durable production state. R05 can now omit shared
+room boundaries when R06 owns them, and R06 trims shared internal-wall
+centerlines at perpendicular R05 host walls by the combined half-thickness
+clearance. The existing producer namespaces remain unchanged: R05/R06 wall
+IDs continue to be the IDs consumed by R07 and R12.
+
+Changed files:
+
+- `src/amanda_agent/bim/stages/layout.py`
+- `src/amanda_agent/bim/stages/shell.py`
+- `src/amanda_agent/production/layout_bim.py`
+- `tests/unit/test_production_layout_bim.py`
+
+The new production regression checks that no R05 wall body overlaps an R06
+wall body. The focused stage/production gate was:
+
+```text
+.\.venv\Scripts\python.exe -m pytest tests/unit/test_stage_shell.py tests/unit/test_production_layout_bim.py tests/unit/test_stage_layout.py tests/unit/test_stage_openings.py tests/unit/test_run_amanda_production.py -q --basetemp .tmp-pytest-current-focused
+36 passed, 0 failed
+```
+
+The fresh non-Revit gate was:
+
+```text
+.\.venv\Scripts\python.exe -m pytest tests -m "not revit and not slow" -q --basetemp .tmp-pytest-current-full2
+873 passed, 0 failed
+```
+
+No live Revit write, save/close/reopen, state transition, or export promotion
+was performed. The persisted `R06.json` remains historical failed evidence and
+must be replaced by a fresh normal-user R01-R06 run after the Revit modal is
+dismissed. The current live boundary is still the human modal
+`Projeto não recentemente salvo`; do not run R07 or promote R06 until the
+fresh R05 persistence read and the new R06 journal both show 100% verified
+records.
+
+The patch is ready for a narrow commit after `git diff --check`; the protected
+`revit/lab/exports/p06t14/GOLDEN/RC01` paths, Topologic result churn, package
+copy, and production journals/RVTs remain outside this block.

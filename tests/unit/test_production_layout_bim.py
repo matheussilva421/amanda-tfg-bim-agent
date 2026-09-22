@@ -12,6 +12,7 @@ import json
 from pathlib import Path
 
 import pytest
+from shapely.geometry import LineString
 
 from amanda_agent.design.models import (
     DesignSolution,
@@ -290,6 +291,34 @@ def test_layout_stage_builds_internal_walls_for_every_partition(registry, progra
     assert len(stage.operations) == len(shared)
     for operation in stage.operations:
         assert operation.semantic_capability == "revit.create_internal_wall"
+
+
+def test_shell_does_not_duplicate_shared_boundaries_owned_by_r06(
+    registry, program, layout, tmp_path
+):
+    plans = _plans(registry, program, layout, tmp_path)
+    by_stage = {plan.stage: plan for plan in plans}
+
+    def body(operation):
+        coordinates = operation.payload["geometry"]["coordinates"]
+        thickness = float(operation.payload["properties"]["thickness_m"])
+        return LineString(coordinates).buffer(thickness / 2.0, cap_style=2)
+
+    r05_walls = [
+        operation
+        for operation in by_stage[BimStage.R05].operations
+        if operation.semantic_capability == "revit.create_wall"
+    ]
+    r06_walls = by_stage[BimStage.R06].operations
+
+    for shell_wall in r05_walls:
+        for layout_wall in r06_walls:
+            overlap_area = body(shell_wall).intersection(body(layout_wall)).area
+            assert overlap_area <= 1e-8, (
+                shell_wall.logical_id,
+                layout_wall.logical_id,
+                overlap_area,
+            )
 
 
 def test_openings_are_hosted_on_real_walls_with_diagonal_corners(registry, program, layout, tmp_path):

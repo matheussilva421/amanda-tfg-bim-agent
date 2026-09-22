@@ -7,6 +7,7 @@ import json
 from collections import defaultdict
 from collections.abc import Mapping, Sequence
 from itertools import pairwise
+from math import hypot
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -105,6 +106,86 @@ def _line_geometry(
     }
 
 
+def _wall_field(wall: Any, key: str, default: Any = None) -> Any:
+    if isinstance(wall, Mapping):
+        return wall.get(key, default)
+    return getattr(wall, key, default)
+
+
+def _point_to_segment_distance(
+    point: tuple[float, float],
+    first: tuple[float, float],
+    second: tuple[float, float],
+) -> tuple[float, float]:
+    """Return distance and projection for a point on a finite segment."""
+
+    vx = second[0] - first[0]
+    vy = second[1] - first[1]
+    length_squared = vx * vx + vy * vy
+    if length_squared <= 1e-12:
+        return hypot(point[0] - first[0], point[1] - first[1]), 0.0
+    projection = (
+        (point[0] - first[0]) * vx + (point[1] - first[1]) * vy
+    ) / length_squared
+    bounded = max(0.0, min(1.0, projection))
+    closest = (first[0] + bounded * vx, first[1] + bounded * vy)
+    return hypot(point[0] - closest[0], point[1] - closest[1]), bounded
+
+
+def _trim_at_shell_hosts(
+    first: tuple[float, float],
+    second: tuple[float, float],
+    shell_walls: Sequence[Any],
+    internal_thickness_m: float,
+) -> tuple[tuple[float, float], tuple[float, float]]:
+    """Recede an internal wall from R05 hosts at a perpendicular T-junction.
+
+    The logical ID remains based on the room boundary, while the emitted
+    centerline stops at the faces of the two wall bodies.  This avoids Revit's
+    overlap warning when R06 meets an R05 shell wall and leaves the room-boundary
+    provenance intact for later verification.
+    """
+
+    dx = second[0] - first[0]
+    dy = second[1] - first[1]
+    length = hypot(dx, dy)
+    if length <= 1e-9 or not shell_walls:
+        return first, second
+    ux, uy = dx / length, dy / length
+    trim_start = 0.0
+    trim_end = 0.0
+    tolerance = 1e-6
+    for wall in shell_walls:
+        host_start = _wall_field(wall, "start")
+        host_end = _wall_field(wall, "end")
+        host_thickness = _wall_field(wall, "thickness_m")
+        if host_start is None or host_end is None or host_thickness is None:
+            continue
+        hs = (float(host_start[0]), float(host_start[1]))
+        he = (float(host_end[0]), float(host_end[1]))
+        hdx, hdy = he[0] - hs[0], he[1] - hs[1]
+        host_length = hypot(hdx, hdy)
+        if host_length <= 1e-9:
+            continue
+        # Collinear ownership is a separate planning error; only trim the
+        # perpendicular T-junctions that create the observed overlap warning.
+        if abs(dx * hdy - dy * hdx) <= tolerance * length * host_length:
+            continue
+        clearance = float(host_thickness) / 2.0 + internal_thickness_m / 2.0
+        start_distance, _ = _point_to_segment_distance(first, hs, he)
+        end_distance, _ = _point_to_segment_distance(second, hs, he)
+        if start_distance <= tolerance:
+            trim_start = max(trim_start, clearance)
+        if end_distance <= tolerance:
+            trim_end = max(trim_end, clearance)
+    if trim_start + trim_end >= length - tolerance:
+        raise StageError("R06 shared boundary is too short for shell-host clearance")
+    return (
+        (first[0] + ux * trim_start, first[1] + uy * trim_start),
+        (second[0] - ux * trim_end, second[1] - uy * trim_end),
+    )
+
+
 def _operation(element: DesiredElement, request: PreflightRequest) -> StageOperation:
     preferred, fallbacks = provider_chain(
         request.registry,
@@ -169,6 +250,7 @@ def plan_layout_stage(
     | None = None,
     area_ranges: Mapping[str, Any] | None = None,
     wall_thickness_m: float = 0.12,
+    shell_walls: Sequence[Any] = (),
     design_option: str | None = None,
 ) -> LayoutStagePlan:
     """Convert the shared boundaries of room polygons into internal walls.
@@ -236,6 +318,9 @@ def plan_layout_stage(
         if len(host_rooms) < 2:
             continue
         first, second = edge_points[key]
+        first, second = _trim_at_shell_hosts(
+            first, second, shell_walls, float(wall_thickness_m)
+        )
         element = DesiredElement(
             logical_id=_edge_id(key),
             category="INTERNAL_WALL",
