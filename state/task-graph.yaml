@@ -2477,8 +2477,15 @@ tasks:
     title: Compile R05–R08
     depends_on:
     - P08-T11
-    status: PENDING
-    evidence: []
+    status: PASS_WITH_WARNINGS
+    evidence:
+    - 'R08 compiler produced 52 room operations with independent geometry area 625.9999999999999 m2 against the official 626.0 m2 target, delta -1.1368683772161603e-13; external programmed area is 260.0 m2 and capacity is 20/20; historical 42-person hypothesis was not used'
+    - 'The first two dry-runs were rejected before transaction start: room logical_id was not applicable and string level LEVEL-01 was invalid; no mutation occurred. Final dry-run used live level ElementId 221018 and returned valid 52, invalid 0, rollback validation and plan fingerprint 933f5d8a59bd5711d4494b87a68935feffb0a0b53821f74ee53b0d712a1ad948'
+    - 'Typed Horizun apply committed 52/52 rooms with verified_applied state, failed 0 and unresolved 0; selection AMANDA-RUN-001-S01 is AGENT_DELEGATED with approval_hash bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef'
+    - 'Independent live readback before save and after reopen returned 52 Ambientes rooms, 87 openings, 78 walls and 3824 elements with coverage_complete and 0 unreadable'
+    - 'Canonical save was verified at sha256 f2a224de1f47dd67844d3a8ad1532934e5d3ba9e906b0ac1a5755ef21812c44c and 4214784 bytes; close with activate_other and reopen preserved the same bytes and active canonical target'
+    - 'Checkpoint R08-rooms-20260922.rvt and manifest were created from the stable canonical source and verify_checkpoint returned true; real 1400x865 STUDY preview was captured and hash 10683b4c4947982086c7cfd4c5b7544c5731ab02959e82df4c3c4a160ac69166'
+    - 'Warnings retained: site boundary, topography, occupancy, frontage count and true north remain unresolved; no FINAL or GOLDEN claim; R09 accessibility is next'
   P08-T13:
     id: P08-T13
     phase: PHASE_08

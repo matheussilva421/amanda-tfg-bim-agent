@@ -1,0 +1,36 @@
+{
+  "journal_type": "bim_production_stage",
+  "stage": "R08_ROOMS",
+  "task_id": "P08-T12",
+  "date": "2026-09-22",
+  "target": "revit/production/working/AMANDA_WORKING_001.rvt",
+  "provider": "horizun",
+  "revit": {
+    "version": "2027",
+    "build": "27.2.0.39",
+    "pid": 25996,
+    "health": "HEALTHY"
+  },
+  "intent": "Create the 52 independent program rooms required by the 626 m2 internal layout while preserving the official 20-person capacity and unresolved site blockers.",
+  "selection": {
+    "design_id": "AMANDA-RUN-001-S01",
+    "authority": "AGENT_DELEGATED",
+    "approval_hash": "bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef"
+  },
+  "write_read_verify": {
+    "write": "52/52 typed room creates committed and verified",
+    "read": "Independent live query returned 52 rooms, 87 openings, 78 walls and 3824 elements",
+    "verify": "Post-save close/reopen requery matched the same counts, canonical path, hash and checkpoint manifest"
+  },
+  "persisted_hash": "f2a224de1f47dd67844d3a8ad1532934e5d3ba9e906b0ac1a5755ef21812c44c",
+  "checkpoint": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R08-rooms-20260922.rvt",
+  "preview": "revit/production/previews/R08-rooms-3D-20260922.png",
+  "status": "PASS_WITH_WARNINGS",
+  "warnings": [
+    "Site boundary, topography and occupancy are blocking.",
+    "Frontage count and true north are degrading.",
+    "Preview remains STUDY and uncalibrated.",
+    "No FINAL or GOLDEN claim."
+  ],
+  "next": "P08-T13 / R09 accessibility"
+}

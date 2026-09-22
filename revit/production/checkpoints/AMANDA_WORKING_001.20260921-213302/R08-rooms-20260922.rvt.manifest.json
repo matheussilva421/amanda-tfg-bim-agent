@@ -1,0 +1,39 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    29554872555928547
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R08-rooms-20260922.rvt",
+  "created_utc": "2026-09-22T12:35:50.961701Z",
+  "document_id": "AMANDA_WORKING_001",
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R08-rooms-20260922.rvt.manifest.json",
+  "provenance": {
+    "coverage_complete": true,
+    "element_count": 3824,
+    "openings": 87,
+    "operation": "post_save_close_reopen_r08_rooms",
+    "program_capacity": 20,
+    "program_external_m2": 260.0,
+    "program_internal_m2": 626.0,
+    "provider": "Horizun",
+    "provider_version": "1.3.3",
+    "revit_build": "27.2.0.39",
+    "revit_version": "2027",
+    "rooms": 52,
+    "unreadable": 0,
+    "walls": 78
+  },
+  "schema_version": 1,
+  "sha256": "f2a224de1f47dd67844d3a8ad1532934e5d3ba9e906b0ac1a5755ef21812c44c",
+  "size_bytes": 4214784,
+  "source_document_id": "AMANDA_WORKING_001",
+  "source_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_file_id": [
+    9107472496377837229,
+    22799473114080638
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_sha256": "f2a224de1f47dd67844d3a8ad1532934e5d3ba9e906b0ac1a5755ef21812c44c",
+  "stage": "R08_ROOMS",
+  "version": 1
+}
