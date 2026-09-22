@@ -99,7 +99,7 @@ def test_shell_derives_one_shared_wall_and_reconciles_net_area(tmp_path: Path):
     walls = [
         element for element in plan.desired_state.elements if element.category == "WALL"
     ]
-    assert len(walls) == 7
+    assert len(walls) == 5
     assert len({element.logical_id for element in walls}) == len(walls)
     assert sum(element.properties["is_shared"] for element in walls) == 1
     assert all(
@@ -116,27 +116,34 @@ def test_shell_derives_one_shared_wall_and_reconciles_net_area(tmp_path: Path):
     }
 
 
-def test_shell_merges_only_overlapping_collinear_runs_and_preserves_diagonals():
+def test_shell_merges_overlapping_and_touching_collinear_runs():
     api = _api()
     first = ((0.0, 0.0), (5.0, 0.0))
     second = ((4.0, 0.0), (8.0, 0.0))
+    touching = ((8.0, 0.0), (10.0, 0.0))
     separated = ((20.0, 0.0), (22.0, 0.0))
     diagonal = ((0.0, 4.0), (2.0, 6.0))
     occurrences = {
         first: ["room-a"],
         second: ["room-b"],
-        separated: ["room-c"],
+        touching: ["room-c"],
+        separated: ["room-d"],
         diagonal: ["room-a"],
     }
 
     merged = api._merge_collinear_edges(occurrences, {key: key for key in occurrences})
 
-    assert ((0.0, 0.0), (8.0, 0.0)) in merged
+    assert ((0.0, 0.0), (10.0, 0.0)) in merged
     assert first not in merged
     assert second not in merged
+    assert touching not in merged
     assert separated in merged
     assert diagonal in merged
-    assert merged[((0.0, 0.0), (8.0, 0.0))][0] == ("room-a", "room-b")
+    assert merged[((0.0, 0.0), (10.0, 0.0))][0] == (
+        "room-a",
+        "room-b",
+        "room-c",
+    )
 
 
 def test_shell_rejects_an_uncontrolled_wall_type(tmp_path: Path):

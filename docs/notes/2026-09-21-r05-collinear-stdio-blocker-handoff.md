@@ -173,3 +173,57 @@ open. The next live gate is a fresh R01-R05 run from a normal-user PowerShell
 with PID 15608 (or a freshly verified published PID), stopping on any failed
 record. Do not advance `PROJECT_STATE.yaml` or claim production completion
 until the independent save/close/reopen evidence exists.
+
+## Addendum - shell semantic classification and live retry (2026-09-21 21:10)
+
+The local patch now treats touching collinear shell runs as one geometric wall
+while preserving the semantic distinction between a genuinely shared room
+boundary and two adjacent external room edges. The merge buckets carry the
+shared-boundary flag, and R05 uses that flag for `wall_kind` and `is_shared`;
+this prevents the top and bottom edges of adjacent rooms from being mislabeled
+as internal walls. The production layout driver continues to resolve openings
+against the actual wall span after gallery/exterior wall merging, and the
+crosswalk helper continues to use absolute paths and fresh idempotency keys.
+
+Validation after this correction:
+
+```text
+Focused: .\.venv\Scripts\python.exe -m pytest tests/unit/test_stage_shell.py tests/unit/test_production_layout_bim.py tests/unit/test_stage_openings.py tests/unit/test_stage_layout.py tests/unit/test_run_amanda_production.py -q --basetemp .tmp-pytest-continuation-green3
+34 passed, 0 failed
+
+Full non-Revit: .\.venv\Scripts\python.exe -m pytest tests -m "not revit and not slow" -q --basetemp .tmp-pytest-continuation-full
+871 passed, 0 failed
+
+Targeted lint: .\.venv\Scripts\python.exe -m ruff check --select B023 src/amanda_agent/bim/stages/shell.py
+All checks passed
+
+Syntax: .\.venv\Scripts\python.exe -m py_compile scripts/prove_crosswalk_grid_roof.py src/amanda_agent/bim/stages/shell.py src/amanda_agent/production/layout_bim.py
+Passed
+```
+
+The global Ruff invocation still reports pre-existing style findings in the
+dirty files (unused imports/noqa, SIM102 and test formatting); it is not a
+clean repository-wide lint gate and was not broadened into this repair.
+
+A live retry was attempted with Revit 2027 PID `15608`, which was visible to
+the controller and had a current discovery file under
+`C:\Users\slvma\.horizun\discovery`. The command was:
+
+```text
+.\.venv\Scripts\python.exe scripts/run_amanda_production.py --rvt revit\production\working\AMANDA_WORKING_001.rvt --max-stage R05 --revit-pid 15608 --execute
+```
+
+It stopped before R01 because the child `horizun-mcp.exe` resolved its own
+profile as `C:\Users\CodexSandboxOffline`; raw calls returned `no Revit is
+reachable` and `No Revit with process id 15608 has published a bridge`. The
+lease was released. No new production RVT or stage journal was produced, and
+the existing R02-R05 journals remain the earlier evidence; no production
+stage may be marked PASS from this retry.
+
+The current durable state is still `PROJECT_STATE.yaml` revision 159,
+`PHASE_08`, `P08-T08`, `GO_WITH_LIMITATIONS`. The site blockers and
+`CROSSWALK_GRID_ROOF_GAP` remain open. The next live action requires a
+controller/stdio route that runs under the same Windows user context as Revit,
+or a manually controlled interactive Horizun route. Do not work around this
+by copying discovery files or by changing `PROJECT_STATE.yaml`; that would not
+prove the real bridge connection.

@@ -235,7 +235,11 @@ def _producer_wall_id(
     logical references by exact string equality.
     """
 
-    prefix = "LAYOUT-WALL" if not exterior and len(rooms) > 1 and not on_gallery else "WALL"
+    prefix = (
+        "LAYOUT-WALL"
+        if not exterior and len(rooms) > 1 and not on_gallery
+        else "WALL"
+    )
     return _wall_id(prefix, start, end)
 
 
@@ -248,6 +252,24 @@ def _edges(polygon: Polygon) -> list[tuple[tuple[float, float], tuple[float, flo
     ]
 
 
+def _wall_covers_edge(wall: _Wall, edge) -> bool:
+    wall_line = LineString([wall.start, wall.end])
+    edge_line = LineString([edge[0], edge[1]])
+    return (
+        wall_line.length + 1e-6 >= edge_line.length
+        and wall_line.distance(edge_line) <= 1e-6
+        and wall_line.covers(edge_line)
+    )
+
+
+def _find_host(room, walls, predicate):
+    for edge in _edges(room.polygon):
+        candidates = [wall for wall in walls if predicate(wall) and _wall_covers_edge(wall, edge)]
+        if candidates:
+            return min(candidates, key=lambda wall: (wall.length_m, wall.logical_id)), edge
+    return None
+
+
 def _on_boundary(edge, boundary) -> bool:
     """Whether an edge runs along a boundary rather than touching it at a point."""
 
@@ -256,7 +278,7 @@ def _on_boundary(edge, boundary) -> bool:
 
 
 def _merge_collinear(walls: list[_Wall]) -> list[_Wall]:
-    """Merge wall runs that lie on the same line and overlap.
+    """Merge wall runs that lie on the same line and form one run.
 
     Two rooms whose faces step by a few centimetres put two exterior walls on
     the same line, and Revit joins them into a T that it then warns about as an
@@ -345,7 +367,7 @@ def _runs_overlap(first: _Wall, second: _Wall) -> bool:
         axis = 0
     first_low, first_high = sorted((first.start[axis], first.end[axis]))
     second_low, second_high = sorted((second.start[axis], second.end[axis]))
-    return second_low < first_high - 1e-6 and first_low < second_high - 1e-6
+    return second_low <= first_high + 1e-6 and first_low <= second_high + 1e-6
 
 
 def build_walls(layout: CourtyardLayout) -> tuple[list[_Wall], list[_Wall]]:
@@ -678,7 +700,7 @@ def _plan_r06(request, layout):
     )
 
 
-def _diagonal_corners(wall, properties):
+def _diagonal_corners(wall, properties, *, span=None):
     """A diagonal corner pair for one opening, in metres.
 
     The bridge builds a rectangular opening from two corners that must differ in
@@ -689,40 +711,33 @@ def _diagonal_corners(wall, properties):
     width = float(properties["clear_width_m"])
     sill = float(properties["sill_m"])
     height = float(properties["height_m"])
-    length = wall.length_m
+    start, end = span or (wall.start, wall.end)
+    length = hypot(end[0] - start[0], end[1] - start[1])
     if length <= 0:
         raise ProductionBimError("wall %s has no length" % wall.logical_id)
-    ux = (wall.end[0] - wall.start[0]) / length
-    uy = (wall.end[1] - wall.start[1]) / length
+    ux = (end[0] - start[0]) / length
+    uy = (end[1] - start[1]) / length
     half = min(width, max(length - 1e-3, 1e-3)) / 2.0
     middle = length / 2.0
     near = [
-        wall.start[0] + ux * (middle - half),
-        wall.start[1] + uy * (middle - half),
+        start[0] + ux * (middle - half),
+        start[1] + uy * (middle - half),
         sill,
     ]
     far = [
-        wall.start[0] + ux * (middle + half),
-        wall.start[1] + uy * (middle + half),
+        start[0] + ux * (middle + half),
+        start[1] + uy * (middle + half),
         sill + height,
     ]
     return {"corner_1": near, "corner_2": far}
 
 
 def _gallery_host(room, by_id):
-    for edge in _edges(room.polygon):
-        candidate = by_id.get(_wall_id("WALL", edge[0], edge[1]))
-        if candidate is not None and candidate.on_gallery:
-            return candidate
-    return None
+    return _find_host(room, by_id.values(), lambda wall: wall.on_gallery)
 
 
 def _exterior_host(room, by_id):
-    for edge in _edges(room.polygon):
-        candidate = by_id.get(_wall_id("WALL", edge[0], edge[1]))
-        if candidate is not None and candidate.exterior:
-            return candidate
-    return None
+    return _find_host(room, by_id.values(), lambda wall: wall.exterior)
 
 
 def _host_records(walls):
@@ -760,15 +775,19 @@ def _host_records(walls):
 def _plan_r07(request, layout, walls):
     by_id = {wall.logical_id: wall for wall in walls}
     openings = []
+    opening_spans = {}
 
     for index, room in enumerate(layout.rooms, start=1):
-        host = _gallery_host(room, by_id)
-        if host is None:
+        host_match = _gallery_host(room, by_id)
+        if host_match is None:
             continue
-        midpoint = host.midpoint
+        host, span = host_match
+        midpoint = ((span[0][0] + span[1][0]) / 2, (span[0][1] + span[1][1]) / 2)
+        opening_id = "DOOR-ROOM-%03d" % index
+        opening_spans[opening_id] = span
         openings.append(
             {
-                "logical_id": "DOOR-ROOM-%03d" % index,
+                "logical_id": opening_id,
                 "kind": "DOOR",
                 "host_logical_id": host.logical_id,
                 "family_type": "DOOR-SINGLE-0.90",
@@ -783,13 +802,16 @@ def _plan_r07(request, layout, walls):
     for index, room in enumerate(layout.rooms, start=1):
         if room.net_area_m2 < WINDOW_MIN_ROOM_M2:
             continue
-        host = _exterior_host(room, by_id)
-        if host is None:
+        host_match = _exterior_host(room, by_id)
+        if host_match is None:
             continue
-        midpoint = host.midpoint
+        host, span = host_match
+        midpoint = ((span[0][0] + span[1][0]) / 2, (span[0][1] + span[1][1]) / 2)
+        opening_id = "WINDOW-%03d" % index
+        opening_spans[opening_id] = span
         openings.append(
             {
-                "logical_id": "WINDOW-%03d" % index,
+                "logical_id": opening_id,
                 "kind": "WINDOW",
                 "host_logical_id": host.logical_id,
                 "family_type": "WINDOW-FIXED-1.20x1.20",
@@ -836,7 +858,11 @@ def _plan_r07(request, layout, walls):
                 update={
                     "payload": {
                         **operation.payload,
-                        **_diagonal_corners(wall, properties),
+                **_diagonal_corners(
+                    wall,
+                    properties,
+                    span=opening_spans.get(operation.logical_id),
+                ),
                     }
                 }
             )

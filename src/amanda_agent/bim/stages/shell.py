@@ -125,9 +125,9 @@ def _merge_collinear_edges(
     ],
 ) -> dict[
     tuple[tuple[float, float], tuple[float, float]],
-    tuple[tuple[str, ...], tuple[float, float], tuple[float, float]],
+    tuple[tuple[str, ...], tuple[float, float], tuple[float, float], bool],
 ]:
-    """Merge room edges that lie on one line and overlap into single runs.
+    """Merge room edges that lie on one line and form one continuous run.
 
     Rooms whose faces step by a few centimetres leave two collinear walls, and
     Revit refuses the batch with "the highlighted walls overlap".  A person
@@ -144,7 +144,7 @@ def _merge_collinear_edges(
         return None
 
     buckets: dict[
-        tuple[int, float],
+        tuple[int, float, bool],
         list[
             tuple[
                 float,
@@ -155,16 +155,17 @@ def _merge_collinear_edges(
     ] = defaultdict(list)
     merged: dict[
         tuple[tuple[float, float], tuple[float, float]],
-        tuple[tuple[str, ...], tuple[float, float], tuple[float, float]],
+        tuple[tuple[str, ...], tuple[float, float], tuple[float, float], bool],
     ] = {}
     for key, room_ids in edge_occurrences.items():
         first, second = edge_points[key]
         axis = axis_of(first, second)
+        is_shared = len(room_ids) > 1
         if axis is None:
             # The architectural layout contains a few diagonal corners.  They
             # cannot be merged by an axis-aligned sweep, but they are still
             # valid shell edges and must remain part of the desired state.
-            merged[key] = (tuple(sorted(set(room_ids))), first, second)
+            merged[key] = (tuple(sorted(set(room_ids))), first, second, is_shared)
             continue
         # ``axis`` is the coordinate that stays fixed along the segment.  The
         # interval therefore varies on the other coordinate: y for a vertical
@@ -172,16 +173,17 @@ def _merge_collinear_edges(
         fixed = round(first[axis], 6)
         varying_axis = 1 - axis
         low, high = sorted((first[varying_axis], second[varying_axis]))
-        buckets[(axis, fixed)].append((low, high, key))
+        buckets[(axis, fixed, is_shared)].append((low, high, key))
 
-    for (axis, fixed), spans in buckets.items():
-        # Sort by interval start so each connected overlap component can be
-        # emitted independently.  Touching runs stay separate: they meet at a
-        # corner and do not create the overlapping wall that Revit rejects.
+    for (axis, fixed, _is_shared), spans in buckets.items():
+        # Sort by interval start so each connected component can be emitted
+        # independently.  Touching runs are joined because Revit's automatic
+        # wall joins can report their bodies as overlapping when submitted as
+        # separate walls.
         ordered = sorted(spans, key=lambda span: (span[0], span[1], span[2]))
         component: list[tuple[float, float, tuple[tuple[float, float], tuple[float, float]]]] = []
 
-        def emit(items):
+        def emit(items, *, axis=axis, fixed=fixed, is_shared=_is_shared):
             if not items:
                 return
             low = min(item[0] for item in items)
@@ -200,10 +202,15 @@ def _merge_collinear_edges(
                 original_key = items[0][2]
                 start, end = edge_points[original_key]
                 output_key = original_key
-            merged[output_key] = (tuple(owners), start, end)
+            merged[output_key] = (
+                tuple(owners),
+                start,
+                end,
+                is_shared,
+            )
 
         for span in ordered:
-            if not component or span[0] < max(item[1] for item in component) - 1e-6:
+            if not component or span[0] <= max(item[1] for item in component) + 1e-6:
                 component.append(span)
                 continue
             emit(component)
@@ -401,8 +408,8 @@ def plan_shell_stage(
         edge_occurrences, edge_points
     )
     for key in sorted(merged_edges):
-        room_ids, first, second = merged_edges[key]
-        kind = "internal" if len(room_ids) > 1 else "external"
+        room_ids, first, second, is_shared = merged_edges[key]
+        kind = "internal" if is_shared else "external"
         logical_id = _edge_id(key)
         opening_ids: set[str] = set(opening_by_host.get(logical_id, []))
         for room_id in room_ids:
@@ -414,7 +421,7 @@ def plan_shell_stage(
             "material": materials[kind],
             "location_line": "CENTERLINE",
             "joins": "AUTOMATIC_CORNERS",
-            "is_shared": len(room_ids) > 1,
+            "is_shared": is_shared,
             "host_dependencies": room_ids,
             "opening_logical_ids": sorted(opening_ids),
         }

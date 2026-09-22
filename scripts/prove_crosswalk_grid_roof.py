@@ -18,6 +18,7 @@ import argparse
 import hashlib
 import json
 import sys
+import uuid
 from pathlib import Path
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
@@ -92,6 +93,17 @@ def _call(transport, tool, arguments):
     return payload, error
 
 
+def _key(label: str) -> str:
+    """A fresh idempotency key for deliberate new work.
+
+    The bridge keeps a key for exactly one operation: reusing one for a
+    different attempt is refused rather than replayed, so every deliberate new
+    call gets its own key.  A retry of an identical call would keep the key.
+    """
+
+    return "amanda-crosswalk-" + label + "-" + uuid.uuid4().hex[:12]
+
+
 def _sha256(path: Path) -> str | None:
     if not path.is_file():
         return None
@@ -99,6 +111,9 @@ def _sha256(path: Path) -> str | None:
 
 
 def run(rvt: Path, *, execute: bool) -> int:
+    # The bridge refuses a relative path: file_path must be an absolute rooted
+    # path, so it is resolved once here rather than passed through as given.
+    rvt = Path(rvt).resolve()
     if not rvt.is_file():
         print("lab target is missing:", rvt, file=sys.stderr)
         return 2
@@ -137,7 +152,7 @@ def run(rvt: Path, *, execute: bool) -> int:
                     "operation": "open",
                     "file_path": str(rvt),
                     "expected_version": "2027",
-                    "idempotency_key": "amanda-crosswalk-open",
+                    "idempotency_key": _key("open"),
                 },
             )
             if error:
@@ -159,7 +174,7 @@ def run(rvt: Path, *, execute: bool) -> int:
                             "elevation": 0.0,
                         }
                     ],
-                    "idempotency_key": "amanda-crosswalk-level",
+                    "idempotency_key": _key("level"),
                 },
             )
             level_id = None
@@ -183,7 +198,7 @@ def run(rvt: Path, *, execute: bool) -> int:
                         "target_document": str(rvt),
                         "units": "m",
                         "elements": [element],
-                        "idempotency_key": "amanda-crosswalk-" + target["kind"],
+                        "idempotency_key": _key(target["kind"]),
                     },
                 )
                 element_id = None
@@ -225,7 +240,7 @@ def run(rvt: Path, *, execute: bool) -> int:
             saved, error = _call(
                 transport,
                 "horizun_save_document",
-                {"target_document": str(rvt), "idempotency_key": "amanda-crosswalk-save"},
+                {"target_document": str(rvt), "idempotency_key": _key("save")},
             )
             if error:
                 print("save failed:", error, file=sys.stderr)
@@ -239,7 +254,7 @@ def run(rvt: Path, *, execute: bool) -> int:
                     "operation": "close",
                     "target_document": str(rvt),
                     "save_on_close": False,
-                    "idempotency_key": "amanda-crosswalk-close",
+                    "idempotency_key": _key("close"),
                 },
             )
             print("closed:", (closed or {}).get("closed"), "disk_changed:", (closed or {}).get("disk_changed"))
@@ -250,7 +265,7 @@ def run(rvt: Path, *, execute: bool) -> int:
                 {
                     "path": str(rvt),
                     "expected_version": "2027",
-                    "idempotency_key": "amanda-crosswalk-reopen",
+                    "idempotency_key": _key("reopen"),
                 },
             )
             if error:
@@ -302,4 +317,3 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
