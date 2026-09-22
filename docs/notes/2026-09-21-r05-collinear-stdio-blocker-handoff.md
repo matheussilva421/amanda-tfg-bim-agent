@@ -355,3 +355,33 @@ dry run: nothing written
 The layout and approval hashes remained unchanged, and the installed template
 was still `Default_M_PTB.rte` on Revit 2027. No live stage was advanced by this
 dry run.
+
+## Addendum - session-start revalidation (2026-09-21)
+
+The session-start protocol was rerun without any BIM mutation. `amanda_agent
+status` and `amanda_agent resume` both completed successfully and confirmed the
+authoritative durable state: revision `159`, `PHASE_08`, next task `P08-T08`,
+`GO_WITH_LIMITATIONS`, five site blockers, and a free writer lease. The
+`PROJECT_STATE.yaml` blocker `CROSSWALK_GRID_ROOF_GAP` remains open. No
+`state/locks/revit-writer.lock` exists.
+
+The live process inventory showed Revit 2027 build `27.2.0.39` in PIDs `15608`
+and `39808`. Process presence is not evidence that the requested document is
+the active bridge target or that the persistence modal has been dismissed, so
+no production command or provider write was started. The existing resume
+boundary remains: dismiss the Revit human modal without changing the saved
+target, then reopen and independently read
+`AMANDA_WORKING_001.20260921-213302.rvt` before any R06-R13 work.
+
+`amanda_agent doctor` detected Revit, but its persisted environment report
+still says `python312: MISSING`; the pinned `.venv\Scripts\python.exe` ran
+`status` and `resume` successfully. This is an environment-report freshness
+discrepancy, not evidence to advance a production gate.
+
+Git remains `main` at `89646c0`, matching `origin/main`. The working tree still
+contains only the pre-existing ACL-visible phantom deletions under
+`revit/lab/exports/p06t14/GOLDEN/RC01`, generated Topologic result changes, and
+untracked `.codex`, package/output, and `revit/production` trees. They were not
+restored, deleted, or staged. A repository-wide `git diff --check` is blocked by
+the ACL-denied GOLDEN paths; no new handoff formatting error was found in the
+path edited above.
