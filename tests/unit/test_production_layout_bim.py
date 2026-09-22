@@ -12,7 +12,7 @@ import json
 from pathlib import Path
 
 import pytest
-from shapely.geometry import LineString
+from shapely.geometry import LineString, Polygon
 
 from amanda_agent.design.models import (
     DesignSolution,
@@ -301,6 +301,21 @@ def test_layout_stage_bridges_template_internal_wall_type(
 
     assert stage.operations
     assert {operation.payload["type_id"] for operation in stage.operations} == {220}
+
+
+def test_rooms_stage_bridges_revit_room_insertion_point(
+    registry, program, layout, tmp_path
+):
+    plans = _plans(registry, program, layout, tmp_path)
+    stage = next(plan for plan in plans if plan.stage is BimStage.R08)
+
+    operation = stage.operations[0]
+    ring = operation.payload["geometry"]["coordinates"][0]
+    centroid = Polygon(ring).centroid
+
+    assert operation.payload["point"] == pytest.approx(
+        [centroid.x, centroid.y]
+    )
 
 
 def test_shell_does_not_duplicate_shared_boundaries_owned_by_r06(

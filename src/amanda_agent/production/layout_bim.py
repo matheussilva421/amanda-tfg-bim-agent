@@ -1054,6 +1054,18 @@ def _stamp(plan, solution_id, approval_hash):
             elif isinstance(type_name, int):
                 fields["type_id"] = type_name
             return fields
+        if kind == "Polygon" and capability == "revit.create_room":
+            ring = coordinates[0] if isinstance(coordinates, list) and coordinates else None
+            if not isinstance(ring, list) or len(ring) < 4:
+                return {}
+            # The compiler retains the full room polygon for reconciliation,
+            # while the typed Revit room command inserts a room at one point.
+            # Use the measured polygon centroid so the provider receives the
+            # required insertion point without changing the source geometry.
+            centroid = Polygon(
+                [(float(point[0]), float(point[1])) for point in ring]
+            ).centroid
+            return {"point": [float(centroid.x), float(centroid.y)]}
         if kind == "Polygon" and capability in {
             "revit.create_floor",
             "revit.create_slab",
