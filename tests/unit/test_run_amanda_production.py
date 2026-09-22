@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from scripts.run_amanda_production import _select_revit_target
+from scripts.run_amanda_production import _new_idempotency_key, _select_revit_target
 
 
 class _Transport:
@@ -20,3 +20,7 @@ def test_select_revit_target_sets_and_verifies_the_requested_pid():
 
     assert selected == {"selected_pid": 37588}
     assert transport.calls == [("horizun_target", {"pid": 37588})]
+
+
+def test_final_save_key_is_unique_per_production_attempt():
+    assert _new_idempotency_key("save", "run-abc123") == "amanda-save-run-abc123"

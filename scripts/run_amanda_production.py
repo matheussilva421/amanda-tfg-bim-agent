@@ -41,6 +41,12 @@ EVIDENCE_ROOT = REPOSITORY_ROOT / "revit" / "production"
 GENERATION_RUN = "AMANDA-RUN-001"
 
 
+def _new_idempotency_key(label: str, run_key: str) -> str:
+    """Build a key scoped to one deliberate production attempt."""
+
+    return f"amanda-{label}-{run_key}"
+
+
 def _payload(result):
     """Return the provider payload of one stage result, or None."""
 
@@ -370,7 +376,10 @@ def run(
 
             transport.call(
                 "horizun_save_document",
-                {"target_document": str(rvt), "idempotency_key": "amanda-save-1"},
+                {
+                    "target_document": str(rvt),
+                    "idempotency_key": _new_idempotency_key("save", run_key),
+                },
             )
             print("saved:", rvt)
         return 0
