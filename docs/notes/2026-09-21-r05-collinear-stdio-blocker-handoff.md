@@ -393,3 +393,32 @@ session-start revalidation`) and pushed successfully to `origin/main`. No code,
 BIM model, project state, protected GOLDEN content, or unrelated working-tree
 artifact was included in that commit. The next continuation still starts at
 the human modal dismissal and fresh R05 reopen/read boundary described above.
+
+## Session-start revalidation (2026-09-21 22:10:13 -03:00)
+
+This session performed the repository session-start protocol only; no production BIM write or state advancement was performed.
+
+### Observed facts
+
+- Branch: `main`; current HEAD and `origin/main` were observed at `6f49873141dc4b954224c43cb403a0e6642a4855`. The durable state still has `last_verified_commit: null`; `f26b7f7` remains the latest commit previously described as the non-Revit regression gate in older handoff evidence.
+- `PROJECT_STATE.yaml` remains revision `159`, phase `PHASE_08`, status `PENDING`, next task `P08-T08`, last completed task `P06-T14`, checkpoint `null`, and phase gate `GO_WITH_LIMITATIONS`.
+- `.\.venv\Scripts\python.exe -m amanda_agent status` reported a free writer lease, five open blockers, and `P08-T08` as the only ready task.
+- No `state/locks/revit-writer.lock` was present during the workspace inspection.
+- Two `Revit.exe` processes and five `horizun-mcp.exe` processes were present. Their simultaneous presence is not evidence that a single production target is selected or that the bridge is usable for a write.
+- The working tree still contains the known ACL-visible `revit/lab/exports/p06t14/GOLDEN/RC01` deletion reports, modifications in `tests/unit/test_production_layout_bim.py` and Topologic result files, and untracked package/output/production artifacts. These paths were not restored, deleted, staged, or committed.
+- Read-only journal inspection found persisted `revit/production/journals/R05.json` with `VERIFIED` in 82/82 records and `R06.json` with `FAILED` in 4/30 records (26 verified). These are historical artifacts from earlier attempts, not fresh evidence from this session, and they do not justify advancing the durable state.
+
+### Reconciliation issue
+
+`PROJECT_STATE.yaml` lists seven blockers, including `REVIT_PIPE_SANDBOX_ACCESS` and `CROSSWALK_GRID_ROOF_GAP`, while `state/blockers.yaml`, `state/status.md`, and the `amanda_agent status` projection expose only five site blockers. This is a durable state/projection mismatch. Do not mark a task or phase complete, or rewrite the state to make the views agree, until the source of truth and blocker projection are reconciled with evidence.
+
+### Tests and GitHub
+
+No tests were executed in this session because no code or behavior was changed. The status command regenerated `state/status.md` as a side effect; that derived change was reverted because the command is documented as read-only and no state transition was intended. The latest recorded handoff evidence remains the prior non-Revit gate and live-attempt records; it was not reclassified as fresh evidence here. No new commit or push was created by this session-start revalidation.
+
+### Exact resume instructions
+
+1. Define the concrete next user-authorized task before modifying code, state, or production artifacts.
+2. If resuming P08-T08, reconcile the blocker projection first and preserve revision `159` until the evidence supports an explicit state transition.
+3. Before any BIM write, re-query the live Revit build, provider health, active document identity, and writer lease; select one verified Revit target and keep the duplicate processes out of the write path.
+4. For the R05 continuation, use the normal-user bridge route and require fresh R01-R05 journals, independent reads, and save/close/reopen evidence. A healthy process list or prior journal is insufficient.
