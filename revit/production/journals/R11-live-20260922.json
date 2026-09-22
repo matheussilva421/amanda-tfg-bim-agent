@@ -1,0 +1,54 @@
+{
+  "journal_type": "bim_production_stage",
+  "stage": "R11_LANDSCAPE",
+  "task_id": "P08-T13",
+  "task_status": "RUNNING",
+  "stage_status": "PASS_WITH_WARNINGS",
+  "date": "2026-09-22",
+  "target": "revit/production/working/AMANDA_WORKING_001.rvt",
+  "provider": "horizun",
+  "revit": {
+    "version": "2027",
+    "build": "27.2.0.39",
+    "pid": 25996,
+    "health": "HEALTHY",
+    "other_writer_clients": 0
+  },
+  "selection": {
+    "design_id": "AMANDA-RUN-001-S01",
+    "authority": "AGENT_DELEGATED",
+    "approval_hash": "bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef"
+  },
+  "write_read_verify": {
+    "write": "25 R11 landscape study DirectShapes committed through the registry-approved Horizun Python fallback: five official zones and twenty zero-additional-area visual/functional layers.",
+    "read": "Independent host queries after apply and exact reopen returned 78 GenericModels total, 25 unique R11 marks, 25 R11 provenance comments, 25 positive bounding boxes, complete coverage and zero unreadable elements.",
+    "verify": "Save changed the canonical hash to f4dd2d9cf72ccd7fa1703d543d11e6b657ae5893254a3f20e7fee34a7a8b0699 at 4325376 bytes; exact close/reopen passed without upgrade, checkpoint verify returned true and a real STUDY preview was captured with the view restored."
+  },
+  "program": {
+    "person_capacity": 20,
+    "internal_useful_m2": 626.0,
+    "external_programmed_m2": 260.0,
+    "zones": 5,
+    "layers": 20,
+    "planned_operations": 25,
+    "historical_42_people_hypothesis": "REJECTED"
+  },
+  "persistence": {
+    "sha256": "f4dd2d9cf72ccd7fa1703d543d11e6b657ae5893254a3f20e7fee34a7a8b0699",
+    "bytes": 4325376,
+    "checkpoint": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R11-landscape-20260922.rvt",
+    "preview": "revit/production/previews/R11-landscape-3D-20260922.png"
+  },
+  "tests": {
+    "command": ".\\.venv\\Scripts\\python.exe -m pytest tests/unit/test_stage_landscape.py tests/unit/test_stage_furniture.py tests/unit/test_production_layout_bim.py tests/test_p08_inputs.py tests/unit/test_checkpoints.py -q -p no:cacheprovider --basetemp .tmp-pytest-delivery-r11",
+    "result": "44 passed, 0 failed in 15.76s",
+    "compile_dry_run": "PASS_DRY_RUN; R01-R11; nothing written"
+  },
+  "warnings": [
+    "R11 coordinates are provisional reversible study coordinates from the adopted layout extents; no verified site, terrain or north claim.",
+    "The landscape elements are STUDY representation, not final planting, irrigation, furniture or construction specification.",
+    "Site blockers and AMANDA_REVIEW_PENDING remain explicit.",
+    "No FINAL or GOLDEN claim."
+  ],
+  "next": "R12_MATERIALS"
+}

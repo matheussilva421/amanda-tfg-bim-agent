@@ -50,9 +50,9 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 ## Design and Revit recovery
 
 - Selected design: `AMANDA-RUN-001-S01`
-- Revit stage: R10
-- Current checkpoint: revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R10-furniture-20260922.rvt
-- R10 live: 238 internal furniture instances, 238 unique marks/comments and positive bounding boxes, 52 rooms, 87 openings, 78 walls and 53 GenericModels, saved/closed/reopened/requeried; real STUDY preview preserved
+- Revit stage: R11
+- Current checkpoint: revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R11-landscape-20260922.rvt
+- R11 live: 25 provisional landscape study elements (5 zones plus 20 layers), 25 unique marks/comments and positive bounding boxes, 52 rooms, 87 openings, 78 walls, 238 furniture and 78 GenericModels, saved/closed/reopened/requeried; real STUDY preview preserved
 
 ## Writer lease
 

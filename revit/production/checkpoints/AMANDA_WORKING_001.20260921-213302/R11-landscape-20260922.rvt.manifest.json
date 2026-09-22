@@ -1,0 +1,24 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    23362423067499754
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R11-landscape-20260922.rvt",
+  "created_utc": "2026-09-22T13:29:44.784211Z",
+  "document_id": null,
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R11-landscape-20260922.rvt.manifest.json",
+  "provenance": {},
+  "schema_version": 1,
+  "sha256": "f4dd2d9cf72ccd7fa1703d543d11e6b657ae5893254a3f20e7fee34a7a8b0699",
+  "size_bytes": 4325376,
+  "source_document_id": null,
+  "source_document_path": null,
+  "source_file_id": [
+    9107472496377837229,
+    87538717757522200
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_sha256": "f4dd2d9cf72ccd7fa1703d543d11e6b657ae5893254a3f20e7fee34a7a8b0699",
+  "stage": "R11_LANDSCAPE",
+  "version": 1
+}

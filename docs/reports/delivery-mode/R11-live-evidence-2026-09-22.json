@@ -1,0 +1,143 @@
+{
+  "report_type": "delivery_mode_live_bim_evidence",
+  "stage": "R11_LANDSCAPE",
+  "task_id": "P08-T13",
+  "task_status": "RUNNING",
+  "stage_status": "PASS_WITH_WARNINGS",
+  "date": "2026-09-22",
+  "target": {
+    "canonical_path": "revit/production/working/AMANDA_WORKING_001.rvt",
+    "revit_version": "2027",
+    "revit_build": "27.2.0.39",
+    "revit_product": "20260716_1515(x64)",
+    "revit_pid": 25996,
+    "provider": "horizun",
+    "provider_version": "1.3.3",
+    "provider_contract_hash": "8b9600f5274d7dffb6e5bd5f",
+    "other_writer_clients": 0,
+    "workshared": false
+  },
+  "selection": {
+    "design_id": "AMANDA-RUN-001-S01",
+    "authority": "AGENT_DELEGATED",
+    "approval_hash": "bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef",
+    "review_status": "AMANDA_REVIEW_PENDING"
+  },
+  "program_and_scope": {
+    "official_people_capacity": 20,
+    "historical_42_people_hypothesis": "REJECTED",
+    "internal_target_m2": 626.0,
+    "external_programmed_m2": 260.0,
+    "layout_hash": "9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d",
+    "normative_compliance_claim": false,
+    "landscape_semantics": "Five first-class landscape zones account for the official 260.0 m2; four visual/functional layers per zone carry zero additional programmed area.",
+    "site_data_boundary": "No verified terrain, boundary, north, site coordinates or external rooms were available in the live RVT.",
+    "provisional_assumption": "Reversible study coordinates derived from adopted layout extents and adjacency narrative; no site, north or terrain claim."
+  },
+  "compile": {
+    "command": "python scripts/run_amanda_production.py --rvt revit/production/working/AMANDA_WORKING_001.rvt --max-stage R11",
+    "status": "PASS_DRY_RUN",
+    "planned_stages": ["R01", "R02", "R03", "R04", "R05", "R06", "R07", "R08", "R09", "R10", "R11"],
+    "approval_hash": "bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef",
+    "operation_count": 25,
+    "zone_count": 5,
+    "layer_count": 20,
+    "template": "C:\\ProgramData\\Autodesk\\RVT 2027\\Templates\\Default_M_PTB.rte",
+    "source_change": "None. Landscape source semantics were preserved; the live payload was normalized only because terrain/site coordinates and external OST_Rooms are not proven."
+  },
+  "fallback_write": {
+    "semantic_capability": "revit.create_landscape_element",
+    "provider_tool": "horizun_execute_python",
+    "approved_fallback": true,
+    "final_preflight": {
+      "status": "PASS",
+      "syntax": "ok",
+      "warnings": [],
+      "target": "active canonical document",
+      "submitted_source_sha256": "e7397e1aa28b9907240ca917120378df6f9cfe7979281d34fe709fd3b042042d"
+    },
+    "apply": {
+      "idempotency_key": "amanda-r11-landscape-20260922-v1",
+      "bridge_status": "completed_unverified",
+      "script_reported_created": 25,
+      "script_reported_element_ids": [222842, 222843, 222844, 222845, 222846, 222847, 222848, 222849, 222850, 222851, 222852, 222853, 222854, 222855, 222856, 222857, 222858, 222859, 222860, 222861, 222862, 222863, 222864, 222865, 222866],
+      "transaction_left_open": false,
+      "retry_policy": "No blind retry; independent host query followed immediately and proved the committed result."
+    }
+  },
+  "independent_readback": {
+    "after_apply": {
+      "generic_models_matched": 78,
+      "r11_unique_marks": 25,
+      "r11_comments_with_provenance": 25,
+      "r11_positive_bounding_boxes": 25,
+      "coverage_complete": true,
+      "unreadable": 0,
+      "r11_element_id_range": [222842, 222866]
+    },
+    "after_reopen": {
+      "whole_element_count": 4140,
+      "rooms": 52,
+      "openings": 87,
+      "walls": 78,
+      "furniture": 238,
+      "generic_models": 78,
+      "coverage_complete": true,
+      "unreadable": 0,
+      "active_canonical_path_verified": true
+    },
+    "interpretation": "Host re-query after exact close/reopen proves 25 R11 marks and positive boxes persisted on top of the 53 R09 GenericModels; the Python response itself remains untrusted evidence status and is not used as the final proof."
+  },
+  "persistence": {
+    "save_status": "saved_verified",
+    "sha256_before": "d7f899c6dd9b1ce86f0b933cbe51f47728dc61f6df2fe92cb1ffece6c00e8959",
+    "sha256_after": "f4dd2d9cf72ccd7fa1703d543d11e6b657ae5893254a3f20e7fee34a7a8b0699",
+    "bytes_after": 4325376,
+    "close_status": "closed_verified",
+    "close_discarded_unsaved_changes": false,
+    "reopen_status": "opened_verified",
+    "reopen_version": "2027",
+    "upgrade_detected": false,
+    "checkpoint": {
+      "path": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R11-landscape-20260922.rvt",
+      "sha256": "f4dd2d9cf72ccd7fa1703d543d11e6b657ae5893254a3f20e7fee34a7a8b0699",
+      "bytes": 4325376,
+      "verify_checkpoint": true
+    }
+  },
+  "preview": {
+    "path": "revit/production/previews/R11-landscape-3D-20260922.png",
+    "classification": "STUDY",
+    "calibration": "UNCALIBRATED",
+    "view": "AMANDA R06 3D STUDY",
+    "view_id": 221538,
+    "width": 1400,
+    "height": 855,
+    "sha256": "a167fdd7a469f48ee6db7fcdaba17fcfa51b1222508e432d8b0094a7c70c657f",
+    "view_restored": true,
+    "rollback_status": "RolledBack"
+  },
+  "tests": {
+    "command": ".\\.venv\\Scripts\\python.exe -m pytest tests/unit/test_stage_landscape.py tests/unit/test_stage_furniture.py tests/unit/test_production_layout_bim.py tests/test_p08_inputs.py tests/unit/test_checkpoints.py -q -p no:cacheprovider --basetemp .tmp-pytest-delivery-r11",
+    "result": "44 passed, 0 failed in 15.76s",
+    "json_yaml_validation": "PASS",
+    "git_diff_check": "PASS for intended R11/state files",
+    "compile_dry_run": "PASS_DRY_RUN; nothing written"
+  },
+  "warnings": [
+    "R11 geometry is a reversible STUDY representation, not verified site landscape, terrain, north or construction documentation.",
+    "The fallback response was downgraded to completed_unverified by the bridge protocol; independent post-apply and post-reopen host queries are the proof used here.",
+    "SITE_TOPOGRAPHY remains BLOCKING.",
+    "SITE_BOUNDARY remains BLOCKING.",
+    "SITE_OCCUPANCY remains BLOCKING.",
+    "SITE_FRONTAGE_COUNT remains DEGRADING.",
+    "SITE_TRUE_NORTH remains DEGRADING.",
+    "AMANDA_REVIEW_PENDING remains open.",
+    "No FINAL or GOLDEN claim."
+  ],
+  "next": {
+    "task": "P08-T13",
+    "substage": "R12_MATERIALS",
+    "resume_rule": "Start with Horizun health, active canonical path, R11 checkpoint/hash reconciliation and fresh whole-model summary; preserve all prior checkpoints and GOLDEN artifacts."
+  }
+}
