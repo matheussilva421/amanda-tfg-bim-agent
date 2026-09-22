@@ -468,3 +468,30 @@ records.
 The patch is ready for a narrow commit after `git diff --check`; the protected
 `revit/lab/exports/p06t14/GOLDEN/RC01` paths, Topologic result churn, package
 copy, and production journals/RVTs remain outside this block.
+
+## Publication and post-commit verification (2026-09-21)
+
+The local repair and this handoff were committed as `10202e6`
+(`fix(revit): trim internal walls at shell junctions`) and pushed successfully
+with `main -> origin/main`. The post-commit verification repeated the focused
+gate and the full non-Revit gate:
+
+```text
+Focused: .\.venv\Scripts\python.exe -m pytest tests/unit/test_stage_shell.py tests/unit/test_production_layout_bim.py tests/unit/test_stage_layout.py tests/unit/test_stage_openings.py tests/unit/test_run_amanda_production.py -q --basetemp .tmp-pytest-postcommit-focused
+36 passed, 0 failed
+
+Full non-Revit: .\.venv\Scripts\python.exe -m pytest tests -m "not revit and not slow" -q --basetemp .tmp-pytest-postcommit-full
+873 passed, 0 failed
+```
+
+`py_compile` passed for the three changed Python modules. The targeted Ruff
+command reported 14 pre-existing `F401` findings in `layout_bim.py` and the
+production-layout test; it reported no `E9` or `B023` finding. This is a lint
+limitation, not a production or Revit gate.
+
+Final publication state: `HEAD` and `origin/main` both resolve to
+`10202e6791afc2d6084c923a14880f0061fd17f1`. The working tree still contains
+only the known protected GOLDEN ACL entries, Topologic result churn, and
+untracked package/production artifacts. No project-state transition, Revit
+write, persistence certification, R07 continuation, or GOLDEN promotion was
+performed.
