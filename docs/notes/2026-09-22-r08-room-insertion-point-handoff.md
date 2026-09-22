@@ -78,6 +78,8 @@ O working tree já contém exclusões ACL-visíveis em
 `revit/lab/exports/p06t14/GOLDEN/RC01`, alterações geradas em `state/` e
 `tool-lab/`, além de artefatos não rastreados de produção e pacotes anteriores.
 Esses caminhos ficam fora deste bloco. O commit deve incluir somente os dois
-arquivos de código/teste e este handoff; push para `origin/main` deve ser feito
-após a revisão do diff.
+arquivos de código/teste e este handoff.
 
+- Commit publicado: `f1563de` (`fix(revit): provide room insertion points`).
+- Push: `origin/main` atualizado de `32eb550` para `f1563de`.
+- O commit contém somente o compilador, o teste e este handoff.
