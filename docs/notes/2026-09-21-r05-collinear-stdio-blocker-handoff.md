@@ -495,3 +495,14 @@ only the known protected GOLDEN ACL entries, Topologic result churn, and
 untracked package/production artifacts. No project-state transition, Revit
 write, persistence certification, R07 continuation, or GOLDEN promotion was
 performed.
+
+## Session-end UI boundary (2026-09-21)
+
+A final computer-use probe found no native Windows applications exposed to the
+session; only browser surfaces were available. Revit therefore could not be
+controlled to dismiss `Projeto não recentemente salvo`. No UI action, BIM
+write, reopen attempt, or state mutation was made. Resume from the existing
+human boundary: dismiss that modal without Save As or changing the target,
+then reopen and independently read
+`revit/production/working/AMANDA_WORKING_001.20260921-213302.rvt` before any
+R06 continuation.
