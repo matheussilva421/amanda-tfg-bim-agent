@@ -506,3 +506,47 @@ human boundary: dismiss that modal without Save As or changing the target,
 then reopen and independently read
 `revit/production/working/AMANDA_WORKING_001.20260921-213302.rvt` before any
 R06 continuation.
+
+## Session-start revalidation (2026-09-21, current continuation)
+
+This continuation repeated the repository session-start checks and made no BIM
+write, provider write, state transition, checkpoint promotion, or export
+promotion.
+
+### Fresh evidence
+
+- `amanda_agent doctor` detected Revit 2027 build `27.2.0.39`; its persisted
+  environment report still lists `python312` as missing, while the pinned
+  project `.venv` remains the executable used for project commands.
+- `amanda_agent status` reports `PHASE_08`, `PENDING`, next task `P08-T08`,
+  revision `159`, no checkpoint, a free writer lease, and five open site
+  blockers.
+- `amanda_agent resume` resolves `P08-T08` and repeats the same site-dependent
+  final blockers. No task became runnable as a result of this read-only check.
+- The process inventory contains Revit PIDs `15608` and `39808` plus multiple
+  `horizun-mcp` processes. This is not evidence of a single verified target,
+  active-document identity, or modal dismissal.
+- The computer-use surface exposes no native Windows application, so the
+  Revit reminder `Projeto não recentemente salvo` cannot be dismissed by this
+  session. No attempt was made to bypass that boundary through process or file
+  manipulation.
+
+### Tests and GitHub
+
+No automated tests were run because no code or behavior changed. The working
+tree remains dirty with the pre-existing ACL-visible deletions below
+`revit/lab/exports/p06t14/GOLDEN/RC01`, generated Topologic result changes, and
+untracked package/production artifacts. They were not restored, deleted,
+staged, or committed. The handoff update is the only file changed by this
+continuation and must be published separately from those artifacts.
+
+### Exact resume boundary
+
+1. Obtain a native Revit UI session and dismiss `Projeto não recentemente
+   salvo` without Save As or changing the saved target.
+2. Re-query the normal-user provider, open
+   `revit/production/working/AMANDA_WORKING_001.20260921-213302.rvt`, and
+   independently read the critical R05 records.
+3. Require fresh close/reopen evidence before starting R06. Do not advance
+   `PROJECT_STATE.yaml` or infer production PASS from the process list,
+   previous journals, or provider health alone.
