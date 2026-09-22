@@ -246,3 +246,52 @@ the successful push result is the publication evidence. The working tree still
 shows only the pre-existing ACL-visible `GOLDEN/RC01` deletions, Topologic
 result changes, untracked package/output trees, and timestamped production
 journals; none are part of `f26b7f7`.
+
+## Addendum - normal-user bridge retry and precision blocker (2026-09-21)
+
+The normal-user route was available in this continuation. Revit 2027 build
+`27.2.0.39` was responding as PID `15608`, its discovery file was visible under
+`C:\Users\slvma\.horizun`, and `horizun_health` returned `healthy` with the
+active document matched to the requested path. The production command was run
+outside the Codex sandbox with the real-user profile:
+
+```text
+.\.venv\Scripts\python.exe scripts/run_amanda_production.py --rvt revit\production\working\AMANDA_WORKING_001.rvt --max-stage R05 --revit-pid 15608 --execute
+```
+
+It created the new attempt
+`revit/production/working/AMANDA_WORKING_001.20260921-211721.rvt` and verified
+R01-R04, but R05 stopped at `74/82`: eight external walls returned
+`Requested properties do not match the committed element`. Independent reads
+by `ALL_MODEL_MARK` found no rows for those eight IDs, so they were reverted;
+the attempt is partial evidence and must not be promoted or reused.
+
+Root cause: `_edge_key` used six-decimal canonical coordinates for identity,
+while `_merge_collinear_edges` returned raw floating-point endpoints for a
+single edge. Revit snapped endpoints to adjacent walls, and the strict
+post-commit verifier rejected differences above its tolerance. The correction
+canonicalizes all single, merged, and diagonal edge endpoints before emitting
+the desired state. A TDD regression was first observed RED, then GREEN.
+
+Validation after the correction:
+
+```text
+Focused: .\.venv\Scripts\python.exe -m pytest tests/unit/test_stage_shell.py tests/unit/test_production_layout_bim.py tests/unit/test_stage_openings.py tests/unit/test_stage_layout.py tests/unit/test_run_amanda_production.py -q --basetemp .tmp-pytest-r05-canonical-focused
+35 passed, 0 failed
+
+Full non-Revit: .\.venv\Scripts\python.exe -m pytest tests -m "not revit and not slow" -q --basetemp .tmp-pytest-r05-canonical-full2
+872 passed, 0 failed
+
+Targeted Ruff: .\.venv\Scripts\python.exe -m ruff check --select B023 src/amanda_agent/bim/stages/shell.py
+All checks passed
+
+Syntax: .\.venv\Scripts\python.exe -m py_compile src/amanda_agent/bim/stages/shell.py scripts/run_amanda_production.py
+Passed
+```
+
+The durable project state remains revision 159, `PHASE_08`, `P08-T08`,
+`GO_WITH_LIMITATIONS`; blockers and `CROSSWALK_GRID_ROOF_GAP` remain open. No
+state advancement, production PASS, save/close/reopen certification, or export
+promotion is justified yet. The next action is to commit/push the narrow
+precision fix, then rerun a fresh normal-user R01-R05 attempt and require
+`100%` verified records before continuing.

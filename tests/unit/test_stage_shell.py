@@ -146,6 +146,22 @@ def test_shell_merges_overlapping_and_touching_collinear_runs():
     )
 
 
+def test_shell_canonicalizes_edge_endpoints_before_revit():
+    api = _api()
+    raw = ((33.69642857142857, 13.158333), (41.19642857142857, 13.158333))
+    key = api._edge_key(*raw)
+
+    merged = api._merge_collinear_edges(
+        {key: ["room-a"]},
+        {key: raw},
+    )
+
+    assert merged[key][1:3] == (
+        (33.696429, 13.158333),
+        (41.196429, 13.158333),
+    )
+
+
 def test_shell_rejects_an_uncontrolled_wall_type(tmp_path: Path):
     api = _api()
 

@@ -165,7 +165,12 @@ def _merge_collinear_edges(
             # The architectural layout contains a few diagonal corners.  They
             # cannot be merged by an axis-aligned sweep, but they are still
             # valid shell edges and must remain part of the desired state.
-            merged[key] = (tuple(sorted(set(room_ids))), first, second, is_shared)
+            merged[key] = (
+                tuple(sorted(set(room_ids))),
+                _point_key(first),
+                _point_key(second),
+                is_shared,
+            )
             continue
         # ``axis`` is the coordinate that stays fixed along the segment.  The
         # interval therefore varies on the other coordinate: y for a vertical
@@ -190,6 +195,8 @@ def _merge_collinear_edges(
             high = max(item[1] for item in items)
             start = (fixed, low) if axis == 0 else (low, fixed)
             end = (fixed, high) if axis == 0 else (high, fixed)
+            start = _point_key(start)
+            end = _point_key(end)
             output_key = _edge_key(start, end)
             owners = sorted(
                 {
@@ -201,6 +208,7 @@ def _merge_collinear_edges(
             if len(items) == 1:
                 original_key = items[0][2]
                 start, end = edge_points[original_key]
+                start, end = _point_key(start), _point_key(end)
                 output_key = original_key
             merged[output_key] = (
                 tuple(owners),
