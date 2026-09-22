@@ -61,7 +61,10 @@ Additional checks:
 ## Git and unrelated state
 
 The branch was `main` at `ddbf4ba`, matching `origin/main` at session start.
-The intended patch is limited to the two files above. Pre-existing ACL-visible
+The code/test/handoff block was published as `ebfbd89`
+(`fix(revit): scope production save idempotency keys`) and the local
+`HEAD` and `origin/main` both resolve to that commit after push.
+The intended patch is limited to the two code/test files above. Pre-existing ACL-visible
 phantom deletions below `revit/lab/exports/p06t14/GOLDEN/RC01`, generated
 Topologic result changes, and untracked `.codex`, package/output, and
 `revit/production` artifacts remain unstaged and must not be restored or
@@ -93,7 +96,6 @@ writing the exact `HEAD` blob directly, without changing the index.
 
 ## Pending
 
-- Publish the narrow code/test/handoff block if the Git index becomes writable.
 - Dismiss the Revit modal through a human-controlled native UI session.
 - Complete the fresh R05 reopen gate, then continue R06 only with fresh
   WRITE→READ→VERIFY evidence.
