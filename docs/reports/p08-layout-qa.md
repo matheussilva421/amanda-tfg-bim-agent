@@ -1,6 +1,6 @@
 # QA do plano - STUDY (R14 pré-modelo)
 
-Veredito: **FAIL** (25 verificações; 1 falhas; 5 aguardando o modelo)
+Veredito: **PASS** (25 verificações; 0 falhas; 5 aguardando o modelo)
 
 Hash do layout: 9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d
 
@@ -12,7 +12,7 @@ MODEL_PENDING e não como aprovadas.
 | --- | --- | --- | --- |
 | program.every_room_placed | PROGRAM | PASS | todos os 52 ambientes do programa foram colocados |
 | program.areas_are_exact | PROGRAM | PASS | cada área líquida é exatamente a do programa |
-| program.reconciliation | PROGRAM | FAIL | reconciliação do programa: FAIL |
+| program.reconciliation | PROGRAM | PASS | reconciliação do programa: PASS |
 | program.enclosed_estimate | PROGRAM | PASS | área fechada 784.88 m2 dentro de 783-814 m2 |
 | program.covered_estimate | PROGRAM | PASS | área coberta 918.56 m2 dentro de 850-950 m2 |
 | program.capacity_is_20 | PROGRAM | PASS | capacidade fixada em 20 pessoas |

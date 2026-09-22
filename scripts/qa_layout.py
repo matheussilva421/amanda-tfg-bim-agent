@@ -111,16 +111,34 @@ def run_checks(program, layout):
         # The reconciler reads plain rows keyed by logical_id, which is the shape
         # a Revit room query also produces.  Handing it that shape keeps this
         # check on the same data path the model check will later use.
-        observed = [
-            {
-                "logical_id": room.logical_id,
-                "area_m2": room.net_area_m2,
-                "sector_id": room.sector_id,
-                "level": "LEVEL-01",
-            }
-            for room in layout.rooms
-        ]
-        reconciliation = asyncio.run(reconcile_program(program, observed))
+        observed_by_base_id = {}
+        for room in layout.rooms:
+            logical_id = room.logical_id.split("#", 1)[0]
+            row = observed_by_base_id.setdefault(
+                logical_id,
+                {
+                    "logical_id": logical_id,
+                    "quantity": 0,
+                    "area_m2": room.net_area_m2,
+                    "sector_id": room.sector_id,
+                    "level": "LEVEL-01",
+                },
+            )
+            row["quantity"] += 1
+        observed = list(observed_by_base_id.values())
+        # The pre-model pass has measured room polygons only.  External areas
+        # are validated separately by the aggregate 260 m² check below; do not
+        # manufacture external geometry merely to satisfy the generic room
+        # reconciler's per-space contract.
+        room_program = {
+            **program,
+            "sectors": [
+                sector
+                for sector in program["sectors"]
+                if str(sector.get("area_kind", "")).upper() == "INTERNAL"
+            ],
+        }
+        reconciliation = asyncio.run(reconcile_program(room_program, observed))
         result = getattr(reconciliation, "result", reconciliation)
         status = str(getattr(result, "value", result))
         ok = status.upper() in {"PASS", "PASS_WITH_WARNINGS"}

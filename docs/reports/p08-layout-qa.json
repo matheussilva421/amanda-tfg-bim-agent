@@ -3,9 +3,9 @@
   "scope": "STUDY",
   "stage": "R14_PRE_MODEL",
   "layout_content_hash": "9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d",
-  "verdict": "FAIL",
+  "verdict": "PASS",
   "checked": 25,
-  "failed": 1,
+  "failed": 0,
   "model_pending": 5,
   "checks": [
     {
@@ -30,8 +30,8 @@
     {
       "check": "program.reconciliation",
       "scope": "PROGRAM",
-      "status": "FAIL",
-      "detail": "reconciliação do programa: FAIL",
+      "status": "PASS",
+      "detail": "reconciliação do programa: PASS",
       "evidence": {}
     },
     {
