@@ -550,3 +550,46 @@ continuation and must be published separately from those artifacts.
 3. Require fresh close/reopen evidence before starting R06. Do not advance
    `PROJECT_STATE.yaml` or infer production PASS from the process list,
    previous journals, or provider health alone.
+
+## Local continuation and workspace cleanup (2026-09-21, current goal)
+
+This continuation advanced the offline side of the production path without
+claiming a Revit result. No BIM write, provider write, state transition,
+checkpoint promotion, or export promotion was performed.
+
+### Fresh local evidence
+
+- Focused production/stage gate: `36 passed, 0 failed` across shell, layout,
+  openings, stage layout, and production-driver tests.
+- Full non-Revit gate: `873 passed, 0 failed` in `63.85s` using a temporary
+  directory outside the repository.
+- Targeted Ruff `B023` check: passed.
+- `py_compile` passed for `shell.py`, `layout_bim.py`, and
+  `run_amanda_production.py`.
+- Production dry-run planned `R01` through `R13`, retained the current layout
+  and approval hashes, selected the Revit 2027 template, and reported
+  `dry run: nothing written`.
+- The persisted `revit/production/journals/R06.json` remains historical
+  evidence with `26/30` verified and four overlap failures. Local tests do not
+  replace a fresh normal-user R06 journal.
+
+### Cleanup result
+
+- The root contained 198 `.tmp-*` artifacts totaling approximately `8.71 GB`.
+- Large pytest result trees were removed through an explicit, path-checked
+  cleanup. The root now contains 119 small `.tmp-*` entries totaling about
+  `137 KB`.
+- Remaining entries include ACL-protected scratch directories and small
+  exploratory files. Broad deletion and relocation were rejected or blocked by
+  ACL safety checks; no ownership change or forced removal was attempted.
+- Source files, RVTs, journals, deliverables, checkpoints, GOLDEN paths, and
+  unrelated dirty files were preserved.
+
+### Exact next production action
+
+After a native Revit UI session dismisses `Projeto não recentemente salvo`,
+re-query the normal-user bridge, reopen
+`revit/production/working/AMANDA_WORKING_001.20260921-213302.rvt`, independently
+read the critical R05 elements, and complete the close/reopen persistence gate.
+Only then run a fresh R06 with the current code and stop on any unverified
+record before considering R07–R13.
