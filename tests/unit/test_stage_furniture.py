@@ -140,6 +140,35 @@ def test_furniture_generation_rejects_a_program_above_twenty_people(tmp_path: Pa
         plan_furniture_stage(_request(tmp_path), program=over_capacity)
 
 
+def test_furniture_generation_excludes_explicit_external_sectors(tmp_path: Path):
+    program = {
+        **PROGRAM,
+        "sectors": [
+            *PROGRAM["sectors"],
+            {
+                "logical_id": "SEC-EXT",
+                "name": "Áreas externas",
+                "area_kind": "EXTERNAL",
+                "spaces": [
+                    {
+                        "logical_id": "REQ-EXT",
+                        "name": "Jardim terapêutico",
+                        "quantity": 1,
+                    }
+                ],
+            },
+        ],
+    }
+
+    plan = plan_furniture_stage(_request(tmp_path), program=program)
+
+    assert all(item.sector_id != "SEC-EXT" for item in plan.items)
+    assert all(
+        element.properties["sector_id"] != "SEC-EXT"
+        for element in plan.desired_state.elements
+    )
+
+
 def test_furniture_ids_are_stable_for_the_same_program(tmp_path: Path):
     first = plan_furniture_stage(_request(tmp_path), program=PROGRAM)
     second = plan_furniture_stage(_request(tmp_path), program=PROGRAM)

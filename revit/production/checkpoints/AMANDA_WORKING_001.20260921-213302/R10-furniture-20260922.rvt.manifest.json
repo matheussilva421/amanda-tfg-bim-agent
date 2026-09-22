@@ -1,0 +1,24 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    95982967058405475
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R10-furniture-20260922.rvt",
+  "created_utc": "2026-09-22T13:13:28.025454Z",
+  "document_id": null,
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA_WORKING_001.20260921-213302\\R10-furniture-20260922.rvt.manifest.json",
+  "provenance": {},
+  "schema_version": 1,
+  "sha256": "d7f899c6dd9b1ce86f0b933cbe51f47728dc61f6df2fe92cb1ffece6c00e8959",
+  "size_bytes": 4304896,
+  "source_document_id": null,
+  "source_document_path": null,
+  "source_file_id": [
+    9107472496377837229,
+    14073748836741721
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA_WORKING_001.rvt",
+  "source_sha256": "d7f899c6dd9b1ce86f0b933cbe51f47728dc61f6df2fe92cb1ffece6c00e8959",
+  "stage": "R10_FURNITURE",
+  "version": 1
+}

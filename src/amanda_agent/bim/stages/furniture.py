@@ -233,6 +233,8 @@ def plan_furniture_stage(
     desired: list[DesiredElement] = []
     items: list[FurnitureItem] = []
     for sector in program.get("sectors", []):
+        if str(sector.get("area_kind", "INTERNAL")).upper() == "EXTERNAL":
+            continue
         sector_id = str(sector.get("logical_id", ""))
         if not sector_id:
             raise ValueError("furniture sector requires logical_id")

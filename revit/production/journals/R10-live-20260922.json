@@ -1,0 +1,47 @@
+{
+  "journal_type": "bim_production_stage",
+  "stage": "R10_FURNITURE",
+  "task_id": "P08-T13",
+  "task_status": "RUNNING",
+  "stage_status": "PASS_WITH_WARNINGS",
+  "date": "2026-09-22",
+  "target": "revit/production/working/AMANDA_WORKING_001.rvt",
+  "provider": "horizun",
+  "revit": {
+    "version": "2027",
+    "build": "27.2.0.39",
+    "pid": 25996,
+    "health": "HEALTHY",
+    "other_writer_clients": 0
+  },
+  "selection": {
+    "design_id": "AMANDA-RUN-001-S01",
+    "authority": "AGENT_DELEGATED",
+    "approval_hash": "bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef"
+  },
+  "write_read_verify": {
+    "write": "238 internal R10 furniture instances committed by the approved Horizun Python fallback; bridge raised only after the transaction at an out-of-transaction Regenerate call.",
+    "read": "Independent host queries after apply and after reopen returned 238 unique FUR- marks, 238 R10 comments, 238 positive bounding boxes and the real 1525 x 762mm type.",
+    "verify": "Save hash changed to d7f899c6dd9b1ce86f0b933cbe51f47728dc61f6df2fe92cb1ffece6c00e8959, exact canonical close/reopen passed, checkpoint verify true and real preview was captured with the view restored."
+  },
+  "program": {
+    "person_capacity": 20,
+    "internal_useful_m2": 626.0,
+    "external_programmed_m2": 260.0,
+    "planned_operations": 238,
+    "excluded_explicit_external_operations": 5,
+    "historical_42_people_hypothesis": "REJECTED"
+  },
+  "persistence": {
+    "sha256": "d7f899c6dd9b1ce86f0b933cbe51f47728dc61f6df2fe92cb1ffece6c00e8959",
+    "bytes": 4304896,
+    "checkpoint": "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R10-furniture-20260922.rvt",
+    "preview": "revit/production/previews/R10-furniture-3D-20260922.png"
+  },
+  "warnings": [
+    "R10 furniture is functional STUDY placeholder geometry, not a final furniture specification.",
+    "Site blockers and AMANDA_REVIEW_PENDING remain explicit.",
+    "No FINAL or GOLDEN claim."
+  ],
+  "next": "R11_LANDSCAPE"
+}
