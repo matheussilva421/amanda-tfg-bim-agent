@@ -68,3 +68,10 @@ test belong to this block. Existing ACL-visible GOLDEN phantom deletions,
 Topologic result churn, and untracked package/production artifacts are
 pre-existing and must remain unstaged unless a later task explicitly handles
 them.
+
+## Publication
+
+The verified QA block was committed as `670b9ae` (`fix(qa): preserve program
+reconciliation failures`) and pushed successfully to `origin/main`. The
+working tree still has only the pre-existing unrelated dirty and untracked
+paths described above.
