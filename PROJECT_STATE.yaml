@@ -7,7 +7,7 @@ blockers:
 - REVIT_PIPE_SANDBOX_ACCESS:DEGRADING
 current_checkpoint: revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R07-openings-20260922.rvt
 last_completed_task: P08-T11
-last_verified_commit: 2a51cdb
+last_verified_commit: f0d6b18
 next_task: P08-T12
 phase_gate: GO_WITH_LIMITATIONS
 phase_id: PHASE_08
