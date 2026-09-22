@@ -593,3 +593,55 @@ re-query the normal-user bridge, reopen
 read the critical R05 elements, and complete the close/reopen persistence gate.
 Only then run a fresh R06 with the current code and stop on any unverified
 record before considering R07–R13.
+
+## Session-start revalidation and modal retry (2026-09-21, 23:27 -03:00)
+
+This continuation performed the required read-only session checks and retried
+the normal-user bridge health probe. No BIM write, provider write, state
+transition, checkpoint promotion, export promotion, or production-file
+mutation occurred.
+
+### Fresh evidence
+
+- `amanda_agent status` reports `PHASE_08`, `PENDING`, next task `P08-T08`,
+  revision `159`, no checkpoint, a free writer lease, and the same five open
+  site blockers.
+- `amanda_agent resume` still resolves `P08-T08`; the final site-dependent
+  blockers remain unchanged.
+- `amanda_agent doctor` detects Revit 2027 build `27.2.0.39`, while its
+  persisted environment report still lists `python312` as missing. The pinned
+  project `.venv` remains the executable used for project commands.
+- The explicit `horizun_health` call was removed from the queue after 3000 ms
+  because Revit still has the human modal `Projeto não recentemente salvo`
+  open. The bridge reported that the request never started, so no model read
+  or write happened.
+- Computer-use inspection exposed no native Windows applications, only browser
+  surfaces. The modal cannot be dismissed through this session.
+- The process inventory showed Revit 2027 PIDs `15608` and `39808` and six
+  `horizun-mcp` processes. Process presence is not evidence of an active
+  document, a single verified target, or modal dismissal.
+- `state/locks/revit-writer.lock` is absent.
+
+The `doctor` command refreshed `state/environment-report.json` and
+`state/status.md` as derived side effects. Both were restored to their
+pre-checkout contents before this handoff update; no generated state report is
+part of the next commit.
+
+### Tests and GitHub
+
+No automated tests were run because no code or behavior changed. The existing
+working-tree state was preserved: ACL-visible phantom deletions below
+`revit/lab/exports/p06t14/GOLDEN/RC01`, generated Topologic result changes,
+and untracked package/production artifacts remain outside this documentation
+block. The only intended change is this handoff addendum.
+
+### Exact resume boundary
+
+1. Obtain a native Revit UI session and dismiss `Projeto não recentemente
+   salvo` without Save As or changing the saved target.
+2. Re-query the normal-user bridge, open
+   `revit/production/working/AMANDA_WORKING_001.20260921-213302.rvt`, and
+   independently read the critical R05 elements.
+3. Require fresh close/reopen evidence before starting R06. Do not advance
+   `PROJECT_STATE.yaml` or infer production PASS from process presence,
+   previous journals, or provider health alone.
