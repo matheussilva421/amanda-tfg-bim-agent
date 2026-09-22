@@ -83,3 +83,10 @@ as sondagens foram bloqueadas pelo modal e não iniciaram trabalho.
 - Revalidação live do provider/documento/PID.
 - Gate independente de save/close/reopen para R05.
 - Nova tentativa R01→R06 e promoção de estado somente após evidência completa.
+
+## Publicação final deste handoff
+
+- Commit: `824c762` (`docs: record Revit modal blocker verification`).
+- Push: `origin/main` atualizado de `05635ae` para `824c762`.
+- O restante das alterações e artefatos previamente existentes permaneceu fora
+  do commit.
