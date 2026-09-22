@@ -62,5 +62,5 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Git verification
 
-- Last verified commit: `0d4374f`
-- Observed HEAD: `0d4374f`
+- Last verified commit: `044e2f1`
+- Observed HEAD: `044e2f1`
