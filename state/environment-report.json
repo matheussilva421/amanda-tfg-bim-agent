@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_utc": "2026-09-16T13:38:17Z",
+  "generated_utc": "2026-09-22T03:57:04Z",
   "generator": "amanda_agent doctor",
   "project_root": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda",
   "machine": {
@@ -52,7 +52,7 @@
     {
       "name": "codex",
       "status": "AVAILABLE",
-      "version": "codex-cli 0.154.0-alpha.6.2",
+      "version": "codex-cli 0.155.0-alpha.9.2",
       "detail": "Codex drives the agent loop; without it the pipeline cannot run.",
       "path": "C:\\Users\\slvma\\AppData\\Roaming\\npm\\codex.CMD",
       "critical": true
