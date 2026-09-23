@@ -37,13 +37,13 @@ Work continues on `codex/canonical-pavilion-migration` in the isolated worktree 
 
 ## GitHub
 
-Commits `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` and `f466418561c101bf27bcf7e1fdd328018a683b32` are pushed to `origin/codex/canonical-pavilion-migration`. No pull request has been created. Plan 11 Task 1 is test/lint green, committed, and pushed; Task 2 is green, committed as `3276976d1f47c9486d4de8f36086600042d57386`, and its handoff/checklist checkpoint `5059cab11d897636e793eb1f59617768b4e8790b` is pushed. Task 3 is committed as `4c24bacd93e60e5e1150eb70d6560d04d7050d46`; the Task 3 handoff/checklist checkpoint is pushed. Task 4 is committed as `0cbf0fc8987831feeba492421da0f93549e4deb5`; its handoff/checklist checkpoint is included in the current branch push. Private `docs/source/` inputs are ignored and must not be published. Original `main` checkout changes and untracked old packages remain untouched except the specifically requested local RVT archive/duplicate cleanup and prior package validation output.
+Commits `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` and `f466418561c101bf27bcf7e1fdd328018a683b32` are pushed to `origin/codex/canonical-pavilion-migration`. No pull request has been created. Plan 11 Task 1 is test/lint green, committed, and pushed; Task 2 is green, committed as `3276976d1f47c9486d4de8f36086600042d57386`, and its handoff/checklist checkpoint `5059cab11d897636e793eb1f59617768b4e8790b` is pushed. Task 3 is committed as `4c24bacd93e60e5e1150eb70d6560d04d7050d46`; the Task 3 handoff/checklist checkpoint is pushed. Task 4 is committed as `0cbf0fc8987831feeba492421da0f93549e4deb5`; its handoff/checklist checkpoint is pushed. Task 5 is committed as `ccfd410fe65ee074c0cdc76bff89e875a51bb443`; its handoff/checklist checkpoint is included in the current branch push. Private `docs/source/` inputs are ignored and must not be published. Original `main` checkout changes and untracked old packages remain untouched except the specifically requested local RVT archive/duplicate cleanup and prior package validation output.
 
 ## Exact resume
 
-1. Continue with Plan 11 Task 5 on the pushed branch; do not add ignored `docs/source/` or any RVT binaries.
-2. Start Task 5 RED-first: replace the active production selection with a new pavilion solution ID and approval hash bound to the three canonical board hashes and official program.
-3. Keep old linear selection/R12 superseded; create a new solution and approval hash bound to the three board hashes and official program before any new geometry.
+1. Continue with Plan 11 Task 6 on the pushed branch; do not add ignored `docs/source/` or any RVT binaries.
+2. Search all direct `build_courtyard_layout` references and classify them as LEGACY or ACTIVE; migrate active QA/export consumers to the canonical layout protocol.
+3. The new selection is a `CANDIDATE` and not BIM-eligible. Do not update `PROJECT_STATE.yaml` or execute Revit writes before the Task 10 migration proof and preceding gates.
 4. Do not write new Revit geometry until BIM-00 passes. Start a clean target, never copy R12 geometry.
 5. Before detailing, pass `CANONICAL_GEOMETRIC_ACCEPTANCE`; run board visual regression at R04/R06/R08/R12/R13/R15. R16 stays blocked until all required geometry/visual and verified site inputs are resolved.
 6. Preserve the GPT-6 Luna Xhigh-only subagent constraint. That exact option was unavailable in the current tool catalog; continue locally unless it appears.
@@ -75,3 +75,14 @@ Commits `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` and `f466418561c101bf27bcf7e1
 - GREEN: 5 focused QA tests passed; combined Tasks 1–4 regression: 36 passed, 0 failed, Python 3.12.14. Ruff check and `git diff --check` passed.
 - No Revit model was opened or written. BIM-00, canonical solution selection/approval binding, geometric acceptance, and stage visual regressions remain pending.
 - Task 4 implementation commit: `0cbf0fc8987831feeba492421da0f93549e4deb5` (`test: enforce canonical pavilion parti`). This commit and the Task 4 handoff checkpoint are being published to `origin/codex/canonical-pavilion-migration`. Task 5 is next.
+
+## Task 5 update — user-directed parti and canonical selection
+
+- RED: new selection constants/history API were absent; after adding the rejection case, the active builder incorrectly accepted the legacy bar. Both expected REDs were observed before their fixes.
+- Active solution ID is `AMANDA-RUN-002-PAVILION-S01` in collision-free run `AMANDA-RUN-002-PAVILION`; no existing run/decision ID collision was found.
+- The selection carries two content-bound decisions: parti decision authority `USER_DIRECTED`, detailed layout authority `AGENT_DELEGATED`. Three canonical image hashes and the official program PDF SHA-256 are referenced in both decision evidence and solution geometry/approval hash.
+- Detailed solution status is `CANDIDATE`; `bim_eligible=false` while site fit, canonical geometric acceptance, and stage regressions remain open. Invalid image/program SHA-256 values are rejected.
+- `build_selection` now accepts canonical pavilion layouts only. `build_legacy_selection` is explicitly named for old evidence/tests; the legacy R12 record remains `SUPERSEDED_BY_USER_DIRECTION` with one archived RVT hash and `geometry_reuse_allowed=false`. The old BIM test fixture is explicitly labelled LEGACY.
+- The current `scripts/run_amanda_production.py` still directly constructs the old layout and calls the active builder; it now fails closed before any write. Migrate and test this runner under Plan 11 Task 8; do not invoke it until then.
+- GREEN: 6 focused selection tests; 39 tests passed across selection/legacy BIM/decision-register/design-model coverage; Tasks 1–4 canonical regression remains 36 passed. Ruff passed on changed selection/model/test files. No Revit model was opened or written.
+- `PROJECT_STATE.yaml` and persistent decision registers remain unchanged pending offline run assembly and migration proof. Task 5 implementation commit: `ccfd410fe65ee074c0cdc76bff89e875a51bb443` (`feat: bind production selection to canonical pavilion boards`). This commit and the Task 5 handoff checkpoint are being published to `origin/codex/canonical-pavilion-migration`. Task 6 is next.
