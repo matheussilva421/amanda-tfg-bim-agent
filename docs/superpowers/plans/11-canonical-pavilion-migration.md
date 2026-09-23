@@ -165,7 +165,7 @@ Required logical components:
 - [x] RED test: no operation recreates a full-length double-loaded gallery as the main building.
 - [x] Implement minimal multi-block planning, with R03/R04 study assumptions explicitly blocked by BIM-00 and R05 detail blocked by canonical geometric acceptance.
 - [x] Run tests; GREEN (40 focused tests passed; 0 failed).
-- [ ] Commit `feat: plan multi-block canonical BIM stages`.
+- [x] Commit `feat: plan multi-block canonical BIM stages` (`98dba47`, pushed to `origin/codex/canonical-pavilion-migration`).
 
 ### Task 8: Harden production runner against legacy RVT reuse
 
