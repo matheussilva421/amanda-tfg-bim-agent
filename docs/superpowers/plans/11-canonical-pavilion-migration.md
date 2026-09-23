@@ -119,13 +119,13 @@ Required logical components:
 - Parti authority: `USER_DIRECTED`.
 - Detailed variant authority: `AGENT_DELEGATED`.
 
-- [ ] Write RED test asserting old `SELECTION_ARCHETYPE == COURTYARD_DOUBLE_LOADED_BAR` is no longer the active production selection.
-- [ ] Write RED test asserting canonical source hashes are part of the selection evidence and changing one changes `approval_hash`.
-- [ ] Write RED test asserting legacy selection remains representable as superseded history.
-- [ ] Implement new selection builder against `CanonicalPavilionLayout`.
-- [ ] Update rationale: do not claim bar wins by area; state user-fixed pavilion parti and agent-selected implementation inside it.
-- [ ] Run tests; GREEN.
-- [ ] Commit `feat: bind production selection to canonical pavilion boards`.
+- [x] Write RED test asserting old `SELECTION_ARCHETYPE == COURTYARD_DOUBLE_LOADED_BAR` is no longer the active production selection.
+- [x] Write RED test asserting canonical source hashes are part of the selection evidence and changing one changes `approval_hash`.
+- [x] Write RED test asserting legacy selection remains representable as superseded history.
+- [x] Implement new selection builder against `CanonicalPavilionLayout`.
+- [x] Update rationale: do not claim bar wins by area; state user-fixed pavilion parti and agent-selected implementation inside it.
+- [x] Run tests; GREEN.
+- [x] Commit `feat: bind production selection to canonical pavilion boards`.
 
 ### Task 6: Migrate QA/export consumers off the legacy builder
 

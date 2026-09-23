@@ -47,7 +47,7 @@ from amanda_agent.production.layout_bim import (
     build_walls,
     layout_stage_order,
 )
-from amanda_agent.production.selection import build_selection
+from amanda_agent.production.selection import build_legacy_selection
 
 ROOT = Path(__file__).resolve().parents[2]
 PROGRAM_PATH = ROOT / "project" / "requirements" / "program.json"
@@ -133,7 +133,8 @@ def registry(tmp_path: Path) -> CapabilityRegistry:
 
 @pytest.fixture(scope="module")
 def selection(layout):
-    return build_selection(
+    # Explicit legacy fixture for historical linear-plan compiler coverage.
+    return build_legacy_selection(
         layout, generation_run=RUN, timestamp="2026-09-16T15:00:00Z"
     )
 

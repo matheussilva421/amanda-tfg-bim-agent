@@ -461,6 +461,7 @@ def build_canonical_pavilion_layout(
             "superseded_source_reused": False,
             "superseded_solution_id": "AMANDA-RUN-001-S01",
             "canonical_source_hashes": list(profile.source_hashes),
+            "program_source_sha256": str(program["baseline"]["source_sha256"]),
             "people": int(program["baseline"]["person_capacity"]),
             "coordinate_basis": "NORMALIZED_METRIC_REFERENCE_NOT_SURVEY",
             "site_fit_status": "UNVERIFIED",

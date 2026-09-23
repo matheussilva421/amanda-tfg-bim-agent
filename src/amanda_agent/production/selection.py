@@ -25,6 +25,9 @@ from dataclasses import dataclass
 from typing import Any
 
 from amanda_agent.design.architectural_layout import CourtyardLayout
+from amanda_agent.design.canonical_pavilion_layout import CanonicalPavilionLayout
+from amanda_agent.design.canonical_qa import run_canonical_checks
+from amanda_agent.design.canonical_reference import CanonicalReferenceProfile
 from amanda_agent.design.models import (
     DesignSolution,
     DesignStatus,
@@ -33,8 +36,10 @@ from amanda_agent.design.models import (
 )
 from amanda_agent.requirements.decisions import (
     DecisionRecord,
+    FactClass,
     ReviewStatus,
     SelectionAuthority,
+    SelectionKind,
     ValidationStatus,
     compute_approval_hash,
 )
@@ -42,15 +47,27 @@ from amanda_agent.requirements.decisions import (
 SCHEMA_VERSION = 1
 
 #: Identity of the delegated selection of the adopted architectural layout.
-SELECTION_DECISION_ID = "DEC-P08-T09-SELECTION-001"
-SELECTION_TOPIC = "ARCHITECTURAL_SELECTION"
-SELECTION_SOLUTION_ID = "AMANDA-RUN-001-S01"
-SELECTION_ARCHETYPE = "COURTYARD_DOUBLE_LOADED_BAR"
-ENGINE_VERSION = "design-engine-v1"
-REQUIREMENTS_VERSION = "requirements-v1"
-SITE_VERSION = "site-v1"
-
+LEGACY_SELECTION_DECISION_ID = "DEC-P08-T09-SELECTION-001"
+LEGACY_SELECTION_TOPIC = "ARCHITECTURAL_SELECTION"
+LEGACY_SELECTION_SOLUTION_ID = "AMANDA-RUN-001-S01"
+LEGACY_SELECTION_ARCHETYPE = "COURTYARD_DOUBLE_LOADED_BAR"
+LEGACY_ENGINE_VERSION = "design-engine-v1"
+LEGACY_REQUIREMENTS_VERSION = "requirements-v1"
+LEGACY_SITE_VERSION = "site-v1"
+PARTI_DECISION_ID = "DEC-CANONICAL-PARTI-001"
+SELECTION_DECISION_ID = "DEC-CANONICAL-DETAIL-001"
+SELECTION_TOPIC = "CANONICAL_PARTI_IMPLEMENTATION"
+SELECTION_SOLUTION_ID = "AMANDA-RUN-002-PAVILION-S01"
+SELECTION_ARCHETYPE = "CANONICAL_PAVILION_CLUSTER"
 SELECTED_OPTION = (
+    "PROVISIONAL_ASSUMPTION: normalized pavilion layout implementing the user-directed "
+    "canonical parti, pending geometric acceptance and verified site inputs."
+)
+ENGINE_VERSION = "canonical-layout-v1"
+REQUIREMENTS_VERSION = "requirements-v1"
+SITE_VERSION = "site-unverified-v1"
+
+LEGACY_SELECTED_OPTION = (
     "Single-storey double-loaded bar with a protected patio, the service face on "
     "the street and a 1.50 m covered gallery serving every room."
 )
@@ -67,6 +84,7 @@ class Selection:
     decision: DecisionRecord
     solution: DesignSolution
     layout_hash: str
+    parti_decision: DecisionRecord | None = None
 
     @property
     def approval_hash(self) -> str:
@@ -88,7 +106,7 @@ def _alternatives(layout: CourtyardLayout) -> list[str]:
         ),
         (
             "Single double-loaded bar with a protected patio: selected, measured "
-            + "%.2f" % measured
+            + f"{measured:.2f}"
             + " m2 enclosed, inside the adopted estimate"
         ),
     ]
@@ -117,8 +135,8 @@ def _rationale(layout: CourtyardLayout) -> str:
     return (
         "Of the alternatives measured for this programme, only the single "
         "double-loaded bar reaches the enclosed area the adopted programme "
-        "estimates: it measures %.2f m2 against the 783-814 m2 range, because "
-        "%.0f m2 of programmed rooms and %.2f m2 of gallery share one envelope "
+        "estimates: it measures {:.2f} m2 against the 783-814 m2 range, because "
+        "{:.0f} m2 of programmed rooms and {:.2f} m2 of gallery share one envelope "
         "and one gallery. The two-wing courtyard needs a second gallery and a "
         "second set of external walls and is roughly 30 percent over budget. The "
         "bar keeps every room on the gallery with daylight from its outer face, "
@@ -126,8 +144,7 @@ def _rationale(layout: CourtyardLayout) -> str:
         "requires. Every room area is exactly the canonical target; none was "
         "stretched to reach the total. The patio is held off the public edge by "
         "the building and closed by the perimeter wall, which remains an "
-        "assumption because only a study boundary exists."
-        % (
+        "assumption because only a study boundary exists.".format(
             accounting["gross_enclosed_m2"],
             accounting["net_internal_m2"],
             accounting["circulation_m2"],
@@ -135,7 +152,7 @@ def _rationale(layout: CourtyardLayout) -> str:
     )
 
 
-def build_selection(
+def build_legacy_selection(
     layout: CourtyardLayout,
     *,
     generation_run: str,
@@ -152,10 +169,10 @@ def build_selection(
     source_refs = _source_refs()
     affected = _affected_requirements()
     decision = DecisionRecord(
-        decision_id=SELECTION_DECISION_ID,
-        topic=SELECTION_TOPIC,
+        decision_id=LEGACY_SELECTION_DECISION_ID,
+        topic=LEGACY_SELECTION_TOPIC,
         alternatives=_alternatives(layout),
-        selected_option=SELECTED_OPTION,
+        selected_option=LEGACY_SELECTED_OPTION,
         rationale=rationale,
         source_refs=source_refs,
         confidence=0.7,
@@ -163,7 +180,7 @@ def build_selection(
         selection_authority=SelectionAuthority.AGENT_DELEGATED,
         timestamp=timestamp,
         approval_hash=compute_approval_hash(
-            selected_option=SELECTED_OPTION,
+            selected_option=LEGACY_SELECTED_OPTION,
             rationale=rationale,
             source_refs=source_refs,
             affected_requirements=affected,
@@ -206,13 +223,13 @@ def build_selection(
         "gallery": [[float(x), float(y)] for x, y in layout.gallery.exterior.coords],
     }
     solution = DesignSolution(
-        solution_id=SELECTION_SOLUTION_ID,
+        solution_id=LEGACY_SELECTION_SOLUTION_ID,
         run_id=generation_run,
         seed=0,
-        requirements_version=REQUIREMENTS_VERSION,
-        site_version=SITE_VERSION,
-        engine_version=ENGINE_VERSION,
-        archetype=SELECTION_ARCHETYPE,
+        requirements_version=LEGACY_REQUIREMENTS_VERSION,
+        site_version=LEGACY_SITE_VERSION,
+        engine_version=LEGACY_ENGINE_VERSION,
+        archetype=LEGACY_SELECTION_ARCHETYPE,
         geometry=geometry,
         metrics=MetricSet(
             program_compliance=1.0,
@@ -223,22 +240,34 @@ def build_selection(
             constructability=1.0,
             overall_score=1.0,
             evidence=[
-                "metrics are declared as the study scope of this selection, not "
-                "as measured simulation output",
-                "program compliance: every programmed room placed at its canonical "
-                "target area, reconciled to 626.00 m2 internal useful",
-                "privacy: the street face carries the public, service and "
-                "community programme and the patio face carries residential, "
-                "children and technical care, so no residential room opens onto "
-                "the public edge",
-                "circulation: one 1.50 m gallery reaches every room, above the "
-                "accessible minimum",
-                "accessibility: the accessible rooms the programme marks are "
-                "placed on the gallery, and the gallery width is measured at "
-                "1.50 m",
-                "constructability: a single-storey double-loaded bar with a "
-                "gallery needs one envelope and one gallery, which is the "
-                "alternative that reaches the adopted enclosed-area estimate",
+                (
+                    "metrics are declared as the study scope of this selection, not "
+                    "as measured simulation output"
+                ),
+                (
+                    "program compliance: every programmed room placed at its canonical "
+                    "target area, reconciled to 626.00 m2 internal useful"
+                ),
+                (
+                    "privacy: the street face carries the public, service and "
+                    "community programme and the patio face carries residential, "
+                    "children and technical care, so no residential room opens onto "
+                    "the public edge"
+                ),
+                (
+                    "circulation: one 1.50 m gallery reaches every room, above the "
+                    "accessible minimum"
+                ),
+                (
+                    "accessibility: the accessible rooms the programme marks are "
+                    "placed on the gallery, and the gallery width is measured at "
+                    "1.50 m"
+                ),
+                (
+                    "constructability: a single-storey double-loaded bar with a "
+                    "gallery needs one envelope and one gallery, which is the "
+                    "alternative that reaches the adopted enclosed-area estimate"
+                ),
             ],
         ),
         hard_violations=[],
@@ -261,7 +290,350 @@ def build_selection(
     )
 
 
+def legacy_selection_history() -> dict[str, Any]:
+    """Describe the archived R12 selection without making it executable."""
+    return {
+        "decision_id": LEGACY_SELECTION_DECISION_ID,
+        "solution_id": LEGACY_SELECTION_SOLUTION_ID,
+        "archetype": LEGACY_SELECTION_ARCHETYPE,
+        "status": "SUPERSEDED_BY_USER_DIRECTION",
+        "solution_status": "SUPERSEDED",
+        "selection_authority": SelectionAuthority.AGENT_DELEGATED.value,
+        "parti_selection_authority": SelectionAuthority.USER_DIRECTED.value,
+        "superseded_by": SELECTION_SOLUTION_ID,
+        "historical_rvt": "revit/production/archive/superseded-linear/AMANDA-RUN-001-S01-R12-linear-historical-20260922.rvt",
+        "historical_rvt_sha256": "ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29",
+        "geometry_reuse_allowed": False,
+    }
+
+
+def _is_sha256(value: str) -> bool:
+    return len(value) == 64 and all(
+        character in "0123456789abcdefABCDEF" for character in value
+    )
+
+
+def _canonical_source_refs(
+    profile: CanonicalReferenceProfile, parameters: Any
+) -> list[str]:
+    refs = [
+        f"{image}#sha256={digest}"
+        for image, digest in zip(
+            profile.canonical_images, profile.source_hashes, strict=True
+        )
+    ]
+    program_hash = str(parameters.get("program_source_sha256", ""))
+    if not _is_sha256(program_hash):
+        raise SelectionError("the official programme source hash is missing or invalid")
+    refs.append(
+        f"project/requirements/program.json#baseline.source_sha256={program_hash}"
+    )
+    return refs
+
+
+def _build_canonical_selection(
+    layout: CanonicalPavilionLayout,
+    profile: CanonicalReferenceProfile,
+    *,
+    generation_run: str,
+    timestamp: str,
+) -> Selection:
+    if not layout.rooms or not layout.content_hash:
+        raise SelectionError("canonical layout needs rooms and a content hash")
+    if profile.status != "CANONICAL_DESIGN_REFERENCE":
+        raise SelectionError("selection requires the user-directed canonical profile")
+    if len(profile.source_hashes) != 3 or len(profile.canonical_images) != 3:
+        raise SelectionError("all three canonical boards must be bound")
+    if any(not _is_sha256(value) for value in profile.source_hashes):
+        raise SelectionError("invalid canonical board hash")
+    if tuple(layout.parameters.get("canonical_source_hashes", ())) != tuple(
+        profile.source_hashes
+    ):
+        raise SelectionError("layout and selection canonical board hashes differ")
+
+    checks = run_canonical_checks(layout, profile)
+    structural_failures = [
+        item.check_id
+        for item in checks
+        if item.status == "FAIL" and item.check_id != "CANON-011"
+    ]
+    if structural_failures:
+        raise SelectionError(
+            "canonical structural QA failed: " + ", ".join(structural_failures)
+        )
+
+    program = dict(profile.data["program"])
+    source_refs = _canonical_source_refs(profile, layout.parameters)
+    affected = [
+        "PROGRAM-PEOPLE-20",
+        "PROGRAM-INTERNAL-626",
+        "PROGRAM-EXTERNAL-260",
+        "PROGRAM-ENCLOSED-ESTIMATE-783-814",
+        "PROGRAM-COVERED-ESTIMATE-850-950",
+        "CANONICAL-ADMIN-PUBLIC-EDGE-TWO-LEVELS",
+        "CANONICAL-RESIDENTIAL-FOUR-PAVILIONS-AND-CENTRAL-GARDEN",
+        "CANONICAL-CHILD-GREEN-INTERFACE",
+        "CANONICAL-SEPARATE-SERVICE-ACCESS",
+        "CANONICAL-COVERED-EXTERNAL-CIRCULATION",
+    ]
+    parti_option = (
+        "USER_DIRECTED: three canonical design boards govern implantation, four "
+        "residential pavilions around the protected garden, the public two-level "
+        "administrative block, child-green interface, separate services and covered links."
+    )
+    parti_rationale = (
+        "The user explicitly designated the three hashed boards as the canonical "
+        "design reference and superseded the linear R12 solution. This decision "
+        "fixes the architectural parti only. It does not claim verified parcel fit, "
+        "topography, regulatory approval, geometric acceptance, or visual regression. "
+        "The official baseline remains 20 people, 626 m2 internal and 260 m2 external."
+    )
+    parti_decision = DecisionRecord(
+        decision_id=PARTI_DECISION_ID,
+        topic="USER_DIRECTED_CANONICAL_PARTI",
+        alternatives=[
+            "Four residential pavilions around a protected garden, with separate public administration and service blocks",
+            "AMANDA-RUN-001-S01 linear bar, explicitly superseded by user direction",
+        ],
+        selected_option=parti_option,
+        rationale=parti_rationale,
+        source_refs=source_refs,
+        confidence=1.0,
+        affected_requirements=affected,
+        selection_authority=SelectionAuthority.USER_DIRECTED,
+        timestamp=timestamp,
+        supersedes=LEGACY_SELECTION_DECISION_ID,
+        approval_hash=compute_approval_hash(
+            selected_option=parti_option,
+            rationale=parti_rationale,
+            source_refs=source_refs,
+            affected_requirements=affected,
+        ),
+        validation_status=ValidationStatus.VERIFIED,
+        revision_procedure=(
+            "The canonical parti can change only by a new explicit user direction; "
+            "append a new decision with the hashes of every referenced board."
+        ),
+        review_status=ReviewStatus.AMANDA_REVIEW_PENDING,
+        selection_kind=SelectionKind.EVIDENCE_BACKED,
+        adoption_status="USER_DIRECTED_CANONICAL_DESIGN_REFERENCE",
+        rejected_options=["AMANDA-RUN-001-S01 linear bar"],
+    )
+
+    detail_refs = [
+        *source_refs,
+        f"decision:{parti_decision.decision_id}#approval_hash={parti_decision.approval_hash}",
+        "project/site/missing-data.yaml#parcel-boundary-and-topography-unverified",
+    ]
+    detail_rationale = (
+        "The detailed normalized layout implements the user-directed canonical "
+        "parti and the exact 20-person programme. Room and outdoor programme areas "
+        "reconcile, and canonical structural QA passes. Coordinates are normalized "
+        "reference geometry, not survey coordinates. Site fit, canonical geometric "
+        "acceptance, and all required stage visual regressions remain pending; this "
+        "candidate is therefore not BIM-eligible."
+    )
+    detail_decision = DecisionRecord(
+        decision_id=SELECTION_DECISION_ID,
+        topic=SELECTION_TOPIC,
+        alternatives=[
+            "PROVISIONAL_ASSUMPTION: normalized metric pavilion placement around a protected central patio",
+            "Reuse of the superseded linear R12 geometry, prohibited",
+        ],
+        selected_option=SELECTED_OPTION,
+        rationale=detail_rationale,
+        source_refs=detail_refs,
+        confidence=0.5,
+        affected_requirements=affected,
+        selection_authority=SelectionAuthority.AGENT_DELEGATED,
+        timestamp=timestamp,
+        supersedes=LEGACY_SELECTION_DECISION_ID,
+        approval_hash=compute_approval_hash(
+            selected_option=SELECTED_OPTION,
+            rationale=detail_rationale,
+            source_refs=detail_refs,
+            affected_requirements=affected,
+        ),
+        validation_status=ValidationStatus.BLOCKED_BY_INPUT,
+        revision_procedure=(
+            "A material layout change creates a new solution ID and approval hash; "
+            "first reconcile site inputs, pass canonical geometric acceptance, and "
+            "re-run applicable visual and BIM gates."
+        ),
+        review_status=ReviewStatus.AMANDA_REVIEW_PENDING,
+        selection_kind=SelectionKind.PROVISIONAL_ASSUMPTION,
+        fact_class=FactClass.DESIGN_HYPOTHESIS,
+        verification_required=True,
+        adoption_status="PROVISIONAL_PENDING_CANONICAL_GEOMETRIC_ACCEPTANCE",
+        rejected_options=["Reuse of superseded AMANDA-RUN-001-S01 geometry"],
+    )
+
+    geometry = {
+        "type": "CanonicalPavilionDesignGeometry",
+        "layout_hash": layout.content_hash,
+        "parti_selection_authority": SelectionAuthority.USER_DIRECTED.value,
+        "detailed_variant_authority": SelectionAuthority.AGENT_DELEGATED.value,
+        "parti_decision": {
+            "decision_id": parti_decision.decision_id,
+            "approval_hash": parti_decision.approval_hash,
+        },
+        "canonical_reference": {
+            "status": profile.status,
+            "images": [
+                {"path": image, "sha256": digest}
+                for image, digest in zip(
+                    profile.canonical_images, profile.source_hashes, strict=True
+                )
+            ],
+        },
+        "canonical_source_hashes": list(profile.source_hashes),
+        "program": program,
+        "program_source_sha256": layout.parameters["program_source_sha256"],
+        "coordinate_basis": layout.coordinate_basis,
+        "site_fit_status": layout.site_fit_status,
+        "geometry_origin": "CANONICAL_PAVILION_RECONSTRUCTION",
+        "superseded_source_reused": False,
+        "blocks": [
+            {
+                "component_id": block.component_id,
+                "role": block.role,
+                "storeys": block.storeys,
+                "footprint_wkt": block.footprint.wkt,
+                "floor_footprints_wkt": {
+                    str(level): polygon.wkt
+                    for level, polygon in sorted(block.floor_footprints.items())
+                },
+            }
+            for block in layout.blocks
+        ],
+        "rooms": [
+            {
+                "logical_id": room.logical_id,
+                "sector_id": room.sector_id,
+                "component_id": room.component_id,
+                "level": room.level,
+                "net_area_m2": room.net_area_m2,
+                "accessible": room.accessible,
+                "polygon_wkt": room.polygon.wkt,
+            }
+            for room in layout.rooms
+        ],
+        "external_spaces": [
+            {
+                "logical_id": space.logical_id,
+                "component_id": space.component_id,
+                "area_m2": space.area_m2,
+                "polygon_wkt": space.polygon.wkt,
+            }
+            for space in layout.external_spaces
+        ],
+        "covered_connectors": [
+            {
+                "connector_id": path.connector_id,
+                "from_component": path.from_component,
+                "to_component": path.to_component,
+                "footprint_wkt": path.footprint.wkt,
+            }
+            for path in layout.covered_connectors
+        ],
+        "footprint_wkt": layout.footprint.wkt,
+        "central_garden_wkt": layout.central_garden.polygon.wkt,
+        "accounting": dict(layout.accounting),
+        "canonical_qa": [
+            {
+                "check_id": item.check_id,
+                "status": item.status,
+                "evidence": item.evidence,
+            }
+            for item in checks
+        ],
+    }
+    solution = DesignSolution(
+        solution_id=SELECTION_SOLUTION_ID,
+        run_id=generation_run,
+        seed=0,
+        requirements_version=REQUIREMENTS_VERSION,
+        site_version=SITE_VERSION,
+        engine_version=ENGINE_VERSION,
+        archetype=SELECTION_ARCHETYPE,
+        geometry=geometry,
+        metrics=MetricSet(
+            program_compliance=1.0,
+            evidence=[
+                "626 m2 internal room instances and 260 m2 external program reconcile exactly",
+                "Other performance dimensions are not scored before canonical geometric acceptance and verified site inputs",
+            ],
+        ),
+        hard_violations=[],
+        soft_penalties={},
+        parents=[generation_run],
+        status=DesignStatus.CANDIDATE,
+        program_person_capacity=int(program["people"]),
+        selection_authority=SelectionAuthority.AGENT_DELEGATED,
+        decision_evidence=detail_decision,
+        review_status=ReviewStatus.AMANDA_REVIEW_PENDING,
+    )
+    if solution.approval_hash != compute_design_approval_hash(solution):
+        raise SelectionError(
+            "canonical solution approval hash does not bind its content"
+        )
+    if solution.bim_eligible:
+        raise SelectionError(
+            "canonical solution must remain gated before BIM-00 and geometric acceptance"
+        )
+    return Selection(
+        decision=detail_decision,
+        solution=solution,
+        layout_hash=layout.content_hash,
+        parti_decision=parti_decision,
+    )
+
+
+def build_canonical_selection(
+    layout: CanonicalPavilionLayout,
+    profile: CanonicalReferenceProfile,
+    *,
+    generation_run: str,
+    timestamp: str,
+) -> Selection:
+    """Build user-directed parti and delegated, still-provisional detail records."""
+    return _build_canonical_selection(
+        layout,
+        profile,
+        generation_run=generation_run,
+        timestamp=timestamp,
+    )
+
+
+def build_selection(
+    layout: CanonicalPavilionLayout,
+    *,
+    generation_run: str,
+    timestamp: str,
+    profile: CanonicalReferenceProfile | None = None,
+) -> Selection:
+    """Build only the active canonical selection; reject legacy geometry."""
+    if not isinstance(layout, CanonicalPavilionLayout):
+        raise SelectionError(
+            "the active selection builder rejects legacy linear layouts"
+        )
+    if profile is None:
+        raise SelectionError(
+            "canonical selection requires its hashed reference profile"
+        )
+    return build_canonical_selection(
+        layout,
+        profile,
+        generation_run=generation_run,
+        timestamp=timestamp,
+    )
+
+
 __all__ = [
+    "LEGACY_SELECTION_ARCHETYPE",
+    "LEGACY_SELECTION_DECISION_ID",
+    "LEGACY_SELECTION_SOLUTION_ID",
+    "PARTI_DECISION_ID",
     "SCHEMA_VERSION",
     "SELECTED_OPTION",
     "SELECTION_ARCHETYPE",
@@ -269,5 +641,7 @@ __all__ = [
     "SELECTION_SOLUTION_ID",
     "Selection",
     "SelectionError",
+    "build_canonical_selection",
     "build_selection",
+    "legacy_selection_history",
 ]

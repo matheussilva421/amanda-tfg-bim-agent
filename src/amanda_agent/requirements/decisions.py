@@ -16,6 +16,7 @@ class SelectionAuthority(StrEnum):
     """Authority that selected the option recorded by a decision."""
 
     AGENT_DELEGATED = "AGENT_DELEGATED"
+    USER_DIRECTED = "USER_DIRECTED"
     AMANDA_DIRECTED = "AMANDA_DIRECTED"
     USER_REQUESTED_PAUSE = "USER_REQUESTED_PAUSE"
 
@@ -139,9 +140,7 @@ class DecisionRecord(BaseModel):
     verification_required: bool = False
     adoption_status: str | None = Field(default=None, min_length=1)
     rejected_options: list[str] = Field(default_factory=list)
-    source_sha256: str | None = Field(
-        default=None, pattern=r"^[0-9a-fA-F]{64}$"
-    )
+    source_sha256: str | None = Field(default=None, pattern=r"^[0-9a-fA-F]{64}$")
 
     @field_validator(
         "alternatives",
@@ -168,9 +167,7 @@ class DecisionRecord(BaseModel):
         values = dict(values)
         selected_option = str(values.get("selected_option", ""))
         if selected_option.startswith("PROVISIONAL_ASSUMPTION"):
-            values.setdefault(
-                "selection_kind", SelectionKind.PROVISIONAL_ASSUMPTION
-            )
+            values.setdefault("selection_kind", SelectionKind.PROVISIONAL_ASSUMPTION)
         if "approval_hash" not in values:
             values["approval_hash"] = compute_approval_hash(
                 selected_option=values.get("selected_option"),
@@ -187,9 +184,7 @@ class DecisionRecord(BaseModel):
             or self.selected_option.startswith("PROVISIONAL_ASSUMPTION")
         )
         if provisional and self.fact_class is not FactClass.DESIGN_HYPOTHESIS:
-            raise ValueError(
-                "PROVISIONAL_ASSUMPTION requires DESIGN_HYPOTHESIS"
-            )
+            raise ValueError("PROVISIONAL_ASSUMPTION requires DESIGN_HYPOTHESIS")
         if provisional and self.scenario is not DecisionScenario.STUDY:
             raise ValueError("PROVISIONAL_ASSUMPTION requires STUDY")
         if provisional and self.validation_status is ValidationStatus.VERIFIED:
@@ -200,9 +195,7 @@ class DecisionRecord(BaseModel):
             self.fact_class is FactClass.DESIGN_HYPOTHESIS
             and self.validation_status is ValidationStatus.VERIFIED
         ):
-            raise ValueError(
-                "a DESIGN_HYPOTHESIS cannot be promoted to VERIFIED"
-            )
+            raise ValueError("a DESIGN_HYPOTHESIS cannot be promoted to VERIFIED")
         return self
 
     @model_validator(mode="after")
