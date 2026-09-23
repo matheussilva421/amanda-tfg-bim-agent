@@ -82,14 +82,14 @@ Required logical components:
 - `THERAPEUTIC_GARDEN`, `PROTECTED_PATIO`, `HORTA`, `EXERCISE`, `PLAYGROUND`;
 - covered external connectors.
 
-- [ ] Write RED tests asserting no single polygon/bar contains all internal program and exactly 626 m² net internal is assigned once.
-- [ ] Add test that residential official mix is distributed across 4 pavilion groups and all required logical IDs remain unique.
-- [ ] Add test that admin and residential clusters have distinct footprints separated by external space.
-- [ ] Add test that external programmed spaces sum to 260 m².
-- [ ] Add test that central garden intersects/relates to all residential pavilion access paths without overlapping closed footprints.
-- [ ] Implement minimal deterministic normalized reference geometry, scaling dimensions from program areas rather than trusting pixels as survey measurements.
-- [ ] Run tests; GREEN.
-- [ ] Commit `feat: build canonical pavilion layout`.
+- [x] Write RED tests asserting no single polygon/bar contains all internal program and exactly 626 m² net internal is assigned once.
+- [x] Add test that residential official mix is distributed across 4 pavilion groups and all required logical IDs remain unique.
+- [x] Add test that admin and residential clusters have distinct footprints separated by external space.
+- [x] Add test that external programmed spaces sum to 260 m².
+- [x] Add test that central garden intersects/relates to all residential pavilion access paths without overlapping closed footprints.
+- [x] Implement minimal deterministic normalized reference geometry, scaling dimensions from program areas rather than trusting pixels as survey measurements.
+- [x] Run tests; GREEN.
+- [x] Commit `feat: build canonical pavilion layout`.
 
 ### Task 4: Canonical visual/parti invariants
 

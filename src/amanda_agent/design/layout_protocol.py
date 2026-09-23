@@ -18,6 +18,7 @@ class ExternalSpace:
     name: str
     polygon: BaseGeometry
     is_covered: bool = False
+    component_id: str | None = None
 
     @property
     def area_m2(self) -> float:
@@ -32,6 +33,7 @@ class ExternalSpaceProtocol(Protocol):
     name: str
     polygon: BaseGeometry
     is_covered: bool
+    component_id: str | None
 
     @property
     def area_m2(self) -> float: ...
