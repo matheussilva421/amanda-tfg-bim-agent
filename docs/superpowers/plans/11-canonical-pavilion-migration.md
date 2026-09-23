@@ -57,10 +57,10 @@
 **Interfaces:**
 - Produces protocol/properties required by BIM/export/QA: `rooms`, `footprint`, `external_spaces`, `content_hash`, `accounting`, `parameters`, `service_access_point`.
 
-- [ ] Write failing test with both a small fake layout and legacy `CourtyardLayout` satisfying protocol.
-- [ ] Run and confirm RED.
-- [ ] Implement protocol/dataclasses without changing legacy geometry.
-- [ ] Run and confirm GREEN.
+- [x] Write failing test with both a small fake layout and legacy `CourtyardLayout` satisfying protocol.
+- [x] Run and confirm RED (protocol module absent).
+- [x] Implement protocol/dataclasses and a geometry-neutral legacy adapter; legacy geometry unchanged.
+- [x] Run and confirm GREEN (18 focused and legacy regression tests passed).
 - [ ] Commit `refactor: define production layout protocol`.
 
 ### Task 3: Canonical pavilion layout model

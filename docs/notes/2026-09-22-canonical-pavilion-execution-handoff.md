@@ -37,14 +37,22 @@ Work continues on `codex/canonical-pavilion-migration` in the isolated worktree 
 
 ## GitHub
 
-Commit `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` created on `codex/canonical-pavilion-migration`; push pending. Plan 11 Task 1 is test/lint green and committed. Private `docs/source/` inputs are ignored and must not be published. Original `main` checkout changes and untracked old packages remain untouched except the specifically requested local RVT archive/duplicate cleanup and prior package validation output.
+Commits `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` and `f466418561c101bf27bcf7e1fdd328018a683b32` are pushed to `origin/codex/canonical-pavilion-migration`. No pull request has been created. Plan 11 Task 1 is test/lint green, committed, and pushed; Task 2 implementation is green locally with commit/push pending. Private `docs/source/` inputs are ignored and must not be published. Original `main` checkout changes and untracked old packages remain untouched except the specifically requested local RVT archive/duplicate cleanup and prior package validation output.
 
 ## Exact resume
 
-1. Push the committed canonical migration branch when the remote is reachable; do not add ignored `docs/source/` or any RVT binaries.
+1. Continue with Plan 11 Task 2 on the pushed branch; do not add ignored `docs/source/` or any RVT binaries.
 2. Continue Plan 11 Task 2 with RED-first tests for the stable layout protocol.
 3. Keep old linear selection/R12 superseded; create a new solution and approval hash bound to the three board hashes and official program before any new geometry.
 4. Do not write new Revit geometry until BIM-00 passes. Start a clean target, never copy R12 geometry.
 5. Before detailing, pass `CANONICAL_GEOMETRIC_ACCEPTANCE`; run board visual regression at R04/R06/R08/R12/R13/R15. R16 stays blocked until all required geometry/visual and verified site inputs are resolved.
 6. Preserve the GPT-6 Luna Xhigh-only subagent constraint. That exact option was unavailable in the current tool catalog; continue locally unless it appears.
 7. Update `PROJECT_STATE.yaml` only after Plan 11 Task 10 migration proof passes. Current live state is still PHASE_08/P08-T13/R12 and has not been promoted.
+
+## Task 2 update
+
+- RED: `tests/unit/test_layout_protocol.py` failed to import the not-yet-created protocol module, as expected.
+- GREEN: command `python -m pytest -p no:cacheprovider --basetemp=.tmp-pytest/plan11-task2-green tests/unit/test_layout_protocol.py tests/unit/test_architectural_layout.py -v` — 18 passed, 0 failed, Python 3.12.14.
+- Ruff check passed; formatting applied.
+- Added `LayoutProtocol`, `ExternalSpaceProtocol`, and immutable `ExternalSpace`; added a patio/veranda adapter to legacy `CourtyardLayout`. Updated the legacy builder's module docstring so it cannot be mistaken for active architectural truth. No legacy geometry code changed; all 16 pre-existing architectural layout tests passed.
+- Task 2 feature commit and push are pending. Next: Plan 11 Task 3 canonical pavilion geometry.

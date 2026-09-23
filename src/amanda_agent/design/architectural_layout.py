@@ -1,56 +1,31 @@
-"""Delegated architectural layout: the canonical program as a buildable plan.
+"""Historical single-bar layout generator retained for compatibility only.
 
-:mod:`amanda_agent.design.macrozones` assigns sectors to site regions and
-:mod:`amanda_agent.design.rooms` tiles full-width room bands through a block.
-Neither yields a plan a person could build from: there is no circulation at
-all, and the bands run across the whole block.  This module closes that gap for
-the adopted programme, and its output is what the BIM stages consume.
-
-Every decision below is delegated to the agent and registered in
-``project/requirements/decision-register.yaml`` rather than asked for:
-
-* typology ``COURTYARD``: a protected residential core behind a controlled
-  urban interface (``DEC-P08-T04-TYPOLOGY-001``);
-* one storey, which the programme's own enclosed-to-useful ratio implies;
-* a double-loaded bar: two rows of ``BAND_DEPTH_M`` separated by one covered
-  gallery of ``CORRIDOR_WIDTH_M``, so every room opens onto the spine and no
-  room is reached through another room;
-* the arrival, service and community programme on the face that looks at the
-  street, and the residential, children's and technical programme on the face
-  that looks at the protected patio;
-* the patio is the external space against the residential face, held off the
-  public edge by the building and closed on its far side by the perimeter wall
-  — a reviewable ``PROVISIONAL_ASSUMPTION``.
-
-Two area conventions are published, because the programme uses two.  "Área
-útil interna" is the sum of the programmed room areas and is preserved to the
-last decimal.  "Área construída fechada" is everything inside the outer face of
-the external walls — rooms, the gallery, partitions and the service voids
-beside the shallow rooms — which is the quantity the programme estimates at
-783-814 m2.  The measured value is reported against that range rather than
-forced into it, and the footprint to the outer face is published separately
-because a construction budget needs the larger number.
-
-The bar is planned as one volume rather than as a courtyard of separate wings,
-and that is a measured decision rather than a preference: a two-wing courtyard
-assembled from the same rooms and a gallery of the same width measures about
-1050 m2 enclosed, roughly 30% above the adopted budget, because a courtyard
-needs a second full gallery and a second set of external walls.  The single bar
-reaches the programme's own estimate while still giving every room daylight and
-a gallery frontage, and the patio supplies the protected outdoor space the
-external programme requires.
+This module implements the former ``COURTYARD_DOUBLE_LOADED_BAR`` choice. It
+is preserved for legacy regression coverage and historical comparisons; it is
+not the active architectural source of truth and must not drive the canonical
+production run. The user-directed canonical pavilion references supersede this
+layout and its prior selection rationale. Active production code must use the
+canonical layout path instead.
 """
 
 from __future__ import annotations
 
 import hashlib
 import json
+from collections.abc import Sequence
 from dataclasses import dataclass, field, replace
 from math import sqrt
-from typing import Any, Sequence
+from typing import Any
 
-from shapely.geometry import LineString, Point, Polygon, box  # type: ignore[import-untyped]
+from shapely.geometry import (  # type: ignore[import-untyped]
+    LineString,
+    Point,
+    Polygon,
+    box,
+)
 from shapely.ops import unary_union  # type: ignore[import-untyped]
+
+from .layout_protocol import ExternalSpace
 
 #: Depth of a room band, measured from the gallery wall outwards.  Chosen so the
 #: enclosed built area the plan measures falls inside the range the adopted
@@ -186,6 +161,24 @@ class CourtyardLayout:
     def face_rooms(self, face: str) -> list[RoomPlacement]:
         return [room for room in self.rooms if room.face == face]
 
+    @property
+    def external_spaces(self) -> tuple[ExternalSpace, ExternalSpace]:
+        """Adapt legacy patio/veranda geometry to the stable layout contract."""
+        return (
+            ExternalSpace(
+                logical_id="PROTECTED_PATIO",
+                name="Protected patio",
+                polygon=self.patio,
+                is_covered=False,
+            ),
+            ExternalSpace(
+                logical_id="COVERED_VERANDA",
+                name="Covered veranda",
+                polygon=self.veranda,
+                is_covered=True,
+            ),
+        )
+
 
 def _value(item: Any, key: str, default: Any = None) -> Any:
     if isinstance(item, dict):
@@ -271,7 +264,7 @@ def _key(point: Sequence[float]) -> tuple[float, float]:
 
 
 def _room_edges(
-    room: "RoomPlacement",
+    room: RoomPlacement,
 ) -> list[tuple[tuple[float, float], tuple[float, float]]]:
     """The straight edges of a room, as rounded coordinate pairs."""
 
