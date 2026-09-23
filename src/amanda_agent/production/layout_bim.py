@@ -30,12 +30,13 @@ from typing import Any
 
 from shapely.geometry import LineString, Polygon  # type: ignore[import-untyped]
 
-from amanda_agent.bim.models import BimStage
+from amanda_agent.bim.models import BimStage, DesiredState
 from amanda_agent.bim.stages import (
     CheckStatus,
     ExecutionMode,
     PreflightRequest,
     StageCheck,
+    run_preflight,
 )
 from amanda_agent.bim.stages import accessibility as accessibility_stage
 from amanda_agent.bim.stages import documentation as documentation_stage
@@ -52,6 +53,7 @@ from amanda_agent.bim.stages import shell as shell_stage
 from amanda_agent.bim.stages import site as site_stage
 from amanda_agent.design.architectural_layout import CourtyardLayout
 from amanda_agent.design.canonical_pavilion_layout import CanonicalPavilionLayout
+from amanda_agent.design.models import compute_design_approval_hash
 from amanda_agent.site.models import (
     BoundaryKind,
     BoundaryPolygon,
@@ -1063,6 +1065,38 @@ def _host_records(walls):
 
 
 def _plan_r07(request, layout, walls):
+    if (
+        request.mode is ExecutionMode.PLANNING_ONLY
+        and isinstance(layout, CanonicalPavilionLayout)
+        and not walls
+    ):
+        detail = (
+            "accepted wall host geometry is not available; openings remain blocked "
+            "until canonical geometric acceptance"
+        )
+        report = run_preflight(request)
+        report = report.model_copy(
+            update={
+                "checks": [
+                    *report.checks,
+                    StageCheck(
+                        name="canonical_opening_hosts",
+                        status=CheckStatus.BLOCKED,
+                        detail=detail,
+                    ),
+                ]
+            }
+        )
+        return openings_stage.OpeningStagePlan(
+            preflight=report,
+            desired_state=DesiredState(
+                stage=BimStage.R07,
+                generation_run=request.generation_run,
+                model_id=request.solution.solution_id,
+            ),
+            warnings=[detail],
+        )
+
     by_id = {wall.logical_id: wall for wall in walls}
     openings = []
     opening_spans = {}
@@ -1191,6 +1225,35 @@ def _plan_r08(request, program, layout):
 
 def _plan_r09(request, accessibility_input):
     if accessibility_input is None:
+        if request.mode is ExecutionMode.PLANNING_ONLY:
+            detail = (
+                "explicit measured accessibility input is missing; route widths, "
+                "slopes, clearances, and compliance are not inferred"
+            )
+            report = run_preflight(request)
+            report = report.model_copy(
+                update={
+                    "checks": [
+                        *report.checks,
+                        StageCheck(
+                            name="accessibility_inputs",
+                            status=CheckStatus.BLOCKED,
+                            detail=detail,
+                        ),
+                    ]
+                }
+            )
+            return accessibility_stage.AccessibilityStagePlan(
+                preflight=report,
+                route_graph=accessibility_stage.RouteGraph(),
+                numeric_status=accessibility_stage.AccessibilityStatus.BLOCKED_BY_INPUT,
+                desired_state=DesiredState(
+                    stage=BimStage.R09,
+                    generation_run=request.generation_run,
+                    model_id=request.solution.solution_id,
+                ),
+                notes=[detail],
+            )
         raise ProductionBimError(
             "R09 needs explicit accessibility input; it is never inferred"
         )
@@ -1462,24 +1525,28 @@ def build_layout_stage_plans(
     get past that gate.
     """
 
+    mode = mode if isinstance(mode, ExecutionMode) else ExecutionMode(mode)
+
     if mode is ExecutionMode.CONCEPT_ONLY:
         raise ProductionBimError(
             "the detailed production chain is not available under CONCEPT_ONLY; "
             "use the concept compiler for R01-R04"
         )
-    if mode is ExecutionMode.DETAILED_BIM:
+    if mode in {ExecutionMode.DETAILED_BIM, ExecutionMode.PLANNING_ONLY}:
         if solution is None:
             raise ProductionBimError(
-                "DETAILED_BIM requires the approved selection record; no plan is "
-                "produced without a content-bound approval"
+                f"{mode.value} requires a content-bound selection record"
             )
-        if not solution.bim_eligible:
+        if (
+            solution.approval_hash != approval_hash
+            or solution.approval_hash != compute_design_approval_hash(solution)
+        ):
+            raise ProductionBimError(
+                "the requested approval_hash is not bound to the current selection"
+            )
+        if mode is ExecutionMode.DETAILED_BIM and not solution.bim_eligible:
             raise ProductionBimError(
                 "the selection record is not BIM eligible under the current evidence"
-            )
-        if solution.approval_hash != approval_hash:
-            raise ProductionBimError(
-                "the requested approval_hash is not the one the selection carries"
             )
     if not layout.rooms:
         raise ProductionBimError("the layout carries no rooms")
@@ -1526,7 +1593,29 @@ def build_layout_stage_plans(
 
     plans = []
     for stage in _STAGE_ORDER:
-        plans.append(handlers[stage]())
+        plan = handlers[stage]()
+        if mode is ExecutionMode.PLANNING_ONLY:
+            capability_check = plan.preflight.get("capability_registry")
+            planning_blockers = ["PLANNING_ONLY"]
+            if capability_check is not None and capability_check.status is CheckStatus.BLOCKED:
+                planning_blockers.append("CAPABILITY_EVIDENCE_BLOCKED")
+            plan = plan.model_copy(
+                update={
+                    "operations": [
+                        operation.model_copy(
+                            update={
+                                "blocked_by": list(
+                                    dict.fromkeys(
+                                        [*operation.blocked_by, *planning_blockers]
+                                    )
+                                )
+                            }
+                        )
+                        for operation in plan.operations
+                    ]
+                }
+            )
+        plans.append(plan)
         if stage is max_stage:
             break
     return [_stamp(plan, solution_id, approval_hash) for plan in plans]

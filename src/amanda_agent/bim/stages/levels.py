@@ -26,8 +26,8 @@ from . import (
     StagePreflightError,
     StageToolInvoker,
     dispatch_operations,
+    provider_assignment,
     run_preflight,
-    select_capability,
     stage_checkpoint_label,
     with_stage_requirements,
 )
@@ -214,15 +214,8 @@ def _operation(
 def _select(
     request: PreflightRequest,
     capability: str,
-) -> tuple[str, list[str]]:
-    preferred, rest = select_capability(
-        request.registry,
-        capability,
-        revit_build=request.revit_build,
-        tool_schema_hash=request.tool_schema_hash,
-        scope=request.evidence_scope,
-    )
-    return preferred.provider, [entry.provider for entry in rest]
+) -> tuple[str | None, list[str]]:
+    return provider_assignment(request, capability)
 
 
 def plan_levels_stage(

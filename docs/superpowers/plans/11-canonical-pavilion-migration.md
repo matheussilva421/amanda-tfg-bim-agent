@@ -206,13 +206,13 @@ The detailed selection remains `bim_eligible=false` until canonical geometric ac
 **Files:**
 - Create: `docs/reports/canonical-migration/MIGRATION_VERIFICATION.md` at runtime.
 
-- [ ] Run legacy unit tests that should remain valid.
-- [ ] Run canonical layout/selection/QA tests.
-- [ ] Run all non-Revit regression: `pytest tests -m "not revit and not slow" -q`.
-- [ ] Search active production code: direct legacy builder references must be zero outside explicit legacy tests/modules.
-- [ ] Run dry production plan to R13; verify no writes occur in dry mode and stage ops reflect multiple blocks.
-- [ ] Record exact pass counts/commits/hashes.
-- [ ] Commit `test: verify canonical pavilion migration`.
+- [x] Run legacy unit tests that should remain valid (58 passed, 0 failed).
+- [x] Run canonical layout/selection/QA tests (31 passed, 0 failed).
+- [x] Run all non-Revit regression: `pytest tests -m "not revit and not slow" -q` (929 passed, 9 known baseline failures; same nine failure families as the 910/9 pre-Task-10 baseline).
+- [x] Search active production code: zero legacy builder references in `scripts/`; only the explicit legacy module definition/export remains in `src/`.
+- [x] Run dry production plan to R13; no file/provider/writer activity; seven distinct R04 block masses and write/evidence blockers verified.
+- [x] Record exact pass counts, Git anchors and canonical hashes in `docs/reports/canonical-migration/MIGRATION_VERIFICATION.md`.
+- [x] Commit `test: verify canonical pavilion migration`.
 
 ### Task 11: State/decision/task-graph migration
 

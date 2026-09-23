@@ -19,8 +19,8 @@ from . import (
     StagePreflightError,
     StageToolInvoker,
     dispatch_operations,
+    provider_assignment,
     run_preflight,
-    select_capability,
     stage_checkpoint_label,
     with_stage_requirements,
 )
@@ -420,13 +420,7 @@ def plan_furniture_stage(
         generation_run=effective.generation_run,
         elements=[*desired, *_external_elements(external_elements, external_planner)],
     )
-    preferred, fallbacks = select_capability(
-        effective.registry,
-        FURNITURE_CAPABILITY,
-        revit_build=effective.revit_build,
-        tool_schema_hash=effective.tool_schema_hash,
-        scope=effective.evidence_scope,
-    )
+    preferred, fallbacks = provider_assignment(effective, FURNITURE_CAPABILITY)
     operations = [
         StageOperation(
             stage=BimStage.R10,
@@ -438,8 +432,8 @@ def plan_furniture_stage(
                 "family_and_type_present",
                 "functional_placeholder",
             ],
-            preferred_provider=preferred.provider,
-            fallback_providers=[entry.provider for entry in fallbacks],
+            preferred_provider=preferred,
+            fallback_providers=fallbacks,
         )
         for element in desired
     ]

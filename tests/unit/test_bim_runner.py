@@ -203,7 +203,6 @@ def test_chain_rejects_empty_out_of_order_duplicate_and_failed_preflight() -> No
             ],
             invoker=SuccessfulInvoker(),
         )
-
     with pytest.raises(StageRunnerError, match="duplicate"):
         execute_chain(
             [
@@ -224,3 +223,29 @@ def test_chain_rejects_empty_out_of_order_duplicate_and_failed_preflight() -> No
             ],
             invoker=SuccessfulInvoker(),
         )
+
+
+def test_execute_stage_refuses_planning_only_plan_before_invoker():
+    from amanda_agent.bim.runner import StageRunnerError, execute_stage
+
+    plan = FakePlan(BimStage.R01, [_operation()])
+    plan.preflight.mode = "PLANNING_ONLY"
+    invoker = SuccessfulInvoker()
+
+    with pytest.raises(StageRunnerError, match="PLANNING_ONLY"):
+        execute_stage(plan, invoker=invoker)
+
+    assert invoker.calls == []
+
+
+def test_execute_stage_refuses_operations_with_unmet_evidence_gates():
+    from amanda_agent.bim.runner import StageRunnerError, execute_stage
+
+    operation = _operation()
+    operation.blocked_by = ["BIM-00"]
+    invoker = SuccessfulInvoker()
+
+    with pytest.raises(StageRunnerError, match="BIM-00"):
+        execute_stage(FakePlan(BimStage.R01, [operation]), invoker=invoker)
+
+    assert invoker.calls == []

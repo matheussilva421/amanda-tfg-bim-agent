@@ -22,7 +22,7 @@ from . import (
     StagePreflightError,
     StageToolInvoker,
     dispatch_operations,
-    provider_chain,
+    provider_assignment,
     run_preflight,
     stage_checkpoint_label,
     with_stage_requirements,
@@ -177,13 +177,7 @@ def _geometry_map(room_geometries: Any) -> dict[str, Any]:
 
 
 def _operation(element: DesiredElement, request: PreflightRequest) -> StageOperation:
-    preferred, fallbacks = provider_chain(
-        request.registry,
-        ROOM_CAPABILITY,
-        revit_build=request.revit_build,
-        tool_schema_hash=request.tool_schema_hash,
-        scope=request.evidence_scope,
-    )
+    preferred, fallbacks = provider_assignment(request, ROOM_CAPABILITY)
     return StageOperation(
         stage=BimStage.R08,
         logical_id=element.logical_id,

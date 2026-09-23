@@ -6,15 +6,15 @@ Revit, write files, or know how a provider transports a request.
 
 from __future__ import annotations
 
+import uuid
 from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, field
 from enum import StrEnum
 from typing import Any
-import uuid
 
 from .models import BimStage
 from .providers import HorizunRequestError, McpTransportError
-from .stages import StageOperation, StageToolCall
+from .stages import ExecutionMode, StageOperation, StageToolCall
 from .verification import (
     VerificationResult,
     all_layers_pass,
@@ -209,9 +209,22 @@ def _validate_plan(plan: Any) -> BimStage:
     failures = _preflight_messages(plan)
     if failures:
         raise StageRunnerError("preflight failures: " + "; ".join(failures))
+    preflight = getattr(plan, "preflight", None)
+    if getattr(preflight, "mode", None) == ExecutionMode.PLANNING_ONLY:
+        raise StageRunnerError("PLANNING_ONLY plans cannot be executed")
     operations = getattr(plan, "operations", None)
     if operations is None:
         raise StageRunnerError(f"{stage.name} plan has no operations list")
+    blocked = [
+        (operation.logical_id, sorted(set(operation.blocked_by)))
+        for operation in operations
+        if isinstance(operation, StageOperation) and operation.blocked_by
+    ]
+    if blocked:
+        details = "; ".join(
+            f"{logical_id}: {', '.join(gates)}" for logical_id, gates in blocked
+        )
+        raise StageRunnerError("operation dispatch blocked by evidence gate: " + details)
     for operation in operations:
         if not isinstance(operation, StageOperation):
             raise StageRunnerError("plan operation must be a StageOperation")

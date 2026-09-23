@@ -62,10 +62,11 @@ class MissingCapabilityError(StageError):
 
 
 class ExecutionMode(StrEnum):
-    """Who a run is allowed to write for."""
+    """The scope of a stage plan and whether it can dispatch writes."""
 
     CONCEPT_ONLY = "CONCEPT_ONLY"
     SYNTHETIC_LAB = "SYNTHETIC_LAB"
+    PLANNING_ONLY = "PLANNING_ONLY"
     DETAILED_BIM = "DETAILED_BIM"
 
 
@@ -384,6 +385,32 @@ def provider_chain(
     return preferred.provider, [entry.provider for entry in rest]
 
 
+def provider_assignment(
+    request: PreflightRequest, operation: str
+) -> tuple[str | None, list[str]]:
+    """Bind a verified provider, or leave it unassigned in read-only planning.
+
+    PLANNING_ONLY may describe desired operations without claiming that a
+    provider is usable. Its preflight records unavailable evidence as BLOCKED,
+    and the executor rejects the entire mode before dispatch. Every other mode
+    keeps the strict capability selector.
+    """
+
+    try:
+        preferred, rest = select_capability(
+            request.registry,
+            operation,
+            revit_build=request.revit_build,
+            tool_schema_hash=request.tool_schema_hash,
+            scope=request.evidence_scope,
+        )
+    except MissingCapabilityError:
+        if request.mode is ExecutionMode.PLANNING_ONLY:
+            return None, []
+        raise
+    return preferred.provider, [entry.provider for entry in rest]
+
+
 def with_stage_requirements(
     request: PreflightRequest,
     extra: Sequence[str] = (),
@@ -461,8 +488,24 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
     else:
         checks.append(_pass("fixture_scope", "target scope matches the execution mode"))
 
-    # 3. Detailed BIM needs an explicit, content-bound selection record.
-    if request.mode is not ExecutionMode.DETAILED_BIM:
+    # 3. Planning and detailed BIM retain the content-bound candidate identity.
+    if request.mode is ExecutionMode.PLANNING_ONLY:
+        if solution is None:
+            checks.append(
+                _fail("selection_record", "planning-only mode requires a candidate record")
+            )
+        elif solution.approval_hash != compute_design_approval_hash(solution):
+            checks.append(
+                _fail("selection_record", "candidate approval hash is not content-bound")
+            )
+        else:
+            checks.append(
+                _pass(
+                    "selection_record",
+                    "content-bound candidate retained for non-executable planning",
+                )
+            )
+    elif request.mode is not ExecutionMode.DETAILED_BIM:
         checks.append(
             _pass("selection_record", "mode does not require a design selection record")
         )
@@ -503,8 +546,11 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
             )
         )
 
-    # 4. The approval hash must still bind the solution content.
-    if request.mode is not ExecutionMode.DETAILED_BIM:
+    # 4. Planning-only candidates keep the same hash/evidence binding as details.
+    if request.mode not in {
+        ExecutionMode.PLANNING_ONLY,
+        ExecutionMode.DETAILED_BIM,
+    }:
         checks.append(
             _pass("approval_hash", "mode does not require a content-bound approval hash")
         )
@@ -537,7 +583,12 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
             _fail("approval_hash", "approval_hash is not bound to the current solution content")
         )
     else:
-        checks.append(_pass("approval_hash", "approval_hash matches the solution content"))
+        detail = (
+            "candidate approval_hash matches; mode cannot dispatch writes"
+            if request.mode is ExecutionMode.PLANNING_ONLY
+            else "approval_hash matches the solution content"
+        )
+        checks.append(_pass("approval_hash", detail))
 
     # 5. Selected input versions must match the run and the selected solution.
     version_problems: list[str] = []
@@ -547,7 +598,10 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
             version_problems.append(f"{key} was not selected")
         elif selected != expected:
             version_problems.append(f"{key}: selected {selected!r} != expected {expected!r}")
-    if request.mode is ExecutionMode.DETAILED_BIM and solution is not None:
+    if request.mode in {
+        ExecutionMode.PLANNING_ONLY,
+        ExecutionMode.DETAILED_BIM,
+    } and solution is not None:
         pinned = {
             "requirements_version": solution.requirements_version,
             "site_version": str(solution.site_version),
@@ -589,6 +643,11 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
     # 7. The registry must prove every operation the stage needs.
     scope = request.evidence_scope
     operations = list(request.required_operations)
+    capability_status = (
+        CheckStatus.BLOCKED
+        if request.mode is ExecutionMode.PLANNING_ONLY
+        else CheckStatus.FAIL
+    )
     if operations:
         refused: list[str] = []
         for operation in operations:
@@ -602,7 +661,13 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
             if not selectable:
                 refused.append(f"{operation}: " + ("; ".join(reasons) or "no record"))
         if refused:
-            checks.append(_fail("capability_registry", " | ".join(refused)))
+            checks.append(
+                StageCheck(
+                    name="capability_registry",
+                    status=capability_status,
+                    detail=" | ".join(refused),
+                )
+            )
         else:
             checks.append(
                 _pass("capability_registry", "every required operation has a usable capability")
@@ -631,10 +696,14 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
             )
         else:
             checks.append(
-                _fail(
-                    "capability_registry",
-                    "the registry has no selectable capability for build "
-                    f"{request.revit_build!r} and schema {request.tool_schema_hash!r}",
+                StageCheck(
+                    name="capability_registry",
+                    status=capability_status,
+                    detail=(
+                        "the registry has no selectable capability for build "
+                        f"{request.revit_build!r} and schema "
+                        f"{request.tool_schema_hash!r}"
+                    ),
                 )
             )
 
@@ -772,6 +841,7 @@ __all__ = [
     "capability_is_selectable",
     "create_stage_checkpoint",
     "dispatch_operations",
+    "provider_assignment",
     "provider_chain",
     "require_capability",
     "run_preflight",

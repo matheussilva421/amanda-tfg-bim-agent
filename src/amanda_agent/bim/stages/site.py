@@ -33,8 +33,8 @@ from . import (
     StagePreflightError,
     StageToolInvoker,
     dispatch_operations,
+    provider_assignment,
     run_preflight,
-    select_capability,
     stage_checkpoint_label,
     with_stage_requirements,
 )
@@ -280,13 +280,7 @@ def plan_site_stage(
     if not points:
         raise StageError("verified topography requires elevation points")
     extent = _extent(points)
-    preferred, rest = select_capability(
-        effective.registry,
-        TOPOSOLID_CAPABILITY,
-        revit_build=effective.revit_build,
-        tool_schema_hash=effective.tool_schema_hash,
-        scope=effective.evidence_scope,
-    )
+    preferred, rest = provider_assignment(effective, TOPOSOLID_CAPABILITY)
     operation = StageOperation(
         stage=BimStage.R02,
         logical_id=TOPO_LOGICAL_ID,
@@ -302,8 +296,8 @@ def plan_site_stage(
             "extent_within_tolerance",
             "elevations_match_source_points",
         ],
-        preferred_provider=preferred.provider,
-        fallback_providers=[entry.provider for entry in rest],
+        preferred_provider=preferred,
+        fallback_providers=rest,
     )
     planner = toposolid_planner
     if planner is None:

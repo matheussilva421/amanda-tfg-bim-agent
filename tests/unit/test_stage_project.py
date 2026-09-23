@@ -309,6 +309,47 @@ def test_registry_must_prove_the_exact_build_and_schema(tmp_path: Path):
     assert stale_pin.get("revit_build").status is CheckStatus.FAIL
 
 
+def test_planning_only_records_unselectable_capability_as_blocked(
+    tmp_path: Path,
+):
+    mismatched = _registry(tmp_path)
+    mismatched.entries[0] = _capability(tmp_path, revit_build="2026")
+
+    planning = run_preflight(
+        _request(
+            tmp_path,
+            mode=ExecutionMode.PLANNING_ONLY,
+            registry=mismatched,
+        )
+    )
+    detailed = run_preflight(_request(tmp_path, registry=mismatched))
+
+    assert planning.ok is True
+    assert planning.get("capability_registry").status is CheckStatus.BLOCKED
+    assert "2026" in planning.get("capability_registry").detail
+    assert detailed.ok is False
+    assert detailed.get("capability_registry").status is CheckStatus.FAIL
+
+
+def test_planning_only_project_operation_does_not_name_unverified_provider(
+    tmp_path: Path,
+):
+    mismatched = _registry(tmp_path)
+    mismatched.entries[0] = _capability(tmp_path, revit_build="2026")
+    request = _request(
+        tmp_path,
+        mode=ExecutionMode.PLANNING_ONLY,
+        registry=mismatched,
+    )
+
+    plan = _plan(tmp_path, request)
+
+    assert plan.preflight.get("capability_registry").status is CheckStatus.BLOCKED
+    assert len(plan.operations) == 1
+    assert plan.operations[0].preferred_provider is None
+    assert plan.operations[0].fallback_providers == []
+
+
 def test_unverified_study_input_cannot_certify_final(tmp_path: Path):
     from amanda_agent.site.models import BoundaryKind, BoundaryPolygon, SiteModel
 

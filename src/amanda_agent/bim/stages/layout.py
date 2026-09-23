@@ -29,7 +29,7 @@ from . import (
     StagePreflightError,
     StageToolInvoker,
     dispatch_operations,
-    provider_chain,
+    provider_assignment,
     run_preflight,
     stage_checkpoint_label,
     with_stage_requirements,
@@ -187,13 +187,7 @@ def _trim_at_shell_hosts(
 
 
 def _operation(element: DesiredElement, request: PreflightRequest) -> StageOperation:
-    preferred, fallbacks = provider_chain(
-        request.registry,
-        LAYOUT_CAPABILITY,
-        revit_build=request.revit_build,
-        tool_schema_hash=request.tool_schema_hash,
-        scope=request.evidence_scope,
-    )
+    preferred, fallbacks = provider_assignment(request, LAYOUT_CAPABILITY)
     return StageOperation(
         stage=BimStage.R06,
         logical_id=element.logical_id,

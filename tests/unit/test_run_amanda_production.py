@@ -98,7 +98,7 @@ def test_runner_reports_all_three_canonical_source_hashes(capsys):
     assert all(digest in output for digest in hashes)
 
 
-def test_run_reports_canonical_hashes_before_failing_closed_on_pending_gates(
+def test_dry_run_compiles_pending_candidate_without_provider_or_writer_lock(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys
 ):
     hashes = ("a" * 64, "b" * 64, "c" * 64)
@@ -124,29 +124,61 @@ def test_run_reports_canonical_hashes_before_failing_closed_on_pending_gates(
         "load",
         lambda _root: profile,
     )
-    monkeypatch.setattr(
-        production_runner,
-        "build_canonical_pavilion_layout",
-        lambda program, loaded_profile: SimpleNamespace(
-            program=program, profile=loaded_profile
-        ),
+    layout = SimpleNamespace(
+        program="official-program", profile=profile, content_hash="canonical-layout-hash"
     )
+    monkeypatch.setattr(production_runner, "build_canonical_pavilion_layout", lambda *_: layout)
     monkeypatch.setattr(
         production_runner, "build_selection", lambda *args, **kwargs: selection
     )
+    registry = SimpleNamespace(
+        entries=[
+            SimpleNamespace(revit_build="27.2.0.39", tool_schema_hash="a" * 64)
+        ]
+    )
+    monkeypatch.setattr(
+        production_runner.CapabilityRegistry,
+        "load_for_production",
+        lambda *_: (registry, []),
+    )
+    captured_planning_arguments = {}
 
+    def capture_plan_arguments(**kwargs):
+        captured_planning_arguments.update(kwargs)
+        return [SimpleNamespace(stage=SimpleNamespace(name="R13"), operations=[])]
+
+    monkeypatch.setattr(
+        production_runner, "build_layout_stage_plans", capture_plan_arguments
+    )
+    monkeypatch.setattr(production_runner, "find_project_template", lambda *_: None)
+
+    class ForbiddenTransport:
+        def __init__(self, **_kwargs):
+            pytest.fail("dry planning must never start a provider transport")
+
+    class ForbiddenWriterLock:
+        def __init__(self, *_args, **_kwargs):
+            pytest.fail("dry planning must never acquire the production writer lock")
+
+    monkeypatch.setattr(production_runner, "McpProbeTransport", ForbiddenTransport)
+    monkeypatch.setattr(production_runner, "WriterLock", ForbiddenWriterLock)
+
+    target = tmp_path / "new-canonical-target.rvt"
     result = production_runner.run(
-        tmp_path / "new-canonical-target.rvt", execute=False, max_stage="R13"
+        target, execute=False, max_stage="R13"
     )
 
     captured = capsys.readouterr()
     output = captured.out + captured.err
-    assert result == 2
+    assert result == 0
     assert all(digest in output for digest in hashes)
-    assert output.index("canonical source hashes") < output.index(
-        "canonical selection is gated"
-    )
+    assert "planned stages: ['R13']" in output
+    assert "dry run: nothing written" in output
     assert "AMANDA-RUN-002-PAVILION-S02" in output
+    assert captured_planning_arguments["mode"].value == "PLANNING_ONLY"
+    assert captured_planning_arguments["max_stage"].name == "R13"
+    assert captured_planning_arguments["solution"].bim_eligible is False
+    assert not target.exists()
 
 
 def test_active_runner_has_no_legacy_linear_layout_builder_import():

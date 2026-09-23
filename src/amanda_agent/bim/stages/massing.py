@@ -24,8 +24,8 @@ from . import (
     StagePreflightError,
     StageToolInvoker,
     dispatch_operations,
+    provider_assignment,
     run_preflight,
-    select_capability,
     stage_checkpoint_label,
     with_stage_requirements,
 )
@@ -236,13 +236,7 @@ def plan_massing_stage(
     if not report.ok:
         raise StagePreflightError("R04 preflight refused: " + "; ".join(report.problems))
     try:
-        preferred, rest = select_capability(
-            effective.registry,
-            MASSING_CAPABILITY,
-            revit_build=effective.revit_build,
-            tool_schema_hash=effective.tool_schema_hash,
-            scope=effective.evidence_scope,
-        )
+        preferred, rest = provider_assignment(effective, MASSING_CAPABILITY)
     except Exception as exc:
         raise StagePreflightError(f"R04 preflight refused: {MASSING_CAPABILITY}: {exc}") from exc
 
@@ -252,8 +246,8 @@ def plan_massing_stage(
         _operation(
             block,
             request.generation_run,
-            preferred.provider,
-            [entry.provider for entry in rest],
+            preferred,
+            rest,
         )
         for block in ordered
     ]

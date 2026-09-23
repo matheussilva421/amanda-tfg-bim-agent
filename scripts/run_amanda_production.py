@@ -249,7 +249,7 @@ def run(
     )
     print("solution id:", selection.solution.solution_id)
     print("approval hash:", selection.approval_hash)
-    if not selection.solution.bim_eligible:
+    if execute and not selection.solution.bim_eligible:
         print(
             "canonical selection is gated: BIM-00, canonical geometric acceptance, "
             "site evidence, and visual regressions must pass before detailed BIM",
@@ -279,7 +279,11 @@ def run(
         solution=selection.solution,
         accessibility_input=None,
         template_root=None,
-        mode=ExecutionMode.DETAILED_BIM,
+        mode=(
+            ExecutionMode.DETAILED_BIM
+            if execute
+            else ExecutionMode.PLANNING_ONLY
+        ),
         max_stage=BimStage[max_stage],
     )
     print("planned stages:", [plan.stage.name for plan in plans])

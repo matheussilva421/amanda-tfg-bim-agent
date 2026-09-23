@@ -26,8 +26,8 @@ from . import (
     StagePreflightError,
     StageToolInvoker,
     dispatch_operations,
+    provider_assignment,
     run_preflight,
-    select_capability,
     stage_checkpoint_label,
     with_stage_requirements,
 )
@@ -458,15 +458,9 @@ def plan_accessibility_stage(
         generation_run=effective.generation_run,
         elements=desired,
     )
-    preferred, fallbacks = select_capability(
-        effective.registry,
-        ACCESSIBILITY_CAPABILITY,
-        revit_build=effective.revit_build,
-        tool_schema_hash=effective.tool_schema_hash,
-        scope=effective.evidence_scope,
-    )
+    preferred, fallbacks = provider_assignment(effective, ACCESSIBILITY_CAPABILITY)
     operations = [
-        _operation(element, preferred.provider, [entry.provider for entry in fallbacks])
+        _operation(element, preferred, fallbacks)
         for element in owned
     ]
     return AccessibilityStagePlan(

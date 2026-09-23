@@ -29,7 +29,7 @@ from . import (
     StagePreflightError,
     StageToolInvoker,
     dispatch_operations,
-    provider_chain,
+    provider_assignment,
     run_preflight,
     stage_checkpoint_label,
     with_stage_requirements,
@@ -297,13 +297,7 @@ def plan_project_initialization(
         template_sha256=template.sha256,
         naming=naming,
     )
-    preferred, fallbacks = provider_chain(
-        effective.registry,
-        PROJECT_CREATE_CAPABILITY,
-        revit_build=effective.revit_build,
-        tool_schema_hash=effective.tool_schema_hash,
-        scope=effective.evidence_scope,
-    )
+    preferred, fallbacks = provider_assignment(effective, PROJECT_CREATE_CAPABILITY)
     operation = StageOperation(
         stage=BimStage.R01,
         logical_id=PROJECT_LOGICAL_ID,

@@ -18,8 +18,8 @@ from . import (
     StagePreflightError,
     StageToolInvoker,
     dispatch_operations,
+    provider_assignment,
     run_preflight,
-    select_capability,
     stage_checkpoint_label,
     with_stage_requirements,
 )
@@ -248,13 +248,7 @@ def plan_landscape_stage(
         generation_run=effective.generation_run,
         elements=[*owned, *_external_elements(external_elements, external_planner)],
     )
-    preferred, fallbacks = select_capability(
-        effective.registry,
-        LANDSCAPE_CAPABILITY,
-        revit_build=effective.revit_build,
-        tool_schema_hash=effective.tool_schema_hash,
-        scope=effective.evidence_scope,
-    )
+    preferred, fallbacks = provider_assignment(effective, LANDSCAPE_CAPABILITY)
     operations = [
         StageOperation(
             stage=BimStage.R11,
@@ -266,8 +260,8 @@ def plan_landscape_stage(
                 "programmed_area_preserved",
                 "privacy_and_adjacency_preserved",
             ],
-            preferred_provider=preferred.provider,
-            fallback_providers=[entry.provider for entry in fallbacks],
+            preferred_provider=preferred,
+            fallback_providers=fallbacks,
         )
         for element in owned
     ]

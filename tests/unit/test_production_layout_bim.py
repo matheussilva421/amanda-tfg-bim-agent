@@ -648,6 +648,123 @@ def test_canonical_r04_plans_distinct_block_masses_as_non_executable_hypotheses(
     assert plan.preflight.get("bim_00").status.value == "BLOCKED"
 
 
+def test_planning_only_compiles_candidate_through_r13_without_removing_write_gates(
+    registry, program, canonical_layout, canonical_profile, tmp_path
+):
+    selection = build_canonical_selection(
+        canonical_layout,
+        canonical_profile,
+        generation_run="AMANDA-RUN-002-PAVILION",
+        timestamp="2026-09-23T00:00:00Z",
+    )
+    candidate = selection.solution
+    assert candidate.bim_eligible is False
+
+    plans = build_layout_stage_plans(
+        program=program,
+        layout=canonical_layout,
+        registry=registry,
+        revit_build=BUILD,
+        tool_schema_hash=SCHEMA,
+        generation_run=candidate.run_id,
+        solution_id=candidate.solution_id,
+        approval_hash=candidate.approval_hash,
+        solution=candidate,
+        accessibility_input=None,
+        template_root=tmp_path,
+        mode="PLANNING_ONLY",
+        max_stage=BimStage.R13,
+    )
+
+    assert [plan.stage.name for plan in plans] == [
+        f"R{stage:02d}" for stage in range(1, 14)
+    ]
+    assert all(plan.preflight.mode.value == "PLANNING_ONLY" for plan in plans)
+    all_operations = [operation for plan in plans for operation in plan.operations]
+    assert all_operations
+    assert all("PLANNING_ONLY" in operation.blocked_by for operation in all_operations)
+    r04_masses = {
+        operation.logical_id
+        for operation in plans[3].operations
+        if operation.semantic_capability == "revit.create_mass"
+    }
+    assert r04_masses == {
+        f"MASS-{block.component_id}" for block in canonical_layout.blocks
+    }
+    assert all("BIM-00" in operation.blocked_by for operation in plans[3].operations)
+    assert all(
+        "CANONICAL_GEOMETRIC_ACCEPTANCE" in operation.blocked_by
+        for operation in plans[4].operations
+    )
+    openings = plans[6]
+    assert openings.operations == []
+    assert openings.preflight.get("canonical_opening_hosts").status.value == "BLOCKED"
+    assert "wall host geometry" in openings.preflight.get(
+        "canonical_opening_hosts"
+    ).detail
+    accessibility = plans[8]
+    assert accessibility.operations == []
+    assert accessibility.numeric_status.value == "BLOCKED_BY_INPUT"
+    assert accessibility.preflight.get("accessibility_inputs").status.value == "BLOCKED"
+    assert candidate.bim_eligible is False
+
+
+def test_planning_only_never_assigns_or_unblocks_operations_with_stale_capability_evidence(
+    registry, program, canonical_layout, canonical_profile, tmp_path
+):
+    selection = build_canonical_selection(
+        canonical_layout,
+        canonical_profile,
+        generation_run="AMANDA-RUN-002-PAVILION",
+        timestamp="2026-09-23T00:00:00Z",
+    )
+    stale_registry = registry.model_copy(
+        update={
+            "entries": [
+                entry.model_copy(
+                    update={"evidence": ["missing-evidence.json::sha256=" + "0" * 64]}
+                )
+                for entry in registry.entries
+            ]
+        }
+    )
+
+    plans = build_layout_stage_plans(
+        program=program,
+        layout=canonical_layout,
+        registry=stale_registry,
+        revit_build=BUILD,
+        tool_schema_hash=SCHEMA,
+        generation_run=selection.solution.run_id,
+        solution_id=selection.solution.solution_id,
+        approval_hash=selection.solution.approval_hash,
+        solution=selection.solution,
+        accessibility_input=None,
+        template_root=tmp_path,
+        mode=ExecutionMode.PLANNING_ONLY,
+        max_stage=BimStage.R13,
+    )
+
+    operations = [operation for plan in plans for operation in plan.operations]
+    assert operations
+    assert all(operation.preferred_provider is None for operation in operations)
+    assert all(operation.fallback_providers == [] for operation in operations)
+    assert all("PLANNING_ONLY" in operation.blocked_by for operation in operations)
+    assert all(
+        "CAPABILITY_EVIDENCE_BLOCKED" in operation.blocked_by
+        for operation in operations
+    )
+    r04_masses = {
+        operation.logical_id
+        for operation in plans[3].operations
+        if operation.semantic_capability == "revit.create_mass"
+    }
+    assert r04_masses == {
+        f"MASS-{block.component_id}" for block in canonical_layout.blocks
+    }
+    assert selection.solution.bim_eligible is False
+
+
 def test_canonical_wall_planner_does_not_infer_partition_or_gallery_walls(
     canonical_layout,
 ):

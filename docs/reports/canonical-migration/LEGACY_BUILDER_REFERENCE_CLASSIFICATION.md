@@ -1,13 +1,15 @@
 # Legacy layout builder reference classification
 
-Search performed on 2026-09-22 with `rg --hidden`, excluding Git internals and private `docs/source/` inputs.
+Search performed on 2026-09-23 with `rg -n "build_courtyard_layout" src scripts`.
+Private `docs/source/` inputs are excluded from Git and are not needed for this
+code-reference classification.
 
 ## Executable references
 
 | File | Classification | Reason / boundary |
 | --- | --- | --- |
-| `scripts/run_amanda_production.py` | ACTIVE, migration pending Task 8 | Still constructs the legacy layout. The active selection builder rejects it before any BIM write; do not invoke this runner until Task 8 migrates it. |
-| `src/amanda_agent/design/architectural_layout.py` | LEGACY implementation | Kept for historic comparison and adapter coverage. It is not an eligible production source. |
+| `src/amanda_agent/design/architectural_layout.py` | LEGACY implementation/export | The sole code definition and export of `build_courtyard_layout`; kept for historical comparison and adapter coverage, not an active production source. |
+| `scripts/run_amanda_production.py` | MIGRATED canonical production entrypoint | Resolves `CanonicalPavilionLayout`; the active script has no reference to `build_courtyard_layout`. Its dry mode cannot acquire the writer lock or invoke a provider. |
 | `tests/unit/test_architectural_layout.py` | LEGACY unit coverage | Tests the retained legacy builder contract. |
 | `tests/unit/test_canonical_qa.py` | LEGACY negative control | Confirms the old single-bar layout fails canonical parti checks. |
 | `tests/unit/test_layout_protocol.py` | LEGACY adapter coverage | Exercises the compatibility adapter from the old courtyard model to the shared protocol. |
@@ -22,8 +24,8 @@ The literal in `tests/unit/test_qa_layout_script.py` is a guard assertion that t
 
 ## Migrated active consumers
 
-`scripts/qa_layout.py`, `scripts/render_study_sheets.py`, and the IFC/DXF exporters have no direct legacy builder import or call. The study PDF packager accepts only the normalized canonical implantation and two floor-plan previews, and refuses a stale pre-canonical QA report. Task 8 remains responsible for the production runner.
+`scripts/run_amanda_production.py`, `scripts/qa_layout.py`, `scripts/render_study_sheets.py`, and the IFC/DXF exporters have no direct legacy builder import or call. The study PDF packager accepts only the normalized canonical implantation and two floor-plan previews, and refuses a stale pre-canonical QA report. The search finds only the legacy module's definition and its `__all__` export in `src/`; there are zero matches in `scripts/`.
 
 ## Gate status
 
-The canonical preview is a normalized study diagram, not a visual regression pass. `CANON-011` remains BLOCKED until R04, R06, R08, R12, R13 and R15 have reviewed results tied to the three canonical board hashes. The historical linear R12 RVT remains hash-frozen and cannot be used as the new BIM base.
+The canonical preview is a normalized study diagram, not a visual regression pass. `CANON-011` remains BLOCKED until R04, R06, R08, R12, R13 and R15 have reviewed results tied to the three canonical board hashes. The historical linear R12 RVT remains hash-frozen and cannot be used as the new BIM base. See `MIGRATION_VERIFICATION.md` for current Task 10 test and dry-plan evidence.
