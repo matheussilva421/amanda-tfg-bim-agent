@@ -37,12 +37,12 @@ Work continues on `codex/canonical-pavilion-migration` in the isolated worktree 
 
 ## GitHub
 
-Commits `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` and `f466418561c101bf27bcf7e1fdd328018a683b32` are pushed to `origin/codex/canonical-pavilion-migration`. No pull request has been created. Plan 11 Task 1 is test/lint green, committed, and pushed; Task 2 is green and committed as `3276976d1f47c9486d4de8f36086600042d57386`, with push pending. Private `docs/source/` inputs are ignored and must not be published. Original `main` checkout changes and untracked old packages remain untouched except the specifically requested local RVT archive/duplicate cleanup and prior package validation output.
+Commits `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` and `f466418561c101bf27bcf7e1fdd328018a683b32` are pushed to `origin/codex/canonical-pavilion-migration`. No pull request has been created. Plan 11 Task 1 is test/lint green, committed, and pushed; Task 2 is green, committed as `3276976d1f47c9486d4de8f36086600042d57386`, and its handoff/checklist checkpoint `5059cab11d897636e793eb1f59617768b4e8790b` is pushed. Task 3 is committed as `4c24bacd93e60e5e1150eb70d6560d04d7050d46`; the Task 3 handoff/checklist checkpoint is included in the current branch push. Private `docs/source/` inputs are ignored and must not be published. Original `main` checkout changes and untracked old packages remain untouched except the specifically requested local RVT archive/duplicate cleanup and prior package validation output.
 
 ## Exact resume
 
-1. Continue with Plan 11 Task 2 on the pushed branch; do not add ignored `docs/source/` or any RVT binaries.
-2. Continue Plan 11 Task 2 with RED-first tests for the stable layout protocol.
+1. Continue with Plan 11 Task 4 on the pushed branch; do not add ignored `docs/source/` or any RVT binaries.
+2. Implement `canonical_qa.py` from `CANONICAL_QA_RUBRIC.yaml`; test that the legacy bar fails canonical checks and the pavilion model passes.
 3. Keep old linear selection/R12 superseded; create a new solution and approval hash bound to the three board hashes and official program before any new geometry.
 4. Do not write new Revit geometry until BIM-00 passes. Start a clean target, never copy R12 geometry.
 5. Before detailing, pass `CANONICAL_GEOMETRIC_ACCEPTANCE`; run board visual regression at R04/R06/R08/R12/R13/R15. R16 stays blocked until all required geometry/visual and verified site inputs are resolved.
@@ -55,4 +55,14 @@ Commits `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` and `f466418561c101bf27bcf7e1
 - GREEN: command `python -m pytest -p no:cacheprovider --basetemp=.tmp-pytest/plan11-task2-green tests/unit/test_layout_protocol.py tests/unit/test_architectural_layout.py -v` — 18 passed, 0 failed, Python 3.12.14.
 - Ruff check passed; formatting applied.
 - Added `LayoutProtocol`, `ExternalSpaceProtocol`, and immutable `ExternalSpace`; added a patio/veranda adapter to legacy `CourtyardLayout`. Updated the legacy builder's module docstring so it cannot be mistaken for active architectural truth. No legacy geometry code changed; all 16 pre-existing architectural layout tests passed.
-- Task 2 commit `3276976d1f47c9486d4de8f36086600042d57386` is complete; push pending. Next: Plan 11 Task 3 canonical pavilion geometry.
+- Task 2 and handoff checkpoint are committed and pushed. Task 3 is now GREEN and awaits its commit; Task 4 is next.
+
+## Task 3 update — canonical pavilion layout
+
+- RED: the focused test initially failed to import the not-yet-created `canonical_pavilion_layout` module, as expected.
+- Implemented a deterministic normalized metric layout with 7 separate volumes: public two-level administration/arrival, 3 sleeping pavilions, 1 communal/dining pavilion, separate services/capacitation, and child sector.
+- Official internal room instances are each assigned once for exactly 626 m²; residential IDs are distributed across the four residential pavilions. Five external spaces derive their names/areas from the versioned program and total exactly 260 m².
+- Four covered external connectors meet the 80 m² central protected patio. Room/floor collision, building separation, landscape/building separation, area derivation, and hash input coverage are represented in focused tests. Coordinates explicitly remain `NORMALIZED_METRIC_REFERENCE_NOT_SURVEY`; site fit is `UNVERIFIED`.
+- GREEN focused: 9 passed, 0 failed. Combined Task 1–3 regression: 31 passed, 0 failed, Python 3.12.14. Ruff check and `git diff --check` passed.
+- No Revit document was opened or written. BIM-00, new solution selection/approval binding, `CANONICAL_GEOMETRIC_ACCEPTANCE`, and visual regression gates remain pending. Task 4 is next; R16 remains blocked by the required gates and unverified site data.
+- Task 3 implementation commit: `4c24bacd93e60e5e1150eb70d6560d04d7050d46` (`feat: build canonical pavilion layout`). The implementation and this handoff checkpoint are being published to `origin/codex/canonical-pavilion-migration`.
