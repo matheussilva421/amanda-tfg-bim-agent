@@ -2130,5 +2130,6 @@ entries:
   status: BLOCKED_BY_TOOL
   evidence:
   - Automatic review rejected request_python_access because it grants indefinite arbitrary Python across files, batches and Revit restarts; the exact R04 mass route currently maps to that executor. No production geometry was written.
-  recorded_utc: '2026-09-23T16:03:21Z'
+  - Live typed dry-run for kind=mass returned unsupported kind, 0 valid, transaction not started, and no write; the tool advertised Python fallback, which was not executed.
+  recorded_utc: '2026-09-23T16:12:33Z'
   note: Do not bypass via direct executor or indirect route. Resume with a bounded typed Horizun capability or policy-approved access.

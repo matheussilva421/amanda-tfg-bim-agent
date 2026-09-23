@@ -2991,6 +2991,7 @@ tasks:
     status: BLOCKED_BY_TOOL
     evidence:
     - BIM-00 PASS and exactly seven R04 operations compile, but the current Horizun mass route maps to execute_python. The request for persistent arbitrary Python access was rejected by automatic review as broader than this one operation. No R04 production write was sent.
+    - Safe live typed dry-run on the active S02 target returned unsupported kind 'mass', valid=0, transaction_status=not_started, write_started=false. It offered Python fallback; no fallback execution was attempted.
   P08-CAN-T09:
     id: P08-CAN-T09
     phase: PHASE_08
