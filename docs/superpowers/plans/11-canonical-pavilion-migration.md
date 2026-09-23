@@ -100,12 +100,12 @@ Required logical components:
 **Interfaces:**
 - Produces: `run_canonical_checks(layout, profile) -> list[CanonicalCheck]`
 
-- [ ] RED test: legacy `build_courtyard_layout` must fail `CANON-001`/`CANON-004`.
-- [ ] RED test: canonical pavilion layout passes structural parti checks.
-- [ ] Implement checks from `CANONICAL_QA_RUBRIC.yaml`.
-- [ ] Include high-level relative-location tests: admin public side; residential protected side; service separated; child-green adjacency; central garden.
-- [ ] Run GREEN.
-- [ ] Commit `test: enforce canonical pavilion parti`.
+- [x] RED test: legacy `build_courtyard_layout` must fail `CANON-001`/`CANON-004`.
+- [x] RED test: canonical pavilion layout passes structural parti checks.
+- [x] Implement checks from `CANONICAL_QA_RUBRIC.yaml`.
+- [x] Include high-level relative-location tests: admin public side; residential protected side; service separated; child-green adjacency; central garden.
+- [x] Run GREEN.
+- [x] Commit `test: enforce canonical pavilion parti`.
 
 ### Task 5: Replace active production selection
 

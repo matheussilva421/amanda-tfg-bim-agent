@@ -456,6 +456,10 @@ def build_canonical_pavilion_layout(
         },
         parameters={
             "selection_authority": "USER_DIRECTED",
+            "canonical_deviations": [],
+            "geometry_origin": "CANONICAL_PAVILION_RECONSTRUCTION",
+            "superseded_source_reused": False,
+            "superseded_solution_id": "AMANDA-RUN-001-S01",
             "canonical_source_hashes": list(profile.source_hashes),
             "people": int(program["baseline"]["person_capacity"]),
             "coordinate_basis": "NORMALIZED_METRIC_REFERENCE_NOT_SURVEY",
