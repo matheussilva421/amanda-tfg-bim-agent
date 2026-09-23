@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "record_id": "P08-CAN-T07-R04-MASS-CAPABILITY-20260923",
+  "scope": "PROVIDER",
+  "host": {
+    "provider": "Horizun",
+    "version": "1.3.3",
+    "revit_version": "2027",
+    "revit_build": "27.2.0.39",
+    "contract_hash": "8b9600f5274d7dffb6e5bd5f",
+    "other_clients_connected": 0
+  },
+  "lab_target": {
+    "path": "revit/lab/horizun/fixtures/AMANDA-R04-MASS-CAPABILITY-20260923.rvt",
+    "before_checkpoint": "revit/lab/horizun/checkpoints/AMANDA-R04-MASS-CAPABILITY-20260923-before.rvt",
+    "before_checkpoint_sha256": "1e1aab8362b733a0bff2ed62c193f2c8f9dce63193d0f4a6fb5519d604231af6",
+    "after_both_operations_sha256": "83f972c4f4772945afd75b0245c251bf126182b7668ed8ca7c4a17ce71bd6345",
+    "revit_file_format": "2027"
+  },
+  "operations": [
+    {
+      "semantic": "revit.create_mass",
+      "registry_operation": "mass",
+      "tool": "horizun_execute_python",
+      "status": "PASS",
+      "idempotency_key": "amanda-r04-mass-capability-lab-20260923-a2",
+      "logical_id": "LAB-MASS-001",
+      "element_id": 221018,
+      "unique_id": "ae1bd869-b0e4-471d-890e-de1b39eb98a-00035f5a",
+      "python_host_verified": false,
+      "preflight_warnings": [],
+      "saved_sha256_after_write": "b14513d7de52bdc2436920bb830702bfeeb7551cdc16c6462f28b6598ca50d5b",
+      "independent_query": {
+        "category": "OST_Mass",
+        "matched_total": 1,
+        "coverage": "complete",
+        "unreadable_total": 0,
+        "bbox_min_m": [0.0, 0.0, 0.0],
+        "bbox_max_m": [4.0, 3.0, 3.2]
+      }
+    },
+    {
+      "semantic": "revit.set_view_category_visibility",
+      "registry_operation": "view_category_visibility",
+      "tool": "horizun_execute_python",
+      "status": "PASS",
+      "idempotency_key": "amanda-r04-show-mass-category-lab-20260923-a1",
+      "view_id": 221021,
+      "category": "OST_Mass",
+      "mass_hidden_before": true,
+      "mass_hidden_after": false,
+      "template_detached": true,
+      "python_host_verified": false,
+      "preflight_warnings": [],
+      "save_close_reopen": true,
+      "independent_view_query_after_reopen": {
+        "scope": "view",
+        "matched_total": 1,
+        "same_unique_id": true,
+        "same_bbox": true
+      }
+    }
+  ],
+  "limitations": [
+    "The Python tool reports host_verified=false; typed independent model queries and a cold reopen verify the persisted model effects.",
+    "This is provider capability evidence from a lab file. It does not prove S02 geometric acceptance or canonical-board visual fidelity."
+  ]
+}

@@ -34,9 +34,11 @@ from amanda_agent.bim.models import BimStage, DesiredState
 from amanda_agent.bim.stages import (
     CheckStatus,
     ExecutionMode,
+    EvidenceScope,
     PreflightRequest,
     StageCheck,
     run_preflight,
+    stage_at_or_before,
 )
 from amanda_agent.bim.stages import accessibility as accessibility_stage
 from amanda_agent.bim.stages import documentation as documentation_stage
@@ -493,6 +495,12 @@ def _request(
         tool_schema_hash=tool_schema_hash,
         expected_build=revit_build,
         expected_tool_schema_hash=tool_schema_hash,
+        evidence_scope=(
+            EvidenceScope.PROVIDER
+            if mode is ExecutionMode.CANONICAL_PREACCEPTANCE
+            and stage is BimStage.R04
+            else EvidenceScope.PRODUCTION
+        ),
         selected_inputs=selected_inputs,
         expected_inputs=expected_inputs,
         required_operations=tuple(merged),
@@ -1532,7 +1540,24 @@ def build_layout_stage_plans(
             "the detailed production chain is not available under CONCEPT_ONLY; "
             "use the concept compiler for R01-R04"
         )
-    if mode in {ExecutionMode.DETAILED_BIM, ExecutionMode.PLANNING_ONLY}:
+    if mode is ExecutionMode.CANONICAL_PREACCEPTANCE:
+        if not stage_at_or_before(max_stage, BimStage.R04):
+            raise ProductionBimError(
+                "CANONICAL_PREACCEPTANCE permits production planning through R04 only"
+            )
+        if solution is None:
+            raise ProductionBimError(
+                "CANONICAL_PREACCEPTANCE requires a content-bound selection record"
+            )
+        if solution.bim_eligible:
+            raise ProductionBimError(
+                "CANONICAL_PREACCEPTANCE is only for a selection awaiting geometric acceptance"
+            )
+    if mode in {
+        ExecutionMode.DETAILED_BIM,
+        ExecutionMode.PLANNING_ONLY,
+        ExecutionMode.CANONICAL_PREACCEPTANCE,
+    }:
         if solution is None:
             raise ProductionBimError(
                 f"{mode.value} requires a content-bound selection record"

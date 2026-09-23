@@ -1441,3 +1441,14 @@ def test_python_furniture_route_never_reads_is_active_from_an_instance():
         "a resolved furniture id may be an instance, so the script must confirm it "
         "holds a FamilySymbol before it reads activation state"
     )
+
+def test_python_scripts_roll_back_open_transactions_in_finally():
+    code = HorizunInvoker._python_script(
+        "revit.create_mass",
+        '{"geometry":{"footprint":[[0,0],[1,0],[1,1]],"height_m":1},"logical_id":"MASS-TEST","properties":{"name":"MASS-TEST"},"semantic_capability":"revit.create_mass"}',
+    )
+
+    assert "finally:" in code
+    finalizer = code.rsplit("finally:", maxsplit=1)[1]
+    assert "TransactionStatus.Started" in finalizer
+    assert "transaction.RollBack()" in finalizer

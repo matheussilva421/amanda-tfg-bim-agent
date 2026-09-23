@@ -237,3 +237,36 @@ def test_custom_api_local_schema_hash_records_unmeasured_limitation():
         "schema hash was not measured" in limitation.lower()
         for limitation in custom_api["limitations"]
     )
+
+def test_production_registry_binds_r04_mass_and_preview_visibility_to_lab_proof():
+    from pathlib import Path
+
+    from amanda_agent.bim.stages import select_capability
+    from amanda_agent.models.capability import CapabilityRegistry, EvidenceScope
+
+    root = Path(__file__).parents[2]
+    registry, _warnings = CapabilityRegistry.load_for_production(root)
+
+    mass, _ = select_capability(
+        registry,
+        "revit.create_mass",
+        revit_build="27.2.0.39",
+        tool_schema_hash="sha256:8b9600f5274d7dffb6e5bd5f",
+        scope=EvidenceScope.PROVIDER,
+    )
+    visibility, _ = select_capability(
+        registry,
+        "revit.set_view_category_visibility",
+        revit_build="27.2.0.39",
+        tool_schema_hash="sha256:8b9600f5274d7dffb6e5bd5f",
+        scope=EvidenceScope.PROVIDER,
+    )
+
+    assert mass.provider == "horizun"
+    assert mass.operation == "mass"
+    assert mass.evidence_scope is EvidenceScope.PROVIDER
+    assert any("p08-can-t07-r04-mass-capability-20260923.json::sha256=" in item for item in mass.evidence)
+    assert visibility.provider == "horizun"
+    assert visibility.operation == "view_category_visibility"
+    assert visibility.evidence_scope is EvidenceScope.PROVIDER
+    assert any("p08-can-t07-r04-mass-capability-20260923.json::sha256=" in item for item in visibility.evidence)

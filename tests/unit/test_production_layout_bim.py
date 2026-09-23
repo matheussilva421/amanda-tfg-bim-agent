@@ -648,6 +648,43 @@ def test_canonical_r04_plans_distinct_block_masses_as_non_executable_hypotheses(
     assert plan.preflight.get("bim_00").status.value == "BLOCKED"
 
 
+def test_canonical_preacceptance_r04_accepts_provider_scope_mass_proof(
+    registry, canonical_layout, canonical_profile
+):
+    preacceptance_solution = build_canonical_selection(
+        canonical_layout,
+        canonical_profile,
+        generation_run="AMANDA-RUN-002-PAVILION",
+        timestamp="2026-09-23T00:00:00Z",
+    )
+    preacceptance_solution = preacceptance_solution.solution
+    provider_registry = registry.model_copy(
+        update={
+            "entries": [
+                entry.model_copy(update={"evidence_scope": EvidenceScope.PROVIDER})
+                if entry.operation == "mass"
+                else entry
+                for entry in registry.entries
+            ]
+        }
+    )
+    request = _request(
+        BimStage.R04,
+        registry=provider_registry,
+        revit_build=BUILD,
+        tool_schema_hash=SCHEMA,
+        generation_run=preacceptance_solution.run_id,
+        mode=ExecutionMode.CANONICAL_PREACCEPTANCE,
+        solution=preacceptance_solution,
+        expected_approval_hash=preacceptance_solution.approval_hash,
+    )
+
+    plan = _plan_r04(request, canonical_layout)
+
+    assert plan.preflight.get("capability_registry").status.value == "PASS"
+    assert request.evidence_scope is EvidenceScope.PROVIDER
+
+
 def test_planning_only_compiles_candidate_through_r13_without_removing_write_gates(
     registry, program, canonical_layout, canonical_profile, tmp_path
 ):
@@ -659,6 +696,91 @@ def test_planning_only_compiles_candidate_through_r13_without_removing_write_gat
     )
     candidate = selection.solution
     assert candidate.bim_eligible is False
+
+
+def test_canonical_preacceptance_compiles_only_through_r04_for_unaccepted_solution(
+    registry, program, canonical_layout, canonical_profile, tmp_path
+):
+    selection = build_canonical_selection(
+        canonical_layout,
+        canonical_profile,
+        generation_run="AMANDA-RUN-002-PAVILION",
+        timestamp="2026-09-23T00:00:00Z",
+    )
+    candidate = selection.solution
+
+    plans = build_layout_stage_plans(
+        program=program,
+        layout=canonical_layout,
+        registry=registry,
+        revit_build=BUILD,
+        tool_schema_hash=SCHEMA,
+        generation_run=candidate.run_id,
+        solution_id=candidate.solution_id,
+        approval_hash=candidate.approval_hash,
+        solution=candidate,
+        accessibility_input=None,
+        template_root=tmp_path,
+        mode=ExecutionMode.CANONICAL_PREACCEPTANCE,
+        max_stage=BimStage.R04,
+    )
+
+    assert [plan.stage for plan in plans] == [
+        BimStage.R01,
+        BimStage.R02,
+        BimStage.R03,
+        BimStage.R04,
+    ]
+    assert candidate.bim_eligible is False
+    assert all(plan.preflight.mode is ExecutionMode.CANONICAL_PREACCEPTANCE for plan in plans)
+    assert all("BIM-00" in operation.blocked_by for operation in plans[3].operations)
+    assert all(
+        "CANONICAL_GEOMETRIC_ACCEPTANCE" in operation.blocked_by
+        for operation in build_layout_stage_plans(
+            program=program,
+            layout=canonical_layout,
+            registry=registry,
+            revit_build=BUILD,
+            tool_schema_hash=SCHEMA,
+            generation_run=candidate.run_id,
+            solution_id=candidate.solution_id,
+            approval_hash=candidate.approval_hash,
+            solution=candidate,
+            accessibility_input=None,
+            template_root=tmp_path,
+            mode=ExecutionMode.PLANNING_ONLY,
+            max_stage=BimStage.R05,
+        )[4].operations
+    )
+
+
+def test_canonical_preacceptance_refuses_planning_beyond_r04(
+    registry, program, canonical_layout, canonical_profile, tmp_path
+):
+    selection = build_canonical_selection(
+        canonical_layout,
+        canonical_profile,
+        generation_run="AMANDA-RUN-002-PAVILION",
+        timestamp="2026-09-23T00:00:00Z",
+    )
+    candidate = selection.solution
+
+    with pytest.raises(ProductionBimError, match="through R04"):
+        build_layout_stage_plans(
+            program=program,
+            layout=canonical_layout,
+            registry=registry,
+            revit_build=BUILD,
+            tool_schema_hash=SCHEMA,
+            generation_run=candidate.run_id,
+            solution_id=candidate.solution_id,
+            approval_hash=candidate.approval_hash,
+            solution=candidate,
+            accessibility_input=None,
+            template_root=tmp_path,
+            mode="CANONICAL_PREACCEPTANCE",
+            max_stage=BimStage.R05,
+        )
 
     plans = build_layout_stage_plans(
         program=program,

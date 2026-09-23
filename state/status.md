@@ -6,9 +6,9 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `PHASE_08` — amanda-production-run
 - Phase status: `RUNNING`
-- Next task: `P08-CAN-T07`
-- Last PASS task: `P08-CAN-T06`
-- Tasks: 178 total; READY: P08-CAN-T07
+- Next task: `P08-CAN-T08` (BLOCKED_BY_TOOL)
+- Last PASS task: `P08-CAN-T07` (with study assumptions)
+- Tasks: 178 total; P08-CAN-T08 BLOCKED_BY_TOOL
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -50,16 +50,16 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 ## Design and Revit recovery
 
 - Selected design: `AMANDA-RUN-002-PAVILION-S02`
-- Revit stage: `PRE_R04`
-- Current checkpoint: `NOT_RECORDED`
+- Revit stage: `PRE_R04` (BIM-00 PASS; R04 write blocked by provider permission review)
+- Current checkpoint: `revit/production/checkpoints/AMANDA-RUN-002-PAVILION-S02/R01-template.rvt`
 
 ## Writer lease
 
 - Status: `FREE`
 - Owner: `NOT_RECORDED`
-- Fencing generation: `NOT_RECORDED`
+- Fencing generation: `NOT_HELD (last used: 2)`
 
 ## Git verification
 
 - Last verified commit: `cd2267b583e6df30cd260a65a140913a7bfcf4a2`
-- Observed HEAD: `cd2267b583e6df30cd260a65a140913a7bfcf4a2`
+- Observed HEAD: `af9c44e146cbb43caced4334f92da4f8a10bff07`

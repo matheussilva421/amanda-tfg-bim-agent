@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "gate": "BIM-00",
+  "status": "PASS",
+  "selection_authority": "USER_DIRECTED",
+  "target_sha256_basis": "last closed disk hash; target matched immutable checkpoint and only read-only scans followed reopen",
+  "evidence": {
+    "gate_id": "BIM-00",
+    "status": "PASS",
+    "target_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-002-PAVILION-S02.rvt",
+    "target_sha256": "f5d4b0f52eca096a29ca3f34bb50d9a83d76f1461ee1d35bc3eb4563318678f7",
+    "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA-RUN-002-PAVILION-S02\\R01-template.rvt",
+    "checkpoint_sha256": "f5d4b0f52eca096a29ca3f34bb50d9a83d76f1461ee1d35bc3eb4563318678f7",
+    "solution_id": "AMANDA-RUN-002-PAVILION-S02",
+    "approval_hash": "75afda89d6a18cd2834bdd571e761ea047305465c6579a4a9d0474e409f91bdf",
+    "layout_hash": "20529b1d08c570546641397a4e9fd302a2a23bef917f50bfea6d22824a19f556",
+    "canonical_source_hashes": [
+      "d7db84c0696f0018ed0bc0525bcc2128378d05ece8e3e5c09e2162493793de7b",
+      "12e35091f33352c21691eb083bf479ba2efd44af4c65774c89021b641de4a5c6",
+      "80cdcccf99154d69ea87943950db420912e949d6320279695a2fd70d44ad286c"
+    ],
+    "historical_r12_sha256": "ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29",
+    "capability_registry_sha256": "39f8233d6b5ceae8b902ab3fb888d40f9ffb95bc6245df10cc4c4ecb8b263eac",
+    "revit_build": "27.2.0.39",
+    "provider_status": "healthy",
+    "active_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-002-PAVILION-S02.rvt",
+    "open_document_count": 1,
+    "open_document_paths": [
+      "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-002-PAVILION-S02.rvt"
+    ],
+    "other_clients_connected": 0,
+    "checks": [
+      {
+        "name": "target_path",
+        "status": "PASS",
+        "evidence": "Active saved S02 target: C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-002-PAVILION-S02.rvt; format 2027; no R04 geometry yet (OST_Mass query matched 0, coverage complete)."
+      },
+      {
+        "name": "writer_lease",
+        "status": "PASS",
+        "evidence": "Live single-writer lease owner=canonical-r04-s02, pid=28936, fencing_generation=2, bound to this target; live Horizun other_clients_connected=0."
+      },
+      {
+        "name": "checkpoint",
+        "status": "PASS",
+        "evidence": "Closed R01 template checkpoint independently hashed f5d4b0f52eca096a29ca3f34bb50d9a83d76f1461ee1d35bc3eb4563318678f7; target/checkpoint matched after close; reopened target and only read-only scans since."
+      },
+      {
+        "name": "historical_r12",
+        "status": "PASS",
+        "evidence": "Archived superseded linear R12 SHA-256 ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29; reuse prohibited."
+      },
+      {
+        "name": "canonical_references",
+        "status": "PASS",
+        "evidence": "Loaded profile and SOURCE_MANIFEST from C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\docs\\amanda-tfg-bim-agent-UNIFICADO-PRANCHAS-CANONICAS-2026-09-22; all three CANONICAL_DESIGN_REFERENCE images hash-match ['d7db84c0696f0018ed0bc0525bcc2128378d05ece8e3e5c09e2162493793de7b', '12e35091f33352c21691eb083bf479ba2efd44af4c65774c89021b641de4a5c6', '80cdcccf99154d69ea87943950db420912e949d6320279695a2fd70d44ad286c']."
+      },
+      {
+        "name": "capability_registry",
+        "status": "PASS",
+        "evidence": "Horizun mass capability PASS at PROVIDER scope; registry SHA-256 39f8233d6b5ceae8b902ab3fb888d40f9ffb95bc6245df10cc4c4ecb8b263eac, semantic crosswalk and lab proof resolve; no RevitCortex fallback."
+      },
+      {
+        "name": "revit_provider",
+        "status": "PASS",
+        "evidence": "Live Horizun healthy 1.3.3 on Revit 2027 build 27.2.0.39; contract hash 8b9600f5274d7dffb6e5bd5f; target path match; 0 queued/running jobs; 0 other clients."
+      },
+      {
+        "name": "units",
+        "status": "PASS",
+        "evidence": "Live model scan reports millimeters; R04 compiler payload coordinates are metric and will be converted by the proven provider route."
+      },
+      {
+        "name": "coordinate_site_mode",
+        "status": "PASS",
+        "evidence": "STUDY; survey/topography/boundary/true north remain PROVISIONAL_ASSUMPTION and are not used as verified site facts."
+      },
+      {
+        "name": "family_strategy",
+        "status": "PASS",
+        "evidence": "R04 uses registered Horizun create_mass capability only; DirectShape/mass study elements, no untested loaded family or geometry provider."
+      },
+      {
+        "name": "canonical_selection",
+        "status": "PASS",
+        "evidence": "selection_authority=USER_DIRECTED; AMANDA-RUN-002-PAVILION-S02; approval_hash=75afda89d6a18cd2834bdd571e761ea047305465c6579a4a9d0474e409f91bdf; layout_hash=20529b1d08c570546641397a4e9fd302a2a23bef917f50bfea6d22824a19f556; official program 20 people / 626 m2 internal / 260 m2 external."
+      }
+    ]
+  },
+  "authorization": {
+    "stage": "MASSING",
+    "operation_count": 7,
+    "operation_ids": [
+      "MASS-ADMIN_ACOLHIMENTO",
+      "MASS-CHILD_SECTOR",
+      "MASS-RES_PAV_A",
+      "MASS-RES_PAV_B",
+      "MASS-RES_PAV_C",
+      "MASS-RES_PAV_D_COMMUNAL",
+      "MASS-SERVICE_CAPACITATION"
+    ],
+    "preflight": {
+      "mode": "CANONICAL_PREACCEPTANCE",
+      "stage": "MASSING",
+      "scenario": "STUDY",
+      "checks": [
+        {
+          "name": "mode_stage_window",
+          "status": "PASS",
+          "detail": "CANONICAL_PREACCEPTANCE permits stage R04"
+        },
+        {
+          "name": "fixture_scope",
+          "status": "PASS",
+          "detail": "target scope matches the execution mode"
+        },
+        {
+          "name": "selection_record",
+          "status": "PASS",
+          "detail": "unaccepted canonical selection under AGENT_DELEGATED"
+        },
+        {
+          "name": "approval_hash",
+          "status": "PASS",
+          "detail": "approval_hash matches the solution content"
+        },
+        {
+          "name": "input_versions",
+          "status": "PASS",
+          "detail": "selected input versions match the run"
+        },
+        {
+          "name": "revit_build",
+          "status": "PASS",
+          "detail": "exact build 27.2.0.39 and schema hash match"
+        },
+        {
+          "name": "capability_registry",
+          "status": "PASS",
+          "detail": "every required operation has a usable capability"
+        },
+        {
+          "name": "site_profile",
+          "status": "PASS",
+          "detail": "STUDY profile records provisional input as such"
+        },
+        {
+          "name": "last_checkpoint",
+          "status": "PASS",
+          "detail": "no previous checkpoint to verify"
+        },
+        {
+          "name": "bim_00",
+          "status": "PASS",
+          "detail": "BIM-00 passed for this target, checkpoint, selection and canonical board set"
+        }
+      ],
+      "notes": [
+        "STUDY profile: topography source is MISSING and no FINAL claim is certified",
+        "no previous checkpoint is recorded for this run",
+        "block heights are non-probative visual hypotheses; compare R04 massing to all three canonical boards after BIM-00",
+        "BIT_IDENTITY: solution_id=AMANDA-RUN-002-PAVILION-S02; approval_hash=75afda89d6a18cd2834bdd571e761ea047305465c6579a4a9d0474e409f91bdf"
+      ]
+    }
+  }
+}

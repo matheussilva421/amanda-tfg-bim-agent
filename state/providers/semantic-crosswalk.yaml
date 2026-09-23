@@ -1,5 +1,5 @@
 schema_version: 1
-generated_utc: '2026-09-16'
+generated_utc: '2026-09-23'
 rule: one row per semantic operation the BIM stages require. A row may claim a registered
   entry only when the evidence file below proves that exact semantic name; an unproven
   row stays a gap instead of being guessed.
@@ -63,8 +63,14 @@ rows:
   writes: true
 - semantic: revit.create_mass
   route: horizun_execute_python
-  registered_entry: execute_python
+  registered_entry: mass
   writes: true
+  evidence: tool-lab/horizun/results/p08-can-t07-r04-mass-capability-20260923.json::sha256=6f9351548304b4962224302e14f76f6ddeedca35324e197a7846a7582c2c8d86
+- semantic: revit.set_view_category_visibility
+  route: horizun_execute_python
+  registered_entry: view_category_visibility
+  writes: true
+  evidence: tool-lab/horizun/results/p08-can-t07-r04-mass-capability-20260923.json::sha256=6f9351548304b4962224302e14f76f6ddeedca35324e197a7846a7582c2c8d86
 - semantic: revit.create_accessibility_element
   route: horizun_execute_python
   registered_entry: execute_python

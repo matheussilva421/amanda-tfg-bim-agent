@@ -24,10 +24,12 @@ from pathlib import Path
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPOSITORY_ROOT / "src"))
 
+from amanda_agent.bim.models import BimStage
 from amanda_agent.bim.providers import HorizunInvoker, McpProbeTransport
 from amanda_agent.bim.runner import RunStatus, execute_stage
 from amanda_agent.bim.stages import (
     ExecutionMode,
+    stage_at_or_before,
 )
 from amanda_agent.design.canonical_pavilion_layout import (
     build_canonical_pavilion_layout,
@@ -46,7 +48,32 @@ from amanda_agent.production.selection import (
 )
 from amanda_agent.state.locks import WriterLock
 
-LOCK_PATH = REPOSITORY_ROOT / "state" / "locks" / "revit-writer.lock"
+
+def _shared_repository_root(repository_root: Path) -> Path:
+    """Resolve linked worktrees to the checkout that owns their common Git dir."""
+
+    root = Path(repository_root).resolve()
+    marker = root / ".git"
+    if marker.is_dir():
+        return root
+    if marker.is_file():
+        first_line = marker.read_text(encoding="utf-8").splitlines()
+        if first_line and first_line[0].casefold().startswith("gitdir:"):
+            git_dir = Path(first_line[0].split(":", 1)[1].strip())
+            if not git_dir.is_absolute():
+                git_dir = root / git_dir
+            git_dir = git_dir.resolve()
+            common_git_dir = git_dir.parent.parent
+            if (
+                git_dir.parent.name.casefold() == "worktrees"
+                and common_git_dir.name.casefold() == ".git"
+            ):
+                return common_git_dir.parent.resolve()
+    return root
+
+
+COMMON_REPOSITORY_ROOT = _shared_repository_root(REPOSITORY_ROOT)
+LOCK_PATH = COMMON_REPOSITORY_ROOT / "state" / "locks" / "revit-writer.lock"
 EVIDENCE_ROOT = REPOSITORY_ROOT / "revit" / "production"
 GENERATION_RUN = "AMANDA-RUN-002-PAVILION"
 
@@ -55,6 +82,49 @@ def _new_idempotency_key(label: str, run_key: str) -> str:
     """Build a key scoped to one deliberate production attempt."""
 
     return f"amanda-{label}-{run_key}"
+
+
+def _execution_scope(
+    *, bim_eligible: bool, requested_max_stage: str
+) -> tuple[ExecutionMode, BimStage]:
+    """Keep an unaccepted selection inside the R01-R04 preacceptance window."""
+
+    requested = BimStage[requested_max_stage]
+    if requested is BimStage.R00:
+        raise ValueError("R00 is not an executable production stage")
+    if bim_eligible:
+        return ExecutionMode.DETAILED_BIM, requested
+    if stage_at_or_before(requested, BimStage.R04):
+        return ExecutionMode.CANONICAL_PREACCEPTANCE, requested
+    return ExecutionMode.CANONICAL_PREACCEPTANCE, BimStage.R04
+
+
+def _validate_revit_session(
+    health: object, *, expected_build: str, revit_pid: int | None
+) -> dict:
+    """Require a healthy, idle, exclusive Revit process before opening a target."""
+
+    if not isinstance(health, dict):
+        raise TypeError("Horizun health did not return a typed object")
+    if str(health.get("status", "")).casefold() != "healthy":
+        raise ValueError("Horizun provider is not healthy")
+    if health.get("revit_build") != expected_build:
+        raise ValueError(
+            f"live Revit build {health.get('revit_build')!r} does not match "
+            f"capability registry {expected_build!r}"
+        )
+    if revit_pid is not None and health.get("process_id") != revit_pid:
+        raise ValueError(
+            f"live Revit PID {health.get('process_id')!r} does not match requested {revit_pid}"
+        )
+    if health.get("other_clients_connected") != 0:
+        raise ValueError(
+            "Revit reports another MCP client in the 10-minute window; wait until "
+            "the shared-session count returns to zero"
+        )
+    if health.get("open_document_count") != 0 or health.get("no_active_document") is not True:
+        raise ValueError("Revit must have no open document before a new canonical target is created")
+    return health
 
 
 def _validate_canonical_target(
@@ -98,7 +168,15 @@ def _validate_canonical_target(
         raise ValueError("superseded R12 archive manifest is inconsistent or invalid")
 
     candidate = Path(rvt).resolve()
-    archived_path = (Path(repository_root) / relative_archive_path).resolve()
+    repository = Path(repository_root).resolve()
+    archived_path = (repository / relative_archive_path).resolve()
+    if not archived_path.is_relative_to(repository):
+        raise ValueError("superseded R12 archive path escapes the repository")
+    if (
+        not archived_path.is_file()
+        or hashlib.sha256(archived_path.read_bytes()).hexdigest() != archived_sha256
+    ):
+        raise ValueError("archived R12 bytes do not match the recorded SHA-256")
     same_archive_path = candidate == archived_path
     same_archive_content = candidate.is_file() and hashlib.sha256(
         candidate.read_bytes()

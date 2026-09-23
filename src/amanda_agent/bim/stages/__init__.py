@@ -67,6 +67,7 @@ class ExecutionMode(StrEnum):
     CONCEPT_ONLY = "CONCEPT_ONLY"
     SYNTHETIC_LAB = "SYNTHETIC_LAB"
     PLANNING_ONLY = "PLANNING_ONLY"
+    CANONICAL_PREACCEPTANCE = "CANONICAL_PREACCEPTANCE"
     DETAILED_BIM = "DETAILED_BIM"
 
 
@@ -455,13 +456,19 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
     registry = request.registry
 
     # 1. The execution mode bounds the stage window.
-    if request.mode is ExecutionMode.CONCEPT_ONLY and not stage_at_or_before(
-        request.stage, CONCEPT_ONLY_MAX_STAGE
-    ):
+    if request.mode in {
+        ExecutionMode.CONCEPT_ONLY,
+        ExecutionMode.CANONICAL_PREACCEPTANCE,
+    } and not stage_at_or_before(request.stage, CONCEPT_ONLY_MAX_STAGE):
+        mode_label = (
+            "CANONICAL_PREACCEPTANCE"
+            if request.mode is ExecutionMode.CANONICAL_PREACCEPTANCE
+            else "CONCEPT_ONLY"
+        )
         checks.append(
             _fail(
                 "mode_stage_window",
-                f"CONCEPT_ONLY permits stages through {CONCEPT_ONLY_MAX_STAGE.name} "
+                f"{mode_label} permits stages through {CONCEPT_ONLY_MAX_STAGE.name} "
                 f"only, got {request.stage.name}",
             )
         )
@@ -481,10 +488,11 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
                 "SYNTHETIC_LAB is restricted to fixtures and cannot authorize a real target",
             )
         )
-    elif request.mode is ExecutionMode.DETAILED_BIM and request.fixture:
-        checks.append(
-            _fail("fixture_scope", "a fixture target cannot authorize detailed production")
-        )
+    elif request.mode in {
+        ExecutionMode.DETAILED_BIM,
+        ExecutionMode.CANONICAL_PREACCEPTANCE,
+    } and request.fixture:
+        checks.append(_fail("fixture_scope", "a fixture target cannot authorize production writes"))
     else:
         checks.append(_pass("fixture_scope", "target scope matches the execution mode"))
 
@@ -503,6 +511,44 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
                 _pass(
                     "selection_record",
                     "content-bound candidate retained for non-executable planning",
+                )
+            )
+    elif request.mode is ExecutionMode.CANONICAL_PREACCEPTANCE:
+        if solution is None:
+            checks.append(
+                _fail(
+                    "selection_record",
+                    "canonical preacceptance requires a content-bound pavilion selection",
+                )
+            )
+        elif solution.status not in (
+            DesignStatus.CANDIDATE,
+            DesignStatus.APPROVED_FOR_BIM,
+            DesignStatus.AMANDA_REVIEW_PENDING,
+        ):
+            checks.append(
+                _fail(
+                    "selection_record",
+                    f"status {solution.status.value} is not eligible for canonical preacceptance",
+                )
+            )
+        elif solution.bim_eligible:
+            checks.append(
+                _fail(
+                    "selection_record",
+                    "canonical preacceptance is only for a selection awaiting geometric acceptance",
+                )
+            )
+        else:
+            if solution.status is DesignStatus.AMANDA_REVIEW_PENDING:
+                notes.append(
+                    "AMANDA_REVIEW_PENDING permits delegated preacceptance work and does not "
+                    "imply personal approval"
+                )
+            checks.append(
+                _pass(
+                    "selection_record",
+                    f"unaccepted canonical selection under {solution.selection_authority.value}",
                 )
             )
     elif request.mode is not ExecutionMode.DETAILED_BIM:
@@ -550,6 +596,7 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
     if request.mode not in {
         ExecutionMode.PLANNING_ONLY,
         ExecutionMode.DETAILED_BIM,
+        ExecutionMode.CANONICAL_PREACCEPTANCE,
     }:
         checks.append(
             _pass("approval_hash", "mode does not require a content-bound approval hash")
@@ -601,6 +648,7 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
     if request.mode in {
         ExecutionMode.PLANNING_ONLY,
         ExecutionMode.DETAILED_BIM,
+        ExecutionMode.CANONICAL_PREACCEPTANCE,
     } and solution is not None:
         pinned = {
             "requirements_version": solution.requirements_version,

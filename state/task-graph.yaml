@@ -2977,8 +2977,10 @@ tasks:
     title: Create the clean canonical production RVT
     depends_on:
     - P08-CAN-T06
-    status: PENDING
-    evidence: []
+    status: PASS_WITH_WARNINGS
+    evidence:
+    - S02 created from the installed Revit 2027 metric template at the canonical target; immutable R01 checkpoint SHA-256 f5d4b0f52eca096a29ca3f34bb50d9a83d76f1461ee1d35bc3eb4563318678f7.
+    - BIM-00 PASS record revit/production/evidence/AMANDA-RUN-002-PAVILION-S02-BIM-00.json (SHA-256 f62c7d7de431fdbbdce82094239827ddb8901ef7ae503f01d3306ab65a1dcce9); STUDY site facts remain provisional.
   P08-CAN-T08:
     id: P08-CAN-T08
     phase: PHASE_08
@@ -2986,8 +2988,9 @@ tasks:
     title: R01-R04 canonical massing and BIM-00 acceptance gates
     depends_on:
     - P08-CAN-T07
-    status: PENDING
-    evidence: []
+    status: BLOCKED_BY_TOOL
+    evidence:
+    - BIM-00 PASS and exactly seven R04 operations compile, but the current Horizun mass route maps to execute_python. The request for persistent arbitrary Python access was rejected by automatic review as broader than this one operation. No R04 production write was sent.
   P08-CAN-T09:
     id: P08-CAN-T09
     phase: PHASE_08

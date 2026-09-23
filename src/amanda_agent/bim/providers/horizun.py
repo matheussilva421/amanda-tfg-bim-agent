@@ -722,9 +722,9 @@ else:
             "        if created_id is None:\n"
             "            created_id = element_id_value(created.Id)\n"
             "        transaction.Commit()\n"
-            "    except Exception:\n"
-            "        transaction.RollBack()\n"
-            "        raise\n"
+            "    finally:\n"
+            "        if transaction.GetStatus() == TransactionStatus.Started:\n"
+            "            transaction.RollBack()\n"
             "    __output__ = {'status': 'self_reported_verified', 'logical_id': logical_id, 'element_id': created_id, 'created': True, 'semantic_capability': semantic_capability}\n"
         )
 

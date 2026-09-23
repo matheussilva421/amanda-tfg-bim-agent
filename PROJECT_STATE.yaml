@@ -5,10 +5,10 @@ blockers:
 - SITE_FRONTAGE_COUNT:DEGRADING
 - SITE_TRUE_NORTH:DEGRADING
 - REVIT_PIPE_SANDBOX_ACCESS:DEGRADING
-current_checkpoint: null
-last_completed_task: P08-CAN-T06
+current_checkpoint: revit/production/checkpoints/AMANDA-RUN-002-PAVILION-S02/R01-template.rvt
+last_completed_task: P08-CAN-T07
 last_verified_commit: cd2267b583e6df30cd260a65a140913a7bfcf4a2
-next_task: P08-CAN-T07
+next_task: P08-CAN-T08
 phase_gate: GO_WITH_LIMITATIONS
 phase_id: PHASE_08
 phase_name: amanda-production-run
@@ -27,14 +27,8 @@ layout_covered_total_m2: null
 production_driver: scripts/run_amanda_production.py
 production_plan_stages: R01 R02 R03 R04
 production_plan_operations: null
-resume_note: S02 is the active USER_DIRECTED canonical pavilion parti; detail remains
-  AGENT_DELEGATED and bim_eligible=false. The linear R12 RVT is retained once as a
-  hash-verified historical archive and all old R09-R12 evidence is historical only.
-  No canonical RVT exists yet; create the clean target at canonical_target_path only
-  after fresh live writer/provider checks. BIM-00 must pass before R04 geometry; CANONICAL_GEOMETRIC_ACCEPTANCE
-  and visual regressions R04/R06/R08/R12/R13/R15 gate detailing and R16. Preserve
-  the six current site/provider blockers; do not infer site facts.
-state_revision: 172
+resume_note: "P08-CAN-T07 PASS_WITH_WARNINGS: S02 created from the installed metric template and checkpointed at R01; BIM-00 PASS. P08-CAN-T08 is BLOCKED_BY_TOOL because the only mapped Horizun mass route requires indefinite arbitrary Python access, rejected by automatic review. Do not write R04 until a bounded typed provider path or approved access is available; site and height inputs remain PROVISIONAL_ASSUMPTION."
+state_revision: 173
 study_ifc: null
 study_dxf: null
 study_pdf: null
@@ -67,9 +61,9 @@ layout_covered_estimate_m2: 850-950
 historical_r12_checkpoint: revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R12-materials-20260922.rvt
 historical_r12_checkpoint_sha256: ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29
 canonical_target_path: revit/production/working/AMANDA-RUN-002-PAVILION-S02.rvt
-canonical_target_status: NOT_CREATED
-canonical_target_exists: false
-bim00_status: PENDING_BEFORE_R04_GEOMETRY
+canonical_target_status: CREATED_FROM_CLEAN_TEMPLATE
+canonical_target_exists: true
+bim00_status: PASS
 canonical_geometric_acceptance: BLOCKED_PENDING_R04
 visual_regression_milestones: R04 R06 R08 R12 R13 R15 PENDING
 historical_linear_study_ifc: docs/reports/study-exports/AMANDA_ESTUDO.ifc
