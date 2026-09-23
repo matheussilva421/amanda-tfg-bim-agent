@@ -37,11 +37,11 @@ Work continues on `codex/canonical-pavilion-migration` in the isolated worktree 
 
 ## GitHub
 
-No commit, PR, or push yet. Plan 11 Task 1 is test/lint green; its planned feature commit remains pending. Private `docs/source/` inputs are ignored and must not be published. Original `main` checkout changes and untracked old packages remain untouched except the specifically requested local RVT archive/duplicate cleanup and prior package validation output.
+Commit `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` created on `codex/canonical-pavilion-migration`; push pending. Plan 11 Task 1 is test/lint green and committed. Private `docs/source/` inputs are ignored and must not be published. Original `main` checkout changes and untracked old packages remain untouched except the specifically requested local RVT archive/duplicate cleanup and prior package validation output.
 
 ## Exact resume
 
-1. Commit Task 1 implementation/test and the current documentation/archival register without adding ignored `docs/source/` or any RVT binaries.
+1. Push the committed canonical migration branch when the remote is reachable; do not add ignored `docs/source/` or any RVT binaries.
 2. Continue Plan 11 Task 2 with RED-first tests for the stable layout protocol.
 3. Keep old linear selection/R12 superseded; create a new solution and approval hash bound to the three board hashes and official program before any new geometry.
 4. Do not write new Revit geometry until BIM-00 passes. Start a clean target, never copy R12 geometry.

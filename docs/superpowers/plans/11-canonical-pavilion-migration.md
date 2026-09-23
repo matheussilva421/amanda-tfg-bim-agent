@@ -45,7 +45,7 @@
 - [x] **Step 2: Run** focused test; confirmed RED because module was absent.
 - [x] **Step 3: Implement minimal loader** that validates YAML + source manifest, rejects missing/hash-mismatched canonical image.
 - [x] **Step 4: Run test** and confirm PASS (4 passed, Python 3.12.14).
-- [ ] **Step 5: Commit** `feat: load canonical pavilion reference profile`.
+- [x] **Step 5: Commit** `feat: establish canonical pavilion reference and archive R12` (`9fe08bc`).
 
 ### Task 2: Introduce stable layout protocol
 
