@@ -41,13 +41,13 @@ Commits `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` and `f466418561c101bf27bcf7e1
 
 ## Exact resume
 
-1. Continue with Plan 11 Task 6 on the pushed branch; do not add ignored `docs/source/` or any RVT binaries.
-2. Search all direct `build_courtyard_layout` references and classify them as LEGACY or ACTIVE; migrate active QA/export consumers to the canonical layout protocol.
-3. The new selection is a `CANDIDATE` and not BIM-eligible. Do not update `PROJECT_STATE.yaml` or execute Revit writes before the Task 10 migration proof and preceding gates.
-4. Do not write new Revit geometry until BIM-00 passes. Start a clean target, never copy R12 geometry.
+1. Continue with Plan 11 Task 7 using TDD; Task 6 consumers are now canonical and its reference inventory is recorded below.
+2. `scripts/run_amanda_production.py` remains an interim active entrypoint with a legacy builder call; it fails closed at active selection. Migrate it in Task 8 and do not invoke it before then.
+3. The new selection remains a `CANDIDATE` and is not BIM-eligible. Do not update `PROJECT_STATE.yaml` or execute Revit writes before the Task 10 migration proof and preceding gates.
+4. Before any new Revit geometry, pass BIM-00 on a clean target; never copy R12 geometry.
 5. Before detailing, pass `CANONICAL_GEOMETRIC_ACCEPTANCE`; run board visual regression at R04/R06/R08/R12/R13/R15. R16 stays blocked until all required geometry/visual and verified site inputs are resolved.
 6. Preserve the GPT-6 Luna Xhigh-only subagent constraint. That exact option was unavailable in the current tool catalog; continue locally unless it appears.
-7. Update `PROJECT_STATE.yaml` only after Plan 11 Task 10 migration proof passes. Current live state is still PHASE_08/P08-T13/R12 and has not been promoted.
+7. Update `PROJECT_STATE.yaml` only after Plan 11 Task 10 migration proof passes. Current live state remains PHASE_08/P08-T13/R12 and has not been promoted.
 
 ## Task 2 update
 
@@ -86,3 +86,14 @@ Commits `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` and `f466418561c101bf27bcf7e1
 - The current `scripts/run_amanda_production.py` still directly constructs the old layout and calls the active builder; it now fails closed before any write. Migrate and test this runner under Plan 11 Task 8; do not invoke it until then.
 - GREEN: 6 focused selection tests; 39 tests passed across selection/legacy BIM/decision-register/design-model coverage; Tasks 1–4 canonical regression remains 36 passed. Ruff passed on changed selection/model/test files. No Revit model was opened or written.
 - `PROJECT_STATE.yaml` and persistent decision registers remain unchanged pending offline run assembly and migration proof. Task 5 implementation commit: `ccfd410fe65ee074c0cdc76bff89e875a51bb443` (`feat: bind production selection to canonical pavilion boards`). This commit and the Task 5 handoff checkpoint are being published to `origin/codex/canonical-pavilion-migration`. Task 6 is next.
+
+## Task 6 update — canonical QA, previews and study exports
+
+- RED: the entrypoint AST test failed on the old direct import in `scripts/qa_layout.py`, as expected. After switching test fixtures to the canonical layout, the old QA/DXF/IFC consumers also failed on missing bar-only fields and a MultiPolygon footprint; these were the expected migration failures.
+- Migrated `scripts/qa_layout.py` to the canonical profile/layout and rubric. It now reports `BLOCKED` for site fit, unmeasured enclosed/covered areas, missing stage visual regressions and Revit-only checks. The official 20-person, 626 m² internal and 260 m² external invariants remain checked; 783–814 m² and 850–950 m² remain estimates, not measurements.
+- Rebuilt study previews for normalized implantation plus ground/upper floor plans. Removed generated elevations/section based on invented heights/openings. The PDF consumer now accepts only those three previews and labels the package as a draft when canonical QA is blocked.
+- DXF preserves seven block outlines, internal rooms by level, five external program spaces and four covered connectors. IFC4 now carries a spatial inventory with level/area/2D WKT metadata and emits no invented walls, doors, windows, slabs or 3D geometry. Both remain STUDY exports, not final Revit deliverables.
+- Reference inventory is in `docs/reports/canonical-migration/LEGACY_BUILDER_REFERENCE_CLASSIFICATION.md`. The remaining direct legacy call in `scripts/run_amanda_production.py` is ACTIVE but fail-closed pending Task 8. Legacy implementation and negative-control/adapter/compiler tests remain explicitly classified as historical coverage.
+- GREEN: Task 6 focused group: 19 passed, 0 failed. Tasks 1–5 relevant regression group: 68 passed, 0 failed. Ruff passed on all changed/new Task 6 files; `git diff --check` passed. Actual canonical profile load/QA: 25 checks, 0 FAIL, 9 BLOCKED, expected exit 2. Actual renderer produced 3 PNG/SVG pairs in `.tmp-pytest/task6-live/drawings`; visual inspection is a structural preview check only and does not pass CANON-011.
+- Tracked `docs/reports/p08-layout-qa.*` and `docs/reports/study-drawings/` still contain the prior linear study outputs; they were preserved during this code migration. Regenerate/replace them only with the canonical run package after Task 9 and validate before removing stale generated plan packages.
+- No Revit document was opened or written. `PROJECT_STATE.yaml` and production decisions remain unchanged. Task 6 implementation is green; commit/push is the next action, followed by Task 7.

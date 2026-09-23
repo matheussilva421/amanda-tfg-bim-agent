@@ -1,40 +1,25 @@
-"""Behavioural contract of the DXF export of the delegated layout.
+"""Contract for a 2D study DXF of the canonical pavilion layout.
 
-The deliverable lists DWG as applicable.  A DWG needs Revit or a licensed CAD
-kernel; an ASCII DXF is the open exchange format a CAD user can open, edit and
-save as DWG themselves, so the plan is delivered in DXF and the limitation is
-stated rather than hidden.
-
-The writer is a real R12 ASCII DXF: groups of code/value pairs, one entity per
-line, in the order the format requires.  These tests read it back and check the
-entities the drawing must contain.
+The export preserves room, block, external-space and covered-path outlines.
+It does not invent walls, openings, elevations or a DWG representation.
 """
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 import pytest
 
-from amanda_agent.design.architectural_layout import build_courtyard_layout
 from amanda_agent.production.dxf_export import (
+    LAYERS,
     DxfExportError,
     export_layout_to_dxf,
 )
 
-ROOT = Path(__file__).resolve().parents[2]
-PROGRAM_PATH = ROOT / "project" / "requirements" / "program.json"
-
 
 @pytest.fixture(scope="module")
-def program() -> dict:
-    return json.loads(PROGRAM_PATH.read_text(encoding="utf-8"))
-
-
-@pytest.fixture(scope="module")
-def layout(program: dict):
-    return build_courtyard_layout(program)
+def layout(canonical_layout):
+    return canonical_layout
 
 
 @pytest.fixture(scope="module")
@@ -45,8 +30,6 @@ def exported(tmp_path_factory, layout):
 
 
 def _entities(text: str) -> list[str]:
-    """Return the entity type of every entity in the ENTITIES section."""
-
     names: list[str] = []
     lines = text.splitlines()
     in_entities = False
@@ -67,48 +50,49 @@ def _entities(text: str) -> list[str]:
 
 def test_dxf_has_the_r12_structure_a_cad_package_requires(exported):
     target, report = exported
-
     text = target.read_text(encoding="utf-8")
+
     assert text.startswith("0\nSECTION")
     assert "HEADER" in text
     assert "TABLES" in text
     assert "ENTITIES" in text
     assert text.rstrip().endswith("EOF")
     assert report["bytes"] == target.stat().st_size
+    assert report["scope"] == "STUDY"
 
 
-def test_dxf_layers_separate_the_plan_by_discipline(exported):
+def test_dxf_layers_separate_canonical_plan_content(exported):
     target, report = exported
     text = target.read_text(encoding="utf-8")
 
-    for layer in ("AMANDA-PAREDES", "AMANDA-AMBIENTES", "AMANDA-GALERIA",
-                  "AMANDA-VARANDA", "AMANDA-PATIO", "AMANDA-ABERTURAS",
-                  "AMANDA-TEXTO"):
+    for layer in LAYERS:
         assert layer in text, layer
-    assert report["layers"] >= 7
+    assert report["layers"] == len(LAYERS)
+    assert "AMANDA-ABERTURAS" not in text
 
 
-def test_dxf_contains_a_closed_polyline_per_room(exported, layout):
-    target, report = exported
-    names = _entities(target.read_text(encoding="utf-8"))
-
-    closed = 0
-    lines = target.read_text(encoding="utf-8").splitlines()
-    for index, line in enumerate(lines):
-        if line.strip() == "0" and index + 1 < len(lines) and lines[index + 1].strip() == "LWPOLYLINE":
-            closed += 1
-    assert closed >= len(layout.rooms)
-    assert report["counts"]["rooms"] == len(layout.rooms)
-    assert names.count("LWPOLYLINE") >= len(layout.rooms)
-
-
-def test_dxf_carries_the_logical_ids_as_text(exported, layout):
+def test_dxf_contains_rooms_blocks_external_program_and_covered_paths(exported, layout):
     target, report = exported
     text = target.read_text(encoding="utf-8")
+    names = _entities(text)
 
-    sample = layout.rooms[0].logical_id
-    assert sample in text
-    assert report["counts"]["labels"] >= len(layout.rooms)
+    assert names.count("LWPOLYLINE") >= len(layout.rooms) + len(layout.blocks)
+    assert report["counts"]["rooms"] == len(layout.rooms)
+    assert report["counts"]["blocks"] == len(layout.blocks) == 7
+    assert report["counts"]["external_spaces"] == len(layout.external_spaces) == 5
+    assert report["counts"]["covered_connectors"] == len(layout.covered_connectors) == 4
+    assert "RES_PAV_D_COMMUNAL" in text
+    assert "REQ-07-01" in text
+    assert "COVERED-RES_PAV_A-TO-PROTECTED_PATIO" in text
+
+
+def test_dxf_separates_room_geometry_by_level(exported):
+    target, _ = exported
+    text = target.read_text(encoding="utf-8")
+
+    assert "AMANDA-INTERIORES-P01" in text
+    assert "AMANDA-INTERIORES-P02" in text
+    assert "geometry=2d-study-only" in text
 
 
 def test_dxf_is_in_metres_and_declares_its_units(exported):
@@ -120,7 +104,7 @@ def test_dxf_is_in_metres_and_declares_its_units(exported):
 
 def test_export_refuses_a_layout_with_no_rooms():
     class Empty:
-        rooms = []
+        rooms = ()
         content_hash = ""
 
     with pytest.raises(DxfExportError):

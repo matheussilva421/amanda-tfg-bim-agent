@@ -142,12 +142,12 @@ Required logical components:
 - Active production/test fixture imports `build_canonical_pavilion_layout` or a new resolver `build_active_layout(...)`.
 - Legacy layout tests remain under explicitly named legacy coverage where useful.
 
-- [ ] Search repository for `build_courtyard_layout` and classify every reference as LEGACY or ACTIVE.
-- [ ] Add failing assertion that production entrypoints contain no direct legacy builder import.
-- [ ] Migrate active consumers to canonical builder/layout protocol.
-- [ ] Update expected geometry without weakening program invariants.
-- [ ] Run focused tests; GREEN.
-- [ ] Commit `refactor: route production consumers to canonical pavilion layout`.
+- [x] Search repository for `build_courtyard_layout` and classify every reference as LEGACY or ACTIVE in `docs/reports/canonical-migration/LEGACY_BUILDER_REFERENCE_CLASSIFICATION.md`.
+- [x] Add failing assertion that active QA/drawing entrypoints contain no direct legacy builder import or call.
+- [x] Migrate QA, study drawing/PDF, DXF and IFC consumers to the canonical layout/protocol.
+- [x] Update expected geometry without weakening program invariants; keep unverified vertical/site outputs blocked.
+- [x] Run focused tests; GREEN (19 Task 6 tests; 68 relevant Tasks 1–5 regression tests).
+- [x] Commit `refactor: route production consumers to canonical pavilion layout`.
 
 ### Task 7: Update BIM stage planning for multi-block/two-level admin geometry
 
