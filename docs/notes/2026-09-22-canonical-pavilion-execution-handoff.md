@@ -187,3 +187,11 @@ Commits `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` and `f466418561c101bf27bcf7e1
 
 - GitHub checkpoint: `a67c8ed517c5585885e5873da4a3eea0e51d7612` (`feat: gate canonical R04 with BIM-00`) was pushed to `origin/codex/canonical-pavilion-migration`; it contains the gate, focused regressions, S02 status and raw BIM-00 evidence.
 - Next user/policy dependency: expose a one-operation typed mass write, or decide whether to pursue a separate approval path for the persistent Python permission. The previous request was rejected at automatic review before a Revit consent dialog appeared.
+
+## Recheck — no safe typed R04 mass route (2026-09-23)
+
+- Loaded `CanonicalReferenceProfile` from the active worktree root. Status is `CANONICAL_DESIGN_REFERENCE`; the three image hashes exactly match `PROJECT_STATE.yaml`. The root `docs/source/references/canonical/` is present, so no asset copy or hash change is needed.
+- Fresh Horizun health still identifies S02 as the active saved target on Revit 2027 build 27.2.0.39, one open document, zero other clients, and no queued/running jobs. The writer lease was released and must be reacquired/revalidated before a future write.
+- The live typed `horizun_create_elements` rehearsal rejected `kind=mass` before transaction start (`valid=0`, `write_started=false`). The exposed RevitCortex catalog has no dedicated mass-creation tool, and the project capability registry contains no approved RevitCortex mass evidence; no Cortex hash was modified or provider write attempted.
+- The only proven Horizun mass route is the arbitrary Python executor. Automatic review rejected its broad persistent permission. No safe production write route remains available; `P08-CAN-T08` stays `BLOCKED_BY_TOOL`, with no R04 geometry or Revit preview.
+- Before this handoff update, branch `codex/canonical-pavilion-migration` was clean at pushed commit `82b257d` on origin. No broad test suite was run; existing focused gates and hashes were reused.
