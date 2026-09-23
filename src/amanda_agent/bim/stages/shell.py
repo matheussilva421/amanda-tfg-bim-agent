@@ -22,6 +22,7 @@ from amanda_agent.design.geometry import InvalidDesignGeometryError, validate_po
 from ..models import BimStage, DesiredElement, DesiredState
 from ..verification import VerificationResult, verify_write
 from . import (
+    CheckStatus,
     PreflightReport,
     PreflightRequest,
     StageError,
@@ -567,6 +568,11 @@ def execute_shell_stage(
 ) -> list[StageExecutionRecord]:
     """Dispatch desired shell operations through the injected adapter."""
 
+    acceptance = plan.preflight.get("canonical_geometric_acceptance")
+    if acceptance is not None and acceptance.status is not CheckStatus.PASS:
+        raise StagePreflightError(
+            "R05 dispatch blocked until canonical geometric acceptance passes"
+        )
     return dispatch_operations(plan.operations, invoker=invoker)
 
 

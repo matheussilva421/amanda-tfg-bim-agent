@@ -160,11 +160,11 @@ Required logical components:
 - Accept multiple closed footprints/levels instead of one bar plate.
 - Covered connectors are external/covered circulation, not enclosed corridor.
 
-- [ ] RED test: plan contains distinct shell operations for admin, service and residential pavilion footprints.
-- [ ] RED test: admin Level 02 operations exist while residential pavilions remain ground-oriented unless the canonical design later changes.
-- [ ] RED test: no operation recreates a full-length double-loaded gallery as the main building.
-- [ ] Implement minimal multi-block planning.
-- [ ] Run tests; GREEN.
+- [x] RED test: plan contains distinct shell operations for admin, service and residential pavilion footprints.
+- [x] RED test: admin Level 02 operations exist while residential pavilions remain ground-oriented unless the canonical design later changes.
+- [x] RED test: no operation recreates a full-length double-loaded gallery as the main building.
+- [x] Implement minimal multi-block planning, with R03/R04 study assumptions explicitly blocked by BIM-00 and R05 detail blocked by canonical geometric acceptance.
+- [x] Run tests; GREEN (40 focused tests passed; 0 failed).
 - [ ] Commit `feat: plan multi-block canonical BIM stages`.
 
 ### Task 8: Harden production runner against legacy RVT reuse

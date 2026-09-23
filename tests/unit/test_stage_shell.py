@@ -11,11 +11,15 @@ from shapely.geometry import box
 
 from amanda_agent.bim.models import BimStage, DesiredElement
 from amanda_agent.bim.stages import (
+    CheckStatus,
     EvidenceScope,
     ExecutionMode,
     PreflightRequest,
+    StageCheck,
     StageError,
+    StageOperation,
     StagePreflightError,
+    dispatch_operations,
 )
 from amanda_agent.models.capability import CapabilityRegistry, ProviderCapability
 
@@ -203,6 +207,44 @@ def test_shell_dispatches_desired_operations_through_injected_invoker(tmp_path: 
     assert invoker.calls
     assert all(call.stage is BimStage.R05 for call in invoker.calls)
     assert all(call.provider == "synthetic-provider" for call in invoker.calls)
+
+
+def test_dispatch_refuses_operations_blocked_by_canonical_acceptance():
+    operation = StageOperation(
+        stage=BimStage.R05,
+        logical_id="FLOOR-ADMIN-L1",
+        semantic_capability="revit.create_floor",
+        preferred_provider="synthetic-provider",
+    ).model_copy(update={"blocked_by": ["CANONICAL_GEOMETRIC_ACCEPTANCE"]})
+    invoker = _RecordingInvoker()
+
+    with pytest.raises(StagePreflightError, match="CANONICAL_GEOMETRIC_ACCEPTANCE"):
+        dispatch_operations([operation], invoker=invoker)
+
+    assert invoker.calls == []
+
+
+def test_shell_executor_refuses_a_blocked_geometric_acceptance_report(tmp_path: Path):
+    api = _api()
+    plan = api.plan_shell_stage(_request(tmp_path), _rooms())
+    blocked_check = StageCheck(
+        name="canonical_geometric_acceptance",
+        status=CheckStatus.BLOCKED,
+        detail="the accepted geometry receipt is missing",
+    )
+    plan = plan.model_copy(
+        update={
+            "preflight": plan.preflight.model_copy(
+                update={"checks": [*plan.preflight.checks, blocked_check]}
+            )
+        }
+    )
+    invoker = _RecordingInvoker()
+
+    with pytest.raises(StagePreflightError, match="canonical geometric acceptance"):
+        api.execute_shell_stage(plan, invoker=invoker)
+
+    assert invoker.calls == []
 
 
 def test_shell_adds_external_elements_from_an_injected_planner(tmp_path: Path):

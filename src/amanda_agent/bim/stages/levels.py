@@ -16,8 +16,10 @@ from ..desired_state import DesiredState
 from ..models import BimStage, DesiredElement
 from ..verification import VerificationResult, verify_write
 from . import (
+    CheckStatus,
     PreflightReport,
     PreflightRequest,
+    StageCheck,
     StageError,
     StageExecutionRecord,
     StageOperation,
@@ -229,8 +231,14 @@ def plan_levels_stage(
     levels: Sequence[LevelReference | Mapping[str, Any]] = (),
     grids: Sequence[GridAxis | Mapping[str, Any]] = (),
     references: Sequence[ReferenceMarker | Mapping[str, Any]] = (),
+    allow_study_assumptions: bool = False,
 ) -> LevelsStagePlan:
-    """Plan only evidenced required levels plus explicitly supplied references."""
+    """Plan evidenced levels, or explicit non-executable assumptions for STUDY.
+
+    ``allow_study_assumptions`` is a review-only path. It never authorizes a
+    write: every operation is blocked by BIM-00 and the report records that
+    gate as BLOCKED. FINAL scenarios keep the evidence requirement strict.
+    """
 
     if request.stage is not BimStage.R03:
         raise StageError(f"R03 levels stage requires stage R03, got {request.stage.name}")
@@ -249,13 +257,14 @@ def plan_levels_stage(
         else ReferenceMarker.model_validate(item)
         for item in references
     ]
-    missing_evidence = [
-        item.logical_id
-        for item in selected_levels
-        if not item.evidence
-        or not item.is_provable
-        or item.source_kind != "VERIFIED_SOURCE"
-    ]
+    if allow_study_assumptions and request.scenario.value != "STUDY":
+        raise StagePreflightError(
+            "R03 preflight refused: study assumptions cannot enter a FINAL scenario"
+        )
+    missing_evidence = []
+    for item in selected_levels:
+        if not item.evidence or item.source_kind == "VERIFIED_SOURCE" and not item.is_provable or item.source_kind == "DESIGN_ASSUMPTION" and not allow_study_assumptions:
+            missing_evidence.append(item.logical_id)
     required_operations = tuple(
         capability
         for capability, items in (
@@ -314,6 +323,29 @@ def plan_levels_stage(
                 fallbacks=fallbacks,
             )
         )
+    if allow_study_assumptions:
+        report = report.model_copy(
+            update={
+                "checks": [
+                    *report.checks,
+                    StageCheck(
+                        name="bim_00",
+                        status=CheckStatus.BLOCKED,
+                        detail=(
+                            "R03 study operations cannot dispatch until BIM-00 validates the clean target, writer lease, checkpoint, references, and live provider"
+                        ),
+                    ),
+                ],
+                "notes": [
+                    *report.notes,
+                    "study level assumptions are explicitly non-probative and BIM-00 blocked",
+                ],
+            }
+        )
+        operations = [
+            operation.model_copy(update={"blocked_by": ["BIM-00"]})
+            for operation in operations
+        ]
     return LevelsStagePlan(
         preflight=report,
         levels=selected_levels,

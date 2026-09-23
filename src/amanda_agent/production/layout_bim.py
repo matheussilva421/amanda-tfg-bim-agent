@@ -20,10 +20,10 @@ carries the views, schedules and sheets the deliverable asks for.
 
 from __future__ import annotations
 
-from collections.abc import Iterable, Mapping, Sequence
-from dataclasses import dataclass, replace
 import hashlib
 import json
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass
 from math import hypot
 from pathlib import Path
 from typing import Any
@@ -31,7 +31,12 @@ from typing import Any
 from shapely.geometry import LineString, Polygon  # type: ignore[import-untyped]
 
 from amanda_agent.bim.models import BimStage
-from amanda_agent.bim.stages import ExecutionMode, PreflightRequest, StageOperation
+from amanda_agent.bim.stages import (
+    CheckStatus,
+    ExecutionMode,
+    PreflightRequest,
+    StageCheck,
+)
 from amanda_agent.bim.stages import accessibility as accessibility_stage
 from amanda_agent.bim.stages import documentation as documentation_stage
 from amanda_agent.bim.stages import furniture as furniture_stage
@@ -45,8 +50,8 @@ from amanda_agent.bim.stages import project as project_stage
 from amanda_agent.bim.stages import rooms as rooms_stage
 from amanda_agent.bim.stages import shell as shell_stage
 from amanda_agent.bim.stages import site as site_stage
-from amanda_agent.design.architectural_layout import CourtyardLayout, RoomPlacement
-from amanda_agent.models.capability import CapabilityRegistry
+from amanda_agent.design.architectural_layout import CourtyardLayout
+from amanda_agent.design.canonical_pavilion_layout import CanonicalPavilionLayout
 from amanda_agent.site.models import (
     BoundaryKind,
     BoundaryPolygon,
@@ -370,7 +375,9 @@ def _runs_overlap(first: _Wall, second: _Wall) -> bool:
     return second_low <= first_high + 1e-6 and first_low <= second_high + 1e-6
 
 
-def build_walls(layout: CourtyardLayout) -> tuple[list[_Wall], list[_Wall]]:
+def build_walls(
+    layout: CourtyardLayout | CanonicalPavilionLayout,
+) -> tuple[list[_Wall], list[_Wall]]:
     """Return the exterior envelope and the partitions of a plan.
 
     A wall is keyed on coordinates a room actually has, not on the buffered
@@ -380,6 +387,11 @@ def build_walls(layout: CourtyardLayout) -> tuple[list[_Wall], list[_Wall]]:
     thing as the boundary of the assembly without depending on whether a float
     comparison of two unioned outlines happens to agree.
     """
+
+    if isinstance(layout, CanonicalPavilionLayout):
+        # The canonical source has no room partitions or opening hosts. Its
+        # covered connectors are external circulation, not gallery walls.
+        return [], []
 
     gallery_boundary = layout.gallery.boundary
     owners: dict[tuple[tuple[float, float], tuple[float, float]], list[str]] = {}
@@ -565,6 +577,57 @@ def _plan_r02(request, layout):
 
 
 def _plan_r03(request, layout):
+    if isinstance(layout, CanonicalPavilionLayout):
+        bounds = layout.footprint.bounds
+        provisional_basis = (
+            "PROVISIONAL_ASSUMPTION: normalized local datum and 3.20m floor-to-floor "
+            "used only for post-BIM-00 R04 visual study; not survey evidence"
+        )
+        levels = [
+            levels_stage.LevelReference(
+                logical_id="LEVEL-01",
+                name="LEVEL-01",
+                elevation_m=0.0,
+                evidence=[provisional_basis],
+                is_provable=False,
+                source_kind="DESIGN_ASSUMPTION",
+            ),
+            levels_stage.LevelReference(
+                logical_id="LEVEL-02",
+                name="LEVEL-02",
+                elevation_m=FLOOR_HEIGHT_M,
+                evidence=[provisional_basis],
+                is_provable=False,
+                source_kind="DESIGN_ASSUMPTION",
+            ),
+        ]
+        grids = [
+            levels_stage.GridAxis(
+                logical_id=name,
+                name=name,
+                start=(position, bounds[1]),
+                end=(position, bounds[3]),
+                assumption="PROVISIONAL_ASSUMPTION",
+            )
+            for name, position in (
+                ("GRID-01", bounds[0]),
+                ("GRID-02", bounds[2]),
+            )
+        ]
+        plan = levels_stage.plan_levels_stage(
+            request,
+            levels=levels,
+            grids=grids,
+            allow_study_assumptions=True,
+        )
+        return plan.model_copy(
+            update={
+                "notes": [
+                    *plan.notes,
+                    "canonical elevations are study hypotheses only; BIM-00 must pass before R04 massing can be written",
+                ]
+            }
+        )
     bounds = layout.footprint.bounds
     storeys = int(layout.parameters["storeys"])
     if storeys != 1:
@@ -624,6 +687,88 @@ def _plan_r03(request, layout):
 
 
 def _plan_r04(request, layout):
+    if isinstance(layout, CanonicalPavilionLayout):
+        height_basis = (
+            "PROVISIONAL_ASSUMPTION: 3.20m per floor for R04 visual study only"
+        )
+        blocks = [
+            massing_stage.MassingBlock(
+                logical_id=f"MASS-{block.component_id}",
+                name=f"MASS-{block.component_id}",
+                sector_id=block.role,
+                footprint=[
+                    (float(x), float(y))
+                    for x, y in block.footprint.exterior.coords[:-1]
+                ],
+                base_elevation_m=0.0,
+                height_m=FLOOR_HEIGHT_M * block.storeys,
+                source_area_m2=float(block.footprint.area),
+                source_solution_id=request.solution.solution_id
+                if request.solution is not None
+                else None,
+            )
+            for block in layout.blocks
+        ]
+        plan = massing_stage.plan_massing_stage(request, blocks=blocks)
+        elements = [
+            element.model_copy(
+                update={
+                    "properties": {
+                        **element.properties,
+                        "height_basis": height_basis,
+                        "geometry_source": layout.coordinate_basis,
+                    }
+                }
+            )
+            for element in plan.desired_state.elements
+        ]
+        operations = [
+            operation.model_copy(
+                update={
+                    "payload": {
+                        **operation.payload,
+                        "properties": {
+                            **operation.payload["properties"],
+                            "height_basis": height_basis,
+                            "geometry_source": layout.coordinate_basis,
+                        },
+                    },
+                    "blocked_by": ["BIM-00"],
+                }
+            )
+            for operation in plan.operations
+        ]
+        preflight = plan.preflight.model_copy(
+            update={
+                "checks": [
+                    *plan.preflight.checks,
+                    StageCheck(
+                        name="bim_00",
+                        status=CheckStatus.BLOCKED,
+                        detail=(
+                            "R04 canonical study geometry cannot be written until BIM-00 validates the clean target, writer lease, checkpoint, references, and live provider"
+                        ),
+                    ),
+                ],
+                "notes": [
+                    *plan.preflight.notes,
+                    "block heights are non-probative visual hypotheses; compare R04 massing to all three canonical boards after BIM-00",
+                ],
+            }
+        )
+        desired_state = plan.desired_state.model_copy(update={"elements": elements})
+        return plan.model_copy(
+            update={
+                "preflight": preflight,
+                "desired_state": desired_state,
+                "operations": operations,
+                "notes": [
+                    *plan.notes,
+                    "canonical block footprints are separate; height is a 3.20m-per-floor study assumption only",
+                    "BIM-00 blocks all mass operations pending clean-target and live-provider checks",
+                ],
+            }
+        )
     # The footprint polygon repeats its first point to close the ring, and the
     # massing script closes the loop itself by wrapping to index 0.  Passing the
     # repeated point would append a zero-length line, which Revit refuses with
@@ -649,7 +794,144 @@ def _plan_r04(request, layout):
     return massing_stage.plan_massing_stage(request, blocks=blocks)
 
 
+def plan_canonical_shell_stage(request, layout: CanonicalPavilionLayout):
+    """Build a non-executable study plan with one shell footprint per block/level.
+
+    The normalized layout provides footprints and logical floor numbers, but
+    does not provide wall heights or the upper-floor datum. Every operation is
+    attached to the geometric-acceptance gate, enforced by the stage executor
+    and shared dispatcher before any provider invocation.
+    """
+
+    if request.stage is not BimStage.R05:
+        raise ProductionBimError("canonical shell planning requires R05")
+    if not isinstance(layout, CanonicalPavilionLayout):
+        raise ProductionBimError("canonical shell planning requires pavilion geometry")
+
+    elements = []
+    operations = []
+    warnings = [
+        "CANONICAL_GEOMETRIC_ACCEPTANCE required before R05 detailing or writes",
+        "wall heights and LEVEL-02 elevation remain unresolved; no vertical dimensions were inferred",
+    ]
+    first_plan = None
+    floor_projection = 0.0
+    for block in layout.blocks:
+        for level in sorted(block.floor_footprints):
+            footprint = block.footprint
+            envelope_id = f"ENVELOPE-{block.component_id}-L{level}"
+            connector_loops = [
+                connector
+                for connector in layout.covered_connectors
+                if connector.from_component == block.component_id and level == 1
+            ]
+            subplan = shell_stage.plan_shell_stage(
+                request,
+                rooms=[{"logical_id": envelope_id, "polygon": footprint}],
+                floor_loops=[footprint],
+                slab_loops=[connector.footprint for connector in connector_loops],
+                wall_types={
+                    "external": str(EXTERNAL_WALL_TYPE_ID),
+                    "internal": str(INTERNAL_WALL_TYPE_ID),
+                },
+                wall_type_source=(
+                    "read from installed Revit 2027 template Default_M_PTB.rte on build 27.2.0.39"
+                ),
+                include_shared_walls=False,
+            )
+            if first_plan is None:
+                first_plan = subplan
+            floor_projection += float(footprint.area)
+
+            updated_by_old_id = {}
+            for element in subplan.desired_state.elements:
+                if element.category == "FLOOR":
+                    logical_id = f"FLOOR-{block.component_id}-L{level}"
+                elif element.category == "SLAB":
+                    connector_index = int(element.properties["loop_index"]) - 1
+                    logical_id = f"SLAB-{connector_loops[connector_index].connector_id}"
+                else:
+                    logical_id = f"{element.logical_id}-{block.component_id}-L{level}"
+                properties = dict(element.properties)
+                properties.update(
+                    {
+                        "component_id": block.component_id,
+                        "level": level,
+                        "geometry_source": layout.coordinate_basis,
+                    }
+                )
+                if element.category == "WALL":
+                    properties["height_status"] = (
+                        "UNRESOLVED_CANONICAL_GEOMETRIC_ACCEPTANCE"
+                    )
+                updated = element.model_copy(
+                    update={"logical_id": logical_id, "properties": properties}
+                )
+                elements.append(updated)
+                updated_by_old_id[element.logical_id] = updated
+
+            for operation in subplan.operations:
+                element = updated_by_old_id[operation.logical_id]
+                payload = element.model_dump(mode="json")
+                if operation.semantic_capability in _NEEDS_LEVEL:
+                    payload["level_id"] = f"LEVEL-{level:02d}"
+                operations.append(
+                    operation.model_copy(
+                        update={
+                            "logical_id": element.logical_id,
+                            "payload": payload,
+                            "blocked_by": ["CANONICAL_GEOMETRIC_ACCEPTANCE"],
+                        }
+                    )
+                )
+            if connector_loops:
+                warnings.append(
+                    f"covered links from {block.component_id} remain external slab loops "
+                    "without enclosing gallery walls or assumed roof heights"
+                )
+
+    if first_plan is None:
+        raise ProductionBimError("canonical layout contains no block floor footprints")
+
+    acceptance_check = StageCheck(
+        name="canonical_geometric_acceptance",
+        status=CheckStatus.BLOCKED,
+        detail=(
+            "R05 detailing is blocked until CANONICAL_GEOMETRIC_ACCEPTANCE binds "
+            "accepted geometry to the three canonical board hashes"
+        ),
+    )
+    preflight = first_plan.preflight.model_copy(
+        update={
+            "checks": [*first_plan.preflight.checks, acceptance_check],
+            "notes": [
+                *first_plan.preflight.notes,
+                "each candidate operation is non-executable while canonical geometric acceptance is BLOCKED",
+            ],
+        }
+    )
+    desired_state = first_plan.desired_state.model_copy(update={"elements": elements})
+    return first_plan.model_copy(
+        update={
+            "preflight": preflight,
+            "desired_state": desired_state,
+            "operations": operations,
+            "area_reconciliation": {
+                "canonical_block_floor_projection_m2": floor_projection,
+                "wall_count": float(
+                    sum(element.category == "WALL" for element in elements)
+                ),
+                "covered_connector_count": float(len(layout.covered_connectors)),
+            },
+            "warnings": warnings,
+        }
+    )
+
+
 def _plan_r05(request, layout):
+    if isinstance(layout, CanonicalPavilionLayout):
+        return plan_canonical_shell_stage(request, layout)
+
     ring = [[x, y] for x, y in layout.footprint.exterior.coords]
     loops = [{"type": "Polygon", "coordinates": [ring]}]
     # The covered external walkway is part of the shell, not a linked model, so
@@ -879,7 +1161,32 @@ def _plan_r07(request, layout, walls):
 
 
 def _plan_r08(request, program, layout):
-    return rooms_stage.plan_rooms_stage(request, program=program, rooms=layout.rooms)
+    plan = rooms_stage.plan_rooms_stage(request, program=program, rooms=layout.rooms)
+    if not isinstance(layout, CanonicalPavilionLayout):
+        return plan
+
+    level_by_room = {room.logical_id: int(room.level) for room in layout.rooms}
+    operations = [
+        operation.model_copy(
+            update={
+                "payload": {
+                    **operation.payload,
+                    "level_id": f"LEVEL-{level_by_room[operation.logical_id]:02d}",
+                },
+                "blocked_by": ["CANONICAL_GEOMETRIC_ACCEPTANCE"],
+            }
+        )
+        for operation in plan.operations
+    ]
+    acceptance_check = StageCheck(
+        name="canonical_geometric_acceptance",
+        status=CheckStatus.BLOCKED,
+        detail="canonical room detailing requires accepted, board-bound geometry",
+    )
+    preflight = plan.preflight.model_copy(
+        update={"checks": [*plan.preflight.checks, acceptance_check]}
+    )
+    return plan.model_copy(update={"preflight": preflight, "operations": operations})
 
 
 def _plan_r09(request, accessibility_input):
@@ -1027,7 +1334,6 @@ def _stamp(plan, solution_id, approval_hash):
             fields = {
                 "start": start,
                 "end": end,
-                "height": float(FLOOR_HEIGHT_M),
             }
             # The provider resolves a wall type by NAME through the type_id
             # field, so the template's real type name travels there.  The stage
@@ -1035,6 +1341,8 @@ def _stamp(plan, solution_id, approval_hash):
             # given the field it reads.
             properties = operation.payload.get("properties")
             properties = dict(properties) if isinstance(properties, Mapping) else {}
+            if properties.get("height_status") != "UNRESOLVED_CANONICAL_GEOMETRIC_ACCEPTANCE":
+                fields["height"] = float(FLOOR_HEIGHT_M)
             # The shell stage names the wall's type in properties.type_id.
             # R06 deliberately keeps the compiler-level name in
             # properties.wall_type_id (INT_WALL_01).  That name is not a Revit
@@ -1178,7 +1486,7 @@ def build_layout_stage_plans(
 
     exterior, partitions = build_walls(layout)
     walls = [*exterior, *partitions]
-    if not walls:
+    if not walls and not isinstance(layout, CanonicalPavilionLayout):
         raise ProductionBimError("the layout produces no walls")
 
     site = _site_model(layout) if solution is not None else None
@@ -1237,4 +1545,5 @@ __all__ = [
     "build_layout_stage_plans",
     "build_walls",
     "layout_stage_order",
+    "plan_canonical_shell_stage",
 ]

@@ -14,40 +14,40 @@ from pathlib import Path
 import pytest
 from shapely.geometry import LineString, Polygon
 
-from amanda_agent.design.models import (
-    DesignSolution,
-    DesignStatus,
-    compute_design_approval_hash,
-)
-from amanda_agent.requirements.decisions import (
-    DecisionRecord,
-    ReviewStatus,
-    SelectionAuthority,
-    SelectionKind,
-    ValidationStatus,
-    compute_approval_hash as compute_decision_hash,
-)
 from amanda_agent.bim.models import BimStage
-from amanda_agent.bim.stages import ExecutionMode
+from amanda_agent.bim.stages import ExecutionMode, StagePreflightError
 from amanda_agent.bim.stages.accessibility import (
-    AccessibleRoute,
     AccessibilityInput,
+    AccessibleRoute,
     WidthCheck,
 )
+from amanda_agent.bim.stages.shell import execute_shell_stage
 from amanda_agent.design.architectural_layout import build_courtyard_layout
+from amanda_agent.design.models import (
+    DesignStatus,
+)
 from amanda_agent.models.capability import (
     CapabilityRegistry,
     CapabilityStatus,
     EvidenceScope,
     ProviderCapability,
 )
+from amanda_agent.production import layout_bim
 from amanda_agent.production.layout_bim import (
     ProductionBimError,
+    _plan_r03,
+    _plan_r04,
+    _plan_r08,
+    _request,
+    _stamp,
     build_layout_stage_plans,
     build_walls,
     layout_stage_order,
 )
-from amanda_agent.production.selection import build_legacy_selection
+from amanda_agent.production.selection import (
+    build_canonical_selection,
+    build_legacy_selection,
+)
 
 ROOT = Path(__file__).resolve().parents[2]
 PROGRAM_PATH = ROOT / "project" / "requirements" / "program.json"
@@ -482,3 +482,221 @@ def test_no_plan_claims_a_final_validation(registry, program, layout, tmp_path):
     for plan in plans:
         for note in plan.preflight.notes:
             assert "FINAL" not in note or "no FINAL claim" in note
+
+
+@pytest.fixture()
+def canonical_test_solution(canonical_layout, canonical_profile):
+    """Eligibility-shaped fixture for pure planner tests; never executable evidence."""
+
+    selection = build_canonical_selection(
+        canonical_layout,
+        canonical_profile,
+        generation_run="AMANDA-RUN-002-PAVILION",
+        timestamp="2026-09-23T00:00:00Z",
+    )
+    # The actual candidate remains ineligible until migration evidence passes.
+    # This status copy only allows the pure stage planner to be exercised; these
+    # tests never call a stage executor or a Revit provider.
+    return selection.solution.model_copy(
+        update={"status": DesignStatus.AMANDA_REVIEW_PENDING}
+    )
+
+
+def _canonical_stage_request(stage, registry, solution):
+    return _request(
+        stage,
+        registry=registry,
+        revit_build=BUILD,
+        tool_schema_hash=SCHEMA,
+        generation_run=solution.run_id,
+        mode=ExecutionMode.DETAILED_BIM,
+        solution=solution,
+        expected_approval_hash=solution.approval_hash,
+    )
+
+
+def test_canonical_shell_plan_has_separate_admin_service_and_residential_footprints(
+    registry, canonical_layout, canonical_test_solution
+):
+    planner = getattr(layout_bim, "plan_canonical_shell_stage", None)
+    assert callable(planner), "canonical shell stage planner is missing"
+
+    plan = planner(
+        _canonical_stage_request(BimStage.R05, registry, canonical_test_solution),
+        canonical_layout,
+    )
+    floor_ids = {
+        operation.logical_id
+        for operation in plan.operations
+        if operation.semantic_capability == "revit.create_floor"
+    }
+
+    assert "FLOOR-ADMIN_ACOLHIMENTO-L1" in floor_ids
+    assert "FLOOR-ADMIN_ACOLHIMENTO-L2" in floor_ids
+    assert "FLOOR-SERVICE_CAPACITATION-L1" in floor_ids
+    assert {
+        "FLOOR-RES_PAV_A-L1",
+        "FLOOR-RES_PAV_B-L1",
+        "FLOOR-RES_PAV_C-L1",
+        "FLOOR-RES_PAV_D_COMMUNAL-L1",
+    } <= floor_ids
+
+
+def test_canonical_room_operations_keep_admin_level_two_and_residential_ground_level(
+    registry, canonical_program, canonical_layout, canonical_test_solution
+):
+    request = _canonical_stage_request(BimStage.R08, registry, canonical_test_solution)
+    plan = _stamp(
+        _plan_r08(request, canonical_program, canonical_layout),
+        canonical_test_solution.solution_id,
+        canonical_test_solution.approval_hash,
+    )
+    level_by_room = {
+        operation.logical_id: operation.payload.get("level_id")
+        for operation in plan.operations
+    }
+    admin_level_two = {
+        room.logical_id
+        for room in canonical_layout.block("ADMIN_ACOLHIMENTO").rooms
+        if room.level == 2
+    }
+    residential_rooms = {
+        room.logical_id
+        for block in canonical_layout.residential_pavilions
+        for room in block.rooms
+    }
+
+    assert admin_level_two
+    assert {level_by_room[room_id] for room_id in admin_level_two} == {"LEVEL-02"}
+    assert {level_by_room[room_id] for room_id in residential_rooms} == {"LEVEL-01"}
+
+
+def test_canonical_shell_plan_does_not_create_a_linear_gallery(
+    registry, canonical_layout, canonical_test_solution
+):
+    planner = getattr(layout_bim, "plan_canonical_shell_stage", None)
+    assert callable(planner), "canonical shell stage planner is missing"
+
+    plan = planner(
+        _canonical_stage_request(BimStage.R05, registry, canonical_test_solution),
+        canonical_layout,
+    )
+    operation_ids = {operation.logical_id for operation in plan.operations}
+    floor_ids = {
+        operation.logical_id
+        for operation in plan.operations
+        if operation.semantic_capability == "revit.create_floor"
+    }
+
+    assert not any(
+        "GALLERY" in logical_id or "CORRIDOR" in logical_id
+        for logical_id in operation_ids
+    )
+    assert "FLOOR-001" not in floor_ids
+    assert len(floor_ids) == 8
+    assert {
+        "SLAB-COVERED-RES_PAV_A-TO-PROTECTED_PATIO",
+        "SLAB-COVERED-RES_PAV_B-TO-PROTECTED_PATIO",
+        "SLAB-COVERED-RES_PAV_C-TO-PROTECTED_PATIO",
+        "SLAB-COVERED-RES_PAV_D_COMMUNAL-TO-PROTECTED_PATIO",
+    } <= operation_ids
+    assert not any(
+        operation.semantic_capability == "revit.create_roof"
+        for operation in plan.operations
+    )
+
+
+def test_canonical_r03_labels_local_levels_as_assumptions_and_blocks_writes(
+    registry, canonical_layout, canonical_test_solution
+):
+    request = _canonical_stage_request(BimStage.R03, registry, canonical_test_solution)
+    try:
+        plan = _plan_r03(request, canonical_layout)
+    except ProductionBimError as exc:
+        pytest.fail(f"R03 must expose a blocked study plan for visual massing: {exc}")
+
+    levels = {level.logical_id: level for level in plan.levels}
+    assert set(levels) == {"LEVEL-01", "LEVEL-02"}
+    assert levels["LEVEL-01"].elevation_m == 0.0
+    assert levels["LEVEL-02"].elevation_m == layout_bim.FLOOR_HEIGHT_M
+    assert all(level.source_kind == "DESIGN_ASSUMPTION" for level in levels.values())
+    assert all(not level.is_provable for level in levels.values())
+    assert all("BIM-00" in operation.blocked_by for operation in plan.operations)
+    assert plan.preflight.get("bim_00").status.value == "BLOCKED"
+
+
+def test_canonical_r04_plans_distinct_block_masses_as_non_executable_hypotheses(
+    registry, canonical_layout, canonical_test_solution
+):
+    request = _canonical_stage_request(BimStage.R04, registry, canonical_test_solution)
+    try:
+        plan = _plan_r04(request, canonical_layout)
+    except ProductionBimError as exc:
+        pytest.fail(f"R04 must expose separate blocked study masses: {exc}")
+
+    masses = {operation.logical_id: operation for operation in plan.operations}
+    assert set(masses) == {f"MASS-{block.component_id}" for block in canonical_layout.blocks}
+    assert masses["MASS-ADMIN_ACOLHIMENTO"].payload["height_m"] == pytest.approx(
+        layout_bim.FLOOR_HEIGHT_M * 2
+    )
+    assert all(
+        operation.payload["properties"]["height_basis"]
+        == "PROVISIONAL_ASSUMPTION: 3.20m per floor for R04 visual study only"
+        for operation in masses.values()
+    )
+    assert all("BIM-00" in operation.blocked_by for operation in masses.values())
+    assert plan.preflight.get("bim_00").status.value == "BLOCKED"
+
+
+def test_canonical_wall_planner_does_not_infer_partition_or_gallery_walls(
+    canonical_layout,
+):
+    try:
+        result = build_walls(canonical_layout)
+    except AttributeError as exc:
+        result = exc
+    assert result == ([], []), "canonical wall hosts must wait for geometric acceptance"
+
+
+def test_canonical_shell_translation_does_not_infer_wall_height(
+    registry, canonical_layout, canonical_test_solution
+):
+    plan = layout_bim.plan_canonical_shell_stage(
+        _canonical_stage_request(BimStage.R05, registry, canonical_test_solution),
+        canonical_layout,
+    )
+    plan = _stamp(
+        plan,
+        canonical_test_solution.solution_id,
+        canonical_test_solution.approval_hash,
+    )
+    walls = [
+        operation
+        for operation in plan.operations
+        if operation.semantic_capability == "revit.create_wall"
+    ]
+
+    assert walls
+    assert all("height" not in operation.payload for operation in walls)
+
+
+def test_canonical_shell_executor_refuses_before_geometric_acceptance(
+    registry, canonical_layout, canonical_test_solution
+):
+    planner = getattr(layout_bim, "plan_canonical_shell_stage", None)
+    assert callable(planner), "canonical shell stage planner is missing"
+    plan = planner(
+        _canonical_stage_request(BimStage.R05, registry, canonical_test_solution),
+        canonical_layout,
+    )
+    assert all(
+        "CANONICAL_GEOMETRIC_ACCEPTANCE" in operation.blocked_by
+        for operation in plan.operations
+    )
+
+    class UnexpectedInvoker:
+        def invoke(self, call):
+            pytest.fail("R05 executor dispatched before canonical geometric acceptance")
+
+    with pytest.raises(StagePreflightError, match="canonical geometric acceptance"):
+        execute_shell_stage(plan, invoker=UnexpectedInvoker())

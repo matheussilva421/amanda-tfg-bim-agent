@@ -195,6 +195,7 @@ class StageOperation(BaseModel):
     semantic_capability: str = Field(min_length=1)
     payload: dict[str, Any] = Field(default_factory=dict)
     verification_rules: list[str] = Field(default_factory=list)
+    blocked_by: list[str] = Field(default_factory=list)
     preferred_provider: str | None = None
     fallback_providers: list[str] = Field(default_factory=list)
 
@@ -710,6 +711,19 @@ def dispatch_operations(
     invoker: StageToolInvoker,
 ) -> list[StageExecutionRecord]:
     """Hand every desired operation to the injected adapter, in order."""
+
+    blocked = [
+        (operation.logical_id, sorted(set(operation.blocked_by)))
+        for operation in operations
+        if operation.blocked_by
+    ]
+    if blocked:
+        details = "; ".join(
+            f"{logical_id}: {', '.join(gates)}" for logical_id, gates in blocked
+        )
+        raise StagePreflightError(
+            "operation dispatch blocked by evidence gate: " + details
+        )
 
     records: list[StageExecutionRecord] = []
     for operation in operations:

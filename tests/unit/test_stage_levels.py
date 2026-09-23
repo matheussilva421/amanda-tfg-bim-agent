@@ -142,6 +142,36 @@ def test_level_without_provable_elevation_is_refused(tmp_path: Path):
         )
 
 
+def test_study_assumption_level_is_planned_but_bim00_blocked(tmp_path: Path):
+    level = LevelReference(
+        logical_id="LEVEL-02",
+        name="LEVEL-02",
+        elevation_m=3.2,
+        evidence=[
+            "PROVISIONAL_ASSUMPTION: 3.20m floor-to-floor for visual massing only"
+        ],
+        is_provable=False,
+        source_kind="DESIGN_ASSUMPTION",
+    )
+    try:
+        plan = plan_levels_stage(
+            _request(tmp_path),
+            levels=[level],
+            allow_study_assumptions=True,
+        )
+    except TypeError as exc:
+        pytest.fail(f"R03 has no explicit blocked-study assumption mode: {exc}")
+
+    assert plan.levels == [level]
+    assert plan.preflight.get("bim_00").status.value == "BLOCKED"
+    assert all("BIM-00" in operation.blocked_by for operation in plan.operations)
+
+    invoker = RecordingInvoker()
+    with pytest.raises(StagePreflightError, match="BIM-00"):
+        execute_levels_stage(plan, invoker=invoker)
+    assert invoker.calls == []
+
+
 def test_level_write_can_be_verified_by_name_and_elevation(tmp_path: Path):
     plan = plan_levels_stage(
         _request(tmp_path),
