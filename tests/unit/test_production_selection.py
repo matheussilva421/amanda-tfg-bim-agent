@@ -79,7 +79,7 @@ def _select(program, profile):
 
 
 def test_active_selection_is_the_user_directed_canonical_pavilion_parti():
-    assert SELECTION_SOLUTION_ID == "AMANDA-RUN-002-PAVILION-S01"
+    assert SELECTION_SOLUTION_ID == "AMANDA-RUN-002-PAVILION-S02"
     assert SELECTION_ARCHETYPE == "CANONICAL_PAVILION_CLUSTER"
     assert SELECTION_SOLUTION_ID != LEGACY_SELECTION_SOLUTION_ID
 
@@ -102,6 +102,11 @@ def test_selection_records_parti_authority_and_delegated_detail_separately(progr
     )
     assert selection.solution.geometry["canonical_source_hashes"] == list(
         profile.source_hashes
+    )
+    assert selection.decision.supersedes == "DEC-CANONICAL-DETAIL-001"
+    assert (
+        selection.solution.geometry["supersedes_provisional_solution_id"]
+        == "AMANDA-RUN-002-PAVILION-S01"
     )
 
 

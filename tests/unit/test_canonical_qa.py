@@ -5,6 +5,7 @@ from dataclasses import replace
 from pathlib import Path
 
 import pytest
+from shapely.affinity import translate as move_geometry
 
 from amanda_agent.design.architectural_layout import build_courtyard_layout
 from amanda_agent.design.canonical_pavilion_layout import (
@@ -109,6 +110,36 @@ def test_relative_location_and_program_checks_pass_for_canonical_pavilions(
 
     for check_id in ("CANON-002", "CANON-005", "CANON-007", "CANON-008", "CANON-009"):
         assert checks[check_id].status == "PASS"
+
+
+def test_residential_cluster_qa_rejects_communal_pavilion_outside_northeast_quadrant(
+    canonical_layout, profile
+):
+    blocks = []
+    for block in canonical_layout.blocks:
+        if block.component_id == "RES_PAV_D_COMMUNAL":
+            offset = (20.0, -30.0)
+            block = replace(
+                block,
+                footprint=move_geometry(block.footprint, xoff=offset[0], yoff=offset[1]),
+                access_point=move_geometry(block.access_point, xoff=offset[0], yoff=offset[1]),
+            )
+        blocks.append(block)
+    misplaced = replace(canonical_layout, blocks=tuple(blocks))
+
+    assert _checks_by_id(misplaced, profile)["CANON-004"].status == "FAIL"
+
+
+def test_covered_path_qa_rejects_straight_link_geometry(canonical_layout, profile):
+    connectors = list(canonical_layout.covered_connectors)
+    first = connectors[0]
+    connectors[0] = replace(
+        first,
+        centerline=(first.centerline[0], first.centerline[-1]),
+    )
+    straight_link = replace(canonical_layout, covered_connectors=tuple(connectors))
+
+    assert _checks_by_id(straight_link, profile)["CANON-006"].status == "FAIL"
 
 
 def test_visual_gate_requires_all_six_reviewed_stages_and_matching_board_hashes(

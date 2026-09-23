@@ -9,7 +9,7 @@ from typing import Any
 from shapely.affinity import translate
 from shapely.geometry import LineString, Point, box
 from shapely.geometry.base import BaseGeometry
-from shapely.ops import unary_union
+from shapely.ops import nearest_points, unary_union
 
 from amanda_agent.design.canonical_reference import CanonicalReferenceProfile
 from amanda_agent.design.layout_protocol import ExternalSpace
@@ -44,6 +44,7 @@ class CoveredConnector:
     from_component: str
     to_component: str
     footprint: BaseGeometry
+    centerline: tuple[tuple[float, float], ...] = ()
 
     @property
     def area_m2(self) -> float:
@@ -139,10 +140,10 @@ for _num in range(1, 5):
 
 _BLOCK_CENTERS = {
     "ADMIN_ACOLHIMENTO": (0.0, -36.0),
-    "RES_PAV_A": (-15.0, 0.0),
-    "RES_PAV_B": (0.0, 16.0),
-    "RES_PAV_C": (15.0, 0.0),
-    "RES_PAV_D_COMMUNAL": (0.0, -16.0),
+    "RES_PAV_A": (-15.0, 15.0),
+    "RES_PAV_B": (-15.0, -15.0),
+    "RES_PAV_C": (15.0, -15.0),
+    "RES_PAV_D_COMMUNAL": (15.0, 15.0),
     "SERVICE_CAPACITATION": (30.0, -10.0),
     "CHILD_SECTOR": (-30.0, 16.0),
 }
@@ -302,21 +303,29 @@ def build_canonical_pavilion_layout(
                         accessible=item["accessible"],
                     )
                 )
-            translated_floors[level] = translate(
+            translated_floor = translate(
                 floor_shapes[level], xoff=offset_x, yoff=offset_y
-            ).buffer(0.25, join_style="mitre")
+            )
+            if component_id.startswith("RES_PAV_"):
+                # The residential reference uses compact, softened pavilion
+                # envelopes around the garden rather than square bar plates.
+                translated_floors[level] = translated_floor.buffer(
+                    0.8, quad_segs=8, join_style="round"
+                )
+            else:
+                translated_floors[level] = translated_floor.buffer(
+                    0.25, join_style="mitre"
+                )
         all_floor_shells = unary_union(list(translated_floors.values()))
         bounds = all_floor_shells.bounds
-        footprint = box(*bounds)
+        footprint = (
+            all_floor_shells
+            if component_id.startswith("RES_PAV_")
+            else box(*bounds)
+        )
         minx, miny, maxx, maxy = footprint.bounds
-        if component_id == "RES_PAV_A":
-            access = Point(maxx, center[1])
-        elif component_id == "RES_PAV_B":
-            access = Point(center[0], miny)
-        elif component_id == "RES_PAV_C":
-            access = Point(minx, center[1])
-        elif component_id == "RES_PAV_D_COMMUNAL":
-            access = Point(center[0], maxy)
+        if component_id == "RES_PAV_A" or component_id == "RES_PAV_B" or component_id == "RES_PAV_C" or component_id == "RES_PAV_D_COMMUNAL":
+            access = nearest_points(footprint, Point(0.0, 0.0))[0]
         elif (
             component_id == "SERVICE_CAPACITATION"
             or component_id == "ADMIN_ACOLHIMENTO"
@@ -346,6 +355,7 @@ def build_canonical_pavilion_layout(
         )
 
     block_map = {item.component_id: item for item in blocks}
+    footprint_union = unary_union([item.footprint for item in blocks])
     external_by_id = {item["logical_id"]: item for item in external_rows}
     external_specs = (
         ("REQ-07-01", "PROTECTED_PATIO", (0.0, 0.0), 8.0),
@@ -368,40 +378,53 @@ def build_canonical_pavilion_layout(
     patio = next(
         item for item in external_spaces if item.component_id == "PROTECTED_PATIO"
     )
-    patio_minx, patio_miny, patio_maxx, patio_maxy = patio.polygon.bounds
-    connector_specs = (
-        (
-            "RES_PAV_A",
-            (block_map["RES_PAV_A"].footprint.bounds[2], 0.0),
-            (patio_minx, 0.0),
-        ),
-        (
-            "RES_PAV_B",
-            (0.0, block_map["RES_PAV_B"].footprint.bounds[1]),
-            (0.0, patio_maxy),
-        ),
-        (
-            "RES_PAV_C",
-            (block_map["RES_PAV_C"].footprint.bounds[0], 0.0),
-            (patio_maxx, 0.0),
-        ),
-        (
-            "RES_PAV_D_COMMUNAL",
-            (0.0, block_map["RES_PAV_D_COMMUNAL"].footprint.bounds[3]),
-            (0.0, patio_miny),
-        ),
-    )
+    patio_center = patio.polygon.centroid
     covered_connectors: list[CoveredConnector] = []
-    for component_id, start, end in connector_specs:
-        path = LineString([start, end]).buffer(
-            1.0, cap_style="flat", join_style="mitre"
+    for component_id in (
+        "RES_PAV_A",
+        "RES_PAV_B",
+        "RES_PAV_C",
+        "RES_PAV_D_COMMUNAL",
+    ):
+        block = block_map[component_id]
+        start = block.access_point
+        garden_edge, _ = nearest_points(patio.polygon, block.footprint)
+        midpoint_x = (start.x + garden_edge.x) / 2.0
+        midpoint_y = (start.y + garden_edge.y) / 2.0
+        outward_x = block.footprint.centroid.x - patio_center.x
+        outward_y = block.footprint.centroid.y - patio_center.y
+        outward_length = math.hypot(outward_x, outward_y)
+        control = (
+            midpoint_x - outward_y / outward_length * 2.5,
+            midpoint_y + outward_x / outward_length * 2.5,
         )
+        curve_points = []
+        for step in range(13):
+            t = step / 12.0
+            inverse = 1.0 - t
+            curve_points.append(
+                (
+                    inverse * inverse * start.x
+                    + 2.0 * inverse * t * control[0]
+                    + t * t * garden_edge.x,
+                    inverse * inverse * start.y
+                    + 2.0 * inverse * t * control[1]
+                    + t * t * garden_edge.y,
+                )
+            )
+        corridor = LineString(curve_points).buffer(
+            1.0, cap_style="flat", join_style="round"
+        )
+        path = corridor.difference(footprint_union)
         covered_connectors.append(
             CoveredConnector(
                 connector_id=f"COVERED-{component_id}-TO-PROTECTED_PATIO",
                 from_component=component_id,
                 to_component="PROTECTED_PATIO",
                 footprint=path,
+                centerline=tuple(
+                    (float(x), float(y)) for x, y in curve_points
+                ),
             )
         )
 
@@ -416,7 +439,8 @@ def build_canonical_pavilion_layout(
                 (item.component_id, item.polygon.wkt) for item in external_spaces
             ],
             "covered_connectors": [
-                (item.connector_id, item.footprint.wkt) for item in covered_connectors
+                (item.connector_id, item.footprint.wkt, item.centerline)
+                for item in covered_connectors
             ],
         },
         "coordinate_basis": "NORMALIZED_METRIC_REFERENCE_NOT_SURVEY",
@@ -429,7 +453,6 @@ def build_canonical_pavilion_layout(
     ).hexdigest()
     net_area = sum(room.net_area_m2 for block in blocks for room in block.rooms)
     external_area = sum(space.area_m2 for space in external_spaces)
-    footprint_union = unary_union([block.footprint for block in blocks])
     return CanonicalPavilionLayout(
         rooms=tuple(room for block in blocks for room in block.rooms),
         blocks=tuple(blocks),

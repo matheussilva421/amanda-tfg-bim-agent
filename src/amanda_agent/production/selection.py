@@ -55,13 +55,14 @@ LEGACY_ENGINE_VERSION = "design-engine-v1"
 LEGACY_REQUIREMENTS_VERSION = "requirements-v1"
 LEGACY_SITE_VERSION = "site-v1"
 PARTI_DECISION_ID = "DEC-CANONICAL-PARTI-001"
-SELECTION_DECISION_ID = "DEC-CANONICAL-DETAIL-001"
+PREVIOUS_CANONICAL_DETAIL_DECISION_ID = "DEC-CANONICAL-DETAIL-001"
+SELECTION_DECISION_ID = "DEC-CANONICAL-DETAIL-002"
 SELECTION_TOPIC = "CANONICAL_PARTI_IMPLEMENTATION"
-SELECTION_SOLUTION_ID = "AMANDA-RUN-002-PAVILION-S01"
+SELECTION_SOLUTION_ID = "AMANDA-RUN-002-PAVILION-S02"
 SELECTION_ARCHETYPE = "CANONICAL_PAVILION_CLUSTER"
 SELECTED_OPTION = (
-    "PROVISIONAL_ASSUMPTION: normalized pavilion layout implementing the user-directed "
-    "canonical parti, pending geometric acceptance and verified site inputs."
+    "PROVISIONAL_ASSUMPTION: board-aligned pavilion layout implementing the "
+    "user-directed canonical parti, pending geometric acceptance and verified site inputs."
 )
 ENGINE_VERSION = "canonical-layout-v1"
 REQUIREMENTS_VERSION = "requirements-v1"
@@ -426,18 +427,23 @@ def _build_canonical_selection(
         "project/site/missing-data.yaml#parcel-boundary-and-topography-unverified",
     ]
     detail_rationale = (
-        "The detailed normalized layout implements the user-directed canonical "
-        "parti and the exact 20-person programme. Room and outdoor programme areas "
-        "reconcile, and canonical structural QA passes. Coordinates are normalized "
-        "reference geometry, not survey coordinates. Site fit, canonical geometric "
-        "acceptance, and all required stage visual regressions remain pending; this "
-        "candidate is therefore not BIM-eligible."
+        "The normalized study follows the board topology: three sleeping pavilions "
+        "occupy the northwest, southwest and southeast sides of the central garden; "
+        "the communal/refectory pavilion is northeast; their covered paths bend "
+        "around the garden. Administration stays on the public edge in two levels, "
+        "services keep a separate access, and the child sector interfaces with green. "
+        "The exact 20-person room and outdoor areas reconcile, and structural parti "
+        "QA passes. Coordinates are normalized reference geometry, not survey data. "
+        "The earlier S01 normalized candidate is superseded by this content-bound "
+        "geometry revision and no Revit geometry was written from S01. Site fit, "
+        "canonical geometric acceptance, and required stage visual regressions "
+        "remain pending, so S02 is not BIM-eligible."
     )
     detail_decision = DecisionRecord(
         decision_id=SELECTION_DECISION_ID,
         topic=SELECTION_TOPIC,
         alternatives=[
-            "PROVISIONAL_ASSUMPTION: normalized metric pavilion placement around a protected central patio",
+            "PROVISIONAL_ASSUMPTION: board-aligned normalized pavilions and curved covered paths around a protected central patio",
             "Reuse of the superseded linear R12 geometry, prohibited",
         ],
         selected_option=SELECTED_OPTION,
@@ -447,7 +453,7 @@ def _build_canonical_selection(
         affected_requirements=affected,
         selection_authority=SelectionAuthority.AGENT_DELEGATED,
         timestamp=timestamp,
-        supersedes=LEGACY_SELECTION_DECISION_ID,
+        supersedes=PREVIOUS_CANONICAL_DETAIL_DECISION_ID,
         approval_hash=compute_approval_hash(
             selected_option=SELECTED_OPTION,
             rationale=detail_rationale,
@@ -471,6 +477,8 @@ def _build_canonical_selection(
     geometry = {
         "type": "CanonicalPavilionDesignGeometry",
         "layout_hash": layout.content_hash,
+        "supersedes_provisional_solution_id": "AMANDA-RUN-002-PAVILION-S01",
+        "supersedes_provisional_decision_id": PREVIOUS_CANONICAL_DETAIL_DECISION_ID,
         "parti_selection_authority": SelectionAuthority.USER_DIRECTED.value,
         "detailed_variant_authority": SelectionAuthority.AGENT_DELEGATED.value,
         "parti_decision": {
@@ -533,6 +541,7 @@ def _build_canonical_selection(
                 "from_component": path.from_component,
                 "to_component": path.to_component,
                 "footprint_wkt": path.footprint.wkt,
+                "centerline": [list(point) for point in path.centerline],
             }
             for path in layout.covered_connectors
         ],
@@ -634,6 +643,7 @@ __all__ = [
     "LEGACY_SELECTION_DECISION_ID",
     "LEGACY_SELECTION_SOLUTION_ID",
     "PARTI_DECISION_ID",
+    "PREVIOUS_CANONICAL_DETAIL_DECISION_ID",
     "SCHEMA_VERSION",
     "SELECTED_OPTION",
     "SELECTION_ARCHETYPE",

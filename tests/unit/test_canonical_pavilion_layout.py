@@ -187,6 +187,29 @@ def test_central_garden_connects_each_pavilion_without_overlapping_closed_footpr
     assert all(garden.polygon.disjoint(block.footprint) for block in layout.blocks)
 
 
+def test_residential_quadrants_match_the_canonical_board_around_the_garden(layout):
+    garden_center = layout.central_garden.polygon.centroid
+    expected_quadrants = {
+        "RES_PAV_A": (-1, 1),
+        "RES_PAV_B": (-1, -1),
+        "RES_PAV_C": (1, -1),
+        "RES_PAV_D_COMMUNAL": (1, 1),
+    }
+
+    for component_id, (x_sign, y_sign) in expected_quadrants.items():
+        center = layout.block(component_id).footprint.centroid
+        assert (center.x - garden_center.x) * x_sign > 0
+        assert (center.y - garden_center.y) * y_sign > 0
+
+
+def test_residential_envelopes_and_covered_routes_preserve_organic_board_form(layout):
+    for block in layout.residential_pavilions:
+        assert len(block.footprint.exterior.coords) > 5
+
+    for connector in layout.covered_connectors:
+        assert len(connector.footprint.exterior.coords) > 5
+
+
 def test_room_footprints_are_contained_and_separate_on_each_level(layout):
     for block in layout.blocks:
         for room in block.rooms:

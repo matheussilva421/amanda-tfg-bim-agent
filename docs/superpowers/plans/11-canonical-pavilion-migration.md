@@ -177,12 +177,16 @@ Required logical components:
 - New canonical run starts from tested template/base.
 - Legacy R12 path must be explicitly rejected as production target.
 
-- [ ] RED test: path/manifest tagged `SUPERSEDED_BY_USER_DIRECTION` cannot be selected as canonical production target.
-- [ ] RED test: canonical source hashes printed/recorded at plan start.
-- [ ] Update imports from legacy builder to canonical active layout resolver.
-- [ ] Preserve writer lock, safe save-as, idempotency and provider activation behavior.
-- [ ] Run focused tests; GREEN.
-- [ ] Commit `fix: prevent canonical rebuild from reusing legacy linear RVT`.
+- [x] RED test: path/manifest tagged `SUPERSEDED_BY_USER_DIRECTION` cannot be selected as canonical production target.
+- [x] RED test: canonical source hashes printed/recorded at plan start.
+- [x] Update imports from legacy builder to canonical active layout resolver.
+- [x] Preserve writer lock, safe save-as, idempotency and provider activation behavior.
+- [x] Run focused tests; GREEN (70 passed, 0 failed; Ruff and `git diff --check` passed).
+- [x] Commit `fix: prevent canonical rebuild from reusing legacy linear RVT`.
+
+#### Task 8 sequencing ruling
+
+The detailed selection remains `bim_eligible=false` until canonical geometric acceptance, while R04 massing must be created after BIM-00 and reviewed before that acceptance. Therefore a global detailed-eligibility check must not prevent an R04-only plan/write once BIM-00 has passed. Keep R05 and later detailing blocked until acceptance; dry planning remains write-free. Cost if wrong: either no path to produce the required R04 acceptance evidence or an unsafe pre-acceptance detail write.
 
 ### Task 9: Create canonical run artifacts offline before Revit write
 

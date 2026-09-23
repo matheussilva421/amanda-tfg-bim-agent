@@ -75,6 +75,30 @@ def _area(item: object) -> float:
     return float(polygon.area) if polygon is not None else 0.0
 
 
+def _centerline_is_curved(connector: object) -> bool:
+    """Require a measured bend in the normalized connector centerline."""
+
+    points = getattr(connector, "centerline", ())
+    if not isinstance(points, (list, tuple)) or len(points) < 3:
+        return False
+    start_x, start_y = points[0]
+    end_x, end_y = points[-1]
+    dx = float(end_x) - float(start_x)
+    dy = float(end_y) - float(start_y)
+    chord_length = math.hypot(dx, dy)
+    if chord_length <= _GEOMETRY_TOLERANCE_M:
+        return False
+    maximum_deviation = max(
+        abs(
+            dx * (float(point[1]) - float(start_y))
+            - dy * (float(point[0]) - float(start_x))
+        )
+        / chord_length
+        for point in points[1:-1]
+    )
+    return maximum_deviation > 0.25
+
+
 def run_canonical_checks(
     layout: object, profile: CanonicalReferenceProfile
 ) -> list[CanonicalCheck]:
@@ -149,6 +173,23 @@ def run_canonical_checks(
     expected_residential = profile.residential_pavilion_count_target
     expected_sleeping = profile.sleeping_pavilions_target
     expected_communal = profile.communal_pavilions_target
+    patio_center = patio.polygon.centroid if patio is not None else None
+    board_quadrants = {
+        "RES_PAV_A": (-1, 1),
+        "RES_PAV_B": (-1, -1),
+        "RES_PAV_C": (1, -1),
+        "RES_PAV_D_COMMUNAL": (1, 1),
+    }
+    board_arrangement_ok = patio_center is not None and all(
+        (block.footprint.centroid.x - patio_center.x) * x_sign > 0.0
+        and (block.footprint.centroid.y - patio_center.y) * y_sign > 0.0
+        for component_id, (x_sign, y_sign) in board_quadrants.items()
+        for block in residential
+        if block.component_id == component_id
+    ) and all(
+        _component(residential, component_id) is not None
+        for component_id in board_quadrants
+    )
     residential_cluster_ok = (
         len(residential) == expected_residential
         and sum(
@@ -161,6 +202,7 @@ def run_canonical_checks(
             for index, first in enumerate(residential)
             for second in residential[index + 1 :]
         )
+        and board_arrangement_ok
     )
     results.append(
         _check(
@@ -168,7 +210,7 @@ def run_canonical_checks(
             "CRITICAL",
             "PASS" if residential_cluster_ok else "FAIL",
             "residential_is_pavilion_cluster",
-            f"pavilions={len(residential)}; sleeping_target={expected_sleeping}; communal_target={expected_communal}",
+            f"pavilions={len(residential)}; sleeping_target={expected_sleeping}; communal_target={expected_communal}; board_quadrants_match={board_arrangement_ok}",
         )
     )
 
@@ -209,6 +251,7 @@ def run_canonical_checks(
             getattr(item, "footprint", None) is not None
             and item.footprint.area > 0.0
             and item.footprint.distance(patio.polygon) <= _GEOMETRY_TOLERANCE_M
+            and _centerline_is_curved(item)
             and all(
                 item.footprint.intersection(block.footprint).area
                 <= _GEOMETRY_TOLERANCE_M
@@ -223,7 +266,7 @@ def run_canonical_checks(
             "HIGH",
             "PASS" if paths_ok else "FAIL",
             "covered_external_paths_connect_pavilions",
-            f"patio_connectors={len(connectors)}; residential_pavilions={len(residential)}",
+            f"patio_connectors={len(connectors)}; residential_pavilions={len(residential)}; curved_routes={all(_centerline_is_curved(item) for item in connectors)}",
         )
     )
 

@@ -14,6 +14,7 @@ registry cannot prove for this exact build.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 import time
@@ -23,28 +24,102 @@ from pathlib import Path
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPOSITORY_ROOT / "src"))
 
-from amanda_agent.bim.stages import create_stage_checkpoint  # noqa: E402
-from amanda_agent.bim.providers import HorizunInvoker, McpProbeTransport  # noqa: E402
-from amanda_agent.bim.runner import RunStatus, execute_stage  # noqa: E402
-from amanda_agent.bim.stages import ExecutionMode  # noqa: E402
-from amanda_agent.design.architectural_layout import build_courtyard_layout  # noqa: E402
-from amanda_agent.models.capability import CapabilityRegistry  # noqa: E402
-from amanda_agent.production.layout_bim import (  # noqa: E402
+from amanda_agent.bim.providers import HorizunInvoker, McpProbeTransport
+from amanda_agent.bim.runner import RunStatus, execute_stage
+from amanda_agent.bim.stages import (
+    ExecutionMode,
+)
+from amanda_agent.design.canonical_pavilion_layout import (
+    build_canonical_pavilion_layout,
+)
+from amanda_agent.design.canonical_reference import (
+    CanonicalReferenceProfile,
+)
+from amanda_agent.models.capability import CapabilityRegistry
+from amanda_agent.production.layout_bim import (
     build_layout_stage_plans,
     find_project_template,
 )
-from amanda_agent.production.selection import build_selection  # noqa: E402
-from amanda_agent.state.locks import WriterLock  # noqa: E402
+from amanda_agent.production.selection import (
+    build_selection,
+    legacy_selection_history,
+)
+from amanda_agent.state.locks import WriterLock
 
 LOCK_PATH = REPOSITORY_ROOT / "state" / "locks" / "revit-writer.lock"
 EVIDENCE_ROOT = REPOSITORY_ROOT / "revit" / "production"
-GENERATION_RUN = "AMANDA-RUN-001"
+GENERATION_RUN = "AMANDA-RUN-002-PAVILION"
 
 
 def _new_idempotency_key(label: str, run_key: str) -> str:
     """Build a key scoped to one deliberate production attempt."""
 
     return f"amanda-{label}-{run_key}"
+
+
+def _validate_canonical_target(
+    rvt: Path, *, repository_root: Path = REPOSITORY_ROOT
+) -> None:
+    """Refuse the archived R12 path and any byte-identical copy of that RVT."""
+
+    history = legacy_selection_history()
+    relative_archive_path = Path(history["historical_rvt"])
+    manifest_path = (
+        Path(repository_root)
+        / relative_archive_path.parent
+        / "manifest.json"
+    )
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(
+            f"cannot verify superseded R12 archive manifest: {manifest_path}"
+        ) from exc
+
+    if not isinstance(manifest, dict):
+        raise TypeError("superseded R12 archive manifest must be a JSON object")
+    artifact = manifest.get("artifact")
+    direction = manifest.get("canonical_direction")
+    if not isinstance(artifact, dict) or not isinstance(direction, dict):
+        raise TypeError(
+            "superseded R12 archive manifest is missing provenance fields"
+        )
+    archived_sha256 = artifact.get("sha256")
+    if (
+        manifest.get("record_type") != "ARCHIVED_HISTORICAL_REVIT_MODEL"
+        or manifest.get("solution_id") != history["solution_id"]
+        or manifest.get("status") != "SUPERSEDED_BY_USER_DIRECTION"
+        or manifest.get("historical_only") is not True
+        or manifest.get("repository_relative_archive_path")
+        != relative_archive_path.as_posix()
+        or direction.get("may_reuse_linear_geometry") is not False
+        or archived_sha256 != history["historical_rvt_sha256"]
+    ):
+        raise ValueError("superseded R12 archive manifest is inconsistent or invalid")
+
+    candidate = Path(rvt).resolve()
+    archived_path = (Path(repository_root) / relative_archive_path).resolve()
+    same_archive_path = candidate == archived_path
+    same_archive_content = candidate.is_file() and hashlib.sha256(
+        candidate.read_bytes()
+    ).hexdigest() == archived_sha256
+    if same_archive_path or same_archive_content:
+        raise ValueError(
+            "canonical production target is SUPERSEDED_BY_USER_DIRECTION: "
+            "AMANDA-RUN-001-S01 R12 cannot be reused"
+        )
+
+
+def _report_canonical_sources(profile: CanonicalReferenceProfile) -> None:
+    """Print path-bound SHA-256 identities before the production plan starts."""
+
+    if len(profile.canonical_images) != 3 or len(profile.source_hashes) != 3:
+        raise ValueError("production planning requires exactly three canonical board hashes")
+    print("canonical source hashes:")
+    for image, digest in zip(
+        profile.canonical_images, profile.source_hashes, strict=True
+    ):
+        print(f"  {image}: {digest}")
 
 
 def _payload(result):
@@ -157,13 +232,31 @@ def run(
 ) -> int:
     from amanda_agent.bim.models import BimStage
 
+    _validate_canonical_target(rvt)
     program = json.loads(
         (REPOSITORY_ROOT / "project" / "requirements" / "program.json").read_text(
             encoding="utf-8"
         )
     )
-    layout = build_courtyard_layout(program)
-    selection = build_selection(layout, generation_run=GENERATION_RUN, timestamp="2026-09-16T15:00:00Z")
+    profile = CanonicalReferenceProfile.load(REPOSITORY_ROOT)
+    _report_canonical_sources(profile)
+    layout = build_canonical_pavilion_layout(program, profile)
+    selection = build_selection(
+        layout,
+        generation_run=GENERATION_RUN,
+        timestamp="2026-09-23T00:00:00Z",
+        profile=profile,
+    )
+    print("solution id:", selection.solution.solution_id)
+    print("approval hash:", selection.approval_hash)
+    if not selection.solution.bim_eligible:
+        print(
+            "canonical selection is gated: BIM-00, canonical geometric acceptance, "
+            "site evidence, and visual regressions must pass before detailed BIM",
+            file=sys.stderr,
+        )
+        return 2
+
     registry, warnings = CapabilityRegistry.load_for_production(REPOSITORY_ROOT)
     for warning in warnings:
         print("registry warning:", warning)
@@ -173,37 +266,6 @@ def run(
     if not build or not schema:
         print("no capability evidence is recorded", file=sys.stderr)
         return 2
-
-    from amanda_agent.bim.stages.accessibility import (
-        AccessibleRoute,
-        AccessibilityInput,
-        WidthCheck,
-    )
-
-    entrance = layout.face_rooms("street")[0].logical_id
-    accessibility = AccessibilityInput(
-        entrance_id=entrance,
-        required_space_ids=[room.logical_id for room in layout.rooms if room.accessible]
-        or [entrance],
-        routes=[
-            AccessibleRoute(
-                logical_id="ROUTE-ENTRANCE-" + room.logical_id,
-                from_node=entrance,
-                to_node=room.logical_id,
-                measured_width_m=layout.corridor_width_m,
-                source_ref="measured gallery width",
-            )
-            for room in layout.rooms
-        ],
-        widths=[
-            WidthCheck(
-                logical_id="WIDTH-GALLERY",
-                location="circulation spine",
-                measured_width_m=layout.corridor_width_m,
-                source_ref="measured gallery width",
-            )
-        ],
-    )
 
     plans = build_layout_stage_plans(
         program=program,
@@ -215,7 +277,7 @@ def run(
         solution_id=selection.solution.solution_id,
         approval_hash=selection.approval_hash,
         solution=selection.solution,
-        accessibility_input=accessibility,
+        accessibility_input=None,
         template_root=None,
         mode=ExecutionMode.DETAILED_BIM,
         max_stage=BimStage[max_stage],
@@ -364,8 +426,8 @@ def run(
                 )
                 verified = sum(1 for r in result.records if r.status is RunStatus.VERIFIED)
                 print(
-                    "%s %s %d/%d verified"
-                    % (plan.stage.name, result.status.value, verified, len(result.records))
+                    f"{plan.stage.name} {result.status.value} "
+                    f"{verified}/{len(result.records)} verified"
                 )
                 if result.status is not RunStatus.VERIFIED:
                     for record in result.records:
