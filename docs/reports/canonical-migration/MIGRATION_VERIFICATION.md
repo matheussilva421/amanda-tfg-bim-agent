@@ -6,7 +6,7 @@
 
 **Worktree:** `codex/canonical-pavilion-migration`
 
-**Git anchors before Task 10:** Task 8 implementation `06c524c`; Task 9 implementation `59684b6`; latest pushed handoff `e822b70` (local HEAD matched `origin/codex/canonical-pavilion-migration`). The Task 10 implementation commit is recorded in the following execution handoff checkpoint.
+**Git anchors:** Task 8 implementation `06c524c`; Task 9 implementation `59684b6`; Task 10 verification `5eb767d` (`test: verify canonical pavilion migration`), pushed to `origin/codex/canonical-pavilion-migration` from `e822b70`.
 
 ## Verdict
 

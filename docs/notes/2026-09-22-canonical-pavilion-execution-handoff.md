@@ -1,4 +1,4 @@
-# Handoff — canonical pavilion migration — 2026-09-22
+# Handoff — canonical pavilion migration — updated 2026-09-23
 
 ## Status
 
@@ -149,4 +149,4 @@ Commits `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` and `f466418561c101bf27bcf7e1
 - Ruff import-order findings introduced by the edits were fixed. Final `ruff check` reports 10 previously existing style findings at unchanged code lines; `git diff --check` passes.
 - No Revit document was opened, no geometry was written, and `PROJECT_STATE.yaml` remains unchanged. The selected S02 candidate remains `bim_eligible=false`. Task 10 migration-specific gates pass with the full-suite failures explicitly carried as baseline limitations.
 - Verification report: `docs/reports/canonical-migration/MIGRATION_VERIFICATION.md`. Files changed include the BIM stage preflight/operation planners, production runner/compiler, focused tests, Plan 11 Task 10 checklist, and legacy-reference classification.
-- Task 10 commit/push is the next action. Then proceed to Plan 11 Task 11 state/decision/task-graph migration; keep BIM-00 before any new Revit geometry, and keep acceptance, visual-regression, site and accessibility gates explicit. R16 remains blocked.
+- Task 10 verification commit `5eb767d` (`test: verify canonical pavilion migration`) is pushed to `origin/codex/canonical-pavilion-migration`; remote advanced from `e822b70` to `5eb767d`. The worktree was clean immediately after this commit/push. Proceed to Plan 11 Task 11 state/decision/task-graph migration; keep BIM-00 before any new Revit geometry, and keep acceptance, visual-regression, site and accessibility gates explicit. R16 remains blocked.
