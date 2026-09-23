@@ -7,7 +7,7 @@ blockers:
 - REVIT_PIPE_SANDBOX_ACCESS:DEGRADING
 current_checkpoint: revit/production/checkpoints/AMANDA-RUN-002-PAVILION-S02/R01-template.rvt
 last_completed_task: P08-CAN-T07
-last_verified_commit: cd2267b583e6df30cd260a65a140913a7bfcf4a2
+last_verified_commit: a67c8ed517c5585885e5873da4a3eea0e51d7612
 next_task: P08-CAN-T08
 phase_gate: GO_WITH_LIMITATIONS
 phase_id: PHASE_08
