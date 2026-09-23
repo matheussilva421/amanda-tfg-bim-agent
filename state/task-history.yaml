@@ -2015,3 +2015,107 @@ entries:
     and real PDF render remain to be proven on the production run (P08-T15/P08-T16).'
   recorded_utc: '2026-09-16T07:40:24Z'
   note: null
+- task_id: P08-T13
+  status: SUSPENDED
+  evidence:
+  - 'SUPERSESSION: Old R09-R12 WRITE/READ/VERIFY, checkpoints, previews and save/close/reopen
+    evidence remain intact but are historical only and satisfy no gate for pavilion
+    geometry. Archive revit/production/archive/superseded-linear/AMANDA-RUN-001-S01-R12-linear-historical-20260922.rvt,
+    SHA-256 ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29; geometry_reuse_allowed=false.'
+  recorded_utc: '2026-09-23T06:10:26Z'
+  note: Historical linear task IDs are retained and never reused.
+- task_id: P08-T14
+  status: SUSPENDED
+  evidence:
+  - Pending linear downstream work suspended by user-directed canonical supersedence.
+  recorded_utc: '2026-09-23T06:10:26Z'
+  note: Historical linear task IDs are retained and never reused.
+- task_id: P08-T15
+  status: SUSPENDED
+  evidence:
+  - Pending linear downstream work suspended by user-directed canonical supersedence.
+  recorded_utc: '2026-09-23T06:10:26Z'
+  note: Historical linear task IDs are retained and never reused.
+- task_id: P08-T16
+  status: SUSPENDED
+  evidence:
+  - Pending linear downstream work suspended by user-directed canonical supersedence.
+  recorded_utc: '2026-09-23T06:10:26Z'
+  note: Historical linear task IDs are retained and never reused.
+- task_id: P08-T17
+  status: SUSPENDED
+  evidence:
+  - Pending linear downstream work suspended by user-directed canonical supersedence.
+  recorded_utc: '2026-09-23T06:10:26Z'
+  note: Historical linear task IDs are retained and never reused.
+- task_id: P08-T18
+  status: SUSPENDED
+  evidence:
+  - Pending linear downstream work suspended by user-directed canonical supersedence.
+  recorded_utc: '2026-09-23T06:10:26Z'
+  note: Historical linear task IDs are retained and never reused.
+- task_id: P08-T19
+  status: SUSPENDED
+  evidence:
+  - Pending linear downstream work suspended by user-directed canonical supersedence.
+  recorded_utc: '2026-09-23T06:10:26Z'
+  note: Historical linear task IDs are retained and never reused.
+- task_id: P08-CAN-T01
+  status: PASS_WITH_WARNINGS
+  evidence:
+  - 'docs/reports/canonical-migration/MIGRATION_VERIFICATION.md: canonical source
+    hashes and migration proof; live provider/Revit health must be checked immediately
+    before any new write.'
+  - 'Historical archive readback: revit/production/archive/superseded-linear/AMANDA-RUN-001-S01-R12-linear-historical-20260922.rvt
+    SHA-256 ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29; both
+    checkout writer-lock files absent; canonical target absent.'
+  recorded_utc: '2026-09-23T06:10:26Z'
+  note: Canonical pavilion migration checkpoint; details remain in the cited report
+    and project state.
+- task_id: P08-CAN-T02
+  status: PASS
+  evidence:
+  - 'Closed linear R12 archive verified: revit/production/archive/superseded-linear/AMANDA-RUN-001-S01-R12-linear-historical-20260922.rvt;
+    4,345,856 bytes; SHA-256 ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29;
+    no copy used as a new model base.'
+  recorded_utc: '2026-09-23T06:10:26Z'
+  note: Canonical pavilion migration checkpoint; details remain in the cited report
+    and project state.
+- task_id: P08-CAN-T03
+  status: PASS_WITH_WARNINGS
+  evidence:
+  - PROJECT_STATE.yaml, task graph/history and decision register migrated to S02 with
+    parti authority USER_DIRECTED; solution approval hash 75afda89d6a18cd2834bdd571e761ea047305465c6579a4a9d0474e409f91bdf.
+  - Migration-specific suites passed. Required non-Revit baseline is 929 passed /
+    9 known baseline failures, recorded in MIGRATION_VERIFICATION.md; no baseline
+    family was hidden or modified.
+  recorded_utc: '2026-09-23T06:10:26Z'
+  note: Canonical pavilion migration checkpoint; details remain in the cited report
+    and project state.
+- task_id: P08-CAN-T04
+  status: PASS_WITH_WARNINGS
+  evidence:
+  - No verified parcel boundary, topography, occupancy, frontage count or true north
+    was found in the canonical input set; continue STUDY with all six existing site/provider
+    blockers preserved.
+  recorded_utc: '2026-09-23T06:10:26Z'
+  note: Canonical pavilion migration checkpoint; details remain in the cited report
+    and project state.
+- task_id: P08-CAN-T05
+  status: PASS
+  evidence:
+  - Canonical run AMANDA-RUN-002-PAVILION, solution AMANDA-RUN-002-PAVILION-S02, layout
+    hash 20529b1d08c570546641397a4e9fd302a2a23bef917f50bfea6d22824a19f556; canonical
+    QA 11 PASS, 0 FAIL, 1 BLOCKED (CANON-011); no Revit geometry written.
+  recorded_utc: '2026-09-23T06:10:26Z'
+  note: Canonical pavilion migration checkpoint; details remain in the cited report
+    and project state.
+- task_id: P08-CAN-T06
+  status: PASS_WITH_WARNINGS
+  evidence:
+  - Parti decision DEC-CANONICAL-PARTI-001 is USER_DIRECTED; detail decision DEC-CANONICAL-DETAIL-002
+    is AGENT_DELEGATED; solution approval hash 75afda89d6a18cd2834bdd571e761ea047305465c6579a4a9d0474e409f91bdf;
+    bim_eligible=false pending geometric acceptance/site/visual gates.
+  recorded_utc: '2026-09-23T06:10:26Z'
+  note: Canonical pavilion migration checkpoint; details remain in the cited report
+    and project state.

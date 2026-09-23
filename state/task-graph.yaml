@@ -2426,10 +2426,18 @@ tasks:
     - P08-T07
     status: PASS_WITH_WARNINGS
     evidence:
-    - 'docs/reports/delivery-mode/R05-live-persistence-2026-09-22.json and R06-live-evidence-2026-09-22.json: live Revit 2027/Horizun target AMANDA_WORKING_001.20260921-213302.rvt; R05 shell and R06 internal layout were written through typed commands, independently read back, saved, closed, reopened and re-queried.'
-    - 'R06 WRITE->READ->VERIFY: 30 requested, 30 dry-run valid, 30 committed, 30 matched on LEVEL-01/type 220; stale 26 layout walls and 32 shared shell walls were reconciled before the write with no unknown rows.'
-    - 'Real Revit previews are retained as STUDY only: R06-live-Nivel-1-20260922.png and R06-live-3D-20260922.png; 3D view AMANDA R06 3D STUDY is persisted and view-restored after capture.'
-    - 'Warning boundary: site topology/boundary/occupancy/frontage/true-north remain unresolved, and the captures are uncalibrated; no FINAL or GOLDEN claim is made.'
+    - 'docs/reports/delivery-mode/R05-live-persistence-2026-09-22.json and R06-live-evidence-2026-09-22.json:
+      live Revit 2027/Horizun target AMANDA_WORKING_001.20260921-213302.rvt; R05 shell
+      and R06 internal layout were written through typed commands, independently read
+      back, saved, closed, reopened and re-queried.'
+    - 'R06 WRITE->READ->VERIFY: 30 requested, 30 dry-run valid, 30 committed, 30 matched
+      on LEVEL-01/type 220; stale 26 layout walls and 32 shared shell walls were reconciled
+      before the write with no unknown rows.'
+    - 'Real Revit previews are retained as STUDY only: R06-live-Nivel-1-20260922.png
+      and R06-live-3D-20260922.png; 3D view AMANDA R06 3D STUDY is persisted and view-restored
+      after capture.'
+    - 'Warning boundary: site topology/boundary/occupancy/frontage/true-north remain
+      unresolved, and the captures are uncalibrated; no FINAL or GOLDEN claim is made.'
   P08-T09:
     id: P08-T09
     phase: PHASE_08
@@ -2439,9 +2447,16 @@ tasks:
     - P08-T08
     status: PASS_WITH_WARNINGS
     evidence:
-    - 'docs/reports/delivery-mode/R05-design-comparison-2026-09-22.md: current compact bar is compared with a two-wing courtyard/pavilion alternative using the official 20-person/626 m2 internal/260 m2 external program; selected bar remains 784.881 m2 enclosed and 918.563 m2 covered, while the ~1050 m2 alternative is rejected for program overrun.'
-    - 'Live selection revalidation: solution AMANDA-RUN-001-S01, selection_authority AGENT_DELEGATED, approval_hash bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef, selection_review AMANDA_REVIEW_PENDING.'
-    - 'Warning boundary: AMANDA_REVIEW_PENDING is nonblocking for delegated development; no site fact was invented and unresolved site blockers remain explicit.'
+    - 'docs/reports/delivery-mode/R05-design-comparison-2026-09-22.md: current compact
+      bar is compared with a two-wing courtyard/pavilion alternative using the official
+      20-person/626 m2 internal/260 m2 external program; selected bar remains 784.881
+      m2 enclosed and 918.563 m2 covered, while the ~1050 m2 alternative is rejected
+      for program overrun.'
+    - 'Live selection revalidation: solution AMANDA-RUN-001-S01, selection_authority
+      AGENT_DELEGATED, approval_hash bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef,
+      selection_review AMANDA_REVIEW_PENDING.'
+    - 'Warning boundary: AMANDA_REVIEW_PENDING is nonblocking for delegated development;
+      no site fact was invented and unresolved site blockers remain explicit.'
   P08-T10:
     id: P08-T10
     phase: PHASE_08
@@ -2451,11 +2466,19 @@ tasks:
     - P08-T09
     status: PASS_WITH_WARNINGS
     evidence:
-    - 'P08-T10 live canonical promotion: typed save_as overwrite from timestamped R06 source to revit/production/working/AMANDA_WORKING_001.rvt; the pre-promotion canonical was preserved at revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/P08-T10-canonical-pre-promotion-20260922.rvt'
-    - 'Post-promotion checkpoint revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/P08-T10-production-canonical-20260922.rvt: sha256 2135ac273634994c89ff7535c2dafbafa6236062068094e9a48cfb2189f966bc, 3977216 bytes, manager verify true'
-    - 'Canonical close/reopen and independent readback passed on Revit 2027 build 27.2.0.39/Horizun 1.3.3: 3630 elements, 76 walls, 3 floors, 1 roof, 1 mass, 3 levels, 2 grids, 24 views, coverage complete and 0 unreadable'
-    - 'Real Revit preview preserved at revit/production/previews/P08-T10-canonical-3D-20260922.png; classified STUDY and uncalibrated'
-    - 'Warnings retained: site boundary, topography, occupancy, frontage count and true north remain unresolved; no FINAL/GOLDEN claim'
+    - 'P08-T10 live canonical promotion: typed save_as overwrite from timestamped
+      R06 source to revit/production/working/AMANDA_WORKING_001.rvt; the pre-promotion
+      canonical was preserved at revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/P08-T10-canonical-pre-promotion-20260922.rvt'
+    - 'Post-promotion checkpoint revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/P08-T10-production-canonical-20260922.rvt:
+      sha256 2135ac273634994c89ff7535c2dafbafa6236062068094e9a48cfb2189f966bc, 3977216
+      bytes, manager verify true'
+    - 'Canonical close/reopen and independent readback passed on Revit 2027 build
+      27.2.0.39/Horizun 1.3.3: 3630 elements, 76 walls, 3 floors, 1 roof, 1 mass,
+      3 levels, 2 grids, 24 views, coverage complete and 0 unreadable'
+    - Real Revit preview preserved at revit/production/previews/P08-T10-canonical-3D-20260922.png;
+      classified STUDY and uncalibrated
+    - 'Warnings retained: site boundary, topography, occupancy, frontage count and
+      true north remain unresolved; no FINAL/GOLDEN claim'
   P08-T11:
     id: P08-T11
     phase: PHASE_08
@@ -2465,11 +2488,19 @@ tasks:
     - P08-T10
     status: PASS_WITH_WARNINGS
     evidence:
-    - 'R01 project readback on the live canonical target returned one project-info row; placeholder address/site metadata is retained as provisional and not treated as verified site fact'
-    - 'R02 terrain/site readback records the placeholder site mode and writes no invented topography; SITE_TOPOGRAPHY, SITE_BOUNDARY and SITE_OCCUPANCY remain explicit blockers'
-    - 'R03 independent readback returned 3 levels and 2 grids; R04 independent readback returned 1 mass; the canonical document remained active and coverage_complete with 0 unreadable'
-    - 'P08-T11 live close/reopen/requery completed on canonical AMANDA_WORKING_001.rvt under the same healthy Horizun/Revit 2027 writer session'
-    - 'Warnings retained: R01-R04 are study/provisional evidence; site-dependent placement, normative compliance and final deliverables remain pending'
+    - R01 project readback on the live canonical target returned one project-info
+      row; placeholder address/site metadata is retained as provisional and not treated
+      as verified site fact
+    - R02 terrain/site readback records the placeholder site mode and writes no invented
+      topography; SITE_TOPOGRAPHY, SITE_BOUNDARY and SITE_OCCUPANCY remain explicit
+      blockers
+    - R03 independent readback returned 3 levels and 2 grids; R04 independent readback
+      returned 1 mass; the canonical document remained active and coverage_complete
+      with 0 unreadable
+    - P08-T11 live close/reopen/requery completed on canonical AMANDA_WORKING_001.rvt
+      under the same healthy Horizun/Revit 2027 writer session
+    - 'Warnings retained: R01-R04 are study/provisional evidence; site-dependent placement,
+      normative compliance and final deliverables remain pending'
   P08-T12:
     id: P08-T12
     phase: PHASE_08
@@ -2479,13 +2510,29 @@ tasks:
     - P08-T11
     status: PASS_WITH_WARNINGS
     evidence:
-    - 'R08 compiler produced 52 room operations with independent geometry area 625.9999999999999 m2 against the official 626.0 m2 target, delta -1.1368683772161603e-13; external programmed area is 260.0 m2 and capacity is 20/20; historical 42-person hypothesis was not used'
-    - 'The first two dry-runs were rejected before transaction start: room logical_id was not applicable and string level LEVEL-01 was invalid; no mutation occurred. Final dry-run used live level ElementId 221018 and returned valid 52, invalid 0, rollback validation and plan fingerprint 933f5d8a59bd5711d4494b87a68935feffb0a0b53821f74ee53b0d712a1ad948'
-    - 'Typed Horizun apply committed 52/52 rooms with verified_applied state, failed 0 and unresolved 0; selection AMANDA-RUN-001-S01 is AGENT_DELEGATED with approval_hash bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef'
-    - 'Independent live readback before save and after reopen returned 52 Ambientes rooms, 87 openings, 78 walls and 3824 elements with coverage_complete and 0 unreadable'
-    - 'Canonical save was verified at sha256 f2a224de1f47dd67844d3a8ad1532934e5d3ba9e906b0ac1a5755ef21812c44c and 4214784 bytes; close with activate_other and reopen preserved the same bytes and active canonical target'
-    - 'Checkpoint R08-rooms-20260922.rvt and manifest were created from the stable canonical source and verify_checkpoint returned true; real 1400x865 STUDY preview was captured and hash 10683b4c4947982086c7cfd4c5b7544c5731ab02959e82df4c3c4a160ac69166'
-    - 'Warnings retained: site boundary, topography, occupancy, frontage count and true north remain unresolved; no FINAL or GOLDEN claim; R09 accessibility is next'
+    - R08 compiler produced 52 room operations with independent geometry area 625.9999999999999
+      m2 against the official 626.0 m2 target, delta -1.1368683772161603e-13; external
+      programmed area is 260.0 m2 and capacity is 20/20; historical 42-person hypothesis
+      was not used
+    - 'The first two dry-runs were rejected before transaction start: room logical_id
+      was not applicable and string level LEVEL-01 was invalid; no mutation occurred.
+      Final dry-run used live level ElementId 221018 and returned valid 52, invalid
+      0, rollback validation and plan fingerprint 933f5d8a59bd5711d4494b87a68935feffb0a0b53821f74ee53b0d712a1ad948'
+    - Typed Horizun apply committed 52/52 rooms with verified_applied state, failed
+      0 and unresolved 0; selection AMANDA-RUN-001-S01 is AGENT_DELEGATED with approval_hash
+      bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef
+    - Independent live readback before save and after reopen returned 52 Ambientes
+      rooms, 87 openings, 78 walls and 3824 elements with coverage_complete and 0
+      unreadable
+    - Canonical save was verified at sha256 f2a224de1f47dd67844d3a8ad1532934e5d3ba9e906b0ac1a5755ef21812c44c
+      and 4214784 bytes; close with activate_other and reopen preserved the same bytes
+      and active canonical target
+    - Checkpoint R08-rooms-20260922.rvt and manifest were created from the stable
+      canonical source and verify_checkpoint returned true; real 1400x865 STUDY preview
+      was captured and hash 10683b4c4947982086c7cfd4c5b7544c5731ab02959e82df4c3c4a160ac69166
+    - 'Warnings retained: site boundary, topography, occupancy, frontage count and
+      true north remain unresolved; no FINAL or GOLDEN claim; R09 accessibility is
+      next'
   P08-T13:
     id: P08-T13
     phase: PHASE_08
@@ -2493,37 +2540,117 @@ tasks:
     title: Compile R09–R12
     depends_on:
     - P08-T12
-    status: RUNNING
+    status: SUSPENDED
     evidence:
-    - 'R09 compiler dry run completed with planned stages R01 through R09, layout hash 9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539 and approval_hash bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef'
-    - 'R09 normative numeric registry is empty; numeric status is STATUS_NAO_VERIFICADO and no normative compliance claim is emitted. Measured gallery width is 1.5 m and route inputs cover 52 rooms.'
-    - 'Typed capability was not available for revit.create_accessibility_element; registry-approved Horizun Python fallback was used. Final preflight passed for active canonical target with syntax ok and zero warnings.'
-    - 'Two fallback attempts failed before transaction start because of missing imports; health/readback after each showed canonical element count 3824 and 0 GenericModel elements, so no duplicate write was retried. Final fallback execution created 53/53 GenericModel markers, skipped 0, transaction closed.'
-    - 'Independent post-write and post-reopen queries returned 53 GenericModel elements with 53 unique R09 ALL_MODEL_MARK values, 53/53 positive bounding boxes, coverage_complete and 0 unreadable; whole model returned 3877 elements, 52 rooms, 87 openings and 78 walls'
-    - 'Canonical save hash changed from f2a224de1f47dd67844d3a8ad1532934e5d3ba9e906b0ac1a5755ef21812c44c to b8145958ea27e85b232afbc72081f42b47ffcad310ac16f8e8057409d5a9548a at 4247552 bytes; close/reopen verified the exact canonical path and Revit 2027 version'
-    - 'Checkpoint R09-accessibility-20260922.rvt and manifest were created from the reopened canonical source and verify_checkpoint returned true; real 1400x865 STUDY preview hash 69cd003b58f07e5052a352ef74866f0a0ed9d074589da0f0ede5cfcb36d237ab preserved'
-    - 'R09 is PASS_WITH_WARNINGS within running P08-T13. Route envelopes are study geometry, not normative accessibility certification; site boundary, topography, occupancy, frontage count and true north blockers remain; next substage is R10 furniture'
-    - 'R10 compiler dry run completed with planned stages R01 through R10, layout hash 9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d and approval_hash bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef; the corrected stage planned 238 internal furniture operations and excluded 5 explicit external operations because the live RVT has 52 internal rooms and no external OST_Rooms'
-    - 'TDD gate for the concrete R10 scope mismatch: the new external-sector test was RED before the correction and tests/unit/test_stage_furniture.py passed 5/5 after the minimum skip-only-EXTERNAL change; focused furniture/production tests passed 23/23'
-    - 'R10 approved fallback preflight passed with syntax ok and zero warnings, source hash 688f1b5bb4cd87124a80abcd2cf0d75c79cb588c4d28ea5fd12ca21c7683485a. The single apply raised after the main transaction at out-of-transaction document.Regenerate; no blind retry was made'
-    - 'Independent post-apply and post-reopen queries proved 238 Mobiliário instances, 238 unique FUR marks, 238 R10 comments, 238 positive bounding boxes, type 1525 x 762mm, element IDs 222604-222841, coverage_complete and 0 unreadable; whole model after reopen returned 4115 elements, 52 rooms, 87 openings, 78 walls, 238 furniture and 53 GenericModels'
-    - 'Canonical save changed the hash from b8145958ea27e85b232afbc72081f42b47ffcad310ac16f8e8057409d5a9548a to d7f899c6dd9b1ce86f0b933cbe51f47728dc61f6df2fe92cb1ffece6c00e8959 at 4304896 bytes; close/reopen verified the exact canonical path and Revit 2027 version'
-    - 'Checkpoint R10-furniture-20260922.rvt and manifest were created from the reopened canonical source and verify_checkpoint returned true; real 1400x865 STUDY preview hash b2a5c46dbb13397d9ccb61a113027f19b0274fdff4aa57b1d6b114ba7b806eaf preserved'
-    - 'R10 is PASS_WITH_WARNINGS within running P08-T13. Furniture is functional STUDY placeholder geometry, not a final specification; site boundary, topography, occupancy, frontage count and true north blockers remain; next substage is R11 landscape'
-    - 'R11 compiler dry run completed with planned stages R01 through R11, layout hash 9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d and approval_hash bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef; five official landscape zones account for 260.0 m2 and four zero-additional-area layers per zone produce 25 study operations'
-    - 'R11 used the registry-approved Horizun Python fallback after final preflight passed with syntax ok and zero warnings; source hash e7397e1aa28b9907240ca917120378df6f9cfe7979281d34fe709fd3b042042d and apply key amanda-r11-landscape-20260922-v1'
-    - 'R11 positions are explicitly PROVISIONAL_ASSUMPTION reversible study coordinates derived from adopted layout extents and adjacency narrative because no verified terrain, boundary, north, site coordinates or external OST_Rooms exist in the live RVT; no site claim was made'
-    - 'Independent post-apply and post-reopen queries proved 78 GenericModels total, 25 unique R11 marks, 25 R11 provenance comments, 25 positive bounding boxes, coverage_complete and 0 unreadable; whole model after reopen returned 4140 elements, 52 rooms, 87 openings, 78 walls and 238 furniture'
-    - 'Canonical save changed the hash from d7f899c6dd9b1ce86f0b933cbe51f47728dc61f6df2fe92cb1ffece6c00e8959 to f4dd2d9cf72ccd7fa1703d543d11e6b657ae5893254a3f20e7fee34a7a8b0699 at 4325376 bytes; close/reopen verified the exact canonical path and Revit 2027 version'
-    - 'Checkpoint R11-landscape-20260922.rvt and manifest were created from the reopened canonical source and verify_checkpoint returned true; real 1400x855 STUDY preview hash a167fdd7a469f48ee6db7fcdaba17fcfa51b1222508e432d8b0094a7c70c657f preserved'
-    - 'R11 is PASS_WITH_WARNINGS within running P08-T13. Landscape is reversible STUDY representation, not verified site/terrain/north or final landscape documentation; site blockers and AMANDA_REVIEW_PENDING remain; next substage is R12 materials'
-    - 'R12 compiler dry run completed with planned stages R01 through R12, layout hash 9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d and approval_hash bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef; 78 wall material assignments were planned as 46 external and 32 internal study assignments'
-    - 'R12 used the registry-approved Horizun Python fallback for revit.assign_material after final preflight passed with syntax ok and zero warnings; submitted source hash 2d5a3e343c61c704d697baf4c6ecea12a27d96ef54116d67f4f6fa3d680199cf and apply key amanda-r12-materials-20260922-v1'
-    - 'R12 material names are Alvenaria ceramica revestida for 46 external walls and Divisoria leve for 32 internal walls; both intents remain PROVISIONAL_ASSUMPTION study decisions rather than final product specifications'
-    - 'Independent post-apply and post-reopen queries proved 78/78 walls with 46 external and 32 internal material assignments and zero failures; whole model after reopen returned 4142 elements, 52 rooms, 87 openings, 78 walls, 238 furniture, 78 GenericModels and 95 Materials with coverage_complete and 0 unreadable'
-    - 'Canonical save changed the hash from f4dd2d9cf72ccd7fa1703d543d11e6b657ae5893254a3f20e7fee34a7a8b0699 to ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29 at 4345856 bytes; exact close/reopen verified the canonical path and Revit 2027 version'
-    - 'Checkpoint R12-materials-20260922.rvt and manifest were created from the reopened canonical source and verify_checkpoint returned true; real 1400x855 STUDY preview hash 438e294422befd8ce9d6000cbab33518843c884ae2b4c0ce903cdaf0c4881d99 preserved'
-    - 'R12 is PASS_WITH_WARNINGS within running P08-T13. Materials are provisional study intents, not final specification; site blockers and AMANDA_REVIEW_PENDING remain; next substage is R13 documentation'
+    - R09 compiler dry run completed with planned stages R01 through R09, layout hash
+      9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539 and approval_hash
+      bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef
+    - R09 normative numeric registry is empty; numeric status is STATUS_NAO_VERIFICADO
+      and no normative compliance claim is emitted. Measured gallery width is 1.5
+      m and route inputs cover 52 rooms.
+    - Typed capability was not available for revit.create_accessibility_element; registry-approved
+      Horizun Python fallback was used. Final preflight passed for active canonical
+      target with syntax ok and zero warnings.
+    - Two fallback attempts failed before transaction start because of missing imports;
+      health/readback after each showed canonical element count 3824 and 0 GenericModel
+      elements, so no duplicate write was retried. Final fallback execution created
+      53/53 GenericModel markers, skipped 0, transaction closed.
+    - Independent post-write and post-reopen queries returned 53 GenericModel elements
+      with 53 unique R09 ALL_MODEL_MARK values, 53/53 positive bounding boxes, coverage_complete
+      and 0 unreadable; whole model returned 3877 elements, 52 rooms, 87 openings
+      and 78 walls
+    - Canonical save hash changed from f2a224de1f47dd67844d3a8ad1532934e5d3ba9e906b0ac1a5755ef21812c44c
+      to b8145958ea27e85b232afbc72081f42b47ffcad310ac16f8e8057409d5a9548a at 4247552
+      bytes; close/reopen verified the exact canonical path and Revit 2027 version
+    - Checkpoint R09-accessibility-20260922.rvt and manifest were created from the
+      reopened canonical source and verify_checkpoint returned true; real 1400x865
+      STUDY preview hash 69cd003b58f07e5052a352ef74866f0a0ed9d074589da0f0ede5cfcb36d237ab
+      preserved
+    - R09 is PASS_WITH_WARNINGS within running P08-T13. Route envelopes are study
+      geometry, not normative accessibility certification; site boundary, topography,
+      occupancy, frontage count and true north blockers remain; next substage is R10
+      furniture
+    - R10 compiler dry run completed with planned stages R01 through R10, layout hash
+      9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d and approval_hash
+      bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef; the corrected
+      stage planned 238 internal furniture operations and excluded 5 explicit external
+      operations because the live RVT has 52 internal rooms and no external OST_Rooms
+    - 'TDD gate for the concrete R10 scope mismatch: the new external-sector test
+      was RED before the correction and tests/unit/test_stage_furniture.py passed
+      5/5 after the minimum skip-only-EXTERNAL change; focused furniture/production
+      tests passed 23/23'
+    - R10 approved fallback preflight passed with syntax ok and zero warnings, source
+      hash 688f1b5bb4cd87124a80abcd2cf0d75c79cb588c4d28ea5fd12ca21c7683485a. The single
+      apply raised after the main transaction at out-of-transaction document.Regenerate;
+      no blind retry was made
+    - Independent post-apply and post-reopen queries proved 238 Mobiliário instances,
+      238 unique FUR marks, 238 R10 comments, 238 positive bounding boxes, type 1525
+      x 762mm, element IDs 222604-222841, coverage_complete and 0 unreadable; whole
+      model after reopen returned 4115 elements, 52 rooms, 87 openings, 78 walls,
+      238 furniture and 53 GenericModels
+    - Canonical save changed the hash from b8145958ea27e85b232afbc72081f42b47ffcad310ac16f8e8057409d5a9548a
+      to d7f899c6dd9b1ce86f0b933cbe51f47728dc61f6df2fe92cb1ffece6c00e8959 at 4304896
+      bytes; close/reopen verified the exact canonical path and Revit 2027 version
+    - Checkpoint R10-furniture-20260922.rvt and manifest were created from the reopened
+      canonical source and verify_checkpoint returned true; real 1400x865 STUDY preview
+      hash b2a5c46dbb13397d9ccb61a113027f19b0274fdff4aa57b1d6b114ba7b806eaf preserved
+    - R10 is PASS_WITH_WARNINGS within running P08-T13. Furniture is functional STUDY
+      placeholder geometry, not a final specification; site boundary, topography,
+      occupancy, frontage count and true north blockers remain; next substage is R11
+      landscape
+    - R11 compiler dry run completed with planned stages R01 through R11, layout hash
+      9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d and approval_hash
+      bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef; five official
+      landscape zones account for 260.0 m2 and four zero-additional-area layers per
+      zone produce 25 study operations
+    - R11 used the registry-approved Horizun Python fallback after final preflight
+      passed with syntax ok and zero warnings; source hash e7397e1aa28b9907240ca917120378df6f9cfe7979281d34fe709fd3b042042d
+      and apply key amanda-r11-landscape-20260922-v1
+    - R11 positions are explicitly PROVISIONAL_ASSUMPTION reversible study coordinates
+      derived from adopted layout extents and adjacency narrative because no verified
+      terrain, boundary, north, site coordinates or external OST_Rooms exist in the
+      live RVT; no site claim was made
+    - Independent post-apply and post-reopen queries proved 78 GenericModels total,
+      25 unique R11 marks, 25 R11 provenance comments, 25 positive bounding boxes,
+      coverage_complete and 0 unreadable; whole model after reopen returned 4140 elements,
+      52 rooms, 87 openings, 78 walls and 238 furniture
+    - Canonical save changed the hash from d7f899c6dd9b1ce86f0b933cbe51f47728dc61f6df2fe92cb1ffece6c00e8959
+      to f4dd2d9cf72ccd7fa1703d543d11e6b657ae5893254a3f20e7fee34a7a8b0699 at 4325376
+      bytes; close/reopen verified the exact canonical path and Revit 2027 version
+    - Checkpoint R11-landscape-20260922.rvt and manifest were created from the reopened
+      canonical source and verify_checkpoint returned true; real 1400x855 STUDY preview
+      hash a167fdd7a469f48ee6db7fcdaba17fcfa51b1222508e432d8b0094a7c70c657f preserved
+    - R11 is PASS_WITH_WARNINGS within running P08-T13. Landscape is reversible STUDY
+      representation, not verified site/terrain/north or final landscape documentation;
+      site blockers and AMANDA_REVIEW_PENDING remain; next substage is R12 materials
+    - R12 compiler dry run completed with planned stages R01 through R12, layout hash
+      9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d and approval_hash
+      bf7dcca735de166f100a6687f441ac7247ccf31f5e9e28a1bd4837591acba7ef; 78 wall material
+      assignments were planned as 46 external and 32 internal study assignments
+    - R12 used the registry-approved Horizun Python fallback for revit.assign_material
+      after final preflight passed with syntax ok and zero warnings; submitted source
+      hash 2d5a3e343c61c704d697baf4c6ecea12a27d96ef54116d67f4f6fa3d680199cf and apply
+      key amanda-r12-materials-20260922-v1
+    - R12 material names are Alvenaria ceramica revestida for 46 external walls and
+      Divisoria leve for 32 internal walls; both intents remain PROVISIONAL_ASSUMPTION
+      study decisions rather than final product specifications
+    - Independent post-apply and post-reopen queries proved 78/78 walls with 46 external
+      and 32 internal material assignments and zero failures; whole model after reopen
+      returned 4142 elements, 52 rooms, 87 openings, 78 walls, 238 furniture, 78 GenericModels
+      and 95 Materials with coverage_complete and 0 unreadable
+    - Canonical save changed the hash from f4dd2d9cf72ccd7fa1703d543d11e6b657ae5893254a3f20e7fee34a7a8b0699
+      to ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29 at 4345856
+      bytes; exact close/reopen verified the canonical path and Revit 2027 version
+    - Checkpoint R12-materials-20260922.rvt and manifest were created from the reopened
+      canonical source and verify_checkpoint returned true; real 1400x855 STUDY preview
+      hash 438e294422befd8ce9d6000cbab33518843c884ae2b4c0ce903cdaf0c4881d99 preserved
+    - R12 is PASS_WITH_WARNINGS within running P08-T13. Materials are provisional
+      study intents, not final specification; site blockers and AMANDA_REVIEW_PENDING
+      remain; next substage is R13 documentation
+    - 'SUPERSESSION: Old R09-R12 WRITE/READ/VERIFY, checkpoints, previews and save/close/reopen
+      evidence remain intact but are historical only and satisfy no gate for pavilion
+      geometry. Archive revit/production/archive/superseded-linear/AMANDA-RUN-001-S01-R12-linear-historical-20260922.rvt,
+      SHA-256 ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29; geometry_reuse_allowed=false.'
   P08-T14:
     id: P08-T14
     phase: PHASE_08
@@ -2531,8 +2658,10 @@ tasks:
     title: Compile R13 documentation
     depends_on:
     - P08-T13
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'SUPERSESSION: pending linear downstream work suspended by user-directed canonical
+      supersedence; no linear release work is authorized.'
   P08-T15:
     id: P08-T15
     phase: PHASE_08
@@ -2540,8 +2669,10 @@ tasks:
     title: Run full R14 QA
     depends_on:
     - P08-T14
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'SUPERSESSION: pending linear downstream work suspended by user-directed canonical
+      supersedence; no linear release work is authorized.'
   P08-T16:
     id: P08-T16
     phase: PHASE_08
@@ -2549,8 +2680,10 @@ tasks:
     title: Create R15 Release Candidate
     depends_on:
     - P08-T15
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'SUPERSESSION: pending linear downstream work suspended by user-directed canonical
+      supersedence; no linear release work is authorized.'
   P08-T17:
     id: P08-T17
     phase: PHASE_08
@@ -2558,8 +2691,10 @@ tasks:
     title: Export/validate RC
     depends_on:
     - P08-T16
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'SUPERSESSION: pending linear downstream work suspended by user-directed canonical
+      supersedence; no linear release work is authorized.'
   P08-T18:
     id: P08-T18
     phase: PHASE_08
@@ -2567,8 +2702,10 @@ tasks:
     title: Promote R16 GOLDEN
     depends_on:
     - P08-T19
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'SUPERSESSION: pending linear downstream work suspended by user-directed canonical
+      supersedence; no linear release work is authorized.'
   P08-T19:
     id: P08-T19
     phase: PHASE_08
@@ -2576,8 +2713,10 @@ tasks:
     title: Final deliverable package preparation before Task 18 promotion
     depends_on:
     - P08-T17
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'SUPERSESSION: pending linear downstream work suspended by user-directed canonical
+      supersedence; no linear release work is authorized.'
   P09-T01:
     id: P09-T01
     phase: PHASE_09
@@ -2755,3 +2894,196 @@ tasks:
       DEFERRED_OPTIONAL/SUSPENDED here, the deferred set is recorded as NOT_EXECUTED
       with an explicit resume path, and any reopen requires a new explicit render
       need'
+  P08-CAN-T01:
+    id: P08-CAN-T01
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: Canonical migration preflight
+    depends_on: []
+    status: PASS_WITH_WARNINGS
+    evidence:
+    - 'docs/reports/canonical-migration/MIGRATION_VERIFICATION.md: canonical source
+      hashes and migration proof; live provider/Revit health must be checked immediately
+      before any new write.'
+    - 'Historical archive readback: revit/production/archive/superseded-linear/AMANDA-RUN-001-S01-R12-linear-historical-20260922.rvt
+      SHA-256 ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29; both
+      checkout writer-lock files absent; canonical target absent.'
+  P08-CAN-T02:
+    id: P08-CAN-T02
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: Archive linear R12 as immutable history
+    depends_on:
+    - P08-CAN-T01
+    status: PASS
+    evidence:
+    - 'Closed linear R12 archive verified: revit/production/archive/superseded-linear/AMANDA-RUN-001-S01-R12-linear-historical-20260922.rvt;
+      4,345,856 bytes; SHA-256 ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29;
+      no copy used as a new model base.'
+  P08-CAN-T03:
+    id: P08-CAN-T03
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: Apply canonical Plan 11 state and decision migration
+    depends_on:
+    - P08-CAN-T02
+    status: PASS_WITH_WARNINGS
+    evidence:
+    - PROJECT_STATE.yaml, task graph/history and decision register migrated to S02
+      with parti authority USER_DIRECTED; solution approval hash 75afda89d6a18cd2834bdd571e761ea047305465c6579a4a9d0474e409f91bdf.
+    - Migration-specific suites passed. Required non-Revit baseline is 929 passed
+      / 9 known baseline failures, recorded in MIGRATION_VERIFICATION.md; no baseline
+      family was hidden or modified.
+  P08-CAN-T04:
+    id: P08-CAN-T04
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: Reconcile site inputs without changing the parti
+    depends_on:
+    - P08-CAN-T03
+    status: PASS_WITH_WARNINGS
+    evidence:
+    - No verified parcel boundary, topography, occupancy, frontage count or true north
+      was found in the canonical input set; continue STUDY with all six existing site/provider
+      blockers preserved.
+  P08-CAN-T05:
+    id: P08-CAN-T05
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: Generate the canonical pavilion run
+    depends_on:
+    - P08-CAN-T04
+    status: PASS
+    evidence:
+    - Canonical run AMANDA-RUN-002-PAVILION, solution AMANDA-RUN-002-PAVILION-S02,
+      layout hash 20529b1d08c570546641397a4e9fd302a2a23bef917f50bfea6d22824a19f556;
+      canonical QA 11 PASS, 0 FAIL, 1 BLOCKED (CANON-011); no Revit geometry written.
+  P08-CAN-T06:
+    id: P08-CAN-T06
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: Select the implementation within the user-directed parti
+    depends_on:
+    - P08-CAN-T05
+    status: PASS_WITH_WARNINGS
+    evidence:
+    - Parti decision DEC-CANONICAL-PARTI-001 is USER_DIRECTED; detail decision DEC-CANONICAL-DETAIL-002
+      is AGENT_DELEGATED; solution approval hash 75afda89d6a18cd2834bdd571e761ea047305465c6579a4a9d0474e409f91bdf;
+      bim_eligible=false pending geometric acceptance/site/visual gates.
+  P08-CAN-T07:
+    id: P08-CAN-T07
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: Create the clean canonical production RVT
+    depends_on:
+    - P08-CAN-T06
+    status: PENDING
+    evidence: []
+  P08-CAN-T08:
+    id: P08-CAN-T08
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: R01-R04 canonical massing and BIM-00 acceptance gates
+    depends_on:
+    - P08-CAN-T07
+    status: PENDING
+    evidence: []
+  P08-CAN-T09:
+    id: P08-CAN-T09
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: R05 canonical multi-block shell
+    depends_on:
+    - P08-CAN-T08
+    status: PENDING
+    evidence: []
+  P08-CAN-T10:
+    id: P08-CAN-T10
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: R06 internal layout and canonical regression
+    depends_on:
+    - P08-CAN-T09
+    status: PENDING
+    evidence: []
+  P08-CAN-T11:
+    id: P08-CAN-T11
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: R07 openings and covered circulation
+    depends_on:
+    - P08-CAN-T10
+    status: PENDING
+    evidence: []
+  P08-CAN-T12:
+    id: P08-CAN-T12
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: R08 room/program reconciliation and plan regression
+    depends_on:
+    - P08-CAN-T11
+    status: PENDING
+    evidence: []
+  P08-CAN-T13:
+    id: P08-CAN-T13
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: R09-R12 developed architecture and regressions
+    depends_on:
+    - P08-CAN-T12
+    status: PENDING
+    evidence: []
+  P08-CAN-T14:
+    id: P08-CAN-T14
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: R13 drawings, sheets and board comparison
+    depends_on:
+    - P08-CAN-T13
+    status: PENDING
+    evidence: []
+  P08-CAN-T15:
+    id: P08-CAN-T15
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: R14 full model, program and canonical QA
+    depends_on:
+    - P08-CAN-T14
+    status: PENDING
+    evidence: []
+  P08-CAN-T16:
+    id: P08-CAN-T16
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: R15 release candidate and cold reopen
+    depends_on:
+    - P08-CAN-T15
+    status: PENDING
+    evidence: []
+  P08-CAN-T17:
+    id: P08-CAN-T17
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: Export and validate model-derived deliverables
+    depends_on:
+    - P08-CAN-T16
+    status: PENDING
+    evidence: []
+  P08-CAN-T18:
+    id: P08-CAN-T18
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: Promote R16 GOLDEN after all canonical gates
+    depends_on:
+    - P08-CAN-T17
+    status: PENDING
+    evidence: []
+  P08-CAN-T19:
+    id: P08-CAN-T19
+    phase: PHASE_08
+    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    title: Final package cleanup and handoff
+    depends_on:
+    - P08-CAN-T18
+    status: PENDING
+    evidence: []

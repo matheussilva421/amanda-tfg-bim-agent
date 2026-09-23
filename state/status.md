@@ -6,9 +6,9 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `PHASE_08` — amanda-production-run
 - Phase status: `RUNNING`
-- Next task: P08-T13 (RUNNING; R09/R10/R11/R12 complete, R13 next)
-- Last PASS task: P08-T12 (PASS_WITH_WARNINGS)
-- Tasks: 159 total; RUNNING: P08-T13
+- Next task: `P08-CAN-T07`
+- Last PASS task: `P08-CAN-T06`
+- Tasks: 178 total; READY: P08-CAN-T07
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -18,7 +18,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `PHASE_06`: 15/15 PASS
 - `PHASE_07A`: 11/11 PASS
 - `PHASE_07B`: 6/8 PASS
-- PHASE_08: 12/19 PASS_WITH_WARNINGS
+- `PHASE_08`: 18/38 PASS
 - `PHASE_09`: 4/10 PASS
 
 ## Environment
@@ -49,10 +49,9 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Design and Revit recovery
 
-- Selected design: `AMANDA-RUN-001-S01`
-- Revit stage: R12
-- Current checkpoint: revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R12-materials-20260922.rvt
-- R12 live: 78 walls saved/closed/reopened/requeried with 46 external `Alvenaria ceramica revestida` assignments and 32 internal `Divisoria leve` assignments; whole model returned 4142 elements, 52 rooms, 87 openings, 238 furniture, 78 GenericModels and 95 materials; real STUDY preview preserved
+- Selected design: `AMANDA-RUN-002-PAVILION-S02`
+- Revit stage: `PRE_R04`
+- Current checkpoint: `NOT_RECORDED`
 
 ## Writer lease
 
@@ -62,5 +61,5 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Git verification
 
-- Last verified commit: `044e2f1`
-- Observed HEAD: `044e2f1`
+- Last verified commit: `cd2267b583e6df30cd260a65a140913a7bfcf4a2`
+- Observed HEAD: `cd2267b583e6df30cd260a65a140913a7bfcf4a2`

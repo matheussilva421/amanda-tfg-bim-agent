@@ -219,11 +219,11 @@ The detailed selection remains `bim_eligible=false` until canonical geometric ac
 **Files:**
 - Modify in live repo: `PROJECT_STATE.yaml`, `state/task-graph.yaml`, `state/task-history.yaml`, `project/requirements/decision-register.yaml`, handoff/status files.
 
-- [ ] Append supersedence record for `AMANDA-RUN-001-S01`.
-- [ ] Set active selected design to new canonical solution only after Task 10 passes.
-- [ ] Reset Revit stage for new geometry to pre-R04/R04 as appropriate; do not pretend R12 legacy completion applies to new geometry.
-- [ ] Preserve provider/capability PASS state and site blockers.
-- [ ] Set next task to rewritten Phase 08 canonical production.
+- [x] Append supersedence record for `AMANDA-RUN-001-S01`.
+- [x] Set active selected design to new canonical solution only after Task 10 passes.
+- [x] Reset Revit stage for new geometry to pre-R04/R04 as appropriate; do not pretend R12 legacy completion applies to new geometry.
+- [x] Preserve provider/capability PASS state and site blockers.
+- [x] Set next task to rewritten Phase 08 canonical production.
 - [ ] Commit `docs: switch production state to canonical pavilion run`.
 
 ### Task 12: Execution handoff to rewritten Phase 08
@@ -232,7 +232,7 @@ The detailed selection remains `bim_eligible=false` until canonical geometric ac
 - [ ] Verify legacy R12 archive exists and is hash recorded.
 - [ ] Verify canonical run/selection/approval hash exists.
 - [ ] Verify writer lease is free.
-- [ ] Write exact next command for P08-T07/R04 build.
+- [ ] Write exact next command for P08-CAN-T07 clean-target setup followed by P08-CAN-T08/R04 build.
 - [ ] Proceed directly to rewritten Phase 08; do not open another design debate.
 
 

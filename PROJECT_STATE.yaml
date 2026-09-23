@@ -5,31 +5,73 @@ blockers:
 - SITE_FRONTAGE_COUNT:DEGRADING
 - SITE_TRUE_NORTH:DEGRADING
 - REVIT_PIPE_SANDBOX_ACCESS:DEGRADING
-current_checkpoint: revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R12-materials-20260922.rvt
-last_completed_task: P08-T12
-last_verified_commit: e322d5d
-next_task: P08-T13
+current_checkpoint: null
+last_completed_task: P08-CAN-T06
+last_verified_commit: cd2267b583e6df30cd260a65a140913a7bfcf4a2
+next_task: P08-CAN-T07
 phase_gate: GO_WITH_LIMITATIONS
 phase_id: PHASE_08
 phase_name: amanda-production-run
 phase_status: RUNNING
 project: Amanda TFG BIM Agent
-revit_stage: R12
+revit_stage: PRE_R04
 schema_version: 1
-selected_design: AMANDA-RUN-001-S01
-selection_authority: AGENT_DELEGATED
+selected_design: AMANDA-RUN-002-PAVILION-S02
+selection_authority: USER_DIRECTED
 selection_review: AMANDA_REVIEW_PENDING
-layout_module: src/amanda_agent/design/architectural_layout.py
-layout_content_hash: 9410f296b0d3a258a51971a6e2a35cd404f8018ca28ba5d6f36003516808539d
+layout_module: src/amanda_agent/design/canonical_pavilion_layout.py
+layout_content_hash: 20529b1d08c570546641397a4e9fd302a2a23bef917f50bfea6d22824a19f556
 layout_net_internal_m2: 626.0
-layout_gross_enclosed_m2: 784.8814285714286
-layout_covered_total_m2: 918.562857142857
+layout_gross_enclosed_m2: null
+layout_covered_total_m2: null
 production_driver: scripts/run_amanda_production.py
-production_plan_stages: R01 R02 R03 R04 R05 R06 R07 R08 R09 R10 R11 R12 R13
-production_plan_operations: 913
-resume_note: LIVE canonical AMANDA_WORKING_001.rvt is active after R12 materials; 78 walls were independently re-queried after save/close/reopen with 46 Alvenaria ceramica revestida external assignments and 32 Divisoria leve internal assignments, while the whole model returned 4142 elements, 52 rooms, 87 openings, 78 walls, 238 furniture, 78 GenericModels and 95 materials; P08-T13 is RUNNING with R09/R10/R11/R12 PASS_WITH_WARNINGS, normative/site blockers and AMANDA_REVIEW_PENDING retained; next exact action is R13 documentation, preserving the R12 checkpoint and all source/GOLDEN artifacts
-state_revision: 171
-study_ifc: docs/reports/study-exports/AMANDA_ESTUDO.ifc
-study_dxf: docs/reports/study-exports/AMANDA_ESTUDO.dxf
-study_pdf: docs/reports/study-package/Amanda_TFG_ESTUDO_pranchas.pdf
-layout_qa: PASS (25 checks, 0 failed, 5 MODEL_PENDING)
+production_plan_stages: R01 R02 R03 R04
+production_plan_operations: null
+resume_note: S02 is the active USER_DIRECTED canonical pavilion parti; detail remains
+  AGENT_DELEGATED and bim_eligible=false. The linear R12 RVT is retained once as a
+  hash-verified historical archive and all old R09-R12 evidence is historical only.
+  No canonical RVT exists yet; create the clean target at canonical_target_path only
+  after fresh live writer/provider checks. BIM-00 must pass before R04 geometry; CANONICAL_GEOMETRIC_ACCEPTANCE
+  and visual regressions R04/R06/R08/R12/R13/R15 gate detailing and R16. Preserve
+  the six current site/provider blockers; do not infer site facts.
+state_revision: 172
+study_ifc: null
+study_dxf: null
+study_pdf: null
+layout_qa: 'CANONICAL CANDIDATE: 11 PASS, 0 FAIL, 1 BLOCKED (CANON-011); no Revit
+  geometric acceptance or visual regression claimed.'
+parti_selection_authority: USER_DIRECTED
+detailed_variant_authority: AGENT_DELEGATED
+selected_run_id: AMANDA-RUN-002-PAVILION
+selection_decision_id: DEC-CANONICAL-DETAIL-002
+parti_decision_id: DEC-CANONICAL-PARTI-001
+supersession_decision_id: DEC-CANONICAL-R12-SUPERSESSION-001
+selection_approval_hash: 75afda89d6a18cd2834bdd571e761ea047305465c6579a4a9d0474e409f91bdf
+parti_approval_hash: f8d36c67c37ac7b2a6387d5f186f29756e6e611bf3ffb8590e9b336b4be10542
+detail_decision_approval_hash: 89c57532d9bc215969d36ec0e0d26e1966e7e333adc734e216a3e9f01f4d620c
+canonical_source_hashes:
+- d7db84c0696f0018ed0bc0525bcc2128378d05ece8e3e5c09e2162493793de7b
+- 12e35091f33352c21691eb083bf479ba2efd44af4c65774c89021b641de4a5c6
+- 80cdcccf99154d69ea87943950db420912e949d6320279695a2fd70d44ad286c
+superseded_designs:
+- solution_id: AMANDA-RUN-001-S01
+  status: SUPERSEDED_BY_USER_DIRECTION
+  replacement_solution_id: AMANDA-RUN-002-PAVILION-S02
+  historical_stage: R12
+  historical_rvt: revit/production/archive/superseded-linear/AMANDA-RUN-001-S01-R12-linear-historical-20260922.rvt
+  historical_rvt_sha256: ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29
+  geometry_reuse_allowed: false
+layout_external_program_m2: 260.0
+layout_gross_enclosed_estimate_m2: 783-814
+layout_covered_estimate_m2: 850-950
+historical_r12_checkpoint: revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/R12-materials-20260922.rvt
+historical_r12_checkpoint_sha256: ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29
+canonical_target_path: revit/production/working/AMANDA-RUN-002-PAVILION-S02.rvt
+canonical_target_status: NOT_CREATED
+canonical_target_exists: false
+bim00_status: PENDING_BEFORE_R04_GEOMETRY
+canonical_geometric_acceptance: BLOCKED_PENDING_R04
+visual_regression_milestones: R04 R06 R08 R12 R13 R15 PENDING
+historical_linear_study_ifc: docs/reports/study-exports/AMANDA_ESTUDO.ifc
+historical_linear_study_dxf: docs/reports/study-exports/AMANDA_ESTUDO.dxf
+historical_linear_study_pdf: docs/reports/study-package/Amanda_TFG_ESTUDO_pranchas.pdf

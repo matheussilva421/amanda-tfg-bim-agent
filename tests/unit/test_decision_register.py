@@ -192,7 +192,7 @@ def test_academic_scope_keeps_mandatory_work_out_of_tfg_complete():
     assert boards.requires_human_action is True
 
 
-def test_yaml_register_contains_six_open_or_resolved_topics_and_academic_scope():
+def test_yaml_register_contains_project_and_canonical_topics_and_academic_scope():
     root = Path(__file__).parents[2]
     register = load_decision_register(
         root / "project" / "requirements" / "decision-register.yaml"
@@ -206,6 +206,9 @@ def test_yaml_register_contains_six_open_or_resolved_topics_and_academic_scope()
         "SITE_OCCUPANCY",
         "SITE_TOPOGRAPHY",
         "REGULATION_APPLICABILITY",
+        "CANONICAL_SOLUTION_SUPERSESSION",
+        "USER_DIRECTED_CANONICAL_PARTI",
+        "CANONICAL_PARTI_IMPLEMENTATION",
     }
     assert all(decision.approval_hash_valid for decision in register.decisions)
 
