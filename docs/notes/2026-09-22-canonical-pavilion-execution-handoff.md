@@ -37,7 +37,7 @@ Work continues on `codex/canonical-pavilion-migration` in the isolated worktree 
 
 ## GitHub
 
-Commits `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` and `f466418561c101bf27bcf7e1fdd328018a683b32` are pushed to `origin/codex/canonical-pavilion-migration`. No pull request has been created. Plan 11 Task 1 is test/lint green, committed, and pushed; Task 2 implementation is green locally with commit/push pending. Private `docs/source/` inputs are ignored and must not be published. Original `main` checkout changes and untracked old packages remain untouched except the specifically requested local RVT archive/duplicate cleanup and prior package validation output.
+Commits `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` and `f466418561c101bf27bcf7e1fdd328018a683b32` are pushed to `origin/codex/canonical-pavilion-migration`. No pull request has been created. Plan 11 Task 1 is test/lint green, committed, and pushed; Task 2 is green and committed as `3276976d1f47c9486d4de8f36086600042d57386`, with push pending. Private `docs/source/` inputs are ignored and must not be published. Original `main` checkout changes and untracked old packages remain untouched except the specifically requested local RVT archive/duplicate cleanup and prior package validation output.
 
 ## Exact resume
 
@@ -55,4 +55,4 @@ Commits `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` and `f466418561c101bf27bcf7e1
 - GREEN: command `python -m pytest -p no:cacheprovider --basetemp=.tmp-pytest/plan11-task2-green tests/unit/test_layout_protocol.py tests/unit/test_architectural_layout.py -v` — 18 passed, 0 failed, Python 3.12.14.
 - Ruff check passed; formatting applied.
 - Added `LayoutProtocol`, `ExternalSpaceProtocol`, and immutable `ExternalSpace`; added a patio/veranda adapter to legacy `CourtyardLayout`. Updated the legacy builder's module docstring so it cannot be mistaken for active architectural truth. No legacy geometry code changed; all 16 pre-existing architectural layout tests passed.
-- Task 2 feature commit and push are pending. Next: Plan 11 Task 3 canonical pavilion geometry.
+- Task 2 commit `3276976d1f47c9486d4de8f36086600042d57386` is complete; push pending. Next: Plan 11 Task 3 canonical pavilion geometry.

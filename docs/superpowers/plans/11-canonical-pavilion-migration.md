@@ -61,7 +61,7 @@
 - [x] Run and confirm RED (protocol module absent).
 - [x] Implement protocol/dataclasses and a geometry-neutral legacy adapter; legacy geometry unchanged.
 - [x] Run and confirm GREEN (18 focused and legacy regression tests passed).
-- [ ] Commit `refactor: define production layout protocol`.
+- [x] Commit `refactor: define production layout protocol` (`3276976`).
 
 ### Task 3: Canonical pavilion layout model
 
