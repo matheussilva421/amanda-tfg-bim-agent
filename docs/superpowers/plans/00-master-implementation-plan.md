@@ -1,4 +1,29 @@
-> GERADO de [2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md](../../../2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md#phase-00) em 2026-09-15. Edite o COMBINED e execute `docs/review/package_review.py`; não edite esta cópia. Caminhos operacionais no texto são relativos à raiz do projeto.
+
+## Canonical Execution Gates — unified patch integration 2026-09-22
+
+This section is operationally mandatory for the canonical pavilion rebuild.
+
+Before any canonical Revit write:
+1. execute `BIM-00 Write Gate`;
+2. validate the canonical reference matrix/profile and source hashes;
+3. freeze the historical R12 linear state;
+4. ensure the active solution is a new pavilion solution ID with current approval binding;
+5. build only from the canonical pavilion interpretation.
+
+Canonical execution order:
+
+`Reference → State protection → BIM-00 → Canonical massing → Geometric acceptance → Visual regression → BIM compilation → Documentation → QA/cold reopen → Release`
+
+No downstream phase, fallback, provider, or convenience optimization may override canonical architectural intent.
+
+Supporting contracts:
+- `docs/source/references/BIM_WRITE_GATE_PROTOCOL.md`
+- `docs/source/references/R12_HISTORICAL_FREEZE_PROTOCOL.md`
+- `docs/source/references/CANONICAL_GEOMETRIC_ACCEPTANCE.md`
+- `docs/source/references/PAVILION_SEMANTIC_DEFINITION.md`
+- `docs/source/references/VISUAL_REGRESSION_QA_PROTOCOL.md`
+
+> GENERATED from `2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md#phase-00` on 2026-09-22. The canonical pavilion override and Plan 11 take precedence for Amanda production.
 
 <a id="phase-00"></a>
 
@@ -8,13 +33,13 @@
 
 **Goal:** Build a local-first, fault-tolerant Codex-controlled architecture/BIM pipeline that ingests Amanda's TFG sources, proves Revit integrations on this PC, generates architectural alternatives, compiles an approved alternative into Autodesk Revit 2027, validates it, and emits an immutable GOLDEN release.
 
-**Status:** REVISED_DOCUMENT on 2026-09-15; implementation and Revit acceptance NOT_RUN.
+**Status:** IMPLEMENTED_IN_PROGRESS. By 2026-09-22 the project had reached PHASE_08 with substantial Tool Lab/design/QA implementation. DELIVERY MODE in Plan 10 overrides infrastructure-first prioritization; reconcile live workspace before acting.
 
 **Architecture:** One canonical combined file containing a master section and nine phase sections. Every phase produces testable software/evidence and ends in a `GO`, `GO_WITH_LIMITATIONS`, or `NO_GO` gate. Revit production writes are forbidden until the Tool Lab has generated a verified Capability Registry.
 
 **Tech Stack:** Windows, Autodesk Revit 2027 Education, Codex CLI, Git, PowerShell, Python 3.12 x64, pytest, Pydantic, Typer, OR-Tools, Shapely, NetworkX, IfcOpenShell; optional TopologicPy/Ladybug/Honeybee; .NET 10; Horizun Revit MCP; RevitCortex; optional Blender MCP and Autodesk APS fallback.
 
-**Spec:** [design specification](../../../2026-09-11-amanda-tfg-bim-agent-design.md)
+**Spec:** [design specification](2026-09-11-amanda-tfg-bim-agent-design.md)
 
 ## Global Constraints
 
@@ -69,17 +94,17 @@ Read each phase through its anchor below. The original ZIP supplied during revie
 
 | Phase | Content | Dependency / completion |
 |---|---|---|
-| [00](../../../2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md#phase-00) | Master and bootstrap of repository | Documentation only |
-| [01](../../../2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md#phase-01) | Foundation and durable state | Local Python/core tests; probes report Revit availability |
-| [07A](../../../2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md#phase-07) | Tasks 1–6, 10–13 and 16 | After 01; policy, task graph, redaction and maintenance safeguards before installs |
-| [03](../../../2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md#phase-03) | Source intelligence | After 01; independent of Revit |
-| [02](../../../2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md#phase-02) | Provider Tool Lab | After 07A; missing Revit blocks this branch |
-| [04](../../../2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md#phase-04) | Design engine | After 03; synthetic work may proceed with scoped input blockers |
-| [05](../../../2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md#phase-05) | BIM compiler | After 02 and 04 |
-| [06](../../../2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md#phase-06) | QA and synthetic release | After 05 |
-| [07B](../../../2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md#phase-07) | Tasks 7–9, 14–15 and 17–19 | After 06; integrated recovery and fresh-session drills |
-| [08](../../../2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md#phase-08) | Amanda production | After 06 and 07B plus resolved production input/selection gates |
-| [09](../../../2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md#phase-09) | Rendering and cloud fallback | Optional post-release rendering; APS exception described below |
+| [00](#phase-00) | Master and bootstrap of repository | Documentation only |
+| [01](#phase-01) | Foundation and durable state | Local Python/core tests; probes report Revit availability |
+| [07A](#phase-07) | Tasks 1–6, 10–13 and 16 | After 01; policy, task graph, redaction and maintenance safeguards before installs |
+| [03](#phase-03) | Source intelligence | After 01; independent of Revit |
+| [02](#phase-02) | Provider Tool Lab | After 07A; missing Revit blocks this branch |
+| [04](#phase-04) | Design engine | After 03; synthetic work may proceed with scoped input blockers |
+| [05](#phase-05) | BIM compiler | After 02 and 04 |
+| [06](#phase-06) | QA and synthetic release | After 05 |
+| [07B](#phase-07) | Tasks 7–9, 14–15 and 17–19 | After 06; integrated recovery and fresh-session drills |
+| [08](#phase-08) | Amanda production | After 06 and 07B plus resolved production input/selection gates |
+| [09](#phase-09) | Rendering and cloud fallback | Optional post-release rendering; APS exception described below |
 
 <!-- phase-dependencies -->
 ```json
