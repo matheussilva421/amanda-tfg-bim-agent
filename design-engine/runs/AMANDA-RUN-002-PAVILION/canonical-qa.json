@@ -1,0 +1,96 @@
+{
+  "checks": [
+    {
+      "check_id": "CANON-001",
+      "evidence": "building_blocks=7; footprint_type=MultiPolygon",
+      "rule": "no_single_linear_bar",
+      "severity": "CRITICAL",
+      "status": "PASS"
+    },
+    {
+      "check_id": "CANON-002",
+      "evidence": "admin_to_public_access_m=0.962; limit_m=15.0",
+      "rule": "admin_at_public_interface",
+      "severity": "CRITICAL",
+      "status": "PASS"
+    },
+    {
+      "check_id": "CANON-003",
+      "evidence": "storeys=2; room_levels=[1, 2]; target=2",
+      "rule": "admin_two_storey_reference_intent",
+      "severity": "HIGH",
+      "status": "PASS"
+    },
+    {
+      "check_id": "CANON-004",
+      "evidence": "pavilions=4; sleeping_target=3; communal_target=1; board_quadrants_match=True",
+      "rule": "residential_is_pavilion_cluster",
+      "severity": "CRITICAL",
+      "status": "PASS"
+    },
+    {
+      "check_id": "CANON-005",
+      "evidence": "protected_patio_area_m2=80.000; residential_nearby=True",
+      "rule": "central_therapeutic_garden_structures_cluster",
+      "severity": "CRITICAL",
+      "status": "PASS"
+    },
+    {
+      "check_id": "CANON-006",
+      "evidence": "patio_connectors=4; residential_pavilions=4; curved_routes=True",
+      "rule": "covered_external_paths_connect_pavilions",
+      "severity": "HIGH",
+      "status": "PASS"
+    },
+    {
+      "check_id": "CANON-007",
+      "evidence": "service_to_public_access_m=37.738; required_gt_m=20.0",
+      "rule": "service_block_and_access_separated",
+      "severity": "HIGH",
+      "status": "PASS"
+    },
+    {
+      "check_id": "CANON-008",
+      "evidence": "child_to_programmed_green_m=0.476; limit_m=5.0",
+      "rule": "child_sector_interfaces_green",
+      "severity": "HIGH",
+      "status": "PASS"
+    },
+    {
+      "check_id": "CANON-009",
+      "evidence": "internal_m2=626.000/626.000; external_m2=260.000/260.000; unique_room_ids=True",
+      "rule": "official_program_reconciled",
+      "severity": "CRITICAL",
+      "status": "PASS"
+    },
+    {
+      "check_id": "CANON-010",
+      "evidence": "deviation_register_present=True; material_deviations=0",
+      "rule": "all_material_deviations_registered",
+      "severity": "CRITICAL",
+      "status": "PASS"
+    },
+    {
+      "check_id": "CANON-011",
+      "evidence": "reviewed_stages=[]; required_stages=['R04', 'R06', 'R08', 'R12', 'R13', 'R15']; board_hashes_match=True",
+      "rule": "plan_preview_visually_corresponds_to_canonical_references",
+      "severity": "HIGH",
+      "status": "BLOCKED"
+    },
+    {
+      "check_id": "CANON-012",
+      "evidence": "geometry_origin=CANONICAL_PAVILION_RECONSTRUCTION; superseded_source_reused=False",
+      "rule": "obsolete_linear_geometry_not_used_as_final_base",
+      "severity": "CRITICAL",
+      "status": "PASS"
+    }
+  ],
+  "schema_version": 1,
+  "summary": {
+    "blocked": 1,
+    "checks": 12,
+    "critical_failures": 0,
+    "fail": 0,
+    "pass": 11
+  }
+}

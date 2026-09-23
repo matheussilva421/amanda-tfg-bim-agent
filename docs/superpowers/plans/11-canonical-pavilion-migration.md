@@ -195,11 +195,11 @@ The detailed selection remains `bim_eligible=false` until canonical geometric ac
 - Create: `scripts/build_canonical_pavilion_run.py` if no existing command cleanly does this.
 - Test: `tests/unit/test_build_canonical_pavilion_run.py`.
 
-- [ ] RED test requires solution JSON, geometry file, canonical QA report, board hashes and approval hash.
-- [ ] Generate deterministic run from program + profile.
-- [ ] Run canonical QA; CRITICAL failures must exit nonzero.
-- [ ] Export simple SVG/PNG schematic only as offline evidence, not Revit completion.
-- [ ] Commit code + generated metadata policy, not huge ephemeral outputs unless repo conventions require them.
+- [x] RED test requires solution JSON, geometry file, canonical QA report, board hashes and approval hash.
+- [x] Generate deterministic run from program + profile.
+- [x] Run canonical QA; CRITICAL failures must exit nonzero.
+- [x] Export simple SVG schematic only as offline evidence, not Revit completion.
+- [x] Commit code and the small generated run artifacts under the existing tracked-run convention; private boards/RVT remain excluded.
 
 ### Task 10: Regression and migration proof
 

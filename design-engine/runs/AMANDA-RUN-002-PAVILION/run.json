@@ -1,0 +1,37 @@
+{
+  "approval_hash": "75afda89d6a18cd2834bdd571e761ea047305465c6579a4a9d0474e409f91bdf",
+  "bim_eligible": false,
+  "canonical_images": [
+    {
+      "path": "canonical/01_implantacao_geral_canonica.png",
+      "sha256": "d7db84c0696f0018ed0bc0525bcc2128378d05ece8e3e5c09e2162493793de7b"
+    },
+    {
+      "path": "canonical/02_bloco_residencial_canonico.png",
+      "sha256": "12e35091f33352c21691eb083bf479ba2efd44af4c65774c89021b641de4a5c6"
+    },
+    {
+      "path": "canonical/03_bloco_administrativo_canonico.png",
+      "sha256": "80cdcccf99154d69ea87943950db420912e949d6320279695a2fd70d44ad286c"
+    }
+  ],
+  "canonical_qa_summary": {
+    "blocked": 1,
+    "checks": 12,
+    "critical_failures": 0,
+    "fail": 0,
+    "pass": 11
+  },
+  "external_programmed_m2": 260.0,
+  "generated_utc": "2026-09-23T00:00:00Z",
+  "internal_useful_m2": 626.0,
+  "layout_hash": "20529b1d08c570546641397a4e9fd302a2a23bef917f50bfea6d22824a19f556",
+  "program_json_sha256": "1dbca202fc96d268939909618cd55657ee3d8853d5f43dce1cd964ed484b2486",
+  "program_person_capacity": 20,
+  "program_source_sha256": "11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17",
+  "revit_calls": 0,
+  "run_id": "AMANDA-RUN-002-PAVILION",
+  "run_status": "OFFLINE_CANDIDATE",
+  "schema_version": 1,
+  "solution_id": "AMANDA-RUN-002-PAVILION-S02"
+}

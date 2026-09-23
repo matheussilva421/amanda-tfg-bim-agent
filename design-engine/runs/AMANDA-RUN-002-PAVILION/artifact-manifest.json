@@ -1,0 +1,44 @@
+{
+  "approval_hash": "75afda89d6a18cd2834bdd571e761ea047305465c6579a4a9d0474e409f91bdf",
+  "artifacts": [
+    {
+      "bytes": 2946,
+      "path": "canonical-qa.json",
+      "sha256": "fdc8813f4c8adb1d5612bb58fa769bf81919885a55c83b1ae6feea049cd53787"
+    },
+    {
+      "bytes": 86858,
+      "path": "finalists/AMANDA-RUN-002-PAVILION-S02/geometry.json",
+      "sha256": "8341ca73b3a6355c90154e1efcd252e3bb1b424f110661ae331c4142140a5f8f"
+    },
+    {
+      "bytes": 93208,
+      "path": "finalists/AMANDA-RUN-002-PAVILION-S02/solution.json",
+      "sha256": "8c2ce6c18d09b54fe8c15e7e4e3e2c397d2d34ea68afd560638963f5e0cd727a"
+    },
+    {
+      "bytes": 10576,
+      "path": "layout-preview.svg",
+      "sha256": "64dd96375b51b38e339088338618906d9c41dec9efc2728ef8104089bbaaf242"
+    },
+    {
+      "bytes": 1326,
+      "path": "run.json",
+      "sha256": "6fa912559e8b2437ed5d097333386e06b3526b005db14599fb2c6f22809a9621"
+    },
+    {
+      "bytes": 6455,
+      "path": "selection.json",
+      "sha256": "fc7c9afa98d6cebfed7d30d40ca5ba9b2f24692259523b98269448170cfd1ffe"
+    }
+  ],
+  "canonical_source_hashes": [
+    "d7db84c0696f0018ed0bc0525bcc2128378d05ece8e3e5c09e2162493793de7b",
+    "12e35091f33352c21691eb083bf479ba2efd44af4c65774c89021b641de4a5c6",
+    "80cdcccf99154d69ea87943950db420912e949d6320279695a2fd70d44ad286c"
+  ],
+  "layout_hash": "20529b1d08c570546641397a4e9fd302a2a23bef917f50bfea6d22824a19f556",
+  "run_id": "AMANDA-RUN-002-PAVILION",
+  "schema_version": 1,
+  "solution_id": "AMANDA-RUN-002-PAVILION-S02"
+}

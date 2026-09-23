@@ -1,0 +1,99 @@
+{
+  "approval_hash": "75afda89d6a18cd2834bdd571e761ea047305465c6579a4a9d0474e409f91bdf",
+  "detail_decision": {
+    "adoption_status": "PROVISIONAL_PENDING_CANONICAL_GEOMETRIC_ACCEPTANCE",
+    "affected_requirements": [
+      "PROGRAM-PEOPLE-20",
+      "PROGRAM-INTERNAL-626",
+      "PROGRAM-EXTERNAL-260",
+      "PROGRAM-ENCLOSED-ESTIMATE-783-814",
+      "PROGRAM-COVERED-ESTIMATE-850-950",
+      "CANONICAL-ADMIN-PUBLIC-EDGE-TWO-LEVELS",
+      "CANONICAL-RESIDENTIAL-FOUR-PAVILIONS-AND-CENTRAL-GARDEN",
+      "CANONICAL-CHILD-GREEN-INTERFACE",
+      "CANONICAL-SEPARATE-SERVICE-ACCESS",
+      "CANONICAL-COVERED-EXTERNAL-CIRCULATION"
+    ],
+    "alternatives": [
+      "PROVISIONAL_ASSUMPTION: board-aligned normalized pavilions and curved covered paths around a protected central patio",
+      "Reuse of the superseded linear R12 geometry, prohibited"
+    ],
+    "approval_hash": "89c57532d9bc215969d36ec0e0d26e1966e7e333adc734e216a3e9f01f4d620c",
+    "confidence": 0.5,
+    "decision_id": "DEC-CANONICAL-DETAIL-002",
+    "fact_class": "DESIGN_HYPOTHESIS",
+    "rationale": "The normalized study follows the board topology: three sleeping pavilions occupy the northwest, southwest and southeast sides of the central garden; the communal/refectory pavilion is northeast; their covered paths bend around the garden. Administration stays on the public edge in two levels, services keep a separate access, and the child sector interfaces with green. The exact 20-person room and outdoor areas reconcile, and structural parti QA passes. Coordinates are normalized reference geometry, not survey data. The earlier S01 normalized candidate is superseded by this content-bound geometry revision and no Revit geometry was written from S01. Site fit, canonical geometric acceptance, and required stage visual regressions remain pending, so S02 is not BIM-eligible.",
+    "rejected_options": [
+      "Reuse of superseded AMANDA-RUN-001-S01 geometry"
+    ],
+    "review_status": "AMANDA_REVIEW_PENDING",
+    "revision_procedure": "A material layout change creates a new solution ID and approval hash; first reconcile site inputs, pass canonical geometric acceptance, and re-run applicable visual and BIM gates.",
+    "scenario": "STUDY",
+    "selected_option": "PROVISIONAL_ASSUMPTION: board-aligned pavilion layout implementing the user-directed canonical parti, pending geometric acceptance and verified site inputs.",
+    "selection_authority": "AGENT_DELEGATED",
+    "selection_kind": "PROVISIONAL_ASSUMPTION",
+    "source_refs": [
+      "canonical/01_implantacao_geral_canonica.png#sha256=d7db84c0696f0018ed0bc0525bcc2128378d05ece8e3e5c09e2162493793de7b",
+      "canonical/02_bloco_residencial_canonico.png#sha256=12e35091f33352c21691eb083bf479ba2efd44af4c65774c89021b641de4a5c6",
+      "canonical/03_bloco_administrativo_canonico.png#sha256=80cdcccf99154d69ea87943950db420912e949d6320279695a2fd70d44ad286c",
+      "project/requirements/program.json#baseline.source_sha256=11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17",
+      "decision:DEC-CANONICAL-PARTI-001#approval_hash=f8d36c67c37ac7b2a6387d5f186f29756e6e611bf3ffb8590e9b336b4be10542",
+      "project/site/missing-data.yaml#parcel-boundary-and-topography-unverified"
+    ],
+    "source_sha256": null,
+    "supersedes": "DEC-CANONICAL-DETAIL-001",
+    "timestamp": "2026-09-23T00:00:00Z",
+    "topic": "CANONICAL_PARTI_IMPLEMENTATION",
+    "validation_status": "BLOCKED_BY_INPUT",
+    "verification_required": true
+  },
+  "layout_hash": "20529b1d08c570546641397a4e9fd302a2a23bef917f50bfea6d22824a19f556",
+  "parti_decision": {
+    "adoption_status": "USER_DIRECTED_CANONICAL_DESIGN_REFERENCE",
+    "affected_requirements": [
+      "PROGRAM-PEOPLE-20",
+      "PROGRAM-INTERNAL-626",
+      "PROGRAM-EXTERNAL-260",
+      "PROGRAM-ENCLOSED-ESTIMATE-783-814",
+      "PROGRAM-COVERED-ESTIMATE-850-950",
+      "CANONICAL-ADMIN-PUBLIC-EDGE-TWO-LEVELS",
+      "CANONICAL-RESIDENTIAL-FOUR-PAVILIONS-AND-CENTRAL-GARDEN",
+      "CANONICAL-CHILD-GREEN-INTERFACE",
+      "CANONICAL-SEPARATE-SERVICE-ACCESS",
+      "CANONICAL-COVERED-EXTERNAL-CIRCULATION"
+    ],
+    "alternatives": [
+      "Four residential pavilions around a protected garden, with separate public administration and service blocks",
+      "AMANDA-RUN-001-S01 linear bar, explicitly superseded by user direction"
+    ],
+    "approval_hash": "f8d36c67c37ac7b2a6387d5f186f29756e6e611bf3ffb8590e9b336b4be10542",
+    "confidence": 1.0,
+    "decision_id": "DEC-CANONICAL-PARTI-001",
+    "fact_class": "SOURCE_FACT",
+    "rationale": "The user explicitly designated the three hashed boards as the canonical design reference and superseded the linear R12 solution. This decision fixes the architectural parti only. It does not claim verified parcel fit, topography, regulatory approval, geometric acceptance, or visual regression. The official baseline remains 20 people, 626 m2 internal and 260 m2 external.",
+    "rejected_options": [
+      "AMANDA-RUN-001-S01 linear bar"
+    ],
+    "review_status": "AMANDA_REVIEW_PENDING",
+    "revision_procedure": "The canonical parti can change only by a new explicit user direction; append a new decision with the hashes of every referenced board.",
+    "scenario": "STUDY",
+    "selected_option": "USER_DIRECTED: three canonical design boards govern implantation, four residential pavilions around the protected garden, the public two-level administrative block, child-green interface, separate services and covered links.",
+    "selection_authority": "USER_DIRECTED",
+    "selection_kind": "EVIDENCE_BACKED",
+    "source_refs": [
+      "canonical/01_implantacao_geral_canonica.png#sha256=d7db84c0696f0018ed0bc0525bcc2128378d05ece8e3e5c09e2162493793de7b",
+      "canonical/02_bloco_residencial_canonico.png#sha256=12e35091f33352c21691eb083bf479ba2efd44af4c65774c89021b641de4a5c6",
+      "canonical/03_bloco_administrativo_canonico.png#sha256=80cdcccf99154d69ea87943950db420912e949d6320279695a2fd70d44ad286c",
+      "project/requirements/program.json#baseline.source_sha256=11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17"
+    ],
+    "source_sha256": null,
+    "supersedes": "DEC-P08-T09-SELECTION-001",
+    "timestamp": "2026-09-23T00:00:00Z",
+    "topic": "USER_DIRECTED_CANONICAL_PARTI",
+    "validation_status": "VERIFIED",
+    "verification_required": false
+  },
+  "run_id": "AMANDA-RUN-002-PAVILION",
+  "schema_version": 1,
+  "solution_id": "AMANDA-RUN-002-PAVILION-S02"
+}
