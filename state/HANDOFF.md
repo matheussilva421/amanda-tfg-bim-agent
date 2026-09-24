@@ -139,13 +139,11 @@ verified.
 
 ## Exact resume
 
-Task 10 closeout is pushed and remote-verified. Task 11 cleanup is complete
-and independently approved; push and verify its report/handoff closeout, then
-begin Task 12. Prove each obsolete branch contains no unique useful work or
-preserve it by tag before deletion. Continue Task 13 only after Task 12 review. Do not use
-`git clean` to delete; preserve gate evidence, source files, RVTs, and release
-artifacts. Only Task 13 may remove `.recovery/` or set the formal next task to
-P1-T01.
+Task 11 cleanup and Task 12 branch retirement are complete and independently
+reviewed. Push and verify this report/handoff closeout, then begin Task 13.
+Do not use `git clean` to delete; preserve gate evidence, source files, RVTs,
+and release artifacts. Only Task 13 may remove `.recovery/` or set the formal
+next task to P1-T01.
 
 ## Task 11 complete; independent review approved
 
@@ -204,6 +202,29 @@ The exact preserved paths include the six historical test log/text files,
 internal test junctions. Production/checkpoint RVTs, private sources, raw
 logs, provenance, writer lock, environments, `.recovery/`, `.superpowers/`, and
 vendor repos remain preserved. No Revit/model action or tests occurred.
+
+## Task 12 complete; independent review approved
+
+Retired both obsolete branches after classifying their history. The local and
+remote `codex/canonical-pavilion-migration` tips were already ancestors of
+`main` (local comparison `20 0`, remote-tracking comparison `22 0`); remote
+deletion succeeded and local `git branch -d` removed the merged ref.
+
+The P08 branch had exactly two commits beyond `main`: `e5c9a0e` adds an
+offline R01–R04 concept-candidate bundle for legacy `AMANDA-RUN-001-F01/F02`,
+and `125c7d9` closes its handoff. It is not current four-board production
+work and was not merged. Its complete history is preserved by the published
+annotated tag `superseded-p08-t08-concept-offline-2026-09-24`, which peels to
+`125c7d956d40fab6c358e4c6702199b4eac4d854`. The remote branch was deleted;
+the local ref was removed by exact-OID `git update-ref -d`, not `branch -D`.
+
+The recovery tag `pre-repository-recovery-2026-09-24` remains published and
+peels to `30cc3b0f7860dfb5e46299402585213d1ac2d02b`. Fresh post-deletion
+remote verification showed `origin/main` at `64d6b94503202fe7d29396efeb26e1e57f84b2c0`,
+both old branch refs absent, and both tags present. Local status shows one
+worktree on `main` and only `.recovery/` untracked. Independent reviewer
+Pascal approved the branch proof, preservation tags, and post-deletion state.
+No tests or Revit/model operations were run during this task.
 
 ## Git checkpoint
 

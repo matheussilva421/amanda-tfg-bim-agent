@@ -128,7 +128,8 @@ Exact unique commit list (2 commits; full hashes and subjects):
 
 
 
-These two commits remain under review; neither branch nor commit is classified for deletion yet.
+At the start of Task 12, these two commits were still under review. Their
+final disposition is recorded below; the history remains available by tag.
 
 ## Initial non-versioned evidence and source candidates
 
@@ -1209,3 +1210,43 @@ paths. Fourteen root temporary evidence paths remain in that preview; no
 `__pycache__` or `.pytest_cache` path remains. Independent reviewer Carson
 approved the exact 153-path delta with no actionable findings. Task 12 begins
 after this report and handoff closeout is pushed and verified.
+
+## Task 12 — retire obsolete branch refs
+
+After `git fetch origin --prune`, the local and remote branch inventories
+contained only `main` plus `codex/canonical-pavilion-migration` and
+`codex/p08-t08-concept-offline`. The working tree was on `main`; the stash
+`stash@{0}` from the pre-recovery dirty worktree was left intact.
+
+`codex/canonical-pavilion-migration` had no commits unique from `main`:
+`git rev-list --left-right --count main...codex/canonical-pavilion-migration`
+returned `20 0`; the remote-tracking comparison returned `22 0`. Local tip
+`daa200f34974065cb0b8adb56261354f0a3c3130` and remote tip
+`30cc3b0f7860dfb5e46299402585213d1ac2d02b` were both ancestors of `main`.
+After a fresh remote-tip check, the remote ref was deleted, then local
+`git branch -d` deleted the fully merged branch.
+
+`codex/p08-t08-concept-offline` had exactly two commits outside `main`:
+`e5c9a0e8342423e9dbcdf4e4b56c94858970879f` adds the offline candidate
+preparation script, tests, and handoff; `125c7d956d40fab6c358e4c6702199b4eac4d854`
+finishes that handoff. The code prepares `CONCEPT_ONLY` artifacts for the
+historical `AMANDA-RUN-001-F01/F02` finalists, stops at R04, and explicitly
+does not provide live Revit evidence. Those legacy candidates have not passed
+the current four-board reconciliation, so this branch is not active production
+work and was not merged into `main`. Its complete history remains preserved
+by annotated tag `superseded-p08-t08-concept-offline-2026-09-24` (tag object
+`1b505c1cdfc322128aa9b70350ffcd59a61441cf`, peeled commit
+`125c7d956d40fab6c358e4c6702199b4eac4d854`). The remote tag was confirmed
+before deleting the remote branch. Its local ref was deleted with an exact
+`git update-ref -d` expected-old-OID check; `git branch -D` was not used.
+
+The recovery anchor remains annotated tag
+`pre-repository-recovery-2026-09-24` (tag object
+`2567d03cc8ff2860e80bda1ec9981195ddddee6c`, peeled commit
+`30cc3b0f7860dfb5e46299402585213d1ac2d02b`). After both deletions, a fresh
+`git ls-remote` showed `origin/main` at `64d6b94503202fe7d29396efeb26e1e57f84b2c0`,
+neither obsolete branch ref, and both preservation tags. Local branch/status
+verification showed only `main`, one worktree, and `.recovery/` untracked.
+Independent reviewer Pascal approved the ancestry, tag preservation, and
+post-deletion state. No tests or Revit/model operations ran during Task 12.
+Task 13 begins only after this closeout is pushed and the remote is verified.
