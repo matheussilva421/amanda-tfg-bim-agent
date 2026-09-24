@@ -139,12 +139,43 @@ starting Task 11.
 
 ## Exact resume
 
-After this Task 10 closeout note is pushed, execute Task 11: preview ignored
-files with `git clean -ndX`, classify candidates, and remove only the approved
-cache/temp paths by explicit path. Do not use `git clean` to delete; preserve
-gate evidence, source files, RVTs, and release artifacts. Continue Tasks 12–13
-in order; only Task 13 may remove `.recovery/` or set the formal next task to
-P1-T01.
+Task 10 closeout is pushed and remote-verified. Task 11 is now in progress; see
+the inventory note below. Continue with the explicit Task 11 disposition list,
+then complete independent review and closeout before Task 12. Do not use
+`git clean` to delete; preserve gate evidence, source files, RVTs, and release
+artifacts. Continue Tasks 12–13 in order; only Task 13 may remove `.recovery/`
+or set the formal next task to P1-T01.
+
+## Task 11 in progress — ignored-file inventory
+
+The read-only `git clean -ndX` preview listed 241 would-remove paths and two
+vendor repositories it would skip. No path has been removed. The preview and
+root-temp metadata are saved under `.recovery/`. The preview includes protected
+source PDFs/documents, provenance extractions, raw logs, production/checkpoint
+RVTs, the live writer lock, all virtual environments, `.recovery/`, and
+`.superpowers/`; these are not cleanup targets.
+
+The preview has 134 root `.tmp-*` entries (104 scripts, 24 directories, and six
+test log/text files), 32 `__pycache__` directories, and `.pytest_cache/`.
+Preserve these six historical gate logs unchanged:
+`.tmp-pytest-r05-canonical-full2.log`, `.tmp-pytest-r05-tree.log`,
+`.tmp-y5.txt`, `.tmp-y7.txt`, `.tmp-y8.txt`, and `.tmp-y9.txt`. Also preserve
+`.tmp-pytest-delivery-r11/`, referenced by the committed R11 evidence. The five
+`.tmp-pytest-y5/` through `.tmp-pytest-y9/` basetemp directories are protected
+test-output trees (four contain 1,679 files each; y7 contains 25); default
+access was denied, and elevated read-only inspection confirmed generated
+pytest outputs. Keep them for evidence.
+
+The remaining root `.tmp-*.py` files are ignored scratch candidates. A static
+AST pass parsed all 104 without executing them; their filenames have no
+tracked source references. Some contain file-write or provider-call paths, so
+their exact disposition still needs review. The other candidate directories
+are pytest scratch outputs. A scan of 345 nested `.rvt`/`.rfa`/`.rte` test
+fixtures across root temp directories found only 6,149 bytes total (largest
+53 bytes); no actual Revit model is in that group. Still validate the exact
+path manifest and preserve anything unknown. The planned cleanup is
+explicit-path removal only for classified scratch, `__pycache__`, and
+`.pytest_cache`; preserve `.ruff_cache/` and every other unclassified path.
 
 ## Git checkpoint
 
