@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -10,6 +12,7 @@ from amanda_agent.design.canonical_pavilion_layout import (
 )
 from amanda_agent.design.canonical_reference import CanonicalReferenceProfile
 from amanda_agent.models.state import TaskStatus
+from amanda_agent.production.selection import build_canonical_selection
 from amanda_agent.requirements.decisions import DecisionRegister
 from amanda_agent.state.tasks import TaskRegistry
 
@@ -23,6 +26,19 @@ LINEAR_ARCHIVE = (
 
 def _yaml(path: str) -> dict:
     return yaml.safe_load((ROOT / path).read_text(encoding="utf-8"))
+
+
+def _expected_selection(profile: CanonicalReferenceProfile):
+    program = json.loads(
+        (ROOT / "project/requirements/program.json").read_text(encoding="utf-8")
+    )
+    layout = build_canonical_pavilion_layout(program, profile)
+    return build_canonical_selection(
+        layout,
+        profile,
+        generation_run="AMANDA-RUN-002-PAVILION",
+        timestamp="2026-09-23T00:00:00Z",
+    )
 
 
 def test_project_state_is_repository_recovery_without_architectural_promotion():
@@ -72,6 +88,28 @@ def test_s02_decisions_remain_historical_while_four_board_layout_is_unimplemente
     parti = register.get("DEC-CANONICAL-PARTI-001")
     detail = register.get("DEC-CANONICAL-DETAIL-002")
     profile = CanonicalReferenceProfile.load(ROOT)
+    historical_source_refs = tuple(
+        reference
+        for reference in parti.source_refs
+        if reference.startswith("canonical/")
+    )
+    historical_images = tuple(
+        reference.split("#sha256=", maxsplit=1)[0]
+        for reference in historical_source_refs
+    )
+    historical_hashes = tuple(
+        reference.rsplit("#sha256=", maxsplit=1)[1]
+        for reference in historical_source_refs
+    )
+    assert len(profile.source_hashes) == 4
+    assert historical_images == profile.canonical_images[:3]
+    assert historical_hashes == profile.source_hashes[:3]
+    historical_profile = replace(
+        profile,
+        canonical_images=historical_images,
+        source_hashes=historical_hashes,
+    )
+    expected = _expected_selection(historical_profile)
 
     assert supersession.selection_authority.value == "USER_DIRECTED"
     assert supersession.selected_option.startswith(
@@ -86,16 +124,15 @@ def test_s02_decisions_remain_historical_while_four_board_layout_is_unimplemente
     assert parti.selection_authority.value == "USER_DIRECTED"
     assert parti.approval_hash == "f8d36c67c37ac7b2a6387d5f186f29756e6e611bf3ffb8590e9b336b4be10542"
     assert "three canonical design boards" in parti.selected_option
+    assert parti.model_dump(mode="json") == expected.parti_decision.model_dump(
+        mode="json"
+    )
     assert detail.approval_hash == "89c57532d9bc215969d36ec0e0d26e1966e7e333adc734e216a3e9f01f4d620c"
+    assert detail.approval_hash == expected.decision.approval_hash
+    assert detail.source_refs == expected.decision.source_refs
     assert detail.selection_authority.value == "AGENT_DELEGATED"
     assert detail.validation_status.value == "BLOCKED_BY_INPUT"
-    assert len(profile.source_hashes) == 4
-    matched_hashes = {
-        digest
-        for digest in profile.source_hashes
-        if any(reference.endswith(digest) for reference in parti.source_refs)
-    }
-    assert len(matched_hashes) == 3
+    assert profile.source_hashes[3] not in parti.source_refs
 
     program = yaml.safe_load(
         (ROOT / "project/requirements/program.json").read_text(encoding="utf-8")

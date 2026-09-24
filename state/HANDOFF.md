@@ -23,6 +23,8 @@ The pre-recovery state is preserved by tag `pre-repository-recovery-2026-09-24`.
 
 ## Recovery checkpoint
 
-Task 5 established the repository-hygiene contract with an expected RED before document/source cleanup. Task 6 is installing the current-document flow and migrating the formal state. Continue the numbered recovery plan one task at a time, with independent review between tasks. Keep the temporary `.recovery/` inventory until final evidence has been transferred into the recovery report.
+Task 5 established the repository-hygiene contract with an expected RED before document/source cleanup. Task 6 is committed and pushed; its review correction restores full historical S02 content-bound selection checks using a three-board historical fixture while leaving the active four-board generator gap explicit for P1. Standards review approved; Spec review approved the correction. Continue the numbered recovery plan one task at a time. Keep the temporary `.recovery/` inventory until final evidence has been transferred into the recovery report.
 
 The focused schema/dashboard/canonical history tests pass (14/14). The hygiene test has 2 passes and 3 expected failures pending source normalization and Task 8 cleanup. The last status command reported writer lease `HELD` by `amanda-P08-CAN-T09-R03`; recovery did not reclaim it. Recheck live lease state before any future BIM write.
+
+The recovery report records the initial Spec finding and its approved correction. Reviewers did not rerun tests; the focused test results are recorded in the report. The first committed Task 6 files and review correction are on `main`/`origin/main`; verify their equality after publishing the correction commit.
