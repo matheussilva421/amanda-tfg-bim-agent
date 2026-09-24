@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import replace
 from pathlib import Path
@@ -101,9 +102,32 @@ def test_s02_decisions_remain_historical_while_four_board_layout_is_unimplemente
         reference.rsplit("#sha256=", maxsplit=1)[1]
         for reference in historical_source_refs
     )
+    expected_historical_images = (
+        "canonical/01_implantacao_geral_canonica.png",
+        "canonical/02_bloco_residencial_canonico.png",
+        "canonical/03_bloco_administrativo_canonico.png",
+    )
+    expected_historical_hashes = (
+        "d7db84c0696f0018ed0bc0525bcc2128378d05ece8e3e5c09e2162493793de7b",
+        "12e35091f33352c21691eb083bf479ba2efd44af4c65774c89021b641de4a5c6",
+        "80cdcccf99154d69ea87943950db420912e949d6320279695a2fd70d44ad286c",
+    )
     assert len(profile.source_hashes) == 4
-    assert historical_images == profile.canonical_images[:3]
-    assert historical_hashes == profile.source_hashes[:3]
+    assert historical_images == expected_historical_images
+    assert historical_hashes == expected_historical_hashes
+    source_manifest = json.loads(
+        (ROOT / "docs/source/SOURCE_MANIFEST.json").read_text(encoding="utf-8")
+    )
+    historical_assets = {
+        asset["sha256"]: asset
+        for asset in source_manifest["assets"]
+        if asset["role"] == "HISTORICAL_REFERENCE"
+    }
+    for digest in expected_historical_hashes:
+        asset = historical_assets[digest]
+        path = ROOT / asset["path"]
+        assert path.is_file()
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == digest
     historical_profile = replace(
         profile,
         canonical_images=historical_images,

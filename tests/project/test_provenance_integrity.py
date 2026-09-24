@@ -187,14 +187,19 @@ def test_all_immutable_source_files_exist_and_match_manifest_hashes():
         Path(item["immutable_path"]).as_posix() for item in documents
     }
     actual_paths = {
-        path.relative_to(ROOT).as_posix() for path in SOURCE_DIR.iterdir()
+        path.relative_to(ROOT).as_posix()
+        for path in SOURCE_DIR.rglob("*")
+        if path.is_file()
     }
-    assert actual_paths == manifest_paths
+    assert manifest_paths <= actual_paths
 
     for item in documents:
         path = ROOT / item["immutable_path"]
         assert path.is_file()
-        assert path.name == item["filename"]
+        expected_stored_name = {
+            "SRC-TFG-001": "TFG.pdf",
+        }.get(item["source_id"], item["filename"])
+        assert path.name == expected_stored_name
         assert sha256_file(path) == item["sha256"]
 
 

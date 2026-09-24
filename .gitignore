@@ -19,8 +19,16 @@ vendor/
 .env.*
 !.env.example
 
-# Private academic sources (never published)
-docs/source/
+# Private academic sources (never published), except the current canonical
+# board images already represented by tracked predecessor references.
+!docs/source/
+docs/source/*
+!docs/source/canonical/
+docs/source/canonical/*
+!docs/source/canonical/01_implantacao.png
+!docs/source/canonical/02_administrativo.png
+!docs/source/canonical/03_residencial.png
+!docs/source/canonical/04_servicos.png
 docs/review/source-extracts/
 TFG_Amanda_2026/
 /programa_necessidades.pdf

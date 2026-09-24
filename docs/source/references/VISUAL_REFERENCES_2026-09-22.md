@@ -1,11 +1,11 @@
-# Referências visuais canônicas — 2026-09-22
+# Referências visuais históricas — 2026-09-22
 
 ## Status
 
-As quatro imagens em canonical/ são CANONICAL_DESIGN_REFERENCE e definem o partido oficial.
+Este registro descreve o conjunto anterior à expansão de 24-09-2026. O contrato atual é `docs/spec/CURRENT.md`; os arquivos citados abaixo foram preservados como evidência histórica.
 
 ### 01 — Implantação geral canônica
-`canonical/01_implantacao_geral_canonica.png`
+`historical/canonical-set-before-2026-09-24/01_implantacao_geral_canonica.png`
 
 Obrigatório preservar:
 - administrativo/acolhimento junto à interface pública;
@@ -19,7 +19,7 @@ Obrigatório preservar:
 Não usar como dado factual: nomes de ruas, área do lote, norte, escala, polígono ou confrontações que conflitem com o terreno verificado do TFG/projeto.
 
 ### 02 — Bloco residencial canônico
-`canonical/02_bloco_residencial_canonico.png`
+`historical/canonical-set-before-2026-09-24/02_bloco_residencial_canonico.png`
 
 Obrigatório preservar:
 - quatro volumes funcionais ao redor de jardim/pátio;
@@ -32,7 +32,7 @@ Obrigatório preservar:
 A composição da prancha coincide substancialmente com o programa oficial: 2 quartos individuais, 3 duplos, 2 triplos/familiares, 1 familiar ampliado, 1 acessível, banheiros, convivência, refeitório e copa. Onde a imagem for ambígua, prevalece o PDF oficial.
 
 ### 03 — Bloco administrativo canônico
-`canonical/03_bloco_administrativo_canonico.png`
+`historical/canonical-set-before-2026-09-24/03_bloco_administrativo_canonico.png`
 
 Obrigatório preservar:
 - térreo focado em acolhimento/atendimento;
@@ -45,7 +45,7 @@ Obrigatório preservar:
 A lógica de dois pavimentos e a sequência pública/controlada continuam regidas por esta prancha; o bloco de serviços/capacitação segue a prancha 04.
 
 ### 04 — Bloco de serviços e capacitação canônico
-canonical/04_bloco_servicos_capacitacao_canonico.png
+historical/canonical-set-before-2026-09-24/04_bloco_servicos_capacitacao_canonico.png
 
 Obrigatório preservar:
 - bloco próprio com implantação curva/setorizada em torno do pátio central;

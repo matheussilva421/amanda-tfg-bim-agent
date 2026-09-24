@@ -18,7 +18,7 @@ from ..requirements.regulations import (
 )
 from ..site.models import BoundaryPolygon, Topography
 from ..site.models import SourceReference as SiteSourceReference
-from .manifest import SourceManifest, sha256_file
+from .manifest import SourceManifest, sha256_file, source_inventory_paths
 from .provenance import ProvenanceRecord
 
 CheckStatus = Literal["PASS", "FAIL"]
@@ -140,9 +140,13 @@ def _validate_manifest(context: _ValidationContext) -> None:
         for item in docs_root.rglob("*")
         if item.is_file()
     }
-    if actual_paths != seen_paths:
-        missing = sorted(seen_paths - actual_paths)
-        extra = sorted(actual_paths - seen_paths)
+    try:
+        expected_paths = source_inventory_paths(context.root, manifest)
+    except (OSError, ValueError) as error:
+        raise ValueError("manifesto suplementar de fontes invalido") from error
+    if actual_paths != expected_paths:
+        missing = sorted(expected_paths - actual_paths)
+        extra = sorted(actual_paths - expected_paths)
         details = []
         if missing:
             details.append("ausentes=" + ",".join(missing[:3]))

@@ -31,7 +31,7 @@ privacy_gradient:
   - COMMUNITY_GARDEN
   - PROTECTED_RESIDENTIAL
 canonical_images:
-  - canonical/01_implantacao_geral_canonica.png
-  - canonical/02_bloco_residencial_canonico.png
-  - canonical/03_bloco_administrativo_canonico.png
-  - canonical/04_bloco_servicos_capacitacao_canonico.png
+  - canonical/01_implantacao.png
+  - canonical/02_administrativo.png
+  - canonical/03_residencial.png
+  - canonical/04_servicos.png

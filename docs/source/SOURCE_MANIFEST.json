@@ -2,38 +2,38 @@
   "schema_version": 1,
   "assets": [
     {
-      "path": "docs/source/canonical/programa_necessidades.pdf",
+      "path": "docs/source/programa_necessidades.pdf",
       "role": "PROGRAM_OFFICIAL",
       "bytes": 31004,
       "sha256": "11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17"
     },
     {
-      "path": "docs/source/canonical/TFG_Amanda_Fernandes_ENTREGA_15.06.2026.pdf",
+      "path": "docs/source/TFG.pdf",
       "role": "TFG_SOURCE",
       "bytes": 54553582,
       "sha256": "16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e"
     },
     {
-      "path": "docs/source/references/canonical/01_implantacao_geral_canonica.png",
-      "role": "CANONICAL_DESIGN_REFERENCE",
+      "path": "docs/source/references/historical/canonical-set-before-2026-09-24/01_implantacao_geral_canonica.png",
+      "role": "HISTORICAL_REFERENCE",
       "bytes": 531259,
       "sha256": "d7db84c0696f0018ed0bc0525bcc2128378d05ece8e3e5c09e2162493793de7b"
     },
     {
-      "path": "docs/source/references/canonical/02_bloco_residencial_canonico.png",
-      "role": "CANONICAL_DESIGN_REFERENCE",
+      "path": "docs/source/references/historical/canonical-set-before-2026-09-24/02_bloco_residencial_canonico.png",
+      "role": "HISTORICAL_REFERENCE",
       "bytes": 464575,
       "sha256": "12e35091f33352c21691eb083bf479ba2efd44af4c65774c89021b641de4a5c6"
     },
     {
-      "path": "docs/source/references/canonical/03_bloco_administrativo_canonico.png",
-      "role": "CANONICAL_DESIGN_REFERENCE",
+      "path": "docs/source/references/historical/canonical-set-before-2026-09-24/03_bloco_administrativo_canonico.png",
+      "role": "HISTORICAL_REFERENCE",
       "bytes": 389746,
       "sha256": "80cdcccf99154d69ea87943950db420912e949d6320279695a2fd70d44ad286c"
     },
     {
-      "path": "docs/source/references/canonical/04_bloco_servicos_capacitacao_canonico.png",
-      "role": "CANONICAL_DESIGN_REFERENCE",
+      "path": "docs/source/references/historical/canonical-set-before-2026-09-24/04_bloco_servicos_capacitacao_canonico.png",
+      "role": "HISTORICAL_REFERENCE",
       "bytes": 2165247,
       "sha256": "d440039a9197d20625f321fe67396f571f5e4d8cde39bf4b7f33f9ad28036bd1"
     },
@@ -72,6 +72,54 @@
       "role": "HISTORICAL_REFERENCE",
       "bytes": 3534451,
       "sha256": "9c911616daff9a08ad7b94e9f6dda13164df5246dd2e3ed94759b43200643de0"
+    },
+    {
+      "path": "docs/source/canonical/01_implantacao.png",
+      "role": "CANONICAL_DESIGN_REFERENCE",
+      "bytes": 3726070,
+      "sha256": "30d009357a095e7794e0e915dcd2fdb04cd6b9aab9f4d13f5663ed54d6f20240"
+    },
+    {
+      "path": "docs/source/canonical/02_administrativo.png",
+      "role": "CANONICAL_DESIGN_REFERENCE",
+      "bytes": 3174816,
+      "sha256": "123b95633ae1be643da84f2226c6337d65a74f7d1337d6b27d94bdead1c3a263"
+    },
+    {
+      "path": "docs/source/canonical/03_residencial.png",
+      "role": "CANONICAL_DESIGN_REFERENCE",
+      "bytes": 3744066,
+      "sha256": "5b96c2d5cc770742ee32d51b83b25993fe8b8a1638bf94da56ba8ef771031381"
+    },
+    {
+      "path": "docs/source/canonical/04_servicos.png",
+      "role": "CANONICAL_DESIGN_REFERENCE",
+      "bytes": 3731032,
+      "sha256": "c56b806f805d9c4aa1e6015ba6b56ac960204066721f93ef08cbadfb312c0386"
+    },
+    {
+      "path": "docs/source/references/CANONICAL_PARTIDO_OVERRIDE_2026-09-22.md",
+      "role": "SOURCE_METADATA",
+      "bytes": 3066,
+      "sha256": "883972e9fa12f783535f3b4790cf61a3b908d47093a69d47b18502403313b1d6"
+    },
+    {
+      "path": "docs/source/references/CANONICAL_REFERENCE_MATRIX.md",
+      "role": "SOURCE_METADATA",
+      "bytes": 2119,
+      "sha256": "62b1d16b5422a8b7d4577354ec0a681a871cc7d0f095eef44858c66af88e9db2"
+    },
+    {
+      "path": "docs/source/references/CANONICAL_REFERENCE_PROFILE.yaml",
+      "role": "SOURCE_METADATA",
+      "bytes": 1033,
+      "sha256": "5a0eef631a7ca57e009f6e761b15ba2bdd2d6fa40517a010e793f8e9ce081808"
+    },
+    {
+      "path": "docs/source/references/VISUAL_REFERENCES_2026-09-22.md",
+      "role": "SOURCE_METADATA",
+      "bytes": 3873,
+      "sha256": "362c070fb2d848aaffcaeedf0541b92e43fa6c954d5fe802214cd95dc9963453"
     }
   ]
 }

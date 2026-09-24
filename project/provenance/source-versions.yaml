@@ -2,7 +2,7 @@ schema_version: 1
 source_version: source-set-v1
 resolved_at_utc: '2026-09-15T19:11:16Z'
 source_manifest: project/provenance/source-manifest.yaml
-source_manifest_sha256: 0419094976aa7840f6bb5afc069cef133df07b58b3f6ce102271741a56740686
+source_manifest_sha256: 721366db27a8597c55a86a278c17fddef724e9e2bfe8c8c8d140201708a39001
 source_set_status: UNCHANGED
 new_sources: []
 scan:
@@ -26,7 +26,7 @@ documents:
 - source_id: SRC-TFG-001
   source_revision: 1
   filename: TFG_Amanda Fernandes_ENTREGA 15.06.2026.pdf
-  immutable_path: docs/source/TFG_Amanda Fernandes_ENTREGA 15.06.2026.pdf
+  immutable_path: docs/source/TFG.pdf
   bytes: 54553582
   sha256: 16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e
 - source_id: SRC-SUP-001

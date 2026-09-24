@@ -18,7 +18,7 @@ from ..design.archetypes import list_archetypes
 from ..design.geometry import validate_polygon
 from ..design.pipeline import PipelineResult, run_pipeline
 from ..design.refinement import refine_run
-from ..ingest.manifest import SourceManifest, sha256_file
+from ..ingest.manifest import SourceManifest, sha256_file, source_inventory_paths
 from ..site.models import BoundaryPolygon, Topography
 from .doctor import project_root
 
@@ -111,7 +111,13 @@ def _manifest_by_id(root: Path, manifest: SourceManifest) -> dict[str, Any]:
         for item in docs_root.rglob("*")
         if item.is_file()
     }
-    if actual_paths != manifest_paths:
+    try:
+        expected_paths = source_inventory_paths(root, manifest)
+    except (OSError, ValueError) as exc:
+        raise DesignInputError(
+            "source state is invalid: supplemental source catalog cannot be trusted"
+        ) from exc
+    if actual_paths != expected_paths:
         raise DesignInputError(
             "source state is invalid: docs/source differs from the manifest"
         )

@@ -197,7 +197,7 @@ class CanonicalReferenceProfile:
 
         expected_manifest_paths: list[str] = []
         hashes: list[str] = []
-        references_root = (root / "docs/source/references").resolve()
+        source_root = (root / "docs/source").resolve()
         for image in images_value:
             relative = PurePosixPath(image)
             if (
@@ -207,7 +207,7 @@ class CanonicalReferenceProfile:
                 or not image.startswith("canonical/")
             ):
                 raise CanonicalReferenceError(f"invalid canonical image path: {image}")
-            source_path = "docs/source/references/" + relative.as_posix()
+            source_path = "docs/source/" + relative.as_posix()
             expected_manifest_paths.append(source_path)
             asset = canonical_assets.get(source_path)
             if asset is None:
@@ -221,9 +221,9 @@ class CanonicalReferenceProfile:
                 raise CanonicalReferenceError(
                     f"invalid canonical source hash: {source_path}"
                 )
-            image_path = (references_root / Path(*relative.parts)).resolve()
+            image_path = (source_root / Path(*relative.parts)).resolve()
             try:
-                image_path.relative_to(references_root)
+                image_path.relative_to(source_root)
             except ValueError as exc:
                 raise CanonicalReferenceError(
                     f"invalid canonical image path: {image}"

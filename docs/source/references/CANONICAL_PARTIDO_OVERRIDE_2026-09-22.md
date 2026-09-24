@@ -25,7 +25,7 @@ O modelo final deve reproduzir, na máxima fidelidade compatível com dados veri
 
 As pranchas não substituem:
 
-- `docs/source/canonical/programa_necessidades.pdf` para programa, capacidade e áreas;
+- `docs/source/programa_necessidades.pdf` para programa, capacidade e áreas;
 - levantamento/polígono/topografia/norte verdadeiros quando forem verificados;
 - normas aplicáveis com fonte/versionamento verificados.
 
