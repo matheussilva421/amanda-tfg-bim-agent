@@ -108,15 +108,42 @@ and closeout commit `1290ba3e83ed44fee4a447a7b6e6d6aad92604d1` were pushed,
 and remote main matched after the closeout push. `PROJECT_STATE.yaml` remains
 at `RECOVERY-VALIDATE`.
 
+## Task 10 complete; independent review approved
+
+The 43-path design-engine baseline is fully classified in
+`.recovery/design-engine-classification.json`: 4 active generator configs,
+37 stale-evidence fixtures (including all seven S02 artifacts), 2 invalid
+predecessor run logs recoverable from the safety tag, and 0 unknown paths.
+Only the two invalid predecessor logs were removed from the active tree; their
+SHA-256 values and exact tag recovery are in
+`docs/reports/repository-recovery.md`. `design-engine/current/` remains absent.
+
+The signed decision register remains unchanged. Its root-level S02 source_ref
+target, `design-engine/runs/AMANDA-RUN-002-PAVILION/solution.json`, is absent
+from the worktree, baseline, and recovery tag. Record it as a pre-existing
+dangling reference; do not rehash the register or fabricate the target. The
+nested S02 finalist artifacts remain stale evidence.
+
+Task 10 focused tests: 72 passed, 0 failed across `test_design_refine.py`,
+`test_p08_t07_environmental_pass.py`, `test_bim_solution_compiler.py`,
+`test_production_layout_bim.py`, `test_build_canonical_pavilion_run.py`,
+`test_canonical_reference.py`, `test_canonical_pavilion_layout.py`,
+`test_canonical_qa.py`, and `test_production_selection.py`. An expanded
+10-module run including `test_canonical_state_migration.py` passed 76/76. No
+full suite or Revit/model action occurred. Independent review approved the
+scoped changes with no actionable findings. Commit and push this task, confirm
+remote `main`, then start Task 11. Do not start it before the Task 10 closeout
+push is verified.
+
 ## Exact resume
 
-Begin Task 10: inventory tracked `design-engine/` files, classify each
-run/candidate as
-`ACTIVE_CURRENT`, `STALE_EVIDENCE`, `HISTORICAL_REPRODUCIBLE`, or `UNKNOWN`,
-create no current solution, remove only proven reproducible historical
-artifacts, and run the focused canonical/design-engine tests. Do not open
-Revit or modify model content. Continue Tasks 11–13 sequentially; only Task 13
-may remove `.recovery/` or set the formal next task to P1-T01.
+Commit and push the reviewed Task 10 report/handoff and two explicit
+design-engine removals. Verify `main` matches `origin/main`. Next execute Task 11: preview
+ignored files with `git clean -ndX`, classify candidates, and remove only the
+approved cache/temp paths by explicit path. Do not use `git clean` to delete;
+preserve gate evidence, source files, RVTs, and release artifacts. Continue
+Tasks 12–13 in order; only Task 13 may remove `.recovery/` or set the formal
+next task to P1-T01.
 
 ## Git checkpoint
 

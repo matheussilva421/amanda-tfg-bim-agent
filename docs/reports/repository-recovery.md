@@ -1115,11 +1115,54 @@ scoped handoff-status correction. Implementation commit
 `c4adceb70c3824dba50c8ef3010472b94664b6f4`
 (`chore: normalize Revit artifact retention`) and report/handoff closeout
 commit `1290ba3e83ed44fee4a447a7b6e6d6aad92604d1`
-(`docs: close Task 9 recovery handoff`) were pushed. After the closeout push,
-`HEAD`, local `main`, `origin/main`, and `git ls-remote origin refs/heads/main`
-all resolved to `1290ba3e83ed44fee4a447a7b6e6d6aad92604d1`. The status
-dashboard reflects the status command run immediately before that closeout
-commit. No Revit/model action occurred. `.recovery/` remains for the final
-transfer in Task 13. Task 10 is next: classify tracked design-engine artifacts,
-create no new active solution, and remove only proven reproducible historical
-outputs.
+(`docs: close Task 9 recovery handoff`) were pushed. A later report correction
+was pushed as `95136014c33a2512ec8a4affa9d998361a45fd3e`; its post-push
+verification found `HEAD`, local `main`, `origin/main`, and
+`git ls-remote origin refs/heads/main` equal at that commit. The status
+dashboard reflects the status command run immediately before the Task 9
+closeout. No Revit/model action occurred. `.recovery/` remains for the final
+transfer in Task 13.
+
+## Task 10 — design-engine current-state classification
+
+The baseline inventory `.recovery/design-engine-files.txt` contains 43 tracked
+paths (SHA-256 `a96fd8aedc3fddf5c43aa1018411246dbb82c3a2fd736f41fbcbdf76f75143a3`).
+`.recovery/design-engine-classification.json` accounts for every baseline
+path: 4 `ACTIVE_CURRENT` generator configurations, 37 `STALE_EVIDENCE`
+artifacts (30 AMANDA-RUN-001 fixtures and all 7 AMANDA-RUN-002-PAVILION/S02
+artifacts), 2 `HISTORICAL_REPRODUCIBLE` invalid predecessor run logs, and 0
+`UNKNOWN`. `design-engine/current/` remains absent; no solution was promoted or
+created.
+
+Only these two invalid predecessor logs were removed from the active tree:
+
+| Removed path | SHA-256 | Recovery evidence |
+|---|---|---|
+| `design-engine/runs/AMANDA-RUN-001-invalid-2026-09-15/run.json` | `c2020d8725202f244434829d4eb8518aa6e79c6d5c7288813e7c77844d9a1520` | Exact blob resolves from `pre-repository-recovery-2026-09-24` |
+| `design-engine/runs/AMANDA-RUN-001-invalid-2026-09-15-rooms/run.json` | `19c1b842e8b21306cc18b5db5c9bf58b5ef4d34548887ea077a8a8eb493324ce` | Exact blob resolves from `pre-repository-recovery-2026-09-24` |
+
+Their historical status remains in task history/task graph, and repository
+search found no active source, test, or entrypoint reference. All seven S02
+artifacts remain preserved as stale evidence. The signed
+`project/requirements/decision-register.yaml` still points to
+`design-engine/runs/AMANDA-RUN-002-PAVILION/solution.json#approval_hash=75afda89d6a18cd2834bdd571e761ea047305465c6579a4a9d0474e409f91bdf`;
+that root-level `solution.json` was already absent from the worktree, 43-path
+baseline, and recovery tag. This is a pre-existing dangling signed source
+reference. The decision register was not edited or rehashed, and no replacement
+file was fabricated. The nested S02 finalist solution remains historical
+evidence and does not satisfy that root-level reference.
+
+Focused validation ran these nine design-engine/canonical modules with
+`.venv/Scripts/python.exe -m pytest`: `test_design_refine.py`,
+`test_p08_t07_environmental_pass.py`, `test_bim_solution_compiler.py`,
+`test_production_layout_bim.py`, `test_build_canonical_pavilion_run.py`,
+`test_canonical_reference.py`, `test_canonical_pavilion_layout.py`,
+`test_canonical_qa.py`, and `test_production_selection.py`: **72 passed, 0
+failed**. An expanded 10-module run that also included
+`test_canonical_state_migration.py` passed 76/76. No full suite was run. No
+Revit process or model content was opened or modified. Independent Task 10
+review approved the scoped diff with no actionable findings. The review also
+verified the complete 43-path classification, exact deletion scope, safety-tag
+recovery, retained S02 set, unchanged signed register, and the documented
+dangling source_ref. Task 11 starts only after this reviewed change is committed
+and pushed.
