@@ -275,7 +275,7 @@ The Task 1 baseline remains **112 inventory rows**: 81 production paths and 31 p
 - The exact S02 target remains `revit/production/working/AMANDA-RUN-002-PAVILION-S02.rvt`, SHA-256 `6199fedf2468d621960c0a756edf02d756da55c05b03a11f6344a3d2c33a65b6`. The writer lease still names it; it remains `UNKNOWN` as stale S02 evidence. It was not moved or opened. `revit/production/working/CURRENT.rvt` remains absent.
 - Final path proof: the inventory baseline accounts for 112 retained files across `revit/` and the three quarantine copies; the R12 canonical destination exists with its verified hash, the three original working duplicate paths are absent and their quarantine copies exist with the same hashes, and no current working-model alias was created. No Revit process or model content was opened or modified.
 - Independent post-move inventory verification rehashed every retained path: **112/112** matched the baseline size and SHA-256, with **0** missing or mismatched files. The current layout has 109 `.rvt` files under `revit/` and 3 temporary duplicate copies under `.recovery/rvt-duplicates/`.
-- Focused verification: the new R12 path-contract/guard selection passed 4 tests; the decision-register historical-source test passed 1; `pytest tests/unit/test_state_store.py tests/unit/test_status_dashboard.py -q` passed 10/10; and `python -m amanda_agent status` exited 0 while reporting the existing writer lease HELD and five site blockers. Running the complete `tests/unit/test_run_amanda_production.py` module produced 14 passed and one failure in the unchanged `test_execute_routes_unaccepted_selection_to_r04_preacceptance` fixture, which expects a WriterLock exception after the current gate returns early. The changed production code in this task only changes the historical archive path; this unrelated fixture failure remains visible and was not “fixed” by changing production gates. The direct `pytest.exe` launcher initially failed collection because it omitted the repository root for `scripts`; rerunning through the project interpreter (`.venv/Scripts/python.exe -m pytest`) collected and passed the focused path tests.
+- Focused verification: the new R12 path-contract/guard selection passed 4 tests; the decision-register historical-source test passed 1; `pytest tests/unit/test_state_store.py tests/unit/test_status_dashboard.py -q` passed 10/10; and `python -m amanda_agent status` exited 0 while reporting the existing writer lease HELD and five site conditions (three `BLOCKING`, two `DEGRADING`). Running the complete `tests/unit/test_run_amanda_production.py` module produced 14 passed and one failure in the unchanged `test_execute_routes_unaccepted_selection_to_r04_preacceptance` fixture, which expects a WriterLock exception after the current gate returns early. The changed production code in this task only changes the historical archive path; this unrelated fixture failure remains visible and was not “fixed” by changing production gates. The direct `pytest.exe` launcher initially failed collection because it omitted the repository root for `scripts`; rerunning through the project interpreter (`.venv/Scripts/python.exe -m pytest`) collected and passed the focused path tests.
 
 ## Full initial untracked-path appendix
 
@@ -984,7 +984,7 @@ The old state also listed `REVIT_PIPE_SANDBOX_ACCESS:DEGRADING` and described P0
 - GREEN compatibility: `& .\.venv\Scripts\python.exe -m pytest tests/unit/test_state_store.py tests/unit/test_status_dashboard.py tests/unit/test_canonical_state_migration.py -q` — 14 tests, 14 passed, 0 failed.
 - Partial hygiene: `& .\.venv\Scripts\python.exe -m pytest tests/project/test_repository_hygiene.py -q` — 5 tests, 2 passed, 3 failed as expected pending Tasks 7–8. Remaining failures are the five superseded root documents, four tracked ZIPs, and not-yet-normalized board images. Current-document and stale-reference checks pass.
 - Combined gate: `& .\.venv\Scripts\python.exe -m pytest tests/unit/test_state_store.py tests/unit/test_status_dashboard.py tests/unit/test_canonical_state_migration.py tests/project/test_repository_hygiene.py -q` — 19 tests, 16 passed, 3 expected hygiene failures, 0 errors.
-- `& .\.venv\Scripts\python.exe -m amanda_agent status` — exit 0; displayed `REPOSITORY_RECOVERY`, `RUNNING`, `RECOVERY-VALIDATE`, `PRE_R04`, no checkpoint, revision 173, and five blockers. It also reported writer lease `HELD` by `amanda-P08-CAN-T09-R03`; the lease was not reclaimed or changed. Recheck before any later BIM write.
+- `& .\.venv\Scripts\python.exe -m amanda_agent status` — exit 0; displayed `REPOSITORY_RECOVERY`, `RUNNING`, `RECOVERY-VALIDATE`, `PRE_R04`, no checkpoint, revision 173, and five site conditions (three `BLOCKING`, two `DEGRADING`). It also reported writer lease `HELD` by `amanda-P08-CAN-T09-R03`; the lease was not reclaimed or changed. Recheck before any later BIM write.
 - `git diff --check` on the Task 6 paths — passed (Git emitted only its normal LF-to-CRLF working-copy notices).
 - Initial Task 6 commit `570c76a39f9e6fd94ad88f45aa0d9588c754f45a` was pushed. The SPEC-review correction is in `08642d979378cfc1934b23218072465df2c97c82`; a subsequent fetch confirmed `HEAD = main = origin/main` at the correction commit and one worktree.
 - Standards review: Herschel returned APPROVED with no hard violations. It accepted omission of the P08 provider-access blocker from active P0 blockers, with provider access to be rechecked before future BIM work.
@@ -1287,7 +1287,48 @@ and their retained checkpoint counterparts are:
 | `AMANDA-RUN-002-PAVILION-S02.0006.rvt` | 4,046,848 | `c5f866b135240ca1a202d68d1028952db3fdef5734f15cfa897fd8676b63156a` | `revit/production/checkpoints/AMANDA-RUN-002-PAVILION-S02/R04-canonical-covered-circulation-20260923.rvt` |
 | `AMANDA-RUN-002-PAVILION-S02.0007.rvt` | 4,046,848 | `2702c626565ed426a8e3b9cc179ebf2008ba36284dda60376dae6e5bb9ff438e` | `revit/production/checkpoints/AMANDA-RUN-002-PAVILION-S02/R03-prewrite-20260923-2219.rvt` |
 
-Before removing `.recovery/`, independently recheck the three retained RVT
-hashes and report inventory, finish the focused test gate and active-document
-audit, and record the state/status transition. Do not open Revit or alter any
-retained model.
+Final Task 13 disposition and validation:
+
+- Removed the exact `.recovery/` directory with a literal path after confirming
+  it resolved inside the workspace and contained no reparse points. All 112
+  baseline RVT rows matched their retained paths before removal; all three
+  quarantined copies matched their named retained checkpoints byte for byte.
+  Their redundant copies were removed; 109 unique RVTs remain under `revit/`.
+  The S02 writer-lease target and all retained checkpoints remain unchanged.
+- The active flow has exactly `docs/plan/CURRENT.md` and
+  `docs/spec/CURRENT.md`; `docs/notes/`, legacy plan/spec/review directories,
+  tracked ZIPs, and ZIPs under `docs/` are absent. `START_HERE.md` routes to the
+  current plan/spec, and `state/HANDOFF.md` is the sole active handoff.
+  `docs/source/SOURCE_MANIFEST.json` remains available with 20 catalogued
+  assets (SHA-256 `a9470ba14db303a6b244e5b80556ed8d89432c4fa68071f3d055be10035a9455`).
+- TDD for the scheduler mismatch: the new project-hygiene test first failed
+  because `P1-T01` was absent from the task registry. The registry now exposes
+  P1-T01 as its only READY task and marks the unstarted legacy S02 chain
+  P08-CAN-T09 through P08-CAN-T19 `SUSPENDED`; their prior blocker and history
+  remain intact. No old task was marked complete.
+- Focused final command (`.venv/Scripts/python.exe -B -m pytest`, with
+  `-p no:cacheprovider`): `tests/project/test_repository_hygiene.py`,
+  `tests/unit/test_state_store.py`, `tests/unit/test_status_dashboard.py`,
+  `tests/unit/test_task_graph.py`, `tests/policy/test_plan_order.py`,
+  `tests/unit/test_canonical_reference.py`,
+  `tests/unit/test_canonical_pavilion_layout.py`,
+  `tests/unit/test_canonical_qa.py`, `tests/unit/test_source_manifest.py`, and
+  `tests/project/test_provenance_integrity.py`: **76 passed, 0 failed**.
+- `python -B -m amanda_agent status` exited 0 and reports phase `P1`
+  (`four-board-reconciliation`), status `READY`, `P1-T01` as the only ready
+  task, and `RECOVERY-VALIDATE` as the last completed task. Five site
+  conditions remain unchanged (three `BLOCKING`, two `DEGRADING`). The writer
+  lease remains HELD by
+  `amanda-P08-CAN-T09-R03`; it was not reclaimed or modified.
+- Elevated retention check: all 109 physical RVTs remain; RC01 still has 36
+  files, manifest SHA-256 `596cb7f878a05cc565d6a1831b7e19f8d10e6fe625f739339e9a61cf34dee5ad`,
+  and model SHA-256 `01b7426e32c162ede4249417a4735e699601a654c2738ed450f6c09b705b0744`.
+  No Revit process or model content was opened or changed.
+
+Earlier scoped runs still have two documented, unrelated historical failures:
+the P08 frozen digest check (4 passed/1 failed) and the unchanged R04 routing
+fixture in `test_run_amanda_production.py` (14 passed/1 failed). Neither is in
+the final focused gate above; neither was altered during recovery. Independent
+reviewer Halley approved Task 13 after the blocker count was clarified as five
+site conditions (three `BLOCKING`, two `DEGRADING`). Only post-closeout remote
+verification remains.

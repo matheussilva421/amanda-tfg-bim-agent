@@ -2999,8 +2999,9 @@ tasks:
     title: R05 canonical multi-block shell
     depends_on:
     - P08-CAN-T08
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
   P08-CAN-T10:
     id: P08-CAN-T10
     phase: PHASE_08
@@ -3008,8 +3009,9 @@ tasks:
     title: R06 internal layout and canonical regression
     depends_on:
     - P08-CAN-T09
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
   P08-CAN-T11:
     id: P08-CAN-T11
     phase: PHASE_08
@@ -3017,8 +3019,9 @@ tasks:
     title: R07 openings and covered circulation
     depends_on:
     - P08-CAN-T10
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
   P08-CAN-T12:
     id: P08-CAN-T12
     phase: PHASE_08
@@ -3026,8 +3029,9 @@ tasks:
     title: R08 room/program reconciliation and plan regression
     depends_on:
     - P08-CAN-T11
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
   P08-CAN-T13:
     id: P08-CAN-T13
     phase: PHASE_08
@@ -3035,8 +3039,9 @@ tasks:
     title: R09-R12 developed architecture and regressions
     depends_on:
     - P08-CAN-T12
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
   P08-CAN-T14:
     id: P08-CAN-T14
     phase: PHASE_08
@@ -3044,8 +3049,9 @@ tasks:
     title: R13 drawings, sheets and board comparison
     depends_on:
     - P08-CAN-T13
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
   P08-CAN-T15:
     id: P08-CAN-T15
     phase: PHASE_08
@@ -3053,8 +3059,9 @@ tasks:
     title: R14 full model, program and canonical QA
     depends_on:
     - P08-CAN-T14
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
   P08-CAN-T16:
     id: P08-CAN-T16
     phase: PHASE_08
@@ -3062,8 +3069,9 @@ tasks:
     title: R15 release candidate and cold reopen
     depends_on:
     - P08-CAN-T15
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
   P08-CAN-T17:
     id: P08-CAN-T17
     phase: PHASE_08
@@ -3071,8 +3079,9 @@ tasks:
     title: Export and validate model-derived deliverables
     depends_on:
     - P08-CAN-T16
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
   P08-CAN-T18:
     id: P08-CAN-T18
     phase: PHASE_08
@@ -3080,8 +3089,9 @@ tasks:
     title: Promote R16 GOLDEN after all canonical gates
     depends_on:
     - P08-CAN-T17
-    status: PENDING
-    evidence: []
+    status: SUSPENDED
+    evidence:
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
   P08-CAN-T19:
     id: P08-CAN-T19
     phase: PHASE_08
@@ -3089,5 +3099,15 @@ tasks:
     title: Final package cleanup and handoff
     depends_on:
     - P08-CAN-T18
+    status: SUSPENDED
+    evidence:
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
+  P1-T01:
+    id: P1-T01
+    phase: P1
+    plan_path: docs/plan/CURRENT.md
+    title: Reconcile the four canonical boards against the official program
+    depends_on: []
     status: PENDING
-    evidence: []
+    evidence:
+    - 'Ready after RECOVERY-VALIDATE; no design solution or Revit work is authorized by this task record.'

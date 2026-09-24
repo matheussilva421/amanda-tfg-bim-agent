@@ -5,6 +5,7 @@ import subprocess
 from pathlib import Path
 
 from amanda_agent.state.tasks import load_registry
+from amanda_agent.state.store import StateStore
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -179,3 +180,22 @@ def test_exactly_four_canonical_board_images_are_active():
         "03_residencial.png",
         "04_servicos.png",
     ]
+
+
+def test_recovery_routes_to_one_ready_four_board_task():
+    state = StateStore(ROOT / "PROJECT_STATE.yaml").load()
+    registry = load_registry(ROOT / "state/task-graph.yaml")
+
+    assert state.phase_id == "P1"
+    assert state.phase_status.value == "READY"
+    assert state.last_completed_task == "RECOVERY-VALIDATE"
+    assert state.next_task == "P1-T01"
+    assert "P1-T01" in registry.tasks
+    assert registry.ready_tasks() == ["P1-T01"]
+
+    superseded_tasks = [f"P08-CAN-T{number:02}" for number in range(9, 20)]
+    assert all(task_id in registry.tasks for task_id in superseded_tasks)
+    assert all(
+        registry.tasks[task_id].status.value == "SUSPENDED"
+        for task_id in superseded_tasks
+    )

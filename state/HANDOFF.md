@@ -2,15 +2,18 @@
 
 ## Formal state and safety
 
-Repository recovery (P0) remains active. `PROJECT_STATE.yaml` points to
-`RECOVERY-VALIDATE`; do not activate P1 until Task 13's final validation and
-remote check are complete. The recovery anchor is
+Repository recovery (P0) is complete. `PROJECT_STATE.yaml` now points to
+`P1-T01` with phase `P1` READY; the last completed task is
+`RECOVERY-VALIDATE`. The recovery anchor is
 `pre-repository-recovery-2026-09-24`; the superseded P08 offline candidate is
 preserved under `superseded-p08-t08-concept-offline-2026-09-24`.
 
-No Revit or model work is in scope during P0. Preserve `.recovery/` until Task
-13 transfers its evidence. Preserve the private program and TFG PDFs locally;
-they are intentionally ignored by Git.
+P0 completed without Revit/model activity. All recovery evidence is transferred
+to `docs/reports/repository-recovery.md`; `.recovery/` was removed after the
+RVT and evidence checks. Preserve the private program and TFG PDFs locally;
+they are intentionally ignored by Git. Five site conditions (three BLOCKING,
+two DEGRADING) remain, and the held writer lease is unchanged; P1-T01 is the
+non-Revit four-board reconciliation.
 
 ## Current documentation flow
 
@@ -226,17 +229,29 @@ worktree on `main` and only `.recovery/` untracked. Independent reviewer
 Pascal approved the branch proof, preservation tags, and post-deletion state.
 No tests or Revit/model operations were run during this task.
 
-## Task 13 in progress
+## Task 13 complete; independent review approved
 
-The final recovery gate has started. `.recovery/` contains 15 files (12,196,838
-bytes), and the report maps each record to a durable evidence section and
-SHA-256. The 112-row RVT inventory was rechecked: all rows resolve with matching
-sizes and hashes to 109 unique retained paths under `revit/`; the three
-quarantined RVTs are byte-identical to retained checkpoints. Next recheck those
-checkpoint hashes, remove only the exact `.recovery/` directory after its
-evidence is recorded, run the focused gates, verify the single CURRENT plan/spec
-and source manifest, then update `PROJECT_STATE.yaml` to P1-T01. No Revit/model
-operation.
+The `.recovery/` crosswalk was committed before deletion. All 15 items
+(12,196,838 bytes) are accounted for in the recovery report, with zero reparse
+points. The 112-row RVT inventory matched all retained paths; the three
+quarantined copies matched retained checkpoints byte for byte. Their redundant
+copies were removed, leaving 109 RVTs under `revit/`; RC01 still has 36 files
+and its manifest/model hashes match the earlier verification.
+
+The current structure is one plan (`docs/plan/CURRENT.md`), one spec
+(`docs/spec/CURRENT.md`), and this sole active handoff. No ZIP is tracked or
+present under `docs/`; `docs/notes/` and the old plan/spec/review directories
+are absent. The source manifest remains present with 20 assets.
+
+TDD readiness change: the first test failed because P1-T01 was absent from the
+task registry. The registry now has P1-T01 as its only READY task and suspends
+legacy `P08-CAN-T09` through `P08-CAN-T19`; no task was marked complete. The
+focused gate passed 76/76 across repository hygiene, state/dashboard/task graph,
+plan order, canonical references/layout/QA, source manifest, and provenance.
+`amanda_agent status` exits 0 with phase P1 READY, next P1-T01, zero pending
+tasks, five site conditions (three BLOCKING, two DEGRADING), and writer lease
+HELD by `amanda-P08-CAN-T09-R03`. The lease was not changed. Independent
+reviewer Halley approved the final recovery state. No Revit/model action.
 
 ## Git checkpoint
 
@@ -245,5 +260,6 @@ report/handoff closeout commit: `1290ba3e83ed44fee4a447a7b6e6d6aad92604d1`.
 Both were pushed. After the closeout push, a fresh `git ls-remote` check
 confirmed `HEAD = main = origin/main` at
 `1290ba3e83ed44fee4a447a7b6e6d6aad92604d1` and exactly one worktree.
-`.recovery/` and the three quarantined RVT duplicates remain local and are
-intentionally preserved for Task 13.
+Task 13 removed `.recovery/` after the full hash inventory and report transfer.
+The three redundant quarantine copies were removed only after matching their
+retained checkpoints; all 109 unique RVTs remain under `revit/`.
