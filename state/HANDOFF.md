@@ -168,14 +168,29 @@ pytest outputs. Keep them for evidence.
 
 The remaining root `.tmp-*.py` files are ignored scratch candidates. A static
 AST pass parsed all 104 without executing them; their filenames have no
-tracked source references. Some contain file-write or provider-call paths, so
-their exact disposition still needs review. The other candidate directories
-are pytest scratch outputs. A scan of 345 nested `.rvt`/`.rfa`/`.rte` test
-fixtures across root temp directories found only 6,149 bytes total (largest
-53 bytes); no actual Revit model is in that group. Still validate the exact
-path manifest and preserve anything unknown. The planned cleanup is
-explicit-path removal only for classified scratch, `__pycache__`, and
-`.pytest_cache`; preserve `.ruff_cache/` and every other unclassified path.
+tracked source references. Some contain file-write or provider-call paths,
+but no script was run. A scan of 345 nested `.rvt`/`.rfa`/`.rte` test fixtures
+across root temp directories found only 6,149 bytes total (largest 53 bytes);
+no actual Revit model is in that group.
+
+Two other pytest scratch trees contain nested junctions, each targeting its
+own `area-restrita` test fixture. Preserve both trees and do not move or
+recursively remove them:
+`.tmp-p08-t08-full/test_junction_escape_identity_0/revit/production/working`
+and
+`.tmp-p08-t08-full-available/test_junction_escape_identity_0/revit/production/working`.
+The exact resolved targets are inside the matching test directories.
+
+The explicit target manifest is now prepared at
+`.recovery/task11-approved-delete-manifest.csv` with its path list at
+`.recovery/task11-approved-delete-list.txt`: 153 candidates (120 root scratch
+entries, 32 `__pycache__` directories, and `.pytest_cache/`). The 120 root
+entries are 104 scripts and 16 test-scratch directories; all resolved paths
+stay inside the workspace and the selected directories have no nested
+reparse points. No deletion has begun. Preserve all 14 excluded root temp
+evidence paths, `.ruff_cache/`, and every other unclassified path. Next review
+the exact manifest, remove only those 153 explicit paths, and verify the
+preserves and fresh dry-run.
 
 ## Git checkpoint
 
