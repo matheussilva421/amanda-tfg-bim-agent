@@ -894,3 +894,13 @@ Pending Task 13.
 | `.tmp-pytest-y9/test_unreachable_provider_retu0/lab/candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
 | `.tmp-pytest-y9/test_unwaived_mandatory_blocke0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
 | `.tmp-pytest-y9/test_verify_manifest_detects_t0/model.rvt` | 8 | `D121BE3103007B41EDF96F8262925F8C7D61894AFE9A041843B631F69445BC57` | TEMPORARY_TEST_FIXTURE |
+
+## Task 2 — canonical branch consolidation
+
+- Before fast-forward: `main` = `7daf6f67a9980705d96bf25e0b648305feeef39b`; `codex/canonical-pavilion-migration` = `daa200f34974065cb0b8adb56261354f0a3c3130`.
+- `git merge-base --is-ancestor main codex/canonical-pavilion-migration` returned exit 0. `main` advanced with `git merge --ff-only codex/canonical-pavilion-migration`; no merge commit was created.
+- After fast-forward and before the report-only commit: local `main`, local canonical, `HEAD`, and fetched `origin/main` all equaled `daa200f34974065cb0b8adb56261354f0a3c3130`.
+- The initial `git push origin main` completed successfully; a subsequent `git fetch origin` confirmed local/remote equality. The report-only commit below is pushed and rechecked separately.
+- Task 1 commits `0e14b1cab93d49b73807cc824bf087cf09450c37` and `daa200f34974065cb0b8adb56261354f0a3c3130` are part of the fast-forwarded history. Original safety tag remains at `30cc3b0f7860dfb5e46299402585213d1ac2d02b`.
+- No tests were run because this task changed Git refs and recovery documentation only. No Revit/model action occurred. Branch deletion and worktree cleanup remain deferred to their named tasks.
+- Evidence capture: `2026-09-24T16:20:11Z`; pre-report worktree status clean, ancestry gate passed, local/remote SHAs verified.
