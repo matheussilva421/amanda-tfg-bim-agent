@@ -65,6 +65,34 @@ These 8 modifications remain unclassified until each file is reconciled with the
 
 Ancestry check: main is an ancestor of the canonical migration branch (git merge-base --is-ancestor exit 0); 26 canonical commits are ahead.
 
+Exact unique commit list (26 commits; full hashes and subjects):
+- `9fe08bc3365d592b5159d39d6ee6a88f79b20d31` — feat: establish canonical pavilion reference and archive R12
+- `f466418561c101bf27bcf7e1fdd328018a683b32` — docs: record canonical migration checkpoint
+- `3276976d1f47c9486d4de8f36086600042d57386` — refactor: define production layout protocol
+- `5059cab11d897636e793eb1f59617768b4e8790b` — docs: record Task 2 layout protocol
+- `4c24bacd93e60e5e1150eb70d6560d04d7050d46` — feat: build canonical pavilion layout
+- `379e2eee043fa1432a95c3be7b68fee54b514f67` — docs: record canonical pavilion checkpoint
+- `0cbf0fc8987831feeba492421da0f93549e4deb5` — test: enforce canonical pavilion parti
+- `49d88912964d55a2f546d72e1cc6aab5c1080d79` — docs: record canonical QA checkpoint
+- `ccfd410fe65ee074c0cdc76bff89e875a51bb443` — feat: bind production selection to canonical pavilion boards
+- `ac9d79872be02aaf66d811273d9ae74696df2805` — docs: record canonical selection checkpoint
+- `089bba5e234ddaaaa06c475bc4ab8362ec58e5a5` — refactor: route production consumers to canonical pavilion layout
+- `3569483484415ec33ab8cbdf045c05953a4defe4` — docs: record canonical consumer migration checkpoint
+- `98dba4718e85ad677de8745611de771db0f80c18` — feat: plan multi-block canonical BIM stages
+- `cea23fa05b5496b363f2e85e81b66118ba59cf08` — docs: record canonical BIM planning checkpoint
+- `06c524c512300ee8442b0909c512e7329f5ce724` — fix: prevent canonical rebuild from reusing legacy linear RVT
+- `f73b7597ead9dfa28038f3f33dcd896bd4f1c18b` — docs: record canonical S02 handoff
+- `59684b62683dc24389b725bae97d654d062abca1` — feat: build offline canonical pavilion run
+- `e822b70c9d3d437dba0845ede6e27c0da19276d5` — docs: record canonical run artifact checkpoint
+- `5eb767d9a6c96705c780bdab90b564e0a18b747b` — test: verify canonical pavilion migration
+- `cd2267b583e6df30cd260a65a140913a7bfcf4a2` — docs: record canonical migration verification
+- `af9c44e146cbb43caced4334f92da4f8a10bff07` — docs: switch production state to canonical pavilion run
+- `a67c8ed517c5585885e5873da4a3eea0e51d7612` — feat: gate canonical R04 with BIM-00
+- `b930e9ec5309157342e4cd1cd6ea5224900ab021` — docs: record canonical R04 access review checkpoint
+- `82b257d061ff8668d5ba06d3be9640940e1a794f` — docs: record typed R04 mass route refusal
+- `7111d6bf4e2c7159f34cdd5ad81a2b4bdffaa843` — docs: record canonical source and provider recheck
+- `30cc3b0f7860dfb5e46299402585213d1ac2d02b` — feat: bind pavilion migration to fourth canonical board
+
 ## Unique commits — concept-offline over main at capture
 
 Patch-equivalence comparison (git log --left-right --cherry-pick --oneline main...codex/p08-t08-concept-offline) records:
@@ -93,6 +121,10 @@ Patch-equivalence comparison (git log --left-right --cherry-pick --oneline main.
 - `> e5c9a0e feat(bim): prepare offline conceptual candidates`
 
 Commit list exclusive to the concept branch:
+
+Exact unique commit list (2 commits; full hashes and subjects):
+- `e5c9a0e8342423e9dbcdf4e4b56c94858970879f` — feat(bim): prepare offline conceptual candidates
+- `125c7d956d40fab6c358e4c6702199b4eac4d854` — docs: finalize P08-T08 offline handoff
 
 
 
@@ -474,3 +506,391 @@ Append decisions and evidence after each task. S02 remains stale by canonical-re
 Pending Task 13.
 
 
+
+
+## Task 1 supplemental recovery evidence
+
+### Verified runtime facts
+
+- Evidence captured UTC: `2026-09-24T15:57:49.0840204Z`. The annotated safety tag `pre-repository-recovery-2026-09-24` points to commit `30cc3b0f7860dfb5e46299402585213d1ac2d02b` and has tag object `2567d03cc8ff2860e80bda1ec9981195ddddee6c`. Verified on origin: `refs/tags/pre-repository-recovery-2026-09-24` points to annotated tag object `2567d03cc8ff2860e80bda1ec9981195ddddee6c`.
+- Recovery stash: `2dbcacb34cd25e07cbed0672c818d797cb58f477`; 8 tracked paths and 232 untracked paths.
+- Elevated worktree status at capture: clean (0 entries).
+- RC01 directory existed and contained 36 files. Manifest SHA-256: `596CB7F878A05CC565D6A1831B7E19F8D10E6FE625F739339E9A61CF34DEE5AD`. Model SHA-256: `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744`.
+- Task 1 execution record: Revit actions = `none`. This records activity only; no test result or model outcome is inferred from it.
+
+### Supplemental full RVT inventory
+
+- Supplemental scan captured UTC: `2026-09-24T15:57:48.0338523Z`; source: supplemental full RVT scan after reversible stash, before branch integration/cleanup.
+- The full scan contains 480 unique RVT paths. The first pre-cleanup inventory captured hashes for 112 files at `2026-09-24T14:56:20.5115075Z`; all 112 were verified unchanged in the supplemental scan.
+- The other 368 ignored test/runtime fixtures had their hashes captured in the supplemental scan before branch integration or cleanup. Their per-file hashes were not captured at the original timestamp.
+
+| Relative path | Bytes | SHA-256 | Classification |
+|---|---:|---|---|
+| `.tmp-pytest-y5/test_ambiguous_hardlink_identi0/working/alias.rvt` | 11 | `E416D2EA33181719A9F727A65820257DB7CE56F2756C81A84B196FB5CEB08214` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_ambiguous_hardlink_identi0/working/AMANDA_WORKING_001.rvt` | 11 | `E416D2EA33181719A9F727A65820257DB7CE56F2756C81A84B196FB5CEB08214` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_checkpoint_copy_publishes0/R01_PROJECT_INITIALIZED.rvt` | 18 | `B3F13D233334459A852183F6D1826324E11DCDE20275B49CD46EA5D3DEAFADCF` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_checkpoint_copy_publishes0/working.rvt` | 18 | `B3F13D233334459A852183F6D1826324E11DCDE20275B49CD46EA5D3DEAFADCF` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_checkpoint_label_is_r01_p0/working.rvt` | 13 | `E35AE756F91636C63A682031F5A294B28216280DEDE4939EED26A29F9A27C5CA` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_checkpoint_label_is_r01_p0/checkpoints/r01.rvt` | 13 | `E35AE756F91636C63A682031F5A294B28216280DEDE4939EED26A29F9A27C5CA` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_checkpoint_protection_app0/working.rvt` | 5 | `9372C470EEADD5ECD9C3C74C2B3CB633F8E2F2FAD799250A0F70D652B6B825E4` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_checkpoint_refuses_active0/working.rvt` | 5 | `9372C470EEADD5ECD9C3C74C2B3CB633F8E2F2FAD799250A0F70D652B6B825E4` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_complete_drill_passes_qa_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_complete_drill_passes_qa_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_complete_record_bridges_a0/model.rvt` | 16 | `8754EFBF3CD1B6BB89195B8DE2B357C204BA015CF454CB907F16CC72794932FD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_corrupt_latest_checkpoint0/R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_corrupt_latest_checkpoint0/R02.rvt` | 8 | `D121BE3103007B41EDF96F8262925F8C7D61894AFE9A041843B631F69445BC57` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_corrupt_latest_checkpoint0/working-R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_corrupt_latest_checkpoint0/working-R02.rvt` | 3 | `3FC4CCFE745870E2C0D99F71F30FF0656C8DEDD41CC1D7D3D376B0DBE685E2F3` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_crashed_state_selects_lat0/R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_crashed_state_selects_lat0/R02.rvt` | 3 | `3FC4CCFE745870E2C0D99F71F30FF0656C8DEDD41CC1D7D3D376B0DBE685E2F3` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_crashed_state_selects_lat0/working-R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_crashed_state_selects_lat0/working-R02.rvt` | 3 | `3FC4CCFE745870E2C0D99F71F30FF0656C8DEDD41CC1D7D3D376B0DBE685E2F3` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_divergent_export_hash_is_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_divergent_export_hash_is_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_empty_issue_list_does_not0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_existing_checkpoint_path_0/checkpoint.rvt` | 9 | `B4DDDECF813201F4A83F2AE71F6FA1A03EA961C3738E3DA7FFF94859C5AD1C17` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_existing_checkpoint_path_0/working.rvt` | 9 | `11E2DEFD59F47C7F2AAC84D6A5D6747E98E785AFFFB72C8BB7B05EC74E1D663C` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_existing_golden_is_never_0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_golden_cannot_be_used_as_0/working.rvt` | 5 | `9372C470EEADD5ECD9C3C74C2B3CB633F8E2F2FAD799250A0F70D652B6B825E4` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_incomplete_mandatory_expo0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_incomplete_persistence_bl0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_interrupted_mutation_neve0/R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_interrupted_mutation_neve0/working-R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_interrupted_staging_never0/golden/.RC01.6en4nn_w.staging/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_interrupted_staging_never0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_invalid_mandatory_export_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_invalid_mandatory_export_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_manifest_does_not_hash_it0/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_manifest_keeps_version_do0/R02_SITE.rvt` | 14 | `5A855430E6B6A41750A0928768920A774A02F00D02D79D2880A4204A2F1F22F5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_manifest_keeps_version_do0/working.rvt` | 14 | `5A855430E6B6A41750A0928768920A774A02F00D02D79D2880A4204A2F1F22F5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_manifest_serialization_is0/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_missing_close_and_hash_ke0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_occupied_writer_lock_is_r0/lab/candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_place_link_accepts_the_st0/context.rvt` | 13 | `C3DA769E6A2A6886B8FCAA6FA7705A84EEACC5A9E14F876E3B356689A39266BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_place_link_returns_a_metr0/context.rvt` | 13 | `C3DA769E6A2A6886B8FCAA6FA7705A84EEACC5A9E14F876E3B356689A39266BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_protected_target_is_refus0/lab/baseline-candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_protected_target_is_refus1/lab/release-candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_protected_target_is_refus2/lab/golden-candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_qa_fail_blocks_promotion0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_reachable_provider_with_f0/lab/candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_recovery_can_decide_retry0/R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_recovery_can_decide_retry0/working-R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_release_verify_detects_wr0/GOLDEN-001/model.rvt` | 6 | `E5C6FDE86910DED72DB5CC7AFC32F850440D4EF7CAA5DBB69F5BDC0D3E39CB3B` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_renamed_original_with_mat0/working/AMANDA_WORKING_001.rvt` | 14 | `E15BBC84603DC71F530B0A4ECC0DF7D987994BD14D57FF2678F499750763C701` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_required_artifact_without0/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_resume_file_contains_dete0/R02.rvt` | 6 | `F379CCB92B9116442DC65BDC35648A85D3786B34779DB7F704A901FA07B00CB6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_resume_file_contains_dete0/working.rvt` | 6 | `F379CCB92B9116442DC65BDC35648A85D3786B34779DB7F704A901FA07B00CB6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_copies_to_a_new_0/checkpoints/R00-lab.rvt` | 18 | `8D1A75DD2D7FFC51AB7B9552CB7D9D04E0E215B29D23F468F3B65D8C8872A03F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_copies_to_a_new_0/work/lab-r01.rvt` | 18 | `8D1A75DD2D7FFC51AB7B9552CB7D9D04E0E215B29D23F468F3B65D8C8872A03F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_refuses_checkpoi0/R02.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_refuses_checkpoi0/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_refuses_the_same0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_rejects_an_exist0/exists.rvt` | 16 | `708A546F370DEE0EC382F9BF24102AF0124EE649E0ADD925C577539E44E04F54` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_rejects_an_exist0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_rejects_a_hash_m0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_requires_a_quies0/new.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_requires_a_quies0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_requires_current0/R02.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_requires_current0/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_requires_current1/R02.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_requires_current1/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_verifies_checkpo0/R01.rvt` | 8 | `D121BE3103007B41EDF96F8262925F8C7D61894AFE9A041843B631F69445BC57` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_rollback_verifies_checkpo0/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_second_promotion_to_same_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_second_promotion_to_same_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_study_can_retain_visible_0/final/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_study_can_retain_visible_0/golden-study/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_study_can_retain_visible_0/study/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_synthetic_pipeline_runs_r0/model.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_synthetic_pipeline_runs_r0/stage-01.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_synthetic_pipeline_runs_r0/stage-02.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_synthetic_pipeline_runs_r0/stage-03.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_synthetic_pipeline_runs_r0/stage-04.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_synthetic_pipeline_runs_r0/stage-05.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_synthetic_pipeline_runs_r0/stage-06.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_synthetic_pipeline_runs_r0/stage-07.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_synthetic_pipeline_runs_r0/stage-08.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_synthetic_pipeline_runs_r0/stage-09.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_synthetic_pipeline_runs_r0/stage-10.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_synthetic_pipeline_runs_r0/stage-11.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_synthetic_pipeline_runs_r0/stage-12.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_synthetic_pipeline_runs_r0/stage-13.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_unreachable_provider_retu0/lab/candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_unwaived_mandatory_blocke0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y5/test_verify_manifest_detects_t0/model.rvt` | 8 | `D121BE3103007B41EDF96F8262925F8C7D61894AFE9A041843B631F69445BC57` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_ambiguous_hardlink_identi0/working/alias.rvt` | 11 | `E416D2EA33181719A9F727A65820257DB7CE56F2756C81A84B196FB5CEB08214` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_ambiguous_hardlink_identi0/working/AMANDA_WORKING_001.rvt` | 11 | `E416D2EA33181719A9F727A65820257DB7CE56F2756C81A84B196FB5CEB08214` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_checkpoint_copy_publishes0/R01_PROJECT_INITIALIZED.rvt` | 18 | `B3F13D233334459A852183F6D1826324E11DCDE20275B49CD46EA5D3DEAFADCF` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_checkpoint_copy_publishes0/working.rvt` | 18 | `B3F13D233334459A852183F6D1826324E11DCDE20275B49CD46EA5D3DEAFADCF` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_checkpoint_label_is_r01_p0/working.rvt` | 13 | `E35AE756F91636C63A682031F5A294B28216280DEDE4939EED26A29F9A27C5CA` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_checkpoint_label_is_r01_p0/checkpoints/r01.rvt` | 13 | `E35AE756F91636C63A682031F5A294B28216280DEDE4939EED26A29F9A27C5CA` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_checkpoint_protection_app0/working.rvt` | 5 | `9372C470EEADD5ECD9C3C74C2B3CB633F8E2F2FAD799250A0F70D652B6B825E4` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_checkpoint_refuses_active0/working.rvt` | 5 | `9372C470EEADD5ECD9C3C74C2B3CB633F8E2F2FAD799250A0F70D652B6B825E4` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_complete_drill_passes_qa_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_complete_drill_passes_qa_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_complete_record_bridges_a0/model.rvt` | 16 | `8754EFBF3CD1B6BB89195B8DE2B357C204BA015CF454CB907F16CC72794932FD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_corrupt_latest_checkpoint0/R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_corrupt_latest_checkpoint0/R02.rvt` | 8 | `D121BE3103007B41EDF96F8262925F8C7D61894AFE9A041843B631F69445BC57` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_corrupt_latest_checkpoint0/working-R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_corrupt_latest_checkpoint0/working-R02.rvt` | 3 | `3FC4CCFE745870E2C0D99F71F30FF0656C8DEDD41CC1D7D3D376B0DBE685E2F3` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_crashed_state_selects_lat0/R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_crashed_state_selects_lat0/R02.rvt` | 3 | `3FC4CCFE745870E2C0D99F71F30FF0656C8DEDD41CC1D7D3D376B0DBE685E2F3` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_crashed_state_selects_lat0/working-R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_crashed_state_selects_lat0/working-R02.rvt` | 3 | `3FC4CCFE745870E2C0D99F71F30FF0656C8DEDD41CC1D7D3D376B0DBE685E2F3` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_divergent_export_hash_is_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_divergent_export_hash_is_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_empty_issue_list_does_not0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_existing_checkpoint_path_0/checkpoint.rvt` | 9 | `B4DDDECF813201F4A83F2AE71F6FA1A03EA961C3738E3DA7FFF94859C5AD1C17` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_existing_checkpoint_path_0/working.rvt` | 9 | `11E2DEFD59F47C7F2AAC84D6A5D6747E98E785AFFFB72C8BB7B05EC74E1D663C` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_existing_golden_is_never_0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_golden_cannot_be_used_as_0/working.rvt` | 5 | `9372C470EEADD5ECD9C3C74C2B3CB633F8E2F2FAD799250A0F70D652B6B825E4` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_incomplete_mandatory_expo0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_incomplete_persistence_bl0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_interrupted_mutation_neve0/R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_interrupted_mutation_neve0/working-R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_interrupted_staging_never0/golden/.RC01.0m2iss_r.staging/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_interrupted_staging_never0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_invalid_mandatory_export_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_invalid_mandatory_export_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_manifest_does_not_hash_it0/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_manifest_keeps_version_do0/R02_SITE.rvt` | 14 | `5A855430E6B6A41750A0928768920A774A02F00D02D79D2880A4204A2F1F22F5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_manifest_keeps_version_do0/working.rvt` | 14 | `5A855430E6B6A41750A0928768920A774A02F00D02D79D2880A4204A2F1F22F5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_manifest_serialization_is0/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_missing_close_and_hash_ke0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_occupied_writer_lock_is_r0/lab/candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_place_link_accepts_the_st0/context.rvt` | 13 | `C3DA769E6A2A6886B8FCAA6FA7705A84EEACC5A9E14F876E3B356689A39266BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_place_link_returns_a_metr0/context.rvt` | 13 | `C3DA769E6A2A6886B8FCAA6FA7705A84EEACC5A9E14F876E3B356689A39266BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_protected_target_is_refus0/lab/baseline-candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_protected_target_is_refus1/lab/release-candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_protected_target_is_refus2/lab/golden-candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_qa_fail_blocks_promotion0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_reachable_provider_with_f0/lab/candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_recovery_can_decide_retry0/R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_recovery_can_decide_retry0/working-R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_release_verify_detects_wr0/GOLDEN-001/model.rvt` | 6 | `E5C6FDE86910DED72DB5CC7AFC32F850440D4EF7CAA5DBB69F5BDC0D3E39CB3B` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_renamed_original_with_mat0/working/AMANDA_WORKING_001.rvt` | 14 | `E15BBC84603DC71F530B0A4ECC0DF7D987994BD14D57FF2678F499750763C701` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_required_artifact_without0/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_resume_file_contains_dete0/R02.rvt` | 6 | `F379CCB92B9116442DC65BDC35648A85D3786B34779DB7F704A901FA07B00CB6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_resume_file_contains_dete0/working.rvt` | 6 | `F379CCB92B9116442DC65BDC35648A85D3786B34779DB7F704A901FA07B00CB6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_copies_to_a_new_0/checkpoints/R00-lab.rvt` | 18 | `8D1A75DD2D7FFC51AB7B9552CB7D9D04E0E215B29D23F468F3B65D8C8872A03F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_copies_to_a_new_0/work/lab-r01.rvt` | 18 | `8D1A75DD2D7FFC51AB7B9552CB7D9D04E0E215B29D23F468F3B65D8C8872A03F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_refuses_checkpoi0/R02.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_refuses_checkpoi0/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_refuses_the_same0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_rejects_an_exist0/exists.rvt` | 16 | `708A546F370DEE0EC382F9BF24102AF0124EE649E0ADD925C577539E44E04F54` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_rejects_an_exist0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_rejects_a_hash_m0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_requires_a_quies0/new.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_requires_a_quies0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_requires_current0/R02.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_requires_current0/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_requires_current1/R02.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_requires_current1/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_verifies_checkpo0/R01.rvt` | 8 | `D121BE3103007B41EDF96F8262925F8C7D61894AFE9A041843B631F69445BC57` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_rollback_verifies_checkpo0/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_second_promotion_to_same_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_second_promotion_to_same_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_study_can_retain_visible_0/final/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_study_can_retain_visible_0/golden-study/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_study_can_retain_visible_0/study/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_synthetic_pipeline_runs_r0/model.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_synthetic_pipeline_runs_r0/stage-01.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_synthetic_pipeline_runs_r0/stage-02.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_synthetic_pipeline_runs_r0/stage-03.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_synthetic_pipeline_runs_r0/stage-04.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_synthetic_pipeline_runs_r0/stage-05.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_synthetic_pipeline_runs_r0/stage-06.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_synthetic_pipeline_runs_r0/stage-07.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_synthetic_pipeline_runs_r0/stage-08.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_synthetic_pipeline_runs_r0/stage-09.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_synthetic_pipeline_runs_r0/stage-10.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_synthetic_pipeline_runs_r0/stage-11.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_synthetic_pipeline_runs_r0/stage-12.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_synthetic_pipeline_runs_r0/stage-13.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_unreachable_provider_retu0/lab/candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_unwaived_mandatory_blocke0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y6/test_verify_manifest_detects_t0/model.rvt` | 8 | `D121BE3103007B41EDF96F8262925F8C7D61894AFE9A041843B631F69445BC57` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_ambiguous_hardlink_identi0/working/alias.rvt` | 11 | `E416D2EA33181719A9F727A65820257DB7CE56F2756C81A84B196FB5CEB08214` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_ambiguous_hardlink_identi0/working/AMANDA_WORKING_001.rvt` | 11 | `E416D2EA33181719A9F727A65820257DB7CE56F2756C81A84B196FB5CEB08214` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_checkpoint_copy_publishes0/R01_PROJECT_INITIALIZED.rvt` | 18 | `B3F13D233334459A852183F6D1826324E11DCDE20275B49CD46EA5D3DEAFADCF` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_checkpoint_copy_publishes0/working.rvt` | 18 | `B3F13D233334459A852183F6D1826324E11DCDE20275B49CD46EA5D3DEAFADCF` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_checkpoint_label_is_r01_p0/working.rvt` | 13 | `E35AE756F91636C63A682031F5A294B28216280DEDE4939EED26A29F9A27C5CA` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_checkpoint_label_is_r01_p0/checkpoints/r01.rvt` | 13 | `E35AE756F91636C63A682031F5A294B28216280DEDE4939EED26A29F9A27C5CA` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_checkpoint_protection_app0/working.rvt` | 5 | `9372C470EEADD5ECD9C3C74C2B3CB633F8E2F2FAD799250A0F70D652B6B825E4` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_checkpoint_refuses_active0/working.rvt` | 5 | `9372C470EEADD5ECD9C3C74C2B3CB633F8E2F2FAD799250A0F70D652B6B825E4` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_complete_drill_passes_qa_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_complete_drill_passes_qa_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_complete_record_bridges_a0/model.rvt` | 16 | `8754EFBF3CD1B6BB89195B8DE2B357C204BA015CF454CB907F16CC72794932FD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_corrupt_latest_checkpoint0/R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_corrupt_latest_checkpoint0/R02.rvt` | 8 | `D121BE3103007B41EDF96F8262925F8C7D61894AFE9A041843B631F69445BC57` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_corrupt_latest_checkpoint0/working-R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_corrupt_latest_checkpoint0/working-R02.rvt` | 3 | `3FC4CCFE745870E2C0D99F71F30FF0656C8DEDD41CC1D7D3D376B0DBE685E2F3` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_crashed_state_selects_lat0/R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_crashed_state_selects_lat0/R02.rvt` | 3 | `3FC4CCFE745870E2C0D99F71F30FF0656C8DEDD41CC1D7D3D376B0DBE685E2F3` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_crashed_state_selects_lat0/working-R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_crashed_state_selects_lat0/working-R02.rvt` | 3 | `3FC4CCFE745870E2C0D99F71F30FF0656C8DEDD41CC1D7D3D376B0DBE685E2F3` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_divergent_export_hash_is_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_divergent_export_hash_is_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_empty_issue_list_does_not0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_existing_checkpoint_path_0/checkpoint.rvt` | 9 | `B4DDDECF813201F4A83F2AE71F6FA1A03EA961C3738E3DA7FFF94859C5AD1C17` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_existing_checkpoint_path_0/working.rvt` | 9 | `11E2DEFD59F47C7F2AAC84D6A5D6747E98E785AFFFB72C8BB7B05EC74E1D663C` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_existing_golden_is_never_0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_golden_cannot_be_used_as_0/working.rvt` | 5 | `9372C470EEADD5ECD9C3C74C2B3CB633F8E2F2FAD799250A0F70D652B6B825E4` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_incomplete_mandatory_expo0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_incomplete_persistence_bl0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_interrupted_mutation_neve0/R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_interrupted_mutation_neve0/working-R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_interrupted_staging_never0/golden/.RC01.794t0wn8.staging/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_interrupted_staging_never0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_invalid_mandatory_export_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_invalid_mandatory_export_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_manifest_does_not_hash_it0/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_manifest_keeps_version_do0/R02_SITE.rvt` | 14 | `5A855430E6B6A41750A0928768920A774A02F00D02D79D2880A4204A2F1F22F5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_manifest_keeps_version_do0/working.rvt` | 14 | `5A855430E6B6A41750A0928768920A774A02F00D02D79D2880A4204A2F1F22F5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_manifest_serialization_is0/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_missing_close_and_hash_ke0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_occupied_writer_lock_is_r0/lab/candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_place_link_accepts_the_st0/context.rvt` | 13 | `C3DA769E6A2A6886B8FCAA6FA7705A84EEACC5A9E14F876E3B356689A39266BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_place_link_returns_a_metr0/context.rvt` | 13 | `C3DA769E6A2A6886B8FCAA6FA7705A84EEACC5A9E14F876E3B356689A39266BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_protected_target_is_refus0/lab/baseline-candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_protected_target_is_refus1/lab/release-candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_protected_target_is_refus2/lab/golden-candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_qa_fail_blocks_promotion0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_reachable_provider_with_f0/lab/candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_recovery_can_decide_retry0/R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_recovery_can_decide_retry0/working-R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_release_verify_detects_wr0/GOLDEN-001/model.rvt` | 6 | `E5C6FDE86910DED72DB5CC7AFC32F850440D4EF7CAA5DBB69F5BDC0D3E39CB3B` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_renamed_original_with_mat0/working/AMANDA_WORKING_001.rvt` | 14 | `E15BBC84603DC71F530B0A4ECC0DF7D987994BD14D57FF2678F499750763C701` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_required_artifact_without0/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_resume_file_contains_dete0/R02.rvt` | 6 | `F379CCB92B9116442DC65BDC35648A85D3786B34779DB7F704A901FA07B00CB6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_resume_file_contains_dete0/working.rvt` | 6 | `F379CCB92B9116442DC65BDC35648A85D3786B34779DB7F704A901FA07B00CB6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_copies_to_a_new_0/checkpoints/R00-lab.rvt` | 18 | `8D1A75DD2D7FFC51AB7B9552CB7D9D04E0E215B29D23F468F3B65D8C8872A03F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_copies_to_a_new_0/work/lab-r01.rvt` | 18 | `8D1A75DD2D7FFC51AB7B9552CB7D9D04E0E215B29D23F468F3B65D8C8872A03F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_refuses_checkpoi0/R02.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_refuses_checkpoi0/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_refuses_the_same0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_rejects_an_exist0/exists.rvt` | 16 | `708A546F370DEE0EC382F9BF24102AF0124EE649E0ADD925C577539E44E04F54` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_rejects_an_exist0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_rejects_a_hash_m0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_requires_a_quies0/new.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_requires_a_quies0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_requires_current0/R02.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_requires_current0/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_requires_current1/R02.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_requires_current1/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_verifies_checkpo0/R01.rvt` | 8 | `D121BE3103007B41EDF96F8262925F8C7D61894AFE9A041843B631F69445BC57` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_rollback_verifies_checkpo0/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_second_promotion_to_same_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_second_promotion_to_same_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_study_can_retain_visible_0/final/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_study_can_retain_visible_0/golden-study/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_study_can_retain_visible_0/study/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_synthetic_pipeline_runs_r0/model.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_synthetic_pipeline_runs_r0/stage-01.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_synthetic_pipeline_runs_r0/stage-02.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_synthetic_pipeline_runs_r0/stage-03.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_synthetic_pipeline_runs_r0/stage-04.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_synthetic_pipeline_runs_r0/stage-05.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_synthetic_pipeline_runs_r0/stage-06.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_synthetic_pipeline_runs_r0/stage-07.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_synthetic_pipeline_runs_r0/stage-08.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_synthetic_pipeline_runs_r0/stage-09.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_synthetic_pipeline_runs_r0/stage-10.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_synthetic_pipeline_runs_r0/stage-11.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_synthetic_pipeline_runs_r0/stage-12.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_synthetic_pipeline_runs_r0/stage-13.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_unreachable_provider_retu0/lab/candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_unwaived_mandatory_blocke0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y8/test_verify_manifest_detects_t0/model.rvt` | 8 | `D121BE3103007B41EDF96F8262925F8C7D61894AFE9A041843B631F69445BC57` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_ambiguous_hardlink_identi0/working/alias.rvt` | 11 | `E416D2EA33181719A9F727A65820257DB7CE56F2756C81A84B196FB5CEB08214` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_ambiguous_hardlink_identi0/working/AMANDA_WORKING_001.rvt` | 11 | `E416D2EA33181719A9F727A65820257DB7CE56F2756C81A84B196FB5CEB08214` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_checkpoint_copy_publishes0/R01_PROJECT_INITIALIZED.rvt` | 18 | `B3F13D233334459A852183F6D1826324E11DCDE20275B49CD46EA5D3DEAFADCF` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_checkpoint_copy_publishes0/working.rvt` | 18 | `B3F13D233334459A852183F6D1826324E11DCDE20275B49CD46EA5D3DEAFADCF` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_checkpoint_label_is_r01_p0/working.rvt` | 13 | `E35AE756F91636C63A682031F5A294B28216280DEDE4939EED26A29F9A27C5CA` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_checkpoint_label_is_r01_p0/checkpoints/r01.rvt` | 13 | `E35AE756F91636C63A682031F5A294B28216280DEDE4939EED26A29F9A27C5CA` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_checkpoint_protection_app0/working.rvt` | 5 | `9372C470EEADD5ECD9C3C74C2B3CB633F8E2F2FAD799250A0F70D652B6B825E4` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_checkpoint_refuses_active0/working.rvt` | 5 | `9372C470EEADD5ECD9C3C74C2B3CB633F8E2F2FAD799250A0F70D652B6B825E4` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_complete_drill_passes_qa_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_complete_drill_passes_qa_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_complete_record_bridges_a0/model.rvt` | 16 | `8754EFBF3CD1B6BB89195B8DE2B357C204BA015CF454CB907F16CC72794932FD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_corrupt_latest_checkpoint0/R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_corrupt_latest_checkpoint0/R02.rvt` | 8 | `D121BE3103007B41EDF96F8262925F8C7D61894AFE9A041843B631F69445BC57` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_corrupt_latest_checkpoint0/working-R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_corrupt_latest_checkpoint0/working-R02.rvt` | 3 | `3FC4CCFE745870E2C0D99F71F30FF0656C8DEDD41CC1D7D3D376B0DBE685E2F3` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_crashed_state_selects_lat0/R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_crashed_state_selects_lat0/R02.rvt` | 3 | `3FC4CCFE745870E2C0D99F71F30FF0656C8DEDD41CC1D7D3D376B0DBE685E2F3` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_crashed_state_selects_lat0/working-R01.rvt` | 3 | `7692C3AD3540BB803C020B3AEE66CD8887123234EA0C6E7143C0ADD73FF431ED` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_crashed_state_selects_lat0/working-R02.rvt` | 3 | `3FC4CCFE745870E2C0D99F71F30FF0656C8DEDD41CC1D7D3D376B0DBE685E2F3` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_divergent_export_hash_is_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_divergent_export_hash_is_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_empty_issue_list_does_not0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_existing_checkpoint_path_0/checkpoint.rvt` | 9 | `B4DDDECF813201F4A83F2AE71F6FA1A03EA961C3738E3DA7FFF94859C5AD1C17` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_existing_checkpoint_path_0/working.rvt` | 9 | `11E2DEFD59F47C7F2AAC84D6A5D6747E98E785AFFFB72C8BB7B05EC74E1D663C` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_existing_golden_is_never_0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_golden_cannot_be_used_as_0/working.rvt` | 5 | `9372C470EEADD5ECD9C3C74C2B3CB633F8E2F2FAD799250A0F70D652B6B825E4` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_incomplete_mandatory_expo0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_incomplete_persistence_bl0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_interrupted_mutation_neve0/R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_interrupted_mutation_neve0/working-R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_interrupted_staging_never0/golden/.RC01.lyp7cx7l.staging/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_interrupted_staging_never0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_invalid_mandatory_export_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_invalid_mandatory_export_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_manifest_does_not_hash_it0/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_manifest_keeps_version_do0/R02_SITE.rvt` | 14 | `5A855430E6B6A41750A0928768920A774A02F00D02D79D2880A4204A2F1F22F5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_manifest_keeps_version_do0/working.rvt` | 14 | `5A855430E6B6A41750A0928768920A774A02F00D02D79D2880A4204A2F1F22F5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_manifest_serialization_is0/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_missing_close_and_hash_ke0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_occupied_writer_lock_is_r0/lab/candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_place_link_accepts_the_st0/context.rvt` | 13 | `C3DA769E6A2A6886B8FCAA6FA7705A84EEACC5A9E14F876E3B356689A39266BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_place_link_returns_a_metr0/context.rvt` | 13 | `C3DA769E6A2A6886B8FCAA6FA7705A84EEACC5A9E14F876E3B356689A39266BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_protected_target_is_refus0/lab/baseline-candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_protected_target_is_refus1/lab/release-candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_protected_target_is_refus2/lab/golden-candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_qa_fail_blocks_promotion0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_reachable_provider_with_f0/lab/candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_recovery_can_decide_retry0/R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_recovery_can_decide_retry0/working-R02.rvt` | 10 | `EDB89D09B913B577EFBD63F53446D060C97D339166531661A5196A0CF6B796BD` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_release_verify_detects_wr0/GOLDEN-001/model.rvt` | 6 | `E5C6FDE86910DED72DB5CC7AFC32F850440D4EF7CAA5DBB69F5BDC0D3E39CB3B` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_renamed_original_with_mat0/working/AMANDA_WORKING_001.rvt` | 14 | `E15BBC84603DC71F530B0A4ECC0DF7D987994BD14D57FF2678F499750763C701` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_required_artifact_without0/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_resume_file_contains_dete0/R02.rvt` | 6 | `F379CCB92B9116442DC65BDC35648A85D3786B34779DB7F704A901FA07B00CB6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_resume_file_contains_dete0/working.rvt` | 6 | `F379CCB92B9116442DC65BDC35648A85D3786B34779DB7F704A901FA07B00CB6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_copies_to_a_new_0/checkpoints/R00-lab.rvt` | 18 | `8D1A75DD2D7FFC51AB7B9552CB7D9D04E0E215B29D23F468F3B65D8C8872A03F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_copies_to_a_new_0/work/lab-r01.rvt` | 18 | `8D1A75DD2D7FFC51AB7B9552CB7D9D04E0E215B29D23F468F3B65D8C8872A03F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_refuses_checkpoi0/R02.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_refuses_checkpoi0/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_refuses_the_same0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_rejects_an_exist0/exists.rvt` | 16 | `708A546F370DEE0EC382F9BF24102AF0124EE649E0ADD925C577539E44E04F54` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_rejects_an_exist0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_rejects_a_hash_m0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_requires_a_quies0/new.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_requires_a_quies0/R00.rvt` | 7 | `239F59ED55E737C77147CF55AD0C1B030B6D7EE748A7426952F9B852D5A935E5` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_requires_current0/R02.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_requires_current0/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_requires_current1/R02.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_requires_current1/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_verifies_checkpo0/R01.rvt` | 8 | `D121BE3103007B41EDF96F8262925F8C7D61894AFE9A041843B631F69445BC57` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_rollback_verifies_checkpo0/working.rvt` | 10 | `BE8E11CCFAE3BB07404C5942CBD1F3904D1C2082813C9515C30FE1E7365FAF45` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_second_promotion_to_same_0/lab/GOLDEN/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_second_promotion_to_same_0/lab/RC01/model.rvt` | 53 | `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_study_can_retain_visible_0/final/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_study_can_retain_visible_0/golden-study/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_study_can_retain_visible_0/study/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_synthetic_pipeline_runs_r0/model.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_synthetic_pipeline_runs_r0/stage-01.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_synthetic_pipeline_runs_r0/stage-02.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_synthetic_pipeline_runs_r0/stage-03.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_synthetic_pipeline_runs_r0/stage-04.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_synthetic_pipeline_runs_r0/stage-05.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_synthetic_pipeline_runs_r0/stage-06.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_synthetic_pipeline_runs_r0/stage-07.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_synthetic_pipeline_runs_r0/stage-08.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_synthetic_pipeline_runs_r0/stage-09.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_synthetic_pipeline_runs_r0/stage-10.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_synthetic_pipeline_runs_r0/stage-11.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_synthetic_pipeline_runs_r0/stage-12.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_synthetic_pipeline_runs_r0/stage-13.rvt` | 24 | `266F9C7BCF7CE2E1C832F89B9A2756B65ECAF303488E9E3F7427E3758A27AA5F` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_unreachable_provider_retu0/lab/candidate.rvt` | 20 | `6B89A963DDD21F5B2F6604311D7C2641E188498DF107319EFC1A90915D70D1B6` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_unwaived_mandatory_blocke0/RC01/model.rvt` | 12 | `766AA46F408D34EBB48DE3137B5D6FE5DE05D9B84575AFA0A2AE63F3A406C0CB` | TEMPORARY_TEST_FIXTURE |
+| `.tmp-pytest-y9/test_verify_manifest_detects_t0/model.rvt` | 8 | `D121BE3103007B41EDF96F8262925F8C7D61894AFE9A041843B631F69445BC57` | TEMPORARY_TEST_FIXTURE |
