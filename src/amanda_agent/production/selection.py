@@ -302,7 +302,7 @@ def legacy_selection_history() -> dict[str, Any]:
         "selection_authority": SelectionAuthority.AGENT_DELEGATED.value,
         "parti_selection_authority": SelectionAuthority.USER_DIRECTED.value,
         "superseded_by": SELECTION_SOLUTION_ID,
-        "historical_rvt": "revit/production/archive/superseded-linear/AMANDA-RUN-001-S01-R12-linear-historical-20260922.rvt",
+        "historical_rvt": "revit/production/archive/linear-r12-superseded.rvt",
         "historical_rvt_sha256": "ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29",
         "geometry_reuse_allowed": False,
     }

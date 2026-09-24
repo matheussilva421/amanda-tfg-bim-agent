@@ -61,24 +61,61 @@ inventory routing, task registry plan paths, session/reboot handoff writers,
 repository hygiene tests, historical report pointers, this handoff, and the
 recovery report are updated. The final focused suite passed 73/73 and Ruff
 passed across changed operational Python and focused test files. Commit
-`06da0b24170a55cf0fa3bb705ce07d98082ec907` is on `main` and `origin/main`.
+`5d95d12ce87559d0e986ce4db1dc880c550c8534` is on `main` and `origin/main`.
 Elevated status confirmed 36 RC01 files intact and one worktree. The only
 remaining named handoff is this file. No Revit/model action occurred. See
 `docs/reports/repository-recovery.md` for the command, detailed evidence, and
 known historical freeze mismatch.
 
+## Task 9 complete; independent review approved
+
+The independent review approved the inventory, hashes, retention decisions,
+and recorded test evidence. It found one stale handoff status; the status was
+corrected and the scoped re-review approved the correction. The Task 9 commit
+and push are the remaining closeout actions for this task.
+
+The 112-row RVT baseline is classified: 31 `LAB_FIXTURE`, 4
+`CHECKPOINT_R04`, 4 `CHECKPOINT_R06`, 1 `CHECKPOINT_R08`, 1
+`HISTORICAL_LINEAR_R12`, and 71 `UNKNOWN`. All `UNKNOWN` files remain
+preserved. The historical linear model was moved by path only to
+`revit/production/archive/linear-r12-superseded.rvt`; its 4,345,856-byte
+SHA-256 remains
+`ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29`. The
+manifest now sits at `revit/production/archive/manifest.json`. Three byte-
+identical S02 working duplicates are in `.recovery/rvt-duplicates/` until
+Task 13; the S02 file named by the writer lease remains in place and
+`revit/production/working/CURRENT.rvt` remains absent. No Revit process or
+model content was opened or modified.
+
+The signed decision register keeps its original historical `source_refs`
+string because `approval_hash` binds that value. A proposed path update failed
+register validation and was reverted without rebinding the hash; the current
+archive path is recorded by the manifest, active selection history, and
+recovery report.
+
+Fresh Task 9 checks: R12 path guards 4/4; historical decision source test
+1/1; state-store/status-dashboard 10/10; status CLI exited 0 and reported the
+existing writer lease as HELD. The full production-runner unit module had
+14/15 passing; its unchanged R04 routing fixture expected a lock exception
+after the current acceptance gate returns early. The focused path checks passed
+when run with `.venv/Scripts/python.exe -m pytest`; the bare `pytest.exe`
+launcher could not import the local `scripts` namespace. Independent review,
+commit, and push are still pending. `PROJECT_STATE.yaml` remains at
+`RECOVERY-VALIDATE`.
+
 ## Exact resume
 
-Begin Task 9 by reading its recovery-plan section and classifying the full RVT
-inventory. Verify the historical linear R12 hash before any move; keep
-`revit/production/working/CURRENT.rvt` absent, never delete `UNKNOWN`, and do
-not open Revit or mutate a model. Commit/push each reviewed task. Continue
-sequentially through Tasks 10–13; only Task 13 may remove `.recovery/` or set
-the formal next task to P1-T01.
+Commit/push the reviewed Task 9 tracked changes, then begin Task 10: inventory
+tracked `design-engine/` files, classify each run/candidate as
+`ACTIVE_CURRENT`, `STALE_EVIDENCE`, `HISTORICAL_REPRODUCIBLE`, or `UNKNOWN`,
+create no current solution, remove only proven reproducible historical
+artifacts, and run the focused canonical/design-engine tests. Do not open
+Revit or modify model content. Continue Tasks 11–13 sequentially; only Task 13
+may remove `.recovery/` or set the formal next task to P1-T01.
 
 ## Git checkpoint
 
-Task 8 started at `fe1e5ea287cfb5dec75877a278349a7ab519e1ec` and closed at
-`HEAD = main = origin/main = 06da0b24170a55cf0fa3bb705ce07d98082ec907`, with
-exactly one worktree. The workspace still contains the intentional untracked
-`.recovery/` evidence.
+Task 8 closed at `HEAD = main = origin/main =
+5d95d12ce87559d0e986ce4db1dc880c550c8534`, with exactly one worktree. Task 9
+is reviewed and ready to commit; `.recovery/` and the three quarantined RVT
+duplicates remain local and are intentionally preserved for Task 13.

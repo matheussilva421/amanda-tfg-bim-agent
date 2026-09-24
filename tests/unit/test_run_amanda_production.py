@@ -10,6 +10,7 @@ import pytest
 import scripts.run_amanda_production as production_runner
 from amanda_agent.bim.models import BimStage
 from amanda_agent.bim.stages import ExecutionMode
+from amanda_agent.production.selection import legacy_selection_history
 from scripts.run_amanda_production import (
     _new_idempotency_key,
     _report_canonical_sources,
@@ -39,6 +40,12 @@ def test_select_revit_target_sets_and_verifies_the_requested_pid():
 
 def test_final_save_key_is_unique_per_production_attempt():
     assert _new_idempotency_key("save", "run-abc123") == "amanda-save-run-abc123"
+
+
+def test_legacy_selection_history_uses_canonical_historical_r12_path():
+    assert legacy_selection_history()["historical_rvt"] == (
+        "revit/production/archive/linear-r12-superseded.rvt"
+    )
 
 
 def test_worktree_resolves_the_shared_repository_root_for_writer_lock(tmp_path: Path):
@@ -156,7 +163,7 @@ def test_superseded_r12_path_or_manifest_hash_cannot_be_reused_as_target(
     target_is_copy: bool,
 ):
     archive_relpath = Path(
-        "revit/production/archive/superseded-linear/AMANDA-RUN-001-S01-R12-linear-historical-20260922.rvt"
+        "revit/production/archive/linear-r12-superseded.rvt"
     )
     archive = tmp_path / archive_relpath
     archive.parent.mkdir(parents=True)
@@ -194,7 +201,7 @@ def test_runner_refuses_archived_r12_when_archive_bytes_do_not_match_manifest(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ):
     archive_relpath = Path(
-        "revit/production/archive/superseded-linear/AMANDA-RUN-001-S01-R12-linear-historical-20260922.rvt"
+        "revit/production/archive/linear-r12-superseded.rvt"
     )
     archive = tmp_path / archive_relpath
     archive.parent.mkdir(parents=True)
