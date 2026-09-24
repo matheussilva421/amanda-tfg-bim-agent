@@ -1250,3 +1250,44 @@ verification showed only `main`, one worktree, and `.recovery/` untracked.
 Independent reviewer Pascal approved the ancestry, tag preservation, and
 post-deletion state. No tests or Revit/model operations ran during Task 12.
 Task 13 begins only after this closeout is pushed and the remote is verified.
+
+## Task 13 — final evidence and readiness gate
+
+The `.recovery/` root resolves inside the workspace at
+`C:\Users\slvma\Downloads\Github\Projeto Amanda\.recovery`; the recursive
+inventory contains 15 files totaling 12,196,838 bytes and no reparse points.
+The text/JSON/CSV recovery records are represented by the report sections
+above as follows:
+
+| Recovery record | Bytes | SHA-256 | Durable representation |
+|---|---:|---|---|
+| `.recovery/concept-integrate.txt` | 0 | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | Empty; Task 3's P08 classification is recorded above. |
+| `.recovery/design-engine-files.txt` | 3,068 | `a96fd8aedc3fddf5c43aa1018411246dbb82c3a2fd736f41fbcbdf76f75143a3` | Task 10 baseline count, digest, and 43-path disposition. |
+| `.recovery/design-engine-classification.json` | 5,096 | `eb5aa37000662fe58ba13f19f13d4b3eea262eb8929679be3500250880a846e6` | Task 10's 4/37/2/0 classification, retained stale evidence, and exact removals. |
+| `.recovery/rvt-inventory.json` | 48,851 | `9925a7fde043d7039204e19e0f7baf57f9d2973e19171891db6af16e7bb06a59` | Task 9's full 112-row RVT table and path/hash reconciliation. |
+| `.recovery/source-hashes-before.txt` | 5,291 | `4782ce0fa196122a541260d98a26636c6edd9bbbb70a6a3dca00ac1b4046d540` | Task 1 capture and Task 7 source-migration record. |
+| `.recovery/source-hashes-after.txt` | 7,139 | `827bc951e23e8d6cc4fe57f12de81c416387f6d732d200e4dc6ffef626b97bb7` | Task 7 hash verification; active source catalog remains at `docs/source/SOURCE_MANIFEST.json`. |
+| `.recovery/task11-approved-delete-list.txt` | 3,024 | `dd7b1460050f4871890a92f809a03e96e6c14d568abf4d9602e12113b3c0df65` | Task 11's exact 153-path selection and before/after reconciliation. |
+| `.recovery/task11-approved-delete-manifest.csv` | 27,116 | `e8417df1550caa7ada2ae8bbfc1478397a0be96791d368a78d32d3b7d93f628c` | Task 11 reviewed classes: 120 root scratch entries, 32 `__pycache__`, and `.pytest_cache/`. |
+| `.recovery/task11-ignored-preview.txt` | 9,994 | `91a7fd2a44a9b3b85e51a5580bd3f0ae762204471a819e17c88aa6ad8e470d5f` | Task 11's 241-path dry-run baseline and preserve decisions. |
+| `.recovery/task11-ignored-preview-after.txt` | 4,932 | `d878da8e014e44f35d80d5912e5e1d1990ba069d84811fe21f35aea8adaa4731` | Task 11's 88-path final dry-run; exactly baseline minus 153 removals. |
+| `.recovery/task11-removal-result.json` | 202 | `09664cbf871ddbad407adba4edc949212a76471c2f87c2feb1c5671ac0dd96af` | Task 11: 153 removed, zero failures, zero missing preserves; no `git clean` deletion. |
+| `.recovery/task11-root-temp-metadata.csv` | 7,117 | `281741112deaa752cf250ea42cb2f886d3b7c9fd46003a1e5a446a8e85284dd7` | Task 11's 134 root-temp inventory, evidence-preserve list, and cleanup categories. |
+
+The three remaining files under `.recovery/rvt-duplicates/` are exact byte
+duplicates of retained checkpoint files, not unique RVT evidence. A fresh
+pre-cleanup hash audit compared all 112 baseline rows to their retained paths:
+112/112 matched, with 109 unique retained paths and 109 physical RVTs under
+`revit/`; zero rows were missing or mismatched. The three quarantine copies
+and their retained checkpoint counterparts are:
+
+| Quarantine copy | Bytes | SHA-256 | Retained identical RVT |
+|---|---:|---|---|
+| `AMANDA-RUN-002-PAVILION-S02.0005.rvt` | 3,981,312 | `49c8aa6e767ce6704c0285771651c8e3b300400d55a52c55163a7ceb11b77eed` | `revit/production/checkpoints/AMANDA-RUN-002-PAVILION-S02/R04-canonical-spatial-acceptance-20260923.rvt` |
+| `AMANDA-RUN-002-PAVILION-S02.0006.rvt` | 4,046,848 | `c5f866b135240ca1a202d68d1028952db3fdef5734f15cfa897fd8676b63156a` | `revit/production/checkpoints/AMANDA-RUN-002-PAVILION-S02/R04-canonical-covered-circulation-20260923.rvt` |
+| `AMANDA-RUN-002-PAVILION-S02.0007.rvt` | 4,046,848 | `2702c626565ed426a8e3b9cc179ebf2008ba36284dda60376dae6e5bb9ff438e` | `revit/production/checkpoints/AMANDA-RUN-002-PAVILION-S02/R03-prewrite-20260923-2219.rvt` |
+
+Before removing `.recovery/`, independently recheck the three retained RVT
+hashes and report inventory, finish the focused test gate and active-document
+audit, and record the state/status transition. Do not open Revit or alter any
+retained model.

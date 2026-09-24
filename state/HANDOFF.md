@@ -140,10 +140,10 @@ verified.
 ## Exact resume
 
 Task 11 cleanup and Task 12 branch retirement are complete and independently
-reviewed. Push and verify this report/handoff closeout, then begin Task 13.
-Do not use `git clean` to delete; preserve gate evidence, source files, RVTs,
-and release artifacts. Only Task 13 may remove `.recovery/` or set the formal
-next task to P1-T01.
+reviewed. Task 13 is now in progress: finish the final evidence, tests, and
+document audit before removing `.recovery/` or setting the formal next task to
+P1-T01. Do not use `git clean` to delete; preserve gate evidence, source files,
+RVTs, and release artifacts.
 
 ## Task 11 complete; independent review approved
 
@@ -225,6 +225,18 @@ both old branch refs absent, and both tags present. Local status shows one
 worktree on `main` and only `.recovery/` untracked. Independent reviewer
 Pascal approved the branch proof, preservation tags, and post-deletion state.
 No tests or Revit/model operations were run during this task.
+
+## Task 13 in progress
+
+The final recovery gate has started. `.recovery/` contains 15 files (12,196,838
+bytes), and the report maps each record to a durable evidence section and
+SHA-256. The 112-row RVT inventory was rechecked: all rows resolve with matching
+sizes and hashes to 109 unique retained paths under `revit/`; the three
+quarantined RVTs are byte-identical to retained checkpoints. Next recheck those
+checkpoint hashes, remove only the exact `.recovery/` directory after its
+evidence is recorded, run the focused gates, verify the single CURRENT plan/spec
+and source manifest, then update `PROJECT_STATE.yaml` to P1-T01. No Revit/model
+operation.
 
 ## Git checkpoint
 
