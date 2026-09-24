@@ -19,21 +19,24 @@ This repository's production work follows these rules:
 
 ## Session-start protocol
 
-At session start, read this file, inspect `git status`, load the current project
-state, identify the active child plan and exact next task, and review blockers,
-environment locks, and the production writer lease. Use the canonical plans in
-`docs/superpowers/plans/` and the root combined plan
-`2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md`. Record facts, constraints,
-and hypotheses separately before making an execution decision. During BIM work,
+At session start, read `START_HERE.md` and follow its exact order: this file,
+`PROJECT_STATE.yaml`, `docs/spec/CURRENT.md`, `docs/plan/CURRENT.md`, and
+`state/HANDOFF.md`. Inspect `git status`, load the current state, identify its
+exact `next_task`, and review blockers. Record facts, constraints, and
+hypotheses separately before making an execution decision. During repository
+recovery (P0), do not run Revit, write a model, or reclaim a writer lease. During
+BIM work after P0, review environment locks and the production writer lease and
 verify the Revit build and provider health before any write.
 
 ## Session-end protocol
 
 Before ending a session, finish or formally suspend the current task, record the
-relevant test commands and results, update task status and project state, and
-write an incremental handoff with changes, evidence, blockers, and exact resume
-instructions. If BIM was mutated, include the checkpoint and independent
-read/verify evidence. Leave the next task and its status explicit.
+relevant test commands and results, update formal task status and
+`PROJECT_STATE.yaml`, and update `state/HANDOFF.md` with changes, evidence,
+blockers, and exact resume instructions. If BIM was mutated, include the
+checkpoint and independent read/verify evidence. Leave the next task and its
+status explicit. Keep `START_HERE.md` as the sole entrypoint and the CURRENT
+specification and plan as the sole active project instructions.
 
 ## Required Superpowers skills
 

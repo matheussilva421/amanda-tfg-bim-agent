@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
+import pytest
 import yaml
 
 from amanda_agent.design.canonical_pavilion_layout import (
@@ -10,16 +10,10 @@ from amanda_agent.design.canonical_pavilion_layout import (
 )
 from amanda_agent.design.canonical_reference import CanonicalReferenceProfile
 from amanda_agent.models.state import TaskStatus
-from amanda_agent.production.selection import build_canonical_selection
 from amanda_agent.requirements.decisions import DecisionRegister
 from amanda_agent.state.tasks import TaskRegistry
 
 ROOT = Path(__file__).resolve().parents[2]
-CANONICAL_PLAN = "docs/superpowers/plans/08-amanda-production-run.md"
-CANONICAL_RUN = "AMANDA-RUN-002-PAVILION"
-CANONICAL_SOLUTION = "AMANDA-RUN-002-PAVILION-S02"
-LAYOUT_HASH = "20529b1d08c570546641397a4e9fd302a2a23bef917f50bfea6d22824a19f556"
-SOLUTION_APPROVAL_HASH = "75afda89d6a18cd2834bdd571e761ea047305465c6579a4a9d0474e409f91bdf"
 LINEAR_ARCHIVE_SHA256 = "ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29"
 LINEAR_ARCHIVE = (
     "revit/production/archive/superseded-linear/"
@@ -31,57 +25,53 @@ def _yaml(path: str) -> dict:
     return yaml.safe_load((ROOT / path).read_text(encoding="utf-8"))
 
 
-def _expected_selection():
-    profile = CanonicalReferenceProfile.load(ROOT)
-    program = json.loads(
-        (ROOT / "project/requirements/program.json").read_text(encoding="utf-8")
-    )
-    layout = build_canonical_pavilion_layout(program, profile)
-    return build_canonical_selection(
-        layout,
-        profile,
-        generation_run=CANONICAL_RUN,
-        timestamp="2026-09-23T00:00:00Z",
-    )
-
-
-def test_project_state_selects_user_directed_canonical_pavilion_before_r04():
+def test_project_state_is_repository_recovery_without_architectural_promotion():
     state = _yaml("PROJECT_STATE.yaml")
-    assert state["selected_design"] == CANONICAL_SOLUTION
-    assert state["selection_authority"] == "USER_DIRECTED"
-    assert state["detailed_variant_authority"] == "AGENT_DELEGATED"
-    assert state["selection_approval_hash"] == SOLUTION_APPROVAL_HASH
-    assert state["layout_module"] == "src/amanda_agent/design/canonical_pavilion_layout.py"
-    assert state["layout_content_hash"] == LAYOUT_HASH
-    assert state["layout_net_internal_m2"] == 626.0
-    assert state["layout_external_program_m2"] == 260.0
-    assert state["layout_gross_enclosed_m2"] is None
-    assert state["layout_covered_total_m2"] is None
-    assert state["layout_gross_enclosed_estimate_m2"] == "783-814"
-    assert state["layout_covered_estimate_m2"] == "850-950"
+    assert state["phase_id"] == "REPOSITORY_RECOVERY"
+    assert state["phase_name"] == "repository-recovery"
+    assert state["phase_status"] == "RUNNING"
+    assert state["last_completed_task"] is None
+    assert state["next_task"] == "RECOVERY-VALIDATE"
+    assert state["schema_version"] == 1
+    assert state["state_revision"] == 173
+    assert state["phase_gate"] == "GO_WITH_LIMITATIONS"
+    assert state["selected_design"] is None
     assert state["revit_stage"] == "PRE_R04"
     assert state["current_checkpoint"] is None
-    assert state["historical_r12_checkpoint"] == (
-        "revit/production/checkpoints/AMANDA_WORKING_001.20260921-213302/"
-        "R12-materials-20260922.rvt"
-    )
-    assert state["next_task"] == "P08-CAN-T07"
-    assert "SITE_TOPOGRAPHY:BLOCKING" in state["blockers"]
-    assert "SITE_BOUNDARY:BLOCKING" in state["blockers"]
-    assert "SITE_OCCUPANCY:BLOCKING" in state["blockers"]
-    assert "SITE_FRONTAGE_COUNT:DEGRADING" in state["blockers"]
-    assert "SITE_TRUE_NORTH:DEGRADING" in state["blockers"]
-    assert "REVIT_PIPE_SANDBOX_ACCESS:DEGRADING" in state["blockers"]
+    assert state["blockers"] == [
+        "SITE_TOPOGRAPHY:BLOCKING",
+        "SITE_BOUNDARY:BLOCKING",
+        "SITE_OCCUPANCY:BLOCKING",
+        "SITE_FRONTAGE_COUNT:DEGRADING",
+        "SITE_TRUE_NORTH:DEGRADING",
+    ]
+    assert state["last_verified_commit"] is None
+    assert set(state) == {
+        "project",
+        "phase_id",
+        "phase_name",
+        "phase_status",
+        "last_completed_task",
+        "next_task",
+        "schema_version",
+        "state_revision",
+        "phase_gate",
+        "selected_design",
+        "revit_stage",
+        "current_checkpoint",
+        "blockers",
+        "last_verified_commit",
+    }
 
 
-def test_decision_register_persists_supersedence_and_content_bound_selection():
+def test_s02_decisions_remain_historical_while_four_board_layout_is_unimplemented():
     register = DecisionRegister.model_validate(
         _yaml("project/requirements/decision-register.yaml")
     )
-    expected = _expected_selection()
     supersession = register.get("DEC-CANONICAL-R12-SUPERSESSION-001")
     parti = register.get("DEC-CANONICAL-PARTI-001")
     detail = register.get("DEC-CANONICAL-DETAIL-002")
+    profile = CanonicalReferenceProfile.load(ROOT)
 
     assert supersession.selection_authority.value == "USER_DIRECTED"
     assert supersession.selected_option.startswith(
@@ -93,19 +83,28 @@ def test_decision_register_persists_supersedence_and_content_bound_selection():
         "AMANDA-RUN-001-S01" in rejected
         for rejected in supersession.rejected_options
     )
-    assert parti.model_dump(mode="json") == expected.parti_decision.model_dump(
-        mode="json"
-    )
-    assert detail.approval_hash == expected.decision.approval_hash
-    assert detail.source_refs == expected.decision.source_refs
+    assert parti.selection_authority.value == "USER_DIRECTED"
+    assert parti.approval_hash == "f8d36c67c37ac7b2a6387d5f186f29756e6e611bf3ffb8590e9b336b4be10542"
+    assert "three canonical design boards" in parti.selected_option
+    assert detail.approval_hash == "89c57532d9bc215969d36ec0e0d26e1966e7e333adc734e216a3e9f01f4d620c"
     assert detail.selection_authority.value == "AGENT_DELEGATED"
-    assert all(
-        any(reference.endswith(digest) for reference in parti.source_refs)
-        for digest in CanonicalReferenceProfile.load(ROOT).source_hashes
+    assert detail.validation_status.value == "BLOCKED_BY_INPUT"
+    assert len(profile.source_hashes) == 4
+    matched_hashes = {
+        digest
+        for digest in profile.source_hashes
+        if any(reference.endswith(digest) for reference in parti.source_refs)
+    }
+    assert len(matched_hashes) == 3
+
+    program = yaml.safe_load(
+        (ROOT / "project/requirements/program.json").read_text(encoding="utf-8")
     )
+    with pytest.raises(ValueError, match="all three canonical board hashes must be bound"):
+        build_canonical_pavilion_layout(program, profile)
 
 
-def test_task_graph_suspends_linear_tail_and_activates_unique_canonical_chain():
+def test_task_graph_keeps_completed_s02_history_and_blocks_its_stale_tail():
     graph_data = _yaml("state/task-graph.yaml")
     registry = TaskRegistry.model_validate(graph_data)
     linear_task = registry.tasks["P08-T13"]
@@ -125,11 +124,12 @@ def test_task_graph_suspends_linear_tail_and_activates_unique_canonical_chain():
         TaskStatus.PASS_WITH_WARNINGS,
     ]
     next_task = registry.tasks["P08-CAN-T07"]
-    assert next_task.status is TaskStatus.PENDING
-    assert next_task.plan_path == CANONICAL_PLAN
+    assert next_task.status is TaskStatus.PASS_WITH_WARNINGS
     assert registry.unready_dependencies("P08-CAN-T07") == []
     assert next_task.depends_on == ["P08-CAN-T06"]
+    assert registry.tasks["P08-CAN-T08"].status is TaskStatus.BLOCKED_BY_TOOL
     assert registry.tasks["P08-CAN-T08"].depends_on == ["P08-CAN-T07"]
+    assert registry.tasks["P08-CAN-T09"].status is TaskStatus.PENDING
     assert registry.tasks["P08-CAN-T18"].depends_on == ["P08-CAN-T17"]
     assert registry.tasks["P08-CAN-T19"].depends_on == ["P08-CAN-T18"]
     registry.validate()
