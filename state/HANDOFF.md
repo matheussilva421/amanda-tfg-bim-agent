@@ -131,19 +131,20 @@ Task 10 focused tests: 72 passed, 0 failed across `test_design_refine.py`,
 `test_canonical_qa.py`, and `test_production_selection.py`. An expanded
 10-module run including `test_canonical_state_migration.py` passed 76/76. No
 full suite or Revit/model action occurred. Independent review approved the
-scoped changes with no actionable findings. Commit and push this task, confirm
-remote `main`, then start Task 11. Do not start it before the Task 10 closeout
-push is verified.
+scoped changes with no actionable findings. Implementation commit
+`051161520f4725ffa6c650e39b6b128ffb43e09a` is pushed; fresh remote verification
+matched `origin/main` at that SHA. The elevated view confirmed one worktree and
+only `.recovery/` untracked. Push this report/handoff closeout note before
+starting Task 11.
 
 ## Exact resume
 
-Commit and push the reviewed Task 10 report/handoff and two explicit
-design-engine removals. Verify `main` matches `origin/main`. Next execute Task 11: preview
-ignored files with `git clean -ndX`, classify candidates, and remove only the
-approved cache/temp paths by explicit path. Do not use `git clean` to delete;
-preserve gate evidence, source files, RVTs, and release artifacts. Continue
-Tasks 12–13 in order; only Task 13 may remove `.recovery/` or set the formal
-next task to P1-T01.
+After this Task 10 closeout note is pushed, execute Task 11: preview ignored
+files with `git clean -ndX`, classify candidates, and remove only the approved
+cache/temp paths by explicit path. Do not use `git clean` to delete; preserve
+gate evidence, source files, RVTs, and release artifacts. Continue Tasks 12–13
+in order; only Task 13 may remove `.recovery/` or set the formal next task to
+P1-T01.
 
 ## Git checkpoint
 

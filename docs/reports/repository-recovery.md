@@ -1164,5 +1164,8 @@ Revit process or model content was opened or modified. Independent Task 10
 review approved the scoped diff with no actionable findings. The review also
 verified the complete 43-path classification, exact deletion scope, safety-tag
 recovery, retained S02 set, unchanged signed register, and the documented
-dangling source_ref. Task 11 starts only after this reviewed change is committed
-and pushed.
+dangling source_ref. Commit `051161520f4725ffa6c650e39b6b128ffb43e09a`
+(`chore: classify design-engine recovery artifacts`) is on `main` and was
+pushed. A fresh `git ls-remote origin refs/heads/main` returned the same SHA;
+the elevated status view showed one worktree and only `.recovery/` untracked.
+Task 11 can start after this closeout note is pushed.
