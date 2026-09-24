@@ -904,3 +904,23 @@ Pending Task 13.
 - Task 1 commits `0e14b1cab93d49b73807cc824bf087cf09450c37` and `daa200f34974065cb0b8adb56261354f0a3c3130` are part of the fast-forwarded history. Original safety tag remains at `30cc3b0f7860dfb5e46299402585213d1ac2d02b`.
 - No tests were run because this task changed Git refs and recovery documentation only. No Revit/model action occurred. Branch deletion and worktree cleanup remain deferred to their named tasks.
 - Evidence capture: `2026-09-24T16:20:11Z`; pre-report worktree status clean, ancestry gate passed, local/remote SHAs verified.
+
+
+## Task 3 — concept-offline branch classification
+
+Patch-equivalence-aware comparison of `main...origin/codex/p08-t08-concept-offline` produced two right-side-only commits; `git rev-list --no-merges main..origin/codex/p08-t08-concept-offline` confirmed the same two SHAs. Full diffs were inspected. Neither commit is integrated.
+
+- `
+e5c9a0e8342423e9dbcdf4e4b56c94858970879f
+` — `INTENTIONALLY_SUPERSEDED`. Adds an offline candidate generator and tests bound to the AMANDA-RUN-001 F01/F02 candidates and the pre-reconciliation solution/geometry contract. The canonical source set now includes a fourth board; the old F01/F02 outputs are not bound to that four-board authority, and the next authorized phase P1-T01 reconciles the code contract. Activating these candidates now would present stale inputs as current. Their handoff also explicitly labels the artifacts synthetic/offline and live Revit persistence pending; no runtime claim is carried forward.
+- `
+125c7d956d40fab6c358e4c6702199b4eac4d854
+` — `INTENTIONALLY_SUPERSEDED`. Adds only a publication note to the same P08-T08 handoff for the superseded offline candidate work; it has no independent current implementation value.
+
+No SHA was classified `INTEGRATE`; `.recovery/concept-integrate.txt` exists and is empty (0 bytes), and no cherry-pick or branch-wide merge was performed. To preserve exact source/history before the later Task 12 branch decision, annotated tag `
+superseded-p08-t08-concept-offline-2026-09-24
+` was created at commit `
+125c7d956d40fab6c358e4c6702199b4eac4d854
+` (tag object `
+1b505c1cdfc322128aa9b70350ffcd59a61441cf
+`). The local/remote P08 branch remains intact; deletion is deferred to Task 12. No tests were run because no code was integrated. No Revit/model action occurred.
