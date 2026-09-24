@@ -37,7 +37,7 @@ immutable manifest plus `SOURCE_MANIFEST.json`.
   `decision-register.yaml` was unchanged by Task 7; retain this failure for the
   final report rather than rebinding the historical freeze.
 
-## Task 8 in progress
+## Task 8 complete
 
 The hygiene test for absence of legacy plan/spec/handoff trees was added and
 first run RED as expected. The old root instructions, 13 child plans, one
@@ -46,12 +46,12 @@ handoff report, and all four tracked plan ZIP archives have now been removed
 from the active tree. Their blobs remain in the safety tag/Git history.
 Independent review confirmed all four ZIP hashes and manifests, then requested
 two fixes: one stale Blender report route and missing final gate evidence. Both
-are fixed and recorded. The follow-up review found one cleanup-script comment
+are fixed and recorded. A follow-up review found one cleanup-script comment
 still naming a deleted plan; a hygiene test caught it RED, the route was
-removed, and the GREEN result is recorded. Two standalone tool-lab handoffs were also removed
-after their findings were confirmed in the maintained README/task history; the
-detailed P02-T15 record was renamed as evidence and remains linked from its
-result report. The final review is pending.
+removed, and the GREEN result is recorded. Two standalone tool-lab handoffs
+were removed after their findings were confirmed in maintained README/task
+history; the detailed P02-T15 record was renamed as evidence and remains linked
+from its result report. Final review approved the staged diff.
 
 The ignored 13-file text-extraction cache was moved to
 `project/provenance/extracted/source-extracts/`; its manifest paths were
@@ -60,20 +60,25 @@ tree. `.gitignore`, `AGENTS.md`, the current spec and decisions, source
 inventory routing, task registry plan paths, session/reboot handoff writers,
 repository hygiene tests, historical report pointers, this handoff, and the
 recovery report are updated. The final focused suite passed 73/73 and Ruff
-passed across all changed operational Python and focused test files. The only
+passed across changed operational Python and focused test files. Commit
+`06da0b24170a55cf0fa3bb705ce07d98082ec907` is on `main` and `origin/main`.
+Elevated status confirmed 36 RC01 files intact and one worktree. The only
 remaining named handoff is this file. No Revit/model action occurred. See
 `docs/reports/repository-recovery.md` for the command, detailed evidence, and
 known historical freeze mismatch.
 
 ## Exact resume
 
-Finish Task 8 by obtaining final independent review, rechecking the staged
-paths and preserved RC01/source/RVT state, then commit and push. Continue
-sequentially through Tasks 9–13; only Task 13 may remove `.recovery/` or set the
-formal next task to P1-T01.
+Begin Task 9 by reading its recovery-plan section and classifying the full RVT
+inventory. Verify the historical linear R12 hash before any move; keep
+`revit/production/working/CURRENT.rvt` absent, never delete `UNKNOWN`, and do
+not open Revit or mutate a model. Commit/push each reviewed task. Continue
+sequentially through Tasks 10–13; only Task 13 may remove `.recovery/` or set
+the formal next task to P1-T01.
 
 ## Git checkpoint
 
-At the start of Task 8, `HEAD = main = origin/main` at
-`fe1e5ea287cfb5dec75877a278349a7ab519e1ec`, with exactly one worktree. The
-workspace also contains the intentional untracked `.recovery/` evidence.
+Task 8 started at `fe1e5ea287cfb5dec75877a278349a7ab519e1ec` and closed at
+`HEAD = main = origin/main = 06da0b24170a55cf0fa3bb705ce07d98082ec907`, with
+exactly one worktree. The workspace still contains the intentional untracked
+`.recovery/` evidence.

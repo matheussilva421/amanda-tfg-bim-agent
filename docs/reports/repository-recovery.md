@@ -1093,5 +1093,10 @@ files, zero RC01 status/diff entries, manifest SHA-256
 `596CB7F878A05CC565D6A1831B7E19F8D10E6FE625F739339E9A61CF34DEE5AD`, and
 `model.rvt` SHA-256
 `01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744`. The
-worktree list contains only `main`. No Revit/model action occurred. Task 8
-commit and remote synchronization remain pending final review.
+worktree list contains only `main`. The independent final review approved the
+staged diff. Commit `06da0b24170a55cf0fa3bb705ce07d98082ec907`
+(`chore: remove superseded operational packages`) was pushed; a fresh fetch
+confirmed `HEAD = main = origin/main` at that SHA. No Revit/model action
+occurred. `.recovery/` remains for the final transfer in Task 13. Task 9 is
+next: classify the full RVT inventory, preserve the verified historical linear
+R12, and keep the future `CURRENT.rvt` target absent.

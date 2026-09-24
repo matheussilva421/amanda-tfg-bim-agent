@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_utc": "2026-09-24T20:02:50Z",
+  "generated_utc": "2026-09-24T20:08:36Z",
   "generator": "bootstrap/get-source-inventory.ps1",
   "root": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda",
   "entry_count": 30,
@@ -44,9 +44,9 @@
     },
     {
       "path": "state/HANDOFF.md",
-      "bytes": 4236,
-      "sha256": "34556ade7ef3e729dc49f2fb07369c156259529aee28761dc6169d78cd1ef670",
-      "modified_utc": "2026-09-24T20:02:30Z"
+      "bytes": 4579,
+      "sha256": "da8744fa3051d5c053d17bb8aad0e31999e2a9fbf021ef7c15b400783ec435bf",
+      "modified_utc": "2026-09-24T20:07:59Z"
     },
     {
       "path": "TFG_Amanda_2026/1_COMECE_AQUI/01_COMECE_AQUI.pdf",
