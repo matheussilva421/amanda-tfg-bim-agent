@@ -74,6 +74,8 @@ and recorded test evidence. It found one stale handoff status; the status was
 corrected and the scoped re-review approved the correction. Commit
 `c4adceb70c3824dba50c8ef3010472b94664b6f4` is on `main` and was pushed to
 `origin/main`; fresh remote verification confirmed all four refs match.
+The report/handoff closeout commit `1290ba3e83ed44fee4a447a7b6e6d6aad92604d1`
+was also pushed and verified against the remote.
 
 The 112-row RVT baseline is classified: 31 `LAB_FIXTURE`, 4
 `CHECKPOINT_R04`, 4 `CHECKPOINT_R06`, 1 `CHECKPOINT_R08`, 1
@@ -100,9 +102,11 @@ existing writer lease as HELD. The full production-runner unit module had
 14/15 passing; its unchanged R04 routing fixture expected a lock exception
 after the current acceptance gate returns early. The focused path checks passed
 when run with `.venv/Scripts/python.exe -m pytest`; the bare `pytest.exe`
-launcher could not import the local `scripts` namespace. Independent review,
-commit, and push are still pending. `PROJECT_STATE.yaml` remains at
-`RECOVERY-VALIDATE`.
+launcher could not import the local `scripts` namespace. Independent review
+approved, implementation commit `c4adceb70c3824dba50c8ef3010472b94664b6f4`
+and closeout commit `1290ba3e83ed44fee4a447a7b6e6d6aad92604d1` were pushed,
+and remote main matched after the closeout push. `PROJECT_STATE.yaml` remains
+at `RECOVERY-VALIDATE`.
 
 ## Exact resume
 
@@ -116,8 +120,10 @@ may remove `.recovery/` or set the formal next task to P1-T01.
 
 ## Git checkpoint
 
-Task 9 closed at `HEAD = main = origin/main =
-c4adceb70c3824dba50c8ef3010472b94664b6f4`, with exactly one worktree. A
-fresh `git ls-remote` check confirmed the remote main SHA. `.recovery/` and the
-three quarantined RVT duplicates remain local and are intentionally preserved
-for Task 13.
+Task 9 implementation commit: `c4adceb70c3824dba50c8ef3010472b94664b6f4`;
+report/handoff closeout commit: `1290ba3e83ed44fee4a447a7b6e6d6aad92604d1`.
+Both were pushed. After the closeout push, a fresh `git ls-remote` check
+confirmed `HEAD = main = origin/main` at
+`1290ba3e83ed44fee4a447a7b6e6d6aad92604d1` and exactly one worktree.
+`.recovery/` and the three quarantined RVT duplicates remain local and are
+intentionally preserved for Task 13.
