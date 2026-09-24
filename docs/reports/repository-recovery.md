@@ -924,3 +924,9 @@ superseded-p08-t08-concept-offline-2026-09-24
 ` (tag object `
 1b505c1cdfc322128aa9b70350ffcd59a61441cf
 `). The local/remote P08 branch remains intact; deletion is deferred to Task 12. No tests were run because no code was integrated. No Revit/model action occurred.
+
+### Task 3 verification note — ACL and reviewer evidence
+
+A non-elevated Git status may list 34 paths under `revit/lab/exports/p06t14/GOLDEN/RC01/` as deleted because that access context cannot enumerate the directory. The elevated status at this checkpoint showed only the required untracked `.recovery/concept-integrate.txt`. An elevated recursive read found all 36 RC01 files present; `manifest.json` SHA-256 remained `596CB7F878A05CC565D6A1831B7E19F8D10E6FE625F739339E9A61CF34DEE5AD` and `model.rvt` SHA-256 remained `01B7426E32C162EDE4249417A4735E699601A654C2738E450F6C09B705B0744`. No RC01 file was restored, staged, or modified.
+
+The second unique P08 commit `125c7d956d40fab6c358e4e6702199b4eac4d854` was resolved as a commit and its full 8-line publication-addendum diff was inspected. A fresh `git ls-remote --tags origin` confirmed archive tag object `1b505c1cdfc322128aa9b70350ffcd59a61441cf` peels to that commit. See the task verification evidence in the ignored SDD workspace for command output.
