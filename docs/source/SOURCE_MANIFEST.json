@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "assets": [
+    {
+      "path": "docs/source/canonical/programa_necessidades.pdf",
+      "role": "PROGRAM_OFFICIAL",
+      "bytes": 31004,
+      "sha256": "11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17"
+    },
+    {
+      "path": "docs/source/canonical/TFG_Amanda_Fernandes_ENTREGA_15.06.2026.pdf",
+      "role": "TFG_SOURCE",
+      "bytes": 54553582,
+      "sha256": "16abe602ac50643482ce3c782780b4135fa8468b5ca814061fe426c8ca292a7e"
+    },
+    {
+      "path": "docs/source/references/canonical/01_implantacao_geral_canonica.png",
+      "role": "CANONICAL_DESIGN_REFERENCE",
+      "bytes": 531259,
+      "sha256": "d7db84c0696f0018ed0bc0525bcc2128378d05ece8e3e5c09e2162493793de7b"
+    },
+    {
+      "path": "docs/source/references/canonical/02_bloco_residencial_canonico.png",
+      "role": "CANONICAL_DESIGN_REFERENCE",
+      "bytes": 464575,
+      "sha256": "12e35091f33352c21691eb083bf479ba2efd44af4c65774c89021b641de4a5c6"
+    },
+    {
+      "path": "docs/source/references/canonical/03_bloco_administrativo_canonico.png",
+      "role": "CANONICAL_DESIGN_REFERENCE",
+      "bytes": 389746,
+      "sha256": "80cdcccf99154d69ea87943950db420912e949d6320279695a2fd70d44ad286c"
+    },
+    {
+      "path": "docs/source/references/canonical/04_bloco_servicos_capacitacao_canonico.png",
+      "role": "CANONICAL_DESIGN_REFERENCE",
+      "bytes": 2165247,
+      "sha256": "d440039a9197d20625f321fe67396f571f5e4d8cde39bf4b7f33f9ad28036bd1"
+    },
+    {
+      "path": "docs/source/references/evidence/01_revit_linear_desalinhado.jpg",
+      "role": "MISALIGNMENT_EVIDENCE",
+      "bytes": 192086,
+      "sha256": "2b7e50ffb868c7395b3a6617d9a1724e5181a91d644d7503a86b023ef9bc27b5"
+    },
+    {
+      "path": "docs/source/references/evidence/02_multiplos_rvts_sem_avanco.jpg",
+      "role": "PROGRESS_EVIDENCE",
+      "bytes": 309949,
+      "sha256": "8f974c01a3e68290d48dc9926e8eb834f045fe180e64af57ce7f3dbecbe62858"
+    },
+    {
+      "path": "docs/source/references/evidence/03_brief_original_whatsapp.jpg",
+      "role": "USER_BRIEF_EVIDENCE",
+      "bytes": 287401,
+      "sha256": "ebcc438a087a552028519f16f79fcbab819ed0c01629178e6d98323476d32a10"
+    },
+    {
+      "path": "docs/source/references/historical/01_ref_admin_previa.png",
+      "role": "HISTORICAL_REFERENCE",
+      "bytes": 2922618,
+      "sha256": "09f344cfd5361a0910a9d4910c4a2385f27b9eebe548202cef7bce5814fc2693"
+    },
+    {
+      "path": "docs/source/references/historical/02_ref_residencial_previa.png",
+      "role": "HISTORICAL_REFERENCE",
+      "bytes": 3359663,
+      "sha256": "85e22c8396501983ed5fbb393b80717859573afcbfbb81aa93f1566679c9a50d"
+    },
+    {
+      "path": "docs/source/references/historical/03_ref_implantacao_previa.png",
+      "role": "HISTORICAL_REFERENCE",
+      "bytes": 3534451,
+      "sha256": "9c911616daff9a08ad7b94e9f6dda13164df5246dd2e3ed94759b43200643de0"
+    }
+  ]
+}

@@ -19,11 +19,19 @@ IMAGE_PATHS = (
     "canonical/01_implantacao_geral_canonica.png",
     "canonical/02_bloco_residencial_canonico.png",
     "canonical/03_bloco_administrativo_canonico.png",
+    "canonical/04_bloco_servicos_capacitacao_canonico.png",
 )
 EXPECTED_SOURCE_HASHES = (
     "d7db84c0696f0018ed0bc0525bcc2128378d05ece8e3e5c09e2162493793de7b",
     "12e35091f33352c21691eb083bf479ba2efd44af4c65774c89021b641de4a5c6",
     "80cdcccf99154d69ea87943950db420912e949d6320279695a2fd70d44ad286c",
+    "d440039a9197d20625f321fe67396f571f5e4d8cde39bf4b7f33f9ad28036bd1",
+)
+EXPECTED_SOURCE_BYTES = (
+    531259,
+    464575,
+    389746,
+    2165247,
 )
 
 
@@ -106,8 +114,8 @@ def test_loads_user_directed_canonical_reference_profile(tmp_path: Path):
     assert profile.residential_pavilion_count_target == 4
     assert profile.admin_public_edge is True
     assert profile.admin_storeys_target == 2
-    assert len(profile.canonical_images) == 3
-    assert len(profile.source_hashes) == 3
+    assert profile.canonical_images == IMAGE_PATHS
+    assert len(profile.source_hashes) == 4
     assert all(len(value) == 64 for value in profile.source_hashes)
     assert profile.data["program"]["people"] == 20
 
@@ -119,9 +127,30 @@ def test_loads_hashes_of_the_local_private_canonical_boards():
     ):
         pytest.skip("private canonical source bundle is not present in this checkout")
 
+    local_profile = yaml.safe_load((ROOT / PROFILE_RELATIVE).read_text(encoding="utf-8"))
+    if tuple(local_profile.get("canonical_images", ())) != IMAGE_PATHS:
+        pytest.skip("local canonical profile has not yet been refreshed to four boards")
+
     profile = CanonicalReferenceProfile.load(ROOT)
 
     assert profile.source_hashes == EXPECTED_SOURCE_HASHES
+    assert tuple(
+        (ROOT / "docs/source/references" / image).stat().st_size
+        for image in IMAGE_PATHS
+    ) == EXPECTED_SOURCE_BYTES
+
+
+def test_local_canonical_board_assets_match_expected_hashes_and_sizes():
+    image_paths = tuple(
+        ROOT / "docs/source/references" / image for image in IMAGE_PATHS
+    )
+    if not all(image.is_file() for image in image_paths):
+        pytest.skip("four local canonical image assets are not present in this checkout")
+
+    assert tuple(
+        hashlib.sha256(image.read_bytes()).hexdigest() for image in image_paths
+    ) == EXPECTED_SOURCE_HASHES
+    assert tuple(image.stat().st_size for image in image_paths) == EXPECTED_SOURCE_BYTES
 
 
 def test_rejects_a_missing_canonical_image(tmp_path: Path):
@@ -143,4 +172,44 @@ def test_rejects_a_canonical_image_whose_hash_does_not_match_manifest(tmp_path: 
     image.write_bytes(image.read_bytes() + b"changed")
 
     with pytest.raises(CanonicalReferenceError, match="hash"):
+        CanonicalReferenceProfile.load(tmp_path)
+
+
+def test_rejects_a_canonical_manifest_path_not_declared_by_profile(tmp_path: Path):
+    _write_reference_inputs(tmp_path)
+    manifest_path = tmp_path / MANIFEST_RELATIVE
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["assets"].append(
+        {
+            "path": "docs/source/references/canonical/extra.png",
+            "role": "CANONICAL_DESIGN_REFERENCE",
+            "bytes": 1,
+            "sha256": "0" * 64,
+        }
+    )
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    with pytest.raises(CanonicalReferenceError, match="match the four profile images"):
+        CanonicalReferenceProfile.load(tmp_path)
+
+
+def test_rejects_a_canonical_manifest_entry_without_expected_size(tmp_path: Path):
+    _write_reference_inputs(tmp_path)
+    manifest_path = tmp_path / MANIFEST_RELATIVE
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["assets"][-1].pop("bytes")
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    with pytest.raises(CanonicalReferenceError, match="size"):
+        CanonicalReferenceProfile.load(tmp_path)
+
+
+def test_rejects_a_canonical_image_whose_size_does_not_match_manifest(tmp_path: Path):
+    _write_reference_inputs(tmp_path)
+    manifest_path = tmp_path / MANIFEST_RELATIVE
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["assets"][-1]["bytes"] += 1
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    with pytest.raises(CanonicalReferenceError, match="size"):
         CanonicalReferenceProfile.load(tmp_path)

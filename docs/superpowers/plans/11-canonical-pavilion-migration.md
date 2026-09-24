@@ -4,7 +4,7 @@
 
 **Goal:** Replace the code path that hard-codes the single double-loaded bar with a content-bound canonical pavilion layout/selection that drives the new Revit production run.
 
-**Architecture:** Preserve `architectural_layout.py` as legacy compatibility/history. Add a new canonical reference loader and pavilion layout module; update selection and production scripts to consume the canonical layout. Bind approval hashes to the three canonical board hashes. All exports/QA/BIM compiler consumers migrate through a stable layout protocol rather than directly importing the legacy builder.
+**Architecture:** Preserve `architectural_layout.py` as legacy compatibility/history. Add a new canonical reference loader and pavilion layout module; update selection and production scripts to consume the canonical layout. Bind approval hashes to all four canonical board hashes. All exports/QA/BIM compiler consumers migrate through a stable layout protocol rather than directly importing the legacy builder.
 
 **Tech Stack:** Python 3.12, Shapely, Pydantic/dataclasses, pytest, existing BIM compiler/Revit provider stack.
 
@@ -14,7 +14,7 @@
 
 - Program: 20 people, 626 m² internal, 260 m² external.
 - Canonical parti: separate blocks/pavilions; no single linear bar.
-- Three canonical board SHA-256 values must be included in selection evidence/approval binding.
+- All four canonical board SHA-256 values must be included in selection evidence/approval binding.
 - Existing linear R12 is historical only.
 - TDD: RED → minimal GREEN → regression → commit.
 - No unverified Revit capability is introduced by this migration.
@@ -41,7 +41,7 @@
 - Produces: `CanonicalReferenceProfile.load(root: Path) -> CanonicalReferenceProfile`
 - Produces: `profile.source_hashes: tuple[str, ...]`
 
-- [x] **Step 1: Write failing test** asserting 3 canonical design refs, `single_linear_bar_allowed is False`, target residential pavilion count 4, and source SHA values exist.
+- [x] **Step 1: Write failing test** asserting 4 canonical design refs, `single_linear_bar_allowed is False`, target residential pavilion count 4, and source SHA values exist.
 - [x] **Step 2: Run** focused test; confirmed RED because module was absent.
 - [x] **Step 3: Implement minimal loader** that validates YAML + source manifest, rejects missing/hash-mismatched canonical image.
 - [x] **Step 4: Run test** and confirm PASS (4 passed, Python 3.12.14).
@@ -276,3 +276,11 @@ Variable:
 - minor dimensional adjustment required by verified technical constraints.
 
 The agent optimizes implementation quality, not the user-directed architectural intent.
+
+## Addendum — fourth canonical services/capacitation board (2026-09-24)
+
+The user supplied and promoted docs/source/references/canonical/04_bloco_servicos_capacitacao_canonico.png to CANONICAL_DESIGN_REFERENCE. SHA-256 is d440039a9197d20625f321fe67396f571f5e4d8cde39bf4b7f33f9ad28036bd1 (2,165,247 bytes). The profile, source manifest, selection evidence, generated solution, and approval hash must bind all four canonical image hashes.
+
+The new board governs the service/capacitation block: preserve its curved, courtyard-facing organization; a public campus entry; a separate service/loading entry; covered circulation; reception/orientation; IT, multiuse, sewing/crafts and practical/entrepreneurship rooms; and support spaces. Its room labels are approximate. Keep the official program fixed at 20 people, 626 m² internal and 260 m² external; reconcile room areas against that program and register every material change as CANONICAL_DEVIATION.
+
+The prior S02 R04 geometry, three-board solution/approval binding, CANONICAL_GEOMETRIC_ACCEPTANCE, and visual review do not establish acceptance against this fourth board. Preserve S02 as the previous STUDY, mark its three-board acceptance stale, and do not advance it to R05. Before any new Revit geometry, close and hash the old linear R12 archive, rerun BIM-00 against the four-board inputs, take a fresh checkpoint, and create a collision-free new solution/run identity. S03 is only a candidate name: verify no collision before assigning it. Rebuild and review R04 against all four boards, then require fresh CANONICAL_GEOMETRIC_ACCEPTANCE before detailing. Keep required visual regression gates at R04/R06/R08/R12/R13/R15; R16 remains blocked until every material regression is documented.

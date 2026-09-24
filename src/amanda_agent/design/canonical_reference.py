@@ -169,9 +169,9 @@ class CanonicalReferenceProfile:
                 )
 
         images_value = profile.get("canonical_images")
-        if not isinstance(images_value, list) or len(images_value) != 3:
+        if not isinstance(images_value, list) or len(images_value) != 4:
             raise CanonicalReferenceError(
-                "profile must declare exactly three canonical images"
+                "profile must declare exactly four canonical images"
             )
         if any(not isinstance(item, str) or not item for item in images_value):
             raise CanonicalReferenceError(
@@ -237,9 +237,14 @@ class CanonicalReferenceProfile:
                 )
             expected_bytes = asset.get("bytes")
             if (
-                expected_bytes is not None
-                and expected_bytes != image_path.stat().st_size
+                not isinstance(expected_bytes, int)
+                or isinstance(expected_bytes, bool)
+                or expected_bytes <= 0
             ):
+                raise CanonicalReferenceError(
+                    f"invalid canonical source size: {source_path}"
+                )
+            if expected_bytes != image_path.stat().st_size:
                 raise CanonicalReferenceError(
                     f"canonical image size mismatch: {source_path}"
                 )
@@ -247,7 +252,7 @@ class CanonicalReferenceProfile:
 
         if set(expected_manifest_paths) != set(canonical_assets):
             raise CanonicalReferenceError(
-                "source manifest canonical assets must match the three profile images exactly"
+                "source manifest canonical assets must match the four profile images exactly"
             )
         return cls(
             status=status,
