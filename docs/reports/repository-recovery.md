@@ -1168,4 +1168,44 @@ dangling source_ref. Commit `051161520f4725ffa6c650e39b6b128ffb43e09a`
 (`chore: classify design-engine recovery artifacts`) is on `main` and was
 pushed. A fresh `git ls-remote origin refs/heads/main` returned the same SHA;
 the elevated status view showed one worktree and only `.recovery/` untracked.
-Task 11 can start after this closeout note is pushed.
+Task 11 started after that closeout was pushed.
+
+## Task 11 — ignored-path cleanup
+
+The read-only `git clean -ndX` preview listed 241 would-remove paths and two
+vendor repositories it would skip. The full list and disposition manifest are
+retained locally under `.recovery/` until Task 13. The preview included private
+source files, extracted provenance, raw logs, production/checkpoint/release
+RVTs, the active writer lock, virtual environments, `.recovery/`, and
+`.superpowers/`; these were preserved.
+
+Removed exactly 153 paths from the reviewed manifest using explicit
+PowerShell `Remove-Item -LiteralPath` calls; no non-dry-run `git clean` was
+used. The set was 32 `__pycache__` directories, root `.pytest_cache/`, and 120
+root `.tmp-*` entries (104 scratch scripts and 16 generated pytest directories).
+The scripts were not executed. A pre-delete pass rechecked every path,
+workspace boundary, file hashes, directory file/byte totals, and absence of
+reparse points; the post-delete check found all 153 absent, with no failures.
+
+Fourteen root temporary evidence paths were preserved: six historical gate
+logs/text files (`.tmp-pytest-r05-canonical-full2.log`,
+`.tmp-pytest-r05-tree.log`, `.tmp-y5.txt`, `.tmp-y7.txt`, `.tmp-y8.txt`, and
+`.tmp-y9.txt`), `.tmp-pytest-delivery-r11/`, `.tmp-pytest-y5/` through
+`.tmp-pytest-y9/`, and the two P08 pytest directories containing test junctions.
+The junction targets resolve to `area-restrita` fixtures inside their own
+scratch trees; those trees remain untouched. `.ruff_cache/`, all other
+unclassified paths, and both skipped vendor repositories were also preserved.
+
+The initial 24 root temporary directories contained 345 `.rvt`, `.rfa`, or
+`.rte` test placeholders totaling 6,149 bytes (largest 53 bytes); these were
+pytest-generated fixtures, not native Revit models. Production RVTs,
+checkpoints, private source files, raw evidence, and the live writer lock were
+outside the deletion list and remain in place. No Revit/model operation or
+test run occurred during this cleanup.
+
+Fresh `git clean -ndX` now lists 88 paths: exactly the 241-item baseline minus
+the 153 approved removals, with zero unexpected additions or missing preserved
+paths. Fourteen root temporary evidence paths remain in that preview; no
+`__pycache__` or `.pytest_cache` path remains. Independent reviewer Carson
+approved the exact 153-path delta with no actionable findings. Task 12 begins
+after this report and handoff closeout is pushed and verified.

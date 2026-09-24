@@ -134,23 +134,24 @@ full suite or Revit/model action occurred. Independent review approved the
 scoped changes with no actionable findings. Implementation commit
 `051161520f4725ffa6c650e39b6b128ffb43e09a` is pushed; fresh remote verification
 matched `origin/main` at that SHA. The elevated view confirmed one worktree and
-only `.recovery/` untracked. Push this report/handoff closeout note before
-starting Task 11.
+only `.recovery/` untracked. Task 11 began after the Task 10 closeout was
+verified.
 
 ## Exact resume
 
-Task 10 closeout is pushed and remote-verified. Task 11 is now in progress; see
-the inventory note below. Continue with the explicit Task 11 disposition list,
-then complete independent review and closeout before Task 12. Do not use
+Task 10 closeout is pushed and remote-verified. Task 11 cleanup is complete
+and independently approved; push and verify its report/handoff closeout, then
+begin Task 12. Prove each obsolete branch contains no unique useful work or
+preserve it by tag before deletion. Continue Task 13 only after Task 12 review. Do not use
 `git clean` to delete; preserve gate evidence, source files, RVTs, and release
-artifacts. Continue Tasks 12–13 in order; only Task 13 may remove `.recovery/`
-or set the formal next task to P1-T01.
+artifacts. Only Task 13 may remove `.recovery/` or set the formal next task to
+P1-T01.
 
-## Task 11 in progress — ignored-file inventory
+## Task 11 complete; independent review approved
 
 The read-only `git clean -ndX` preview listed 241 would-remove paths and two
-vendor repositories it would skip. No path has been removed. The preview and
-root-temp metadata are saved under `.recovery/`. The preview includes protected
+vendor repositories it would skip. The preview and root-temp metadata are saved
+under `.recovery/`. The preview includes protected
 source PDFs/documents, provenance extractions, raw logs, production/checkpoint
 RVTs, the live writer lock, all virtual environments, `.recovery/`, and
 `.superpowers/`; these are not cleanup targets.
@@ -181,16 +182,28 @@ and
 `.tmp-p08-t08-full-available/test_junction_escape_identity_0/revit/production/working`.
 The exact resolved targets are inside the matching test directories.
 
-The explicit target manifest is now prepared at
+The explicit target manifest is recorded at
 `.recovery/task11-approved-delete-manifest.csv` with its path list at
 `.recovery/task11-approved-delete-list.txt`: 153 candidates (120 root scratch
 entries, 32 `__pycache__` directories, and `.pytest_cache/`). The 120 root
 entries are 104 scripts and 16 test-scratch directories; all resolved paths
 stay inside the workspace and the selected directories have no nested
-reparse points. No deletion has begun. Preserve all 14 excluded root temp
-evidence paths, `.ruff_cache/`, and every other unclassified path. Next review
-the exact manifest, remove only those 153 explicit paths, and verify the
-preserves and fresh dry-run.
+reparse points. Removed exactly those 153 paths with explicit
+`Remove-Item -LiteralPath`, never `git clean`. Post-delete verification found
+all targets absent, zero failures, all 14 excluded root temp evidence paths
+present, and the fresh dry-run equal to the original set minus the removals:
+88 paths remain, with no new or missing entries. `.ruff_cache/` and every
+other unclassified path remain. Independent reviewer Carson approved the
+exact 153-path delta, the 241-to-88 preview reconciliation, and the 14
+preserved evidence paths with no actionable findings. Push and verify this
+report/handoff closeout before Task 12.
+
+The exact preserved paths include the six historical test log/text files,
+`.tmp-pytest-delivery-r11/`, `.tmp-pytest-y5/` through `.tmp-pytest-y9/`, and
+`.tmp-p08-t08-full/` plus `.tmp-p08-t08-full-available/` because they contain
+internal test junctions. Production/checkpoint RVTs, private sources, raw
+logs, provenance, writer lock, environments, `.recovery/`, `.superpowers/`, and
+vendor repos remain preserved. No Revit/model action or tests occurred.
 
 ## Git checkpoint
 
