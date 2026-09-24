@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import json
 import subprocess
 from pathlib import Path
+
+from amanda_agent.state.tasks import load_registry
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -21,6 +24,23 @@ FORBIDDEN_ROOT_OPERATIONAL_FILES = (
     "PLAN_SELF_REVIEW.md",
     "RESUME_AFTER_REBOOT.md",
     "START_HERE_FOR_CODEX.md",
+)
+
+FORBIDDEN_LEGACY_DOCUMENT_DIRS = (
+    "docs/notes",
+    "docs/superpowers/plans",
+    "docs/superpowers/specs",
+    "docs/review",
+)
+
+FORBIDDEN_LEGACY_HANDOFFS = (
+    "docs/reports/2026-09-16-relatorio-completo-para-proximo-agente.md",
+)
+
+OBSOLETE_TOOL_HANDOFFS = (
+    "tool-lab/topologic/HANDOFF.md",
+    "tool-lab/environmental/HANDOFF.md",
+    "tool-lab/revitcortex/results/t15-handoff.md",
 )
 
 STALE_ACTIVE_TERMS = (
@@ -54,9 +74,75 @@ def test_superseded_root_operational_documents_are_absent():
     assert present == []
 
 
+def test_legacy_plan_spec_and_handoff_trees_are_absent():
+    present_dirs = [name for name in FORBIDDEN_LEGACY_DOCUMENT_DIRS if (ROOT / name).exists()]
+    present_handoffs = [name for name in FORBIDDEN_LEGACY_HANDOFFS if (ROOT / name).exists()]
+    assert present_dirs == [], f"legacy operational document directories remain: {present_dirs}"
+    assert present_handoffs == [], f"superseded handoffs remain: {present_handoffs}"
+
+
+def test_old_tool_handoffs_are_removed_or_reclassified_as_evidence():
+    present = [name for name in OBSOLETE_TOOL_HANDOFFS if (ROOT / name).exists()]
+    assert present == [], f"old tool handoffs remain active: {present}"
+    assert (ROOT / "tool-lab/revitcortex/results/t15-close-reopen-evidence.md").is_file()
+
+
+def test_task_registry_routes_through_the_single_current_plan():
+    registry = load_registry(ROOT / "state/task-graph.yaml")
+    plan_paths = {record.plan_path for record in registry.tasks.values()}
+    assert plan_paths == {"docs/plan/CURRENT.md"}
+    assert (ROOT / "docs/plan/CURRENT.md").is_file()
+
+
+def test_source_inventory_records_the_current_operational_documents(tmp_path: Path):
+    output_path = tmp_path / "source-inventory.json"
+    script = ROOT / "bootstrap/get-source-inventory.ps1"
+    result = subprocess.run(
+        [
+            "pwsh",
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            str(script),
+            "-Root",
+            str(ROOT),
+            "-OutputPath",
+            str(output_path),
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    inventory = json.loads(output_path.read_text(encoding="utf-8-sig"))
+    paths = {entry["path"] for entry in inventory["entries"]}
+    assert {
+        "AGENTS.md",
+        "START_HERE.md",
+        "PROJECT_STATE.yaml",
+        "docs/spec/CURRENT.md",
+        "docs/plan/CURRENT.md",
+        "docs/decisions/DECISIONS.md",
+        "state/HANDOFF.md",
+    }.issubset(paths)
+
+
 def test_no_generated_zip_package_is_tracked():
     # Catches generated plan packages being committed as repository sources.
     assert _git("ls-files", "*.zip") == []
+
+
+def test_source_zip_files_are_not_hidden_by_generated_package_ignores():
+    result = subprocess.run(
+        ["git", "check-ignore", "-q", "supplied-source-evidence.zip"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 1, "source/evidence ZIPs must remain addable"
 
 
 def test_active_entrypoints_do_not_route_to_stale_instructions():
@@ -68,6 +154,11 @@ def test_active_entrypoints_do_not_route_to_stale_instructions():
     )
     hits = [term for term in STALE_ACTIVE_TERMS if term in active_text]
     assert hits == []
+
+
+def test_local_cleanup_script_has_no_route_to_deleted_plan():
+    script = (ROOT / "scripts/cleanup-local.ps1").read_text(encoding="utf-8")
+    assert "docs/superpowers/plans/" not in script
 
 
 def test_exactly_four_canonical_board_images_are_active():

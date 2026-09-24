@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import os
 import re
+import tempfile
 from collections.abc import Iterable, Mapping
 from datetime import UTC, datetime
 from datetime import date as date_type
@@ -101,7 +103,8 @@ def compose_handoff(
     )
     checkpoint = checkpoint_reference or "none recorded (no BIM mutation declared)"
     return (
-        f"# Session handoff: {_slug(scope)}\n\n"
+        "<!-- BEGIN GENERATED SESSION HANDOFF -->\n"
+        f"## Session update: {_slug(scope)}\n\n"
         f"Date: {generated_date}\n\n"
         "## Changes\n\n"
         + _markdown_lines(changes)
@@ -118,27 +121,50 @@ def compose_handoff(
         + f"\n\n- explicit next task: `{next_task_id}`"
         + f"\n- persisted project-state status: `{state_status}` (revision {state_revision})"
         + f"\n- checkpoint reference: `{checkpoint}`\n"
+        + "<!-- END GENERATED SESSION HANDOFF -->"
     )
 
 
-def write_incremental_handoff(root: Path, *, filename: str, content: str) -> Path:
-    """Create a handoff or append to the exact existing path without replacing it."""
-    target = Path(root) / "docs" / "notes" / filename
+def write_incremental_handoff(root: Path, *, content: str) -> Path:
+    """Update the latest session block in the canonical handoff atomically."""
+    target = Path(root) / "state" / "HANDOFF.md"
     target.parent.mkdir(parents=True, exist_ok=True)
     if target.is_symlink():
         raise SessionEndRefused("refusing to write a handoff through a symlink")
-    if not target.exists():
-        target.write_text(content, encoding="utf-8")
-        return target
     try:
-        existing = target.read_text(encoding="utf-8")
+        existing = target.read_text(encoding="utf-8") if target.is_file() else ""
     except (OSError, UnicodeError) as exc:
         raise SessionEndRefused("existing handoff could not be read: " + str(exc)) from exc
-    if content in existing:
-        return target
-    separator = "" if existing.endswith("\n") else "\n"
-    with target.open("a", encoding="utf-8", newline="\n") as stream:
-        stream.write(separator + "\n" + content)
+    if not existing.strip():
+        existing = "# Current Handoff\n"
+
+    begin_marker = "<!-- BEGIN GENERATED SESSION HANDOFF -->"
+    end_marker = "<!-- END GENERATED SESSION HANDOFF -->"
+    if begin_marker in existing or end_marker in existing:
+        if (
+            existing.count(begin_marker) != 1
+            or existing.count(end_marker) != 1
+            or existing.index(begin_marker) > existing.index(end_marker)
+        ):
+            raise SessionEndRefused("canonical handoff has malformed session markers")
+        start = existing.index(begin_marker)
+        stop = existing.index(end_marker) + len(end_marker)
+        updated = existing[:start].rstrip() + "\n\n" + content + existing[stop:]
+    else:
+        updated = existing.rstrip() + "\n\n" + content + "\n"
+
+    handle, temporary_name = tempfile.mkstemp(
+        prefix=".HANDOFF.", suffix=".tmp", dir=target.parent
+    )
+    temporary = Path(temporary_name)
+    try:
+        with os.fdopen(handle, "w", encoding="utf-8", newline="\n") as stream:
+            stream.write(updated)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, target)
+    finally:
+        temporary.unlink(missing_ok=True)
     return target
 
 
@@ -249,7 +275,6 @@ def end_session(
         registry.save(registry_path)
 
     generated_date = _date_text(date)
-    slug = _slug(scope)
     content = compose_handoff(
         scope=scope,
         generated_date=generated_date,
@@ -268,7 +293,6 @@ def end_session(
     )
     handoff_path = write_incremental_handoff(
         root,
-        filename=f"{generated_date}-{slug}-handoff.md",
         content=content,
     )
     return {

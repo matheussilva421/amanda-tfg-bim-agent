@@ -11,7 +11,7 @@
     - the stray System.Collections.Specialized.OrderedDictionary file left by a
       PowerShell redirection accident;
     - .venv-lockcheck, a verification-only virtualenv reproducible from
-      requirements.lock.txt (see docs/superpowers/plans/04-design-engine.md).
+      the tracked requirements.lock.txt.
 
     It never touches: .venv, .venv-topologic, .venv-environmental, .dotnet,
     vendor/, revit/lab, tool-lab results, docs, state or any tracked file.

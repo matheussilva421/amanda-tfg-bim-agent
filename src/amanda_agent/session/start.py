@@ -84,13 +84,7 @@ def is_bim_phase(state: ProjectState | None) -> bool:
 def _phase_plan_path(root: Path, state: ProjectState | None) -> Path | None:
     if state is None:
         return None
-    phase_token = state.phase_id.removeprefix("PHASE_")
-    numeric_token = phase_token[:2] if phase_token[:2].isdigit() else phase_token
-    candidates = [
-        root / "docs" / "superpowers" / "plans" / f"{numeric_token}-{state.phase_name}.md",
-        root / "docs" / "superpowers" / "plans" / f"{phase_token}-{state.phase_name}.md",
-    ]
-    return next((path for path in candidates if path.is_file()), candidates[0])
+    return root / "docs" / "plan" / "CURRENT.md"
 
 
 def _registry_plan_path(
@@ -100,7 +94,9 @@ def _registry_plan_path(
         record = registry.tasks.get(state.next_task)
         if record is not None:
             path = Path(record.plan_path)
-            return path if path.is_absolute() else root / path
+            resolved = path if path.is_absolute() else root / path
+            if resolved.is_file():
+                return resolved
     return _phase_plan_path(root, state)
 
 

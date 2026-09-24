@@ -30,3 +30,15 @@ Status: ACTIVE
 Status: ACTIVE
 
 Git history and preserved tags are the archive for reproducible superseded operational documents. Superseded plans and handoffs do not remain active merely for convenience.
+
+## DEC-006 — Delegated design research
+
+Status: ACTIVE
+
+Within an explicitly authorized task, the agent may research, compare, and select reversible design approaches inside verified source and requirement boundaries. Record the rationale and keep the selection revisable. Amanda's review is a separate human decision; never attribute approval to her without evidence.
+
+## DEC-007 — Technical and academic completion
+
+Status: ACTIVE
+
+A technical `GOLDEN` release does not establish that the academic TFG is complete. Academic authorship, advisor review, defense, and institutional submission have separate owners and evidence. Do not claim `TFG_COMPLETE` while required academic deliverables remain open.

@@ -1,5 +1,11 @@
 # Blender rendering scheduling decision
 
+> Historical decision record from 2026-09-15. The project now uses the single
+> active specification and plan in `docs/spec/CURRENT.md` and
+> `docs/plan/CURRENT.md`; `PROJECT_STATE.yaml` and `state/HANDOFF.md` control
+> current task selection. Reopen this decision only under the conditions below
+> and current project authority.
+
 Date: 2026-09-15
 Decision: `DEFERRED_OPTIONAL`
 Capability: `blender_rendering`
@@ -34,22 +40,13 @@ rendering tool.
 Command:
 
 ```powershell
-rg -n --no-heading -i "render|preview|PNG" project/requirements/academic-deliverables.yaml project/requirements/program-summary.md docs/superpowers/plans/08-amanda-production-run.md
+rg -n --no-heading -i "render|preview|PNG" project/requirements/academic-deliverables.yaml project/requirements/program-summary.md
 ```
 
-Observed output: no matches in the two requirements files; P08 matches include
-`floorplan/zoning SVG/PNG`, `preview export for every sheet`, `validate
-page count/nonblank previews`, `export selected PNG previews`, and Task 19's
-`preview/` directory.
-
-Command:
-
-```powershell
-rg -n --no-heading -i "render|preview|PNG" docs/superpowers/plans/09-optional-render-cloud.md
-```
-
-Observed output: P09 describes rendering as optional and explicitly permits
-`DEFERRED_OPTIONAL` with an `UNTESTED` capability when no render is required.
+Observed output on 2026-09-15: no matches in the two requirements files. The
+plan snapshot archived in Git history recorded Revit board/view previews and
+explicitly permitted `DEFERRED_OPTIONAL` with an `UNTESTED` capability when a
+separate render was not required.
 
 ## Conditions to reopen
 

@@ -101,4 +101,3 @@ hash semântico estável. Para uma receita EnergyPlus equivalente, a prova
   CLIs, licenças, EPW, engines e os dois runs.
 - `results/energyplus-run-1/` e `results/energyplus-run-2/`: outputs reais do
   EnergyPlus usados na comparação.
-- `HANDOFF.md`: estado curto e instruções de retomada.

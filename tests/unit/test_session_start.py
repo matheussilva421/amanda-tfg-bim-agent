@@ -18,7 +18,7 @@ def _seed_start_project(
 ) -> Path:
     paths = ProjectPaths.from_root(tmp_path)
     (paths.root / "AGENTS.md").write_text("session contract", encoding="utf-8")
-    plan = paths.root / "docs" / "superpowers" / "plans" / "03-project-intelligence.md"
+    plan = paths.root / "docs" / "plan" / "CURRENT.md"
     plan.parent.mkdir(parents=True)
     plan.write_text("child plan", encoding="utf-8")
     paths.state.mkdir(parents=True)
@@ -35,7 +35,7 @@ def _seed_start_project(
         TaskRecord(
             id="P03-T01",
             phase=phase_id,
-            plan_path="docs/superpowers/plans/03-project-intelligence.md",
+            plan_path="docs/plan/CURRENT.md",
             status=TaskStatus.PENDING,
         )
     )
@@ -43,7 +43,7 @@ def _seed_start_project(
         TaskRecord(
             id="P03-T02",
             phase=phase_id,
-            plan_path="docs/superpowers/plans/03-project-intelligence.md",
+            plan_path="docs/plan/CURRENT.md",
             depends_on=["P03-T01"],
             status=TaskStatus.PENDING,
         )
@@ -140,3 +140,20 @@ def test_next_task_is_resolved_from_registry_ready_set(tmp_path: Path):
 
     assert report["ready_tasks"] == ["P03-T01"]
     assert report["next_task"] == "P03-T01"
+
+
+def test_unregistered_recovery_task_loads_the_current_plan_fallback(tmp_path: Path):
+    root = _seed_start_project(
+        tmp_path,
+        phase_id="REPOSITORY_RECOVERY",
+        phase_name="repository-recovery",
+        next_task="RECOVERY-VALIDATE",
+    )
+
+    report = start_session(root, git_runner=_clean_git)
+
+    plan_check = next(
+        entry for entry in report["checks"] if entry["name"] == "load_current_child_plan"
+    )
+    assert plan_check["status"] == "OK"
+    assert plan_check["path"] == str(root / "docs" / "plan" / "CURRENT.md")

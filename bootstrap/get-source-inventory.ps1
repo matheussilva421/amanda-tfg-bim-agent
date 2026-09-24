@@ -25,11 +25,13 @@ if (-not $OutputPath) {
 $rootFull = (Resolve-Path -LiteralPath $Root).Path
 
 $canonical = @(
-    'START_HERE_FOR_CODEX.md',
-    'PLAN_SELF_REVIEW.md',
-    '2026-09-11-amanda-tfg-bim-agent-design.md',
-    '2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md',
-    'docs/notes/2026-09-15-revisao-planos-handoff.md'
+    'AGENTS.md',
+    'START_HERE.md',
+    'PROJECT_STATE.yaml',
+    'docs/spec/CURRENT.md',
+    'docs/plan/CURRENT.md',
+    'docs/decisions/DECISIONS.md',
+    'state/HANDOFF.md'
 )
 
 function Get-RelativePath([string]$basePath, [string]$fullPath) {

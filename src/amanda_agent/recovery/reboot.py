@@ -74,7 +74,8 @@ def render_resume_after_reboot(
         commands = ["NOT_RECORDED"]
     command_lines = "\n".join(f"{index}. `{command}`" for index, command in enumerate(commands, 1))
     return (
-        "# RESUME_AFTER_REBOOT\n\n"
+        "<!-- BEGIN GENERATED REBOOT RECOVERY CONTEXT -->\n"
+        "## Reboot recovery context\n\n"
         "Status: PREPARED\n\n"
         "## Recovery context\n\n"
         f"- Phase: `{phase_text}`\n"
@@ -93,17 +94,37 @@ def render_resume_after_reboot(
         "incremental handoff before resuming. A checkpoint reopen, provider "
         "healthcheck, current-state re-query, and task readiness must be evidenced "
         "before any new BIM mutation.\n"
+        "<!-- END GENERATED REBOOT RECOVERY CONTEXT -->"
     )
 
 
 def write_resume_after_reboot(root: Path, **kwargs: Any) -> Path:
-    """Atomically write the repository-root reboot handoff."""
+    """Atomically update the reboot context inside the canonical handoff."""
 
-    target = Path(root).resolve() / "RESUME_AFTER_REBOOT.md"
+    target = Path(root).resolve() / "state" / "HANDOFF.md"
     target.parent.mkdir(parents=True, exist_ok=True)
-    content = render_resume_after_reboot(**kwargs)
+    block = render_resume_after_reboot(**kwargs)
+    begin_marker = "<!-- BEGIN GENERATED REBOOT RECOVERY CONTEXT -->"
+    end_marker = "<!-- END GENERATED REBOOT RECOVERY CONTEXT -->"
+    existing = target.read_text(encoding="utf-8") if target.is_file() else ""
+    if not existing.strip():
+        existing = "# Current Handoff\n"
+
+    if begin_marker in existing or end_marker in existing:
+        if (
+            existing.count(begin_marker) != 1
+            or existing.count(end_marker) != 1
+            or existing.index(begin_marker) > existing.index(end_marker)
+        ):
+            raise ValueError("canonical handoff has malformed reboot-context markers")
+        start = existing.index(begin_marker)
+        stop = existing.index(end_marker) + len(end_marker)
+        content = existing[:start].rstrip() + "\n\n" + block + existing[stop:]
+    else:
+        content = existing.rstrip() + "\n\n" + block + "\n"
+
     handle, temporary_name = tempfile.mkstemp(
-        prefix=".RESUME_AFTER_REBOOT.", suffix=".tmp", dir=target.parent
+        prefix=".HANDOFF.", suffix=".tmp", dir=target.parent
     )
     temporary = Path(temporary_name)
     try:

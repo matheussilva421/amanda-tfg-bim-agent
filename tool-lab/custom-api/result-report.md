@@ -128,5 +128,5 @@ anteriores e não são usados como resultado final.
 Não registrar este resultado em `state/*` neste bloco. O orquestrador deve
 consumir este relatório para atualizar P02-T16. O close/reopen do P02-T15 foi
 executado separadamente e está documentado em
-`tool-lab/revitcortex/results/t15-handoff.md`; o drill P02-T18 está em
+`tool-lab/revitcortex/results/t15-close-reopen-evidence.md`; o drill P02-T18 está em
 `tool-lab/custom-api/results/t18-drill-report.md`.

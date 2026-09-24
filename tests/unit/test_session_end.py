@@ -27,7 +27,7 @@ def _seed_end_project(
         TaskRecord(
             id="P03-T01",
             phase="PHASE_03",
-            plan_path="docs/superpowers/plans/03-project-intelligence.md",
+            plan_path="docs/plan/CURRENT.md",
             status=task_status,
         )
     )
@@ -98,8 +98,7 @@ def test_handoff_contains_all_required_sections(tmp_path: Path):
     handoff = Path(result["handoff_path"])
     text = handoff.read_text(encoding="utf-8")
 
-    assert handoff.parent == root / "docs" / "notes"
-    assert handoff.name.endswith("-session-end-handoff.md")
+    assert handoff == root / "state" / "HANDOFF.md"
     for section in (
         "## Changes",
         "## Evidence",
@@ -111,6 +110,25 @@ def test_handoff_contains_all_required_sections(tmp_path: Path):
         assert section in text
 
 
+def test_session_end_updates_the_canonical_handoff_and_preserves_context(
+    tmp_path: Path,
+):
+    root = _seed_end_project(tmp_path)
+    target = root / "state" / "HANDOFF.md"
+    target.write_text(
+        "# Current Handoff\n\nKeep the current project context.\n",
+        encoding="utf-8",
+    )
+
+    result = _end(root)
+
+    assert Path(result["handoff_path"]) == target
+    text = target.read_text(encoding="utf-8")
+    assert "Keep the current project context." in text
+    assert "## Changes" in text
+    assert not (root / "docs" / "notes").exists()
+
+
 def test_bim_mutation_without_checkpoint_is_refused(tmp_path: Path):
     root = _seed_end_project(tmp_path)
 
@@ -120,8 +138,7 @@ def test_bim_mutation_without_checkpoint_is_refused(tmp_path: Path):
 
 def test_existing_handoff_is_preserved_when_new_entry_is_appended(tmp_path: Path):
     root = _seed_end_project(tmp_path)
-    target = root / "docs" / "notes" / "2026-09-15-session-end-handoff.md"
-    target.parent.mkdir(parents=True)
+    target = root / "state" / "HANDOFF.md"
     target.write_text("previous durable entry\n", encoding="utf-8")
 
     _end(root, date="2026-09-15")
@@ -129,3 +146,4 @@ def test_existing_handoff_is_preserved_when_new_entry_is_appended(tmp_path: Path
     text = target.read_text(encoding="utf-8")
     assert text.startswith("previous durable entry\n")
     assert "## Changes" in text
+    assert text.count("BEGIN GENERATED SESSION HANDOFF") == 1

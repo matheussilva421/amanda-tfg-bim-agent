@@ -997,3 +997,101 @@ Result: 18 passed, 0 failed. This covered canonical reference loading/hashes, hi
 - Read-only live validators: design source loader PASS for 23 immutable documents; ingest source validator PASS with all 42 files accounted for by both catalogs; all 20 JSON-catalogued asset sizes and SHA-256 values PASS.
 - Additional historical check: `tests/test_p08_inputs.py` — 4 passed, 1 failed at `test_p08_freeze_binds_versions_and_current_file_hashes`. The frozen decision-register digest is `61865b3e7884a5dd12a88086091ed9fac7e53ec160c80fdb9cf40c10e9553344`; current worktree, `HEAD`, and the freeze's recorded `design_engine_commit` contain different digests (`e4df3d7b...`, `748cd9e4...`, and `ee47e297...`). `project/requirements/decision-register.yaml` was not changed in Task 7. This pre-existing freeze mismatch is outside the source-path task and remains visible for final reporting.
 - Independent review and follow-up returned APPROVED. Its P2 request for a direct ingest-validator refusal test was addressed with `test_ingest_source_validator_rejects_uncatalogued_source_files`; the reviewer confirmed this closes the finding. Task 7 commit `f5da48d5c25f7f2b33e3a09c7fe0a7c30485e27a` (`chore: normalize canonical source paths`) was pushed. A fresh fetch confirmed `HEAD = main = origin/main` at that SHA and one worktree. The only untracked tree is the intentional `.recovery/` inventory, scheduled for Task 13 cleanup. No Revit/model action occurred.
+
+## Task 8 — remove superseded operational packages and documents
+
+Removed the five obsolete root instructions (`COMBINED-plan`, old design,
+`PLAN_SELF_REVIEW.md`, `RESUME_AFTER_REBOOT.md`, and
+`START_HERE_FOR_CODEX.md`), all 13 child plans, the old canonical-pavilion
+specification, 88 historical notes/handoffs, 33 package-review files, and the
+stale 2026-09-16 next-agent handoff report. Two standalone tool-lab handoffs
+were also removed after their findings were checked against maintained READMEs
+and task history. The detailed P02-T15 close/reopen record was renamed to
+`tool-lab/revitcortex/results/t15-close-reopen-evidence.md`, and its result
+report link now points to the preserved evidence. The old files remain
+recoverable from
+the pre-recovery safety tag and Git history. Current task routing remains in
+`START_HERE.md`, the `CURRENT.md` specification and plan, `DECISIONS.md`,
+`PROJECT_STATE.yaml`, and `state/HANDOFF.md`.
+
+All four tracked ZIPs were inspected read-only; their internal manifests and
+recorded hashes were valid. They are historical plan-package archives: one
+original handoff package and three generated/intermediate snapshots, with no
+unique current source inputs. The exact archive hashes were:
+
+| Archive | SHA-256 | Disposition |
+|---|---|---|
+| `amanda-tfg-bim-agent-superpowers-plan.zip` | `3e470c7442097b420ee3ab7a2bb26267b75a2448ff36842c9f58bb94928c2b4c` | Removed from active tree; blob retained in Git history/tag |
+| `amanda-tfg-bim-agent-planos-REVISADOS-2026-09-15.zip` | `fa69c1e5058f306066c6d32189b72dce649a54386f58527d0ad6020304feb959` | Removed from active tree; blob retained in Git history/tag |
+| `docs/review/before-delegated-decisions/amanda-tfg-bim-agent-planos-REVISADOS-2026-09-15.zip` | `f1dc8bcb09b6bb76f79090e40f2126763b91c16892e1dfaae58783e5d8a4c91d` | Removed from active tree; blob retained in Git history/tag |
+| `docs/review/before-program-baseline/amanda-tfg-bim-agent-planos-REVISADOS-2026-09-15.zip` | `dc8ff4a4d8ff2d0cbecadbfbadae9662f262a36d2ffe9a05d6cfed29dbbe8dd0` | Removed from active tree; blob retained in Git history/tag |
+
+The former `docs/review/source-extracts/` directory was ignored local data, not
+part of the 33 tracked review artifacts. Its 13 derived text extractions and
+manifest were moved to the ignored
+`project/provenance/extracted/source-extracts/` location; only the manifest's
+output paths were rewritten, and all 13 records resolve. Primary source files and their
+hashes remain in the source tree. No canonical source image, catalogued source
+document, catalogued evidence image, RVT, or RC01 release artifact was included
+in the staged removals. The two generated program-package preview PNGs were
+obsolete review outputs; their exact prior bytes remain in the safety tag/Git
+history along with the other removed review artifacts.
+
+Migrated the unique operational boundaries found in the old design into the
+current specification and decisions: the agent may research and select
+reversible approaches within task authorization, Amanda's approval must not be
+invented, external actions retain their human gates, and a technical `GOLDEN`
+does not establish academic TFG completion. The current spec also records the
+required fields for a `CANONICAL_DEVIATION`.
+
+Updated `.gitignore` to exclude ZIPs, generated package folders, and root
+runtime logs; removed its obsolete `docs/review/source-extracts/` rule. The new
+repository-hygiene test first failed because the four legacy document trees
+were present. A first post-removal run exposed the ignored extraction cache;
+after moving it to the provenance extraction area and removing the empty review
+directory, the focused gate passed:
+
+```powershell
+& .\.venv\Scripts\python.exe -m pytest tests/project/test_repository_hygiene.py -q -p no:cacheprovider
+```
+
+Result: 6 passed, 0 failed. The first expanded Task 8 gate passed 22 tests,
+0 failed, across canonical reference loading, historic S02 bindings, source
+provenance, supplemental source catalogs, and repository hygiene. After the
+independent reviews found a stale report route, missing gate record, and
+cleanup-script comment pointing to a deleted plan, stale report routing was
+marked historical, the policy now names the decisions ledger, and operational
+session writers, task routing, the cleanup script, and source inventory were
+migrated to the CURRENT structure. The final focused gate was:
+
+```powershell
+& '.\.venv\Scripts\python.exe' -m pytest tests/unit/test_reboot_resume.py tests/unit/test_session_end.py tests/unit/test_session_start.py tests/unit/test_task_graph.py tests/unit/test_advance_cli.py tests/unit/test_tool_lab_cli.py tests/project/test_repository_hygiene.py tests/policy/test_agents_policy.py tests/project/test_provenance_integrity.py::test_all_immutable_source_files_exist_and_match_manifest_hashes tests/unit/test_source_manifest.py -q -p no:cacheprovider
+```
+
+Result: 73 passed, 0 failed. The old-tool-handoff hygiene test first ran RED
+with the three legacy paths present, then passed after removal and evidence
+reclassification. The cleanup-script routing test also ran RED on the stale
+plan reference and passed after it was removed. Ruff on all changed operational
+Python and focused test files passed with `ruff check`. The generated source inventory
+contains 30 entries and records the current instructions. At the review
+checkpoint, 88 notes, 13 plans, one old specification, 33 review artifacts,
+and four ZIPs are absent from the active index. `git ls-files '*.zip'` returns
+no paths. Active entrypoints contain no routes to removed instruction trees.
+Independent classification approved removal of the obsolete note/plan/spec
+flow; archive review confirmed all four package hashes and integrity.
+`git cat-file -e` resolved all four deleted ZIP paths from
+`pre-repository-recovery-2026-09-24` (4/4). The only remaining handoff-named
+file under `docs/`, `state/`, or `tool-lab/` is `state/HANDOFF.md`. The final
+active-route scan found no matches for removed plan/spec/note/handoff paths.
+A repeat of
+the initial 22-test
+command under an escalated shell hit 10 pytest setup errors because that shell
+could not scan `C:\Users\slvma\AppData\Local\Temp\pytest-of-slvma`; rerunning
+in the normal user context passed 22/22. The first reviewer could not inspect
+RC01 because of ACL. The elevated read-only pre-commit check found 36 RC01
+files, zero RC01 status/diff entries, manifest SHA-256
+`596CB7F878A05CC565D6A1831B7E19F8D10E6FE625F739339E9A61CF34DEE5AD`, and
+`model.rvt` SHA-256
+`01B7426E32C162EDE4249417A4735E699601A654C2738ED450F6C09B705B0744`. The
+worktree list contains only `main`. No Revit/model action occurred. Task 8
+commit and remote synchronization remain pending final review.

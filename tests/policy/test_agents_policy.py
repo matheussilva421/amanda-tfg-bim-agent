@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 REPO_ROOT = Path(__file__).resolve().parents[2]
 AGENTS_PATH = REPO_ROOT / "AGENTS.md"
 
@@ -28,12 +27,19 @@ def test_production_agents_policy_contains_required_rules_and_protocols() -> Non
     for rule in required_rules:
         assert rule in policy, f"missing required rule: {rule}"
 
-    assert "docs/superpowers/plans/" in policy
-    assert "2026-09-11-amanda-tfg-bim-agent-combined-plan.md" in policy
-    assert (REPO_ROOT / "docs/superpowers/plans").is_dir()
-    assert (
-        REPO_ROOT / "2026-09-11-amanda-tfg-bim-agent-COMBINED-plan.md"
-    ).is_file()
+    for current_path in (
+        "start_here.md",
+        "docs/spec/current.md",
+        "docs/plan/current.md",
+        "docs/decisions/decisions.md",
+        "state/handoff.md",
+    ):
+        assert current_path in policy
+    assert (REPO_ROOT / "START_HERE.md").is_file()
+    assert (REPO_ROOT / "docs/spec/CURRENT.md").is_file()
+    assert (REPO_ROOT / "docs/plan/CURRENT.md").is_file()
+    assert (REPO_ROOT / "docs/decisions/DECISIONS.md").is_file()
+    assert (REPO_ROOT / "state/HANDOFF.md").is_file()
 
     assert "## session-start protocol" in policy
     assert "## session-end protocol" in policy

@@ -1,4 +1,4 @@
-# P07-T17 — session recovery drill
+# P07-T17 — session recovery drill (historical evidence)
 
 Data: 2026-09-15  
 Status desta preparação: `PREPARED_PARTIAL`  
@@ -29,7 +29,8 @@ documento descartável/autorizado e autorização explícita.
 ## Evidência preparada agora
 
 - Os testes focados de recovery, watchdog, reboot, dashboard e resumo passaram.
-- `RESUME_AFTER_REBOOT.md` foi gerado atomicamente na raiz.
+- Naquele drill, o contexto de reboot foi gerado atomicamente; o writer atualiza
+  o bloco de retomada dentro de `state/HANDOFF.md`.
 - O manifesto `revit/lab/custom-api/T18_LAST_PASS.rvt.manifest.json` foi lido e
   seu arquivo foi verificado por SHA-256; o hash é
   `8ccab171e89fa4ac414f9ca3c57b5c4161cd7ee6dd61f45f86529703ee281cb2`.
@@ -59,10 +60,11 @@ Na sessão nova, executar exatamente:
 Set-Location 'C:\Users\slvma\Downloads\Github\Projeto Amanda'
 $env:PYTHONIOENCODING='utf-8'
 Get-Content -Raw AGENTS.md
-Get-Content -Raw START_HERE_FOR_CODEX.md
-Get-Content -Raw docs/notes/2026-09-15-p07b-recovery-continuity-handoff.md
-Get-Content -Raw RESUME_AFTER_REBOOT.md
+Get-Content -Raw START_HERE.md
 Get-Content -Raw PROJECT_STATE.yaml
+Get-Content -Raw docs/spec/CURRENT.md
+Get-Content -Raw docs/plan/CURRENT.md
+Get-Content -Raw state/HANDOFF.md
 git status --short --branch
 & './.venv/Scripts/python.exe' -m amanda_agent doctor
 & './.venv/Scripts/python.exe' -m amanda_agent status

@@ -68,7 +68,7 @@ def write_tool_lab_state(
                     "P02-T01": {
                         "id": "P02-T01",
                         "phase": "PHASE_02",
-                        "plan_path": "docs/superpowers/plans/02-revit-tool-lab-providers.md",
+                        "plan_path": "docs/plan/CURRENT.md",
                         "title": "read capability",
                         "status": "PASS",
                         "evidence": [],
@@ -76,7 +76,7 @@ def write_tool_lab_state(
                     "P02-T02": {
                         "id": "P02-T02",
                         "phase": "PHASE_02",
-                        "plan_path": "docs/superpowers/plans/02-revit-tool-lab-providers.md",
+                        "plan_path": "docs/plan/CURRENT.md",
                         "title": "failed capability",
                         "status": "FAIL",
                         "evidence": [],
@@ -84,7 +84,7 @@ def write_tool_lab_state(
                     "P02-T03": {
                         "id": "P02-T03",
                         "phase": "PHASE_02",
-                        "plan_path": "docs/superpowers/plans/02-revit-tool-lab-providers.md",
+                        "plan_path": "docs/plan/CURRENT.md",
                         "title": "pending capability",
                         "status": "PENDING",
                         "evidence": [],

@@ -12,8 +12,11 @@ import pytest
 import yaml
 
 from amanda_agent.models.state import TaskStatus
+from amanda_agent.state import build_task_graph
 from amanda_agent.state.build_task_graph import (
     build_registry as build_registry_from_plans,
+)
+from amanda_agent.state.build_task_graph import (
     regenerate,
 )
 from amanda_agent.state.plan_order import diagnose_plan_order
@@ -26,7 +29,7 @@ def build_registry() -> TaskRegistry:
         TaskRecord(
             id="P03-T01",
             phase="PHASE_03",
-            plan_path="docs/superpowers/plans/03-project-intelligence.md",
+            plan_path="docs/plan/CURRENT.md",
             title="Source manifest",
         )
     )
@@ -34,7 +37,7 @@ def build_registry() -> TaskRegistry:
         TaskRecord(
             id="P03-T02",
             phase="PHASE_03",
-            plan_path="docs/superpowers/plans/03-project-intelligence.md",
+            plan_path="docs/plan/CURRENT.md",
             title="Provenance model",
             depends_on=["P03-T01"],
         )
@@ -43,7 +46,7 @@ def build_registry() -> TaskRegistry:
         TaskRecord(
             id="P07-T01",
             phase="PHASE_07A",
-            plan_path="docs/superpowers/plans/07-autonomy-recovery-security.md",
+            plan_path="docs/plan/CURRENT.md",
             title="Production AGENTS policy",
         )
     )
@@ -97,7 +100,7 @@ def test_unknown_dependency_and_cycle_are_rejected():
         TaskRecord(
             id="P03-T03",
             phase="PHASE_03",
-            plan_path="docs/superpowers/plans/03-project-intelligence.md",
+            plan_path="docs/plan/CURRENT.md",
             title="Ingest command",
             depends_on=["P03-NOPE"],
         )
@@ -129,7 +132,7 @@ def test_missing_registry_file_is_not_silently_invented(tmp_path: Path):
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
-def test_phase_level_plan_edges_exist_as_task_dependencies():
+def test_phase_level_plan_edges_exist_as_task_dependencies(tmp_path: Path):
     """The master plan states its graph at phase level, not task level.
 
     ``01 -> 07A -> 02`` and ``01 -> 03 -> 04`` therefore cannot come from the
@@ -138,9 +141,15 @@ def test_phase_level_plan_edges_exist_as_task_dependencies():
     the graph silently allows Phase 03 and Phase 07A to start before the
     foundation they consume finished.
     """
-    registry = build_registry_from_plans(
-        REPO_ROOT / "docs" / "superpowers" / "plans", relative_to=REPO_ROOT
+    plans = tmp_path / "plans"
+    plans.mkdir()
+    (plans / "structured-plan.md").write_text(
+        "### Task 13: Foundation complete [P01-T13]\n\n"
+        "### Task 1: Project intelligence [P03-T01]\n\n"
+        "### Task 1: Autonomy [P07-T01]\n",
+        encoding="utf-8",
     )
+    registry = build_registry_from_plans(plans, relative_to=tmp_path)
 
     assert "P01-T13" in registry.tasks["P03-T01"].depends_on
     assert "P01-T13" in registry.tasks["P07-T01"].depends_on
@@ -194,3 +203,36 @@ def test_regenerating_from_scratch_needs_no_existing_file(tmp_path: Path):
 
     assert registry.tasks["P01-T01"].status == TaskStatus.PENDING
     assert load_registry(target).tasks["P01-T01"].title == "First"
+
+
+def test_main_refuses_to_overwrite_durable_graph_from_narrative_plan(
+    tmp_path: Path, monkeypatch, capsys
+):
+    script = tmp_path / "repo" / "src" / "amanda_agent" / "state" / "build_task_graph.py"
+    script.parent.mkdir(parents=True)
+    target = tmp_path / "repo" / "state" / "task-graph.yaml"
+    target.parent.mkdir(parents=True)
+    durable_state = (
+        "schema_version: 1\n"
+        "tasks:\n"
+        "  P01-T01:\n"
+        "    id: P01-T01\n"
+        "    phase: PHASE_01\n"
+        "    plan_path: docs/plan/CURRENT.md\n"
+        "    title: Preserve task outcome\n"
+        "    depends_on: []\n"
+        "    status: PASS\n"
+        "    evidence:\n"
+        "    - retained evidence\n"
+    )
+    target.write_text(durable_state, encoding="utf-8")
+    current_plan = tmp_path / "repo" / "docs" / "plan" / "CURRENT.md"
+    current_plan.parent.mkdir(parents=True)
+    current_plan.write_text("Narrative project plan\n", encoding="utf-8")
+    monkeypatch.setattr(build_task_graph, "__file__", str(script))
+
+    exit_code = build_task_graph.main()
+
+    assert exit_code != 0
+    assert target.read_text(encoding="utf-8") == durable_state
+    assert "refus" in capsys.readouterr().out.lower()

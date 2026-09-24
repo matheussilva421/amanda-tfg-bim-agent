@@ -19,8 +19,8 @@ vendor/
 .env.*
 !.env.example
 
-# Private academic sources (never published), except the current canonical
-# board images already represented by tracked predecessor references.
+# Private academic sources (never published), except the four active canonical
+# board images required by the current design workflow.
 !docs/source/
 docs/source/*
 !docs/source/canonical/
@@ -29,7 +29,6 @@ docs/source/canonical/*
 !docs/source/canonical/02_administrativo.png
 !docs/source/canonical/03_residencial.png
 !docs/source/canonical/04_servicos.png
-docs/review/source-extracts/
 TFG_Amanda_2026/
 /programa_necessidades.pdf
 /TFG_Amanda*.pdf
@@ -39,6 +38,7 @@ project/provenance/extracted/
 state/snapshots/private/
 state/locks/
 logs/raw/
+/logs/
 
 # Revit / BIM binaries
 *.rvt
@@ -65,6 +65,10 @@ wheels/
 # Generated local artifacts
 artifacts/local/
 deliverables/local/
+handoff-packages/
+generated-packages/
+/amanda-tfg-bim-agent-planos-REVISADOS-2026-09-15.zip
+/amanda-tfg-bim-agent-superpowers-plan.zip
 
 # Local scratch
 .git-commit-msg.tmp

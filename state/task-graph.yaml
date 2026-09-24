@@ -3,7 +3,7 @@ tasks:
   P00-T01:
     id: P00-T01
     phase: PHASE_00
-    plan_path: docs/superpowers/plans/00-master-implementation-plan.md
+    plan_path: docs/plan/CURRENT.md
     title: Establish the repository without relocating the input bundle
     depends_on: []
     status: PASS
@@ -24,7 +24,7 @@ tasks:
   P00-T02:
     id: P00-T02
     phase: PHASE_00
-    plan_path: docs/superpowers/plans/00-master-implementation-plan.md
+    plan_path: docs/plan/CURRENT.md
     title: Enforce plan dependency order
     depends_on:
     - P00-T01
@@ -41,7 +41,7 @@ tasks:
   P00-T03:
     id: P00-T03
     phase: PHASE_00
-    plan_path: docs/superpowers/plans/00-master-implementation-plan.md
+    plan_path: docs/plan/CURRENT.md
     title: Global completion verification
     depends_on:
     - P00-T02
@@ -60,7 +60,7 @@ tasks:
   P01-T01:
     id: P01-T01
     phase: PHASE_01
-    plan_path: docs/superpowers/plans/01-foundation-environment-state.md
+    plan_path: docs/plan/CURRENT.md
     title: Bootstrap Python package and CLI
     depends_on: []
     status: PASS
@@ -69,7 +69,7 @@ tasks:
   P01-T02:
     id: P01-T02
     phase: PHASE_01
-    plan_path: docs/superpowers/plans/01-foundation-environment-state.md
+    plan_path: docs/plan/CURRENT.md
     title: Canonical paths
     depends_on:
     - P01-T01
@@ -79,7 +79,7 @@ tasks:
   P01-T03:
     id: P01-T03
     phase: PHASE_01
-    plan_path: docs/superpowers/plans/01-foundation-environment-state.md
+    plan_path: docs/plan/CURRENT.md
     title: Project-state models
     depends_on:
     - P01-T02
@@ -89,7 +89,7 @@ tasks:
   P01-T04:
     id: P01-T04
     phase: PHASE_01
-    plan_path: docs/superpowers/plans/01-foundation-environment-state.md
+    plan_path: docs/plan/CURRENT.md
     title: Atomic YAML state store
     depends_on:
     - P01-T03
@@ -99,7 +99,7 @@ tasks:
   P01-T05:
     id: P01-T05
     phase: PHASE_01
-    plan_path: docs/superpowers/plans/01-foundation-environment-state.md
+    plan_path: docs/plan/CURRENT.md
     title: Single-writer lock
     depends_on:
     - P01-T04
@@ -109,7 +109,7 @@ tasks:
   P01-T06:
     id: P01-T06
     phase: PHASE_01
-    plan_path: docs/superpowers/plans/01-foundation-environment-state.md
+    plan_path: docs/plan/CURRENT.md
     title: Detect actual Revit 2027 installation
     depends_on:
     - P01-T05
@@ -119,7 +119,7 @@ tasks:
   P01-T07:
     id: P01-T07
     phase: PHASE_01
-    plan_path: docs/superpowers/plans/01-foundation-environment-state.md
+    plan_path: docs/plan/CURRENT.md
     title: Probe Codex/Git/PowerShell/Python/.NET
     depends_on:
     - P01-T06
@@ -129,7 +129,7 @@ tasks:
   P01-T08:
     id: P01-T08
     phase: PHASE_01
-    plan_path: docs/superpowers/plans/01-foundation-environment-state.md
+    plan_path: docs/plan/CURRENT.md
     title: Snapshot Codex config and Revit add-in inventory
     depends_on:
     - P01-T07
@@ -139,7 +139,7 @@ tasks:
   P01-T09:
     id: P01-T09
     phase: PHASE_01
-    plan_path: docs/superpowers/plans/01-foundation-environment-state.md
+    plan_path: docs/plan/CURRENT.md
     title: Structured JSONL logger
     depends_on:
     - P01-T08
@@ -149,7 +149,7 @@ tasks:
   P01-T10:
     id: P01-T10
     phase: PHASE_01
-    plan_path: docs/superpowers/plans/01-foundation-environment-state.md
+    plan_path: docs/plan/CURRENT.md
     title: '`doctor`'
     depends_on:
     - P01-T09
@@ -159,7 +159,7 @@ tasks:
   P01-T11:
     id: P01-T11
     phase: PHASE_01
-    plan_path: docs/superpowers/plans/01-foundation-environment-state.md
+    plan_path: docs/plan/CURRENT.md
     title: '`status`, `resume`, `rollback`'
     depends_on:
     - P01-T10
@@ -169,7 +169,7 @@ tasks:
   P01-T12:
     id: P01-T12
     phase: PHASE_01
-    plan_path: docs/superpowers/plans/01-foundation-environment-state.md
+    plan_path: docs/plan/CURRENT.md
     title: Initialize durable state files
     depends_on:
     - P01-T11
@@ -179,7 +179,7 @@ tasks:
   P01-T13:
     id: P01-T13
     phase: PHASE_01
-    plan_path: docs/superpowers/plans/01-foundation-environment-state.md
+    plan_path: docs/plan/CURRENT.md
     title: Add the idempotent `bootstrap` command
     depends_on:
     - P01-T12
@@ -189,7 +189,7 @@ tasks:
   P02-T01:
     id: P02-T01
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Capability registry models
     depends_on:
     - P07-T13
@@ -200,7 +200,7 @@ tasks:
   P02-T02:
     id: P02-T02
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Circuit breaker
     depends_on:
     - P02-T01
@@ -217,7 +217,7 @@ tasks:
   P02-T03:
     id: P02-T03
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Evidence record model
     depends_on:
     - P02-T02
@@ -232,7 +232,7 @@ tasks:
   P02-T04:
     id: P02-T04
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Clone/audit/pin/build/install Horizun from source
     depends_on:
     - P02-T03
@@ -252,7 +252,7 @@ tasks:
   P02-T05:
     id: P02-T05
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Create immutable disposable Revit baseline fixture
     depends_on:
     - P02-T04
@@ -268,7 +268,7 @@ tasks:
   P02-T06:
     id: P02-T06
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Discover actual Horizun MCP tool catalog
     depends_on:
     - P02-T05
@@ -292,7 +292,7 @@ tasks:
   P02-T07:
     id: P02-T07
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Horizun read-only smoke
     depends_on:
     - P02-T06
@@ -310,7 +310,7 @@ tasks:
   P02-T08:
     id: P02-T08
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Horizun `create_level` persistence test
     depends_on:
     - P02-T07
@@ -333,7 +333,7 @@ tasks:
   P02-T09:
     id: P02-T09
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Horizun `create_wall` persistence test
     depends_on:
     - P02-T08
@@ -377,7 +377,7 @@ tasks:
   P02-T10:
     id: P02-T10
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Horizun floor and room tests
     depends_on:
     - P02-T09
@@ -435,7 +435,7 @@ tasks:
   P02-T11:
     id: P02-T11
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Horizun hosted/documentation/export matrix
     depends_on:
     - P02-T10
@@ -521,7 +521,7 @@ tasks:
   P02-T12:
     id: P02-T12
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Horizun Toposolid/site test
     depends_on:
     - P02-T11
@@ -583,7 +583,7 @@ tasks:
   P02-T13:
     id: P02-T13
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Clone/audit/build/deploy RevitCortex
     depends_on:
     - P02-T12
@@ -688,7 +688,7 @@ tasks:
   P02-T14:
     id: P02-T14
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Discover Cortex tools and prove bridge
     depends_on:
     - P02-T13
@@ -761,7 +761,7 @@ tasks:
   P02-T15:
     id: P02-T15
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: A/B Cortex smoke using identical fixtures
     depends_on:
     - P02-T14
@@ -775,7 +775,7 @@ tasks:
   P02-T16:
     id: P02-T16
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Custom C# Revit API fallback proof
     depends_on:
     - P02-T15
@@ -791,7 +791,7 @@ tasks:
   P02-T17:
     id: P02-T17
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Fault-injection matrix
     depends_on:
     - P02-T16
@@ -836,7 +836,7 @@ tasks:
   P02-T18:
     id: P02-T18
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Crash/recovery drill
     depends_on:
     - P02-T17
@@ -859,7 +859,7 @@ tasks:
   P02-T19:
     id: P02-T19
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Provider benchmark and final matrix
     depends_on:
     - P02-T18
@@ -882,7 +882,7 @@ tasks:
   P02-T20:
     id: P02-T20
     phase: PHASE_02
-    plan_path: docs/superpowers/plans/02-revit-tool-lab-providers.md
+    plan_path: docs/plan/CURRENT.md
     title: Add the `tool-lab` CLI surface
     depends_on:
     - P02-T19
@@ -910,7 +910,7 @@ tasks:
   P03-T01:
     id: P03-T01
     phase: PHASE_03
-    plan_path: docs/superpowers/plans/03-project-intelligence.md
+    plan_path: docs/plan/CURRENT.md
     title: Source manifest and hashing
     depends_on:
     - P01-T13
@@ -921,7 +921,7 @@ tasks:
   P03-T02:
     id: P03-T02
     phase: PHASE_03
-    plan_path: docs/superpowers/plans/03-project-intelligence.md
+    plan_path: docs/plan/CURRENT.md
     title: Provenance model
     depends_on:
     - P03-T01
@@ -932,7 +932,7 @@ tasks:
   P03-T03:
     id: P03-T03
     phase: PHASE_03
-    plan_path: docs/superpowers/plans/03-project-intelligence.md
+    plan_path: docs/plan/CURRENT.md
     title: Immutable ingest command
     depends_on:
     - P03-T02
@@ -944,7 +944,7 @@ tasks:
   P03-T04:
     id: P03-T04
     phase: PHASE_03
-    plan_path: docs/superpowers/plans/03-project-intelligence.md
+    plan_path: docs/plan/CURRENT.md
     title: Inventory and reconcile all supplied Amanda sources
     depends_on:
     - P03-T03
@@ -959,7 +959,7 @@ tasks:
   P03-T05:
     id: P03-T05
     phase: PHASE_03
-    plan_path: docs/superpowers/plans/03-project-intelligence.md
+    plan_path: docs/plan/CURRENT.md
     title: PDF text extraction adapter
     depends_on:
     - P03-T04
@@ -970,7 +970,7 @@ tasks:
   P03-T06:
     id: P03-T06
     phase: PHASE_03
-    plan_path: docs/superpowers/plans/03-project-intelligence.md
+    plan_path: docs/plan/CURRENT.md
     title: Program requirement schema
     depends_on:
     - P03-T05
@@ -981,7 +981,7 @@ tasks:
   P03-T07:
     id: P03-T07
     phase: PHASE_03
-    plan_path: docs/superpowers/plans/03-project-intelligence.md
+    plan_path: docs/plan/CURRENT.md
     title: Compile the program of needs into canonical JSON
     depends_on:
     - P03-T06
@@ -995,7 +995,7 @@ tasks:
   P03-T08:
     id: P03-T08
     phase: PHASE_03
-    plan_path: docs/superpowers/plans/03-project-intelligence.md
+    plan_path: docs/plan/CURRENT.md
     title: Relations schema
     depends_on:
     - P03-T07
@@ -1007,7 +1007,7 @@ tasks:
   P03-T09:
     id: P03-T09
     phase: PHASE_03
-    plan_path: docs/superpowers/plans/03-project-intelligence.md
+    plan_path: docs/plan/CURRENT.md
     title: Compile source-backed principles separately from design hypotheses
     depends_on:
     - P03-T08
@@ -1020,7 +1020,7 @@ tasks:
   P03-T10:
     id: P03-T10
     phase: PHASE_03
-    plan_path: docs/superpowers/plans/03-project-intelligence.md
+    plan_path: docs/plan/CURRENT.md
     title: Canonical site schema
     depends_on:
     - P03-T09
@@ -1034,7 +1034,7 @@ tasks:
   P03-T11:
     id: P03-T11
     phase: PHASE_03
-    plan_path: docs/superpowers/plans/03-project-intelligence.md
+    plan_path: docs/plan/CURRENT.md
     title: Compile known site facts and missing-data registry
     depends_on:
     - P03-T10
@@ -1050,7 +1050,7 @@ tasks:
   P03-T12:
     id: P03-T12
     phase: PHASE_03
-    plan_path: docs/superpowers/plans/03-project-intelligence.md
+    plan_path: docs/plan/CURRENT.md
     title: Regulation source registry
     depends_on:
     - P03-T11
@@ -1061,7 +1061,7 @@ tasks:
   P03-T13:
     id: P03-T13
     phase: PHASE_03
-    plan_path: docs/superpowers/plans/03-project-intelligence.md
+    plan_path: docs/plan/CURRENT.md
     title: Provenance integrity suite
     depends_on:
     - P03-T12
@@ -1073,7 +1073,7 @@ tasks:
   P03-T14:
     id: P03-T14
     phase: PHASE_03
-    plan_path: docs/superpowers/plans/03-project-intelligence.md
+    plan_path: docs/plan/CURRENT.md
     title: One-command validation report
     depends_on:
     - P03-T13
@@ -1084,7 +1084,7 @@ tasks:
   P03-T15:
     id: P03-T15
     phase: PHASE_03
-    plan_path: docs/superpowers/plans/03-project-intelligence.md
+    plan_path: docs/plan/CURRENT.md
     title: Academic deliverable and decision register
     depends_on:
     - P03-T14
@@ -1095,7 +1095,7 @@ tasks:
   P04-T01:
     id: P04-T01
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Install and pin core design dependencies
     depends_on:
     - P03-T15
@@ -1114,7 +1114,7 @@ tasks:
   P04-T02:
     id: P04-T02
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Design solution models
     depends_on:
     - P04-T01
@@ -1128,7 +1128,7 @@ tasks:
   P04-T03:
     id: P04-T03
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Geometry primitives/tolerances
     depends_on:
     - P04-T02
@@ -1141,7 +1141,7 @@ tasks:
   P04-T04:
     id: P04-T04
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Hard-constraint engine
     depends_on:
     - P04-T03
@@ -1154,7 +1154,7 @@ tasks:
   P04-T05:
     id: P04-T05
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Adjacency graph
     depends_on:
     - P04-T04
@@ -1166,7 +1166,7 @@ tasks:
   P04-T06:
     id: P04-T06
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Flow graphs
     depends_on:
     - P04-T05
@@ -1177,7 +1177,7 @@ tasks:
   P04-T07:
     id: P04-T07
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Privacy gradient metric
     depends_on:
     - P04-T06
@@ -1189,7 +1189,7 @@ tasks:
   P04-T08:
     id: P04-T08
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Archetype configuration
     depends_on:
     - P04-T07
@@ -1201,7 +1201,7 @@ tasks:
   P04-T09:
     id: P04-T09
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: OR-Tools macrozone solver
     depends_on:
     - P04-T08
@@ -1216,7 +1216,7 @@ tasks:
   P04-T10:
     id: P04-T10
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Block polygon generator
     depends_on:
     - P04-T09
@@ -1230,7 +1230,7 @@ tasks:
   P04-T11:
     id: P04-T11
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Room refinement
     depends_on:
     - P04-T10
@@ -1244,7 +1244,7 @@ tasks:
   P04-T12:
     id: P04-T12
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: External spaces as first-class geometry
     depends_on:
     - P04-T11
@@ -1258,7 +1258,7 @@ tasks:
   P04-T13:
     id: P04-T13
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Versioned scoring
     depends_on:
     - P04-T12
@@ -1273,7 +1273,7 @@ tasks:
   P04-T14:
     id: P04-T14
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Pareto frontier
     depends_on:
     - P04-T13
@@ -1287,7 +1287,7 @@ tasks:
   P04-T15:
     id: P04-T15
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Fast solar/ventilation heuristics
     depends_on:
     - P04-T14
@@ -1301,7 +1301,7 @@ tasks:
   P04-T16:
     id: P04-T16
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Deterministic generation
     depends_on:
     - P04-T15
@@ -1315,7 +1315,7 @@ tasks:
   P04-T17:
     id: P04-T17
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Progressive pipeline
     depends_on:
     - P04-T16
@@ -1329,7 +1329,7 @@ tasks:
   P04-T18:
     id: P04-T18
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Explainability
     depends_on:
     - P04-T17
@@ -1343,7 +1343,7 @@ tasks:
   P04-T19:
     id: P04-T19
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Core regression fixtures
     depends_on:
     - P04-T18
@@ -1387,7 +1387,7 @@ tasks:
   P04-T20:
     id: P04-T20
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Optional TopologicPy spike
     depends_on:
     - P04-T19
@@ -1421,13 +1421,13 @@ tasks:
       the three integration scopes, all passed, 0 failed'
     - ruff check on tool-lab/topologic/spike.py and tests/unit/test_topologic_spike.py
       is clean
-    - recovery point recorded in tool-lab/topologic/HANDOFF.md and README.md; artefacts
+    - recovery evidence retained in tool-lab/topologic/README.md, results and task history; artefacts
       hashed (report 53FF6517..., obj 07336714..., mtl B5152B57..., topology json
       3B6F7416...) so a re-run can be compared byte for byte
   P04-T21:
     id: P04-T21
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: Optional Ladybug/Honeybee finalist environment
     depends_on:
     - P04-T20
@@ -1448,7 +1448,7 @@ tasks:
   P04-T22:
     id: P04-T22
     phase: PHASE_04
-    plan_path: docs/superpowers/plans/04-design-engine.md
+    plan_path: docs/plan/CURRENT.md
     title: CLI `design` and `compare`
     depends_on:
     - P04-T21
@@ -1468,7 +1468,7 @@ tasks:
   P05-T01:
     id: P05-T01
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Revit unit conversion library
     depends_on:
     - P02-T20
@@ -1485,7 +1485,7 @@ tasks:
   P05-T02:
     id: P05-T02
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: BIM stage and desired-element models
     depends_on:
     - P05-T01
@@ -1502,7 +1502,7 @@ tasks:
   P05-T03:
     id: P05-T03
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Safety Sentinel
     depends_on:
     - P05-T02
@@ -1517,7 +1517,7 @@ tasks:
   P05-T04:
     id: P05-T04
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Checkpoint manager
     depends_on:
     - P05-T03
@@ -1531,7 +1531,7 @@ tasks:
   P05-T05:
     id: P05-T05
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Desired/current-state diff
     depends_on:
     - P05-T04
@@ -1545,7 +1545,7 @@ tasks:
   P05-T06:
     id: P05-T06
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Destructive-change threshold
     depends_on:
     - P05-T05
@@ -1560,7 +1560,7 @@ tasks:
   P05-T07:
     id: P05-T07
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: BIM plan generator
     depends_on:
     - P05-T06
@@ -1575,7 +1575,7 @@ tasks:
   P05-T08:
     id: P05-T08
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Write-read-verify result model
     depends_on:
     - P05-T07
@@ -1588,7 +1588,7 @@ tasks:
   P05-T09:
     id: P05-T09
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Project initialization stage R01
     depends_on:
     - P05-T08
@@ -1601,7 +1601,7 @@ tasks:
   P05-T10:
     id: P05-T10
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Site stage R02
     depends_on:
     - P05-T09
@@ -1614,7 +1614,7 @@ tasks:
   P05-T11:
     id: P05-T11
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Levels/references R03
     depends_on:
     - P05-T10
@@ -1627,7 +1627,7 @@ tasks:
   P05-T12:
     id: P05-T12
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Massing R04
     depends_on:
     - P05-T11
@@ -1641,7 +1641,7 @@ tasks:
   P05-T13:
     id: P05-T13
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Architectural shell R05
     depends_on:
     - P05-T12
@@ -1653,7 +1653,7 @@ tasks:
   P05-T14:
     id: P05-T14
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Internal layout R06
     depends_on:
     - P05-T13
@@ -1665,7 +1665,7 @@ tasks:
   P05-T15:
     id: P05-T15
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Openings R07
     depends_on:
     - P05-T14
@@ -1677,7 +1677,7 @@ tasks:
   P05-T16:
     id: P05-T16
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Rooms R08
     depends_on:
     - P05-T15
@@ -1689,7 +1689,7 @@ tasks:
   P05-T17:
     id: P05-T17
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Accessibility R09
     depends_on:
     - P05-T16
@@ -1702,7 +1702,7 @@ tasks:
   P05-T18:
     id: P05-T18
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Furniture R10
     depends_on:
     - P05-T17
@@ -1714,7 +1714,7 @@ tasks:
   P05-T19:
     id: P05-T19
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Landscape R11
     depends_on:
     - P05-T18
@@ -1726,7 +1726,7 @@ tasks:
   P05-T20:
     id: P05-T20
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Materials R12
     depends_on:
     - P05-T19
@@ -1738,7 +1738,7 @@ tasks:
   P05-T21:
     id: P05-T21
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Documentation R13
     depends_on:
     - P05-T20
@@ -1750,7 +1750,7 @@ tasks:
   P05-T22:
     id: P05-T22
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: BIM CLI
     depends_on:
     - P05-T21
@@ -1764,7 +1764,7 @@ tasks:
   P05-T23:
     id: P05-T23
     phase: PHASE_05
-    plan_path: docs/superpowers/plans/05-bim-compiler.md
+    plan_path: docs/plan/CURRENT.md
     title: Synthetic end-to-end BIM compile
     depends_on:
     - P05-T22
@@ -1777,7 +1777,7 @@ tasks:
   P06-T01:
     id: P06-T01
     phase: PHASE_06
-    plan_path: docs/superpowers/plans/06-qa-release-exports.md
+    plan_path: docs/plan/CURRENT.md
     title: QA typed models
     depends_on:
     - P05-T23
@@ -1791,7 +1791,7 @@ tasks:
   P06-T02:
     id: P06-T02
     phase: PHASE_06
-    plan_path: docs/superpowers/plans/06-qa-release-exports.md
+    plan_path: docs/plan/CURRENT.md
     title: Program reconciliation QA
     depends_on:
     - P06-T01
@@ -1806,7 +1806,7 @@ tasks:
   P06-T03:
     id: P06-T03
     phase: PHASE_06
-    plan_path: docs/superpowers/plans/06-qa-release-exports.md
+    plan_path: docs/plan/CURRENT.md
     title: Model/geometric QA
     depends_on:
     - P06-T02
@@ -1821,7 +1821,7 @@ tasks:
   P06-T04:
     id: P06-T04
     phase: PHASE_06
-    plan_path: docs/superpowers/plans/06-qa-release-exports.md
+    plan_path: docs/plan/CURRENT.md
     title: Warning baseline/delta
     depends_on:
     - P06-T03
@@ -1836,7 +1836,7 @@ tasks:
   P06-T05:
     id: P06-T05
     phase: PHASE_06
-    plan_path: docs/superpowers/plans/06-qa-release-exports.md
+    plan_path: docs/plan/CURRENT.md
     title: Architecture/concept QA
     depends_on:
     - P06-T04
@@ -1851,7 +1851,7 @@ tasks:
   P06-T06:
     id: P06-T06
     phase: PHASE_06
-    plan_path: docs/superpowers/plans/06-qa-release-exports.md
+    plan_path: docs/plan/CURRENT.md
     title: Accessibility QA status discipline
     depends_on:
     - P06-T05
@@ -1867,7 +1867,7 @@ tasks:
   P06-T07:
     id: P06-T07
     phase: PHASE_06
-    plan_path: docs/superpowers/plans/06-qa-release-exports.md
+    plan_path: docs/plan/CURRENT.md
     title: IFC validator
     depends_on:
     - P06-T06
@@ -1882,7 +1882,7 @@ tasks:
   P06-T08:
     id: P06-T08
     phase: PHASE_06
-    plan_path: docs/superpowers/plans/06-qa-release-exports.md
+    plan_path: docs/plan/CURRENT.md
     title: PDF validator
     depends_on:
     - P06-T07
@@ -1898,7 +1898,7 @@ tasks:
   P06-T09:
     id: P06-T09
     phase: PHASE_06
-    plan_path: docs/superpowers/plans/06-qa-release-exports.md
+    plan_path: docs/plan/CURRENT.md
     title: DWG sanity validator
     depends_on:
     - P06-T08
@@ -1913,7 +1913,7 @@ tasks:
   P06-T10:
     id: P06-T10
     phase: PHASE_06
-    plan_path: docs/superpowers/plans/06-qa-release-exports.md
+    plan_path: docs/plan/CURRENT.md
     title: Persistence coordinator
     depends_on:
     - P06-T09
@@ -1929,7 +1929,7 @@ tasks:
   P06-T11:
     id: P06-T11
     phase: PHASE_06
-    plan_path: docs/superpowers/plans/06-qa-release-exports.md
+    plan_path: docs/plan/CURRENT.md
     title: Release manifest
     depends_on:
     - P06-T10
@@ -1944,7 +1944,7 @@ tasks:
   P06-T12:
     id: P06-T12
     phase: PHASE_06
-    plan_path: docs/superpowers/plans/06-qa-release-exports.md
+    plan_path: docs/plan/CURRENT.md
     title: GOLDEN promoter
     depends_on:
     - P06-T11
@@ -1959,7 +1959,7 @@ tasks:
   P06-T13:
     id: P06-T13
     phase: PHASE_06
-    plan_path: docs/superpowers/plans/06-qa-release-exports.md
+    plan_path: docs/plan/CURRENT.md
     title: QA/export CLI
     depends_on:
     - P06-T12
@@ -1975,7 +1975,7 @@ tasks:
   P06-T14:
     id: P06-T14
     phase: PHASE_06
-    plan_path: docs/superpowers/plans/06-qa-release-exports.md
+    plan_path: docs/plan/CURRENT.md
     title: Synthetic R14→R16 release drill
     depends_on:
     - P06-T15
@@ -2001,7 +2001,7 @@ tasks:
   P06-T15:
     id: P06-T15
     phase: PHASE_06
-    plan_path: docs/superpowers/plans/06-qa-release-exports.md
+    plan_path: docs/plan/CURRENT.md
     title: Visual-documentation review protocol
     depends_on:
     - P06-T13
@@ -2016,7 +2016,7 @@ tasks:
   P07-T01:
     id: P07-T01
     phase: PHASE_07A
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Production `AGENTS.md`
     depends_on:
     - P01-T13
@@ -2027,7 +2027,7 @@ tasks:
   P07-T02:
     id: P07-T02
     phase: PHASE_07A
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Task dependency graph
     depends_on:
     - P07-T01
@@ -2038,7 +2038,7 @@ tasks:
   P07-T03:
     id: P07-T03
     phase: PHASE_07A
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Session start protocol
     depends_on:
     - P07-T02
@@ -2050,7 +2050,7 @@ tasks:
   P07-T04:
     id: P07-T04
     phase: PHASE_07A
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Session end protocol
     depends_on:
     - P07-T03
@@ -2062,7 +2062,7 @@ tasks:
   P07-T05:
     id: P07-T05
     phase: PHASE_07A
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Retry/fallback/time budgets
     depends_on:
     - P07-T04
@@ -2074,7 +2074,7 @@ tasks:
   P07-T06:
     id: P07-T06
     phase: PHASE_07A
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Blocker registry
     depends_on:
     - P07-T05
@@ -2086,7 +2086,7 @@ tasks:
   P07-T07:
     id: P07-T07
     phase: PHASE_07B
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Recovery manager
     depends_on:
     - P06-T15
@@ -2103,7 +2103,7 @@ tasks:
   P07-T08:
     id: P07-T08
     phase: PHASE_07B
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Revit watchdog
     depends_on:
     - P07-T07
@@ -2120,7 +2120,7 @@ tasks:
   P07-T09:
     id: P07-T09
     phase: PHASE_07B
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Reboot-resume file
     depends_on:
     - P07-T08
@@ -2139,7 +2139,7 @@ tasks:
   P07-T10:
     id: P07-T10
     phase: PHASE_07A
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Security redaction
     depends_on:
     - P07-T06
@@ -2150,7 +2150,7 @@ tasks:
   P07-T11:
     id: P07-T11
     phase: PHASE_07A
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Tool trust scoring
     depends_on:
     - P07-T10
@@ -2162,7 +2162,7 @@ tasks:
   P07-T12:
     id: P07-T12
     phase: PHASE_07A
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Tool-discovery report
     depends_on:
     - P07-T11
@@ -2174,7 +2174,7 @@ tasks:
   P07-T13:
     id: P07-T13
     phase: PHASE_07A
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Maintenance/update guard
     depends_on:
     - P07-T12
@@ -2187,7 +2187,7 @@ tasks:
   P07-T14:
     id: P07-T14
     phase: PHASE_07B
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Status dashboard
     depends_on:
     - P07-T09
@@ -2204,7 +2204,7 @@ tasks:
   P07-T15:
     id: P07-T15
     phase: PHASE_07B
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Run summary
     depends_on:
     - P07-T14
@@ -2219,7 +2219,7 @@ tasks:
   P07-T16:
     id: P07-T16
     phase: PHASE_07A
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Human-intervention state machine
     depends_on:
     - P07-T13
@@ -2229,7 +2229,7 @@ tasks:
   P07-T17:
     id: P07-T17
     phase: PHASE_07B
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Fresh-session recovery drill
     depends_on:
     - P07-T15
@@ -2250,7 +2250,7 @@ tasks:
   P07-T18:
     id: P07-T18
     phase: PHASE_07B
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Provider-update isolation drill
     depends_on:
     - P07-T17
@@ -2277,7 +2277,7 @@ tasks:
   P07-T19:
     id: P07-T19
     phase: PHASE_07B
-    plan_path: docs/superpowers/plans/07-autonomy-recovery-security.md
+    plan_path: docs/plan/CURRENT.md
     title: Full reboot simulation/procedure
     depends_on:
     - P07-T18
@@ -2297,7 +2297,7 @@ tasks:
   P08-T01:
     id: P08-T01
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Production preflight
     depends_on:
     - P06-T15
@@ -2323,7 +2323,7 @@ tasks:
   P08-T02:
     id: P08-T02
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Re-ingest/validate the latest Amanda sources
     depends_on:
     - P08-T01
@@ -2341,7 +2341,7 @@ tasks:
   P08-T03:
     id: P08-T03
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Resolve site data to highest verified level
     depends_on:
     - P08-T02
@@ -2358,7 +2358,7 @@ tasks:
   P08-T04:
     id: P08-T04
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Freeze design-run inputs
     depends_on:
     - P08-T03
@@ -2375,7 +2375,7 @@ tasks:
   P08-T05:
     id: P08-T05
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Generate production candidate run 001
     depends_on:
     - P08-T04
@@ -2394,7 +2394,7 @@ tasks:
   P08-T06:
     id: P08-T06
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Refine/rank top candidates
     depends_on:
     - P08-T05
@@ -2408,7 +2408,7 @@ tasks:
   P08-T07:
     id: P08-T07
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Environmental finalist pass
     depends_on:
     - P08-T06
@@ -2420,7 +2420,7 @@ tasks:
   P08-T08:
     id: P08-T08
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Create conceptual Revit massing for finalist set
     depends_on:
     - P08-T07
@@ -2441,7 +2441,7 @@ tasks:
   P08-T09:
     id: P08-T09
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Delegated architectural selection and later Amanda review
     depends_on:
     - P08-T08
@@ -2460,7 +2460,7 @@ tasks:
   P08-T10:
     id: P08-T10
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Create production working RVT
     depends_on:
     - P08-T09
@@ -2482,7 +2482,7 @@ tasks:
   P08-T11:
     id: P08-T11
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Compile R01–R04
     depends_on:
     - P08-T10
@@ -2504,7 +2504,7 @@ tasks:
   P08-T12:
     id: P08-T12
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Compile R05–R08
     depends_on:
     - P08-T11
@@ -2536,7 +2536,7 @@ tasks:
   P08-T13:
     id: P08-T13
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Compile R09–R12
     depends_on:
     - P08-T12
@@ -2654,7 +2654,7 @@ tasks:
   P08-T14:
     id: P08-T14
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Compile R13 documentation
     depends_on:
     - P08-T13
@@ -2665,7 +2665,7 @@ tasks:
   P08-T15:
     id: P08-T15
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Run full R14 QA
     depends_on:
     - P08-T14
@@ -2676,7 +2676,7 @@ tasks:
   P08-T16:
     id: P08-T16
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Create R15 Release Candidate
     depends_on:
     - P08-T15
@@ -2687,7 +2687,7 @@ tasks:
   P08-T17:
     id: P08-T17
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Export/validate RC
     depends_on:
     - P08-T16
@@ -2698,7 +2698,7 @@ tasks:
   P08-T18:
     id: P08-T18
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Promote R16 GOLDEN
     depends_on:
     - P08-T19
@@ -2709,7 +2709,7 @@ tasks:
   P08-T19:
     id: P08-T19
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Final deliverable package preparation before Task 18 promotion
     depends_on:
     - P08-T17
@@ -2720,7 +2720,7 @@ tasks:
   P09-T01:
     id: P09-T01
     phase: PHASE_09
-    plan_path: docs/superpowers/plans/09-optional-render-cloud.md
+    plan_path: docs/plan/CURRENT.md
     title: Determine immediate rendering need
     depends_on:
     - P08-T19
@@ -2742,7 +2742,7 @@ tasks:
   P09-T02:
     id: P09-T02
     phase: PHASE_09
-    plan_path: docs/superpowers/plans/09-optional-render-cloud.md
+    plan_path: docs/plan/CURRENT.md
     title: Install/verify `uv` for Blender MCP
     depends_on:
     - P09-T01
@@ -2758,7 +2758,7 @@ tasks:
   P09-T03:
     id: P09-T03
     phase: PHASE_09
-    plan_path: docs/superpowers/plans/09-optional-render-cloud.md
+    plan_path: docs/plan/CURRENT.md
     title: Register Blender MCP
     depends_on:
     - P09-T02
@@ -2774,7 +2774,7 @@ tasks:
   P09-T04:
     id: P09-T04
     phase: PHASE_09
-    plan_path: docs/superpowers/plans/09-optional-render-cloud.md
+    plan_path: docs/plan/CURRENT.md
     title: Blender Tool Lab
     depends_on:
     - P09-T03
@@ -2792,7 +2792,7 @@ tasks:
   P09-T05:
     id: P09-T05
     phase: PHASE_09
-    plan_path: docs/superpowers/plans/09-optional-render-cloud.md
+    plan_path: docs/plan/CURRENT.md
     title: Rendering pipeline from verified BIM release
     depends_on:
     - P09-T04
@@ -2809,7 +2809,7 @@ tasks:
   P09-T06:
     id: P09-T06
     phase: PHASE_09
-    plan_path: docs/superpowers/plans/09-optional-render-cloud.md
+    plan_path: docs/plan/CURRENT.md
     title: APS need gate
     depends_on:
     - P09-T05
@@ -2831,7 +2831,7 @@ tasks:
   P09-T07:
     id: P09-T07
     phase: PHASE_09
-    plan_path: docs/superpowers/plans/09-optional-render-cloud.md
+    plan_path: docs/plan/CURRENT.md
     title: Audit official APS sample repos
     depends_on:
     - P09-T06
@@ -2844,7 +2844,7 @@ tasks:
   P09-T08:
     id: P09-T08
     phase: PHASE_09
-    plan_path: docs/superpowers/plans/09-optional-render-cloud.md
+    plan_path: docs/plan/CURRENT.md
     title: APS secret boundary
     depends_on:
     - P09-T07
@@ -2861,7 +2861,7 @@ tasks:
   P09-T09:
     id: P09-T09
     phase: PHASE_09
-    plan_path: docs/superpowers/plans/09-optional-render-cloud.md
+    plan_path: docs/plan/CURRENT.md
     title: APS sandbox deployment/test
     depends_on:
     - P09-T08
@@ -2878,7 +2878,7 @@ tasks:
   P09-T10:
     id: P09-T10
     phase: PHASE_09
-    plan_path: docs/superpowers/plans/09-optional-render-cloud.md
+    plan_path: docs/plan/CURRENT.md
     title: Preserve local-first routing
     depends_on:
     - P09-T09
@@ -2897,7 +2897,7 @@ tasks:
   P08-CAN-T01:
     id: P08-CAN-T01
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Canonical migration preflight
     depends_on: []
     status: PASS_WITH_WARNINGS
@@ -2911,7 +2911,7 @@ tasks:
   P08-CAN-T02:
     id: P08-CAN-T02
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Archive linear R12 as immutable history
     depends_on:
     - P08-CAN-T01
@@ -2923,7 +2923,7 @@ tasks:
   P08-CAN-T03:
     id: P08-CAN-T03
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Apply canonical Plan 11 state and decision migration
     depends_on:
     - P08-CAN-T02
@@ -2937,7 +2937,7 @@ tasks:
   P08-CAN-T04:
     id: P08-CAN-T04
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Reconcile site inputs without changing the parti
     depends_on:
     - P08-CAN-T03
@@ -2949,7 +2949,7 @@ tasks:
   P08-CAN-T05:
     id: P08-CAN-T05
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Generate the canonical pavilion run
     depends_on:
     - P08-CAN-T04
@@ -2961,7 +2961,7 @@ tasks:
   P08-CAN-T06:
     id: P08-CAN-T06
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Select the implementation within the user-directed parti
     depends_on:
     - P08-CAN-T05
@@ -2973,7 +2973,7 @@ tasks:
   P08-CAN-T07:
     id: P08-CAN-T07
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Create the clean canonical production RVT
     depends_on:
     - P08-CAN-T06
@@ -2984,7 +2984,7 @@ tasks:
   P08-CAN-T08:
     id: P08-CAN-T08
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: R01-R04 canonical massing and BIM-00 acceptance gates
     depends_on:
     - P08-CAN-T07
@@ -2995,7 +2995,7 @@ tasks:
   P08-CAN-T09:
     id: P08-CAN-T09
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: R05 canonical multi-block shell
     depends_on:
     - P08-CAN-T08
@@ -3004,7 +3004,7 @@ tasks:
   P08-CAN-T10:
     id: P08-CAN-T10
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: R06 internal layout and canonical regression
     depends_on:
     - P08-CAN-T09
@@ -3013,7 +3013,7 @@ tasks:
   P08-CAN-T11:
     id: P08-CAN-T11
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: R07 openings and covered circulation
     depends_on:
     - P08-CAN-T10
@@ -3022,7 +3022,7 @@ tasks:
   P08-CAN-T12:
     id: P08-CAN-T12
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: R08 room/program reconciliation and plan regression
     depends_on:
     - P08-CAN-T11
@@ -3031,7 +3031,7 @@ tasks:
   P08-CAN-T13:
     id: P08-CAN-T13
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: R09-R12 developed architecture and regressions
     depends_on:
     - P08-CAN-T12
@@ -3040,7 +3040,7 @@ tasks:
   P08-CAN-T14:
     id: P08-CAN-T14
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: R13 drawings, sheets and board comparison
     depends_on:
     - P08-CAN-T13
@@ -3049,7 +3049,7 @@ tasks:
   P08-CAN-T15:
     id: P08-CAN-T15
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: R14 full model, program and canonical QA
     depends_on:
     - P08-CAN-T14
@@ -3058,7 +3058,7 @@ tasks:
   P08-CAN-T16:
     id: P08-CAN-T16
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: R15 release candidate and cold reopen
     depends_on:
     - P08-CAN-T15
@@ -3067,7 +3067,7 @@ tasks:
   P08-CAN-T17:
     id: P08-CAN-T17
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Export and validate model-derived deliverables
     depends_on:
     - P08-CAN-T16
@@ -3076,7 +3076,7 @@ tasks:
   P08-CAN-T18:
     id: P08-CAN-T18
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Promote R16 GOLDEN after all canonical gates
     depends_on:
     - P08-CAN-T17
@@ -3085,7 +3085,7 @@ tasks:
   P08-CAN-T19:
     id: P08-CAN-T19
     phase: PHASE_08
-    plan_path: docs/superpowers/plans/08-amanda-production-run.md
+    plan_path: docs/plan/CURRENT.md
     title: Final package cleanup and handoff
     depends_on:
     - P08-CAN-T18

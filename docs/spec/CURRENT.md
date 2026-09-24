@@ -43,6 +43,10 @@ The official program candidate has SHA-256 `11DAA9EFC4D1B022407D8BD02999E85B604A
 - Board 03: four residential pavilion groupings.
 - Board 04: curved, patio-centered services and capacitation block.
 
+The spatial character moves from city and public reception through shared
+transition space into protected residential use. Residential spaces should
+remain domestic in scale, welcoming, and connected to landscape.
+
 ### Board 01 — General implantation
 
 | Board requirement | Required interpretation | Official-program relation | Gate |
@@ -130,6 +134,28 @@ The west/green board zone must remain the child sector and playground/green zone
 ## Conflict rule
 
 Boards govern form and organization; the official PDF governs official quantitative program. Every material mismatch is an explicit reconciliation, never a silent substitution. User-approved requirements remain immutable during optimization.
+
+Record any material departure from a canonical board as `CANONICAL_DEVIATION`
+with the affected element, canonical board reference, verifiable reason,
+alternatives considered, impact, approving authority or decision status, and
+input/output hashes. Convenience, cost, or ease of modeling alone is not a
+valid basis for returning to the historical linear layout.
+
+## Decision and completion boundaries
+
+Within an explicitly authorized task, the agent may research, compare, and
+select reversible design approaches inside the verified source and requirement
+boundaries. Record the rationale and keep the choice revisable. A later review
+by Amanda is a separate human decision; never state or imply that she approved
+a choice unless there is evidence of that approval. This delegation does not
+authorize installs, process termination, cloud uploads, or other external
+actions outside the task's existing authorization; preserve applicable human
+gates for those actions.
+
+A technical `GOLDEN` release is a BIM artifact milestone, not proof that the
+academic TFG is complete. Academic authorship, advisor review, defense, and
+institutional submission retain their own owners and evidence. Do not claim
+`TFG_COMPLETE` while any required academic deliverable remains open.
 
 ## Current stale state
 

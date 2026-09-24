@@ -23,7 +23,8 @@ At session start, read `START_HERE.md` and follow its exact order: this file,
 `PROJECT_STATE.yaml`, `docs/spec/CURRENT.md`, `docs/plan/CURRENT.md`, and
 `state/HANDOFF.md`. Inspect `git status`, load the current state, identify its
 exact `next_task`, and review blockers. Record facts, constraints, and
-hypotheses separately before making an execution decision. During repository
+hypotheses separately before making an execution decision. Consult
+`docs/decisions/DECISIONS.md` for accepted project decisions. During repository
 recovery (P0), do not run Revit, write a model, or reclaim a writer lease. During
 BIM work after P0, review environment locks and the production writer lease and
 verify the Revit build and provider health before any write.

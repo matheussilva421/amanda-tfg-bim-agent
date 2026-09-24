@@ -23,12 +23,12 @@ def build_root(tmp_path: Path, *, tasks: list | None = None) -> Path:
         TaskRecord(
             id="P01-T01",
             phase="PHASE_01",
-            plan_path="docs/superpowers/plans/01-foundation-environment-state.md",
+            plan_path="docs/plan/CURRENT.md",
         ),
         TaskRecord(
             id="P01-T02",
             phase="PHASE_01",
-            plan_path="docs/superpowers/plans/01-foundation-environment-state.md",
+            plan_path="docs/plan/CURRENT.md",
             depends_on=["P01-T01"],
         ),
     ]:
@@ -50,12 +50,12 @@ def test_task_graph_command_reports_progress_without_mutating_state(
 
     assert result.exit_code == 0
     assert "total" in result.stdout
-    ready_line = [
+    ready_line = next(
         line for line in result.stdout.splitlines() if line.startswith("ready")
-    ][0]
-    blocked_line = [
+    )
+    blocked_line = next(
         line for line in result.stdout.splitlines() if line.startswith("blocked")
-    ][0]
+    )
     assert "P01-T01" in ready_line, "an unblocked task is ready"
     assert "P01-T02" not in ready_line, "a dependent is not ready yet"
     assert "P01-T02" in blocked_line
@@ -68,9 +68,9 @@ def test_task_graph_blocks_dependents_until_the_dependency_passes(
     monkeypatch.setenv("AMANDA_PROJECT_ROOT", str(build_root(tmp_path)))
 
     first = runner.invoke(app, ["task-graph"])
-    first_ready = [
+    first_ready = next(
         line for line in first.stdout.splitlines() if line.startswith("ready")
-    ][0]
+    )
     assert "P01-T01" in first_ready
 
     done = runner.invoke(
@@ -88,9 +88,9 @@ def test_task_graph_blocks_dependents_until_the_dependency_passes(
     assert done.exit_code == 0, done.stdout
 
     second = runner.invoke(app, ["task-graph"])
-    second_ready = [
+    second_ready = next(
         line for line in second.stdout.splitlines() if line.startswith("ready")
-    ][0]
+    )
     assert "P01-T02" in second_ready, "the dependent becomes ready on PASS"
 
 

@@ -20,10 +20,10 @@ Blender render.
 Evidence command:
 
 ```powershell
-rg -n --no-heading -i "render|preview|PNG" project/requirements/academic-deliverables.yaml project/requirements/program-summary.md docs/superpowers/plans/08-amanda-production-run.md
+rg -n --no-heading -i "render|preview|PNG" project/requirements/academic-deliverables.yaml project/requirements/program-summary.md docs/plan/CURRENT.md docs/spec/CURRENT.md
 ```
 
-Observed output: no matches in the two requirements files. P08 matches were
+Historical observation from 2026-09-15: no matches in the two requirements files. P08 matches were
 `floorplan/zoning SVG/PNG`, `preview export for every sheet`, `validate page
 count/nonblank previews`, `export selected PNG previews`, and Task 19's
 `preview/` directory.

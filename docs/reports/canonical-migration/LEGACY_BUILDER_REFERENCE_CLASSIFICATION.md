@@ -20,7 +20,8 @@ The literal in `tests/unit/test_qa_layout_script.py` is a guard assertion that t
 
 ## Policy/documentation references
 
-`docs/superpowers/plans/11-canonical-pavilion-migration.md` and this handoff mention the legacy builder as a migration rule. They do not execute it.
+The historical migration plan, preserved in Git history, and this report
+mention the legacy builder as a migration rule. They do not execute it.
 
 ## Migrated active consumers
 

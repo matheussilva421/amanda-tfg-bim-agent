@@ -1,8 +1,13 @@
 # Canonical pavilion migration verification
 
+> Historical evidence snapshot from 2026-09-23. The plan and worktree named
+> below were archived during repository recovery. This report records the
+> state and checks observed then; use `docs/spec/CURRENT.md`,
+> `docs/plan/CURRENT.md`, and `state/HANDOFF.md` for active direction.
+
 **Date:** 2026-09-23
 
-**Plan:** `docs/superpowers/plans/11-canonical-pavilion-migration.md`, Task 10
+**Historical source:** canonical pavilion migration plan, Task 10 (preserved in Git history)
 
 **Worktree:** `codex/canonical-pavilion-migration`
 
@@ -63,6 +68,10 @@ The focused counts overlap and must not be summed. Final pytest used the project
 
 The same nine failure families were recorded at the pre-Task-10 full-suite baseline (910 passed, 9 failed). No private source manifest was rewritten, no PDF was fabricated, and no dependency environment was installed to make these checks appear green.
 
-## Exact continuation
+## Historical continuation snapshot
+
+The following records the continuation state observed on 2026-09-23. It is not
+an instruction to resume that work. Current task selection is owned by
+`PROJECT_STATE.yaml` and `state/HANDOFF.md`.
 
 Plan 11 Task 11 state migration is applied in worktree revision 172. `PROJECT_STATE.yaml` selects S02 under `USER_DIRECTED` parti authority and points to `P08-CAN-T07`; old linear `P08-T13..T19` tasks are suspended and their evidence remains intact. The archived R12 file was re-read at 4,345,856 bytes with SHA-256 `ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29`. The worktree-local canonical target does not exist. Before creating it, perform the fresh live Revit/provider and writer-lease checks in Plan 11 Task 12. BIM-00 is required before R04 geometry; `CANONICAL_GEOMETRIC_ACCEPTANCE` and visual regressions R04/R06/R08/R12/R13/R15 remain open, site/accessibility evidence is incomplete, and R16 remains blocked.

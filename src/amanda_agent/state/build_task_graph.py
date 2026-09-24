@@ -1,14 +1,15 @@
-"""Derive ``state/task-graph.yaml`` from the canonical phase plans.
+"""Build a task registry from explicitly supplied structured plan markdown.
 
-The markdown plans are the single source of truth for task identity. This
-module parses the ``### Task ... [Pnn-Tnn]`` headings out of
-``docs/superpowers/plans/`` and writes the registry the scheduler consumes, so
-a plan edit cannot silently desynchronise the graph.
+The current project plan is narrative, while ``state/task-graph.yaml`` carries
+durable outcomes and evidence. The standalone entry point therefore refuses
+to regenerate that state from the narrative plan; callers may still use the
+parser helpers with an explicit structured plan directory.
 """
 
 from __future__ import annotations
 
 import re
+from itertools import pairwise
 from pathlib import Path
 
 from .tasks import TaskRecord, TaskRegistry, load_registry
@@ -159,9 +160,9 @@ def _wire_sequential_dependencies(registry: TaskRegistry) -> None:
     for record in registry.tasks.values():
         by_phase.setdefault(record.phase, []).append(record.id)
 
-    for phase, task_ids in by_phase.items():
+    for task_ids in by_phase.values():
         ordered = sorted(task_ids)
-        for previous, current in zip(ordered, ordered[1:]):
+        for previous, current in pairwise(ordered):
             if current in EXPLICIT_DEPENDENCIES:
                 continue
             registry.tasks[current].depends_on = [previous]
@@ -181,9 +182,15 @@ def _wire_sequential_dependencies(registry: TaskRegistry) -> None:
 def main() -> int:
     root = Path(__file__).resolve().parents[3]
     target = root / "state" / "task-graph.yaml"
-    registry = regenerate(root / "docs" / "superpowers" / "plans", target)
-    print("wrote " + str(target) + " with " + str(len(registry.tasks)) + " tasks")
-    return 0
+    current_plan = root / "docs" / "plan" / "CURRENT.md"
+    if not current_plan.is_file() or not target.is_file():
+        print("refusing task-graph regeneration: current plan or durable registry is missing")
+        return 2
+    print(
+        "refusing task-graph regeneration from narrative CURRENT plan; "
+        "durable task status and evidence were left unchanged"
+    )
+    return 2
 
 
 if __name__ == "__main__":

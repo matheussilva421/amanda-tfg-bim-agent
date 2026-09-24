@@ -1,8 +1,8 @@
 # AMANDA-RUN-001 — comparação dos finalistas
 
-**Status deste documento:** DRAFT/PENDING — insumo de P08-T09. A recomendação abaixo é delegada ao agente e aguarda revisão de Amanda/Matheus. Este documento não altera `state/`, não grava seleção no decision-register e não muda o status de nenhuma tarefa.
+**Status atual deste documento:** HISTORICAL_REFERENCE — a comparação foi um insumo DRAFT/PENDING de P08-T09 e nunca gravou uma seleção no estado ou no decision-register. S02 ficou obsoleto após a expansão para quatro pranchas; esta análise não autoriza retomar essa seleção.
 
-**Caminho canônico:** o plano `docs/superpowers/plans/08-amanda-production-run.md` fixa `solutions/finalists/comparison.md` para P08-T09. O mesmo caminho aparece no plano combinado de revisão. Portanto, este é o arquivo canônico; não foi usado o fallback `design-engine/runs/AMANDA-RUN-001/finalists/comparison.md`.
+Na época, `solutions/finalists/comparison.md` foi o arquivo canônico de P08-T09 e o fallback `design-engine/runs/AMANDA-RUN-001/finalists/comparison.md` não foi usado. A orientação ativa agora está em `docs/spec/CURRENT.md` e `docs/plan/CURRENT.md`; nenhuma identidade nova de solução foi escolhida durante a recuperação.
 
 **Data da análise:** 2026-09-15 23:49:41 -03:00. **Dados examinados:** somente os artefatos dos dois finalistas, o programa/site em disco e o código de scoring/refinamento citado abaixo. Os PNGs `floorplan` e `zoning` dos dois candidatos foram inspecionados visualmente.
 

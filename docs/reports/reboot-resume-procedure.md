@@ -1,13 +1,16 @@
-# P07-T19 — reboot/resume procedure
+# P07-T19 — reboot/resume procedure (historical drill)
 
 Data: 2026-09-15  
 Status: `PREPARED_PARTIAL`; a máquina não foi reiniciada.
 
 ## Procedimento validado nesta sessão
 
+Este registro descreve o procedimento observado na data acima; o fluxo ativo
+usa o handoff único em `state/HANDOFF.md`.
+
 Foi validada localmente a preparação do procedimento:
 
-- `RESUME_AFTER_REBOOT.md` foi gerado de forma determinística e com redaction;
+- o contexto de retomada foi gerado de forma determinística e com redaction;
 - o checkpoint `revit/lab/custom-api/T18_LAST_PASS.rvt` foi lido pelo manifesto
   e seu SHA-256 foi recalculado: `8ccab171e89fa4ac414f9ca3c57b5c4161cd7ee6dd61f45f86529703ee281cb2`;
 - o estado e o task graph foram lidos do disco, sem edição por este procedimento;
@@ -32,7 +35,7 @@ Set-Location 'C:\Users\slvma\Downloads\Github\Projeto Amanda'
 $env:PYTHONIOENCODING='utf-8'
 Get-Content -Raw AGENTS.md
 Get-Content -Raw PROJECT_STATE.yaml
-Get-Content -Raw RESUME_AFTER_REBOOT.md
+Get-Content -Raw state/HANDOFF.md
 git status --short --branch
 & './.venv/Scripts/python.exe' -m amanda_agent doctor
 & './.venv/Scripts/python.exe' -m amanda_agent status

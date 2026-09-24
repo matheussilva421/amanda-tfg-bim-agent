@@ -54,7 +54,7 @@ def test_resume_writer_redacts_secret_values(tmp_path: Path):
     )
 
     content = path.read_text(encoding="utf-8")
-    assert content == render_resume_after_reboot(
+    assert render_resume_after_reboot(
         phase="PHASE_07B",
         last_pass_task="P07-T15",
         reboot_reason="token=super-secret-value",
@@ -63,10 +63,48 @@ def test_resume_writer_redacts_secret_values(tmp_path: Path):
         expected_provider_state="provider healthy",
         verification_commands=["python -m amanda_agent status --api-key=abc12345"],
         next_task="P07-T17",
-    )
+    ) in content
     assert "super-secret-value" not in content
     assert "abc12345" not in content
     assert "[REDACTED]" in content
+
+
+def test_resume_writer_updates_canonical_handoff_without_overwriting_context(
+    tmp_path: Path,
+):
+    handoff = tmp_path / "state" / "HANDOFF.md"
+    handoff.parent.mkdir()
+    handoff.write_text(
+        "# Current Handoff\n\n## Project context\nKeep this context.\n",
+        encoding="utf-8",
+    )
+    values = {
+        "phase": "PHASE_07B",
+        "last_pass_task": "P07-T15",
+        "reboot_reason": "controlled restart",
+        "checkpoint": None,
+        "expected_revit_state": "closed",
+        "expected_provider_state": "healthy",
+        "verification_commands": ["python -m amanda_agent doctor"],
+        "next_task": "P07-T17",
+    }
+
+    first_path = write_resume_after_reboot(tmp_path, **values)
+    first_content = handoff.read_text(encoding="utf-8")
+    second_path = write_resume_after_reboot(
+        tmp_path, **{**values, "next_task": "P07-T18"}
+    )
+    second_content = handoff.read_text(encoding="utf-8")
+
+    assert first_path == handoff
+    assert second_path == handoff
+    assert "Keep this context." in second_content
+    assert "P07-T18" in second_content
+    assert "P07-T17" not in second_content
+    assert second_content.count("BEGIN GENERATED REBOOT RECOVERY CONTEXT") == 1
+    assert second_content.count("END GENERATED REBOOT RECOVERY CONTEXT") == 1
+    assert first_content.count("BEGIN GENERATED REBOOT RECOVERY CONTEXT") == 1
+    assert not (tmp_path / "RESUME_AFTER_REBOOT.md").exists()
 
 
 def test_resume_file_can_record_missing_checkpoint_honestly(tmp_path: Path):

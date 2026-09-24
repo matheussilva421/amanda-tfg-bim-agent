@@ -1,4 +1,8 @@
-# Handoff incremental — P02-T15
+# Historical close/reopen evidence — P02-T15
+
+> This file preserves the detailed Revit close/reopen evidence observed on
+> 2026-09-15. Its former handoff instructions are historical. Current execution
+> is selected through `PROJECT_STATE.yaml` and `state/task-graph.yaml`.
 
 Data: 2026-09-15
 
@@ -50,13 +54,15 @@ Data: 2026-09-15
 
 O inventário completo está em `t15-close-reopen-summary.json`. Os arquivos `.000N` de fixtures virgens que ainda existem coincidem com o baseline; os arquivos canônicos de cada exercício são cópias mutadas deliberadamente. O scan não encontrou alteração no baseline imutável nem no fixture T16 já aprovado.
 
-## Retomada
+## Historical follow-up recorded at the time
 
-1. Consumir este resultado no grafo do orquestrador como close/reopen concluído.
-2. Manter T15 geral como `PASS_WITH_WARNINGS` enquanto o ambiente 328668 continuar sem região fechada; não declarar a geometria do ambiente como 16 m².
-3. O drill P02-T18 já foi concluído separadamente; consumir
+1. O resultado indicava consumir close/reopen no grafo do orquestrador.
+2. T15 geral deveria permanecer `PASS_WITH_WARNINGS` enquanto o ambiente 328668 continuasse sem região fechada; a geometria do ambiente não foi declarada como 16 m².
+3. O drill P02-T18 foi registrado separadamente; o relatório indicado era
    `tool-lab/custom-api/results/t18-drill-report.md` e
    `t18-drill-summary.json` como `PASS_WITH_WARNINGS`.
+
+Esses encaminhamentos descrevem o estado daquela data e não são tarefas atuais.
 
 ## Git
 

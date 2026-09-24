@@ -24,7 +24,9 @@ git remote -v
 ```
 
 `docs/review/package_review.py` existe (4.575 bytes) e foi lido antes da
-verificação. Ele escreve `docs/superpowers/plans/**`, o ZIP de planos e
+verificação. Na implementação avaliada naquela data, ele escrevia o diretóriode planos estruturados e um ZIP de planos. Esses artefatos foram arquivados na
+recuperação de 2026-09-24; esta descrição é evidência histórica, não o fluxo
+atual. O inventário ativo está em `docs/plan/CURRENT.md` e `docs/spec/CURRENT.md`.
 `docs/review/package-validation.json`; por isso não foi executado diretamente,
 pois esses caminhos estão fora do write set desta tarefa. A mesma lógica de
 separação de seções foi executada em memória:
