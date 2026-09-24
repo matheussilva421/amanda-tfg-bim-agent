@@ -71,8 +71,9 @@ known historical freeze mismatch.
 
 The independent review approved the inventory, hashes, retention decisions,
 and recorded test evidence. It found one stale handoff status; the status was
-corrected and the scoped re-review approved the correction. The Task 9 commit
-and push are the remaining closeout actions for this task.
+corrected and the scoped re-review approved the correction. Commit
+`c4adceb70c3824dba50c8ef3010472b94664b6f4` is on `main` and was pushed to
+`origin/main`; fresh remote verification confirmed all four refs match.
 
 The 112-row RVT baseline is classified: 31 `LAB_FIXTURE`, 4
 `CHECKPOINT_R04`, 4 `CHECKPOINT_R06`, 1 `CHECKPOINT_R08`, 1
@@ -105,8 +106,8 @@ commit, and push are still pending. `PROJECT_STATE.yaml` remains at
 
 ## Exact resume
 
-Commit/push the reviewed Task 9 tracked changes, then begin Task 10: inventory
-tracked `design-engine/` files, classify each run/candidate as
+Begin Task 10: inventory tracked `design-engine/` files, classify each
+run/candidate as
 `ACTIVE_CURRENT`, `STALE_EVIDENCE`, `HISTORICAL_REPRODUCIBLE`, or `UNKNOWN`,
 create no current solution, remove only proven reproducible historical
 artifacts, and run the focused canonical/design-engine tests. Do not open
@@ -115,7 +116,8 @@ may remove `.recovery/` or set the formal next task to P1-T01.
 
 ## Git checkpoint
 
-Task 8 closed at `HEAD = main = origin/main =
-5d95d12ce87559d0e986ce4db1dc880c550c8534`, with exactly one worktree. Task 9
-is reviewed and ready to commit; `.recovery/` and the three quarantined RVT
-duplicates remain local and are intentionally preserved for Task 13.
+Task 9 closed at `HEAD = main = origin/main =
+c4adceb70c3824dba50c8ef3010472b94664b6f4`, with exactly one worktree. A
+fresh `git ls-remote` check confirmed the remote main SHA. `.recovery/` and the
+three quarantined RVT duplicates remain local and are intentionally preserved
+for Task 13.
