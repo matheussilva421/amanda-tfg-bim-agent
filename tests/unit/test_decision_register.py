@@ -221,3 +221,22 @@ def test_yaml_register_contains_project_and_canonical_topics_and_academic_scope(
     assert any("42 pessoas" in option for option in baseline.rejected_options)
     assert baseline.review_status is ReviewStatus.AMANDA_REVIEW_PENDING
     assert register.academic_scope.get("academic-pranchas").date is None
+
+
+def test_p3_detail_decision_is_recorded_as_provisional_and_hash_valid():
+    root = Path(__file__).parents[2]
+    register = load_decision_register(
+        root / "project" / "requirements" / "decision-register.yaml"
+    )
+
+    detail = register.get("DEC-CANONICAL-DETAIL-003")
+
+    assert detail.supersedes == "DEC-CANONICAL-DETAIL-002"
+    assert detail.approval_hash_valid is True
+    assert detail.selection_kind is SelectionKind.PROVISIONAL_ASSUMPTION
+    assert detail.fact_class is FactClass.DESIGN_HYPOTHESIS
+    assert detail.validation_status is ValidationStatus.BLOCKED_BY_INPUT
+    assert detail.review_status is ReviewStatus.AMANDA_REVIEW_PENDING
+    assert detail.verification_required is True
+    assert sum(ref.startswith("canonical/") for ref in detail.source_refs) == 4
+    assert any("programa_necessidades.pdf#sha256=" in ref for ref in detail.source_refs)

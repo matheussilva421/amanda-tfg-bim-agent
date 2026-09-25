@@ -1,0 +1,48 @@
+{
+  "approval_hash": "eea4a342a4d732cbc986a16d01d93e3981e79a5931f8d99ebef82c61d24299ec",
+  "artifacts": [
+    {
+      "bytes": 5180,
+      "path": "canonical-qa.json",
+      "sha256": "6cc5fff7ac80cc397d6fa6f45ac8cb1d2a87161ac0e2c83f57814c7b97f6d91d"
+    },
+    {
+      "bytes": 125984,
+      "path": "finalists/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C/geometry.json",
+      "sha256": "4814556d5e3fbd3034394744473c37c6ac94938323f0d5efffe525547462759d"
+    },
+    {
+      "bytes": 132661,
+      "path": "finalists/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C/solution.json",
+      "sha256": "8caf4ddeff6a9cca2487c8e6ff40efaaeada99a7a825eac8d742dd916003e3c2"
+    },
+    {
+      "bytes": 14895,
+      "path": "layout-preview.svg",
+      "sha256": "0b67fd5e2c2589d2b9a9a8b5fe23c96a4a69dbf7ad6183d74ba4e6ccefa1db6e"
+    },
+    {
+      "bytes": 1787,
+      "path": "run.json",
+      "sha256": "fced10824a481e83f91b5b074ee272c0a88bbe8f1ccedfd28f18d2716faae4b6"
+    },
+    {
+      "bytes": 7009,
+      "path": "selection.json",
+      "sha256": "d64f6b1139718227bf8fb9094cdd5bc3e2deb4b04b3e7d543d726d66d17c0f05"
+    }
+  ],
+  "canonical_source_hashes": [
+    "30d009357a095e7794e0e915dcd2fdb04cd6b9aab9f4d13f5663ed54d6f20240",
+    "123b95633ae1be643da84f2226c6337d65a74f7d1337d6b27d94bdead1c3a263",
+    "5b96c2d5cc770742ee32d51b83b25993fe8b8a1638bf94da56ba8ef771031381",
+    "c56b806f805d9c4aa1e6015ba6b56ac960204066721f93ef08cbadfb312c0386"
+  ],
+  "identity_fingerprint": "4b1275558a6c2c40828dbba1422c0063703c182fd9d7b800b36a448499a073c4",
+  "layout_hash": "7fde3e34a162167ce27fe2e3158a38f446882816a7c81bb326d486bdfaaae2e2",
+  "program_source_sha256": "11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17",
+  "reconciliation_report_sha256": "8d297d9c35e0fcdec8b36e5857e03c9e992cbfeb9dab082dddf2106a2ed5025b",
+  "run_id": "AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C",
+  "schema_version": 1,
+  "solution_id": "AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C"
+}

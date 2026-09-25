@@ -24,14 +24,17 @@ from amanda_agent.design.canonical_reference import (
     CanonicalReferenceError,
     CanonicalReferenceProfile,
 )
+from amanda_agent.production.canonical_identity import (
+    CanonicalIdentityError,
+    CanonicalSolutionIdentity,
+    load_canonical_solution_identity,
+)
 from amanda_agent.production.selection import (
-    SELECTION_SOLUTION_ID,
     SelectionError,
     build_selection,
 )
 
-GENERATION_RUN = "AMANDA-RUN-002-PAVILION"
-GENERATION_TIMESTAMP = "2026-09-23T00:00:00Z"
+GENERATION_TIMESTAMP = "2026-09-25T10:53:10Z"
 
 
 class CanonicalRunError(RuntimeError):
@@ -163,6 +166,26 @@ def _qa_payload(checks: list[CanonicalCheck]) -> dict:
     }
 
 
+def _require_p3_qa(checks: list[CanonicalCheck], qa: dict) -> None:
+    can011 = [item for item in checks if item.check_id == "CANON-011"]
+    expected = {
+        "checks": 18,
+        "pass": 17,
+        "blocked": 1,
+        "fail": 0,
+        "critical_failures": 0,
+    }
+    if (
+        qa["summary"] != expected
+        or len(can011) != 1
+        or can011[0].status != "BLOCKED"
+        or any(item.status != "PASS" for item in checks if item.check_id != "CANON-011")
+    ):
+        raise CanonicalRunError(
+            "P3 hard QA requires 17 PASS, 0 FAIL, and CANON-011 BLOCKED"
+        )
+
+
 def _existing_outputs_match(output_dir: Path, expected: dict[str, bytes]) -> bool:
     existing = {
         path.relative_to(output_dir).as_posix(): path.read_bytes()
@@ -175,6 +198,7 @@ def _existing_outputs_match(output_dir: Path, expected: dict[str, bytes]) -> boo
 def build_canonical_pavilion_run(
     program: dict,
     profile: CanonicalReferenceProfile,
+    identity: CanonicalSolutionIdentity,
     output_dir: Path,
 ) -> Path:
     """Write deterministic run, selection, geometry, QA, and SVG evidence offline."""
@@ -182,22 +206,28 @@ def build_canonical_pavilion_run(
     layout = build_canonical_pavilion_layout(program, profile)
     checks = run_canonical_checks(layout, profile)
     qa = _qa_payload(checks)
-    if qa["summary"]["critical_failures"]:
-        failed = [
-            item["check_id"]
-            for item in qa["checks"]
-            if item["severity"] == "CRITICAL" and item["status"] == "FAIL"
-        ]
-        raise CanonicalRunError(
-            "critical canonical QA failures: " + ", ".join(failed)
-        )
+    _require_p3_qa(checks, qa)
+
+    identity_paths = tuple(item.path for item in identity.canonical_boards)
+    identity_hashes = tuple(item.sha256 for item in identity.canonical_boards)
+    profile_paths = tuple(f"docs/source/{image}" for image in profile.canonical_images)
+    if identity_paths != profile_paths or identity_hashes != profile.source_hashes:
+        raise CanonicalRunError("P2 identity does not match the four canonical board hashes")
+    program_hash = str(program.get("baseline", {}).get("source_sha256", ""))
+    if identity.program_source.sha256 != program_hash:
+        raise CanonicalRunError("P2 identity does not match the official program hash")
+    if identity.reconciliation_id != "P1-T01":
+        raise CanonicalRunError("P2 identity is not bound to the P1-T01 reconciliation")
+
+    generation_run = identity.solution_id
 
     try:
         selection = build_selection(
             layout,
-            generation_run=GENERATION_RUN,
+            generation_run=generation_run,
             timestamp=GENERATION_TIMESTAMP,
             profile=profile,
+            solution_identity=identity,
         )
     except SelectionError as exc:
         raise CanonicalRunError(str(exc)) from exc
@@ -213,10 +243,11 @@ def build_canonical_pavilion_run(
         "selection.json": _json_bytes(
             {
                 "schema_version": 1,
-                "run_id": GENERATION_RUN,
+                "run_id": generation_run,
                 "solution_id": selection.solution.solution_id,
                 "layout_hash": selection.layout_hash,
                 "approval_hash": selection.approval_hash,
+                "identity_fingerprint": identity.identity_fingerprint,
                 "parti_decision": selection.parti_decision.model_dump(mode="json"),
                 "detail_decision": selection.decision.model_dump(mode="json"),
             }
@@ -225,8 +256,11 @@ def build_canonical_pavilion_run(
     program_sha256 = _sha256(_json_bytes(program))
     run_value = {
         "schema_version": 1,
-        "run_id": GENERATION_RUN,
+        "run_id": generation_run,
         "solution_id": selection.solution.solution_id,
+        "identity_fingerprint": identity.identity_fingerprint,
+        "reconciliation_id": identity.reconciliation_id,
+        "reconciliation_report_sha256": identity.reconciliation_report.sha256,
         "run_status": "OFFLINE_CANDIDATE",
         "generated_utc": GENERATION_TIMESTAMP,
         "program_person_capacity": selection.solution.program_person_capacity,
@@ -242,6 +276,7 @@ def build_canonical_pavilion_run(
         ],
         "layout_hash": selection.layout_hash,
         "approval_hash": selection.approval_hash,
+        "decision_approval_hash": selection.decision.approval_hash,
         "bim_eligible": selection.solution.bim_eligible,
         "canonical_qa_summary": qa["summary"],
         "revit_calls": 0,
@@ -250,11 +285,14 @@ def build_canonical_pavilion_run(
     files["artifact-manifest.json"] = _json_bytes(
         {
             "schema_version": 1,
-            "run_id": GENERATION_RUN,
+            "run_id": generation_run,
             "solution_id": selection.solution.solution_id,
+            "identity_fingerprint": identity.identity_fingerprint,
             "approval_hash": selection.approval_hash,
             "layout_hash": selection.layout_hash,
             "canonical_source_hashes": list(profile.source_hashes),
+            "program_source_sha256": identity.program_source.sha256,
+            "reconciliation_report_sha256": identity.reconciliation_report.sha256,
             "artifacts": [
                 {
                     "path": name,
@@ -295,13 +333,18 @@ def build_canonical_pavilion_run(
     return output_dir
 
 
-def _load_inputs(repository_root: Path) -> tuple[dict, CanonicalReferenceProfile]:
+def _load_inputs(
+    repository_root: Path,
+) -> tuple[dict, CanonicalReferenceProfile, CanonicalSolutionIdentity]:
     program_path = Path(repository_root) / "project/requirements/program.json"
     try:
         program = json.loads(program_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         raise CanonicalRunError(f"cannot load official program: {program_path}") from exc
-    return program, CanonicalReferenceProfile.load(Path(repository_root))
+    repository_root = Path(repository_root)
+    profile = CanonicalReferenceProfile.load(repository_root)
+    identity = load_canonical_solution_identity(repository_root)
+    return program, profile, identity
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -309,17 +352,22 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--repository-root", type=Path, default=REPOSITORY_ROOT)
     parser.add_argument("--output-dir", type=Path)
     args = parser.parse_args(argv)
-    output_dir = args.output_dir or (
-        args.repository_root / "design-engine" / "runs" / GENERATION_RUN
-    )
     try:
-        program, profile = _load_inputs(args.repository_root)
-        created = build_canonical_pavilion_run(program, profile, output_dir)
-    except (CanonicalRunError, CanonicalReferenceError, ValueError) as exc:
+        program, profile, identity = _load_inputs(args.repository_root)
+        output_dir = args.output_dir or (
+            args.repository_root / "design-engine" / "runs" / identity.solution_id
+        )
+        created = build_canonical_pavilion_run(program, profile, identity, output_dir)
+    except (
+        CanonicalRunError,
+        CanonicalReferenceError,
+        CanonicalIdentityError,
+        ValueError,
+    ) as exc:
         print(f"canonical run blocked: {exc}", file=sys.stderr)
         return 2
     print(f"offline canonical run: {created}")
-    print(f"solution id: {SELECTION_SOLUTION_ID}")
+    print(f"solution id: {identity.solution_id}")
     print("BIM eligible: false; Revit calls: 0")
     return 0
 

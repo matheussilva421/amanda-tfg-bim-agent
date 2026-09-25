@@ -10,6 +10,11 @@ import pytest
 
 from amanda_agent.design.canonical_qa import CanonicalCheck
 from amanda_agent.design.canonical_reference import CanonicalReferenceProfile
+from amanda_agent.design.models import compute_design_approval_hash
+from amanda_agent.production.canonical_identity import (
+    assign_canonical_solution_identity,
+)
+from amanda_agent.requirements.decisions import load_decision_register
 from scripts import build_canonical_pavilion_run as run_builder
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -90,15 +95,96 @@ def test_script_cli_loads_project_sources_without_external_pythonpath():
     assert "--output-dir" in completed.stdout
 
 
-def test_current_four_board_sources_cannot_create_stale_s02_run(tmp_path: Path):
-    profile = _profile()
-    output = tmp_path / "must-not-create"
+def _build_current_run(output: Path) -> tuple[int, Path]:
+    exit_code = run_builder.main(
+        ["--repository-root", str(ROOT), "--output-dir", str(output)]
+    )
+    return exit_code, output
 
-    with pytest.raises(
-        run_builder.CanonicalRunError,
-        match="STALE_BY_CANONICAL_REFERENCE_EXPANSION",
-    ):
-        run_builder.build_canonical_pavilion_run(PROGRAM, profile, output)
+
+def test_p3_loads_p2_identity_and_emits_a_distinct_offline_candidate(tmp_path: Path):
+    output = tmp_path / "canonical-candidate"
+
+    exit_code, created = _build_current_run(output)
+
+    assert exit_code == 0
+    identity = assign_canonical_solution_identity(ROOT)
+    run = json.loads((created / "run.json").read_text(encoding="utf-8"))
+    solution = json.loads(
+        next(created.glob("finalists/*/solution.json")).read_text(encoding="utf-8")
+    )
+    selection = json.loads((created / "selection.json").read_text(encoding="utf-8"))
+    decision = load_decision_register(
+        ROOT / "project/requirements/decision-register.yaml"
+    ).get("DEC-CANONICAL-DETAIL-003")
+    assert run["solution_id"] == identity.solution_id
+    assert run["solution_id"] != "AMANDA-RUN-002-PAVILION-S02"
+    assert run["run_id"] == identity.solution_id
+    assert "AMANDA-RUN-002" not in run["run_id"]
+    assert solution["approval_hash"] == compute_design_approval_hash(solution)
+    assert solution["geometry"]["canonical_source_hashes"] == [
+        source.sha256 for source in identity.canonical_boards
+    ]
+    assert run["program_source_sha256"] == identity.program_source.sha256
+    assert run["revit_calls"] == 0
+    assert run["bim_eligible"] is False
+    assert selection["detail_decision"] == decision.model_dump(mode="json")
+
+
+def test_p3_requires_seventeen_structural_passes_and_keeps_canon_011_blocked(
+    tmp_path: Path,
+):
+    exit_code, created = _build_current_run(tmp_path / "canonical-qa")
+
+    assert exit_code == 0
+    qa = json.loads((created / "canonical-qa.json").read_text(encoding="utf-8"))
+    assert qa["summary"] == {
+        "checks": 18,
+        "pass": 17,
+        "blocked": 1,
+        "fail": 0,
+        "critical_failures": 0,
+    }
+    can011 = next(item for item in qa["checks"] if item["check_id"] == "CANON-011")
+    assert can011["status"] == "BLOCKED"
+    assert "reviewed_stages=[]" in can011["evidence"]
+    assert "required_stages=" in can011["evidence"]
+
+
+def test_p3_layout_and_approval_hashes_are_repeatable(tmp_path: Path):
+    first_exit, first_dir = _build_current_run(tmp_path / "first")
+    second_exit, second_dir = _build_current_run(tmp_path / "second")
+
+    assert first_exit == second_exit == 0
+    assert _files(first_dir) == _files(second_dir)
+
+
+def test_p3_hashed_run_artifacts_are_not_line_ending_normalized():
+    path = (
+        "design-engine/runs/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C/run.json"
+    )
+    completed = subprocess.run(
+        ["git", "check-attr", "text", "--", path],
+        cwd=ROOT,
+        capture_output=True,
+        check=False,
+        text=True,
+        timeout=30,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    assert f"{path}: text: unset" in completed.stdout
+
+
+def test_builder_rejects_identity_mismatched_four_board_profile(tmp_path: Path):
+    profile = _profile()
+    identity = assign_canonical_solution_identity(ROOT)
+    output = tmp_path / "mismatched-source"
+
+    with pytest.raises(run_builder.CanonicalRunError, match="identity.*board hashes"):
+        run_builder.build_canonical_pavilion_run(
+            PROGRAM, profile, identity, output
+        )
 
     assert not output.exists()
 
@@ -107,7 +193,15 @@ def test_critical_canonical_failure_returns_nonzero_without_partial_run(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ):
     output = tmp_path / "blocked-run"
-    monkeypatch.setattr(run_builder, "_load_inputs", lambda _root: (PROGRAM, _profile()))
+    monkeypatch.setattr(
+        run_builder,
+        "_load_inputs",
+        lambda _root: (
+            PROGRAM,
+            CanonicalReferenceProfile.load(ROOT),
+            assign_canonical_solution_identity(ROOT),
+        ),
+    )
     monkeypatch.setattr(
         run_builder,
         "run_canonical_checks",

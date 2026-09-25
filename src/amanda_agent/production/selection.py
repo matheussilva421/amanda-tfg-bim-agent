@@ -34,6 +34,7 @@ from amanda_agent.design.models import (
     MetricSet,
     compute_design_approval_hash,
 )
+from amanda_agent.production.canonical_identity import CanonicalSolutionIdentity
 from amanda_agent.requirements.decisions import (
     DecisionRecord,
     FactClass,
@@ -61,7 +62,7 @@ PREVIOUS_CANONICAL_DETAIL_DECISION_ID = "DEC-CANONICAL-DETAIL-002"
 SELECTION_DECISION_ID = "DEC-CANONICAL-DETAIL-003"
 SELECTION_TOPIC = "CANONICAL_PARTI_IMPLEMENTATION"
 STALE_SELECTION_SOLUTION_ID = "AMANDA-RUN-002-PAVILION-S02"
-# P1-T01 leaves identity assignment to the next task.
+# Compatibility sentinel only; P3 selection receives the persisted P2 identity.
 SELECTION_SOLUTION_ID: str | None = None
 SELECTION_ARCHETYPE = "CANONICAL_PAVILION_CLUSTER"
 SELECTED_OPTION = (
@@ -345,6 +346,7 @@ def _build_canonical_selection(
     *,
     generation_run: str,
     timestamp: str,
+    solution_identity: CanonicalSolutionIdentity | None = None,
 ) -> Selection:
     if not layout.rooms or not layout.content_hash:
         raise SelectionError("canonical layout needs rooms and a content hash")
@@ -358,11 +360,25 @@ def _build_canonical_selection(
         profile.source_hashes
     ):
         raise SelectionError("layout and selection canonical board hashes differ")
-    active_solution_id = SELECTION_SOLUTION_ID
+    if solution_identity is not None:
+        identity_paths = tuple(item.path for item in solution_identity.canonical_boards)
+        identity_hashes = tuple(item.sha256 for item in solution_identity.canonical_boards)
+        profile_paths = tuple(f"docs/source/{image}" for image in profile.canonical_images)
+        if identity_paths != profile_paths or identity_hashes != profile.source_hashes:
+            raise SelectionError("P2 identity and canonical board hashes differ")
+        if solution_identity.program_source.sha256 != layout.parameters.get(
+            "program_source_sha256"
+        ):
+            raise SelectionError("P2 identity and official program hashes differ")
+    active_solution_id = (
+        solution_identity.solution_id
+        if solution_identity is not None
+        else SELECTION_SOLUTION_ID
+    )
     if active_solution_id is None or active_solution_id == STALE_SELECTION_SOLUTION_ID:
         raise SelectionError(
             "AMANDA-RUN-002-PAVILION-S02 is STALE_BY_CANONICAL_REFERENCE_EXPANSION; "
-            "P2 must assign a new solution identity before selection"
+            "load the persisted P2 identity before selection"
         )
     if active_solution_id in {
         LEGACY_SELECTION_SOLUTION_ID,
@@ -459,7 +475,7 @@ def _build_canonical_selection(
         "The earlier S01 normalized candidate is superseded by this content-bound "
         "geometry revision and no Revit geometry was written from S01. Site fit, "
         "canonical geometric acceptance, and required stage visual regressions "
-        "remain pending, so S02 is not BIM-eligible."
+        "remain pending, so this candidate is not BIM-eligible."
     )
     detail_decision = DecisionRecord(
         decision_id=SELECTION_DECISION_ID,
@@ -626,6 +642,7 @@ def build_canonical_selection(
     *,
     generation_run: str,
     timestamp: str,
+    solution_identity: CanonicalSolutionIdentity | None = None,
 ) -> Selection:
     """Build user-directed parti and delegated, still-provisional detail records."""
     return _build_canonical_selection(
@@ -633,6 +650,7 @@ def build_canonical_selection(
         profile,
         generation_run=generation_run,
         timestamp=timestamp,
+        solution_identity=solution_identity,
     )
 
 
@@ -642,6 +660,7 @@ def build_selection(
     generation_run: str,
     timestamp: str,
     profile: CanonicalReferenceProfile | None = None,
+    solution_identity: CanonicalSolutionIdentity | None = None,
 ) -> Selection:
     """Build only the active canonical selection; reject legacy geometry."""
     if not isinstance(layout, CanonicalPavilionLayout):
@@ -657,6 +676,7 @@ def build_selection(
         profile,
         generation_run=generation_run,
         timestamp=timestamp,
+        solution_identity=solution_identity,
     )
 
 

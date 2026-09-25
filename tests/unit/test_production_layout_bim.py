@@ -151,7 +151,7 @@ def _accessibility(layout) -> AccessibilityInput:
         required_space_ids=accessible,
         routes=[
             AccessibleRoute(
-                logical_id="ROUTE-ENTRANCE-%s" % room.logical_id,
+                logical_id=f"ROUTE-ENTRANCE-{room.logical_id}",
                 from_node=entrance,
                 to_node=room.logical_id,
                 measured_width_m=layout.corridor_width_m,
@@ -174,19 +174,19 @@ def _plans(registry, program, layout, tmp_path: Path, **overrides):
     """Build the stage plans with the approved selection by default."""
 
     solution = overrides.pop("solution", _DEFAULT_SELECTION["value"])
-    kwargs = dict(
-        program=program,
-        layout=layout,
-        registry=registry,
-        revit_build=BUILD,
-        tool_schema_hash=SCHEMA,
-        generation_run=RUN,
-        solution_id=solution.solution_id,
-        approval_hash=solution.approval_hash,
-        solution=solution,
-        accessibility_input=_accessibility(layout),
-        template_root=tmp_path,
-    )
+    kwargs = {
+        "program": program,
+        "layout": layout,
+        "registry": registry,
+        "revit_build": BUILD,
+        "tool_schema_hash": SCHEMA,
+        "generation_run": RUN,
+        "solution_id": solution.solution_id,
+        "approval_hash": solution.approval_hash,
+        "solution": solution,
+        "accessibility_input": _accessibility(layout),
+        "template_root": tmp_path,
+    }
     kwargs.update(overrides)
     return build_layout_stage_plans(**kwargs)
 
@@ -485,14 +485,15 @@ def test_no_plan_claims_a_final_validation(registry, program, layout, tmp_path):
 
 
 @pytest.fixture()
-def canonical_test_solution(canonical_layout, canonical_profile):
+def canonical_test_solution(canonical_layout, canonical_profile, canonical_test_identity):
     """Eligibility-shaped fixture for pure planner tests; never executable evidence."""
 
     selection = build_canonical_selection(
         canonical_layout,
         canonical_profile,
-        generation_run="AMANDA-RUN-002-PAVILION",
+        generation_run="AMANDA-RUN-TEST-CANONICAL",
         timestamp="2026-09-23T00:00:00Z",
+        solution_identity=canonical_test_identity,
     )
     # The actual candidate remains ineligible until migration evidence passes.
     # This status copy only allows the pure stage planner to be exercised; these
@@ -649,13 +650,14 @@ def test_canonical_r04_plans_distinct_block_masses_as_non_executable_hypotheses(
 
 
 def test_canonical_preacceptance_r04_accepts_provider_scope_mass_proof(
-    registry, canonical_layout, canonical_profile
+    registry, canonical_layout, canonical_profile, canonical_test_identity
 ):
     preacceptance_solution = build_canonical_selection(
         canonical_layout,
         canonical_profile,
-        generation_run="AMANDA-RUN-002-PAVILION",
+        generation_run="AMANDA-RUN-TEST-CANONICAL",
         timestamp="2026-09-23T00:00:00Z",
+        solution_identity=canonical_test_identity,
     )
     preacceptance_solution = preacceptance_solution.solution
     provider_registry = registry.model_copy(
@@ -686,26 +688,28 @@ def test_canonical_preacceptance_r04_accepts_provider_scope_mass_proof(
 
 
 def test_planning_only_compiles_candidate_through_r13_without_removing_write_gates(
-    registry, program, canonical_layout, canonical_profile, tmp_path
+    registry, program, canonical_layout, canonical_profile, canonical_test_identity, tmp_path
 ):
     selection = build_canonical_selection(
         canonical_layout,
         canonical_profile,
-        generation_run="AMANDA-RUN-002-PAVILION",
+        generation_run="AMANDA-RUN-TEST-CANONICAL",
         timestamp="2026-09-23T00:00:00Z",
+        solution_identity=canonical_test_identity,
     )
     candidate = selection.solution
     assert candidate.bim_eligible is False
 
 
 def test_canonical_preacceptance_compiles_only_through_r04_for_unaccepted_solution(
-    registry, program, canonical_layout, canonical_profile, tmp_path
+    registry, program, canonical_layout, canonical_profile, canonical_test_identity, tmp_path
 ):
     selection = build_canonical_selection(
         canonical_layout,
         canonical_profile,
-        generation_run="AMANDA-RUN-002-PAVILION",
+        generation_run="AMANDA-RUN-TEST-CANONICAL",
         timestamp="2026-09-23T00:00:00Z",
+        solution_identity=canonical_test_identity,
     )
     candidate = selection.solution
 
@@ -755,13 +759,14 @@ def test_canonical_preacceptance_compiles_only_through_r04_for_unaccepted_soluti
 
 
 def test_canonical_preacceptance_refuses_planning_beyond_r04(
-    registry, program, canonical_layout, canonical_profile, tmp_path
+    registry, program, canonical_layout, canonical_profile, canonical_test_identity, tmp_path
 ):
     selection = build_canonical_selection(
         canonical_layout,
         canonical_profile,
-        generation_run="AMANDA-RUN-002-PAVILION",
+        generation_run="AMANDA-RUN-TEST-CANONICAL",
         timestamp="2026-09-23T00:00:00Z",
+        solution_identity=canonical_test_identity,
     )
     candidate = selection.solution
 
@@ -832,13 +837,14 @@ def test_canonical_preacceptance_refuses_planning_beyond_r04(
 
 
 def test_planning_only_never_assigns_or_unblocks_operations_with_stale_capability_evidence(
-    registry, program, canonical_layout, canonical_profile, tmp_path
+    registry, program, canonical_layout, canonical_profile, canonical_test_identity, tmp_path
 ):
     selection = build_canonical_selection(
         canonical_layout,
         canonical_profile,
-        generation_run="AMANDA-RUN-002-PAVILION",
+        generation_run="AMANDA-RUN-TEST-CANONICAL",
         timestamp="2026-09-23T00:00:00Z",
+        solution_identity=canonical_test_identity,
     )
     stale_registry = registry.model_copy(
         update={

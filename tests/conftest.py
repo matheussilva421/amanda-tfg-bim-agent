@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 
@@ -9,6 +10,13 @@ from amanda_agent.design.canonical_pavilion_layout import (
     build_canonical_pavilion_layout,
 )
 from amanda_agent.design.canonical_reference import CanonicalReferenceProfile
+from amanda_agent.production.canonical_identity import (
+    OFFICIAL_PROGRAM_PATH,
+    RECONCILIATION_REPORT_PATH,
+    CanonicalSolutionIdentity,
+    SourceHashBinding,
+)
+from amanda_agent.requirements.program import PROGRAM_SOURCE_SHA256
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -66,3 +74,42 @@ def canonical_profile() -> CanonicalReferenceProfile:
 @pytest.fixture(scope="session")
 def canonical_layout(canonical_program, canonical_profile):
     return build_canonical_pavilion_layout(canonical_program, canonical_profile)
+
+
+@pytest.fixture(scope="session")
+def canonical_test_identity(canonical_profile):
+    """Synthetic but source-bound identity for non-executing planner tests."""
+    boards = tuple(
+        SourceHashBinding(path=f"docs/source/{path}", sha256=digest)
+        for path, digest in zip(
+            canonical_profile.canonical_images,
+            canonical_profile.source_hashes,
+            strict=True,
+        )
+    )
+    program = SourceHashBinding(
+        path=OFFICIAL_PROGRAM_PATH,
+        sha256=PROGRAM_SOURCE_SHA256,
+    )
+    report = SourceHashBinding(
+        path=RECONCILIATION_REPORT_PATH,
+        sha256="e" * 64,
+    )
+    material = {
+        "canonical_boards": [item.model_dump(mode="json") for item in boards],
+        "program_source": program.model_dump(mode="json"),
+        "reconciliation_id": "P1-T01",
+        "reconciliation_report": report.model_dump(mode="json"),
+    }
+    encoded = json.dumps(
+        material, ensure_ascii=True, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    fingerprint = hashlib.sha256(encoded).hexdigest()
+    return CanonicalSolutionIdentity(
+        solution_id="AMANDA-RUN-003-PAVILION-CANONICAL-" + fingerprint[:12].upper(),
+        identity_fingerprint=fingerprint,
+        canonical_boards=boards,
+        program_source=program,
+        reconciliation_id="P1-T01",
+        reconciliation_report=report,
+    )

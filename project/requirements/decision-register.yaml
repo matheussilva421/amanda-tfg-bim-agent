@@ -507,6 +507,60 @@ decisions:
   rejected_options:
   - AMANDA-RUN-001-S01 linear bar
   source_sha256: null
+- decision_id: DEC-CANONICAL-DETAIL-003
+  topic: CANONICAL_PARTI_IMPLEMENTATION
+  alternatives:
+  - 'PROVISIONAL_ASSUMPTION: board-aligned normalized pavilions and curved covered paths around a protected central patio'
+  - Reuse of the superseded linear R12 geometry, prohibited
+  selected_option: 'PROVISIONAL_ASSUMPTION: board-aligned pavilion layout implementing the user-directed canonical parti, pending geometric acceptance and verified site inputs.'
+  rationale: >-
+    The normalized study follows the board topology: three sleeping pavilions
+    occupy the northwest, southwest and southeast sides of the central garden; the communal/refectory
+    pavilion is northeast; their covered paths bend around the garden. Administration stays
+    on the public edge in two levels, services keep a separate access, and the child sector
+    interfaces with green. The exact 20-person room and outdoor areas reconcile, and structural
+    parti QA passes. Coordinates are normalized reference geometry, not survey data. The earlier
+    S01 normalized candidate is superseded by this content-bound geometry revision and no Revit
+    geometry was written from S01. Site fit, canonical geometric acceptance, and required stage
+    visual regressions remain pending, so this candidate is not BIM-eligible.
+  source_refs:
+  - canonical/01_implantacao.png#sha256=30d009357a095e7794e0e915dcd2fdb04cd6b9aab9f4d13f5663ed54d6f20240
+  - canonical/02_administrativo.png#sha256=123b95633ae1be643da84f2226c6337d65a74f7d1337d6b27d94bdead1c3a263
+  - canonical/03_residencial.png#sha256=5b96c2d5cc770742ee32d51b83b25993fe8b8a1638bf94da56ba8ef771031381
+  - canonical/04_servicos.png#sha256=c56b806f805d9c4aa1e6015ba6b56ac960204066721f93ef08cbadfb312c0386
+  - docs/source/programa_necessidades.pdf#sha256=11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17
+  - project/requirements/program.json#baseline.source_sha256=11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17
+  - decision:DEC-CANONICAL-PARTI-002#approval_hash=9f0dac4ff63692ea2cd13c43043f02070f26b8c2d57b57bbedfc494634c601bc
+  - project/site/missing-data.yaml#parcel-boundary-and-topography-unverified
+  confidence: 0.5
+  affected_requirements:
+  - PROGRAM-PEOPLE-20
+  - PROGRAM-INTERNAL-626
+  - PROGRAM-EXTERNAL-260
+  - PROGRAM-ENCLOSED-ESTIMATE-783-814
+  - PROGRAM-COVERED-ESTIMATE-850-950
+  - CANONICAL-ADMIN-PUBLIC-EDGE-TWO-LEVELS
+  - CANONICAL-RESIDENTIAL-FOUR-PAVILIONS-AND-CENTRAL-GARDEN
+  - CANONICAL-CHILD-GREEN-INTERFACE
+  - CANONICAL-SEPARATE-SERVICE-ACCESS
+  - CANONICAL-COVERED-EXTERNAL-CIRCULATION
+  selection_authority: AGENT_DELEGATED
+  timestamp: '2026-09-25T10:53:10Z'
+  supersedes: DEC-CANONICAL-DETAIL-002
+  approval_hash: f37c5c8c2f4f43e957429bd05dbc659012a7f6eaa0b0be65e23cbf7f47c43efc
+  validation_status: BLOCKED_BY_INPUT
+  revision_procedure: A material layout change creates a new solution ID and approval hash; first
+    reconcile site inputs, pass canonical geometric acceptance, and re-run applicable visual and
+    BIM gates.
+  review_status: AMANDA_REVIEW_PENDING
+  fact_class: DESIGN_HYPOTHESIS
+  scenario: STUDY
+  selection_kind: PROVISIONAL_ASSUMPTION
+  verification_required: true
+  adoption_status: PROVISIONAL_PENDING_CANONICAL_GEOMETRIC_ACCEPTANCE
+  rejected_options:
+  - Reuse of superseded AMANDA-RUN-001-S01 geometry
+  source_sha256: null
 academic_deliverables:
 - deliverable_id: academic-caderno-revision
   name: Caderno revision

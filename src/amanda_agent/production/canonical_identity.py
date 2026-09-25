@@ -241,3 +241,23 @@ def write_canonical_solution_identity(
         if temporary_path is not None and temporary_path.exists():
             temporary_path.unlink()
     return target
+
+
+def load_canonical_solution_identity(root: Path) -> CanonicalSolutionIdentity:
+    """Load the persisted P2 identity and verify it still matches live sources."""
+
+    root = Path(root)
+    target = root / IDENTITY_ARTIFACT_PATH
+    try:
+        payload = yaml.safe_load(target.read_text(encoding="utf-8"))
+        identity = CanonicalSolutionIdentity.model_validate(payload)
+    except (OSError, yaml.YAMLError, ValueError, TypeError) as exc:
+        raise CanonicalIdentityError(
+            f"cannot load a valid persisted P2 identity: {target}"
+        ) from exc
+
+    if identity != assign_canonical_solution_identity(root):
+        raise CanonicalIdentityError(
+            "persisted P2 identity does not match the current canonical source bindings"
+        )
+    return identity
