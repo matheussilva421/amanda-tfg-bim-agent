@@ -100,7 +100,7 @@ recusa divergências do modo de coordenadas.
   concluído e bloqueado; (3) o handoff mantinha instruções de retomada antigas.
   Dois testes de cenário e as expectativas de estado reproduziram RED
   (4 falhas, 62 passes). Implementadas a recusa de cenário não-STUDY,
-  `last_completed_task: P3-T01` com revisão de estado 184 e marcação explícita
+  `last_completed_task: P3-T01` com revisão de estado 185 e marcação explícita
   das instruções históricas como superadas. Revisão independente de confirmação
   aprovou os três fechamentos sem achados residuais. A revisão também pediu
   escopo explícito para severidades no dashboard e rótulo histórico na seção

@@ -74,7 +74,7 @@ changed.
   only through R04 with `LOCAL_NORMALIZED_STUDY_NOT_SURVEYED`; Amanda review
   remains pending and CANON-011 still requires a real four-board comparison
   before R05. The content approval hash is not personal approval.
-- `PROJECT_STATE.yaml` revision 184 records RUN-003 as the current reversible
+- `PROJECT_STATE.yaml` revision 185 records RUN-003 as the current reversible
   study selection. Site blockers are DEGRADING for this scope; final/site claims
   remain constrained by `project/site/missing-data.yaml`. The current P4 blockers
   are unreachable Horizun provider, writer lease held for superseded S02, and no

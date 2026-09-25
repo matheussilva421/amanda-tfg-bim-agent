@@ -35,7 +35,7 @@ def test_project_state_routes_to_blocked_p4_without_revit_promotion():
     assert state["last_completed_task"] == "P3-T01"
     assert state["next_task"] == "P4-T01"
     assert state["schema_version"] == 1
-    assert state["state_revision"] == 184
+    assert state["state_revision"] == 185
     assert state["phase_gate"] == "GO_WITH_LIMITATIONS"
     assert state["selected_design"] == "AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C"
     assert state["revit_stage"] == "PRE_R04"
