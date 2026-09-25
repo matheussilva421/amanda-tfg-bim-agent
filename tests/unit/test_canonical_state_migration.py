@@ -27,15 +27,15 @@ def _yaml(path: str) -> dict:
     return yaml.safe_load((ROOT / path).read_text(encoding="utf-8"))
 
 
-def test_project_state_routes_to_pending_new_identity_without_revit_promotion():
+def test_project_state_routes_to_pending_p3_without_revit_promotion():
     state = _yaml("PROJECT_STATE.yaml")
-    assert state["phase_id"] == "P2"
-    assert state["phase_name"] == "new-canonical-solution"
+    assert state["phase_id"] == "P3"
+    assert state["phase_name"] == "canonical-qa-and-approval"
     assert state["phase_status"] == "PENDING"
-    assert state["last_completed_task"] == "P1-T01"
-    assert state["next_task"] == "P2-T01"
+    assert state["last_completed_task"] == "P2-T01"
+    assert state["next_task"] == "P3-T01"
     assert state["schema_version"] == 1
-    assert state["state_revision"] == 178
+    assert state["state_revision"] == 179
     assert state["phase_gate"] == "GO_WITH_LIMITATIONS"
     assert state["selected_design"] is None
     assert state["revit_stage"] == "PRE_R04"
@@ -197,9 +197,11 @@ def test_task_graph_keeps_completed_s02_history_and_blocks_its_stale_tail():
     assert registry.tasks["P08-CAN-T18"].depends_on == ["P08-CAN-T17"]
     assert registry.tasks["P08-CAN-T19"].depends_on == ["P08-CAN-T18"]
     assert registry.tasks["P1-T01"].status is TaskStatus.PASS
-    assert registry.tasks["P2-T01"].status is TaskStatus.PENDING
+    assert registry.tasks["P2-T01"].status is TaskStatus.PASS
     assert registry.tasks["P2-T01"].depends_on == ["P1-T01"]
-    assert registry.ready_tasks() == ["P2-T01"]
+    assert registry.tasks["P3-T01"].status is TaskStatus.PENDING
+    assert registry.tasks["P3-T01"].depends_on == ["P2-T01"]
+    assert registry.ready_tasks() == ["P3-T01"]
     registry.validate()
 
 

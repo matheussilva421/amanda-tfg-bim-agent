@@ -8,13 +8,13 @@ Repository recovery closed on 2026-09-24. The recovery report records branch con
 
 P1-T01 binds exactly the four canonical boards and reconciles implantation, administration floors, residential pavilion membership, the curved service/capacitation courtyard, child-sector contents, and the official program. Its report records unresolved board-to-program differences without changing official areas. No Revit work or new solution identity was created.
 
-## P2 — New canonical solution
+## P2 — New canonical solution (P2-T01 complete)
 
-P2-T01 is the next task: assign a new solution identity after stale S02 and bind it to all four canonical board hashes and the official program source hash. It remains pending; do not start it automatically from P1-T01 closeout.
+P2-T01 assigned `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C`, bound to exactly the four current canonical board hashes, the official program PDF hash, and the P1-T01 reconciliation report identity. The machine-readable record is `project/requirements/canonical-solution-identity.yaml`; `PROJECT_STATE.selected_design` remains null. This identity-only task created no layout or approval hash and authorized no BIM-00 or Revit write.
 
 ## P3 — Canonical QA and approval
 
-Pass all non-Revit four-board hard checks; generate new layout and approval hashes.
+P3-T01 is the next authorized task and remains pending. It will pass the non-Revit four-board hard checks and, if they are green, generate the new layout and selection approval hashes. P3-T01 was not started during P2-T01 closeout.
 
 ## P4 — BIM-00
 
@@ -40,4 +40,4 @@ Run R14, R15 cold reopen, and exports.
 
 Run R16 only after every required gate and documented deviation passes.
 
-P0 and P1-T01 are closed. `PROJECT_STATE.yaml` is the formal pointer and now names pending P2-T01. Historical plans are archive material in Git history, not a second instruction source.
+P0, P1-T01, and P2-T01 are closed. `PROJECT_STATE.yaml` is the formal pointer and names pending P3-T01. Historical plans are archive material in Git history, not a second instruction source.

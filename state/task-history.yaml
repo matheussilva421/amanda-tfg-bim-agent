@@ -2142,3 +2142,11 @@ entries:
   - 'AMANDA-RUN-002-PAVILION-S02 remains stale; current solution identity is unset and generator fails closed.'
   recorded_utc: '2026-09-25T01:34:05Z'
   note: P1-T01 completed from main; P2-T01 is pending new-identity assignment.
+- task_id: P2-T01
+  status: PASS
+  evidence:
+  - 'project/requirements/canonical-solution-identity.yaml assigns AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C and binds the four current board hashes, official program PDF hash, and P1-T01 report hash.'
+  - 'Focused identity and state gates pass 41/41; identity generation is deterministic and the idempotent writer re-verifies live hashes. S02 remains stale; both S01 aliases and other linear IDs are rejected.'
+  - 'selected_design and SELECTION_SOLUTION_ID remain unset; approval_hash is null. No layout, BIM-00, Revit/RVT access or write, R04, or R05 occurred.'
+  recorded_utc: '2026-09-25T10:17:20Z'
+  note: P2-T01 complete from main; P3-T01 is the next authorized task and was not started.

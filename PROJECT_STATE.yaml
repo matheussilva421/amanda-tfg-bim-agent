@@ -1,11 +1,11 @@
 project: Amanda TFG BIM Agent
-phase_id: P2
-phase_name: new-canonical-solution
+phase_id: P3
+phase_name: canonical-qa-and-approval
 phase_status: PENDING
-last_completed_task: P1-T01
-next_task: P2-T01
+last_completed_task: P2-T01
+next_task: P3-T01
 schema_version: 1
-state_revision: 178
+state_revision: 179
 phase_gate: GO_WITH_LIMITATIONS
 selected_design: null
 revit_stage: PRE_R04

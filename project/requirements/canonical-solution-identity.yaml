@@ -1,0 +1,25 @@
+schema_version: 1
+status: IDENTITY_ASSIGNED
+solution_id: AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C
+identity_fingerprint: 4b1275558a6c2c40828dbba1422c0063703c182fd9d7b800b36a448499a073c4
+canonical_boards:
+- path: docs/source/canonical/01_implantacao.png
+  sha256: 30d009357a095e7794e0e915dcd2fdb04cd6b9aab9f4d13f5663ed54d6f20240
+- path: docs/source/canonical/02_administrativo.png
+  sha256: 123b95633ae1be643da84f2226c6337d65a74f7d1337d6b27d94bdead1c3a263
+- path: docs/source/canonical/03_residencial.png
+  sha256: 5b96c2d5cc770742ee32d51b83b25993fe8b8a1638bf94da56ba8ef771031381
+- path: docs/source/canonical/04_servicos.png
+  sha256: c56b806f805d9c4aa1e6015ba6b56ac960204066721f93ef08cbadfb312c0386
+program_source:
+  path: docs/source/programa_necessidades.pdf
+  sha256: 11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17
+reconciliation_id: P1-T01
+reconciliation_report:
+  path: docs/reports/P1-T01-four-board-reconciliation.md
+  sha256: 8d297d9c35e0fcdec8b36e5857e03c9e992cbfeb9dab082dddf2106a2ed5025b
+selected_design: null
+approval_hash: null
+bim_eligible: false
+bim00_authorized: false
+revit_write_authorized: false

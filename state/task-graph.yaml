@@ -3122,6 +3122,20 @@ tasks:
     title: Assign a new canonical solution identity and bind the four source hashes
     depends_on:
     - P1-T01
+    status: PASS
+    evidence:
+    - 'project/requirements/canonical-solution-identity.yaml assigns AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C (fingerprint 4b1275558a6c2c40828dbba1422c0063703c182fd9d7b800b36a448499a073c4).'
+    - 'Identity binds exactly the four current canonical board SHA-256 values, the official program PDF SHA-256, and the P1-T01 reconciliation report SHA-256.'
+    - 'The identity is deterministic; its idempotent writer re-verifies live source hashes. Tests reject S02, both historical S01 identities, other linear IDs, incorrect self-consistent hashes, incomplete bindings, and authorization promotion.'
+    - 'selected_design and SELECTION_SOLUTION_ID remain unset; approval_hash is null; no layout, DesignSolution, BIM-00, Revit access/write, or R04/R05 artifact was created.'
+  P3-T01:
+    id: P3-T01
+    phase: P3
+    plan_path: docs/plan/CURRENT.md
+    title: Run canonical hard QA and generate the new layout and selection approval hashes
+    depends_on:
+    - P2-T01
     status: PENDING
     evidence:
-    - 'Pending: P1-T01 completed; assign a new identity before emitting any solution artifact. This task does not authorize Revit writes or R04/R05.'
+    - 'Next authorized task after P2-T01; pass non-Revit four-board hard checks before generating any P3 layout or approval hash. P3-T01 was not started during P2-T01 closeout.'
+    - 'This task does not authorize BIM-00, Revit access/write, or R04/R05.'

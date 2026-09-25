@@ -2,9 +2,11 @@
 
 ## Formal state and safety
 
-Repository recovery (P0) and four-board reconciliation (P1-T01) are complete.
-`PROJECT_STATE.yaml` points to pending `P2-T01`; the last completed task is
-`P1-T01`. The recovery anchor is
+Repository recovery (P0), four-board reconciliation (P1-T01), and identity
+assignment (P2-T01) are complete. `PROJECT_STATE.yaml` points to pending
+`P3-T01`; the last completed task is `P2-T01`. The source-bound identity is
+recorded at `project/requirements/canonical-solution-identity.yaml`, while
+`selected_design` remains null. The recovery anchor is
 `pre-repository-recovery-2026-09-24`; the superseded P08 offline candidate is
 preserved under `superseded-p08-t08-concept-offline-2026-09-24`.
 
@@ -13,8 +15,58 @@ to `docs/reports/repository-recovery.md`; `.recovery/` was removed after the
 RVT and evidence checks. Preserve the private program and TFG PDFs locally;
 they are intentionally ignored by Git. Five site conditions (three BLOCKING,
 two DEGRADING) remain, and the held writer lease is unchanged. P1-T01 completed
-without Revit/model activity; the solution identity remains unset and S02 remains
-stale.
+without Revit/model activity. At P1-T01 closeout the solution identity was
+unset and S02 was stale; P2-T01 has since assigned the source-bound identity
+recorded above.
+
+## P2-T01 closeout — identity only
+
+Assigned `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C` with fingerprint
+`4b1275558a6c2c40828dbba1422c0063703c182fd9d7b800b36a448499a073c4`. The
+identity binds, in profile order, all four current canonical board hashes, the
+official `programa_necessidades.pdf` hash, and the P1-T01 report hash. The
+identity-only implementation lives in
+`src/amanda_agent/production/canonical_identity.py`; the machine record and
+short reconciliation report are `project/requirements/canonical-solution-identity.yaml`
+and `docs/reports/P2-T01-canonical-solution-identity.md`.
+
+`SELECTION_SOLUTION_ID` and `PROJECT_STATE.selected_design` remain null;
+`approval_hash` is null. No layout, `DesignSolution`, BIM-00, Revit/RVT access or
+write, R04, or R05 work occurred. S02 remains
+`STALE_BY_CANONICAL_REFERENCE_EXPANSION`. The focused identity, selection,
+state, repository-hygiene, and plan-order gate passed **41/41**; changed-file
+Ruff is recorded at closeout. `P2-T01` is PASS and `P3-T01` is the next
+authorized pending task; P3 was not started.
+
+Focused command:
+`.venv/Scripts/python.exe -m pytest tests/unit/test_canonical_solution_identity.py tests/unit/test_production_selection.py tests/unit/test_canonical_state_migration.py tests/project/test_repository_hygiene.py tests/policy/test_plan_order.py -q`
+— 41 passed. Changed-file Ruff command:
+`.venv/Scripts/ruff.exe check src/amanda_agent/production/canonical_identity.py tests/unit/test_canonical_solution_identity.py tests/unit/test_canonical_state_migration.py tests/project/test_repository_hygiene.py`
+— all checks passed. Scoped `git diff --check` passed. TDD evidence: identity
+tests first failed because the module was absent; after implementation they
+reached 11 passed/1 failed only because the required persisted manifest had not
+yet been generated. An independent review found that an internally consistent
+but incorrect board or reconciliation hash could reach the writer. A new RED
+case reproduced it; the writer now recomputes the live identity first, and
+both source-hash regressions pass. The state-routing regressions failed against
+the old P2 pointer and passed after the formal P3 transition. The reviewer
+recheck then found stale wording from the P1 closeout; the handoff now labels it
+as historical. Final independent read-only review returned **APPROVE**, noting
+the writer/source binding fix, exact source hashes, null selection/approval,
+and P3-T01 as the next pending task.
+
+RC01 preflight used read-only inspection. The normal sandbox listed 34 tracked
+paths as deleted because it could not enumerate the protected directory. An
+authorized elevated read found 36 physical files: all 34 tracked files match
+the Git index after clean filters; the other two are ignored `.rvt`/`.rte`
+files. This is an ACL visibility issue, not repository data loss. No RC01 path
+was restored, edited, staged, or included in this task.
+
+To resume, start from `main`, read the required current documents in the order
+in `START_HERE.md`, verify `PROJECT_STATE.yaml` and the P3-T01 dependency, then
+execute only P3-T01's non-Revit canonical hard checks and P3 layout/approval
+generation if those checks pass. Do not begin BIM-00 or Revit/R04/R05 from this
+handoff.
 
 ## Current documentation flow
 

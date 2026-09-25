@@ -4,13 +4,14 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Phase and task progress
 
-- Phase: `P2` — new-canonical-solution
+- Phase: `P3` — canonical-qa-and-approval
 - Phase status: `PENDING`
-- Next task: `P2-T01`
-- Last PASS task: `P1-T01`
-- Tasks: 180 total; READY: P2-T01
+- Next task: `P3-T01`
+- Last PASS task: `P2-T01`
+- Tasks: 181 total; READY: P3-T01
 - `P1`: 1/1 PASS
-- `P2`: 0/1 PASS
+- `P2`: 1/1 PASS
+- `P3`: 0/1 PASS
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
