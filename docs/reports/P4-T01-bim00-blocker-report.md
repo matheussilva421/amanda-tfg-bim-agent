@@ -20,8 +20,27 @@
   obsoleto S02. Não foi liberado nem reivindicado. Não havia processo Revit em
   execução, portanto não há evidência atual de saúde do provider.
 - Permanecem os bloqueios de entrada `SITE_TOPOGRAPHY`, `SITE_BOUNDARY` e
-  `SITE_OCCUPANCY`, além das pendências `SITE_FRONTAGE_COUNT` e
+  `SITE_OCCUPANCY` (para vincular o endereço ao lote e confirmar a premissa de
+  transferência), além das pendências `SITE_FRONTAGE_COUNT` e
   `SITE_TRUE_NORTH`. O ajuste de sítio da candidata permanece não verificado.
+
+## Rechecagem de fontes atuais — 2026-09-25
+
+Uma fonte oficial estadual parcialmente qualifica a informação de ocupação: a
+[Carta de Serviços da Polícia Militar do RN, atualizada em 03/02/2026](https://www.transparencia.rn.gov.br/docs/orgaosdogoverno/cartasdeservico/Carta_de_Servi%C3%A7os_PMRN.pdf)
+lista o BPChoque no endereço Av. Miguel Castro, s/n, Lagoa Nova, Natal. Isso
+registra o endereço institucional publicado; não identifica o polígono
+cadastral do lote, não confirma que o endereço corresponde integralmente ao
+terreno de estudo e não documenta autorização ou plano de transferência. Por
+isso, a evidência não libera a alegação de disponibilidade: `SITE_OCCUPANCY`
+permanece `BLOCKING` até a confirmação do lote e da premissa de transferência.
+
+Uma auditoria independente somente de leitura também confirmou que a fonte de
+sítio continua com limite `STUDY_PLACEHOLDER`, topografia ausente, norte
+verdadeiro nulo e contagem de frentes conflitante; a identidade RUN-003 segue
+sem seleção, elegibilidade BIM, alvo RVT ou checkpoint. CANON-011 permanece
+pendente de aceitação visual humana, e o lease existente continua associado a
+S02. Nenhum desses pontos foi alterado nesta rechecagem.
 
 ## Correção do contrato BIM-00
 

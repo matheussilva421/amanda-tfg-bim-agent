@@ -38,6 +38,26 @@ Independent review found no Critical, Important, or Minor findings. Code and
 plan contract are committed as `bc494683f9d9b154c40bdc8069a3dfa48710c665`;
 `last_verified_commit` points there. State revision is 182.
 
+### Recheck — 2026-09-25
+
+An official RN government PMRN service charter updated 2026-02-03 lists BPChoque
+at Av. Miguel Castro, s/n, Lagoa Nova, Natal
+([source](https://www.transparencia.rn.gov.br/docs/orgaosdogoverno/cartasdeservico/Carta_de_Servi%C3%A7os_PMRN.pdf)).
+This is partial evidence of the published institutional address. It does not
+identify the cadastral parcel or establish an approved transfer, so
+`SITE_OCCUPANCY` remains `BLOCKING` for claiming site availability. The other
+site fields remain unverified: placeholder boundary, missing topography,
+unresolved frontage conflict, and no verified true-north bearing.
+
+An independent read-only audit confirmed RUN-003 is still unselected and
+ineligible, with no exact target/checkpoint; CANON-011 remains pending human
+visual acceptance. The lease remains held for S02 and was not changed. No Revit
+process or document was opened or written. `P4-T01` remains the retry pointer;
+P5/R04 and R05 remain unauthorized. A fresh `git ls-remote` could not reach
+GitHub in this session; local `HEAD` and `origin/main` both pointed to
+`f367e99bd65268ba4ea665225808f771ac9c11cd` before these documentation updates.
+The pre-existing RC01 deletions were not staged or changed.
+
 Resume only P4-T01 after the canonical selection is approved/eligible, required
 site inputs are resolved, an exact target and separate checkpoint are
 designated, and the writer lease/provider can produce fresh passing evidence.
