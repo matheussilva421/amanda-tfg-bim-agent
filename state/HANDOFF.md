@@ -8,11 +8,16 @@ P4-T01 was attempted as a read-only BIM-00 preflight and is
 `BLOCKED_BY_INPUT`. `PROJECT_STATE.yaml` remains at P4 with `next_task: P4-T01`;
 P3-T01 is the last PASS task. The source-bound identity is recorded at
 `project/requirements/canonical-solution-identity.yaml`, while
-`selected_design` remains null and the candidate is not BIM-eligible. The recovery anchor is
+the selected design is RUN-003 for normalized study only; final/detailed
+eligibility remains false. The recovery anchor is
 `pre-repository-recovery-2026-09-24`; the superseded P08 offline candidate is
 preserved under `superseded-p08-t08-concept-offline-2026-09-24`.
 
 ## P4-T01 attempt — BIM-00 blocked
+
+> Historical snapshot from the original P4-T01 attempt. Its eligibility and
+> runtime observations below are superseded by the current continuation section
+> later in this file; use that section and PROJECT_STATE.yaml for current state.
 
 No BIM-00 evidence or authorization was emitted. RUN-003 remains
 `OFFLINE_CANDIDATE`, `bim_eligible=false`, `revit_calls=0`, with
@@ -61,6 +66,53 @@ pushed, and a fresh `git ls-remote --heads origin main` confirmed that commit
 at `refs/heads/main`. This handoff status correction is being committed as a
 fast-forward follow-up. The pre-existing RC01 deletions were not staged or
 changed.
+
+### P4-T01 continuation — scoped study selection and BIM-00 hardening (2026-09-25)
+
+- The previously recorded site-data dependency was too broad for normalized
+  academic STUDY. Successor decision `DEC-CANONICAL-DETAIL-004` selects RUN-003
+  only through R04 with `LOCAL_NORMALIZED_STUDY_NOT_SURVEYED`; Amanda review
+  remains pending and CANON-011 still requires a real four-board comparison
+  before R05. The content approval hash is not personal approval.
+- `PROJECT_STATE.yaml` revision 184 records RUN-003 as the current reversible
+  study selection. Site blockers are DEGRADING for this scope; final/site claims
+  remain constrained by `project/site/missing-data.yaml`. The current P4 blockers
+  are unreachable Horizun provider, writer lease held for superseded S02, and no
+  exact RUN-003 target/checkpoint.
+- The generated current study snapshot is
+  `design-engine/runs/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C-study-detail-004/`.
+  It binds detail decision 004 (hash
+  `29d70f0e830708a3926abad14877f4c3941418630c5f0225b0bf5924f2dabd8b`) and
+  content approval `961b6edc95bd097fe600b2ce968aacdf28876bf3c587b788a0b2358baddfc0b0`.
+  Its manifest verifies 6/6 files; QA remains 17 PASS, 0 FAIL, CANON-011
+  BLOCKED; it records `bim_eligible=false` and `revit_calls=0`. Original P3
+  snapshot remains preserved at its original path.
+- R04 mass payloads carry `design_scenario=STUDY` and the typed coordinate mode.
+  BIM-00 refuses untyped/mismatched coordinate modes. R04 mass writer now
+  preserves base elevation and interior rings, and completion requires separate
+  geometry readback from the Revit model before verification. Model readback
+  geometry/identity now override self-reported write payload fields; failed
+  readback removes the geometry claim so runner verification fails closed.
+- Regression tests for independent review findings reproduced RED: FINAL plans
+  could pass BIM-00 and blocked P4-T01 was also recorded as completed. The new
+  scenario/state regressions reported 4 failures and 62 passes before fixes.
+  BIM-00 now requires STUDY; the last completed task is P3-T01; the old resume
+  instructions are explicitly superseded. The focused BIM-00/R04/readback/
+  geometric suite previously passed 154 tests. Review follow-up also requested
+  explicit claim scope in the dashboard and a historical label on the older
+  pre-DEC-004 section. Both changes have regression coverage; independent
+  confirmation approved with no remaining findings. The final 19-module focused
+  suite passed 270/270 and scoped Ruff passed. Record diff check, snapshot hash,
+  manifest 6/6 validation, and QA 17 PASS/0 FAIL/CANON-011 BLOCKED are verified.
+  Record commit and push below at closeout.
+- Read-only Revit diagnostics: Revit 2027 PID 38152 responds but has no
+  targetable main window; `horizun_health` failed with no reachable Revit.
+  No RVT was opened and no Revit write, BIM-00 authorization, R04 or R05 was
+  performed. S02 lease remains untouched.
+- Resume P4-T01 only after a targetable/healthy provider, safe resolution of the
+  S02 writer lease, and an exact RUN-003 target/checkpoint are evidenced. Rebind
+  current commit/state/source hashes then rerun BIM-00; do not advance R05
+  until CANON-011 passes.
 
 ### Bounded official-source research — 2026-09-25
 
@@ -518,3 +570,52 @@ confirmed `HEAD = main = origin/main` at
 Task 13 removed `.recovery/` after the full hash inventory and report transfer.
 The three redundant quarantine copies were removed only after matching their
 retained checkpoints; all 109 unique RVTs remain under `revit/`.
+
+## Historical P4 continuation — normalized study audit and candidate search (2026-09-25)
+
+This subsection records the earlier pre-DEC-CANONICAL-DETAIL-004 snapshot. Its
+selection, eligibility, site-scope, and resume statements are superseded by the
+active P4-T01 continuation above; use that section and `PROJECT_STATE.yaml`.
+
+The user supplied explicit authorization for a read-only public candidate
+search and asked to continue through later gates when they pass. The search
+found only a `CANDIDATE` geographic context (Lagoa Nova / Av. Miguel Castro / a
+rounded institutional GeoNatal point). It did not identify a parcel polygon
+that can be tied to the TFG's approximate 24,135 m² site. No lot is
+`PROVISIONAL` or `VERIFIED`; no owner, CPF, title or private records were
+searched. Evidence is added to
+`docs/reports/P4-T01-site-source-research-2026-09-25.md`.
+
+An independent read-only audit found that missing site evidence and
+`AMANDA_REVIEW_PENDING` should not alone prevent a reversible normalized
+academic `STUDY` through R04. Existing site-data and preacceptance code already
+allows that scope. The gaps still block cadastral placement, final grading,
+legal frontage/setback/orientation statements, and actual availability or
+transfer claims. The current P4 record still lacks a typed site-coordinate
+mode, and the project state/spec wording needs an explicit normalized-study
+scope before the gate can be issued. Human approval remains pending.
+
+The first focused run of the R04 planner/provider suite had 5 failures, all at
+`projection_area: MASS-SERVICE_CAPACITATION`: R04 exported only the outer
+polygon ring and filled the six internal voids. TDD regressions reproduced the
+missing-ring behavior in both planning and the generated Revit route. The
+implementation now carries all interior rings into the R04 geometry, computes
+net area including the voids, and makes independent geometry verification
+reject a readback with a missing ring. Focused validation is **39 passed** for
+`test_stage_massing.py`, the complete `test_production_layout_bim.py`, and the
+mass provider route. Independent code review is still pending. A Ruff pass
+reported existing violations in the touched legacy modules plus a new test
+`exec` lint finding; the test lint finding must be addressed and changed-file
+checks rerun.
+
+No Revit process was started and no RVT was opened or written. A read-only
+Horizun health call returned “no Revit is reachable.” The S02 lease remains
+untouched; the recorded owner PID was not running and no Revit process was
+present, but lease transition criteria and an exact RUN-003 target/checkpoint
+have not yet been completed. `PROJECT_STATE.yaml` still points to P4-T01 and
+still has no selected design/checkpoint. RC01 deletions remain untouched and
+unstaged.
+
+**Resume:** superseded. Continue from the latest `P4-T01 continuation` section
+above and its explicit blocker list. Do not repeat already completed coordinate
+binding, R04 ring/readback, or offline snapshot work.

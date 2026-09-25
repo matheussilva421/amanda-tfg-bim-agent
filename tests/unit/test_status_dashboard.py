@@ -105,6 +105,11 @@ def test_dashboard_reads_state_and_all_required_operational_fields(tmp_path: Pat
     assert "PASS: 1" in markdown
     assert "FAIL: 1" in markdown
     assert "UNTESTED: 1" in markdown
+    assert (
+        "Blocker severity applies to the affected tasks and claims; check"
+        " state/blockers.yaml, the task graph, and PROJECT_STATE.yaml for"
+        " phase-specific scope."
+    ) in markdown
     assert "SITE_TOPOGRAPHY" in markdown
     assert "DESIGN-001" in markdown
     assert "R13_DOCUMENTATION" in markdown

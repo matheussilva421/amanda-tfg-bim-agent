@@ -27,25 +27,28 @@ def _yaml(path: str) -> dict:
     return yaml.safe_load((ROOT / path).read_text(encoding="utf-8"))
 
 
-def test_project_state_routes_to_pending_p3_without_revit_promotion():
+def test_project_state_routes_to_blocked_p4_without_revit_promotion():
     state = _yaml("PROJECT_STATE.yaml")
-    assert state["phase_id"] == "P3"
-    assert state["phase_name"] == "canonical-qa-and-approval"
-    assert state["phase_status"] == "PENDING"
-    assert state["last_completed_task"] == "P2-T01"
-    assert state["next_task"] == "P3-T01"
+    assert state["phase_id"] == "P4"
+    assert state["phase_name"] == "bim-00"
+    assert state["phase_status"] == "BLOCKED_BY_INPUT"
+    assert state["last_completed_task"] == "P3-T01"
+    assert state["next_task"] == "P4-T01"
     assert state["schema_version"] == 1
-    assert state["state_revision"] == 179
+    assert state["state_revision"] == 184
     assert state["phase_gate"] == "GO_WITH_LIMITATIONS"
-    assert state["selected_design"] is None
+    assert state["selected_design"] == "AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C"
     assert state["revit_stage"] == "PRE_R04"
     assert state["current_checkpoint"] is None
     assert state["blockers"] == [
-        "SITE_TOPOGRAPHY:BLOCKING",
-        "SITE_BOUNDARY:BLOCKING",
-        "SITE_OCCUPANCY:BLOCKING",
+        "SITE_TOPOGRAPHY:DEGRADING",
+        "SITE_BOUNDARY:DEGRADING",
+        "SITE_OCCUPANCY:DEGRADING",
         "SITE_FRONTAGE_COUNT:DEGRADING",
         "SITE_TRUE_NORTH:DEGRADING",
+        "REVIT_PROVIDER_UNREACHABLE:BLOCKING",
+        "WRITER_LEASE_HELD_FOR_SUPERSEDED_S02:BLOCKING",
+        "RUN003_TARGET_CHECKPOINT_UNBOUND:BLOCKING",
     ]
     assert len(state["last_verified_commit"]) == 40
     assert set(state) == {
@@ -156,7 +159,7 @@ def test_signed_three_source_decisions_remain_historical_under_four_board_author
     assert detail.validation_status.value == "SUPERSEDED"
     assert detail.review_status.value == "SUPERSEDED"
     assert profile.source_hashes[3] not in parti.source_refs
-    assert SELECTION_DECISION_ID == "DEC-CANONICAL-DETAIL-003"
+    assert SELECTION_DECISION_ID == "DEC-CANONICAL-DETAIL-004"
 
     program = json.loads(
         (ROOT / "project/requirements/program.json").read_text(encoding="utf-8")
@@ -199,9 +202,11 @@ def test_task_graph_keeps_completed_s02_history_and_blocks_its_stale_tail():
     assert registry.tasks["P1-T01"].status is TaskStatus.PASS
     assert registry.tasks["P2-T01"].status is TaskStatus.PASS
     assert registry.tasks["P2-T01"].depends_on == ["P1-T01"]
-    assert registry.tasks["P3-T01"].status is TaskStatus.PENDING
+    assert registry.tasks["P3-T01"].status is TaskStatus.PASS
     assert registry.tasks["P3-T01"].depends_on == ["P2-T01"]
-    assert registry.ready_tasks() == ["P3-T01"]
+    assert registry.tasks["P4-T01"].status is TaskStatus.BLOCKED_BY_INPUT
+    assert registry.tasks["P4-T01"].depends_on == ["P3-T01"]
+    assert registry.ready_tasks() == []
     registry.validate()
 
 
@@ -230,3 +235,9 @@ def test_migration_history_preserves_existing_entries_and_records_transition():
     reconciliation = [entry for entry in history if entry["task_id"] == "P1-T01"]
     assert reconciliation and reconciliation[-1]["status"] == "PASS"
     assert "100 passed" in " ".join(reconciliation[-1]["evidence"])
+    for task_id in ("P2-T01", "P3-T01"):
+        entries = [entry for entry in history if entry["task_id"] == task_id]
+        assert entries and entries[-1]["status"] == "PASS"
+    p4_entries = [entry for entry in history if entry["task_id"] == "P4-T01"]
+    assert p4_entries and p4_entries[-1]["status"] == "BLOCKED_BY_INPUT"
+    assert "154 passed" in " ".join(p4_entries[-1]["evidence"])

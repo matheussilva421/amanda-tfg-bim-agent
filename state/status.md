@@ -7,7 +7,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - Phase: `P4` — bim-00
 - Phase status: `BLOCKED_BY_INPUT`
 - Next task: `P4-T01`
-- Last recorded task: `P4-T01`
+- Last recorded task: `P3-T01`
 - Tasks: 182 total; READY: (none)
 - `P1`: 1/1 PASS
 - `P2`: 1/1 PASS
@@ -34,8 +34,8 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Preferred provider: `horizun`
 - `custom-api`: AVAILABLE (fallback-last-resort)
-- `horizun-revit-mcp`: HEALTHY (primary)
-- `revitcortex`: HEALTHY (fallback-typed)
+- `horizun-revit-mcp`: UNREACHABLE (primary)
+- `revitcortex`: NOT_PROBED_THIS_SESSION (fallback-typed)
 
 ## Capability counts
 
@@ -45,6 +45,8 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Blockers
 
+Blocker severity applies to the affected tasks and claims; check state/blockers.yaml, the task graph, and PROJECT_STATE.yaml for phase-specific scope.
+
 - `SITE_TOPOGRAPHY` [BLOCKING]: verified survey or topographic elevations for the lot
 - `SITE_BOUNDARY` [BLOCKING]: surveyed or cadastral polygon in a stated coordinate system
 - `SITE_OCCUPANCY` [BLOCKING]: confirmation of the current use of the lot and of the relocation premise for the police company unit
@@ -53,7 +55,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Design and Revit recovery
 
-- Selected design: `NOT_RECORDED`
+- Selected design: `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C`
 - Revit stage: `PRE_R04`
 - Current checkpoint: `NOT_RECORDED`
 
@@ -65,5 +67,5 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Git verification
 
-- Last verified commit: `bc494683f9d9b154c40bdc8069a3dfa48710c665`
-- Observed HEAD: `bc494683f9d9b154c40bdc8069a3dfa48710c665`
+- Last verified commit: `cce2c7dbda70cef655e44cc22e8d298d9fa32f18`
+- Observed HEAD: `cce2c7dbda70cef655e44cc22e8d298d9fa32f18`

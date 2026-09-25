@@ -58,16 +58,16 @@ LEGACY_REQUIREMENTS_VERSION = "requirements-v1"
 LEGACY_SITE_VERSION = "site-v1"
 PREVIOUS_CANONICAL_PARTI_DECISION_ID = "DEC-CANONICAL-PARTI-001"
 PARTI_DECISION_ID = "DEC-CANONICAL-PARTI-002"
-PREVIOUS_CANONICAL_DETAIL_DECISION_ID = "DEC-CANONICAL-DETAIL-002"
-SELECTION_DECISION_ID = "DEC-CANONICAL-DETAIL-003"
+PREVIOUS_CANONICAL_DETAIL_DECISION_ID = "DEC-CANONICAL-DETAIL-003"
+SELECTION_DECISION_ID = "DEC-CANONICAL-DETAIL-004"
 SELECTION_TOPIC = "CANONICAL_PARTI_IMPLEMENTATION"
 STALE_SELECTION_SOLUTION_ID = "AMANDA-RUN-002-PAVILION-S02"
 # Compatibility sentinel only; P3 selection receives the persisted P2 identity.
 SELECTION_SOLUTION_ID: str | None = None
 SELECTION_ARCHETYPE = "CANONICAL_PAVILION_CLUSTER"
 SELECTED_OPTION = (
-    "PROVISIONAL_ASSUMPTION: board-aligned pavilion layout implementing the "
-    "user-directed canonical parti, pending geometric acceptance and verified site inputs."
+    "AGENT_DELEGATED STUDY: use RUN-003 normalized local-reference geometry "
+    "through R04; no surveyed site claim."
 )
 ENGINE_VERSION = "canonical-layout-v1"
 REQUIREMENTS_VERSION = "requirements-v1"
@@ -462,32 +462,32 @@ def _build_canonical_selection(
     detail_refs = [
         *source_refs,
         f"decision:{parti_decision.decision_id}#approval_hash={parti_decision.approval_hash}",
-        "project/site/missing-data.yaml#parcel-boundary-and-topography-unverified",
+        "project/site/missing-data.yaml#study-scope-and-final-claim-limitations",
     ]
     detail_rationale = (
-        "The normalized study follows the board topology: three sleeping pavilions "
-        "occupy the northwest, southwest and southeast sides of the central garden; "
-        "the communal/refectory pavilion is northeast; their covered paths bend "
-        "around the garden. Administration stays on the public edge in two levels, "
-        "services keep a separate access, and the child sector interfaces with green. "
-        "The exact 20-person room and outdoor areas reconcile, and structural parti "
-        "QA passes. Coordinates are normalized reference geometry, not survey data. "
-        "The earlier S01 normalized candidate is superseded by this content-bound "
-        "geometry revision and no Revit geometry was written from S01. Site fit, "
-        "canonical geometric acceptance, and required stage visual regressions "
-        "remain pending, so this candidate is not BIM-eligible."
+        "The P3 candidate structurally reconciles the four current canonical boards with "
+        "the immutable official program. Its coordinates are normalized local reference "
+        "geometry and do not identify or fit a verified parcel. Missing topography blocks "
+        "final grading and altimetric accessibility; the missing boundary blocks final "
+        "area, setback and permit claims; unknown occupancy blocks availability and "
+        "transfer claims; frontage conflict and unverified true north block the related "
+        "final access, setback and orientation claims. Those scoped gaps do not prevent "
+        "a reversible academic STUDY through R04. R04 must retain the explicit "
+        "LOCAL_NORMALIZED_STUDY_NOT_SURVEYED basis. CANON-011 remains pending until "
+        "actual R04 geometry is compared with all four boards. This delegated study "
+        "decision is not Amanda's personal approval and does not authorize R05."
     )
     detail_decision = DecisionRecord(
         decision_id=SELECTION_DECISION_ID,
         topic=SELECTION_TOPIC,
         alternatives=[
-            "PROVISIONAL_ASSUMPTION: board-aligned normalized pavilions and curved covered paths around a protected central patio",
-            "Reuse of the superseded linear R12 geometry, prohibited",
+            "AGENT_DELEGATED: reversible normalized local-reference STUDY through R04, marked not surveyed",
+            "Defer all normalized STUDY massing until parcel survey and Amanda review",
         ],
         selected_option=SELECTED_OPTION,
         rationale=detail_rationale,
         source_refs=detail_refs,
-        confidence=0.5,
+        confidence=0.8,
         affected_requirements=affected,
         selection_authority=SelectionAuthority.AGENT_DELEGATED,
         timestamp=timestamp,
@@ -498,18 +498,25 @@ def _build_canonical_selection(
             source_refs=detail_refs,
             affected_requirements=affected,
         ),
-        validation_status=ValidationStatus.BLOCKED_BY_INPUT,
+        validation_status=ValidationStatus.PENDING_VERIFICATION,
         revision_procedure=(
-            "A material layout change creates a new solution ID and approval hash; "
-            "first reconcile site inputs, pass canonical geometric acceptance, and "
-            "re-run applicable visual and BIM gates."
+            "This authorization ends at R04. Compare actual R04 geometry and views with all "
+            "four boards to resolve CANON-011 before R05. Keep parcel, grading/accessibility, "
+            "setback/orientation, and availability/transfer claims blocked until their "
+            "corresponding site evidence is verified. Keep Amanda review pending unless she "
+            "records acceptance. A material geometry change requires a new solution identity "
+            "and content approval hash."
         ),
         review_status=ReviewStatus.AMANDA_REVIEW_PENDING,
         selection_kind=SelectionKind.PROVISIONAL_ASSUMPTION,
         fact_class=FactClass.DESIGN_HYPOTHESIS,
         verification_required=True,
-        adoption_status="PROVISIONAL_PENDING_CANONICAL_GEOMETRIC_ACCEPTANCE",
-        rejected_options=["Reuse of superseded AMANDA-RUN-001-S01 geometry"],
+        adoption_status="STUDY_ONLY_AUTHORIZED_CANON011_PENDING",
+        rejected_options=[
+            "Reuse superseded AMANDA-RUN-002-PAVILION-S02 geometry",
+            "Claim normalized local coordinates as surveyed site coordinates",
+            "Advance to R05 before CANON-011 passes against all four boards",
+        ],
     )
 
     geometry = {

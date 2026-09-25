@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import re
+from enum import StrEnum
 from pathlib import Path
 from typing import Any
 
@@ -11,6 +12,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from .models import BimStage
 from .stages import CheckStatus, PreflightReport, StageCheck, StageOperation
+from ..requirements.decisions import DecisionScenario
 
 BIM00_REQUIRED_CHECKS: tuple[str, ...] = (
     "target_path",
@@ -31,6 +33,12 @@ BIM00_REQUIRED_CHECKS: tuple[str, ...] = (
 )
 _SHA256_PATTERN = r"^[0-9a-f]{64}$"
 _COMMIT_SHA_PATTERN = r"^[0-9a-f]{40}$"
+
+
+class CoordinateSiteMode(StrEnum):
+    """Explicit coordinate basis permitted for the provisional study gate."""
+
+    LOCAL_NORMALIZED_STUDY_NOT_SURVEYED = "LOCAL_NORMALIZED_STUDY_NOT_SURVEYED"
 
 
 class Bim00GateRefused(RuntimeError):
@@ -61,6 +69,7 @@ class Bim00Evidence(BaseModel):
     solution_id: str = Field(min_length=1)
     approval_hash: str = Field(pattern=_SHA256_PATTERN)
     layout_hash: str = Field(pattern=_SHA256_PATTERN)
+    coordinate_site_mode: CoordinateSiteMode
     canonical_source_hashes: tuple[str, str, str, str]
     official_program_sha256: str = Field(pattern=_SHA256_PATTERN)
     repository_commit_sha: str = Field(pattern=_COMMIT_SHA_PATTERN)
@@ -105,6 +114,13 @@ def _required_checks_passed(evidence: Bim00Evidence) -> None:
         raise Bim00GateRefused("missing required BIM-00 checks: " + ", ".join(missing))
     if any(by_name[name].status is not CheckStatus.PASS for name in BIM00_REQUIRED_CHECKS):
         raise Bim00GateRefused("not all required checks passed")
+    if (
+        by_name["coordinate_site_mode"].evidence
+        != evidence.coordinate_site_mode.value
+    ):
+        raise Bim00GateRefused(
+            "coordinate-site-mode check does not match the typed coordinate site mode"
+        )
 
 
 def _validate_expected_bindings(
@@ -113,7 +129,14 @@ def _validate_expected_bindings(
     repository_commit_sha: str,
     project_state_revision: int,
     project_state_sha256: str,
+    coordinate_site_mode: CoordinateSiteMode,
 ) -> None:
+    if (
+        not isinstance(coordinate_site_mode, CoordinateSiteMode)
+        or coordinate_site_mode
+        is not CoordinateSiteMode.LOCAL_NORMALIZED_STUDY_NOT_SURVEYED
+    ):
+        raise Bim00GateRefused("expected BIM-00 coordinate site mode is invalid")
     for name, value in (
         ("official_program_sha256", official_program_sha256),
         ("project_state_sha256", project_state_sha256),
@@ -145,6 +168,7 @@ def _verify_binding(
     repository_commit_sha: str,
     project_state_revision: int,
     project_state_sha256: str,
+    coordinate_site_mode: CoordinateSiteMode,
 ) -> None:
     _required_checks_passed(evidence)
     _validate_expected_bindings(
@@ -152,6 +176,7 @@ def _verify_binding(
         repository_commit_sha=repository_commit_sha,
         project_state_revision=project_state_revision,
         project_state_sha256=project_state_sha256,
+        coordinate_site_mode=coordinate_site_mode,
     )
     if evidence.status is not CheckStatus.PASS:
         raise Bim00GateRefused("BIM-00 evidence status is not PASS")
@@ -188,6 +213,10 @@ def _verify_binding(
     if evidence.project_state_sha256 != project_state_sha256:
         raise Bim00GateRefused(
             "BIM-00 PROJECT_STATE SHA-256 does not match the active state file"
+        )
+    if evidence.coordinate_site_mode is not coordinate_site_mode:
+        raise Bim00GateRefused(
+            "BIM-00 coordinate site mode does not match the expected study mode"
         )
     open_paths = [_canonical_path(path) for path in evidence.open_document_paths]
     if len(open_paths) != evidence.open_document_count:
@@ -226,6 +255,7 @@ def authorize_preacceptance_stage(
     repository_commit_sha: str,
     project_state_revision: int,
     project_state_sha256: str,
+    coordinate_site_mode: CoordinateSiteMode,
 ) -> Any:
     """Remove only BIM-00 from R03/R04 after every binding is checked."""
 
@@ -243,6 +273,7 @@ def authorize_preacceptance_stage(
         repository_commit_sha=repository_commit_sha,
         project_state_revision=project_state_revision,
         project_state_sha256=project_state_sha256,
+        coordinate_site_mode=coordinate_site_mode,
     )
     operations = getattr(plan, "operations", None)
     if not isinstance(operations, list) or not all(
@@ -262,6 +293,8 @@ def authorize_preacceptance_stage(
     preflight = getattr(plan, "preflight", None)
     if not isinstance(preflight, PreflightReport):
         raise Bim00GateRefused("preacceptance plan has no typed preflight report")
+    if preflight.scenario is not DecisionScenario.STUDY:
+        raise Bim00GateRefused("BIM-00 authorization is available only for STUDY scenario")
     checks = [check for check in preflight.checks if check.name != "bim_00"]
     checks.append(
         StageCheck(
@@ -282,6 +315,7 @@ __all__ = [
     "BIM00_REQUIRED_CHECKS",
     "Bim00Evidence",
     "Bim00GateRefused",
+    "CoordinateSiteMode",
     "WriteGateCheck",
     "authorize_preacceptance_stage",
 ]

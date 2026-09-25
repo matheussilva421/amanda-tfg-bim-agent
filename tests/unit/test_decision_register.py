@@ -240,3 +240,28 @@ def test_p3_detail_decision_is_recorded_as_provisional_and_hash_valid():
     assert detail.verification_required is True
     assert sum(ref.startswith("canonical/") for ref in detail.source_refs) == 4
     assert any("programa_necessidades.pdf#sha256=" in ref for ref in detail.source_refs)
+
+
+def test_current_detail_successor_authorizes_only_normalized_study_pending_review():
+    root = Path(__file__).parents[2]
+    register = load_decision_register(
+        root / "project" / "requirements" / "decision-register.yaml"
+    )
+
+    detail = register.get("DEC-CANONICAL-DETAIL-004")
+
+    assert detail.supersedes == "DEC-CANONICAL-DETAIL-003"
+    assert detail.approval_hash_valid is True
+    assert detail.selection_authority is SelectionAuthority.AGENT_DELEGATED
+    assert detail.selection_kind is SelectionKind.PROVISIONAL_ASSUMPTION
+    assert detail.fact_class is FactClass.DESIGN_HYPOTHESIS
+    assert detail.scenario.value == "STUDY"
+    assert detail.validation_status is ValidationStatus.PENDING_VERIFICATION
+    assert detail.review_status is ReviewStatus.AMANDA_REVIEW_PENDING
+    assert detail.verification_required is True
+    assert detail.adoption_status == "STUDY_ONLY_AUTHORIZED_CANON011_PENDING"
+    assert sum(ref.startswith("canonical/") for ref in detail.source_refs) == 4
+    assert any("programa_necessidades.pdf#sha256=" in ref for ref in detail.source_refs)
+    assert "through R04" in detail.selected_option
+    assert "surveyed" in detail.selected_option
+    assert "CANON-011" in detail.revision_procedure

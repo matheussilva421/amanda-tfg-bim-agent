@@ -274,6 +274,9 @@ def render_status_markdown(data: Mapping[str, Any]) -> str:
         + f"- FAIL: {capability_counts.get('FAIL', 0)}\n"
         + f"- UNTESTED: {capability_counts.get('UNTESTED', 0)}\n\n"
         "## Blockers\n\n"
+        "Blocker severity applies to the affected tasks and claims; check "
+        "state/blockers.yaml, the task graph, and PROJECT_STATE.yaml for "
+        "phase-specific scope.\n\n"
         + blocker_lines
         + "\n\n## Design and Revit recovery\n\n"
         + f"- Selected design: `{redact_text(str(state.get('selected_design') or 'NOT_RECORDED'))}`\n"

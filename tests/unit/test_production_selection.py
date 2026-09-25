@@ -90,7 +90,7 @@ def test_s02_remains_stale_and_cannot_become_the_current_selection(program):
     assert STALE_SELECTION_SOLUTION_ID == "AMANDA-RUN-002-PAVILION-S02"
     assert SELECTION_ARCHETYPE == "CANONICAL_PAVILION_CLUSTER"
     assert PARTI_DECISION_ID == "DEC-CANONICAL-PARTI-002"
-    assert SELECTION_DECISION_ID == "DEC-CANONICAL-DETAIL-003"
+    assert SELECTION_DECISION_ID == "DEC-CANONICAL-DETAIL-004"
     assert STALE_SELECTION_SOLUTION_ID != LEGACY_SELECTION_SOLUTION_ID
     with pytest.raises(SelectionError, match="STALE_BY_CANONICAL_REFERENCE_EXPANSION"):
         _select(program, profile)

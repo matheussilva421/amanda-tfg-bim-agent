@@ -31,6 +31,7 @@ from typing import Any
 from shapely.geometry import LineString, Polygon  # type: ignore[import-untyped]
 
 from amanda_agent.bim.models import BimStage, DesiredState
+from amanda_agent.bim.write_gate import CoordinateSiteMode
 from amanda_agent.bim.stages import (
     CheckStatus,
     ExecutionMode,
@@ -710,6 +711,10 @@ def _plan_r04(request, layout):
                     (float(x), float(y))
                     for x, y in block.footprint.exterior.coords[:-1]
                 ],
+                interior_rings=[
+                    [(float(x), float(y)) for x, y in ring.coords[:-1]]
+                    for ring in block.footprint.interiors
+                ],
                 base_elevation_m=0.0,
                 height_m=FLOOR_HEIGHT_M * block.storeys,
                 source_area_m2=float(block.footprint.area),
@@ -727,6 +732,10 @@ def _plan_r04(request, layout):
                         **element.properties,
                         "height_basis": height_basis,
                         "geometry_source": layout.coordinate_basis,
+                        "coordinate_site_mode": (
+                            CoordinateSiteMode.LOCAL_NORMALIZED_STUDY_NOT_SURVEYED.value
+                        ),
+                        "design_scenario": request.scenario.value,
                     }
                 }
             )
@@ -741,6 +750,10 @@ def _plan_r04(request, layout):
                             **operation.payload["properties"],
                             "height_basis": height_basis,
                             "geometry_source": layout.coordinate_basis,
+                            "coordinate_site_mode": (
+                                CoordinateSiteMode.LOCAL_NORMALIZED_STUDY_NOT_SURVEYED.value
+                            ),
+                            "design_scenario": request.scenario.value,
                         },
                     },
                     "blocked_by": ["BIM-00"],

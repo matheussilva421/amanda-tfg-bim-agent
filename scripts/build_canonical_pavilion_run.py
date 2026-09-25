@@ -34,7 +34,7 @@ from amanda_agent.production.selection import (
     build_selection,
 )
 
-GENERATION_TIMESTAMP = "2026-09-25T10:53:10Z"
+GENERATION_TIMESTAMP = "2026-09-25T18:15:00Z"
 
 
 class CanonicalRunError(RuntimeError):

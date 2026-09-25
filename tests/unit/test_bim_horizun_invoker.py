@@ -7,7 +7,10 @@ never starts Revit or an MCP process.
 from __future__ import annotations
 
 import json
-from typing import Any
+import sys
+import types
+from itertools import pairwise
+from typing import Any, ClassVar
 
 import pytest
 
@@ -45,6 +48,264 @@ def _reply(payload: dict[str, Any]) -> dict[str, Any]:
             "content": [{"type": "text", "text": json.dumps(payload)}],
         },
     }
+
+
+def _execute_generated_mass_script(code: str, monkeypatch: pytest.MonkeyPatch):
+    """Run the generated route against a minimal, recording Revit API surface."""
+
+    class FakeList(list):
+        @classmethod
+        def __class_getitem__(cls, _item):
+            return cls
+
+        def Add(self, value):
+            self.append(value)
+
+    class FakeXYZ:
+        def __init__(self, x, y, z):
+            self.X, self.Y, self.Z = x, y, z
+            self.coordinates = (x, y, z)
+
+    FakeXYZ.BasisZ = FakeXYZ(0.0, 0.0, 1.0)
+
+    class FakeCurveLoop:
+        def __init__(self):
+            self.curves = []
+
+        def Append(self, curve):
+            self.curves.append(curve)
+
+    class FakeLine:
+        @staticmethod
+        def CreateBound(start, end):
+            return start, end
+
+    class FakeGeometryCreationUtilities:
+        profile_loops: ClassVar[list[Any]] = []
+
+        @classmethod
+        def CreateExtrusionGeometry(cls, loops, _direction, _height):
+            cls.profile_loops = list(loops)
+            return object()
+
+    class FakeElementId:
+        def __init__(self, value):
+            self.Value = int(value)
+
+    class FakeParameter:
+        IsReadOnly = False
+
+        def Set(self, value):
+            self.value = value
+
+    class FakeElement:
+        def __init__(self):
+            self.Id = FakeElementId(901)
+            self.Name = ""
+
+        def SetShape(self, _shapes):
+            return None
+
+        def get_Parameter(self, _parameter):
+            return FakeParameter()
+
+    class FakeDirectShape:
+        @staticmethod
+        def CreateElement(_document, _category):
+            return FakeElement()
+
+    class FakeCollector:
+        def __init__(self, _document):
+            pass
+
+        def WhereElementIsNotElementType(self):
+            return self
+
+        def __iter__(self):
+            return iter(())
+
+    class FakeTransaction:
+        def __init__(self, _document, _name):
+            self.status = "NotStarted"
+
+        def Start(self):
+            self.status = "Started"
+
+        def Commit(self):
+            self.status = "Committed"
+
+        def RollBack(self):
+            self.status = "RolledBack"
+
+        def GetStatus(self):
+            return self.status
+
+    db = types.ModuleType("Autodesk.Revit.DB")
+    db.__all__ = [
+        "BuiltInCategory",
+        "BuiltInParameter",
+        "CurveLoop",
+        "DirectShape",
+        "ElementId",
+        "FilteredElementCollector",
+        "GeometryCreationUtilities",
+        "GeometryObject",
+        "Line",
+        "Transaction",
+        "TransactionStatus",
+        "XYZ",
+    ]
+    db.BuiltInCategory = types.SimpleNamespace(OST_Mass=1)
+    db.BuiltInParameter = types.SimpleNamespace(ALL_MODEL_MARK=1)
+    db.CurveLoop = FakeCurveLoop
+    db.DirectShape = FakeDirectShape
+    db.ElementId = FakeElementId
+    db.FilteredElementCollector = FakeCollector
+    db.GeometryCreationUtilities = FakeGeometryCreationUtilities
+    db.GeometryObject = type("GeometryObject", (), {})
+    db.Line = FakeLine
+    db.Transaction = FakeTransaction
+    db.TransactionStatus = types.SimpleNamespace(Started="Started")
+    db.XYZ = FakeXYZ
+
+    structure = types.ModuleType("Autodesk.Revit.DB.Structure")
+    structure.StructuralType = types.SimpleNamespace(NonStructural=0)
+    autodesk = types.ModuleType("Autodesk")
+    autodesk.__path__ = []
+    revit = types.ModuleType("Autodesk.Revit")
+    revit.__path__ = []
+    revit.DB = db
+    autodesk.Revit = revit
+    clr = types.ModuleType("clr")
+    clr.AddReference = lambda _name: None
+    system = types.ModuleType("System")
+    system.__path__ = []
+    generic = types.ModuleType("System.Collections.Generic")
+    generic.List = FakeList
+    collections = types.ModuleType("System.Collections")
+    collections.__path__ = []
+    system.Collections = collections
+
+    for name, module in (
+        ("Autodesk", autodesk),
+        ("Autodesk.Revit", revit),
+        ("Autodesk.Revit.DB", db),
+        ("Autodesk.Revit.DB.Structure", structure),
+        ("System", system),
+        ("System.Collections", collections),
+        ("System.Collections.Generic", generic),
+        ("clr", clr),
+    ):
+        monkeypatch.setitem(sys.modules, name, module)
+
+    document = object()
+    namespace = {"doc": document}
+    exec(code, namespace)  # noqa: S102 - generated route runs against a controlled fake Revit API
+    return FakeGeometryCreationUtilities.profile_loops
+
+
+def _execute_generated_mass_geometry_readback(code: str) -> dict[str, Any]:
+    """Run the read-only extraction route against a small fake DirectShape solid."""
+
+    class FakeXYZ:
+        def __init__(self, x: float, y: float, z: float) -> None:
+            self.X, self.Y, self.Z = x, y, z
+
+    class FakeElementId:
+        def __init__(self, value: int) -> None:
+            self.Value = value
+
+    class FakeCurve:
+        def __init__(self, points: list[FakeXYZ]) -> None:
+            self.points = points
+
+        def Tessellate(self) -> list[FakeXYZ]:
+            return self.points
+
+    class FakeCurveLoop(list):
+        pass
+
+    class FakePlanarFace:
+        def __init__(self, z: float, normal_z: float, loops: list[FakeCurveLoop]) -> None:
+            self.Origin = FakeXYZ(0.0, 0.0, z)
+            self.FaceNormal = FakeXYZ(0.0, 0.0, normal_z)
+            self.loops = loops
+
+        def GetEdgesAsCurveLoops(self) -> list[FakeCurveLoop]:
+            return self.loops
+
+    class FakeSolid:
+        def __init__(self) -> None:
+            conversion = 3.280839895013123
+            base_elevation_m = 2.75
+            height_m = 3.0
+            bottom_z = base_elevation_m * conversion
+            top_z = (base_elevation_m + height_m) * conversion
+            footprint = [(0.0, 0.0), (10.0, 0.0), (10.0, 10.0), (0.0, 10.0)]
+            courtyard = [(3.0, 3.0), (3.0, 7.0), (7.0, 7.0), (7.0, 3.0)]
+
+            def loop_at_z(ring: list[tuple[float, float]], z: float) -> FakeCurveLoop:
+                closed = [*ring, ring[0]]
+                return FakeCurveLoop(
+                    [
+                        FakeCurve(
+                            [
+                                FakeXYZ(first[0] * conversion, first[1] * conversion, z),
+                                FakeXYZ(second[0] * conversion, second[1] * conversion, z),
+                            ]
+                        )
+                        for first, second in pairwise(closed)
+                    ]
+                )
+
+            bottom_loops = [loop_at_z(footprint, bottom_z), loop_at_z(courtyard, bottom_z)]
+            self.Faces = [
+                FakePlanarFace(bottom_z, -1.0, bottom_loops),
+                FakePlanarFace(top_z, 1.0, []),
+            ]
+
+    class FakeElement:
+        Id = FakeElementId(901)
+        UniqueId = "uid-mass-courtyard"
+
+        def get_Geometry(self, _options: Any) -> list[FakeSolid]:
+            return [FakeSolid()]
+
+    class FakeDocument:
+        def GetElement(self, element_id: FakeElementId) -> FakeElement | None:
+            return FakeElement() if element_id.Value == 901 else None
+
+    db = types.ModuleType("Autodesk.Revit.DB")
+    db.__all__ = ["ElementId", "Options", "PlanarFace", "Solid"]
+    db.ElementId = FakeElementId
+    db.Options = type("Options", (), {})
+    db.PlanarFace = FakePlanarFace
+    db.Solid = FakeSolid
+    autodesk = types.ModuleType("Autodesk")
+    autodesk.__path__ = []
+    revit = types.ModuleType("Autodesk.Revit")
+    revit.__path__ = []
+    revit.DB = db
+    autodesk.Revit = revit
+    clr = types.ModuleType("clr")
+    clr.AddReference = lambda _name: None
+    # Keep the fake modules local to this helper's execution environment.
+    old_modules = {name: sys.modules.get(name) for name in ("Autodesk", "Autodesk.Revit", "Autodesk.Revit.DB", "clr")}
+    sys.modules.update(
+        {"Autodesk": autodesk, "Autodesk.Revit": revit, "Autodesk.Revit.DB": db, "clr": clr}
+    )
+    try:
+        namespace = {"doc": FakeDocument()}
+        exec(code, namespace)  # noqa: S102 - generated read route runs against a controlled fake Revit API
+        output = namespace.get("__output__")
+        assert isinstance(output, dict)
+        return output
+    finally:
+        for name, old_module in old_modules.items():
+            if old_module is None:
+                sys.modules.pop(name, None)
+            else:
+                sys.modules[name] = old_module
 
 
 def _wall_call(**payload: Any) -> StageToolCall:
@@ -513,7 +774,7 @@ def test_mcp_error_is_returned_as_failed_tool_result_with_read_payload():
     assert result.error == {"code": -32000, "message": "no Revit is reachable"}
 
 
-def test_mass_uses_execute_python_after_prewrite_document_and_model_reads():
+def test_mass_uses_all_profile_rings_for_the_extruded_solid(monkeypatch):
     transport = FakeMcpTransport(
         _reply({"title": "LAB_AMANDA", "path": "LAB_AMANDA.rvt", "version": "2027"}),
         _reply({"rows": []}),
@@ -529,6 +790,9 @@ def test_mass_uses_execute_python_after_prewrite_document_and_model_reads():
             "target_document": "LAB_AMANDA",
             "geometry": {
                 "footprint": [[0.0, 0.0], [4.0, 0.0], [4.0, 3.0], [0.0, 3.0]],
+                "interior_rings": [
+                    [[1.0, 1.0], [1.0, 2.0], [2.0, 2.0], [2.0, 1.0]]
+                ],
                 "base_elevation_m": 0.0,
                 "height_m": 3.0,
             },
@@ -549,8 +813,161 @@ def test_mass_uses_execute_python_after_prewrite_document_and_model_reads():
     python_arguments = transport.calls[2][1]
     assert python_arguments["target_document"] == "LAB_AMANDA"
     assert python_arguments["idempotency_key"] == "mass-001"
-    assert "revit.create_mass" in python_arguments["code"]
-    assert "__output__" in python_arguments["code"]
+    profile_loops = _execute_generated_mass_script(
+        python_arguments["code"], monkeypatch
+    )
+
+    assert len(profile_loops) == 2
+    assert [len(loop.curves) for loop in profile_loops] == [4, 4]
+
+
+def test_mass_applies_nonzero_base_elevation_to_profile_points(monkeypatch):
+    transport = FakeMcpTransport(
+        _reply({"title": "LAB_AMANDA", "path": "LAB_AMANDA.rvt", "version": "2027"}),
+        _reply({"rows": []}),
+        _reply({"status": "self_reported_verified", "created_ids": [901]}),
+    )
+    invoker = HorizunInvoker(transport=transport)
+    call = _python_call(
+        "revit.create_mass",
+        BimStage.R04,
+        geometry={
+            "footprint": [[0.0, 0.0], [4.0, 0.0], [4.0, 3.0], [0.0, 3.0]],
+            "base_elevation_m": 2.75,
+            "height_m": 3.0,
+        },
+        properties={"name": "Elevated mass"},
+    )
+
+    invoker.invoke(call)
+
+    profile_loops = _execute_generated_mass_script(_python_code(transport), monkeypatch)
+    expected_z_ft = 2.75 * 3.280839895013123
+    assert all(
+        point.coordinates[2] == pytest.approx(expected_z_ft)
+        for loop in profile_loops
+        for curve in loop.curves
+        for point in curve
+    )
+
+
+def test_mass_geometry_is_reread_from_revit_after_write():
+    observed_geometry = {
+        "footprint": [
+            [0.0, 0.0],
+            [10.0, 0.0],
+            [10.0, 10.0],
+            [0.0, 10.0],
+            [0.0, 0.0],
+        ],
+        "interior_rings": [
+            [[3.0, 3.0], [3.0, 7.0], [7.0, 7.0], [7.0, 3.0], [3.0, 3.0]]
+        ],
+        "base_elevation_m": 2.75,
+        "height_m": 3.0,
+    }
+
+    class GeometryReadbackTransport(FakeMcpTransport):
+        python_calls = 0
+
+        def call(self, tool: str, arguments: dict[str, Any]) -> dict[str, Any]:
+            if tool == "horizun_execute_python":
+                self.python_calls += 1
+                if self.python_calls == 2:
+                    self.calls.append((tool, arguments))
+                    return _reply(_execute_generated_mass_geometry_readback(arguments["code"]))
+            return super().call(tool, arguments)
+
+    transport = GeometryReadbackTransport(
+        _reply({"title": "LAB_AMANDA", "path": "LAB_AMANDA.rvt", "version": "2027"}),
+        _reply({"rows": []}),
+        _reply({"status": "self_reported_verified", "element_id": 901}),
+    )
+    invoker = HorizunInvoker(transport=transport)
+
+    result = invoker.invoke(
+        _python_call(
+            "revit.create_mass",
+            BimStage.R04,
+            geometry=observed_geometry,
+            properties={"name": "Courtyard mass"},
+            dry_run=False,
+        )
+    )
+
+    python_reads = [
+        arguments
+        for tool, arguments in transport.calls
+        if tool == "horizun_execute_python"
+    ]
+    assert len(python_reads) == 2
+    assert python_reads[1]["target_document"] == "LAB_AMANDA"
+    assert python_reads[1]["code"] != python_reads[0]["code"]
+    assert result.read_payload["readback_verified"] is True
+    geometry = result.read_payload["geometry"]
+    assert geometry["footprint"] == observed_geometry["footprint"]
+    assert geometry["interior_rings"] == observed_geometry["interior_rings"]
+    assert geometry["base_elevation_m"] == pytest.approx(2.75)
+    assert geometry["height_m"] == pytest.approx(3.0)
+    assert result.read_payload["geometry_readback_provenance"] == "SELF_REPORTED_PYTHON_READBACK"
+
+
+def test_mass_model_readback_overrides_geometry_claims_from_write_response():
+    expected_geometry = {
+        "footprint": [[0.0, 0.0], [10.0, 0.0], [10.0, 10.0], [0.0, 10.0], [0.0, 0.0]],
+        "interior_rings": [[[3.0, 3.0], [3.0, 7.0], [7.0, 7.0], [7.0, 3.0], [3.0, 3.0]]],
+        "base_elevation_m": 2.75,
+        "height_m": 3.0,
+    }
+    actual_geometry = {
+        **expected_geometry,
+        "interior_rings": [],
+    }
+
+    class MisleadingWriteTransport(FakeMcpTransport):
+        python_calls = 0
+
+        def call(self, tool: str, arguments: dict[str, Any]) -> dict[str, Any]:
+            if tool == "horizun_execute_python":
+                self.python_calls += 1
+                if self.python_calls == 2:
+                    self.calls.append((tool, arguments))
+                    return _reply(
+                        {
+                            "status": "self_reported_verified",
+                            "element_id": 901,
+                            "unique_id": "uid-actual-model",
+                            "geometry": actual_geometry,
+                        }
+                    )
+            return super().call(tool, arguments)
+
+    transport = MisleadingWriteTransport(
+        _reply({"title": "LAB_AMANDA", "path": "LAB_AMANDA.rvt", "version": "2027"}),
+        _reply({"rows": []}),
+        _reply(
+            {
+                "status": "self_reported_verified",
+                "element_id": 901,
+                "unique_id": "uid-from-write",
+                "geometry": expected_geometry,
+                "readback_verified": True,
+            }
+        ),
+    )
+    result = HorizunInvoker(transport=transport).invoke(
+        _python_call(
+            "revit.create_mass",
+            BimStage.R04,
+            geometry=expected_geometry,
+            properties={"name": "Courtyard mass"},
+            dry_run=False,
+        )
+    )
+
+    assert result.read_payload["geometry"] == actual_geometry
+    assert result.read_payload["unique_id"] == "uid-actual-model"
+    assert result.read_payload["readback_verified"] is True
 
 
 def test_typed_wall_resolves_logical_level_and_type_ids_and_caches_stage_reads():

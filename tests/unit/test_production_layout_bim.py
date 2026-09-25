@@ -637,12 +637,33 @@ def test_canonical_r04_plans_distinct_block_masses_as_non_executable_hypotheses(
 
     masses = {operation.logical_id: operation for operation in plan.operations}
     assert set(masses) == {f"MASS-{block.component_id}" for block in canonical_layout.blocks}
+    service_block = next(
+        block
+        for block in canonical_layout.blocks
+        if block.component_id == "SERVICE_CAPACITATION"
+    )
+    service_mass = masses["MASS-SERVICE_CAPACITATION"]
+    assert len(service_mass.payload["geometry"]["interior_rings"]) == len(
+        service_block.footprint.interiors
+    )
+    assert service_mass.payload["area_m2"] == pytest.approx(
+        service_block.footprint.area
+    )
     assert masses["MASS-ADMIN_ACOLHIMENTO"].payload["height_m"] == pytest.approx(
         layout_bim.FLOOR_HEIGHT_M * 2
     )
     assert all(
         operation.payload["properties"]["height_basis"]
         == "PROVISIONAL_ASSUMPTION: 3.20m per floor for R04 visual study only"
+        for operation in masses.values()
+    )
+    assert all(
+        operation.payload["properties"]["coordinate_site_mode"]
+        == "LOCAL_NORMALIZED_STUDY_NOT_SURVEYED"
+        for operation in masses.values()
+    )
+    assert all(
+        operation.payload["properties"]["design_scenario"] == "STUDY"
         for operation in masses.values()
     )
     assert all("BIM-00" in operation.blocked_by for operation in masses.values())

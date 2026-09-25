@@ -118,7 +118,7 @@ def test_p3_loads_p2_identity_and_emits_a_distinct_offline_candidate(tmp_path: P
     selection = json.loads((created / "selection.json").read_text(encoding="utf-8"))
     decision = load_decision_register(
         ROOT / "project/requirements/decision-register.yaml"
-    ).get("DEC-CANONICAL-DETAIL-003")
+    ).get("DEC-CANONICAL-DETAIL-004")
     assert run["solution_id"] == identity.solution_id
     assert run["solution_id"] != "AMANDA-RUN-002-PAVILION-S02"
     assert run["run_id"] == identity.solution_id
@@ -131,6 +131,11 @@ def test_p3_loads_p2_identity_and_emits_a_distinct_offline_candidate(tmp_path: P
     assert run["revit_calls"] == 0
     assert run["bim_eligible"] is False
     assert selection["detail_decision"] == decision.model_dump(mode="json")
+    assert selection["detail_decision"]["review_status"] == "AMANDA_REVIEW_PENDING"
+    assert selection["detail_decision"]["adoption_status"] == (
+        "STUDY_ONLY_AUTHORIZED_CANON011_PENDING"
+    )
+    assert selection["detail_decision"]["supersedes"] == "DEC-CANONICAL-DETAIL-003"
 
 
 def test_p3_requires_seventeen_structural_passes_and_keeps_canon_011_blocked(

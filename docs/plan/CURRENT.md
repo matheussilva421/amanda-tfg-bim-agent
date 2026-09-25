@@ -31,10 +31,17 @@ units, site-coordinate mode, family strategy, canonical selection, and
 official program source. BIM-00 is an evidence/authorization gate only; it
 does not execute an R04/R05 operation.
 
-**Current status:** `P4-T01` is `BLOCKED_BY_INPUT`. RUN-003 is not selected or
-BIM-eligible; no exact target/checkpoint is bound; site inputs and live
-lease/provider evidence are unresolved. The retry pointer remains P4-T01; P5
-is not ready. See `docs/reports/P4-T01-bim00-blocker-report.md`.
+**Current status:** `P4-T01` is `BLOCKED_BY_INPUT`. DEC-CANONICAL-DETAIL-004
+selects RUN-003 for reversible normalized local-reference STUDY through R04;
+`AMANDA_REVIEW_PENDING` remains, `bim_eligible=false` remains for detailed/final
+production, and CANON-011 awaits real comparison with all four boards. Missing
+survey/site inputs constrain their dependent final claims but do not block this
+study. BIM-00 still cannot pass: Horizun cannot reach the installed Revit
+provider, the writer lease is held for superseded S02, and no exact RUN-003
+target/checkpoint is bound. P4-T01 remains the retry pointer; R04 writes stay
+blocked until BIM-00 PASS, and R05 stays blocked until CANON-011 PASS. See
+`docs/reports/P4-T01-bim00-blocker-report.md`; the selected offline STUDY
+snapshot is `design-engine/runs/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C-study-detail-004/`.
 
 ## P5 — R04 Revit
 

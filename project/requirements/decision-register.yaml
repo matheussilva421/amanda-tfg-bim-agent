@@ -561,6 +561,68 @@ decisions:
   rejected_options:
   - Reuse of superseded AMANDA-RUN-001-S01 geometry
   source_sha256: null
+- decision_id: DEC-CANONICAL-DETAIL-004
+  topic: CANONICAL_PARTI_IMPLEMENTATION
+  alternatives:
+  - 'AGENT_DELEGATED: reversible normalized local-reference STUDY through R04, marked not surveyed'
+  - Defer all normalized STUDY massing until parcel survey and Amanda review
+  selected_option: 'AGENT_DELEGATED STUDY: use RUN-003 normalized local-reference geometry through R04; no surveyed site claim.'
+  rationale: >-
+    The P3 candidate structurally reconciles the four current canonical boards with
+    the immutable official program. Its coordinates are normalized local reference
+    geometry and do not identify or fit a verified parcel. Missing topography blocks
+    final grading and altimetric accessibility; the missing boundary blocks final
+    area, setback and permit claims; unknown occupancy blocks availability and
+    transfer claims; frontage conflict and unverified true north block the related
+    final access, setback and orientation claims. Those scoped gaps do not prevent
+    a reversible academic STUDY through R04. R04 must retain the explicit
+    LOCAL_NORMALIZED_STUDY_NOT_SURVEYED basis. CANON-011 remains pending until
+    actual R04 geometry is compared with all four boards. This delegated study
+    decision is not Amanda's personal approval and does not authorize R05.
+  source_refs:
+  - canonical/01_implantacao.png#sha256=30d009357a095e7794e0e915dcd2fdb04cd6b9aab9f4d13f5663ed54d6f20240
+  - canonical/02_administrativo.png#sha256=123b95633ae1be643da84f2226c6337d65a74f7d1337d6b27d94bdead1c3a263
+  - canonical/03_residencial.png#sha256=5b96c2d5cc770742ee32d51b83b25993fe8b8a1638bf94da56ba8ef771031381
+  - canonical/04_servicos.png#sha256=c56b806f805d9c4aa1e6015ba6b56ac960204066721f93ef08cbadfb312c0386
+  - docs/source/programa_necessidades.pdf#sha256=11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17
+  - project/requirements/program.json#baseline.source_sha256=11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17
+  - decision:DEC-CANONICAL-PARTI-002#approval_hash=9f0dac4ff63692ea2cd13c43043f02070f26b8c2d57b57bbedfc494634c601bc
+  - project/site/missing-data.yaml#study-scope-and-final-claim-limitations
+  confidence: 0.8
+  affected_requirements:
+  - PROGRAM-PEOPLE-20
+  - PROGRAM-INTERNAL-626
+  - PROGRAM-EXTERNAL-260
+  - PROGRAM-ENCLOSED-ESTIMATE-783-814
+  - PROGRAM-COVERED-ESTIMATE-850-950
+  - CANONICAL-ADMIN-PUBLIC-EDGE-TWO-LEVELS
+  - CANONICAL-RESIDENTIAL-FOUR-PAVILIONS-AND-CENTRAL-GARDEN
+  - CANONICAL-CHILD-GREEN-INTERFACE
+  - CANONICAL-SEPARATE-SERVICE-ACCESS
+  - CANONICAL-COVERED-EXTERNAL-CIRCULATION
+  selection_authority: AGENT_DELEGATED
+  timestamp: '2026-09-25T18:15:00Z'
+  supersedes: DEC-CANONICAL-DETAIL-003
+  approval_hash: 29d70f0e830708a3926abad14877f4c3941418630c5f0225b0bf5924f2dabd8b
+  validation_status: PENDING_VERIFICATION
+  revision_procedure: >-
+    This authorization ends at R04. Compare actual R04 geometry and views with all
+    four boards to resolve CANON-011 before R05. Keep parcel, grading/accessibility,
+    setback/orientation, and availability/transfer claims blocked until their
+    corresponding site evidence is verified. Keep Amanda review pending unless she
+    records acceptance. A material geometry change requires a new solution identity
+    and content approval hash.
+  review_status: AMANDA_REVIEW_PENDING
+  fact_class: DESIGN_HYPOTHESIS
+  scenario: STUDY
+  selection_kind: PROVISIONAL_ASSUMPTION
+  verification_required: true
+  adoption_status: STUDY_ONLY_AUTHORIZED_CANON011_PENDING
+  rejected_options:
+  - Reuse superseded AMANDA-RUN-002-PAVILION-S02 geometry
+  - Claim normalized local coordinates as surveyed site coordinates
+  - Advance to R05 before CANON-011 passes against all four boards
+  source_sha256: null
 academic_deliverables:
 - deliverable_id: academic-caderno-revision
   name: Caderno revision

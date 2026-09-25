@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import Mapping
+from textwrap import dedent
 from typing import Any
 
 from ..stages import StageToolCall
@@ -415,19 +416,27 @@ class HorizunInvoker:
         # honest, rather than being declared verified without a read.
         readback_category = _PYTHON_READBACK_CATEGORIES.get(call.semantic_capability)
         if readback_category is not None and payload.get("dry_run") is False:
-            self._pending_readbacks[key] = {
-                "logical_id": call.logical_id,
-                "tool": "horizun_query_model",
-                "arguments": {
-                    "categories": [readback_category],
-                    # unique_id proves the read found one specific element
-                    # rather than a name, and the default field set omits it.
-                    "return_fields": list(self._READBACK_FIELDS),
-                    "response_mode": "compact",
-                    "cache_mode": "bypass",
-                },
-                "match_by_logical_id": True,
-            }
+            if call.semantic_capability == "revit.create_mass":
+                self._pending_readbacks[key] = {
+                    "logical_id": call.logical_id,
+                    "tool": "horizun_execute_python",
+                    "arguments": {"target_document": target, "response_mode": "compact"},
+                    "geometry_readback": True,
+                }
+            else:
+                self._pending_readbacks[key] = {
+                    "logical_id": call.logical_id,
+                    "tool": "horizun_query_model",
+                    "arguments": {
+                        "categories": [readback_category],
+                        # unique_id proves the read found one specific element
+                        # rather than a name, and the default field set omits it.
+                        "return_fields": list(self._READBACK_FIELDS),
+                        "response_mode": "compact",
+                        "cache_mode": "bypass",
+                    },
+                    "match_by_logical_id": True,
+                }
         request = dict(payload)
         request.setdefault("logical_id", call.logical_id)
         request.setdefault("semantic_capability", call.semantic_capability)
@@ -470,16 +479,34 @@ if type_id is None:
 created = Toposolid.Create(document, point_list, ElementId(int(type_id)), ElementId(int(level_id)))
 """,
             "revit.create_mass": """
-footprint = geometry.get('footprint') or geometry.get('profile')
-if not footprint or len(footprint) < 3:
+footprint = geometry.get('footprint')
+interior_rings = geometry.get('interior_rings') or []
+base_elevation_m = float(geometry.get('base_elevation_m') or 0.0)
+
+def mass_xyz(value):
+    point = to_xyz(value)
+    return XYZ(point.X, point.Y, point.Z + base_elevation_m * M_TO_FT)
+
+if footprint:
+    profile_rings = [footprint, *interior_rings]
+else:
+    profile = geometry.get('profile')
+    if profile and profile[0] and isinstance(profile[0][0], (list, tuple)):
+        profile_rings = profile
+    else:
+        profile_rings = [profile] if profile else []
+if not profile_rings or any(not ring or len(ring) < 3 for ring in profile_rings):
     raise ValueError('create_mass requires a closed metric footprint')
-loop = CurveLoop()
-for index in range(len(footprint)):
-    loop.Append(Line.CreateBound(to_xyz(footprint[index]), to_xyz(footprint[(index + 1) % len(footprint)])))
+profile_loops = List[CurveLoop]()
+for ring in profile_rings:
+    loop = CurveLoop()
+    for index in range(len(ring)):
+                    loop.Append(Line.CreateBound(mass_xyz(ring[index]), mass_xyz(ring[(index + 1) % len(ring)])))
+    profile_loops.Add(loop)
 height_m = float(geometry.get('height_m') or geometry.get('height') or request.get('height_m') or 0.01)
 if height_m <= 0:
     raise ValueError('create_mass height must be positive')
-solid = GeometryCreationUtilities.CreateExtrusionGeometry(List[CurveLoop]([loop]), XYZ.BasisZ, height_m * M_TO_FT)
+solid = GeometryCreationUtilities.CreateExtrusionGeometry(profile_loops, XYZ.BasisZ, height_m * M_TO_FT)
 created = make_direct_shape(BuiltInCategory.OST_Mass, solid)
 set_name(created, property_value('name', logical_id))
 """,
@@ -727,6 +754,100 @@ else:
             "            transaction.RollBack()\n"
             "    __output__ = {'status': 'self_reported_verified', 'logical_id': logical_id, 'element_id': created_id, 'created': True, 'semantic_capability': semantic_capability}\n"
         )
+
+    @staticmethod
+    def _mass_geometry_readback_script(element_id: int) -> str:
+        """Extract the solid profile in a separate, read-only Revit call."""
+
+        if isinstance(element_id, bool) or element_id < 0:
+            raise ValueError("mass geometry readback requires a non-negative element id")
+        script = """
+            import clr
+            clr.AddReference('RevitAPI')
+            from Autodesk.Revit.DB import ElementId, Options, PlanarFace, Solid
+
+            document = globals().get('doc') or globals().get('document') or globals().get('__document__')
+            if document is None:
+                raise RuntimeError('Horizun Python context did not expose the active Document')
+            expected_element_id = __ELEMENT_ID__
+            element = document.GetElement(ElementId(expected_element_id))
+            if element is None:
+                raise RuntimeError('mass geometry readback could not find the written element')
+
+            M_TO_FT = 3.280839895013123
+            solids = [
+                item for item in element.get_Geometry(Options())
+                if isinstance(item, Solid) and len(item.Faces) > 0
+            ]
+            if len(solids) != 1:
+                raise RuntimeError('mass geometry readback requires exactly one non-empty solid')
+            horizontal_faces = [
+                face for face in solids[0].Faces
+                if isinstance(face, PlanarFace)
+                and abs(abs(face.FaceNormal.Z) - 1.0) < 1e-8
+            ]
+            if len(horizontal_faces) < 2:
+                raise RuntimeError('mass geometry readback found no horizontal base and top faces')
+
+            bottom_face = min(horizontal_faces, key=lambda face: face.Origin.Z)
+            top_face = max(horizontal_faces, key=lambda face: face.Origin.Z)
+            base_elevation_m = float(bottom_face.Origin.Z) / M_TO_FT
+            height_m = (float(top_face.Origin.Z) - float(bottom_face.Origin.Z)) / M_TO_FT
+            if height_m <= 0:
+                raise RuntimeError('mass geometry readback returned a non-positive extrusion height')
+
+            rings = []
+            for curve_loop in bottom_face.GetEdgesAsCurveLoops():
+                ring = []
+                for curve in curve_loop:
+                    for point in curve.Tessellate():
+                        xy = [float(point.X) / M_TO_FT, float(point.Y) / M_TO_FT]
+                        if not ring or abs(ring[-1][0] - xy[0]) > 1e-9 or abs(ring[-1][1] - xy[1]) > 1e-9:
+                            ring.append(xy)
+                if len(ring) < 3:
+                    raise RuntimeError('mass geometry readback found an incomplete profile ring')
+                if abs(ring[0][0] - ring[-1][0]) > 1e-9 or abs(ring[0][1] - ring[-1][1]) > 1e-9:
+                    ring.append(list(ring[0]))
+                if len(ring) < 4:
+                    raise RuntimeError('mass geometry readback found a degenerate closed profile ring')
+                rings.append(ring)
+
+            def signed_area(ring):
+                return sum(
+                    ring[i][0] * ring[i + 1][1] - ring[i + 1][0] * ring[i][1]
+                    for i in range(len(ring) - 1)
+                ) / 2.0
+
+            def canonical_ring(ring, clockwise):
+                points = ring[:-1]
+                if (signed_area(ring) < 0) != clockwise:
+                    points = list(reversed(points))
+                start = min(
+                    range(len(points)),
+                    key=lambda index: (points[index][0], points[index][1]),
+                )
+                points = points[start:] + points[:start]
+                return points + [list(points[0])]
+
+            if not rings:
+                raise RuntimeError('mass geometry readback returned no profile rings')
+            rings.sort(key=lambda ring: abs(signed_area(ring)), reverse=True)
+            footprint = canonical_ring(rings[0], False)
+            interior_rings = [canonical_ring(ring, True) for ring in rings[1:]]
+            interior_rings.sort(key=lambda ring: (ring[0][0], ring[0][1]))
+            __output__ = {
+                'status': 'self_reported_verified',
+                'element_id': int(element.Id.Value),
+                'unique_id': str(element.UniqueId),
+                'geometry': {
+                    'footprint': footprint,
+                    'interior_rings': interior_rings,
+                    'base_elevation_m': base_elevation_m,
+                    'height_m': height_m,
+                },
+            }
+        """
+        return dedent(script).replace("__ELEMENT_ID__", str(int(element_id))).lstrip()
 
     def _translate_python_references(
         self, call: StageToolRequest, request: dict[str, Any]
@@ -1053,6 +1174,9 @@ else:
             "write_tool": result.get("tool"),
             "logical_id": plan["logical_id"],
         }
+        if plan.get("geometry_readback"):
+            self._merge_mass_geometry_readback(result, key, plan, memo)
+            return
         unavailable_reason = plan.get("readback_unavailable")
         if unavailable_reason is None:
             memo["readback_tool"] = plan["tool"]
@@ -1107,6 +1231,93 @@ else:
         merged = dict(payload) if isinstance(payload, Mapping) else {}
         for name, value in memo.items():
             merged.setdefault(name, value)
+        result["read_payload"] = merged
+        result["payload"] = merged
+
+    def _merge_mass_geometry_readback(
+        self,
+        result: StageToolResult,
+        key: str,
+        plan: Mapping[str, Any],
+        memo: dict[str, Any],
+    ) -> None:
+        """Read the created DirectShape solid after the write call has returned."""
+
+        memo["readback_tool"] = plan["tool"]
+        element_id = self._row_element_id(result.read_payload)
+        if element_id is None:
+            element_id = self._logical_ids.get(str(plan["logical_id"]))
+        if not result.reported_success:
+            memo["readback_verified"] = False
+            memo["readback_error"] = "write did not report success; the model was not read back"
+        elif element_id is None:
+            memo["readback_verified"] = False
+            memo["readback_error"] = "mass write returned no element id for geometric readback"
+        else:
+            read_key = f"{key}:mass-geometry-readback"
+            arguments = {
+                **dict(plan["arguments"]),
+                "code": self._mass_geometry_readback_script(element_id),
+                "idempotency_key": read_key,
+            }
+            try:
+                payload = self._read_tool(plan["tool"], arguments)
+            except Exception as exc:  # noqa: BLE001 - a failed read never becomes a pass
+                memo["readback_verified"] = False
+                memo["readback_error"] = f"{type(exc).__name__}: {exc}"
+            else:
+                if isinstance(payload, Mapping):
+                    observed_id = self._row_element_id(payload)
+                    unique_id = payload.get("unique_id")
+                    geometry = payload.get("geometry")
+                    memo["geometry_readback_provenance"] = "SELF_REPORTED_PYTHON_READBACK"
+                    memo["geometry_readback_element_id"] = observed_id
+                    if isinstance(unique_id, str) and unique_id.strip():
+                        memo["unique_id"] = unique_id
+                    if isinstance(geometry, Mapping):
+                        memo["geometry"] = dict(geometry)
+                    memo["readback_verified"] = bool(
+                        str(payload.get("status", "")).casefold() == "self_reported_verified"
+                        and observed_id == element_id
+                        and isinstance(unique_id, str)
+                        and bool(unique_id.strip())
+                        and isinstance(geometry, Mapping)
+                        and isinstance(geometry.get("footprint"), list)
+                        and isinstance(geometry.get("interior_rings"), list)
+                        and geometry.get("base_elevation_m") is not None
+                        and geometry.get("height_m") is not None
+                    )
+                    if not memo["readback_verified"]:
+                        memo["readback_error"] = "mass readback omitted stable identity or solid geometry"
+                else:
+                    memo["readback_verified"] = False
+                    memo["readback_error"] = "mass readback returned no structured geometry"
+        original = result.read_payload
+        merged = dict(original) if isinstance(original, Mapping) else {}
+        for name, value in memo.items():
+            if name in {
+                "readback_tool",
+                "readback_verified",
+                "readback_error",
+                "geometry_readback_provenance",
+                "geometry_readback_element_id",
+            }:
+                merged[name] = value
+            else:
+                merged.setdefault(name, value)
+        if memo.get("readback_verified"):
+            if "geometry" in memo:
+                merged["geometry"] = memo["geometry"]
+            if "unique_id" in memo:
+                merged["unique_id"] = memo["unique_id"]
+            observed_id = memo.get("geometry_readback_element_id")
+            if observed_id is not None:
+                merged["element_id"] = observed_id
+        else:
+            # A stale write response cannot stand in for missing post-write
+            # geometry. Remove its self-reported shape so verification fails closed.
+            merged.pop("geometry", None)
+            merged.pop("unique_id", None)
         result["read_payload"] = merged
         result["payload"] = merged
 

@@ -2180,3 +2180,16 @@ entries:
   recorded_utc: '2026-09-25T12:46:12Z'
   note: P4-T01 preflight closed as BLOCKED_BY_INPUT; retry P4-T01 only after current
     inputs and live evidence are supplied.
+- task_id: P4-T01
+  status: BLOCKED_BY_INPUT
+  evidence:
+  - 'DEC-CANONICAL-DETAIL-004 selects RUN-003 only for reversible normalized local-reference STUDY through R04; AMANDA_REVIEW_PENDING remains and R05 requires CANON-011 comparison against all four boards.'
+  - 'Offline snapshot design-engine/runs/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C-study-detail-004: decision hash 29d70f0e830708a3926abad14877f4c3941418630c5f0225b0bf5924f2dabd8b; content approval hash 961b6edc95bd097fe600b2ce968aacdf28876bf3c587b788a0b2358baddfc0b0; manifest 6/6 valid; QA 17 PASS, 0 FAIL, CANON-011 BLOCKED; revit_calls=0.'
+  - 'PROJECT_STATE revision 183 records scoped site gaps as DEGRADING and current blockers for provider reachability, the held S02 lease, and missing exact target/checkpoint.'
+  - 'Read-only Revit diagnostic: PID 38152 responds but has no targetable window; Horizun health reports no reachable Revit. No model was opened or written.'
+  - 'TDD focused R04/readback/geometric/BIM-00 suite: 154 passed; final independent review and closeout gates pending.'
+  - 'Consolidated 15-module state/provider/selection/R04/session/status/plan gate: 235 passed.'
+  - 'Independent review findings were fixed test-first: FINAL scenario refusal for R03/R04, P3-T01 as last completed task at PROJECT_STATE revision 184, claim-specific dashboard blocker scope, and an explicitly historical pre-DEC-004 handoff section. Follow-up independent review approved with no residual findings.'
+  - 'Final focused 19-module suite: 270 passed, 0 failed; scoped Ruff passed. No Revit write, BIM-00 authorization, R04, or R05 occurred.'
+  recorded_utc: '2026-09-25T18:57:15Z'
+  note: 'P4-T01 continuation reconciled study scope; BIM-00 remains blocked and no Revit write was made.'

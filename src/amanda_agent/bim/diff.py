@@ -10,6 +10,7 @@ from typing import Any
 
 import yaml
 from pydantic import BaseModel, ConfigDict, Field
+from shapely.geometry import Polygon
 
 from .current_state import CurrentElement, CurrentState
 from .desired_state import DesiredElement, DesiredState, load_desired_state
@@ -449,11 +450,87 @@ def _equivalent(left: Any, right: Any, tolerance: float) -> bool:
     return left == right
 
 
+def _mass_polygon(value: Mapping[str, Any]) -> Polygon | None:
+    footprint = value.get("footprint")
+    interior_rings = value.get("interior_rings", [])
+    if not isinstance(footprint, Sequence) or isinstance(footprint, (str, bytes)):
+        return None
+    if not isinstance(interior_rings, Sequence) or isinstance(interior_rings, (str, bytes)):
+        return None
+    try:
+        polygon = Polygon(footprint, holes=interior_rings)
+    except (TypeError, ValueError):
+        return None
+    return polygon if not polygon.is_empty and polygon.is_valid else None
+
+
+def _equivalent_mass_geometry(
+    expected: Mapping[str, Any], actual: Mapping[str, Any], tolerance: float
+) -> bool:
+    expected_polygon = _mass_polygon(expected)
+    actual_polygon = _mass_polygon(actual)
+    if expected_polygon is None or actual_polygon is None:
+        return False
+    if expected_polygon.hausdorff_distance(actual_polygon) > tolerance:
+        return False
+
+    expected_base = expected.get("base_elevation_m")
+    actual_base = actual.get("base_elevation_m")
+    expected_height = expected.get("height_m")
+    actual_height = actual.get("height_m")
+    if expected_base is None or actual_base is None or not _equivalent(
+        expected_base, actual_base, tolerance
+    ):
+        return False
+    if expected_height is None or actual_height is None or not _equivalent(
+        expected_height, actual_height, tolerance
+    ):
+        return False
+
+    actual_derived = {
+        "centroid": list(actual_polygon.centroid.coords[0]),
+        "dimensions_m": [
+            actual_polygon.bounds[2] - actual_polygon.bounds[0],
+            actual_polygon.bounds[3] - actual_polygon.bounds[1],
+        ],
+        "top_elevation_m": float(actual_base) + float(actual_height),
+    }
+    for key, expected_value in expected.items():
+        if key in {
+            "footprint",
+            "interior_rings",
+            "base_elevation_m",
+            "height_m",
+        }:
+            continue
+        if key == "rotation_degrees" and key not in actual:
+            if not _equivalent(expected_value, 0.0, tolerance):
+                return False
+            continue
+        actual_value = actual.get(key, actual_derived.get(key))
+        if actual_value is None or not _equivalent(
+            expected_value, actual_value, tolerance
+        ):
+            return False
+    return True
+
+
 def equivalent_geometry(left: Any, right: Any, *, tolerance: float = 1e-6) -> bool:
     """Compare geometry recursively using an absolute model tolerance."""
 
     if tolerance < 0 or not math.isfinite(tolerance):
         raise ValueError("tolerance must be finite and non-negative")
+    if (
+        isinstance(left, Mapping)
+        and isinstance(right, Mapping)
+        and "footprint" in left
+        and "footprint" in right
+        and "base_elevation_m" in left
+        and "base_elevation_m" in right
+        and "height_m" in left
+        and "height_m" in right
+    ):
+        return _equivalent_mass_geometry(left, right, tolerance)
     return _equivalent(left, right, tolerance)
 
 

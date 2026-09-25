@@ -17,6 +17,7 @@ from amanda_agent.bim.write_gate import (
     BIM00_REQUIRED_CHECKS,
     Bim00Evidence,
     Bim00GateRefused,
+    CoordinateSiteMode,
     WriteGateCheck,
     authorize_preacceptance_stage,
 )
@@ -32,13 +33,16 @@ OFFICIAL_PROGRAM_SHA256 = "9" * 64
 REPOSITORY_COMMIT_SHA = "a" * 40
 PROJECT_STATE_REVISION = 180
 PROJECT_STATE_SHA256 = "8" * 64
+COORDINATE_SITE_MODE = CoordinateSiteMode.LOCAL_NORMALIZED_STUDY_NOT_SURVEYED
 NEW_BINDING_CHECKS = (
+    "coordinate_site_mode",
     "official_program_sha256",
     "repository_commit_sha",
     "project_state_revision",
     "project_state_sha256",
 )
 EXPECTED_BINDINGS = {
+    "coordinate_site_mode": COORDINATE_SITE_MODE,
     "official_program_sha256": OFFICIAL_PROGRAM_SHA256,
     "repository_commit_sha": REPOSITORY_COMMIT_SHA,
     "project_state_revision": PROJECT_STATE_REVISION,
@@ -47,13 +51,18 @@ EXPECTED_BINDINGS = {
 
 
 class _Plan:
-    def __init__(self, stage: BimStage, operations: list[StageOperation]):
+    def __init__(
+        self,
+        stage: BimStage,
+        operations: list[StageOperation],
+        scenario: str = "STUDY",
+    ):
         self.stage = stage
         self.operations = operations
         self.preflight = PreflightReport(
             mode="DETAILED_BIM",
             stage=stage,
-            scenario="STUDY",
+            scenario=scenario,
             checks=[
                 StageCheck(name="bim_00", status=CheckStatus.BLOCKED, detail="BIM-00 pending"),
                 StageCheck(name="capability", status=CheckStatus.PASS, detail="typed provider verified"),
@@ -89,13 +98,24 @@ def _evidence(**updates) -> Bim00Evidence:
         "open_document_count": 1,
         "open_document_paths": [TARGET],
         "other_clients_connected": 0,
-        "checks": [WriteGateCheck(name=name, status=CheckStatus.PASS, evidence=f"verified {name}") for name in BIM00_REQUIRED_CHECKS],
+        "checks": [
+            WriteGateCheck(
+                name=name,
+                status=CheckStatus.PASS,
+                evidence=(
+                    COORDINATE_SITE_MODE.value
+                    if name == "coordinate_site_mode"
+                    else f"verified {name}"
+                ),
+            )
+            for name in BIM00_REQUIRED_CHECKS
+        ],
     }
     values.update(updates)
     return Bim00Evidence(**values)
 
 
-def _plan(stage: BimStage) -> _Plan:
+def _plan(stage: BimStage, scenario: str = "STUDY") -> _Plan:
     operation = StageOperation(
         stage=stage,
         logical_id="CANONICAL-MASS-ADMIN",
@@ -103,7 +123,7 @@ def _plan(stage: BimStage) -> _Plan:
         blocked_by=["BIM-00", "CANONICAL_GEOMETRIC_ACCEPTANCE"],
         preferred_provider="horizun-revit-mcp",
     )
-    return _Plan(stage, [operation])
+    return _Plan(stage, [operation], scenario=scenario)
 
 
 def _authorize(plan: _Plan, evidence: Bim00Evidence, **expected_updates):
@@ -143,6 +163,8 @@ def test_bim00_evidence_requires_each_new_binding(field):
     (
         ("official_program_sha256", "A" * 64),
         ("official_program_sha256", "9" * 63),
+        ("coordinate_site_mode", "SURVEYED_SITE_COORDINATES"),
+        ("coordinate_site_mode", "local_normalized_study_not_surveyed"),
         ("repository_commit_sha", "A" * 40),
         ("repository_commit_sha", "a" * 39),
         ("repository_commit_sha", "g" * 40),
@@ -301,9 +323,52 @@ def test_bim00_requires_explicit_expected_values_for_new_bindings():
         )
 
 
+def test_bim00_binds_the_typed_local_normalized_site_mode():
+    with pytest.raises(Bim00GateRefused, match="coordinate site mode"):
+        authorize_preacceptance_stage(
+            _plan(BimStage.R04),
+            _evidence(),
+            target_path=TARGET,
+            solution_id=SOLUTION,
+            approval_hash=APPROVAL,
+            layout_hash=LAYOUT,
+            canonical_source_hashes=BOARD_HASHES,
+            coordinate_site_mode="VERIFIED_SITE_COORDINATES",
+            official_program_sha256=OFFICIAL_PROGRAM_SHA256,
+            repository_commit_sha=REPOSITORY_COMMIT_SHA,
+            project_state_revision=PROJECT_STATE_REVISION,
+            project_state_sha256=PROJECT_STATE_SHA256,
+        )
+
+
+def test_bim00_coordinate_mode_check_must_name_the_typed_mode():
+    checks = list(_evidence().checks)
+    checks = [
+        WriteGateCheck(
+            name=check.name,
+            status=check.status,
+            evidence=(
+                "verified coordinate_site_mode"
+                if check.name == "coordinate_site_mode"
+                else check.evidence
+            ),
+        )
+        for check in checks
+    ]
+
+    with pytest.raises(Bim00GateRefused, match="coordinate-site-mode check"):
+        _authorize(_plan(BimStage.R04), _evidence(checks=checks))
+
+
 def test_bim00_cannot_release_r05_detailing_or_geometry_acceptance_blocker():
     with pytest.raises(Bim00GateRefused, match="only R03/R04"):
         _authorize(_plan(BimStage.R05), _evidence())
+
+
+@pytest.mark.parametrize("stage", [BimStage.R03, BimStage.R04])
+def test_bim00_refuses_final_scenario_plans(stage):
+    with pytest.raises(Bim00GateRefused, match="for STUDY scenario"):
+        _authorize(_plan(stage, scenario="FINAL"), _evidence())
 
 
 def test_checkpoint_and_target_must_match_the_saved_active_document():

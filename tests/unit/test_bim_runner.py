@@ -95,6 +95,38 @@ def test_success_without_independent_readback_is_failed_with_typed_reason() -> N
     assert result.records[0].error["code"] == "INDEPENDENT_READ_MISSING"
 
 
+def test_mass_readback_without_geometry_cannot_be_reported_verified():
+    from amanda_agent.bim.runner import RunStatus, execute_stage
+
+    operation = StageOperation(
+        stage=BimStage.R04,
+        logical_id="MASS-COURTYARD",
+        semantic_capability="revit.create_mass",
+        payload={
+            "geometry": {
+                "footprint": [[0.0, 0.0], [10.0, 0.0], [10.0, 10.0], [0.0, 10.0]],
+                "interior_rings": [
+                    [[3.0, 3.0], [3.0, 7.0], [7.0, 7.0], [7.0, 3.0]]
+                ],
+                "base_elevation_m": 0.0,
+                "height_m": 3.0,
+            },
+            "idempotency_key": "mass-courtyard",
+        },
+        preferred_provider="fake-provider",
+    )
+
+    result = execute_stage(
+        FakePlan(BimStage.R04, [operation]), invoker=SuccessfulInvoker()
+    )
+
+    assert result.status is RunStatus.FAILED
+    geometry_layer = next(
+        layer for layer in result.records[0].layers if layer.layer.value == "geometry"
+    )
+    assert geometry_layer.passed is False
+
+
 def test_provider_failure_is_failed_and_preserves_provider_error() -> None:
     from amanda_agent.bim.runner import RunStatus, execute_stage
 

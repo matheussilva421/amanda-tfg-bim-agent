@@ -45,7 +45,12 @@ arquivos do manifesto conferem em tamanho e SHA-256. `bim_eligible` é `false`,
 `revit_calls` é `0`, `PROJECT_STATE.selected_design` continua `null`, e a
 decisão segue provisória, `BLOCKED_BY_INPUT` e `AMANDA_REVIEW_PENDING`. O
 `approval_hash` do artefato é um vínculo determinístico de conteúdo, não uma
-aprovação humana nem autorização BIM.
+aprovação humana nem autorização BIM. Este é o snapshot histórico produzido em
+P3. Durante P4-T01, o sucessor delegado `DEC-CANONICAL-DETAIL-004` autorizou
+somente estudo normalizado até R04; o snapshot atual correspondente foi gerado
+separadamente em
+`design-engine/runs/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C-study-detail-004/`.
+O snapshot P3 foi preservado sem sobrescrita.
 
 ## Divergências preservadas
 

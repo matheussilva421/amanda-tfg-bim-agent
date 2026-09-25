@@ -40,3 +40,33 @@ A página do GeoNatal anuncia camadas de lotes/logradouros e curvas de nível. A
 | `SITE_TRUE_NORTH` | **DEGRADING — não resolvido** | Nenhum bearing oficial verificável encontrado nesta busca. |
 
 **Efeito:** nenhum bloqueio foi formalmente resolvido ou reclassificado. `PROJECT_STATE.yaml` permanece fora do escopo desta pesquisa; ao retomar, `P4-T01` continua sendo o `next_task` e `BLOCKED_BY_INPUT`. A Carta de Serviços e as afirmações do TFG não autorizam selecionar o lote, presumir sua liberação, fixar implantação/orientação ou emitir BIM-00.
+
+## Busca de lote candidato autorizada — 25/09/2026
+
+Foi feita uma busca somente leitura, autorizada pelo usuário, para tentar
+localizar uma parcela candidata usando o contexto público do TFG. O extrato do
+TFG situa o terreno na confluência das avenidas Prudente de Morais e Miguel
+Castro, em Lagoa Nova, e declara área aproximada de 24.135 m²; a própria fonte
+trata a área como pendente de conferência cadastral. [Extrato do TFG, p. 56 e
+seção 5.3](../../project/provenance/extracted/source-extracts/TFG_Amanda%20Fernandes_ENTREGA%2015.06.2026.pdf.txt#L969)
+
+A Carta de Serviços da PMRN publica o endereço do BPChoque na Av. Miguel
+Castro, s/n, Lagoa Nova. Na interface pública do GeoNatal, a busca em
+“Equipamentos Comunitários > Segurança Pública” mostrou um ponto rotulado
+“CPATAMO (CTO)” nesse contexto, nas coordenadas arredondadas `-5.8215,
+-35.2127`. A diferença entre os nomes e a precisão do ponto impedem usá-lo
+como identidade cadastral do terreno. [Carta de Serviços PMRN](https://www.transparencia.rn.gov.br/docs/orgaosdogoverno/cartasdeservico/Carta_de_Servi%C3%A7os_PMRN.pdf)
+· [GeoNatal](https://geomapas.natal.rn.gov.br/)
+
+A camada pública “Lotes — Zona Sul” exibiu polígonos na área geral, mas não foi
+possível vincular um polígono único ao ponto institucional nem verificar se
+algum deles corresponde à área declarada de 24.135 m². A coleção integral não
+coube na leitura do navegador e o acesso de rede disponível não permitiu
+consultá-la diretamente sem salvar uma cópia. Nenhuma feição, inscrição ou
+geometria foi atribuída ao terreno.
+
+**Classificação:** `CANDIDATE` somente para o contexto bairro/logradouro/ponto
+institucional. Não há lote `PROVISIONAL` nem `VERIFIED`. `SITE_BOUNDARY` segue
+sem polígono cadastral verificável. Não foram pesquisados proprietários, CPF,
+matrícula, título ou registros privados; nenhuma agência foi contatada e
+nenhum artefato GIS foi salvo localmente.

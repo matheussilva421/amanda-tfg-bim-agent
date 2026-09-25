@@ -314,6 +314,7 @@ def _record_from_result(
 
     expected_geometry, expected_properties = _desired_expectations(plan, operation)
     query_result = payload if isinstance(payload, Mapping) else None
+    requires_mass_geometry = operation.semantic_capability == "revit.create_mass"
     layers = verify_write(
         logical_id=operation.logical_id,
         tool_reported_success=True,
@@ -321,7 +322,9 @@ def _record_from_result(
         expected_geometry=(
             expected_geometry
             if isinstance(query_result, Mapping)
-            and query_result.get("geometry") is not None
+            and (
+                query_result.get("geometry") is not None or requires_mass_geometry
+            )
             and isinstance(expected_geometry, Mapping)
             else None
         ),

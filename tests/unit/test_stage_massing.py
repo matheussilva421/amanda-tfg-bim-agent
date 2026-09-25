@@ -80,6 +80,17 @@ def _block():
     )
 
 
+def _courtyard_block():
+    return MassingBlock(
+        logical_id="MASS-COURTYARD",
+        name="Courtyard mass",
+        footprint=[(0.0, 0.0), (10.0, 0.0), (10.0, 10.0), (0.0, 10.0)],
+        interior_rings=[[(3.0, 3.0), (3.0, 7.0), (7.0, 7.0), (7.0, 3.0)]],
+        base_elevation_m=0.0,
+        height_m=3.0,
+    )
+
+
 def test_concept_massing_creates_a_metric_surrogate_and_desired_state(tmp_path: Path):
     plan = plan_massing_stage(_request(tmp_path), blocks=[_block()])
 
@@ -90,6 +101,43 @@ def test_concept_massing_creates_a_metric_surrogate_and_desired_state(tmp_path: 
     assert plan.operations[0].payload["area_m2"] == 50.0
     assert plan.operations[0].payload["geometry"]["centroid"] == [5.0, 2.5]
     assert plan.operations[0].payload["geometry"]["dimensions_m"] == [10.0, 5.0]
+
+
+def test_massing_preserves_interior_rings_in_projected_area_and_operation(tmp_path: Path):
+    plan = plan_massing_stage(_request(tmp_path), blocks=[_courtyard_block()])
+
+    assert plan.blocks[0].area_projection_m2 == pytest.approx(84.0)
+    assert plan.operations[0].payload["area_m2"] == pytest.approx(84.0)
+    assert plan.operations[0].payload["geometry"]["interior_rings"] == [
+        [[3.0, 3.0], [3.0, 7.0], [7.0, 7.0], [7.0, 3.0]]
+    ]
+
+
+def test_independent_read_refuses_a_massing_shape_with_missing_courtyard_ring(
+    tmp_path: Path,
+):
+    plan = plan_massing_stage(_request(tmp_path), blocks=[_courtyard_block()])
+    observed_geometry = dict(plan.operations[0].payload["geometry"])
+    observed_geometry.pop("interior_rings")
+
+    results = verify_massing_stage(
+        plan,
+        tool_reported_success=True,
+        query_results={
+            "MASS-COURTYARD": {
+                "logical_id": "MASS-COURTYARD",
+                "unique_id": "uid-courtyard",
+                "geometry": observed_geometry,
+                "properties": {
+                    "name": "Courtyard mass",
+                    "area_projection_m2": 84.0,
+                },
+            }
+        },
+    )
+
+    geometry_check = next(result for result in results if result.layer.value == "geometry")
+    assert geometry_check.passed is False
 
 
 def test_massing_write_verifies_geometry_against_the_block(tmp_path: Path):

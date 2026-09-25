@@ -8,8 +8,8 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 from shapely.geometry import Polygon, shape
+from shapely.validation import explain_validity
 
-from amanda_agent.design.geometry import centroid as polygon_centroid
 from amanda_agent.design.geometry import contains, overlap_area_m2, validate_polygon
 
 from ..desired_state import DesiredState
@@ -54,6 +54,7 @@ class MassingBlock(BaseModel):
     name: str = Field(default="Mass", min_length=1)
     sector_id: str | None = Field(default=None, min_length=1)
     footprint: list[tuple[float, float]] = Field(min_length=4)
+    interior_rings: list[list[tuple[float, float]]] = Field(default_factory=list)
     base_elevation_m: float = 0.0
     height_m: float = Field(gt=0)
     rotation_degrees: float = 0.0
@@ -68,7 +69,27 @@ class MassingBlock(BaseModel):
             return values
         values = dict(values)
         if "footprint" not in values and "geometry" in values:
-            values["footprint"] = _coordinates(values.pop("geometry"))
+            geometry_value = values.pop("geometry")
+            geometry = (
+                geometry_value
+                if isinstance(geometry_value, Polygon)
+                else shape(geometry_value)
+                if isinstance(geometry_value, Mapping)
+                else None
+            )
+            if isinstance(geometry, Polygon):
+                values["footprint"] = [
+                    (float(x), float(y)) for x, y in geometry.exterior.coords
+                ]
+                values.setdefault(
+                    "interior_rings",
+                    [
+                        [(float(x), float(y)) for x, y in ring.coords]
+                        for ring in geometry.interiors
+                    ],
+                )
+            else:
+                values["footprint"] = _coordinates(geometry_value)
         if "height_m" not in values:
             for key in ("height", "height_meters"):
                 if key in values:
@@ -84,12 +105,28 @@ class MassingBlock(BaseModel):
             raise ValueError("massing elevations and height must be finite")
         if not isfinite(self.rotation_degrees):
             raise ValueError("massing rotation must be finite")
-        validate_polygon(self.footprint)
+        shell = validate_polygon(self.footprint)
+        holes = [validate_polygon(ring) for ring in self.interior_rings]
+        polygon = Polygon(
+            shell.exterior.coords,
+            [hole.exterior.coords for hole in holes],
+        )
+        if not polygon.is_valid:
+            raise ValueError(
+                "massing interior rings must be valid and strictly inside the outer footprint: "
+                + explain_validity(polygon)
+            )
         return self
 
     @property
+    def polygon(self) -> Polygon:
+        """The full footprint, including courtyard and other interior voids."""
+
+        return Polygon(self.footprint, holes=self.interior_rings)
+
+    @property
     def area_projection_m2(self) -> float:
-        return float(validate_polygon(self.footprint).area)
+        return float(self.polygon.area)
 
     @property
     def top_elevation_m(self) -> float:
@@ -116,12 +153,13 @@ def _desired_element(block: MassingBlock, generation_run: str) -> DesiredElement
         category="Massing",
         geometry={
             "footprint": [list(point) for point in block.footprint],
-            "centroid": list(polygon_centroid(block.footprint)),
+            "interior_rings": [
+                [list(point) for point in ring] for ring in block.interior_rings
+            ],
+            "centroid": [block.polygon.centroid.x, block.polygon.centroid.y],
             "dimensions_m": [
-                max(point[0] for point in block.footprint)
-                - min(point[0] for point in block.footprint),
-                max(point[1] for point in block.footprint)
-                - min(point[1] for point in block.footprint),
+                block.polygon.bounds[2] - block.polygon.bounds[0],
+                block.polygon.bounds[3] - block.polygon.bounds[1],
             ],
             "base_elevation_m": block.base_elevation_m,
             "height_m": block.height_m,
@@ -208,7 +246,7 @@ def plan_massing_stage(
     if site_boundary is not None:
         site_boundary = getattr(site_boundary, "boundary", site_boundary)
         for block in selected:
-            if not contains(site_boundary, block.footprint, tolerance_m=0.0):
+            if not contains(site_boundary, block.polygon, tolerance_m=0.0):
                 raise StagePreflightError(
                     f"R04 preflight refused: site_containment: {block.logical_id} is outside the site"
                 )
@@ -225,7 +263,7 @@ def plan_massing_stage(
 
     for index, first in enumerate(selected):
         for second in selected[index + 1 :]:
-            if overlap_area_m2(first.footprint, second.footprint) > 1e-6:
+            if overlap_area_m2(first.polygon, second.polygon) > 1e-6:
                 raise StagePreflightError(
                     "R04 preflight refused: separation: "
                     f"{first.logical_id} overlaps {second.logical_id}"

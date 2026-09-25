@@ -3154,23 +3154,41 @@ tasks:
     evidence:
     - Formal task record for the already-defined P4 BIM-00 phase; scope is unchanged
       and excludes R04/R05.
-    - The exact candidate is not BIM-eligible; run BIM-00 only after its solution/target
-      requirements and current blockers are explicitly satisfied.
-    - docs/reports/P4-T01-bim00-blocker-report.md records the exact missing selection,
-      target/checkpoint, site, lease, and live-provider evidence; no BIM-00 authorization
-      was emitted.
+    - DEC-CANONICAL-DETAIL-004 selects RUN-003 only for reversible normalized local-reference
+      STUDY through R04. AMANDA_REVIEW_PENDING remains; final/detailed eligibility stays false.
+    - docs/reports/P4-T01-bim00-blocker-report.md records current provider, S02 lease,
+      and exact target/checkpoint blockers; no BIM-00 authorization was emitted.
     - 'Read-only SHA-256 recheck: four canonical boards, official program PDF, and
       P1-T01 report match the persisted canonical identity.'
     - '2026-09-25 source recheck: the official PMRN service charter lists BPChoque at Av. Miguel Castro, s/n, Lagoa Nova; it does not bind the cadastral parcel or confirm transfer, so SITE_OCCUPANCY remains BLOCKING.'
     - docs/reports/P4-T01-site-source-research-2026-09-25.md records a bounded search of official municipal/state sources. GeoNatal serves a 40,568-feature lot GeoJSON collection in CRS84, but no feature was validly tied to this project parcel; no lot-specific survey/elevation/datum, occupancy/transfer decision, frontage count, or true-north bearing was verified. The layer remains unadopted due to unverified provenance/applicability. No blocker was resolved or reclassified.
     - 'Read-only environment check: doctor exited 0; Git/Codex/PowerShell/.NET available; Revit 2027 detected but no Revit process was running. The project venv is Python 3.12.14 although the host-only probe reports python312 MISSING; live provider health remains unverified. The S02 writer lease was not touched.'
-    - 'Site-specific matching of GeoNatal cadastral features against the project site description was rejected by automatic approval review as potentially identifying a third-party parcel. No feature was assigned to this project; request explicit user approval before any such match.'
-    - RUN-003 remains OFFLINE_CANDIDATE, bim_eligible=false, revit_calls=0; selected_design=null
-      and current_checkpoint=null.
-    - No canonical RVT target is bound; CURRENT.rvt is absent. Revit process is not
-      running. Existing writer lock remains HELD for superseded S02 and was not touched.
+    - 'The user authorized a read-only candidate search. GeoNatal showed an institutional point in the general road/neighborhood context and lot polygons in the broader area, but no unique parcel could be tied to the TFG site or its reported 24,135 m2. No parcel feature was assigned; SITE_BOUNDARY remains unresolved. See docs/reports/P4-T01-site-source-research-2026-09-25.md.'
+    - RUN-003 remains an offline candidate for final/detailed production, bim_eligible=false,
+      revit_calls=0; PROJECT_STATE selects it only for the reversible R04 STUDY and keeps
+      current_checkpoint=null.
+    - No canonical RVT target or checkpoint is bound; CURRENT.rvt is absent. Revit 2027
+      process PID 38152 was started for read-only diagnostics but exposed no targetable UI
+      window. Horizun health failed twice with no reachable Revit; its add-in manifest and
+      DLL exist, but no active provider was proven. Existing writer lock remains HELD for
+      superseded S02 and was not touched.
     - 'P4 gate TDD: 38 RED failures / 1 pass; focused gate GREEN 41 passed; gate/status/state
       tests 57 passed; Ruff passed.'
-    - 'Final focused closeout suite: 103 passed across BIM-00, state, session, repository,
-      status, and plan-order tests; changed-file Ruff and scoped diff check pass.'
+    - 'Continuation focused suite: 154 passed across R04 mass planning, Revit mass readback,
+      geometry verification, and BIM-00. TDD regression reproduced three independent
+      review findings as RED before code fixes.'
+    - 'Independent review found BIM-00 could authorize FINAL scenario plans, formal state marked blocked P4-T01 as completed, and a historical handoff resume section was stale. RED reproduced 4 failures; the gate now requires STUDY, last_completed_task is P3-T01, and stale resume text is superseded.'
+    - 'Follow-up review found the dashboard did not explain claim-specific blocker scope and an older handoff section lacked a historical label. Both were fixed with regression coverage; independent confirmation approved with no residual findings.'
+    - 'Focused final suite across 19 modules passed 270/270; scoped Ruff check passed. BIM-00 final-scenario refusal covers R03 and R04.'
+    - 'Consolidated 15-module state/provider/selection/R04/session/status/plan suite: 235 passed.'
+    - DEC-CANONICAL-DETAIL-004 (approval hash 29d70f0e830708a3926abad14877f4c3941418630c5f0225b0bf5924f2dabd8b)
+      authorizes normalized local-reference STUDY through R04 only; Amanda review remains
+      pending, site-specific final claims remain blocked, and CANON-011 gates R05.
+    - 'Current offline snapshot: design-engine/runs/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C-study-detail-004; content approval hash 961b6edc95bd097fe600b2ce968aacdf28876bf3c587b788a0b2358baddfc0b0. The original P3 snapshot is preserved.'
+    - 'BIM-00 coordinate binding requires LOCAL_NORMALIZED_STUDY_NOT_SURVEYED; R04 mass payloads
+      carry this mode and STUDY scenario. Separate model geometry readback is required to
+      report mass verification; base elevation and courtyard interior ring are preserved.'
+    - 'Current PROJECT_STATE scope: site gaps are DEGRADING for normalized study; active BLOCKING
+      items are unreachable provider, S02 lease, and missing exact target/checkpoint.'
+    - 'PROJECT_STATE revision is 184; P3-T01 is last completed and P4-T01 remains BLOCKED_BY_INPUT.'
     - No Revit/RVT was opened or written; no R04/R05 work occurred.

@@ -53,3 +53,9 @@ The four boards govern spatial organization. The program PDF governs every room 
 The southeast service/capacitation block uses a curved composition around an unprogrammed court. Its campus pedestrian entry and cargo entry remain separate. The court is not one of the official external areas. Every SEC-05 and SEC-06 room is assigned once at its PDF area; SEC-05 Copa/Sanitário stay at the Board-02 ground-floor locations while the remaining SEC-05 and SEC-06 service rooms occupy the southeast block. Board-02 duplicate archive labeling and Board-04-only activities, room combinations, area deltas and unlabelled official support rooms remain explicit in `docs/reports/P1-T01-four-board-reconciliation.md`; no extra area or official room is inferred from a board label. The two official 80 m² spaces—protected patio and therapeutic garden—remain distinct.
 
 P1-T01 leaves the selected design identity unset. The signed three-source DEC-CANONICAL-PARTI-001 remains hash-preserved but is formally superseded by DEC-CANONICAL-PARTI-002, which binds all four current board hashes and the official PDF. The old S02 detail entry is superseded; P2 must assign a new solution identity and fresh detail decision before any BIM artifact is emitted.
+
+## DEC-009 — Reversible normalized study selection
+
+Status: ACTIVE — `DEC-CANONICAL-DETAIL-004`
+
+RUN-003 is selected by agent delegation only for a reversible, normalized local-reference STUDY through R04. Its coordinates are not surveyed site data. Missing boundary, topography, occupancy/transfer, frontage, and true-north evidence continues to block the dependent parcel and final claims. `AMANDA_REVIEW_PENDING` remains; the content approval hash is not personal approval. CANON-011 requires actual R04 comparison against all four boards and must pass before R05. Current BIM-00 is still blocked by provider reachability, the S02 writer lease, and the missing exact RUN-003 target/checkpoint.

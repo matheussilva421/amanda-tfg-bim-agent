@@ -1,5 +1,5 @@
 schema_version: 1
-generated_utc: '2026-09-15T19:00:00Z'
+generated_utc: '2026-09-25T18:15:52Z'
 tools:
   git:
     status: AVAILABLE
@@ -18,26 +18,32 @@ tools:
     status: AVAILABLE
     version: 8.0.422
 revit:
-  status: HEALTHY
+  status: PROCESS_RUNNING_NO_REACHABLE_PROVIDER
   selected: 27.2.0.39
-  note: Revit 2027 launched with the lab host; disposable docs only
+  process_id: 38152
+  responding: true
+  main_window_handle: 0
+  provider_probe_utc: '2026-09-25T18:15:52Z'
+  note: Revit 2027 responds but has no targetable window; Horizun health reports no reachable Revit. No document was opened.
 python312:
   status: AVAILABLE
   version: 3.12.14
   note: pinned control-plane venv at ./.venv/Scripts/python.exe
 providers:
   horizun-revit-mcp:
-    status: HEALTHY
+    status: UNREACHABLE
     role: primary
     server_version: 1.3.3
     contract_hash: 8b9600f5274d7dffb6e5bd5f
     permission_profile: full_write
-    note: proved read/write/export/document-cycle on disposable files
+    last_probe_utc: '2026-09-25T18:15:52Z'
+    last_probe_result: ERROR_NO_REVIT_REACHABLE
+    note: capability was proven on disposable files previously; current live provider health is not available
   revitcortex:
-    status: HEALTHY
+    status: NOT_PROBED_THIS_SESSION
     role: fallback-typed
     server_version: 2.0.0
-    note: proved mutations and re-reads; no document cycle in its contract
+    note: prior capability evidence exists; no live provider probe was made in this P4 retry
   custom-api:
     status: AVAILABLE
     role: fallback-last-resort
