@@ -14,11 +14,11 @@ P2-T01 assigned `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C`, bound to exact
 
 ## P3 — Canonical QA and approval
 
-P3-T01 is the next authorized task and remains pending. It will pass the non-Revit four-board hard checks and, if they are green, generate the new layout and selection approval hashes. P3-T01 was not started during P2-T01 closeout.
+P3-T01 generated offline candidate `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C`, bound to the four boards, official program PDF, and P1-T01 report. The focused gate passed 74 tests; emitted QA is 17 PASS, 0 FAIL, CANON-011 BLOCKED. Direct builder calls revalidate the persisted identity against live sources, and the QA guard requires unique CANON-001..018 IDs. Independent re-review closed both code findings; final state review found no critical/important findings and its minor phase-edge test gap is closed. The candidate stays provisional, unselected, and ineligible for BIM; no Revit call or R04/R05 work occurred. Evidence: `docs/reports/P3-T01-canonical-qa-and-approval.md`.
 
 ## P4 — BIM-00
 
-Authorize only the exact new solution and target.
+`P4-T01` is the formal task for this existing plan gate: establish BIM-00 evidence and authorize only the exact new solution and target. It depends on P3-T01 and does not include R04/R05. P4-T01 is the next pending task.
 
 ## P5 — R04 Revit
 
@@ -40,4 +40,4 @@ Run R14, R15 cold reopen, and exports.
 
 Run R16 only after every required gate and documented deviation passes.
 
-P0, P1-T01, and P2-T01 are closed. `PROJECT_STATE.yaml` is the formal pointer and names pending P3-T01. Historical plans are archive material in Git history, not a second instruction source.
+P0, P1-T01, P2-T01, and P3-T01 are closed. `PROJECT_STATE.yaml` is the formal task pointer and names pending P4-T01. Historical plans are archive material in Git history, not a second instruction source.

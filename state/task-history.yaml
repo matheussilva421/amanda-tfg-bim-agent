@@ -2150,3 +2150,13 @@ entries:
   - 'selected_design and SELECTION_SOLUTION_ID remain unset; approval_hash is null. No layout, BIM-00, Revit/RVT access or write, R04, or R05 occurred.'
   recorded_utc: '2026-09-25T10:22:34Z'
   note: P2-T01 complete from main; P3-T01 is the next authorized task and was not started.
+- task_id: P3-T01
+  status: PASS
+  evidence:
+  - 'docs/reports/P3-T01-canonical-qa-and-approval.md records the candidate identity, four board/PDF/P1 bindings, unresolved reconciliation differences, and non-Revit boundary.'
+  - 'Focused gate: 74 passed; state/task/session routing suite: 55 passed; changed-file Ruff clean; deterministic candidate regeneration succeeded; all six artifacts match manifest hashes and byte counts.'
+  - 'P3 QA contains exactly unique CANON-001..018: 17 PASS, 0 FAIL, CANON-011 BLOCKED. Candidate is BIM-ineligible, selected_design remains null, and revit_calls=0.'
+  - 'Independent review and follow-up re-review: no unresolved findings; writer boundary revalidates persisted P1 report binding, duplicate/missing QA IDs are rejected, and CLI remains valid.'
+  - 'Exploratory tests/unit/test_production_layout_bim.py: 26 passed, 5 failed at R04 projection_area: MASS-SERVICE_CAPACITATION; recorded for R04 planning and not modified.'
+  recorded_utc: '2026-09-25T11:46:53Z'
+  note: P3-T01 passed; P4-T01 is next and remains limited to BIM-00.

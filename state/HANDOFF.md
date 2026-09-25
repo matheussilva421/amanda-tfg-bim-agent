@@ -2,11 +2,12 @@
 
 ## Formal state and safety
 
-Repository recovery (P0), four-board reconciliation (P1-T01), and identity
-assignment (P2-T01) are complete. `PROJECT_STATE.yaml` points to pending
-`P3-T01`; the last completed task is `P2-T01`. The source-bound identity is
-recorded at `project/requirements/canonical-solution-identity.yaml`, while
-`selected_design` remains null. The recovery anchor is
+Repository recovery (P0), four-board reconciliation (P1-T01), identity
+assignment (P2-T01), and offline canonical QA (P3-T01) are complete.
+`PROJECT_STATE.yaml` points to pending `P4-T01` (BIM-00); the last completed
+task is `P3-T01`. The source-bound identity is recorded at
+`project/requirements/canonical-solution-identity.yaml`, while
+`selected_design` remains null and the candidate is not BIM-eligible. The recovery anchor is
 `pre-repository-recovery-2026-09-24`; the superseded P08 offline candidate is
 preserved under `superseded-p08-t08-concept-offline-2026-09-24`.
 
@@ -17,7 +18,57 @@ they are intentionally ignored by Git. Five site conditions (three BLOCKING,
 two DEGRADING) remain, and the held writer lease is unchanged. P1-T01 completed
 without Revit/model activity. At P1-T01 closeout the solution identity was
 unset and S02 was stale; P2-T01 has since assigned the source-bound identity
-recorded above.
+recorded above. Five site conditions (three BLOCKING, two DEGRADING) remain;
+the held writer lease was not changed.
+
+## P3-T01 closeout — canonical QA and candidate
+
+Generated offline candidate `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C`
+with identity fingerprint
+`4b1275558a6c2c40828dbba1422c0063703c182fd9d7b800b36a448499a073c4`. It binds
+all four current board hashes, the official 20-person / 626 m² internal /
+260 m² external program PDF, and the P1-T01 report. Layout hash:
+`7fde3e34a162167ce27fe2e3158a38f446882816a7c81bb326d486bdfaaae2e2`;
+candidate content approval hash:
+`eea4a342a4d732cbc986a16d01d93e3981e79a5931f8d99ebef82c61d24299ec`;
+detail-decision hash:
+`f37c5c8c2f4f43e957429bd05dbc659012a7f6eaa0b0be65e23cbf7f47c43efc`.
+The approval hash is a deterministic content binding, not Amanda approval or
+BIM authorization. `DEC-CANONICAL-DETAIL-003` remains provisional,
+`BLOCKED_BY_INPUT`, and `AMANDA_REVIEW_PENDING`.
+
+P3 QA requires exactly one each of CANON-001..018: **17 PASS, 0 FAIL,
+CANON-011 BLOCKED**, zero critical failures. The normal CLI and direct builder
+both validate the persisted P2 identity against live sources including the P1
+report. A forged self-consistent report hash regression was first reproduced
+RED and then passed GREEN. A second RED/GREEN regression rejects duplicate/missing
+QA IDs. Independent review and re-review verified both fixes and no CLI
+regression. The final state review found no Critical/Important issues and one
+Minor gap in negative phase-edge coverage; tests now cover P1→P2, P2→P3, and
+P3→P4.
+
+Focused command:
+`.venv/Scripts/python.exe -m pytest tests/unit/test_build_canonical_pavilion_run.py tests/unit/test_canonical_solution_identity.py tests/unit/test_production_selection.py tests/unit/test_canonical_qa.py tests/unit/test_decision_register.py tests/project/test_repository_hygiene.py tests/policy/test_plan_order.py -q`
+— **74 passed**. State/task/session routing suite — **55 passed**. Changed-file Ruff and `git diff --check` pass. The builder
+regenerated RUN-003 deterministically; its six artifact-manifest entries all
+match recorded SHA-256 and byte counts. `bim_eligible=false`, `revit_calls=0`,
+`selected_design=null`; no Revit access/write and no R04/R05 activity.
+
+Broader downstream check
+`.venv/Scripts/pytest.exe tests/unit/test_production_layout_bim.py -q` returned
+**26 passed, 5 failed**. All five failures are R04 planning preflights at
+`projection_area: MASS-SERVICE_CAPACITATION`; this is recorded as an R04
+readiness blocker and was not modified in P3. Board 03's six drawn common-WC
+cells vs five official rooms, Board 02/04 repeated or relabeled support areas,
+and Board 04 unpriced training functions remain explicitly reconciled in the
+P1 report. CANON-011 visual acceptance and site verification remain pending.
+
+P3 writer/QA correction commit `0957a516c09a97075c820d105ccdebac3c4cacc4` and
+current phase-order correction commit `d85456ea5d0d5c1c6e849f18846be52bf53f95c5`
+are on `main`. The state closeout records P3 PASS, keeps
+`selected_design=null`, and sets P4-T01 as the next pending task. P4-T01 is only
+the current plan's BIM-00 gate; do not run R04/R05 or write Revit from this
+handoff. Do not touch or stage RC01 paths.
 
 ## P2-T01 closeout — identity only
 

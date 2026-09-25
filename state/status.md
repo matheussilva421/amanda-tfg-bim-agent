@@ -4,14 +4,15 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Phase and task progress
 
-- Phase: `P3` — canonical-qa-and-approval
+- Phase: `P4` — bim-00
 - Phase status: `PENDING`
-- Next task: `P3-T01`
-- Last PASS task: `P2-T01`
-- Tasks: 181 total; READY: P3-T01
+- Next task: `P4-T01`
+- Last PASS task: `P3-T01`
+- Tasks: 182 total; READY: P4-T01
 - `P1`: 1/1 PASS
 - `P2`: 1/1 PASS
-- `P3`: 0/1 PASS
+- `P3`: 1/1 PASS
+- `P4`: 0/1 PASS
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -64,5 +65,5 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Git verification
 
-- Last verified commit: `aa1975af65cd86fc19aeab76156a40d01112d7a9`
-- Observed HEAD: `b563953846b48c25cbc4d217911c1f6e8875dd5f`
+- Last verified commit: `d85456ea5d0d5c1c6e849f18846be52bf53f95c5`
+- Observed HEAD: `d85456ea5d0d5c1c6e849f18846be52bf53f95c5`

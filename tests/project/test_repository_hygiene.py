@@ -182,29 +182,31 @@ def test_exactly_four_canonical_board_images_are_active():
     ]
 
 
-def test_identity_assignment_routes_to_pending_canonical_qa_task():
+def test_canonical_qa_completion_routes_to_pending_bim00_task():
     state = StateStore(ROOT / "PROJECT_STATE.yaml").load()
     registry = load_registry(ROOT / "state/task-graph.yaml")
 
-    assert state.phase_id == "P3"
+    assert state.phase_id == "P4"
     assert state.phase_status.value == "PENDING"
-    assert state.last_completed_task == "P2-T01"
-    assert state.next_task == "P3-T01"
+    assert state.last_completed_task == "P3-T01"
+    assert state.next_task == "P4-T01"
     assert "P1-T01" in registry.tasks
     assert registry.tasks["P1-T01"].status.value == "PASS"
     assert registry.tasks["P2-T01"].status.value == "PASS"
-    assert registry.tasks["P3-T01"].status.value == "PENDING"
-    assert registry.ready_tasks() == ["P3-T01"]
+    assert registry.tasks["P3-T01"].status.value == "PASS"
+    assert registry.tasks["P4-T01"].status.value == "PENDING"
+    assert registry.ready_tasks() == ["P4-T01"]
 
     dashboard = (ROOT / "state/status.md").read_text(encoding="utf-8")
-    assert "Phase: `P3` — canonical-qa-and-approval" in dashboard
+    assert "Phase: `P4` — bim-00" in dashboard
     assert "Phase status: `PENDING`" in dashboard
-    assert "Next task: `P3-T01`" in dashboard
-    assert "Last PASS task: `P2-T01`" in dashboard
+    assert "Next task: `P4-T01`" in dashboard
+    assert "Last PASS task: `P3-T01`" in dashboard
     assert "`P1`: 1/1 PASS" in dashboard
     assert "`P2`: 1/1 PASS" in dashboard
-    assert "`P3`: 0/1 PASS" in dashboard
-    assert "READY: P3-T01" in dashboard
+    assert "`P3`: 1/1 PASS" in dashboard
+    assert "`P4`: 0/1 PASS" in dashboard
+    assert "READY: P4-T01" in dashboard
 
     superseded_tasks = [f"P08-CAN-T{number:02}" for number in range(9, 20)]
     assert all(task_id in registry.tasks for task_id in superseded_tasks)

@@ -161,7 +161,7 @@ institutional submission retain their own owners and evidence. Do not claim
 
 ## Current stale state
 
-`AMANDA-RUN-002-PAVILION-S02` is `STALE_BY_CANONICAL_REFERENCE_EXPANSION`. It is bound to an obsolete subset of the canonical references; the current architecture requires all four boards. S02 is not authorized to advance to R05. Historical linear identities `AMANDA-RUN-001-S01` and `AMANDA-RUN-002-PAVILION-S01` are superseded and cannot authorize a canonical selection or be reused as the final solution. P1-T01 does not assign a new identity; that is the next planned task after reconciliation.
+`AMANDA-RUN-002-PAVILION-S02` remains `STALE_BY_CANONICAL_REFERENCE_EXPANSION`. It is bound to an obsolete subset of the canonical references; the current architecture requires all four boards. S02 is not authorized to advance to R05. Historical linear identities `AMANDA-RUN-001-S01` and `AMANDA-RUN-002-PAVILION-S01` are superseded and cannot authorize a canonical selection or be reused as the final solution. P2-T01 assigned the new identity `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C`; P3-T01 passed its offline QA and candidate checks, generating content hashes for that identity. CANON-011 remains BLOCKED pending visual acceptance. The candidate remains provisional, `bim_eligible=false`, and unselected while canonical visual acceptance and site inputs are unresolved. Its content `approval_hash` is not Amanda's approval or BIM authorization. See `docs/reports/P3-T01-canonical-qa-and-approval.md` for evidence and open divergences.
 
 ## Site limitations
 
