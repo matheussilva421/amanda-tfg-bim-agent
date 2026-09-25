@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import subprocess
@@ -12,6 +13,7 @@ from amanda_agent.design.canonical_qa import CanonicalCheck
 from amanda_agent.design.canonical_reference import CanonicalReferenceProfile
 from amanda_agent.design.models import compute_design_approval_hash
 from amanda_agent.production.canonical_identity import (
+    CanonicalSolutionIdentity,
     assign_canonical_solution_identity,
 )
 from amanda_agent.requirements.decisions import load_decision_register
@@ -151,6 +153,17 @@ def test_p3_requires_seventeen_structural_passes_and_keeps_canon_011_blocked(
     assert "required_stages=" in can011["evidence"]
 
 
+def test_p3_qa_rejects_duplicate_check_id_even_when_status_counts_match():
+    profile = CanonicalReferenceProfile.load(ROOT)
+    layout = run_builder.build_canonical_pavilion_layout(PROGRAM, profile)
+    checks = run_builder.run_canonical_checks(layout, profile)
+    checks[-1] = checks[-2]
+    qa = run_builder._qa_payload(checks)
+
+    with pytest.raises(run_builder.CanonicalRunError, match="exactly CANON-001 through CANON-018"):
+        run_builder._require_p3_qa(checks, qa)
+
+
 def test_p3_layout_and_approval_hashes_are_repeatable(tmp_path: Path):
     first_exit, first_dir = _build_current_run(tmp_path / "first")
     second_exit, second_dir = _build_current_run(tmp_path / "second")
@@ -183,7 +196,42 @@ def test_builder_rejects_identity_mismatched_four_board_profile(tmp_path: Path):
 
     with pytest.raises(run_builder.CanonicalRunError, match="identity.*board hashes"):
         run_builder.build_canonical_pavilion_run(
-            PROGRAM, profile, identity, output
+            PROGRAM, profile, identity, output, repository_root=ROOT
+        )
+
+    assert not output.exists()
+
+
+def test_builder_rejects_self_consistent_identity_with_fabricated_p1_report_hash(
+    tmp_path: Path,
+):
+    profile = CanonicalReferenceProfile.load(ROOT)
+    identity = assign_canonical_solution_identity(ROOT)
+    payload = identity.model_dump(mode="json")
+    payload["reconciliation_report"]["sha256"] = "e" * 64
+    material = {
+        key: payload[key]
+        for key in (
+            "canonical_boards",
+            "program_source",
+            "reconciliation_id",
+            "reconciliation_report",
+        )
+    }
+    encoded = json.dumps(
+        material, ensure_ascii=True, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    fingerprint = hashlib.sha256(encoded).hexdigest()
+    payload["identity_fingerprint"] = fingerprint
+    payload["solution_id"] = (
+        "AMANDA-RUN-003-PAVILION-CANONICAL-" + fingerprint[:12].upper()
+    )
+    fabricated_identity = CanonicalSolutionIdentity.model_validate(payload)
+    output = tmp_path / "fabricated-reconciliation"
+
+    with pytest.raises(run_builder.CanonicalRunError, match="P1-T01 report"):
+        run_builder.build_canonical_pavilion_run(
+            PROGRAM, profile, fabricated_identity, output, repository_root=ROOT
         )
 
     assert not output.exists()

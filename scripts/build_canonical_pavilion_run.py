@@ -167,6 +167,8 @@ def _qa_payload(checks: list[CanonicalCheck]) -> dict:
 
 
 def _require_p3_qa(checks: list[CanonicalCheck], qa: dict) -> None:
+    expected_check_ids = {f"CANON-{number:03d}" for number in range(1, 19)}
+    check_ids = [item.check_id for item in checks]
     can011 = [item for item in checks if item.check_id == "CANON-011"]
     expected = {
         "checks": 18,
@@ -177,12 +179,15 @@ def _require_p3_qa(checks: list[CanonicalCheck], qa: dict) -> None:
     }
     if (
         qa["summary"] != expected
+        or len(check_ids) != len(expected_check_ids)
+        or set(check_ids) != expected_check_ids
         or len(can011) != 1
         or can011[0].status != "BLOCKED"
         or any(item.status != "PASS" for item in checks if item.check_id != "CANON-011")
     ):
         raise CanonicalRunError(
-            "P3 hard QA requires 17 PASS, 0 FAIL, and CANON-011 BLOCKED"
+            "P3 hard QA requires exactly CANON-001 through CANON-018 once, "
+            "with 17 PASS, 0 FAIL, and CANON-011 BLOCKED"
         )
 
 
@@ -200,9 +205,23 @@ def build_canonical_pavilion_run(
     profile: CanonicalReferenceProfile,
     identity: CanonicalSolutionIdentity,
     output_dir: Path,
+    *,
+    repository_root: Path,
 ) -> Path:
     """Write deterministic run, selection, geometry, QA, and SVG evidence offline."""
     output_dir = Path(output_dir)
+    try:
+        persisted_identity = load_canonical_solution_identity(Path(repository_root))
+    except CanonicalIdentityError as exc:
+        raise CanonicalRunError(
+            "cannot verify persisted P2 identity against live P1-T01 report and sources"
+        ) from exc
+    if identity != persisted_identity:
+        raise CanonicalRunError(
+            "identity does not match persisted P2 identity and live P1-T01 report"
+        )
+    identity = persisted_identity
+
     layout = build_canonical_pavilion_layout(program, profile)
     checks = run_canonical_checks(layout, profile)
     qa = _qa_payload(checks)
@@ -357,7 +376,13 @@ def main(argv: list[str] | None = None) -> int:
         output_dir = args.output_dir or (
             args.repository_root / "design-engine" / "runs" / identity.solution_id
         )
-        created = build_canonical_pavilion_run(program, profile, identity, output_dir)
+        created = build_canonical_pavilion_run(
+            program,
+            profile,
+            identity,
+            output_dir,
+            repository_root=args.repository_root,
+        )
     except (
         CanonicalRunError,
         CanonicalReferenceError,
