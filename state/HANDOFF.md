@@ -176,6 +176,31 @@ unset and S02 was stale; P2-T01 has since assigned the source-bound identity
 recorded above. Five site conditions (three BLOCKING, two DEGRADING) remain;
 the held writer lease was not changed.
 
+### Follow-up after explicit user authorization — GeoNatal candidate recheck (2026-09-25)
+
+The user authorized read-only matching using only public GeoNatal location,
+street, area, and geometry data, and expressly excluded owner, CPF, private
+registration, title, and titularity searches/inferences. The official portal's
+`Logradouros` linework places the shared Prudente de Morais / Miguel Castro node
+at `[-35.21356846, -5.82163110]` in CRS84. Filtering the portal-hosted `Lotes —
+Zona Sul` collection found a nearest large Lagoa Nova polygon with published
+`area=20,817.519`; its boundary is approximately 7.5 m from the Prudente de
+Morais line and 8.5 m from the Miguel Castro line. Its published area value is
+about 13.7% below the TFG's approximate 24,135 m². The shared road-intersection
+node is west of the candidate envelope by roughly 10 m, and the portal layer's
+units, accuracy, survey date, and cadastral
+certification for this feature are not established. Classification is
+`PROVISIONAL_CANDIDATE`, not an adopted site boundary. Details and source URLs
+are in `docs/reports/P4-T01-site-source-research-2026-09-25.md`.
+
+`SITE_BOUNDARY` remains unresolved; no blocker or formal task status changed.
+The candidate does not authorize cadastral placement, final-area claims, or
+BIM-00. No owner/CPF/private registration/title/titularity field was searched
+or inferred, no local GIS copy was saved, and no external cadastral data,
+task graph, PROJECT_STATE, lease, Revit, or model was changed. P4-T01 remains
+`BLOCKED_BY_INPUT`; do not advance R04/R05 or perform a Revit write from this
+research result.
+
 ## P3-T01 closeout — canonical QA and candidate
 
 Generated offline candidate `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C`

@@ -70,3 +70,52 @@ institucional. Não há lote `PROVISIONAL` nem `VERIFIED`. `SITE_BOUNDARY` segue
 sem polígono cadastral verificável. Não foram pesquisados proprietários, CPF,
 matrícula, título ou registros privados; nenhuma agência foi contatada e
 nenhum artefato GIS foi salvo localmente.
+
+## Rechecagem GeoNatal — candidato espacial provisório — 25/09/2026
+
+### Método e evidência
+
+A página inicial oficial lista as camadas públicas `Localização > Logradouros`
+e `Cadastro territorial > Parcelas (Lotes)`. O extrato do TFG informa a
+confluência de Av. Prudente de Morais e Av. Miguel Castro, Lagoa Nova, e área
+aproximada de 24.135 m²; esses dados foram usados somente como filtros de
+localização e comparação. [GeoNatal — camadas públicas](https://geomapas.natal.rn.gov.br/) ·
+[Extrato do TFG, p. 56 e seção 5.3](../../project/provenance/extracted/source-extracts/TFG_Amanda%20Fernandes_ENTREGA%2015.06.2026.pdf.txt#L969)
+
+Na camada pública de logradouros, as geometrias com `nome` igual a `PRUDENTE
+DE MORAIS` e `MIGUEL CASTRO` compartilham o nó `[-35.21356846, -5.82163110]`
+em ordem GeoJSON `[longitude, latitude]`. A camada “Lotes — Zona Sul” responde
+HTTP 200, declara `FeatureCollection`, CRS84, 40.568 feições e `Last-Modified:
+15 May 2025`; a propriedade espacial `bairro`/`area` e as geometrias foram
+filtradas no navegador. Nenhuma cópia foi salva no repositório. [Logradouros —
+GeoNatal](https://geomapas.natal.rn.gov.br/uploads/logradouros_11_02_2025_035c3f6488ff31a998976830b7c39ab7.geojson) ·
+[Lotes — Zona Sul, GeoNatal](https://geomapas.natal.rn.gov.br/uploads/lotes_zona_sul_12_02_2025_c4ba6dc4ecd731c091a580ac0faaf898.geojson)
+
+Na busca local por polígonos próximos ao nó (janela de cerca de 660 m) com
+`bairro` Lagoa Nova e valor `area` entre 10.000 e 35.000, foram encontrados 12
+registros. O polígono mais próximo tem `area=20.817,519`, tipo `MultiPolygon`
+com um componente, e envelope geométrico `[-35.21347948, -5.82217436,
+-35.21162159, -5.82051495]`. Seu limite publicado fica a aproximadamente 10 m
+do nó viário; a distância mínima calculada entre o limite e as geometrias
+lineares das vias é 7,5 m para Prudente de Morais e 8,5 m para Miguel Castro.
+O nó da interseção está fora do polígono. O próximo polígono grande mais
+próximo tem valor `area=11.098,457` e limite a cerca de 182 m do nó.
+
+### Divergência e classificação
+
+O valor `area` do candidato é numericamente 3.317,481 menor que os 24.135 m²
+aproximados declarados no TFG (cerca de 13,7% abaixo). A página/camada
+consultada não declara, junto à feição, unidade, método de cálculo, acurácia,
+data de levantamento, datum cadastral ou certificação. A proximidade das duas
+vias e o bairro são compatíveis com o contexto de busca, mas não provam que a
+feição corresponda ao terreno acadêmico; a diferença de área reforça a
+ambiguidade. O envelope acima é apenas descritivo do polígono servido, não um
+limite cadastral adotado.
+
+**Resultado:** `PROVISIONAL_CANDIDATE — GeoNatal, não validado`. É o candidato
+espacial mais próximo encontrado sob os filtros acima, não uma identificação
+oficial do lote. `SITE_BOUNDARY` permanece não resolvido e bloqueia qualquer
+afirmação de limite ou área oficial. Não foram consultados campos de
+proprietário, CPF, matrícula privada, título ou titularidade; nada foi inferido
+sobre titularidade. Não houve contato com órgãos, escrita no Revit, alteração
+de task graph/PROJECT_STATE, lease ou dados cadastrais externos.
