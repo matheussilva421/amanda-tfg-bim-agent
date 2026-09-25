@@ -3190,5 +3190,6 @@ tasks:
       report mass verification; base elevation and courtyard interior ring are preserved.'
     - 'Current PROJECT_STATE scope: site gaps are DEGRADING for normalized study; active BLOCKING
       items are unreachable provider, S02 lease, and missing exact target/checkpoint.'
-    - 'PROJECT_STATE revision is 185; P3-T01 is last completed and P4-T01 remains BLOCKED_BY_INPUT.'
+    - 'PROJECT_STATE revision is 186; P3-T01 is last completed and P4-T01 remains BLOCKED_BY_INPUT.'
     - No Revit/RVT was opened or written; no R04/R05 work occurred.
+    - '2026-09-25 provider retry: PIDs 38152 and 40124 had no main window, RevitAPI.dll, Horizun.Revit.dll, or journal newer than 2026-09-24 and were stopped only after those checks. Clean PID 31152 started from the install directory; after 40 seconds it still had no window/API/add-in, and horizun_health again reported no Revit reachable. No RVT/model was opened or changed; provider blocker remains.'

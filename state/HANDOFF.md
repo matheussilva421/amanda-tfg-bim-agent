@@ -654,3 +654,43 @@ unstaged.
 **Resume:** superseded. Continue from the latest `P4-T01 continuation` section
 above and its explicit blocker list. Do not repeat already completed coordinate
 binding, R04 ring/readback, or offline snapshot work.
+
+## P4-T01 continuation — GeoNatal scope and Revit startup retry (2026-09-25)
+
+- The user authorized read-only matching against public GeoNatal location,
+  street, area, and geometry fields only. The existing report identifies a
+  `PROVISIONAL_CANDIDATE` polygon (published `area=20,817.519`; the layer does
+  not declare the unit) near the Prudente de Morais / Miguel Castro intersection;
+  that node is outside the polygon. Its numeric value is 13.7% below the TFG's
+  approximate 24,135 m² only if both values use the same unit. It is not an
+  adopted cadastral boundary. No owner, CPF, private registration, title,
+  or titularity data was queried or inferred. Details remain in
+  `docs/reports/P4-T01-site-source-research-2026-09-25.md`.
+- Health before and after the Revit retry returned `no Revit is reachable`.
+  Revit PIDs 38152 and 40124 had no main window, `RevitAPI.dll`, or
+  `Horizun.Revit.dll`, and no journal newer than 2026-09-24; they were stopped
+  after these checks. A single clean launch from the Revit 2027 install folder
+  created PID 31152, but after 40 seconds it still had no window/API/add-in and
+  no new journal. No RVT was opened or written. Do not terminate PID 31152
+  without a fresh safety check.
+- S02 writer lease was left untouched. `CURRENT.rvt` and the exact RUN-003
+  target/checkpoint remain unbound. `PROJECT_STATE.yaml` revision is 186;
+  P3-T01 remains last completed and P4-T01 remains `BLOCKED_BY_INPUT`.
+- Validation this continuation: `python -m amanda_agent status` exited 0 and
+  showed P4-T01 blocked; `horizun_health` failed before and after startup. No
+  test suite was run because no implementation changed. Earlier focused test
+  results remain recorded in the P4 blocker report.
+- Repository at entry was `main` / `origin/main` `4322402`; pre-existing
+  ACL-protected RC01 deletions remain untouched and unstaged. Changes in this
+  continuation are documentation/state records only and still need independent
+  review, commit, and push. Changed files: `PROJECT_STATE.yaml`,
+  `docs/reports/P4-T01-bim00-blocker-report.md`, `state/task-graph.yaml`,
+  `state/HANDOFF.md`, and the CLI-refreshed `state/status.md` (its observed HEAD
+  changed to `4322402`).
+
+**Resume:** obtain an observable interactive Revit 2027 session with Horizun
+loaded (the current PID 31152 is not usable), then run `horizun_health`. Only
+after health passes, bind a fresh RUN-003 target/checkpoint, verify and safely
+reclaim the stale S02 lease using the project lock API, refresh gate bindings,
+and run BIM-00. Do not use S02, do not write to Revit before BIM-00 PASS, and do
+not advance R05.

@@ -26,10 +26,15 @@ CANON-011 passar.
 
 ## Bloqueadores atuais de BIM-00
 
-- **Provider:** Revit 2027 build `27.2.0.39`, PID `38152`, responde ao sistema,
-  mas tem `MainWindowHandle=0` e título vazio. `horizun_health` falhou em duas
-  tentativas com `no Revit is reachable`. Manifesto e DLL do add-in existem,
-  mas isso não prova provider ativo ou saudável. Não foi aberto documento RVT.
+- **Provider (retry em 25/09/2026):** Os processos anteriores `38152` e `40124`
+  tinham `MainWindowHandle=0`, não carregavam `RevitAPI.dll` nem
+  `Horizun.Revit.dll`, e não havia journal posterior a 24/09. Foram encerrados
+  somente após essas verificações. Uma inicialização limpa do Revit 2027 pelo
+  diretório de instalação criou o PID `31152`; após 40 s ele ainda não tinha
+  janela, API ou add-in, e o journal continuava sem atualização. `horizun_health`
+  voltou a falhar com `no Revit is reachable`. O processo não chegou a um estado
+  observável que permita abrir/consultar documento. Nenhum RVT foi aberto nem
+  escrito. A existência do manifesto e da DLL continua sem provar provider ativo.
 - **Writer lease:** o lock continua `HELD` por `amanda-P08-CAN-T09-R03` para o
   alvo obsoleto S02, PID antigo `33648`, heartbeat de `2026-09-23T22:18:55Z`.
   Não foi liberado, removido ou reivindicado; não há evidência suficiente para
@@ -116,8 +121,10 @@ recusa divergências do modo de coordenadas.
 ## Resultado e retomada
 
 P4-T01 permanece `BLOCKED_BY_INPUT` por provider inacessível, lease S02 ainda
-retido e ausência de alvo/checkpoint exatos. Não emitir BIM-00 nem executar R04
-até esses fatos estarem resolvidos e os vínculos atualizados. A próxima tentativa
-autorizada é P4-T01; não avançar R05 automaticamente. Depois do R04, comparar o
+retido e ausência de alvo/checkpoint exatos. Para retomar, é necessária uma
+sessão Revit 2027 observável na área de trabalho interativa, com Horizun carregado;
+então repetir `horizun_health` antes de qualquer alvo, lease ou BIM-00. Não emitir
+BIM-00 nem executar R04 até esses fatos estarem resolvidos e os vínculos
+atualizados. Não avançar R05 automaticamente. Depois do R04, comparar o
 resultado real com as quatro pranchas para avaliar CANON-011. Preserve
 `AMANDA_REVIEW_PENDING` e todos os limites de alegações de sítio.
