@@ -77,7 +77,10 @@ observed on alternate routes; this does not establish that official layers are
 compromised. No site blocker was resolved or reclassified; `P4-T01` stays
 `BLOCKED_BY_INPUT`. The task-graph CLI validated
 182 registered tasks, with no ready task. No test suite, Revit, or RVT was run
-or opened. No BIM authorization or R04/R05 work occurred.
+or opened. No BIM authorization or R04/R05 work occurred. The research delta
+was committed as `4723b3c9d352289b88e133bae1c67fa405198487` and pushed; a fresh
+`git ls-remote --heads origin main` verified that SHA on the remote. The
+pre-existing RC01 deletions were not staged.
 
 Resume only P4-T01 after the canonical selection is approved/eligible, required
 site inputs are resolved, an exact target and separate checkpoint are
