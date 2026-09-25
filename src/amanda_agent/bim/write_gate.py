@@ -24,8 +24,13 @@ BIM00_REQUIRED_CHECKS: tuple[str, ...] = (
     "coordinate_site_mode",
     "family_strategy",
     "canonical_selection",
+    "official_program_sha256",
+    "repository_commit_sha",
+    "project_state_revision",
+    "project_state_sha256",
 )
 _SHA256_PATTERN = r"^[0-9a-f]{64}$"
+_COMMIT_SHA_PATTERN = r"^[0-9a-f]{40}$"
 
 
 class Bim00GateRefused(RuntimeError):
@@ -57,6 +62,10 @@ class Bim00Evidence(BaseModel):
     approval_hash: str = Field(pattern=_SHA256_PATTERN)
     layout_hash: str = Field(pattern=_SHA256_PATTERN)
     canonical_source_hashes: tuple[str, str, str, str]
+    official_program_sha256: str = Field(pattern=_SHA256_PATTERN)
+    repository_commit_sha: str = Field(pattern=_COMMIT_SHA_PATTERN)
+    project_state_revision: int = Field(ge=0, strict=True)
+    project_state_sha256: str = Field(pattern=_SHA256_PATTERN)
     historical_r12_sha256: str = Field(pattern=_SHA256_PATTERN)
     capability_registry_sha256: str = Field(pattern=_SHA256_PATTERN)
     revit_build: str = Field(min_length=1)
@@ -98,6 +107,32 @@ def _required_checks_passed(evidence: Bim00Evidence) -> None:
         raise Bim00GateRefused("not all required checks passed")
 
 
+def _validate_expected_bindings(
+    *,
+    official_program_sha256: str,
+    repository_commit_sha: str,
+    project_state_revision: int,
+    project_state_sha256: str,
+) -> None:
+    for name, value in (
+        ("official_program_sha256", official_program_sha256),
+        ("project_state_sha256", project_state_sha256),
+    ):
+        if not isinstance(value, str) or re.fullmatch(_SHA256_PATTERN, value) is None:
+            raise Bim00GateRefused(f"expected BIM-00 {name} is invalid")
+    if (
+        not isinstance(repository_commit_sha, str)
+        or re.fullmatch(_COMMIT_SHA_PATTERN, repository_commit_sha) is None
+    ):
+        raise Bim00GateRefused("expected BIM-00 repository_commit_sha is invalid")
+    if (
+        isinstance(project_state_revision, bool)
+        or not isinstance(project_state_revision, int)
+        or project_state_revision < 0
+    ):
+        raise Bim00GateRefused("expected BIM-00 project_state_revision is invalid")
+
+
 def _verify_binding(
     evidence: Bim00Evidence,
     *,
@@ -106,8 +141,18 @@ def _verify_binding(
     approval_hash: str,
     layout_hash: str,
     canonical_source_hashes: tuple[str, str, str, str],
+    official_program_sha256: str,
+    repository_commit_sha: str,
+    project_state_revision: int,
+    project_state_sha256: str,
 ) -> None:
     _required_checks_passed(evidence)
+    _validate_expected_bindings(
+        official_program_sha256=official_program_sha256,
+        repository_commit_sha=repository_commit_sha,
+        project_state_revision=project_state_revision,
+        project_state_sha256=project_state_sha256,
+    )
     if evidence.status is not CheckStatus.PASS:
         raise Bim00GateRefused("BIM-00 evidence status is not PASS")
     if _canonical_path(evidence.target_path) != _canonical_path(target_path):
@@ -127,6 +172,22 @@ def _verify_binding(
     if evidence.canonical_source_hashes != canonical_source_hashes:
         raise Bim00GateRefused(
             "BIM-00 canonical board hashes do not match the loaded references"
+        )
+    if evidence.official_program_sha256 != official_program_sha256:
+        raise Bim00GateRefused(
+            "BIM-00 official program SHA-256 does not match the active source"
+        )
+    if evidence.repository_commit_sha != repository_commit_sha:
+        raise Bim00GateRefused(
+            "BIM-00 repository commit does not match the active checkout"
+        )
+    if evidence.project_state_revision != project_state_revision:
+        raise Bim00GateRefused(
+            "BIM-00 PROJECT_STATE revision does not match the active state"
+        )
+    if evidence.project_state_sha256 != project_state_sha256:
+        raise Bim00GateRefused(
+            "BIM-00 PROJECT_STATE SHA-256 does not match the active state file"
         )
     open_paths = [_canonical_path(path) for path in evidence.open_document_paths]
     if len(open_paths) != evidence.open_document_count:
@@ -161,6 +222,10 @@ def authorize_preacceptance_stage(
     approval_hash: str,
     layout_hash: str,
     canonical_source_hashes: tuple[str, str, str, str],
+    official_program_sha256: str,
+    repository_commit_sha: str,
+    project_state_revision: int,
+    project_state_sha256: str,
 ) -> Any:
     """Remove only BIM-00 from R03/R04 after every binding is checked."""
 
@@ -174,6 +239,10 @@ def authorize_preacceptance_stage(
         approval_hash=approval_hash,
         layout_hash=layout_hash,
         canonical_source_hashes=canonical_source_hashes,
+        official_program_sha256=official_program_sha256,
+        repository_commit_sha=repository_commit_sha,
+        project_state_revision=project_state_revision,
+        project_state_sha256=project_state_sha256,
     )
     operations = getattr(plan, "operations", None)
     if not isinstance(operations, list) or not all(

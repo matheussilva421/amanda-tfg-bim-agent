@@ -18,7 +18,18 @@ P3-T01 generated offline candidate `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A
 
 ## P4 — BIM-00
 
-`P4-T01` is the formal task for this existing plan gate: establish BIM-00 evidence and authorize only the exact new solution and target. It depends on P3-T01 and does not include R04/R05. P4-T01 is the next pending task.
+`P4-T01` establishes BIM-00 evidence and can authorize only the exact new
+solution and target; it depends on P3-T01 and excludes R04/R05. Its evidence
+must bind the `solution_id`, `layout_hash`, content `approval_hash`, exactly
+four canonical board hashes, official program PDF SHA-256, target RVT path and
+SHA-256, a separate checkpoint path and matching SHA-256, repository commit
+SHA, and the `PROJECT_STATE.yaml` revision and raw-file SHA-256. Each binding
+is compared to the active expected value; an unbound or mismatched value fails
+closed. Required live checks include the writer lease, checkpoint, historical
+R12 exclusion, canonical references, capability registry, Revit provider,
+units, site-coordinate mode, family strategy, canonical selection, and
+official program source. BIM-00 is an evidence/authorization gate only; it
+does not execute an R04/R05 operation.
 
 ## P5 — R04 Revit
 

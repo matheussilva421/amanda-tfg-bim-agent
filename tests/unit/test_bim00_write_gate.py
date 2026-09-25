@@ -21,13 +21,29 @@ from amanda_agent.bim.write_gate import (
     authorize_preacceptance_stage,
 )
 
-TARGET = Path(r"C:\project\revit\production\working\AMANDA-RUN-002-PAVILION-S02.rvt")
-CHECKPOINT = Path(r"C:\project\revit\production\checkpoints\AMANDA-RUN-002-PAVILION-S02\R01.rvt")
+TARGET = Path(r"C:\synthetic\revit\working\RUN-003-BIM-00-fixture.rvt")
+CHECKPOINT = Path(r"C:\synthetic\revit\checkpoints\RUN-003-BIM-00-fixture\checkpoint.rvt")
 ANCHOR = Path.home() / ".horizun" / "anchor" / "HZ_ANCHOR_2027.rvt"
-SOLUTION = "AMANDA-RUN-002-PAVILION-S02"
+SOLUTION = "AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C"
 APPROVAL = "a" * 64
 LAYOUT = "b" * 64
 BOARD_HASHES = ("c" * 64, "d" * 64, "e" * 64, "f" * 64)
+OFFICIAL_PROGRAM_SHA256 = "9" * 64
+REPOSITORY_COMMIT_SHA = "a" * 40
+PROJECT_STATE_REVISION = 180
+PROJECT_STATE_SHA256 = "8" * 64
+NEW_BINDING_CHECKS = (
+    "official_program_sha256",
+    "repository_commit_sha",
+    "project_state_revision",
+    "project_state_sha256",
+)
+EXPECTED_BINDINGS = {
+    "official_program_sha256": OFFICIAL_PROGRAM_SHA256,
+    "repository_commit_sha": REPOSITORY_COMMIT_SHA,
+    "project_state_revision": PROJECT_STATE_REVISION,
+    "project_state_sha256": PROJECT_STATE_SHA256,
+}
 
 
 class _Plan:
@@ -64,6 +80,7 @@ def _evidence(**updates) -> Bim00Evidence:
         "approval_hash": APPROVAL,
         "layout_hash": LAYOUT,
         "canonical_source_hashes": BOARD_HASHES,
+        **EXPECTED_BINDINGS,
         "historical_r12_sha256": "1" * 64,
         "capability_registry_sha256": "2" * 64,
         "revit_build": "27.2.0.39",
@@ -89,23 +106,89 @@ def _plan(stage: BimStage) -> _Plan:
     return _Plan(stage, [operation])
 
 
-def test_bim00_evidence_requires_exactly_four_canonical_board_hashes():
-    with pytest.raises(ValidationError):
-        _evidence(canonical_source_hashes=BOARD_HASHES[:3])
-
-
-def test_valid_bim00_releases_only_the_r03_r04_bim00_blocker():
-    plan = _plan(BimStage.R04)
-
-    released = authorize_preacceptance_stage(
+def _authorize(plan: _Plan, evidence: Bim00Evidence, **expected_updates):
+    expected = {**EXPECTED_BINDINGS, **expected_updates}
+    return authorize_preacceptance_stage(
         plan,
-        _evidence(),
+        evidence,
         target_path=TARGET,
         solution_id=SOLUTION,
         approval_hash=APPROVAL,
         layout_hash=LAYOUT,
         canonical_source_hashes=BOARD_HASHES,
+        **expected,
     )
+
+
+def test_bim00_evidence_requires_exactly_four_canonical_board_hashes():
+    with pytest.raises(ValidationError):
+        _evidence(canonical_source_hashes=BOARD_HASHES[:3])
+
+
+def test_bim00_required_checks_cover_each_new_binding():
+    assert set(NEW_BINDING_CHECKS) <= set(BIM00_REQUIRED_CHECKS)
+
+
+@pytest.mark.parametrize("field", NEW_BINDING_CHECKS)
+def test_bim00_evidence_requires_each_new_binding(field):
+    values = _evidence().model_dump()
+    values.pop(field)
+
+    with pytest.raises(ValidationError):
+        Bim00Evidence(**values)
+
+
+@pytest.mark.parametrize(
+    ("field", "invalid_value"),
+    (
+        ("official_program_sha256", "A" * 64),
+        ("official_program_sha256", "9" * 63),
+        ("repository_commit_sha", "A" * 40),
+        ("repository_commit_sha", "a" * 39),
+        ("repository_commit_sha", "g" * 40),
+        ("project_state_revision", -1),
+        ("project_state_revision", True),
+        ("project_state_sha256", "G" * 64),
+        ("project_state_sha256", "8" * 63),
+    ),
+)
+def test_bim00_evidence_rejects_malformed_new_bindings(field, invalid_value):
+    values = _evidence().model_dump()
+    values[field] = invalid_value
+
+    with pytest.raises(ValidationError):
+        Bim00Evidence(**values)
+
+
+@pytest.mark.parametrize("check_name", NEW_BINDING_CHECKS)
+def test_bim00_refuses_missing_new_binding_check(check_name):
+    evidence = _evidence()
+    evidence.checks = [check for check in evidence.checks if check.name != check_name]
+
+    with pytest.raises(Bim00GateRefused, match="missing required BIM-00 checks"):
+        _authorize(_plan(BimStage.R04), evidence)
+
+
+@pytest.mark.parametrize("check_name", NEW_BINDING_CHECKS)
+def test_bim00_refuses_blocked_new_binding_check(check_name):
+    evidence = _evidence()
+    evidence.checks = [
+        WriteGateCheck(
+            name=check.name,
+            status=CheckStatus.BLOCKED if check.name == check_name else check.status,
+            evidence=check.evidence,
+        )
+        for check in evidence.checks
+    ]
+
+    with pytest.raises(Bim00GateRefused, match="not all required checks passed"):
+        _authorize(_plan(BimStage.R04), evidence)
+
+
+def test_valid_bim00_releases_only_the_r03_r04_bim00_blocker():
+    plan = _plan(BimStage.R04)
+
+    released = _authorize(plan, _evidence())
 
     assert released.operations[0].blocked_by == ["CANONICAL_GEOMETRIC_ACCEPTANCE"]
     assert released.preflight.get("bim_00").status is CheckStatus.PASS
@@ -118,15 +201,7 @@ def test_bim00_accepts_target_with_only_the_bridge_owned_anchor_open():
         open_document_paths=[TARGET, ANCHOR],
     )
 
-    released = authorize_preacceptance_stage(
-        _plan(BimStage.R04),
-        evidence,
-        target_path=TARGET,
-        solution_id=SOLUTION,
-        approval_hash=APPROVAL,
-        layout_hash=LAYOUT,
-        canonical_source_hashes=BOARD_HASHES,
-    )
+    released = _authorize(_plan(BimStage.R04), evidence)
 
     assert released.operations[0].blocked_by == ["CANONICAL_GEOMETRIC_ACCEPTANCE"]
 
@@ -138,15 +213,7 @@ def test_bim00_refuses_any_other_open_document():
     )
 
     with pytest.raises(Bim00GateRefused, match="bridge-owned anchor"):
-        authorize_preacceptance_stage(
-            _plan(BimStage.R04),
-            evidence,
-            target_path=TARGET,
-            solution_id=SOLUTION,
-            approval_hash=APPROVAL,
-            layout_hash=LAYOUT,
-            canonical_source_hashes=BOARD_HASHES,
-        )
+        _authorize(_plan(BimStage.R04), evidence)
 
 
 def test_bim00_refuses_duplicate_or_incomplete_open_document_paths():
@@ -156,15 +223,7 @@ def test_bim00_refuses_duplicate_or_incomplete_open_document_paths():
         {"open_document_paths": [TARGET, ANCHOR], "open_document_count": 1},
     ):
         with pytest.raises(Bim00GateRefused):
-            authorize_preacceptance_stage(
-                _plan(BimStage.R04),
-                _evidence(**changes),
-                target_path=TARGET,
-                solution_id=SOLUTION,
-                approval_hash=APPROVAL,
-                layout_hash=LAYOUT,
-                canonical_source_hashes=BOARD_HASHES,
-            )
+            _authorize(_plan(BimStage.R04), _evidence(**changes))
 
 
 def test_bim00_refuses_missing_or_blocked_checks():
@@ -173,11 +232,7 @@ def test_bim00_refuses_missing_or_blocked_checks():
     evidence = _evidence(status=CheckStatus.BLOCKED, checks=checks)
 
     with pytest.raises(Bim00GateRefused, match="not all required checks passed"):
-        authorize_preacceptance_stage(
-            _plan(BimStage.R04), evidence,
-            target_path=TARGET, solution_id=SOLUTION, approval_hash=APPROVAL,
-            layout_hash=LAYOUT, canonical_source_hashes=BOARD_HASHES,
-        )
+        _authorize(_plan(BimStage.R04), evidence)
 
 
 def test_bim00_is_bound_to_target_solution_layout_and_board_hashes():
@@ -191,27 +246,67 @@ def test_bim00_is_bound_to_target_solution_layout_and_board_hashes():
     ):
         changed = evidence.model_copy(update=mismatch)
         with pytest.raises(Bim00GateRefused):
-            authorize_preacceptance_stage(
-                _plan(BimStage.R04), changed,
-                target_path=TARGET, solution_id=SOLUTION, approval_hash=APPROVAL,
-                layout_hash=LAYOUT, canonical_source_hashes=BOARD_HASHES,
-            )
+            _authorize(_plan(BimStage.R04), changed)
+
+
+@pytest.mark.parametrize(
+    ("binding", "mismatched_expected"),
+    (
+        ("official_program_sha256", "7" * 64),
+        ("repository_commit_sha", "b" * 40),
+        ("project_state_revision", PROJECT_STATE_REVISION + 1),
+        ("project_state_sha256", "6" * 64),
+    ),
+)
+def test_bim00_refuses_each_new_binding_when_expected_value_differs(
+    binding, mismatched_expected
+):
+    with pytest.raises(Bim00GateRefused):
+        _authorize(
+            _plan(BimStage.R04),
+            _evidence(),
+            **{binding: mismatched_expected},
+        )
+
+
+@pytest.mark.parametrize(
+    ("binding", "invalid_expected"),
+    (
+        ("official_program_sha256", "A" * 64),
+        ("repository_commit_sha", "a" * 39),
+        ("project_state_revision", -1),
+        ("project_state_revision", True),
+        ("project_state_sha256", "G" * 64),
+    ),
+)
+def test_bim00_refuses_malformed_expected_new_binding(binding, invalid_expected):
+    with pytest.raises(Bim00GateRefused):
+        _authorize(
+            _plan(BimStage.R04),
+            _evidence(),
+            **{binding: invalid_expected},
+        )
+
+
+def test_bim00_requires_explicit_expected_values_for_new_bindings():
+    with pytest.raises(TypeError, match="official_program_sha256"):
+        authorize_preacceptance_stage(
+            _plan(BimStage.R04),
+            _evidence(),
+            target_path=TARGET,
+            solution_id=SOLUTION,
+            approval_hash=APPROVAL,
+            layout_hash=LAYOUT,
+            canonical_source_hashes=BOARD_HASHES,
+        )
 
 
 def test_bim00_cannot_release_r05_detailing_or_geometry_acceptance_blocker():
     with pytest.raises(Bim00GateRefused, match="only R03/R04"):
-        authorize_preacceptance_stage(
-            _plan(BimStage.R05), _evidence(),
-            target_path=TARGET, solution_id=SOLUTION, approval_hash=APPROVAL,
-            layout_hash=LAYOUT, canonical_source_hashes=BOARD_HASHES,
-        )
+        _authorize(_plan(BimStage.R05), _evidence())
 
 
 def test_checkpoint_and_target_must_match_the_saved_active_document():
     evidence = _evidence(checkpoint_sha256="0" * 64)
     with pytest.raises(Bim00GateRefused, match="checkpoint hash"):
-        authorize_preacceptance_stage(
-            _plan(BimStage.R04), evidence,
-            target_path=TARGET, solution_id=SOLUTION, approval_hash=APPROVAL,
-            layout_hash=LAYOUT, canonical_source_hashes=BOARD_HASHES,
-        )
+        _authorize(_plan(BimStage.R04), evidence)
