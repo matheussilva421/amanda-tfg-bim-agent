@@ -3162,6 +3162,7 @@ tasks:
     - 'Read-only SHA-256 recheck: four canonical boards, official program PDF, and
       P1-T01 report match the persisted canonical identity.'
     - '2026-09-25 source recheck: the official PMRN service charter lists BPChoque at Av. Miguel Castro, s/n, Lagoa Nova; it does not bind the cadastral parcel or confirm transfer, so SITE_OCCUPANCY remains BLOCKING.'
+    - docs/reports/P4-T01-site-source-research-2026-09-25.md records a bounded search of official municipal/state sources. It found no verifiable parcel polygon/CRS, site survey/topography/datum, parcel occupancy/transfer decision, frontage count, or true-north bearing; GeoNatal layers were excluded as evidence pending layer-specific validation after unrelated content was observed on alternate routes. No blocker was resolved or reclassified.
     - RUN-003 remains OFFLINE_CANDIDATE, bim_eligible=false, revit_calls=0; selected_design=null
       and current_checkpoint=null.
     - No canonical RVT target is bound; CURRENT.rvt is absent. Revit process is not

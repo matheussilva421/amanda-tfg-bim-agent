@@ -62,6 +62,23 @@ at `refs/heads/main`. This handoff status correction is being committed as a
 fast-forward follow-up. The pre-existing RC01 deletions were not staged or
 changed.
 
+### Bounded official-source research — 2026-09-25
+
+`docs/reports/P4-T01-site-source-research-2026-09-25.md` records a read-only
+search of official municipal and state sources. It found no verifiable
+parcel-specific cadastral polygon/CRS, site survey/topography/datum, physical
+occupancy confirmation or transfer/availability decision, frontage count, or
+true-north bearing. The PMRN service charter supports only a published BPChoque
+institutional address; the municipal law and procurement specification are
+routes/specifications, not parcel data, although the municipal specification
+does describe geospatial references/products. GeoNatal map layers were excluded
+as evidence pending layer-specific validation after unrelated content was
+observed on alternate routes; this does not establish that official layers are
+compromised. No site blocker was resolved or reclassified; `P4-T01` stays
+`BLOCKED_BY_INPUT`. The task-graph CLI validated
+182 registered tasks, with no ready task. No test suite, Revit, or RVT was run
+or opened. No BIM authorization or R04/R05 work occurred.
+
 Resume only P4-T01 after the canonical selection is approved/eligible, required
 site inputs are resolved, an exact target and separate checkpoint are
 designated, and the writer lease/provider can produce fresh passing evidence.
