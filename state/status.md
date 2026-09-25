@@ -68,4 +68,4 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 ## Git verification
 
 - Last verified commit: `3c816cb2e5bfb84b318ec043196551446fb70e9d`
-- Observed HEAD: `3c816cb36f5e082b96894d65679a77e33932838b`
+- Observed HEAD: `9d3b255f3ffbb4aee4eae915d80522e397a39f91`

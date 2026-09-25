@@ -114,6 +114,16 @@ changed.
   current commit/state/source hashes then rerun BIM-00; do not advance R05
   until CANON-011 passes.
 
+### P4-T01 Git closeout
+
+Implementation commit `3c816cb2e5bfb84b318ec043196551446fb70e9d` and state
+closeout commit `9d3b255f3ffbb4aee4eae915d80522e397a39f91` are on `main`.
+The final handoff/status closeout is also committed and pushed as a fast-forward;
+a fresh `git ls-remote origin refs/heads/main` after that push matched local
+`main`. Staging was limited to the 40 explicit P4-T01 paths; no RC01 path was
+staged or changed. Temporary staging copies used for the ACL-restricted
+snapshot were removed after their bytes were verified.
+
 ### Bounded official-source research — 2026-09-25
 
 `docs/reports/P4-T01-site-source-research-2026-09-25.md` records a read-only
