@@ -50,6 +50,7 @@ SCHEMA_VERSION = 1
 LEGACY_SELECTION_DECISION_ID = "DEC-P08-T09-SELECTION-001"
 LEGACY_SELECTION_TOPIC = "ARCHITECTURAL_SELECTION"
 LEGACY_SELECTION_SOLUTION_ID = "AMANDA-RUN-001-S01"
+PREVIOUS_PROVISIONAL_SELECTION_SOLUTION_ID = "AMANDA-RUN-002-PAVILION-S01"
 LEGACY_SELECTION_ARCHETYPE = "COURTYARD_DOUBLE_LOADED_BAR"
 LEGACY_ENGINE_VERSION = "design-engine-v1"
 LEGACY_REQUIREMENTS_VERSION = "requirements-v1"
@@ -363,10 +364,13 @@ def _build_canonical_selection(
             "AMANDA-RUN-002-PAVILION-S02 is STALE_BY_CANONICAL_REFERENCE_EXPANSION; "
             "P2 must assign a new solution identity before selection"
         )
-    if active_solution_id == LEGACY_SELECTION_SOLUTION_ID:
+    if active_solution_id in {
+        LEGACY_SELECTION_SOLUTION_ID,
+        PREVIOUS_PROVISIONAL_SELECTION_SOLUTION_ID,
+    }:
         raise SelectionError(
-            "AMANDA-RUN-001-S01 is a superseded linear solution identity and cannot "
-            "authorize the four-board canonical selection"
+            f"{active_solution_id} is a superseded linear solution identity and "
+            "cannot authorize the four-board canonical selection"
         )
 
     checks = run_canonical_checks(layout, profile)
@@ -495,7 +499,7 @@ def _build_canonical_selection(
     geometry = {
         "type": "CanonicalPavilionDesignGeometry",
         "layout_hash": layout.content_hash,
-        "supersedes_provisional_solution_id": "AMANDA-RUN-002-PAVILION-S01",
+        "supersedes_provisional_solution_id": PREVIOUS_PROVISIONAL_SELECTION_SOLUTION_ID,
         "supersedes_provisional_decision_id": PREVIOUS_CANONICAL_DETAIL_DECISION_ID,
         "parti_selection_authority": SelectionAuthority.USER_DIRECTED.value,
         "detailed_variant_authority": SelectionAuthority.AGENT_DELEGATED.value,
@@ -663,6 +667,7 @@ __all__ = [
     "PARTI_DECISION_ID",
     "PREVIOUS_CANONICAL_DETAIL_DECISION_ID",
     "PREVIOUS_CANONICAL_PARTI_DECISION_ID",
+    "PREVIOUS_PROVISIONAL_SELECTION_SOLUTION_ID",
     "SCHEMA_VERSION",
     "SELECTED_OPTION",
     "SELECTION_ARCHETYPE",

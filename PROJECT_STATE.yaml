@@ -5,7 +5,7 @@ phase_status: PENDING
 last_completed_task: P1-T01
 next_task: P2-T01
 schema_version: 1
-state_revision: 176
+state_revision: 177
 phase_gate: GO_WITH_LIMITATIONS
 selected_design: null
 revit_stage: PRE_R04
@@ -16,4 +16,4 @@ blockers:
 - SITE_OCCUPANCY:BLOCKING
 - SITE_FRONTAGE_COUNT:DEGRADING
 - SITE_TRUE_NORTH:DEGRADING
-last_verified_commit: f774a5af766f164fecf4087da805d77ccf4d0e2c
+last_verified_commit: 0d3fc94474f2a0d0944e10db6c602ce223aa7bc7

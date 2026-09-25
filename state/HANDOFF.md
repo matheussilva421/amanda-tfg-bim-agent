@@ -36,14 +36,25 @@ decision register now supersedes the three-source and S02 decisions while
 preserving their signed history; the new solution identity remains unset and
 `AMANDA-RUN-002-PAVILION-S02` remains stale.
 
-Verification: the focused 11-module suite passed 99/99; changed-file Ruff
+Verification: the focused 11-module suite passed 100/100; changed-file Ruff
 passed; `git diff --check` passed when scoped to P1-T01 files. A repository-wide
 diff check also encountered pre-existing deleted GOLDEN/RC01 paths that deny
 read access; those unrelated deletions remain unstaged and untouched. Independent
-review found no technical reconciliation blocker and requested the historical
-decision-register note below be clarified; that note is now explicitly marked
-as a P0 checkpoint and superseded. Final review/commit/push evidence will be
-recorded here before closeout.
+review by Huygens found no technical reconciliation blocker but withheld full
+approval until commit/push, and asked that the historical decision-register
+note below be clarified; it is now marked as a P0 checkpoint and superseded.
+Follow-up review by Herschel verified the four-source decision, Board 03 count,
+deviation schema/output hash, S01/S02 status, and task pointers, then found that
+`AMANDA-RUN-002-PAVILION-S01` could still authorize selection and that the review
+status wording here conflicted with the task graph. A regression test failed
+for that alias and passed for the existing S01; the selection guard now rejects
+both historical linear identities, and this handoff records those findings
+instead of saying evidence is still pending. Implementation commit
+`0d3fc94474f2a0d0944e10db6c602ce223aa7bc7` was pushed and a fresh remote read
+confirmed `origin/main` at that SHA. Herschel's follow-up then caught the second
+linear S01 alias; that fix and its new regression test are in the current
+working changes, and a final independent review remains pending after their
+commit/push.
 
 Open discrepancies are documented in the report: Board 03 draws six common
 bathroom cells while the official PDF specifies five; the exact extra graphic

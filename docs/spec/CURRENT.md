@@ -161,7 +161,7 @@ institutional submission retain their own owners and evidence. Do not claim
 
 ## Current stale state
 
-`AMANDA-RUN-002-PAVILION-S02` is `STALE_BY_CANONICAL_REFERENCE_EXPANSION`. It is bound to an obsolete subset of the canonical references; the current architecture requires all four boards. S02 is not authorized to advance to R05. The historical linear R12 is superseded and cannot be reused as the final solution. P1-T01 does not assign a new identity; that is the next planned task after reconciliation.
+`AMANDA-RUN-002-PAVILION-S02` is `STALE_BY_CANONICAL_REFERENCE_EXPANSION`. It is bound to an obsolete subset of the canonical references; the current architecture requires all four boards. S02 is not authorized to advance to R05. Historical linear identities `AMANDA-RUN-001-S01` and `AMANDA-RUN-002-PAVILION-S01` are superseded and cannot authorize a canonical selection or be reused as the final solution. P1-T01 does not assign a new identity; that is the next planned task after reconciliation.
 
 ## Site limitations
 

@@ -35,7 +35,7 @@ def test_project_state_routes_to_pending_new_identity_without_revit_promotion():
     assert state["last_completed_task"] == "P1-T01"
     assert state["next_task"] == "P2-T01"
     assert state["schema_version"] == 1
-    assert state["state_revision"] == 176
+    assert state["state_revision"] == 177
     assert state["phase_gate"] == "GO_WITH_LIMITATIONS"
     assert state["selected_design"] is None
     assert state["revit_stage"] == "PRE_R04"
@@ -227,4 +227,4 @@ def test_migration_history_preserves_existing_entries_and_records_transition():
         assert entries and entries[-1]["status"] in {"PASS", "PASS_WITH_WARNINGS"}
     reconciliation = [entry for entry in history if entry["task_id"] == "P1-T01"]
     assert reconciliation and reconciliation[-1]["status"] == "PASS"
-    assert "99 passed" in " ".join(reconciliation[-1]["evidence"])
+    assert "100 passed" in " ".join(reconciliation[-1]["evidence"])

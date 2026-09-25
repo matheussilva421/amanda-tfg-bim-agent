@@ -107,11 +107,15 @@ def test_s02_stays_rejected_even_if_some_caller_reactivates_its_constant(
         _select(program, _profile())
 
 
+@pytest.mark.parametrize(
+    "superseded_solution_id",
+    [LEGACY_SELECTION_SOLUTION_ID, "AMANDA-RUN-002-PAVILION-S01"],
+)
 def test_superseded_linear_solution_id_cannot_authorize_canonical_selection(
-    program, monkeypatch
+    program, monkeypatch, superseded_solution_id
 ):
     monkeypatch.setattr(
-        selection_module, "SELECTION_SOLUTION_ID", LEGACY_SELECTION_SOLUTION_ID
+        selection_module, "SELECTION_SOLUTION_ID", superseded_solution_id
     )
 
     with pytest.raises(SelectionError, match="superseded linear solution identity"):
