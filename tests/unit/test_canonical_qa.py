@@ -42,11 +42,12 @@ def _profile() -> CanonicalReferenceProfile:
         status="CANONICAL_DESIGN_REFERENCE",
         supersedes=("AMANDA-RUN-001-S01", "COURTYARD_DOUBLE_LOADED_BAR"),
         canonical_images=(
-            "canonical/01_implantacao_geral_canonica.png",
-            "canonical/02_bloco_residencial_canonico.png",
-            "canonical/03_bloco_administrativo_canonico.png",
+            "canonical/01_implantacao.png",
+            "canonical/02_administrativo.png",
+            "canonical/03_residencial.png",
+            "canonical/04_servicos.png",
         ),
-        source_hashes=("a" * 64, "b" * 64, "c" * 64),
+        source_hashes=("a" * 64, "b" * 64, "c" * 64, "d" * 64),
         data={
             "program": {
                 "people": 20,
@@ -84,12 +85,79 @@ def test_qa_exposes_every_rubric_check_and_blocks_unproven_visual_regression(
 ):
     checks = _checks_by_id(canonical_layout, profile)
 
-    assert set(checks) == {f"CANON-{number:03d}" for number in range(1, 13)}
+    assert set(checks) == {f"CANON-{number:03d}" for number in range(1, 19)}
     assert all(
         checks[f"CANON-{number:03d}"].status == "PASS" for number in range(1, 11)
     )
     assert checks["CANON-011"].status == "BLOCKED"
     assert checks["CANON-012"].status == "PASS"
+    assert all(checks[f"CANON-{number:03d}"].status == "PASS" for number in range(13, 19))
+
+
+def test_explicit_reconciliation_checks_fail_when_floor_or_child_membership_drifts(
+    canonical_layout, profile
+):
+    blocks = []
+    for block in canonical_layout.blocks:
+        if block.component_id == "ADMIN_ACOLHIMENTO":
+            rooms = tuple(
+                replace(room, level=2) if room.logical_id == "REQ-01-01" else room
+                for room in block.rooms
+            )
+            block = replace(block, rooms=rooms)
+        elif block.component_id == "CHILD_SECTOR":
+            block = replace(
+                block,
+                rooms=tuple(room for room in block.rooms if room.logical_id != "REQ-03-04"),
+            )
+        blocks.append(block)
+    drifted = replace(canonical_layout, blocks=tuple(blocks))
+    checks = _checks_by_id(drifted, profile)
+
+    assert checks["CANON-015"].status == "FAIL"
+    assert checks["CANON-018"].status == "FAIL"
+
+
+def test_administration_qa_requires_board02_ground_floor_support_rooms(
+    canonical_layout, profile
+):
+    blocks = [
+        replace(
+            block,
+            rooms=tuple(
+                room
+                for room in block.rooms
+                if room.logical_id not in {"REQ-05-03", "REQ-05-04"}
+            ),
+        )
+        if block.component_id == "ADMIN_ACOLHIMENTO"
+        else block
+        for block in canonical_layout.blocks
+    ]
+    displaced = replace(canonical_layout, blocks=tuple(blocks))
+
+    assert _checks_by_id(displaced, profile)["CANON-015"].status == "FAIL"
+
+
+def test_four_board_qa_rejects_missing_or_unbound_fourth_reference(canonical_layout, profile):
+    params = {
+        **canonical_layout.parameters,
+        "canonical_source_hashes": list(profile.source_hashes[:3]),
+    }
+    unbound = replace(canonical_layout, parameters=params)
+
+    assert _checks_by_id(unbound, profile)["CANON-013"].status == "FAIL"
+
+
+def test_curved_service_qa_rejects_a_missing_or_overcounted_courtyard(
+    canonical_layout, profile
+):
+    service = next(
+        block for block in canonical_layout.blocks if block.component_id == "SERVICE_CAPACITATION"
+    )
+    broken = replace(canonical_layout, service_courtyard=service.footprint)
+
+    assert _checks_by_id(broken, profile)["CANON-017"].status == "FAIL"
 
 
 def test_legacy_single_bar_fails_the_no_bar_and_residential_cluster_checks(
@@ -171,3 +239,75 @@ def test_missing_deviation_register_fails_closed(canonical_layout, profile):
     unregistered = replace(canonical_layout, parameters=params)
 
     assert _checks_by_id(unregistered, profile)["CANON-010"].status == "FAIL"
+
+
+def test_all_known_board_program_differences_must_be_reconciled(canonical_layout, profile):
+    params = {
+        **canonical_layout.parameters,
+        "canonical_deviations": [],
+    }
+    unrecorded = replace(canonical_layout, parameters=params)
+
+    assert _checks_by_id(unrecorded, profile)["CANON-010"].status == "FAIL"
+
+
+def test_program_qa_requires_board02_crosswalk_deviations(canonical_layout, profile):
+    deviations = [
+        item
+        for item in canonical_layout.parameters["canonical_deviations"]
+        if not str(item.get("id", "")).startswith("BOARD02-")
+    ]
+    incomplete = replace(
+        canonical_layout,
+        parameters={**canonical_layout.parameters, "canonical_deviations": deviations},
+    )
+
+    assert _checks_by_id(incomplete, profile)["CANON-010"].status == "FAIL"
+
+
+def test_deviation_qa_requires_spec_fields_and_current_output_hash(
+    canonical_layout, profile
+):
+    deviations = [
+        {
+            **item,
+            "impact": "",
+        }
+        if item["id"] == "BOARD02-SEC05-SUPPORT-PLACEMENT"
+        else item
+        for item in canonical_layout.parameters["canonical_deviations"]
+    ]
+    malformed = replace(
+        canonical_layout,
+        parameters={**canonical_layout.parameters, "canonical_deviations": deviations},
+    )
+
+    assert _checks_by_id(malformed, profile)["CANON-010"].status == "FAIL"
+
+
+def test_deviation_qa_rejects_an_output_hash_that_does_not_bind_the_layout(
+    canonical_layout, profile
+):
+    deviations = [
+        {**item, "output_hash": "0" * 64}
+        if item["id"] == "BOARD02-SEC05-SUPPORT-PLACEMENT"
+        else item
+        for item in canonical_layout.parameters["canonical_deviations"]
+    ]
+    mismatched = replace(
+        canonical_layout,
+        parameters={**canonical_layout.parameters, "canonical_deviations": deviations},
+    )
+
+    assert _checks_by_id(mismatched, profile)["CANON-010"].status == "FAIL"
+
+
+def test_service_qa_rejects_collapsed_campus_and_cargo_accesses(
+    canonical_layout, profile
+):
+    collapsed = replace(
+        canonical_layout,
+        service_public_access_point=canonical_layout.service_access_point,
+    )
+
+    assert _checks_by_id(collapsed, profile)["CANON-017"].status == "FAIL"

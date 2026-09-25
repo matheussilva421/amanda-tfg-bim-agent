@@ -111,11 +111,14 @@ def test_live_revit_preflight_requires_single_idle_writer_target():
             )
 
 
-def test_execute_routes_unaccepted_selection_to_r04_preacceptance(
+def test_execute_stops_before_writer_lock_for_unaccepted_selection(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ):
-    hashes = ("a" * 64, "b" * 64, "c" * 64)
-    profile = SimpleNamespace(canonical_images=("a.png", "b.png", "c.png"), source_hashes=hashes)
+    hashes = ("a" * 64, "b" * 64, "c" * 64, "d" * 64)
+    profile = SimpleNamespace(
+        canonical_images=("a.png", "b.png", "c.png", "d.png"),
+        source_hashes=hashes,
+    )
     solution = SimpleNamespace(
         solution_id="AMANDA-RUN-002-PAVILION-S02",
         approval_hash="f" * 64,
@@ -125,7 +128,6 @@ def test_execute_routes_unaccepted_selection_to_r04_preacceptance(
     registry = SimpleNamespace(
         entries=[SimpleNamespace(revit_build="27.2.0.39", tool_schema_hash="d" * 64)]
     )
-    captured = {}
 
     monkeypatch.setattr(production_runner, "_validate_canonical_target", lambda *_: None)
     monkeypatch.setattr(production_runner.CanonicalReferenceProfile, "load", lambda _root: profile)
@@ -133,27 +135,24 @@ def test_execute_routes_unaccepted_selection_to_r04_preacceptance(
     monkeypatch.setattr(production_runner, "build_selection", lambda *args, **kwargs: selection)
     monkeypatch.setattr(production_runner.CapabilityRegistry, "load_for_production", lambda *_: (registry, []))
 
-    def capture_plans(**kwargs):
-        captured.update(kwargs)
-        return []
-
-    monkeypatch.setattr(production_runner, "build_layout_stage_plans", capture_plans)
+    monkeypatch.setattr(
+        production_runner,
+        "build_layout_stage_plans",
+        lambda **_kwargs: pytest.fail("an unaccepted selection must stop before stage planning"),
+    )
     monkeypatch.setattr(production_runner, "find_project_template", lambda *_: None)
 
     class StopAtLock:
         def __init__(self, *_args, **_kwargs):
-            pass
-
-        def acquire(self, **_kwargs):
-            raise RuntimeError("stop before transport")
+            pytest.fail("an unaccepted selection must stop before the writer lock")
 
     monkeypatch.setattr(production_runner, "WriterLock", StopAtLock)
 
-    with pytest.raises(RuntimeError, match="stop before transport"):
-        production_runner.run(tmp_path / "canonical.rvt", execute=True, max_stage="R13")
+    result = production_runner.run(
+        tmp_path / "canonical.rvt", execute=True, max_stage="R13"
+    )
 
-    assert captured["mode"] is ExecutionMode.CANONICAL_PREACCEPTANCE
-    assert captured["max_stage"] is BimStage.R04
+    assert result == 2
 
 
 @pytest.mark.parametrize("target_is_copy", [False, True])
@@ -235,13 +234,14 @@ def test_runner_refuses_archived_r12_when_archive_bytes_do_not_match_manifest(
         _validate_canonical_target(tmp_path / "new-canonical-target.rvt", repository_root=tmp_path)
 
 
-def test_runner_reports_all_three_canonical_source_hashes(capsys):
-    hashes = ("a" * 64, "b" * 64, "c" * 64)
+def test_runner_reports_all_four_canonical_source_hashes(capsys):
+    hashes = ("a" * 64, "b" * 64, "c" * 64, "d" * 64)
     profile = SimpleNamespace(
         canonical_images=(
             "canonical/site.png",
             "canonical/residential.png",
             "canonical/admin.png",
+            "canonical/services.png",
         ),
         source_hashes=hashes,
     )
@@ -256,12 +256,13 @@ def test_runner_reports_all_three_canonical_source_hashes(capsys):
 def test_dry_run_compiles_pending_candidate_without_provider_or_writer_lock(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys
 ):
-    hashes = ("a" * 64, "b" * 64, "c" * 64)
+    hashes = ("a" * 64, "b" * 64, "c" * 64, "d" * 64)
     profile = SimpleNamespace(
         canonical_images=(
             "canonical/site.png",
             "canonical/residential.png",
             "canonical/admin.png",
+            "canonical/services.png",
         ),
         source_hashes=hashes,
     )

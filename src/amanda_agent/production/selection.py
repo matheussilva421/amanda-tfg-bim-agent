@@ -54,11 +54,14 @@ LEGACY_SELECTION_ARCHETYPE = "COURTYARD_DOUBLE_LOADED_BAR"
 LEGACY_ENGINE_VERSION = "design-engine-v1"
 LEGACY_REQUIREMENTS_VERSION = "requirements-v1"
 LEGACY_SITE_VERSION = "site-v1"
-PARTI_DECISION_ID = "DEC-CANONICAL-PARTI-001"
-PREVIOUS_CANONICAL_DETAIL_DECISION_ID = "DEC-CANONICAL-DETAIL-001"
-SELECTION_DECISION_ID = "DEC-CANONICAL-DETAIL-002"
+PREVIOUS_CANONICAL_PARTI_DECISION_ID = "DEC-CANONICAL-PARTI-001"
+PARTI_DECISION_ID = "DEC-CANONICAL-PARTI-002"
+PREVIOUS_CANONICAL_DETAIL_DECISION_ID = "DEC-CANONICAL-DETAIL-002"
+SELECTION_DECISION_ID = "DEC-CANONICAL-DETAIL-003"
 SELECTION_TOPIC = "CANONICAL_PARTI_IMPLEMENTATION"
-SELECTION_SOLUTION_ID = "AMANDA-RUN-002-PAVILION-S02"
+STALE_SELECTION_SOLUTION_ID = "AMANDA-RUN-002-PAVILION-S02"
+# P1-T01 leaves identity assignment to the next task.
+SELECTION_SOLUTION_ID: str | None = None
 SELECTION_ARCHETYPE = "CANONICAL_PAVILION_CLUSTER"
 SELECTED_OPTION = (
     "PROVISIONAL_ASSUMPTION: board-aligned pavilion layout implementing the "
@@ -301,7 +304,7 @@ def legacy_selection_history() -> dict[str, Any]:
         "solution_status": "SUPERSEDED",
         "selection_authority": SelectionAuthority.AGENT_DELEGATED.value,
         "parti_selection_authority": SelectionAuthority.USER_DIRECTED.value,
-        "superseded_by": SELECTION_SOLUTION_ID,
+        "superseded_by": STALE_SELECTION_SOLUTION_ID,
         "historical_rvt": "revit/production/archive/linear-r12-superseded.rvt",
         "historical_rvt_sha256": "ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29",
         "geometry_reuse_allowed": False,
@@ -327,6 +330,9 @@ def _canonical_source_refs(
     if not _is_sha256(program_hash):
         raise SelectionError("the official programme source hash is missing or invalid")
     refs.append(
+        f"docs/source/programa_necessidades.pdf#sha256={program_hash}"
+    )
+    refs.append(
         f"project/requirements/program.json#baseline.source_sha256={program_hash}"
     )
     return refs
@@ -343,14 +349,25 @@ def _build_canonical_selection(
         raise SelectionError("canonical layout needs rooms and a content hash")
     if profile.status != "CANONICAL_DESIGN_REFERENCE":
         raise SelectionError("selection requires the user-directed canonical profile")
-    if len(profile.source_hashes) != 3 or len(profile.canonical_images) != 3:
-        raise SelectionError("all three canonical boards must be bound")
+    if len(profile.source_hashes) != 4 or len(profile.canonical_images) != 4:
+        raise SelectionError("all four canonical boards must be bound")
     if any(not _is_sha256(value) for value in profile.source_hashes):
         raise SelectionError("invalid canonical board hash")
     if tuple(layout.parameters.get("canonical_source_hashes", ())) != tuple(
         profile.source_hashes
     ):
         raise SelectionError("layout and selection canonical board hashes differ")
+    active_solution_id = SELECTION_SOLUTION_ID
+    if active_solution_id is None or active_solution_id == STALE_SELECTION_SOLUTION_ID:
+        raise SelectionError(
+            "AMANDA-RUN-002-PAVILION-S02 is STALE_BY_CANONICAL_REFERENCE_EXPANSION; "
+            "P2 must assign a new solution identity before selection"
+        )
+    if active_solution_id == LEGACY_SELECTION_SOLUTION_ID:
+        raise SelectionError(
+            "AMANDA-RUN-001-S01 is a superseded linear solution identity and cannot "
+            "authorize the four-board canonical selection"
+        )
 
     checks = run_canonical_checks(layout, profile)
     structural_failures = [
@@ -378,16 +395,17 @@ def _build_canonical_selection(
         "CANONICAL-COVERED-EXTERNAL-CIRCULATION",
     ]
     parti_option = (
-        "USER_DIRECTED: three canonical design boards govern implantation, four "
+        "USER_DIRECTED: exactly four canonical boards govern implantation, four "
         "residential pavilions around the protected garden, the public two-level "
         "administrative block, child-green interface, separate services and covered links."
     )
     parti_rationale = (
-        "The user explicitly designated the three hashed boards as the canonical "
-        "design reference and superseded the linear R12 solution. This decision "
-        "fixes the architectural parti only. It does not claim verified parcel fit, "
-        "topography, regulatory approval, geometric acceptance, or visual regression. "
-        "The official baseline remains 20 people, 626 m2 internal and 260 m2 external."
+        "The current user direction explicitly names all four canonical board images "
+        "as authority for geometry, organization, parti and spatial relationships. "
+        "The official program PDF remains authoritative for capacity, quantities and "
+        "areas. This decision fixes the architectural parti only; it does not claim "
+        "verified parcel fit, topography, regulatory approval, geometric acceptance "
+        "or visual regression."
     )
     parti_decision = DecisionRecord(
         decision_id=PARTI_DECISION_ID,
@@ -403,7 +421,7 @@ def _build_canonical_selection(
         affected_requirements=affected,
         selection_authority=SelectionAuthority.USER_DIRECTED,
         timestamp=timestamp,
-        supersedes=LEGACY_SELECTION_DECISION_ID,
+        supersedes=PREVIOUS_CANONICAL_PARTI_DECISION_ID,
         approval_hash=compute_approval_hash(
             selected_option=parti_option,
             rationale=parti_rationale,
@@ -412,12 +430,12 @@ def _build_canonical_selection(
         ),
         validation_status=ValidationStatus.VERIFIED,
         revision_procedure=(
-            "The canonical parti can change only by a new explicit user direction; "
-            "append a new decision with the hashes of every referenced board."
+            "A further parti change requires explicit new user direction and a new "
+            "decision bound to all four current board hashes and the official program PDF hash."
         ),
         review_status=ReviewStatus.AMANDA_REVIEW_PENDING,
         selection_kind=SelectionKind.EVIDENCE_BACKED,
-        adoption_status="USER_DIRECTED_CANONICAL_DESIGN_REFERENCE",
+        adoption_status="USER_DIRECTED_FOUR_BOARD_CANONICAL_REFERENCE",
         rejected_options=["AMANDA-RUN-001-S01 linear bar"],
     )
 
@@ -558,7 +576,7 @@ def _build_canonical_selection(
         ],
     }
     solution = DesignSolution(
-        solution_id=SELECTION_SOLUTION_ID,
+        solution_id=active_solution_id,
         run_id=generation_run,
         seed=0,
         requirements_version=REQUIREMENTS_VERSION,
@@ -644,11 +662,13 @@ __all__ = [
     "LEGACY_SELECTION_SOLUTION_ID",
     "PARTI_DECISION_ID",
     "PREVIOUS_CANONICAL_DETAIL_DECISION_ID",
+    "PREVIOUS_CANONICAL_PARTI_DECISION_ID",
     "SCHEMA_VERSION",
     "SELECTED_OPTION",
     "SELECTION_ARCHETYPE",
     "SELECTION_DECISION_ID",
     "SELECTION_SOLUTION_ID",
+    "STALE_SELECTION_SOLUTION_ID",
     "Selection",
     "SelectionError",
     "build_canonical_selection",

@@ -191,8 +191,8 @@ def _validate_canonical_target(
 def _report_canonical_sources(profile: CanonicalReferenceProfile) -> None:
     """Print path-bound SHA-256 identities before the production plan starts."""
 
-    if len(profile.canonical_images) != 3 or len(profile.source_hashes) != 3:
-        raise ValueError("production planning requires exactly three canonical board hashes")
+    if len(profile.canonical_images) != 4 or len(profile.source_hashes) != 4:
+        raise ValueError("production planning requires exactly four canonical board hashes")
     print("canonical source hashes:")
     for image, digest in zip(
         profile.canonical_images, profile.source_hashes, strict=True

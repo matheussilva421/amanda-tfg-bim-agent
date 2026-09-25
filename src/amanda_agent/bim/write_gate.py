@@ -56,7 +56,7 @@ class Bim00Evidence(BaseModel):
     solution_id: str = Field(min_length=1)
     approval_hash: str = Field(pattern=_SHA256_PATTERN)
     layout_hash: str = Field(pattern=_SHA256_PATTERN)
-    canonical_source_hashes: tuple[str, str, str]
+    canonical_source_hashes: tuple[str, str, str, str]
     historical_r12_sha256: str = Field(pattern=_SHA256_PATTERN)
     capability_registry_sha256: str = Field(pattern=_SHA256_PATTERN)
     revit_build: str = Field(min_length=1)
@@ -70,13 +70,13 @@ class Bim00Evidence(BaseModel):
     @field_validator("canonical_source_hashes")
     @classmethod
     def _validate_source_hashes(
-        cls, values: tuple[str, str, str]
-    ) -> tuple[str, str, str]:
-        if len(values) != 3 or any(
+        cls, values: tuple[str, str, str, str]
+    ) -> tuple[str, str, str, str]:
+        if len(values) != 4 or any(
             re.fullmatch(_SHA256_PATTERN, value) is None for value in values
         ):
             raise ValueError(
-                "canonical_source_hashes must contain exactly three SHA-256 values"
+                "canonical_source_hashes must contain exactly four SHA-256 values"
             )
         return values
 
@@ -105,7 +105,7 @@ def _verify_binding(
     solution_id: str,
     approval_hash: str,
     layout_hash: str,
-    canonical_source_hashes: tuple[str, str, str],
+    canonical_source_hashes: tuple[str, str, str, str],
 ) -> None:
     _required_checks_passed(evidence)
     if evidence.status is not CheckStatus.PASS:
@@ -160,7 +160,7 @@ def authorize_preacceptance_stage(
     solution_id: str,
     approval_hash: str,
     layout_hash: str,
-    canonical_source_hashes: tuple[str, str, str],
+    canonical_source_hashes: tuple[str, str, str, str],
 ) -> Any:
     """Remove only BIM-00 from R03/R04 after every binding is checked."""
 

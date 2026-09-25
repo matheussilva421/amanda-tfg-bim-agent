@@ -116,7 +116,7 @@ def main() -> int:
     manifest_source = json.loads(qa_path.read_text(encoding="utf-8"))
     if (
         manifest_source.get("stage") != "CANONICAL_PRE_MODEL"
-        or len(manifest_source.get("canonical_source_hashes", [])) != 3
+        or len(manifest_source.get("canonical_source_hashes", [])) != 4
     ):
         print(
             "refusing: QA report is stale or not bound to canonical references",

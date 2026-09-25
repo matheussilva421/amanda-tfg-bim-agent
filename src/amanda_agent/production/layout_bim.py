@@ -762,7 +762,7 @@ def _plan_r04(request, layout):
                 ],
                 "notes": [
                     *plan.preflight.notes,
-                    "block heights are non-probative visual hypotheses; compare R04 massing to all three canonical boards after BIM-00",
+                    "block heights are non-probative visual hypotheses; compare R04 massing to all four canonical boards after BIM-00",
                 ],
             }
         )
@@ -908,7 +908,7 @@ def plan_canonical_shell_stage(request, layout: CanonicalPavilionLayout):
         status=CheckStatus.BLOCKED,
         detail=(
             "R05 detailing is blocked until CANONICAL_GEOMETRIC_ACCEPTANCE binds "
-            "accepted geometry to the three canonical board hashes"
+            "accepted geometry to all four canonical board hashes"
         ),
     )
     preflight = first_plan.preflight.model_copy(

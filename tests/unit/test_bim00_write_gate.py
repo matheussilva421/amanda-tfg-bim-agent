@@ -4,6 +4,7 @@ from copy import copy
 from pathlib import Path
 
 import pytest
+from pydantic import ValidationError
 
 from amanda_agent.bim.models import BimStage
 from amanda_agent.bim.stages import (
@@ -26,7 +27,7 @@ ANCHOR = Path.home() / ".horizun" / "anchor" / "HZ_ANCHOR_2027.rvt"
 SOLUTION = "AMANDA-RUN-002-PAVILION-S02"
 APPROVAL = "a" * 64
 LAYOUT = "b" * 64
-BOARD_HASHES = ("c" * 64, "d" * 64, "e" * 64)
+BOARD_HASHES = ("c" * 64, "d" * 64, "e" * 64, "f" * 64)
 
 
 class _Plan:
@@ -86,6 +87,11 @@ def _plan(stage: BimStage) -> _Plan:
         preferred_provider="horizun-revit-mcp",
     )
     return _Plan(stage, [operation])
+
+
+def test_bim00_evidence_requires_exactly_four_canonical_board_hashes():
+    with pytest.raises(ValidationError):
+        _evidence(canonical_source_hashes=BOARD_HASHES[:3])
 
 
 def test_valid_bim00_releases_only_the_r03_r04_bim00_blocker():

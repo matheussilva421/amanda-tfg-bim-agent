@@ -16,11 +16,12 @@ ROOT = Path(__file__).resolve().parents[2]
 PROGRAM = json.loads(
     (ROOT / "project/requirements/program.json").read_text(encoding="utf-8")
 )
-SOURCE_HASHES = ("a" * 64, "b" * 64, "c" * 64)
+SOURCE_HASHES = ("a" * 64, "b" * 64, "c" * 64, "d" * 64)
 SOURCE_PATHS = (
-    "canonical/01_implantacao_geral_canonica.png",
-    "canonical/02_bloco_residencial_canonico.png",
-    "canonical/03_bloco_administrativo_canonico.png",
+    "canonical/01_implantacao.png",
+    "canonical/02_administrativo.png",
+    "canonical/03_residencial.png",
+    "canonical/04_servicos.png",
 )
 
 
@@ -89,47 +90,17 @@ def test_script_cli_loads_project_sources_without_external_pythonpath():
     assert "--output-dir" in completed.stdout
 
 
-def test_builds_deterministic_offline_run_bound_to_canonical_sources(tmp_path: Path):
+def test_current_four_board_sources_cannot_create_stale_s02_run(tmp_path: Path):
     profile = _profile()
-    first = run_builder.build_canonical_pavilion_run(
-        PROGRAM, profile, tmp_path / "first"
-    )
-    second = run_builder.build_canonical_pavilion_run(
-        PROGRAM, profile, tmp_path / "second"
-    )
+    output = tmp_path / "must-not-create"
 
-    solution_path = (
-        first
-        / "finalists"
-        / "AMANDA-RUN-002-PAVILION-S02"
-        / "solution.json"
-    )
-    geometry_path = (
-        first
-        / "finalists"
-        / "AMANDA-RUN-002-PAVILION-S02"
-        / "geometry.json"
-    )
-    qa_path = first / "canonical-qa.json"
-    solution = json.loads(solution_path.read_text(encoding="utf-8"))
-    geometry = json.loads(geometry_path.read_text(encoding="utf-8"))
-    qa = json.loads(qa_path.read_text(encoding="utf-8"))
-    run = json.loads((first / "run.json").read_text(encoding="utf-8"))
-    manifest = json.loads((first / "artifact-manifest.json").read_text(encoding="utf-8"))
+    with pytest.raises(
+        run_builder.CanonicalRunError,
+        match="STALE_BY_CANONICAL_REFERENCE_EXPANSION",
+    ):
+        run_builder.build_canonical_pavilion_run(PROGRAM, profile, output)
 
-    assert solution["solution_id"] == "AMANDA-RUN-002-PAVILION-S02"
-    assert solution["program_person_capacity"] == 20
-    assert solution["approval_hash"] == run["approval_hash"]
-    assert geometry == solution["geometry"]
-    assert geometry["canonical_source_hashes"] == list(SOURCE_HASHES)
-    assert [item["sha256"] for item in geometry["canonical_reference"]["images"]] == list(SOURCE_HASHES)
-    assert run["bim_eligible"] is False
-    assert run["revit_calls"] == 0
-    assert qa["summary"]["critical_failures"] == 0
-    assert any(item["status"] == "BLOCKED" for item in qa["checks"])
-    assert "NOT A SURVEY" in (first / "layout-preview.svg").read_text(encoding="utf-8")
-    assert manifest["approval_hash"] == solution["approval_hash"]
-    assert _files(first) == _files(second)
+    assert not output.exists()
 
 
 def test_critical_canonical_failure_returns_nonzero_without_partial_run(

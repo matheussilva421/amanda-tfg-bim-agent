@@ -3108,6 +3108,20 @@ tasks:
     plan_path: docs/plan/CURRENT.md
     title: Reconcile the four canonical boards against the official program
     depends_on: []
+    status: PASS
+    evidence:
+    - docs/reports/P1-T01-four-board-reconciliation.md records all four source hashes, official floor/room mappings, the Board-02/Board-04 crosswalk, and unresolved unpriced functions and graphic deltas.
+    - 'Canonical QA has 18 checks: 17 structural relations PASS; CANON-011 stays BLOCKED pending later Revit visual evidence.'
+    - 'Focused implementation/state/repository/plan suite: 99 passed; changed-file Ruff check passes. Eight existing layout_bim.py lint findings also reproduce unchanged at main.'
+    - S02 remains stale and the current identity is unset; no BIM artifact, R04/R05 stage, or Revit write was created.
+    - Independent review closeout evidence is recorded in state/HANDOFF.md.
+  P2-T01:
+    id: P2-T01
+    phase: P2
+    plan_path: docs/plan/CURRENT.md
+    title: Assign a new canonical solution identity and bind the four source hashes
+    depends_on:
+    - P1-T01
     status: PENDING
     evidence:
-    - 'Ready after RECOVERY-VALIDATE; no design solution or Revit work is authorized by this task record.'
+    - 'Pending: P1-T01 completed; assign a new identity before emitting any solution artifact. This task does not authorize Revit writes or R04/R05.'

@@ -59,10 +59,12 @@ class CanonicalPavilionLayout:
     external_spaces: tuple[ExternalSpace, ...]
     covered_connectors: tuple[CoveredConnector, ...]
     central_garden: ExternalSpace
+    service_courtyard: BaseGeometry
     content_hash: str
     accounting: dict[str, float]
     parameters: dict[str, Any]
     public_access_point: Point
+    service_public_access_point: Point
     service_access_point: Point
     coordinate_basis: str = "NORMALIZED_METRIC_REFERENCE_NOT_SURVEY"
     site_fit_status: str = "UNVERIFIED"
@@ -90,15 +92,15 @@ for _room_id, _component in {
     "REQ-02-01#1": "RES_PAV_A",
     "REQ-02-01#2": "RES_PAV_A",
     "REQ-02-02#1": "RES_PAV_A",
+    "REQ-02-02#2": "RES_PAV_A",
     "REQ-02-06#1": "RES_PAV_A",
     "REQ-02-06#2": "RES_PAV_A",
-    "REQ-02-02#2": "RES_PAV_B",
-    "REQ-02-02#3": "RES_PAV_B",
     "REQ-02-03#1": "RES_PAV_B",
+    "REQ-02-03#2": "RES_PAV_B",
+    "REQ-02-04": "RES_PAV_B",
     "REQ-02-06#3": "RES_PAV_B",
     "REQ-02-06#4": "RES_PAV_B",
-    "REQ-02-03#2": "RES_PAV_C",
-    "REQ-02-04": "RES_PAV_C",
+    "REQ-02-02#3": "RES_PAV_C",
     "REQ-02-05": "RES_PAV_C",
     "REQ-02-06#5": "RES_PAV_C",
     "REQ-02-07": "RES_PAV_C",
@@ -114,23 +116,25 @@ for _room_id in (
     "REQ-01-03",
     "REQ-01-04",
     "REQ-01-05",
-    "REQ-06-04",
-    "REQ-06-05",
-):
-    _ROOM_COMPONENTS[_room_id] = ("ADMIN_ACOLHIMENTO", 1)
-for _room_id in (
     "REQ-04-01",
     "REQ-04-02",
     "REQ-04-03",
     "REQ-04-04",
-    "REQ-04-05",
     "REQ-04-06",
+    "REQ-05-03",
+    "REQ-05-04",
+):
+    _ROOM_COMPONENTS[_room_id] = ("ADMIN_ACOLHIMENTO", 1)
+for _room_id in (
+    "REQ-04-05",
     "REQ-06-01",
     "REQ-06-02",
     "REQ-06-03",
+    "REQ-06-04",
+    "REQ-06-05",
 ):
     _ROOM_COMPONENTS[_room_id] = ("ADMIN_ACOLHIMENTO", 2)
-for _num in range(1, 5):
+for _num in range(1, 3):
     _ROOM_COMPONENTS[f"REQ-05-{_num:02d}"] = ("SERVICE_CAPACITATION", 1)
 for _num in range(6, 16):
     _ROOM_COMPONENTS[f"REQ-06-{_num:02d}"] = ("SERVICE_CAPACITATION", 1)
@@ -139,13 +143,13 @@ for _num in range(1, 5):
 
 
 _BLOCK_CENTERS = {
-    "ADMIN_ACOLHIMENTO": (0.0, -36.0),
-    "RES_PAV_A": (-15.0, 15.0),
-    "RES_PAV_B": (-15.0, -15.0),
-    "RES_PAV_C": (15.0, -15.0),
-    "RES_PAV_D_COMMUNAL": (15.0, 15.0),
-    "SERVICE_CAPACITATION": (30.0, -10.0),
-    "CHILD_SECTOR": (-30.0, 16.0),
+    "ADMIN_ACOLHIMENTO": (0.0, -44.0),
+    "RES_PAV_A": (-13.0, 37.0),
+    "RES_PAV_B": (-13.0, 7.0),
+    "RES_PAV_C": (13.0, 7.0),
+    "RES_PAV_D_COMMUNAL": (13.0, 37.0),
+    "SERVICE_CAPACITATION": (32.0, -22.0),
+    "CHILD_SECTOR": (-33.0, -10.0),
 }
 
 
@@ -196,6 +200,32 @@ def _pack_rooms(
     )
 
 
+def _pack_rooms_centered(
+    items: list[dict[str, Any]], max_width: float, center: tuple[float, float]
+) -> list[tuple[dict[str, Any], BaseGeometry]]:
+    placements, _ = _pack_rooms(items, max_width=max_width)
+    bounds = unary_union([polygon for _, polygon in placements]).bounds
+    offset_x = center[0] - (bounds[0] + bounds[2]) / 2.0
+    offset_y = center[1] - (bounds[1] + bounds[3]) / 2.0
+    return [
+        (item, translate(polygon, xoff=offset_x, yoff=offset_y))
+        for item, polygon in placements
+    ]
+
+
+def _curved_service_spine(center: tuple[float, float]) -> BaseGeometry:
+    cx, cy = center
+    local_points = (
+        (-12.5, -7.0), (-15.0, -7.0), (-16.0, -4.0), (-16.0, 4.0),
+        (-14.5, 8.0), (-11.0, 12.0), (-7.0, 16.0), (-3.5, 18.0),
+        (0.0, 18.5), (3.5, 18.0), (7.0, 16.0), (11.0, 12.0),
+        (14.5, 8.0), (16.0, 4.0), (16.0, -4.0), (15.0, -7.0),
+        (12.5, -7.0),
+    )
+    points = [(cx + x, cy + y) for x, y in local_points]
+    return LineString(points).buffer(1.5, cap_style="round", join_style="round")
+
+
 def _external(
     logical_id: str,
     component_id: str,
@@ -214,6 +244,51 @@ def _external(
     )
 
 
+def _deviation_record(
+    profile: CanonicalReferenceProfile,
+    program_sha256: str,
+    *,
+    deviation_id: str,
+    affected_element: str,
+    board_indices: tuple[int, ...],
+    reason: str,
+    alternatives_considered: tuple[str, ...],
+    impact: str,
+    extra: dict[str, int] | None = None,
+) -> dict[str, Any]:
+    board_references = [
+        "docs/source/canonical/"
+        + image.rsplit("/", maxsplit=1)[-1]
+        + f"#sha256={profile.source_hashes[index]}"
+        for index, image in enumerate(profile.canonical_images)
+        if index in board_indices
+    ]
+    program_reference = (
+        "docs/source/programa_necessidades.pdf#sha256=" + program_sha256
+    )
+    input_hashes = [
+        *(profile.source_hashes[index] for index in board_indices),
+        program_sha256,
+    ]
+    record: dict[str, Any] = {
+        "id": deviation_id,
+        "description": reason,
+        "basis": "PROGRAM",
+        "evidence": "; ".join([*board_references, program_reference]),
+        "affected_element": affected_element,
+        "board_reference": board_references,
+        "program_reference": program_reference,
+        "reason": reason,
+        "alternatives_considered": list(alternatives_considered),
+        "impact": impact,
+        "decision_status": "RECONCILED_P1_T01; AMANDA_REVIEW_PENDING",
+        "input_hashes": input_hashes,
+    }
+    if extra:
+        record.update(extra)
+    return record
+
+
 def build_canonical_pavilion_layout(
     program: dict[str, Any], profile: CanonicalReferenceProfile
 ) -> CanonicalPavilionLayout:
@@ -227,8 +302,8 @@ def build_canonical_pavilion_layout(
     parti = profile.data.get("required_parti", {})
     if parti.get("single_linear_bar_allowed") is not False:
         raise ValueError("the canonical parti must reject a single linear bar")
-    if len(profile.source_hashes) != 3:
-        raise ValueError("all three canonical board hashes must be bound")
+    if len(profile.source_hashes) != 4:
+        raise ValueError("all four canonical board hashes must be bound")
 
     internal = [
         item for item in _expand_program(program) if item["area_kind"] == "INTERNAL"
@@ -274,19 +349,50 @@ def build_canonical_pavilion_layout(
                 for item in rooms_by_component[component_id]
                 if item["level"] == level
             ]
-            placements, _ = _pack_rooms(
-                level_items,
-                max_width=13.0
-                if component_id in {"ADMIN_ACOLHIMENTO", "SERVICE_CAPACITATION"}
-                else 10.0,
-            )
+            if component_id == "SERVICE_CAPACITATION":
+                service_items = {
+                    item["logical_id"]: item for item in level_items
+                }
+                community = [
+                    item for item in level_items if item["sector_id"] == "SEC-05"
+                ]
+                kitchen_and_laundry = [
+                    service_items[f"REQ-06-{number:02}"]
+                    for number in range(6, 10)
+                ]
+                cargo_and_storage = [
+                    service_items[logical_id]
+                    for logical_id in (
+                        "REQ-06-14",
+                        "REQ-06-10",
+                        "REQ-06-11",
+                        "REQ-06-12",
+                        "REQ-06-13",
+                        "REQ-06-15",
+                    )
+                ]
+                placements = [
+                    *_pack_rooms_centered(community, 14.0, (0.0, 11.0)),
+                    *_pack_rooms_centered(kitchen_and_laundry, 8.0, (-12.5, 0.0)),
+                    *_pack_rooms_centered(cargo_and_storage, 8.0, (12.5, 0.0)),
+                ]
+            else:
+                placements, _ = _pack_rooms(
+                    level_items,
+                    max_width=13.0
+                    if component_id == "ADMIN_ACOLHIMENTO"
+                    else 10.0,
+                )
             floor_placements[level] = placements
             floor_shapes[level] = unary_union([polygon for _, polygon in placements])
 
         projected = unary_union(list(floor_shapes.values()))
         minx, miny, maxx, maxy = projected.bounds
-        offset_x = center[0] - (minx + maxx) / 2
-        offset_y = center[1] - (miny + maxy) / 2
+        if component_id == "SERVICE_CAPACITATION":
+            offset_x, offset_y = center
+        else:
+            offset_x = center[0] - (minx + maxx) / 2
+            offset_y = center[1] - (miny + maxy) / 2
         translated_floors: dict[int, BaseGeometry] = {}
         for level, placements in floor_placements.items():
             for item, polygon in placements:
@@ -312,25 +418,32 @@ def build_canonical_pavilion_layout(
                 translated_floors[level] = translated_floor.buffer(
                     0.8, quad_segs=8, join_style="round"
                 )
+            elif component_id == "SERVICE_CAPACITATION":
+                translated_floors[level] = translated_floor.buffer(
+                    0.65, quad_segs=8, join_style="round"
+                )
             else:
                 translated_floors[level] = translated_floor.buffer(
                     0.25, join_style="mitre"
                 )
         all_floor_shells = unary_union(list(translated_floors.values()))
         bounds = all_floor_shells.bounds
-        footprint = (
-            all_floor_shells
-            if component_id.startswith("RES_PAV_")
-            else box(*bounds)
-        )
+        if component_id.startswith("RES_PAV_"):
+            footprint = all_floor_shells
+        elif component_id == "SERVICE_CAPACITATION":
+            footprint = unary_union(
+                [all_floor_shells, _curved_service_spine(center)]
+            )
+            translated_floors[1] = footprint
+        else:
+            footprint = box(*bounds)
         minx, miny, maxx, maxy = footprint.bounds
-        if component_id == "RES_PAV_A" or component_id == "RES_PAV_B" or component_id == "RES_PAV_C" or component_id == "RES_PAV_D_COMMUNAL":
+        if component_id.startswith("RES_PAV_"):
             access = nearest_points(footprint, Point(0.0, 0.0))[0]
-        elif (
-            component_id == "SERVICE_CAPACITATION"
-            or component_id == "ADMIN_ACOLHIMENTO"
-        ):
+        elif component_id == "ADMIN_ACOLHIMENTO":
             access = Point(center[0], miny)
+        elif component_id == "SERVICE_CAPACITATION":
+            access = Point(center[0] - 18.0, center[1] - 7.0)
         else:
             access = Point(center)
         role = {
@@ -356,13 +469,20 @@ def build_canonical_pavilion_layout(
 
     block_map = {item.component_id: item for item in blocks}
     footprint_union = unary_union([item.footprint for item in blocks])
+    service_center = _BLOCK_CENTERS["SERVICE_CAPACITATION"]
+    service_courtyard = box(
+        service_center[0] - 7.0,
+        service_center[1] - 6.0,
+        service_center[0] + 7.0,
+        service_center[1] + 4.0,
+    )
     external_by_id = {item["logical_id"]: item for item in external_rows}
     external_specs = (
-        ("REQ-07-01", "PROTECTED_PATIO", (0.0, 0.0), 8.0),
-        ("REQ-07-02", "THERAPEUTIC_GARDEN", (-24.0, 25.0), 10.0),
-        ("REQ-07-03", "HORTA", (30.0, -35.0), 6.0),
-        ("REQ-07-04", "EXERCISE", (28.0, 18.0), 6.0),
-        ("REQ-07-05", "PLAYGROUND", (-32.0, 0.0), 8.0),
+        ("REQ-07-01", "PROTECTED_PATIO", (0.0, 22.0), 8.0),
+        ("REQ-07-02", "THERAPEUTIC_GARDEN", (0.0, -10.0), 10.0),
+        ("REQ-07-03", "HORTA", (58.0, 0.0), 6.0),
+        ("REQ-07-04", "EXERCISE", (0.0, -24.0), 6.0),
+        ("REQ-07-05", "PLAYGROUND", (-33.0, -20.0), 8.0),
     )
     external_spaces = tuple(
         _external(
@@ -428,16 +548,131 @@ def build_canonical_pavilion_layout(
             )
         )
 
-    public_access = Point(0.0, -47.0)
+    public_access = Point(0.0, -62.0)
+    service_public_access = block_map["SERVICE_CAPACITATION"].access_point
+    loading_room = next(
+        room
+        for room in block_map["SERVICE_CAPACITATION"].rooms
+        if room.logical_id == "REQ-06-14"
+    )
+    service_cargo_access = nearest_points(
+        loading_room.polygon,
+        block_map["SERVICE_CAPACITATION"].footprint.boundary,
+    )[1]
+    program_sha256 = str(program["baseline"]["source_sha256"])
+    canonical_deviations = [
+        _deviation_record(
+            profile,
+            program_sha256,
+            deviation_id="BOARD02-SEC05-SUPPORT-PLACEMENT",
+            affected_element="SEC-05 REQ-05-03/04 locations and Board-04 repeated labels",
+            board_indices=(1, 3),
+            reason="Board 02 shows the official 8 m² community copa and 5 m² accessible toilet in the administrative ground floor. Their SEC-05 IDs/areas stay unchanged there; Board 04's larger/multiple depictions do not create duplicates.",
+            alternatives_considered=(
+                "Keep both official rooms in the southeast services block, contrary to Board 02 placement.",
+                "Duplicate the Board-04 labels as extra rooms, exceeding official quantities.",
+                "Use the exact Board-02 ground-floor locations once at official areas.",
+            ),
+            impact="No change to official room count or area; 13 m² of official SEC-05 support remains in the administrative footprint.",
+        ),
+        _deviation_record(
+            profile,
+            program_sha256,
+            deviation_id="BOARD02-ARCHIVE-DUPLICATE-LABEL",
+            affected_element="SEC-04 REQ-04-06 archive/support repeated on Board 02",
+            board_indices=(1,),
+            reason="Board 02 labels a 5 m² archive on the ground floor and a 5 m² support/archive upstairs, while the program has one 5 m² REQ-04-06.",
+            alternatives_considered=(
+                "Model both board labels as rooms, doubling the official archive area.",
+                "Keep the single official room on the ground floor beside public intake; treat the upper label as repeated graphic notation.",
+            ),
+            impact="One official 5 m² room remains on the ground floor; no second archive area is added upstairs.",
+        ),
+        _deviation_record(
+            profile,
+            program_sha256,
+            deviation_id="BOARD03-SCHEMATIC-BATHROOM-COUNT",
+            affected_element="Common bathroom cells in the three sleeping pavilions",
+            board_indices=(2,),
+            reason="Board 03 depicts six common bathroom cells; the official program requires five common bathrooms and one accessible bathroom.",
+            alternatives_considered=(
+                "Model all six common cells, exceeding the official quantity by one.",
+                "Keep the five official rooms distributed 2/2/1 across the sleeping pavilions; leave the extra board symbol non-additive.",
+            ),
+            impact="Exactly five 3.5 m² common bathrooms and one 4.5 m² accessible bathroom are modeled; the sixth common cell is not an additional programmed room.",
+            extra={
+                "board_common_cell_count": 6,
+                "official_common_room_count": 5,
+                "modeled_common_room_count": 5,
+            },
+        ),
+        _deviation_record(
+            profile,
+            program_sha256,
+            deviation_id="BOARD04-UNPRICED-FUNCTIONS",
+            affected_element="Board-04 training and reception functions without official room rows",
+            board_indices=(3,),
+            reason="Informatics, sewing/handicraft, practical entrepreneurship, and orientation appear on Board 04 without matching official room rows or individual official areas.",
+            alternatives_considered=(
+                "Create four extra official rooms/areas from the board labels.",
+                "Retain them as unpriced operational uses pending later assignment within approved rooms.",
+            ),
+            impact="No new room or area enters the official 626 m² internal program; exact functional attribution remains open.",
+        ),
+        _deviation_record(
+            profile,
+            program_sha256,
+            deviation_id="BOARD04-AREA-AND-QUANTITY-MISMATCHES",
+            affected_element="Board-04 printed area and quantity labels",
+            board_indices=(3,),
+            reason="Board 04 areas differ from the PDF for multiuse (50/60 m²), reception (25/10 m²), accessible toilets (2x18/1x5 m²), support/deposit (12 m² versus official 8 or 6 m² candidates), DML (6/3 m²), combined linen/store (15/6+8 m²), laundry (20/12 m²), and support copa (15/8 m²).",
+            alternatives_considered=(
+                "Use the printed Board-04 areas/quantities as official, changing the accepted program.",
+                "Keep every PDF area/quantity and report Board-04 figures as unresolved graphic deltas.",
+            ),
+            impact="All modeled room counts and areas remain those of the official PDF; printed Board-04 deltas do not change 626 m² internal or 260 m² external totals.",
+        ),
+        _deviation_record(
+            profile,
+            program_sha256,
+            deviation_id="BOARD04-OFFICIAL-SUPPORT-ROOMS",
+            affected_element="Official SEC-05/SEC-06 support rooms without a unique Board-04 label",
+            board_indices=(3,),
+            reason="The PDF requires chair/material storage 8 m², production kitchen 25 m², dry pantry 6 m², freezer/refrigerated storage 4 m², waste 4 m², and loading/unloading 15 m²; Board 04 does not give each a unique room label and area.",
+            alternatives_considered=(
+                "Infer official areas from the service-access or generic support labels.",
+                "Keep the PDF-defined rooms and areas distinct; treat the service access as circulation, not as the 15 m² loading room.",
+            ),
+            impact="Official support-room counts/areas stay intact; the loading access point does not substitute for the loading room.",
+        ),
+        _deviation_record(
+            profile,
+            program_sha256,
+            deviation_id="BOARD04-GARDEN-LABEL-IS-UNMETERED",
+            affected_element="Board-04 Pátio de Convivência/Jardim Central label",
+            board_indices=(3,),
+            reason="The Board-04 garden label has no area, while the PDF lists separate 80 m² protected patio and 80 m² therapeutic garden.",
+            alternatives_considered=(
+                "Merge the two official 80 m² spaces into one garden.",
+                "Represent the protected patio and therapeutic garden separately at their official areas.",
+            ),
+            impact="Both official 80 m² external spaces remain distinct and included once in the 260 m² external total.",
+        ),
+    ]
     source_payload = {
         "program": program,
         "canonical_source_hashes": sorted(profile.source_hashes),
+        "canonical_deviations": canonical_deviations,
         "components": list(_BLOCK_CENTERS.items()),
         "geometry": {
             "blocks": [(item.component_id, item.footprint.wkt) for item in blocks],
             "external_spaces": [
                 (item.component_id, item.polygon.wkt) for item in external_spaces
             ],
+            "service_courtyard": service_courtyard.wkt,
+            "public_access": public_access.wkt,
+            "service_public_access": service_public_access.wkt,
+            "service_cargo_access": service_cargo_access.wkt,
             "covered_connectors": [
                 (item.connector_id, item.footprint.wkt, item.centerline)
                 for item in covered_connectors
@@ -460,6 +695,7 @@ def build_canonical_pavilion_layout(
         external_spaces=external_spaces,
         covered_connectors=tuple(covered_connectors),
         central_garden=patio,
+        service_courtyard=service_courtyard,
         content_hash=content_hash,
         accounting={
             "net_internal_m2": net_area,
@@ -479,7 +715,10 @@ def build_canonical_pavilion_layout(
         },
         parameters={
             "selection_authority": "USER_DIRECTED",
-            "canonical_deviations": [],
+            "canonical_deviations": [
+                {**item, "output_hash": content_hash}
+                for item in canonical_deviations
+            ],
             "geometry_origin": "CANONICAL_PAVILION_RECONSTRUCTION",
             "superseded_source_reused": False,
             "superseded_solution_id": "AMANDA-RUN-001-S01",
@@ -491,5 +730,6 @@ def build_canonical_pavilion_layout(
             "external_links_are_covered": True,
         },
         public_access_point=public_access,
-        service_access_point=block_map["SERVICE_CAPACITATION"].access_point,
+        service_public_access_point=service_public_access,
+        service_access_point=service_cargo_access,
     )

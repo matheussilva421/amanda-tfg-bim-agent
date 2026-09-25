@@ -49,11 +49,12 @@ def _profile() -> CanonicalReferenceProfile:
         status="CANONICAL_DESIGN_REFERENCE",
         supersedes=("AMANDA-RUN-001-S01", "COURTYARD_DOUBLE_LOADED_BAR"),
         canonical_images=(
-            "canonical/01_implantacao_geral_canonica.png",
-            "canonical/02_bloco_residencial_canonico.png",
-            "canonical/03_bloco_administrativo_canonico.png",
+            "canonical/01_implantacao.png",
+            "canonical/02_administrativo.png",
+            "canonical/03_residencial.png",
+            "canonical/04_servicos.png",
         ),
-        source_hashes=("a" * 64, "b" * 64, "c" * 64),
+        source_hashes=("a" * 64, "b" * 64, "c" * 64, "d" * 64),
         data=data,
     )
 
@@ -140,7 +141,8 @@ def test_administration_has_two_levels_and_services_are_a_separate_block(layout)
     assert levels == {1, 2}
     assert admin.footprint.disjoint(service.footprint)
     assert service.access_point.distance(layout.public_access_point) > 20.0
-    assert layout.service_access_point == service.access_point
+    assert layout.service_access_point.distance(service.access_point) > 12.0
+    assert layout.service_access_point.distance(service.footprint) < 1e-6
 
 
 def test_buildings_remain_separate_volumes_in_normalized_reference_coordinates(layout):
@@ -245,3 +247,135 @@ def test_programmed_landscape_areas_are_separate_from_building_footprints(layout
     for index, first in enumerate(layout.external_spaces):
         for second in layout.external_spaces[index + 1 :]:
             assert first.polygon.disjoint(second.polygon)
+
+
+def test_layout_binds_exactly_the_four_verified_canonical_boards(program):
+    profile = CanonicalReferenceProfile.load(ROOT)
+
+    layout = build_canonical_pavilion_layout(program, profile)
+
+    assert layout.parameters["canonical_source_hashes"] == list(
+        profile.source_hashes
+    )
+    assert len(layout.parameters["canonical_source_hashes"]) == 4
+
+
+def test_board_one_zones_follow_the_public_to_protected_site_gradient(layout):
+    therapeutic_garden = next(
+        item for item in layout.external_spaces if item.component_id == "THERAPEUTIC_GARDEN"
+    )
+    horta = next(item for item in layout.external_spaces if item.component_id == "HORTA")
+    residential_center_y = sum(
+        block.footprint.centroid.y for block in layout.residential_pavilions
+    ) / len(layout.residential_pavilions)
+
+    assert layout.block("ADMIN_ACOLHIMENTO").footprint.centroid.y < therapeutic_garden.polygon.centroid.y
+    assert residential_center_y > therapeutic_garden.polygon.centroid.y
+    assert layout.block("SERVICE_CAPACITATION").footprint.centroid.x > therapeutic_garden.polygon.centroid.x
+    assert layout.block("SERVICE_CAPACITATION").footprint.centroid.y < therapeutic_garden.polygon.centroid.y
+    assert layout.block("CHILD_SECTOR").footprint.centroid.x < therapeutic_garden.polygon.centroid.x
+    assert horta.polygon.centroid.x > layout.block("SERVICE_CAPACITATION").footprint.centroid.x
+    assert layout.public_access_point.y < layout.block("ADMIN_ACOLHIMENTO").footprint.centroid.y
+
+
+def test_administrative_rooms_are_reconciled_to_official_floors(layout):
+    admin_rooms = {
+        room.logical_id: room.level
+        for room in layout.rooms
+        if room.component_id == "ADMIN_ACOLHIMENTO"
+    }
+    ground = {
+        "REQ-01-01", "REQ-01-02", "REQ-01-03", "REQ-01-04", "REQ-01-05",
+        "REQ-04-01", "REQ-04-02", "REQ-04-03", "REQ-04-04", "REQ-04-06",
+        "REQ-05-03", "REQ-05-04",
+    }
+    upper = {
+        "REQ-04-05", "REQ-06-01", "REQ-06-02", "REQ-06-03", "REQ-06-04", "REQ-06-05",
+    }
+
+    assert {room_id for room_id, level in admin_rooms.items() if level == 1} == ground
+    assert {room_id for room_id, level in admin_rooms.items() if level == 2} == upper
+
+
+def test_residential_rooms_keep_the_four_pavilion_program_and_exact_bathroom_counts(layout):
+    by_component: dict[str, set[str]] = defaultdict(set)
+    for room in layout.rooms:
+        if room.component_id.startswith("RES_PAV_"):
+            by_component[room.component_id].add(room.logical_id)
+
+    assert by_component["RES_PAV_A"] == {
+        "REQ-02-01#1", "REQ-02-01#2", "REQ-02-02#1", "REQ-02-02#2",
+        "REQ-02-06#1", "REQ-02-06#2",
+    }
+    assert by_component["RES_PAV_B"] == {
+        "REQ-02-03#1", "REQ-02-03#2", "REQ-02-04", "REQ-02-06#3", "REQ-02-06#4",
+    }
+    assert by_component["RES_PAV_C"] == {
+        "REQ-02-02#3", "REQ-02-05", "REQ-02-06#5", "REQ-02-07",
+    }
+    assert by_component["RES_PAV_D_COMMUNAL"] == {
+        "REQ-02-08", "REQ-02-09", "REQ-02-10",
+    }
+
+
+def test_board03_common_wc_deviation_preserves_pdf_quantity(layout):
+    deviation = next(
+        item
+        for item in layout.parameters["canonical_deviations"]
+        if item["id"] == "BOARD03-SCHEMATIC-BATHROOM-COUNT"
+    )
+    modeled_common = [
+        room
+        for room in layout.rooms
+        if room.logical_id.startswith("REQ-02-06#")
+    ]
+
+    assert deviation["board_common_cell_count"] == 6
+    assert deviation["official_common_room_count"] == 5
+    assert deviation["modeled_common_room_count"] == len(modeled_common) == 5
+    assert deviation["alternatives_considered"]
+
+
+def test_service_sector_curves_around_unprogrammed_courtyard_with_separate_entries(layout):
+    service = layout.block("SERVICE_CAPACITATION")
+    service_ids = {room.logical_id for room in service.rooms}
+    official_service_ids = {
+        "REQ-05-01", "REQ-05-02",
+        *(f"REQ-06-{number:02}" for number in range(6, 16)),
+    }
+    loading_room = next(room for room in service.rooms if room.logical_id == "REQ-06-14")
+
+    assert service_ids == official_service_ids
+    assert service.footprint.geom_type == "Polygon"
+    assert len(service.footprint.exterior.coords) > 20
+    assert layout.service_courtyard.area > 0
+    assert layout.service_courtyard.disjoint(service.footprint)
+    assert layout.service_courtyard.distance(service.footprint) < 2.0
+    assert layout.service_public_access_point.distance(service.footprint) < 5.0
+    assert layout.service_access_point.distance(service.footprint) < 1e-6
+    assert layout.service_access_point.distance(layout.service_public_access_point) > 12.0
+    assert layout.service_access_point.distance(loading_room.polygon) < 8.0
+    assert sum(space.area_m2 for space in layout.external_spaces) == pytest.approx(260.0)
+
+
+def test_board02_support_crosswalk_does_not_duplicate_official_spaces(layout):
+    admin = layout.block("ADMIN_ACOLHIMENTO")
+    service = layout.block("SERVICE_CAPACITATION")
+    admin_ids = {room.logical_id for room in admin.rooms}
+    service_ids = {room.logical_id for room in service.rooms}
+    deviations = {
+        item["id"] for item in layout.parameters["canonical_deviations"]
+    }
+
+    assert {"REQ-05-03", "REQ-05-04"} <= admin_ids
+    assert not {"REQ-05-03", "REQ-05-04"} & service_ids
+    assert {"BOARD02-SEC05-SUPPORT-PLACEMENT", "BOARD02-ARCHIVE-DUPLICATE-LABEL"} <= deviations
+
+
+def test_child_sector_contains_all_official_rooms_and_remains_by_playground(layout):
+    child = layout.block("CHILD_SECTOR")
+    assert {room.logical_id for room in child.rooms} == {
+        "REQ-03-01", "REQ-03-02", "REQ-03-03", "REQ-03-04",
+    }
+    playground = next(item for item in layout.external_spaces if item.component_id == "PLAYGROUND")
+    assert child.footprint.distance(playground.polygon) < 5.0

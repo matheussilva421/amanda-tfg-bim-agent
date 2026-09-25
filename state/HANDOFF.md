@@ -2,9 +2,9 @@
 
 ## Formal state and safety
 
-Repository recovery (P0) is complete. `PROJECT_STATE.yaml` now points to
-`P1-T01` with phase `P1` READY; the last completed task is
-`RECOVERY-VALIDATE`. The recovery anchor is
+Repository recovery (P0) and four-board reconciliation (P1-T01) are complete.
+`PROJECT_STATE.yaml` points to pending `P2-T01`; the last completed task is
+`P1-T01`. The recovery anchor is
 `pre-repository-recovery-2026-09-24`; the superseded P08 offline candidate is
 preserved under `superseded-p08-t08-concept-offline-2026-09-24`.
 
@@ -12,8 +12,9 @@ P0 completed without Revit/model activity. All recovery evidence is transferred
 to `docs/reports/repository-recovery.md`; `.recovery/` was removed after the
 RVT and evidence checks. Preserve the private program and TFG PDFs locally;
 they are intentionally ignored by Git. Five site conditions (three BLOCKING,
-two DEGRADING) remain, and the held writer lease is unchanged; P1-T01 is the
-non-Revit four-board reconciliation.
+two DEGRADING) remain, and the held writer lease is unchanged. P1-T01 completed
+without Revit/model activity; the solution identity remains unset and S02 remains
+stale.
 
 ## Current documentation flow
 
@@ -23,6 +24,38 @@ and this handoff. The four active canonical images are normalized under
 `docs/source/canonical/`; prior board images remain byte-identical under the
 historical source path. Source and evidence inventories are covered by the
 immutable manifest plus `SOURCE_MANIFEST.json`.
+
+## P1-T01 closeout — four canonical boards
+
+P1-T01 is implemented from `main`; the implementation binds the exact four
+canonical image hashes and the official PDF hash. The crosswalk, geometry,
+capacity/area authority, and remaining board/program discrepancies are in
+`docs/reports/P1-T01-four-board-reconciliation.md`. The official 20-person,
+626 m² internal, and 260 m² external program was not changed. The active
+decision register now supersedes the three-source and S02 decisions while
+preserving their signed history; the new solution identity remains unset and
+`AMANDA-RUN-002-PAVILION-S02` remains stale.
+
+Verification: the focused 11-module suite passed 99/99; changed-file Ruff
+passed; `git diff --check` passed when scoped to P1-T01 files. A repository-wide
+diff check also encountered pre-existing deleted GOLDEN/RC01 paths that deny
+read access; those unrelated deletions remain unstaged and untouched. Independent
+review found no technical reconciliation blocker and requested the historical
+decision-register note below be clarified; that note is now explicitly marked
+as a P0 checkpoint and superseded. Final review/commit/push evidence will be
+recorded here before closeout.
+
+Open discrepancies are documented in the report: Board 03 draws six common
+bathroom cells while the official PDF specifies five; the exact extra graphic
+cell is not identifiable. Board 02/04 repeat or relabel archive, copa, and
+sanitary functions with inconsistent areas/counts. Board 04 labels computer
+and workshop uses without official room/area equivalents, and several support
+labels do not map one-to-one. The PDF quantities/areas remain authoritative.
+Canonical visual check CANON-011 remains blocked pending later Revit evidence;
+P1-T01 made no Revit writes or BIM artifact. Next task: P2-T01 only; no R04/R05
+or Revit work is authorized by this handoff.
+
+## Historical P0 recovery log — reference only; superseded by current state above
 
 ## Completed work
 
@@ -111,7 +144,7 @@ and closeout commit `1290ba3e83ed44fee4a447a7b6e6d6aad92604d1` were pushed,
 and remote main matched after the closeout push. `PROJECT_STATE.yaml` remains
 at `RECOVERY-VALIDATE`.
 
-## Task 10 complete; independent review approved
+## Task 10 complete; independent review approved (historical P0 checkpoint)
 
 The 43-path design-engine baseline is fully classified in
 `.recovery/design-engine-classification.json`: 4 active generator configs,
@@ -121,11 +154,15 @@ Only the two invalid predecessor logs were removed from the active tree; their
 SHA-256 values and exact tag recovery are in
 `docs/reports/repository-recovery.md`. `design-engine/current/` remains absent.
 
-The signed decision register remains unchanged. Its root-level S02 source_ref
-target, `design-engine/runs/AMANDA-RUN-002-PAVILION/solution.json`, is absent
-from the worktree, baseline, and recovery tag. Record it as a pre-existing
-dangling reference; do not rehash the register or fabricate the target. The
-nested S02 finalist artifacts remain stale evidence.
+At the Task 10/P0 recovery checkpoint, the signed decision register had not
+changed. Its root-level S02 source_ref target,
+`design-engine/runs/AMANDA-RUN-002-PAVILION/solution.json`, was absent from the
+worktree, baseline, and recovery tag; the nested S02 finalist artifacts were
+stale evidence. This is historical recovery context only. P1-T01 subsequently
+updated the active register: the previous three-source and S02 detail records
+are formally superseded with their signed history preserved, and
+`DEC-CANONICAL-PARTI-002` binds the four current boards plus the official PDF.
+See `project/requirements/decision-register.yaml` and the P1-T01 report.
 
 Task 10 focused tests: 72 passed, 0 failed across `test_design_refine.py`,
 `test_p08_t07_environmental_pass.py`, `test_bim_solution_compiler.py`,

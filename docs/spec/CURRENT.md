@@ -79,9 +79,9 @@ The ground floor is the public intake and care sequence. The upper floor contain
 | Serviço Social | 10 m² | Ground; direct match |
 | Atendimento Jurídico | 10 m² | Ground; direct match |
 | Sala de Reunião | 15 m² | Ground; direct match |
-| Arquivo | 5 m² | Ground; direct/technical support |
-| Copa | 8 m² | Ground; functional support, reconcile quantity |
-| Sanitário Acessível | 5 m² | Ground; accessibility/support |
+| Arquivo | 5 m² | Ground; official SEC-04 REQ-04-06, represented once despite a repeated upper-floor label |
+| Copa | 8 m² | Ground; official SEC-05 REQ-05-03 stays at its exact Board-02 location |
+| Sanitário Acessível | 5 m² | Ground; official SEC-05 REQ-05-04 stays at its exact Board-02 location |
 
 | Upper-floor board space | Board area | Functional placement / PDF relation |
 |---|---:|---|
@@ -90,7 +90,7 @@ The ground floor is the public intake and care sequence. The upper floor contain
 | Sala de Equipe | 15 m² | Upper; direct match |
 | Refeitório/Copa Funcionários | 15 m² | Upper; direct match |
 | Sala Multiuso/Grupos | 30 m² | Upper; direct match |
-| Apoio/Arquivo | 5 m² | Upper; support |
+| Apoio/Arquivo | 5 m² | Repeated board label; do not add a second official room beyond ground-floor REQ-04-06 |
 | Sanitário/Vestiário Funcionários | 10 m² | Upper; direct match |
 | Varanda protegida | Not specified | Upper; semi-open element |
 
@@ -105,6 +105,8 @@ Fail the layout if psychology, social work, legal service, or meeting is placed 
 | C — lower-right accessible/mixed pavilion | 1 accessible room at 16 m²; 1 double room at 12 m²; common WCs; 1 accessible WC at 4.5 m² | Independent accessible/mixed pavilion |
 | D — upper-right communal pavilion | Living room 30 m²; support pantry 12 m²; residential dining 25 m² | Communal use, not sleeping rooms |
 
+Board 03 shows six common bathroom cells, while the official PDF requires five. Keep exactly five official rooms (2/2/1 across A/B/C) and one accessible bathroom. The extra graphic cell is not a sixth programmed room; the board does not identify it unambiguously, so retain that representation as non-additive.
+
 Keep four independent volumes legible. Preserve the unbuilt central garden/patio. Covered and landscape connections remain external or semi-open, not a closed double-loaded corridor. Reconcile room types and quantities exactly with the official PDF before generating a new solution.
 
 ### Board 04 — Services and capacitation
@@ -118,18 +120,18 @@ The final organization is a curved/patio-centered composition, not a rectangular
 | Sala Multiuso | 50 m² | PDF has a multiuse/community room at a different area; PDF controls official area |
 | Costura/Artesanato | 40 m² | Not explicit in the PDF; derived capacitation use |
 | Prática/Empreendedorismo | 40 m² | Not explicit in the PDF; derived capacitation use |
-| Sanitários | 18 + 18 m² | Reconcile to official sanitary quantities and areas |
+| Sanitários | 18 + 18 m² | Board-04 depiction conflicts with the single 5 m² SEC-05 REQ-05-04, already located on Board-02 ground floor; do not duplicate it |
 | Apoio/Depósito | 12 m² | Partial match; reconcile support allocation |
 | DML | 6 m² | PDF DML is smaller; official area wins unless baseline changes |
 | Rouparia/Almox | 15 m² | Reconcile to combined official support areas |
 | Lavanderia | 20 m² | PDF laundry is smaller; official area wins unless baseline changes |
-| Copa | 15 m² | PDF support pantry is smaller; official area wins unless baseline changes |
+| Copa | 15 m² | Board-04 depiction conflicts with the 8 m² SEC-05 REQ-05-03, already located on Board-02 ground floor; do not duplicate it |
 
 Hard rules: no final rectangular `box(*bounds)` footprint; retain a real central patio and curved/formal organization; separate service access; represent board functional identities as modes/subzones when needed while the PDF controls official quantities and areas.
 
 ### Child-sector reconciliation
 
-The west/green board zone must remain the child sector and playground/green zone. The official PDF also requires brinquedoteca 24 m², apoio pedagógico 18 m², banheiro 6 m², and depósito 4 m². P1 must select and record one content-bound implementation: (1) a small child pavilion integrated into the west/green sector, or (2) indoor rooms in an adjacent canonical block while preserving the external child sector. Do not add an arbitrary seventh generic box without architectural rationale.
+The west/green board zone remains the child sector and playground/green zone. P1-T01 records the implementation as a child pavilion integrated into that zone, with official PDF rooms brinquedoteca 24 m², apoio pedagógico 18 m², banheiro 6 m², and depósito 4 m². Do not add an arbitrary seventh generic box without architectural rationale.
 
 ## Conflict rule
 
@@ -159,7 +161,7 @@ institutional submission retain their own owners and evidence. Do not claim
 
 ## Current stale state
 
-`AMANDA-RUN-002-PAVILION-S02` is `STALE_BY_CANONICAL_REFERENCE_EXPANSION`. It was bound to three canonical source hashes; the current architecture is four-board. S02 is not authorized to advance to R05. The historical linear R12 is superseded and cannot be reused as the final solution. No new solution identity is selected during repository recovery.
+`AMANDA-RUN-002-PAVILION-S02` is `STALE_BY_CANONICAL_REFERENCE_EXPANSION`. It is bound to an obsolete subset of the canonical references; the current architecture requires all four boards. S02 is not authorized to advance to R05. The historical linear R12 is superseded and cannot be reused as the final solution. P1-T01 does not assign a new identity; that is the next planned task after reconciliation.
 
 ## Site limitations
 

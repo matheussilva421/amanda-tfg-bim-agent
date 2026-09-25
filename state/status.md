@@ -4,12 +4,13 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Phase and task progress
 
-- Phase: `P1` — four-board-reconciliation
-- Phase status: `READY`
-- Next task: `P1-T01`
-- Last PASS task: `RECOVERY-VALIDATE`
-- Tasks: 179 total; READY: P1-T01
-- `P1`: 0/1 PASS
+- Phase: `P2` — new-canonical-solution
+- Phase status: `PENDING`
+- Next task: `P2-T01`
+- Last PASS task: `P1-T01`
+- Tasks: 180 total; READY: P2-T01
+- `P1`: 1/1 PASS
+- `P2`: 0/1 PASS
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS

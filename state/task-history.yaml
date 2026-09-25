@@ -2133,3 +2133,12 @@ entries:
   - Live typed dry-run for kind=mass returned unsupported kind, 0 valid, transaction not started, and no write; the tool advertised Python fallback, which was not executed.
   recorded_utc: '2026-09-23T16:12:33Z'
   note: Do not bypass via direct executor or indirect route. Resume with a bounded typed Horizun capability or policy-approved access.
+- task_id: P1-T01
+  status: PASS
+  evidence:
+  - 'docs/reports/P1-T01-four-board-reconciliation.md: four exact canonical source hashes and official program SHA-256; implantation, administration, residential, service/capacitation, child-sector and board-to-program crosswalks documented.'
+  - 'Focused canonical implementation/state/repository gates: 99 passed, covering four-source binding, geometry/function assignment, selection refusal, write-gate hash checks, runner guards, study package provenance, state routing, repository hygiene and plan order.'
+  - 'Canonical QA: 17 structural checks PASS; CANON-011 remains BLOCKED pending later Revit visual evidence. No BIM output, R04/R05, or Revit write.'
+  - 'AMANDA-RUN-002-PAVILION-S02 remains stale; current solution identity is unset and generator fails closed.'
+  recorded_utc: '2026-09-25T01:14:00Z'
+  note: P1-T01 completed from main; P2-T01 is pending new-identity assignment.

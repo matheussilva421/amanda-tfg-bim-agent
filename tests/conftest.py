@@ -44,11 +44,12 @@ def canonical_profile() -> CanonicalReferenceProfile:
         status="CANONICAL_DESIGN_REFERENCE",
         supersedes=("AMANDA-RUN-001-S01", "COURTYARD_DOUBLE_LOADED_BAR"),
         canonical_images=(
-            "canonical/01_implantacao_geral_canonica.png",
-            "canonical/02_bloco_residencial_canonico.png",
-            "canonical/03_bloco_administrativo_canonico.png",
+            "canonical/01_implantacao.png",
+            "canonical/02_administrativo.png",
+            "canonical/03_residencial.png",
+            "canonical/04_servicos.png",
         ),
-        source_hashes=("a" * 64, "b" * 64, "c" * 64),
+        source_hashes=("a" * 64, "b" * 64, "c" * 64, "d" * 64),
         data={
             "program": {
                 "people": 20,

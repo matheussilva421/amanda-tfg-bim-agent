@@ -2,10 +2,8 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import replace
 from pathlib import Path
 
-import pytest
 import yaml
 
 from amanda_agent.design.canonical_pavilion_layout import (
@@ -13,7 +11,7 @@ from amanda_agent.design.canonical_pavilion_layout import (
 )
 from amanda_agent.design.canonical_reference import CanonicalReferenceProfile
 from amanda_agent.models.state import TaskStatus
-from amanda_agent.production.selection import build_canonical_selection
+from amanda_agent.production.selection import PARTI_DECISION_ID, SELECTION_DECISION_ID
 from amanda_agent.requirements.decisions import DecisionRegister
 from amanda_agent.state.tasks import TaskRegistry
 
@@ -29,28 +27,15 @@ def _yaml(path: str) -> dict:
     return yaml.safe_load((ROOT / path).read_text(encoding="utf-8"))
 
 
-def _expected_selection(profile: CanonicalReferenceProfile):
-    program = json.loads(
-        (ROOT / "project/requirements/program.json").read_text(encoding="utf-8")
-    )
-    layout = build_canonical_pavilion_layout(program, profile)
-    return build_canonical_selection(
-        layout,
-        profile,
-        generation_run="AMANDA-RUN-002-PAVILION",
-        timestamp="2026-09-23T00:00:00Z",
-    )
-
-
-def test_project_state_is_repository_recovery_without_architectural_promotion():
+def test_project_state_routes_to_pending_new_identity_without_revit_promotion():
     state = _yaml("PROJECT_STATE.yaml")
-    assert state["phase_id"] == "REPOSITORY_RECOVERY"
-    assert state["phase_name"] == "repository-recovery"
-    assert state["phase_status"] == "RUNNING"
-    assert state["last_completed_task"] is None
-    assert state["next_task"] == "RECOVERY-VALIDATE"
+    assert state["phase_id"] == "P2"
+    assert state["phase_name"] == "new-canonical-solution"
+    assert state["phase_status"] == "PENDING"
+    assert state["last_completed_task"] == "P1-T01"
+    assert state["next_task"] == "P2-T01"
     assert state["schema_version"] == 1
-    assert state["state_revision"] == 173
+    assert state["state_revision"] == 176
     assert state["phase_gate"] == "GO_WITH_LIMITATIONS"
     assert state["selected_design"] is None
     assert state["revit_stage"] == "PRE_R04"
@@ -62,7 +47,7 @@ def test_project_state_is_repository_recovery_without_architectural_promotion():
         "SITE_FRONTAGE_COUNT:DEGRADING",
         "SITE_TRUE_NORTH:DEGRADING",
     ]
-    assert state["last_verified_commit"] is None
+    assert len(state["last_verified_commit"]) == 40
     assert set(state) == {
         "project",
         "phase_id",
@@ -81,12 +66,13 @@ def test_project_state_is_repository_recovery_without_architectural_promotion():
     }
 
 
-def test_s02_decisions_remain_historical_while_four_board_layout_is_unimplemented():
+def test_signed_three_source_decisions_remain_historical_under_four_board_authority():
     register = DecisionRegister.model_validate(
         _yaml("project/requirements/decision-register.yaml")
     )
     supersession = register.get("DEC-CANONICAL-R12-SUPERSESSION-001")
     parti = register.get("DEC-CANONICAL-PARTI-001")
+    current_parti = register.get("DEC-CANONICAL-PARTI-002")
     detail = register.get("DEC-CANONICAL-DETAIL-002")
     profile = CanonicalReferenceProfile.load(ROOT)
     historical_source_refs = tuple(
@@ -128,13 +114,6 @@ def test_s02_decisions_remain_historical_while_four_board_layout_is_unimplemente
         path = ROOT / asset["path"]
         assert path.is_file()
         assert hashlib.sha256(path.read_bytes()).hexdigest() == digest
-    historical_profile = replace(
-        profile,
-        canonical_images=historical_images,
-        source_hashes=historical_hashes,
-    )
-    expected = _expected_selection(historical_profile)
-
     assert supersession.selection_authority.value == "USER_DIRECTED"
     assert supersession.selected_option.startswith(
         "AMANDA-RUN-001-S01 is SUPERSEDED_BY_USER_DIRECTION"
@@ -148,21 +127,45 @@ def test_s02_decisions_remain_historical_while_four_board_layout_is_unimplemente
     assert parti.selection_authority.value == "USER_DIRECTED"
     assert parti.approval_hash == "f8d36c67c37ac7b2a6387d5f186f29756e6e611bf3ffb8590e9b336b4be10542"
     assert "three canonical design boards" in parti.selected_option
-    assert parti.model_dump(mode="json") == expected.parti_decision.model_dump(
-        mode="json"
-    )
+    assert parti.validation_status.value == "SUPERSEDED"
+    assert parti.review_status.value == "SUPERSEDED"
+    assert parti.adoption_status == "SUPERSEDED_BY_FOUR_BOARD_SOURCE_EXPANSION"
+    assert PARTI_DECISION_ID == "DEC-CANONICAL-PARTI-002"
+    assert current_parti.decision_id == PARTI_DECISION_ID
+    assert current_parti.supersedes == "DEC-CANONICAL-PARTI-001"
+    assert current_parti.approval_hash_valid
+    assert current_parti.validation_status.value == "VERIFIED"
+    current_refs = [
+        reference
+        for reference in current_parti.source_refs
+        if reference.startswith("canonical/")
+    ]
+    assert len(current_refs) == 4
+    assert tuple(reference.rsplit("#sha256=", maxsplit=1)[1] for reference in current_refs) == profile.source_hashes
+    assert any("docs/source/programa_necessidades.pdf#sha256=" in ref for ref in current_parti.source_refs)
+    assert len(historical_images) == 3
     assert detail.approval_hash == "89c57532d9bc215969d36ec0e0d26e1966e7e333adc734e216a3e9f01f4d620c"
-    assert detail.approval_hash == expected.decision.approval_hash
-    assert detail.source_refs == expected.decision.source_refs
+    assert all(
+        reference in parti.source_refs
+        for reference in (
+            f"{image}#sha256={digest}"
+            for image, digest in zip(historical_images, historical_hashes, strict=True)
+        )
+    )
     assert detail.selection_authority.value == "AGENT_DELEGATED"
-    assert detail.validation_status.value == "BLOCKED_BY_INPUT"
+    assert detail.validation_status.value == "SUPERSEDED"
+    assert detail.review_status.value == "SUPERSEDED"
     assert profile.source_hashes[3] not in parti.source_refs
+    assert SELECTION_DECISION_ID == "DEC-CANONICAL-DETAIL-003"
 
-    program = yaml.safe_load(
+    program = json.loads(
         (ROOT / "project/requirements/program.json").read_text(encoding="utf-8")
     )
-    with pytest.raises(ValueError, match="all three canonical board hashes must be bound"):
-        build_canonical_pavilion_layout(program, profile)
+    current_layout = build_canonical_pavilion_layout(program, profile)
+    assert current_layout.parameters["canonical_source_hashes"] == list(
+        profile.source_hashes
+    )
+    assert len(current_layout.parameters["canonical_source_hashes"]) == 4
 
 
 def test_task_graph_keeps_completed_s02_history_and_blocks_its_stale_tail():
@@ -190,9 +193,13 @@ def test_task_graph_keeps_completed_s02_history_and_blocks_its_stale_tail():
     assert next_task.depends_on == ["P08-CAN-T06"]
     assert registry.tasks["P08-CAN-T08"].status is TaskStatus.BLOCKED_BY_TOOL
     assert registry.tasks["P08-CAN-T08"].depends_on == ["P08-CAN-T07"]
-    assert registry.tasks["P08-CAN-T09"].status is TaskStatus.PENDING
+    assert registry.tasks["P08-CAN-T09"].status is TaskStatus.SUSPENDED
     assert registry.tasks["P08-CAN-T18"].depends_on == ["P08-CAN-T17"]
     assert registry.tasks["P08-CAN-T19"].depends_on == ["P08-CAN-T18"]
+    assert registry.tasks["P1-T01"].status is TaskStatus.PASS
+    assert registry.tasks["P2-T01"].status is TaskStatus.PENDING
+    assert registry.tasks["P2-T01"].depends_on == ["P1-T01"]
+    assert registry.ready_tasks() == ["P2-T01"]
     registry.validate()
 
 
@@ -218,3 +225,6 @@ def test_migration_history_preserves_existing_entries_and_records_transition():
     for new_task_id in (f"P08-CAN-T{i:02}" for i in range(1, 7)):
         entries = [entry for entry in history if entry["task_id"] == new_task_id]
         assert entries and entries[-1]["status"] in {"PASS", "PASS_WITH_WARNINGS"}
+    reconciliation = [entry for entry in history if entry["task_id"] == "P1-T01"]
+    assert reconciliation and reconciliation[-1]["status"] == "PASS"
+    assert "99 passed" in " ".join(reconciliation[-1]["evidence"])
