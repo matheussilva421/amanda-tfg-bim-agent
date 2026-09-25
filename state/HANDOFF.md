@@ -93,6 +93,11 @@ site using its area/neighborhood/street description because it could identify
 a third-party parcel. No feature was assigned to this project; obtain explicit
 user approval before any site-specific match.
 
+The GeoNatal response metadata correction and approval-review blocker note were
+independently reviewed and committed as
+`3ed955662d8ca340205e266b9175691aeaaf7ec4`; the commit was pushed, and a fresh
+remote read confirmed `origin/main` at the same SHA.
+
 Resume only P4-T01 after the canonical selection is approved/eligible, required
 site inputs are resolved, an exact target and separate checkpoint are
 designated, and the writer lease/provider can produce fresh passing evidence.
