@@ -56,7 +56,11 @@ process or document was opened or written. `P4-T01` remains the retry pointer;
 P5/R04 and R05 remain unauthorized. A fresh `git ls-remote` could not reach
 GitHub in this session; local `HEAD` and `origin/main` both pointed to
 `f367e99bd65268ba4ea665225808f771ac9c11cd` before these documentation updates.
-The pre-existing RC01 deletions were not staged or changed.
+The recheck commit `05684895699053409ccc39ad78045ba45ef73d38` was subsequently
+pushed, and a fresh `git ls-remote --heads origin main` confirmed that commit
+at `refs/heads/main`. This handoff status correction is being committed as a
+fast-forward follow-up. The pre-existing RC01 deletions were not staged or
+changed.
 
 Resume only P4-T01 after the canonical selection is approved/eligible, required
 site inputs are resolved, an exact target and separate checkpoint are
