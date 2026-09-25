@@ -1,5 +1,7 @@
 """Behavioral contract for the cross-phase plan dependency verifier."""
 
+import pytest
+
 from amanda_agent.models.state import TaskStatus
 from amanda_agent.state.plan_order import diagnose_plan_order
 from amanda_agent.state.tasks import TaskRecord, TaskRegistry
@@ -7,6 +9,9 @@ from amanda_agent.state.tasks import TaskRecord, TaskRegistry
 
 def _registry(*, solver_dependency: bool = True, revit_status: TaskStatus | None = None):
     dependencies = {
+        "P2-T01": ["P1-T01"],
+        "P3-T01": ["P2-T01"],
+        "P4-T01": ["P3-T01"],
         "P07-T01": ["P01-T01"],
         "P02-T01": ["P07-T01"],
         "P03-T01": ["P01-T01"],
@@ -17,6 +22,10 @@ def _registry(*, solver_dependency: bool = True, revit_status: TaskStatus | None
         "P08-T01": ["P07-T07"],
     }
     phases = {
+        "P1-T01": "P1",
+        "P2-T01": "P2",
+        "P3-T01": "P3",
+        "P4-T01": "P4",
         "P01-T01": "PHASE_01",
         "P07-T01": "PHASE_07A",
         "P02-T01": "PHASE_02",
@@ -55,6 +64,9 @@ def test_well_formed_phase_contract_passes_without_mutating_registry():
     assert report.passed is True
     assert report.issues == ()
     assert report.phase_edges == (
+        ("P1", "P2"),
+        ("P2", "P3"),
+        ("P3", "P4"),
         ("PHASE_01", "PHASE_03"),
         ("PHASE_01", "PHASE_07A"),
         ("PHASE_02", "PHASE_05"),
@@ -66,6 +78,31 @@ def test_well_formed_phase_contract_passes_without_mutating_registry():
         ("PHASE_07B", "PHASE_08"),
     )
     assert registry.model_dump(mode="json") == before
+
+
+@pytest.mark.parametrize(
+    ("task_id", "predecessor", "successor"),
+    [
+        ("P2-T01", "P1", "P2"),
+        ("P3-T01", "P2", "P3"),
+        ("P4-T01", "P3", "P4"),
+    ],
+)
+def test_missing_current_canonical_phase_dependency_is_reported(
+    task_id: str, predecessor: str, successor: str
+):
+    registry = _registry()
+    registry.tasks[task_id].depends_on = []
+
+    report = diagnose_plan_order(registry)
+
+    assert report.passed is False
+    assert any(
+        issue.code == "MISSING_PHASE_DEPENDENCY"
+        and issue.predecessor_phase == predecessor
+        and issue.successor_phase == successor
+        for issue in report.issues
+    )
 
 
 def test_missing_cross_phase_dependency_is_reported():

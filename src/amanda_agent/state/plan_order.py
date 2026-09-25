@@ -20,6 +20,9 @@ from .tasks import TaskRegistry, load_registry
 # Each tuple is (predecessor phase, successor phase).  The optional rendering
 # phase is checked only when it is present in the task registry.
 REQUIRED_PHASE_DEPENDENCIES: tuple[tuple[str, str], ...] = (
+    ("P1", "P2"),
+    ("P2", "P3"),
+    ("P3", "P4"),
     ("PHASE_01", "PHASE_07A"),
     ("PHASE_07A", "PHASE_02"),
     ("PHASE_01", "PHASE_03"),
