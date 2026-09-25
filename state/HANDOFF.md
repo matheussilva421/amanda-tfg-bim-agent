@@ -52,9 +52,16 @@ both historical linear identities, and this handoff records those findings
 instead of saying evidence is still pending. Implementation commit
 `0d3fc94474f2a0d0944e10db6c602ce223aa7bc7` was pushed and a fresh remote read
 confirmed `origin/main` at that SHA. Herschel's follow-up then caught the second
-linear S01 alias; that fix and its new regression test are in the current
-working changes, and a final independent review remains pending after their
-commit/push.
+linear S01 alias; the fix and its regression test are in commit
+`0d27fef6d068d471ac0bfe8b8634e902e08ed091`, which was pushed. A fresh remote
+read confirmed `origin/main` at that SHA. Final independent review by Laplace
+returned **APPROVE** for P1-T01: both historical S01 identifiers are rejected,
+the task pointers and handoff agree, all four boards and the official program
+are bound, and no BIM/R04/R05/Revit activity occurred. That reviewer ran the
+two-case S01 regression only (2 passed; 6 deselected). The full focused gate
+passed 100/100 and changed-file Ruff passed. `PROJECT_STATE.yaml` records
+`0d27fef6d068d471ac0bfe8b8634e902e08ed091` as the last verified implementation
+commit; the final handoff/state-only closeout commit is separate.
 
 Open discrepancies are documented in the report: Board 03 draws six common
 bathroom cells while the official PDF specifies five; the exact extra graphic

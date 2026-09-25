@@ -35,7 +35,7 @@ def test_project_state_routes_to_pending_new_identity_without_revit_promotion():
     assert state["last_completed_task"] == "P1-T01"
     assert state["next_task"] == "P2-T01"
     assert state["schema_version"] == 1
-    assert state["state_revision"] == 177
+    assert state["state_revision"] == 178
     assert state["phase_gate"] == "GO_WITH_LIMITATIONS"
     assert state["selected_design"] is None
     assert state["revit_stage"] == "PRE_R04"
