@@ -2160,3 +2160,23 @@ entries:
   - 'Exploratory tests/unit/test_production_layout_bim.py: 26 passed, 5 failed at R04 projection_area: MASS-SERVICE_CAPACITATION; recorded for R04 planning and not modified.'
   recorded_utc: '2026-09-25T11:46:53Z'
   note: P3-T01 passed; P4-T01 is next and remains limited to BIM-00.
+- task_id: P4-T01
+  status: BLOCKED_BY_INPUT
+  evidence:
+  - docs/reports/P4-T01-bim00-blocker-report.md records the exact missing selection,
+    target/checkpoint, site, lease, and live-provider evidence; no BIM-00 authorization
+    was emitted.
+  - 'Read-only SHA-256 recheck: four canonical boards, official program PDF, and P1-T01
+    report match the persisted canonical identity.'
+  - RUN-003 remains OFFLINE_CANDIDATE, bim_eligible=false, revit_calls=0; selected_design=null
+    and current_checkpoint=null.
+  - No canonical RVT target is bound; CURRENT.rvt is absent. Revit process is not
+    running. Existing writer lock remains HELD for superseded S02 and was not touched.
+  - 'P4 gate TDD: 38 RED failures / 1 pass; focused gate GREEN 41 passed; gate/status/state
+    tests 57 passed; Ruff passed.'
+  - 'Final focused closeout suite: 103 passed across BIM-00, state, session, repository,
+    status, and plan-order tests; changed-file Ruff and scoped diff check pass.'
+  - No Revit/RVT was opened or written; no R04/R05 work occurred.
+  recorded_utc: '2026-09-25T12:46:12Z'
+  note: P4-T01 preflight closed as BLOCKED_BY_INPUT; retry P4-T01 only after current
+    inputs and live evidence are supplied.

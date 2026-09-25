@@ -31,6 +31,11 @@ units, site-coordinate mode, family strategy, canonical selection, and
 official program source. BIM-00 is an evidence/authorization gate only; it
 does not execute an R04/R05 operation.
 
+**Current status:** `P4-T01` is `BLOCKED_BY_INPUT`. RUN-003 is not selected or
+BIM-eligible; no exact target/checkpoint is bound; site inputs and live
+lease/provider evidence are unresolved. The retry pointer remains P4-T01; P5
+is not ready. See `docs/reports/P4-T01-bim00-blocker-report.md`.
+
 ## P5 — R04 Revit
 
 Create canonical massing, save, close, reopen, and query.
@@ -51,4 +56,7 @@ Run R14, R15 cold reopen, and exports.
 
 Run R16 only after every required gate and documented deviation passes.
 
-P0, P1-T01, P2-T01, and P3-T01 are closed. `PROJECT_STATE.yaml` is the formal task pointer and names pending P4-T01. Historical plans are archive material in Git history, not a second instruction source.
+P0, P1-T01, P2-T01, and P3-T01 are closed. `PROJECT_STATE.yaml` is the
+formal task pointer; P4-T01 is `BLOCKED_BY_INPUT` and remains the retry pointer.
+Historical plans are archive material in Git history, not a second instruction
+source.

@@ -259,7 +259,7 @@ def render_status_markdown(data: Mapping[str, Any]) -> str:
         f"{redact_text(str(state.get('phase_name', 'NOT_RECORDED')))}\n"
         f"- Phase status: `{redact_text(str(state.get('phase_status', 'NOT_RECORDED')))}`\n"
         f"- Next task: `{redact_text(str(state.get('next_task', 'NOT_RECORDED')))}`\n"
-        f"- Last PASS task: `{redact_text(str(state.get('last_completed_task') or 'NOT_RECORDED'))}`\n"
+        f"- Last recorded task: `{redact_text(str(state.get('last_completed_task') or 'NOT_RECORDED'))}`\n"
         + task_line
         + "\n"
         + phase_lines

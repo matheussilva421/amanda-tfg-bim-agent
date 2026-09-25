@@ -4,12 +4,45 @@
 
 Repository recovery (P0), four-board reconciliation (P1-T01), identity
 assignment (P2-T01), and offline canonical QA (P3-T01) are complete.
-`PROJECT_STATE.yaml` points to pending `P4-T01` (BIM-00); the last completed
-task is `P3-T01`. The source-bound identity is recorded at
+P4-T01 was attempted as a read-only BIM-00 preflight and is
+`BLOCKED_BY_INPUT`. `PROJECT_STATE.yaml` remains at P4 with `next_task: P4-T01`;
+P3-T01 is the last PASS task. The source-bound identity is recorded at
 `project/requirements/canonical-solution-identity.yaml`, while
 `selected_design` remains null and the candidate is not BIM-eligible. The recovery anchor is
 `pre-repository-recovery-2026-09-24`; the superseded P08 offline candidate is
 preserved under `superseded-p08-t08-concept-offline-2026-09-24`.
+
+## P4-T01 attempt — BIM-00 blocked
+
+No BIM-00 evidence or authorization was emitted. RUN-003 remains
+`OFFLINE_CANDIDATE`, `bim_eligible=false`, `revit_calls=0`, with
+`selected_design=null`, `current_checkpoint=null`, and a detail decision marked
+`BLOCKED_BY_INPUT` / `AMANDA_REVIEW_PENDING`. The hashes of all four canonical
+boards, the official program PDF, and the P1 report were independently
+recomputed and match the persisted identity. Values are recorded in
+`docs/reports/P4-T01-bim00-blocker-report.md`.
+
+There are preserved RVTs in the production tree, but none is bound as the
+RUN-003 target; `revit/production/working/CURRENT.rvt` is absent. The writer
+lock remains HELD by `amanda-P08-CAN-T09-R03` on superseded S02; it was not
+released or reclaimed. No Revit process was running, so live provider health
+was not established. Site topography, boundary, and occupancy remain blocking;
+frontage count and true north remain unresolved/degrading.
+
+P4 contract hardening added mandatory binding and comparison for the official
+program SHA-256, repository commit, and `PROJECT_STATE.yaml` revision/raw SHA.
+Focused gate tests: 41 passed; combined gate/status/state tests: 57 passed;
+final focused closeout suite: 103 passed; Ruff and scoped diff check passed. The
+tests first produced 38 failures and 1 pass before the fix.
+Independent review found no Critical, Important, or Minor findings. Code and
+plan contract are committed as `bc494683f9d9b154c40bdc8069a3dfa48710c665`;
+`last_verified_commit` points there. State revision is 182.
+
+Resume only P4-T01 after the canonical selection is approved/eligible, required
+site inputs are resolved, an exact target and separate checkpoint are
+designated, and the writer lease/provider can produce fresh passing evidence.
+Do not choose an existing RVT by filename, reclaim the S02 lease, reuse S02 as
+the solution, or run R04/R05. P5 remains unauthorized.
 
 P0 completed without Revit/model activity. All recovery evidence is transferred
 to `docs/reports/repository-recovery.md`; `.recovery/` was removed after the
@@ -63,12 +96,12 @@ cells vs five official rooms, Board 02/04 repeated or relabeled support areas,
 and Board 04 unpriced training functions remain explicitly reconciled in the
 P1 report. CANON-011 visual acceptance and site verification remain pending.
 
-P3 writer/QA correction commit `0957a516c09a97075c820d105ccdebac3c4cacc4` and
-current phase-order correction commit `d85456ea5d0d5c1c6e849f18846be52bf53f95c5`
-are on `main`. The state closeout records P3 PASS, keeps
-`selected_design=null`, and sets P4-T01 as the next pending task. P4-T01 is only
-the current plan's BIM-00 gate; do not run R04/R05 or write Revit from this
-handoff. Do not touch or stage RC01 paths.
+P3 writer/QA correction commit `0957a516c09a97075c820d105ccdebac3c4cacc4`,
+phase-order correction commit `d85456ea5d0d5c1c6e849f18846be52bf53f95c5`,
+and P4 gate contract commit `bc494683f9d9b154c40bdc8069a3dfa48710c665` are
+on `main`. P4-T01 is formally `BLOCKED_BY_INPUT`; it remains the retry pointer.
+Do not run R04/R05 or write Revit from this handoff. Do not touch or stage RC01
+paths.
 
 ## P2-T01 closeout — identity only
 

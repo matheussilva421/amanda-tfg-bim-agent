@@ -5,10 +5,10 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 ## Phase and task progress
 
 - Phase: `P4` — bim-00
-- Phase status: `PENDING`
+- Phase status: `BLOCKED_BY_INPUT`
 - Next task: `P4-T01`
-- Last PASS task: `P3-T01`
-- Tasks: 182 total; READY: P4-T01
+- Last recorded task: `P4-T01`
+- Tasks: 182 total; READY: (none)
 - `P1`: 1/1 PASS
 - `P2`: 1/1 PASS
 - `P3`: 1/1 PASS
@@ -65,5 +65,5 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Git verification
 
-- Last verified commit: `d85456ea5d0d5c1c6e849f18846be52bf53f95c5`
-- Observed HEAD: `d85456ea5d0d5c1c6e849f18846be52bf53f95c5`
+- Last verified commit: `bc494683f9d9b154c40bdc8069a3dfa48710c665`
+- Observed HEAD: `bc494683f9d9b154c40bdc8069a3dfa48710c665`

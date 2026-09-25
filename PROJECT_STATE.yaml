@@ -1,11 +1,11 @@
 project: Amanda TFG BIM Agent
 phase_id: P4
 phase_name: bim-00
-phase_status: PENDING
-last_completed_task: P3-T01
+phase_status: BLOCKED_BY_INPUT
+last_completed_task: P4-T01
 next_task: P4-T01
 schema_version: 1
-state_revision: 180
+state_revision: 182
 phase_gate: GO_WITH_LIMITATIONS
 selected_design: null
 revit_stage: PRE_R04
@@ -16,4 +16,4 @@ blockers:
 - SITE_OCCUPANCY:BLOCKING
 - SITE_FRONTAGE_COUNT:DEGRADING
 - SITE_TRUE_NORTH:DEGRADING
-last_verified_commit: d85456ea5d0d5c1c6e849f18846be52bf53f95c5
+last_verified_commit: bc494683f9d9b154c40bdc8069a3dfa48710c665
