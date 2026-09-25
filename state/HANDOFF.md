@@ -680,13 +680,14 @@ binding, R04 ring/readback, or offline snapshot work.
   showed P4-T01 blocked; `horizun_health` failed before and after startup. No
   test suite was run because no implementation changed. Earlier focused test
   results remain recorded in the P4 blocker report.
-- Repository at entry was `main` / `origin/main` `4322402`; pre-existing
-  ACL-protected RC01 deletions remain untouched and unstaged. Changes in this
-  continuation are documentation/state records only and still need independent
-  review, commit, and push. Changed files: `PROJECT_STATE.yaml`,
+- Repository at entry was `main` / `origin/main` `4322402`; commit `79ba478`
+  containing the provider retry record was pushed to `origin/main` successfully.
+  This final dashboard/handoff closeout is included in the current main update.
+  Pre-existing ACL-protected RC01 deletions remain untouched and unstaged.
+  Changed files: `PROJECT_STATE.yaml`,
   `docs/reports/P4-T01-bim00-blocker-report.md`, `state/task-graph.yaml`,
-  `state/HANDOFF.md`, and the CLI-refreshed `state/status.md` (its observed HEAD
-  changed to `4322402`).
+  `state/HANDOFF.md`, and the CLI-refreshed `state/status.md` (observed HEAD
+  `79ba478`).
 
 **Resume:** obtain an observable interactive Revit 2027 session with Horizun
 loaded (the current PID 31152 is not usable), then run `horizun_health`. Only
