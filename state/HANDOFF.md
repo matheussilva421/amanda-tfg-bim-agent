@@ -54,8 +54,10 @@ recheck then found stale wording from the P1 closeout; the handoff now labels it
 as historical. Final independent read-only review returned **APPROVE**, noting
 the writer/source binding fix, exact source hashes, null selection/approval,
 and P3-T01 as the next pending task. P2 implementation commit on `main`:
-`aa1975a` (`feat: assign canonical solution identity P2-T01`). The state-only
-closeout will set `last_verified_commit` to this tested implementation commit.
+`aa1975a` (`feat: assign canonical solution identity P2-T01`). State-only
+closeout commit `b563953` set `last_verified_commit` to this tested
+implementation commit. Both commits were pushed; a fresh remote read confirmed
+`origin/main` at `b563953` before this handoff/status refresh.
 
 RC01 preflight used read-only inspection. The normal sandbox listed 34 tracked
 paths as deleted because it could not enumerate the protected directory. An
