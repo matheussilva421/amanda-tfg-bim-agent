@@ -66,21 +66,32 @@ changed.
 
 `docs/reports/P4-T01-site-source-research-2026-09-25.md` records a read-only
 search of official municipal and state sources. It found no verifiable
-parcel-specific cadastral polygon/CRS, site survey/topography/datum, physical
+project-specific cadastral polygon, site survey/topography/datum, physical
 occupancy confirmation or transfer/availability decision, frontage count, or
 true-north bearing. The PMRN service charter supports only a published BPChoque
 institutional address; the municipal law and procurement specification are
 routes/specifications, not parcel data, although the municipal specification
-does describe geospatial references/products. GeoNatal map layers were excluded
-as evidence pending layer-specific validation after unrelated content was
-observed on alternate routes; this does not establish that official layers are
-compromised. No site blocker was resolved or reclassified; `P4-T01` stays
+does describe geospatial references/products. GeoNatal serves a public 40,568-
+feature lot GeoJSON collection with CRS84, but no feature was linked to this
+project parcel; the served file alone does not establish currentness or
+site-specific applicability. Unrelated content was also observed on alternate
+routes, which is an anomaly of content and does not prove the official layers
+are compromised. No site blocker was resolved or reclassified; `P4-T01` stays
 `BLOCKED_BY_INPUT`. The task-graph CLI validated
 182 registered tasks, with no ready task. No test suite, Revit, or RVT was run
 or opened. No BIM authorization or R04/R05 work occurred. The research delta
 was committed as `4723b3c9d352289b88e133bae1c67fa405198487` and pushed; a fresh
 `git ls-remote --heads origin main` verified that SHA on the remote. The
 pre-existing RC01 deletions were not staged.
+
+The read-only environment doctor exited 0: Git, Codex, PowerShell and .NET were
+available; Revit 2027 was detected, but no Revit process was running. The venv
+Python is 3.12.14 even though the host-only probe reports `python312 MISSING`;
+live provider health remains unverified. The S02 writer lease was not touched.
+Automatic approval review rejected matching cadastral features to the project
+site using its area/neighborhood/street description because it could identify
+a third-party parcel. No feature was assigned to this project; obtain explicit
+user approval before any site-specific match.
 
 Resume only P4-T01 after the canonical selection is approved/eligible, required
 site inputs are resolved, an exact target and separate checkpoint are
