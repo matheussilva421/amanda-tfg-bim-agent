@@ -76,8 +76,16 @@ def _execute_generated_mass_script(code: str, monkeypatch: pytest.MonkeyPatch):
             self.curves.append(curve)
 
     class FakeLine:
+        short_curve_tolerance_ft = 0.0025602645572916664
+
         @staticmethod
         def CreateBound(start, end):
+            length_ft = sum(
+                (first - second) ** 2
+                for first, second in zip(start.coordinates, end.coordinates, strict=True)
+            ) ** 0.5
+            if length_ft < FakeLine.short_curve_tolerance_ft:
+                raise ValueError("Curve length is too small for Revit's tolerance")
             return start, end
 
     class FakeGeometryCreationUtilities:
@@ -198,10 +206,14 @@ def _execute_generated_mass_script(code: str, monkeypatch: pytest.MonkeyPatch):
     ):
         monkeypatch.setitem(sys.modules, name, module)
 
-    document = object()
-    namespace = {"doc": document}
+    class FakeDocument:
+        Application = types.SimpleNamespace(
+            ShortCurveTolerance=FakeLine.short_curve_tolerance_ft
+        )
+
+    namespace = {"doc": FakeDocument()}
     exec(code, namespace)  # noqa: S102 - generated route runs against a controlled fake Revit API
-    return FakeGeometryCreationUtilities.profile_loops
+    return FakeGeometryCreationUtilities.profile_loops, namespace.get("__output__")
 
 
 def _execute_generated_mass_geometry_readback(code: str) -> dict[str, Any]:
@@ -823,7 +835,7 @@ def test_mass_uses_all_profile_rings_for_the_extruded_solid(monkeypatch):
     python_arguments = transport.calls[2][1]
     assert python_arguments["target_document"] == "LAB_AMANDA"
     assert python_arguments["idempotency_key"] == "mass-001"
-    profile_loops = _execute_generated_mass_script(
+    profile_loops, _ = _execute_generated_mass_script(
         python_arguments["code"], monkeypatch
     )
 
@@ -851,7 +863,7 @@ def test_mass_applies_nonzero_base_elevation_to_profile_points(monkeypatch):
 
     invoker.invoke(call)
 
-    profile_loops = _execute_generated_mass_script(_python_code(transport), monkeypatch)
+    profile_loops, _ = _execute_generated_mass_script(_python_code(transport), monkeypatch)
     expected_z_ft = 2.75 * 3.280839895013123
     assert all(
         point.coordinates[2] == pytest.approx(expected_z_ft)
@@ -859,6 +871,45 @@ def test_mass_applies_nonzero_base_elevation_to_profile_points(monkeypatch):
         for curve in loop.curves
         for point in curve
     )
+
+
+def test_mass_simplifies_sub_tolerance_profile_segment_with_bounded_deviation(
+    monkeypatch,
+):
+    transport = FakeMcpTransport(
+        _reply({"title": "LAB_AMANDA", "path": "LAB_AMANDA.rvt", "version": "2027"}),
+        _reply({"rows": []}),
+        _reply({"status": "self_reported_verified", "created_ids": [901]}),
+    )
+    invoker = HorizunInvoker(transport=transport)
+    invoker.invoke(
+        _python_call(
+            "revit.create_mass",
+            BimStage.R04,
+            geometry={
+                "footprint": [
+                    [0.0, 0.0],
+                    [1.0, 0.0],
+                    [1.0, 1.0],
+                    [0.0, 1.0],
+                    [0.0, 0.0001],
+                ],
+                "base_elevation_m": 0.0,
+                "height_m": 3.0,
+            },
+            properties={"name": "Short edge mass"},
+        )
+    )
+
+    profile_loops, output = _execute_generated_mass_script(
+        _python_code(transport), monkeypatch
+    )
+
+    assert len(profile_loops) == 1
+    assert len(profile_loops[0].curves) == 4
+    adjustment = output["profile_simplifications"][0]
+    assert adjustment["removed_vertex_count"] == 1
+    assert adjustment["max_deviation_m"] <= adjustment["short_curve_tolerance_m"]
 
 
 def test_mass_geometry_is_reread_from_revit_after_write():

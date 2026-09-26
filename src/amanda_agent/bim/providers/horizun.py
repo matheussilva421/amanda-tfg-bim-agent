@@ -497,11 +497,93 @@ else:
         profile_rings = [profile] if profile else []
 if not profile_rings or any(not ring or len(ring) < 3 for ring in profile_rings):
     raise ValueError('create_mass requires a closed metric footprint')
+
+short_curve_tolerance_ft = float(document.Application.ShortCurveTolerance)
+short_curve_tolerance_m = short_curve_tolerance_ft / M_TO_FT
+if short_curve_tolerance_ft <= 0:
+    raise RuntimeError('Revit returned an invalid ShortCurveTolerance')
+
+def mass_distance(first, second):
+    return ((float(first[0]) - float(second[0])) ** 2 + (float(first[1]) - float(second[1])) ** 2) ** 0.5
+
+def mass_point_segment_distance(point, start, end):
+    dx = float(end[0]) - float(start[0])
+    dy = float(end[1]) - float(start[1])
+    denominator = dx * dx + dy * dy
+    if denominator <= 0:
+        return mass_distance(point, start)
+    fraction = ((float(point[0]) - float(start[0])) * dx + (float(point[1]) - float(start[1])) * dy) / denominator
+    fraction = max(0.0, min(1.0, fraction))
+    projection = [float(start[0]) + fraction * dx, float(start[1]) + fraction * dy]
+    return mass_distance(point, projection)
+
+def normalize_mass_ring(ring, ring_index):
+    points = [list(point) for point in ring]
+    if len(points) > 3 and mass_distance(points[0], points[-1]) <= 1e-9:
+        points = points[:-1]
+    original_count = len(points)
+    removed = []
+    while len(points) > 3:
+        short_edge = None
+        for index in range(len(points)):
+            length_m = mass_distance(points[index], points[(index + 1) % len(points)])
+            if length_m * M_TO_FT < short_curve_tolerance_ft:
+                short_edge = (index, length_m)
+                break
+        if short_edge is None:
+            break
+        edge_index, edge_length_m = short_edge
+        candidates = []
+        for vertex_index in sorted(set((edge_index, (edge_index + 1) % len(points)))):
+            if len(points) <= 3:
+                continue
+            previous = points[(vertex_index - 1) % len(points)]
+            vertex = points[vertex_index]
+            following = points[(vertex_index + 1) % len(points)]
+            replacement_length_m = mass_distance(previous, following)
+            if replacement_length_m * M_TO_FT < short_curve_tolerance_ft:
+                continue
+            deviation_m = mass_point_segment_distance(vertex, previous, following)
+            candidates.append((deviation_m, vertex_index, vertex))
+        if not candidates:
+            raise ValueError('create_mass cannot represent a sub-tolerance edge without collapsing its profile')
+        deviation_m, vertex_index, removed_point = min(candidates, key=lambda item: (item[0], item[1]))
+        if deviation_m > short_curve_tolerance_m:
+            raise ValueError('create_mass short-edge simplification exceeds Revit ShortCurveTolerance')
+        removed.append({
+            'vertex_index': int(vertex_index),
+            'point': [float(removed_point[0]), float(removed_point[1])],
+            'short_edge_m': float(edge_length_m),
+            'deviation_m': float(deviation_m),
+        })
+        points.pop(vertex_index)
+    remaining_short_edges = [
+        mass_distance(points[index], points[(index + 1) % len(points)])
+        for index in range(len(points))
+        if mass_distance(points[index], points[(index + 1) % len(points)]) * M_TO_FT < short_curve_tolerance_ft
+    ]
+    if remaining_short_edges:
+        raise ValueError('create_mass profile still contains an edge below Revit ShortCurveTolerance')
+    if len(points) < 3:
+        raise ValueError('create_mass short-edge simplification collapsed a profile ring')
+    if removed:
+        profile_simplifications.append({
+            'ring_index': int(ring_index),
+            'input_vertex_count': int(original_count),
+            'output_vertex_count': int(len(points)),
+            'removed_vertex_count': int(len(removed)),
+            'max_deviation_m': float(max(item['deviation_m'] for item in removed)),
+            'short_curve_tolerance_m': float(short_curve_tolerance_m),
+            'removed_vertices': removed,
+        })
+    return points
+
+profile_rings = [normalize_mass_ring(ring, index) for index, ring in enumerate(profile_rings)]
 profile_loops = List[CurveLoop]()
 for ring in profile_rings:
     loop = CurveLoop()
     for index in range(len(ring)):
-                    loop.Append(Line.CreateBound(mass_xyz(ring[index]), mass_xyz(ring[(index + 1) % len(ring)])))
+        loop.Append(Line.CreateBound(mass_xyz(ring[index]), mass_xyz(ring[(index + 1) % len(ring)])))
     profile_loops.Add(loop)
 height_m = float(geometry.get('height_m') or geometry.get('height') or request.get('height_m') or 0.01)
 if height_m <= 0:
@@ -664,6 +746,7 @@ else:
             "semantic_capability = request['semantic_capability']\n"
             "geometry = request.get('geometry') or {}\n"
             "properties = request.get('properties') or {}\n"
+            "profile_simplifications = []\n"
             "M_TO_FT = 3.280839895013123\n"
             "def element_id_value(element_id):\n"
             "    return int(element_id.Value)\n"
@@ -752,7 +835,7 @@ else:
             "    finally:\n"
             "        if transaction.GetStatus() == TransactionStatus.Started:\n"
             "            transaction.RollBack()\n"
-            "    __output__ = {'status': 'self_reported_verified', 'logical_id': logical_id, 'element_id': created_id, 'created': True, 'semantic_capability': semantic_capability}\n"
+            "    __output__ = {'status': 'self_reported_verified', 'logical_id': logical_id, 'element_id': created_id, 'created': True, 'semantic_capability': semantic_capability, 'profile_simplifications': profile_simplifications}\n"
         )
 
     @staticmethod
