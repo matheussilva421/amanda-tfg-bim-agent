@@ -1,6 +1,57 @@
 # Current Handoff
 
-## Current continuation — 2026-09-26 (P4-T01 and P5-T01 complete)
+## Current continuation — 2026-09-26 (P6-T01 visual evidence and readback)
+
+The RUN-003 R04 model is saved, reopened, and active in Revit 2027. Horizun
+1.3.3 final health is HEALTHY, the exact target is matched by path, the registry
+is 73/73 clean, 80/80 tools are visible, there is one open document and no other
+client. Seven masses and six dedicated views were independently queried after
+reopen with complete coverage and zero unreadable elements. The writer lease is
+FREE. No mass geometry changed in this visual closeout.
+
+The current target hash is
+`7097faf9b92a812e6488bed39b0dc573d37fe23790671179cd28cba607761095` (4,612,096
+bytes). Revit close/reopen used the exact target without upgrade. The immutable
+P6 snapshot and CheckpointManager manifest match this hash and verification
+passed. The default `revit/production/checkpoints/` route was refused by the
+existing safety path-component guard; no guard was bypassed or edited. The
+verified copy is under `revit/production/evidence/AMANDA-RUN-003-R04/`.
+The repository ignores `*.rvt` at `.gitignore:44`; the target and snapshot
+binaries remain local, while their manifests, hashes, report, and PNG captures
+are versioned in this closeout.
+
+Six accepted, hashed PNG captures and the machine-readable record are in
+`revit/production/evidence/AMANDA-RUN-003-R04/visual-geometric-evidence.json`;
+the short comparison is `docs/reports/P6-T01-run003-visual-geometric-acceptance.md`.
+Broad mass zoning and the curved services courtyard are supported. P6 remains
+PENDING / CANON-011 OPEN because the model has no garden/horta/path/playground,
+separate entrances, or internal room/floor assignments. Admin mass footprint
+237.407 m² is 18.7% above the board's approximate 200 m² label; this remains an
+open board-geometry discrepancy. Official PDF areas were not changed. The
+independent read-only review by Bacon confirms PASS only for broad mass zoning,
+four-volume residential count/separation, and overall curved services form;
+all internal program, site landscape, access and child/playground findings
+remain pending. It also flagged the P5 `NOT_ACCEPTED` capture field as needing
+time-scoped clarification; the P5 report now states that it is the P5 snapshot
+and links the later P6 evidence without altering the P5 result.
+
+No software tests were run: this closeout changed views/evidence/state docs but
+no code or mass geometry. Revit verification was live typed query after cold
+reopen; checkpoint bytes/hash were checked independently. One failed checkpoint
+attempt at the conventional directory created no files; using the safe evidence
+directory succeeded. An initial close attempt included an unsupported `save`
+argument and a second was refused because the active document cannot be closed;
+the exact saved file was then closed using the bridge's supported activate-other
+option, reopened, and the temporary bridge anchor was closed again. No unsaved
+changes were discarded.
+
+**Resume:** continue `P6-T01` only. Keep R05 blocked. Resolve the listed
+architectural gaps and the administrative footprint discrepancy with a scoped,
+source-backed decision before any further model write. Do not start GeoNatal
+research or modify RC01. `PROJECT_STATE.yaml` remains phase P6 / PENDING and
+points `next_task` to P6-T01.
+
+## Previous continuation — 2026-09-26 (P4-T01 and P5-T01 complete)
 
 P4-T01 BIM-00 passed, then the user-authorized P5-T01 R04 write ran in the
 actual Revit 2027 session. Horizun 1.3.3 health is `healthy`, contract

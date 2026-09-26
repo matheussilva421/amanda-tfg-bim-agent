@@ -6875,7 +6875,11 @@
   },
   "visual_capture": {
     "status": "NOT_ACCEPTED",
-    "details": "No usable visual artifact produced. Both attempted captures rolled back temporary changes and restored the view; top-view calibration failed. No screenshot is used as evidence. P6 visual/geometric acceptance remains pending."
+    "as_of_task": "P5-T01 closeout",
+    "details": "At P5 closeout no usable visual artifact had been produced: attempted captures rolled back temporary changes and restored the view; top-view calibration failed. This is the historical P5 result, not the current visual evidence state.",
+    "superseded_for_current_visual_state_by": "P6-T01",
+    "current_visual_evidence": "docs/reports/P6-T01-run003-visual-geometric-acceptance.md",
+    "current_visual_evidence_status": "AVAILABLE; CANON-011 STILL OPEN"
   },
   "tests": {
     "focused_command": "python -m pytest tests/unit/test_bim_horizun_invoker.py -q",

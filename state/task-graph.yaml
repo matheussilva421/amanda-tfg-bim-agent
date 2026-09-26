@@ -3309,5 +3309,9 @@ tasks:
     status: PENDING
     evidence:
     - P5-T01 completed with warnings; seven masses persisted through save, checkpoint, cold reopen, and typed post-reopen query.
-    - CANON-011 remains open because neither attempted view capture produced a usable visual artifact; compare all four boards before authorizing R05.
-    - No R05 or additional Revit write is included in this task record.
+    - Six dedicated Revit views and accepted PNG captures are saved under revit/production/evidence/AMANDA-RUN-003-R04; captures and all four boards plus the official program were SHA-256 verified.
+    - Current target SHA-256 is 7097faf9b92a812e6488bed39b0dc573d37fe23790671179cd28cba607761095; immutable evidence copy and manifest match and CheckpointManager.verify_checkpoint passed.
+    - After exact-path close/reopen without upgrade, typed queries returned all seven masses and six views; coverage complete, zero unreadable. Final Horizun health is healthy, exact target active, one document open, zero other clients; writer lease FREE.
+    - Independent read-only review by Bacon confirmed mass-only passes for broad zoning, residential count/separation, and curved services form; it confirmed landscape/access/internal-function gaps and the open administrative footprint discrepancy (+37.407 m2 / +18.7% against the board's approximate 200 m2 per-floor label).
+    - See docs/reports/P6-T01-run003-visual-geometric-acceptance.md and revit/production/evidence/AMANDA-RUN-003-R04/visual-geometric-evidence.json. P6-T01 remains PENDING and CANON-011 OPEN pending scoped gap resolution.
+    - No R05 or additional mass-geometry write is included in this task record.

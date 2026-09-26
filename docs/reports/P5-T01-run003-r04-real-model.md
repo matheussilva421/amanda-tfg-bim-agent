@@ -33,7 +33,9 @@ Horizun save returned `saved_verified` with target SHA-256 `120935963a19af4c6548
 
 The detailed record, including per-element IDs, unique IDs, typed queries, geometry readbacks, idempotency/job references, verification layers, and cold-reopen results, is `revit/production/evidence/AMANDA-RUN-003-R04/real-model-evidence.json`. Python results remain labelled `self_reported_verified` / `host_verified=false`; typed model queries independently confirm each element identity and bounding box before and after reopen.
 
-No usable screenshot was produced: attempted captures rolled back and restored the view, and top-view calibration failed. Therefore CANON-011 and P6 visual/geometric acceptance remain open. No visual acceptance or R05 claim is made.
+At the P5-T01 closeout, no usable screenshot had been produced: attempted captures rolled back and restored the view, and top-view calibration failed. Therefore CANON-011 and P6 visual/geometric acceptance remained open at that task boundary. No visual acceptance or R05 claim was made.
+
+**P6 evidence addendum (2026-09-26):** six usable Revit captures were subsequently generated, saved, and reviewed in P6-T01. See `docs/reports/P6-T01-run003-visual-geometric-acceptance.md` and `revit/production/evidence/AMANDA-RUN-003-R04/visual-geometric-evidence.json`. This later evidence does not alter the historical P5 result; P6 and CANON-011 remain pending.
 
 ## Tests
 

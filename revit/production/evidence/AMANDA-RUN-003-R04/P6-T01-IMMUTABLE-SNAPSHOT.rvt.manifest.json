@@ -1,0 +1,36 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    5910974512256610
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\evidence\\AMANDA-RUN-003-R04\\P6-T01-IMMUTABLE-SNAPSHOT.rvt",
+  "created_utc": "2026-09-26T14:55:32.440009Z",
+  "document_id": "AMANDA-RUN-003-PAVILION-CANONICAL-STUDY",
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\evidence\\AMANDA-RUN-003-R04\\P6-T01-IMMUTABLE-SNAPSHOT.rvt.manifest.json",
+  "provenance": {
+    "model_sha256_at_save": "7097faf9b92a812e6488bed39b0dc573d37fe23790671179cd28cba607761095",
+    "note": "Dedicated evidence views and mass visibility template; no mass geometry changed.",
+    "task": "P6-T01",
+    "views": {
+      "administration": 328688,
+      "child_sector": 328721,
+      "overall_isometric": 328677,
+      "residential": 328699,
+      "services": 328710,
+      "site_top": 328666
+    }
+  },
+  "schema_version": 1,
+  "sha256": "7097faf9b92a812e6488bed39b0dc573d37fe23790671179cd28cba607761095",
+  "size_bytes": 4612096,
+  "source_document_id": "AMANDA-RUN-003-PAVILION-CANONICAL-STUDY",
+  "source_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "source_file_id": [
+    9107472496377837229,
+    60798594969577001
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "source_sha256": "7097faf9b92a812e6488bed39b0dc573d37fe23790671179cd28cba607761095",
+  "stage": "P6_T01_VISUAL_EVIDENCE",
+  "version": 1
+}

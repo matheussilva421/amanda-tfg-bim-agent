@@ -64,7 +64,7 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 
 - Selected design: `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C`
 - Revit stage: `R04`
-- Current checkpoint: `revit/production/checkpoints/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY-POST-R04.rvt`
+- Current checkpoint: `revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-IMMUTABLE-SNAPSHOT.rvt`
 
 ## Writer lease
 
@@ -74,9 +74,15 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 
 ## Git verification
 
-- Last verified commit: `b078685897a1601da948e2d6140736ff6fa5c132`
-- Observed HEAD: `b078685897a1601da948e2d6140736ff6fa5c132`
+- Last verified commit at P6-T01 entry: `c705b04dea8cb76edb69d71e03440c152611f6ff`
+- Observed HEAD at P6-T01 entry: `c705b04dea8cb76edb69d71e03440c152611f6ff`
 
-The P4/P5 evidence closeout was pushed as `ed1a7ab`; a post-push
-`git ls-remote origin refs/heads/main` matched local `main`. This dashboard's
-generated HEAD snapshot above predates that documentation/evidence commit.
+P6-T01 live closeout on 2026-09-26: Horizun 1.3.3 HEALTHY, Revit 2027
+27.2.0.39, exact RUN-003 active, one document open, zero other clients, 73/73
+registry clean. Seven masses and six views passed fresh post-reopen typed
+queries; P6 remains PENDING / CANON-011 OPEN due unmodeled landscape/access/
+internal functions and an open administrative footprint discrepancy. See
+`docs/reports/P6-T01-run003-visual-geometric-acceptance.md` and
+`revit/production/evidence/AMANDA-RUN-003-R04/visual-geometric-evidence.json`.
+The current writer lease is FREE. The P4/P5 remote push record above predates
+this P6 evidence update.

@@ -60,9 +60,10 @@ provisional. All five site-data blockers remain open. No R05 operation occurred.
 
 `P5-T01` is complete with `PASS_WITH_WARNINGS`; see the execution evidence
 above. `P6-T01` is next: compare the saved R04 geometry to all four canonical
-boards and close CANON-011. Revit visual acceptance is still pending because
-the available capture attempts did not produce a usable image. R05 remains
-blocked until P6 passes and is not authorized by this continuation.
+boards and close CANON-011. Six dedicated views and usable Revit captures now
+exist, but the comparison records unmodeled landscape/access/internal functions
+and an open administrative footprint discrepancy. P6 remains pending; R05
+remains blocked and is not authorized by this continuation.
 
 ## P6 — R04 visual/geometric acceptance
 
