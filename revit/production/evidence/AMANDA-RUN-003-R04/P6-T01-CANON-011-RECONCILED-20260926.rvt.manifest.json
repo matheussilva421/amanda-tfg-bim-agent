@@ -1,0 +1,34 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    168884986027719987
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\evidence\\AMANDA-RUN-003-R04\\P6-T01-CANON-011-RECONCILED-20260926.rvt",
+  "created_utc": "2026-09-26T21:34:32.213661Z",
+  "document_id": "AMANDA-RUN-003-PAVILION-CANONICAL-STUDY",
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\evidence\\AMANDA-RUN-003-R04\\P6-T01-CANON-011-RECONCILED-20260926.rvt.manifest.json",
+  "provenance": {
+    "admin_floor_ids": [
+      331163,
+      331170
+    ],
+    "admin_mass_id": 328657,
+    "public_admin_route_id": 331177,
+    "run": "RUN-003",
+    "save_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+    "task": "P6-T01"
+  },
+  "schema_version": 1,
+  "sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+  "size_bytes": 4960256,
+  "source_document_id": "AMANDA-RUN-003-PAVILION-CANONICAL-STUDY",
+  "source_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "source_file_id": [
+    9107472496377837229,
+    159877786772979388
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "source_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+  "stage": "P6_T01_CANON_011_RECONCILED",
+  "version": 1
+}

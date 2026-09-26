@@ -1,0 +1,28 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    116530640359534337
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\evidence\\AMANDA-RUN-003-R04\\P6-T01-PRE-FLOOR-REPLACEMENT-20260926.rvt",
+  "created_utc": "2026-09-26T21:29:17.884655Z",
+  "document_id": "AMANDA-RUN-003-PAVILION-CANONICAL-STUDY",
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\evidence\\AMANDA-RUN-003-R04\\P6-T01-PRE-FLOOR-REPLACEMENT-20260926.rvt.manifest.json",
+  "provenance": {
+    "note": "Administrative mass reconciled to Board 02; floors and public route not yet replaced.",
+    "run": "RUN-003",
+    "task": "P6-T01"
+  },
+  "schema_version": 1,
+  "sha256": "3659990c6e1fb41a8c2b2e4e39cad75374b43fed0d85f27f74972d3029f81635",
+  "size_bytes": 4952064,
+  "source_document_id": "AMANDA-RUN-003-PAVILION-CANONICAL-STUDY",
+  "source_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "source_file_id": [
+    9107472496377837229,
+    170855310864502390
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "source_sha256": "3659990c6e1fb41a8c2b2e4e39cad75374b43fed0d85f27f74972d3029f81635",
+  "stage": "P6_T01_PRE_FLOOR_REPLACEMENT",
+  "version": 1
+}

@@ -4,12 +4,14 @@ canonical_deviations:
     recorded_on: '2026-09-26'
     run: RUN-003
     stage: R04
-    status: OPEN_FOR_REVIEW
+    status: RESOLVED_FOR_STUDY
     affected_elements:
+      - mark: MASS-ADMIN_ACOLHIMENTO
+        element_id: 328657
       - mark: R04-ADMIN-FLOOR-L1
-        element_id: 329929
+        element_id: 331163
       - mark: R04-ADMIN-FLOOR-L2
-        element_id: 329936
+        element_id: 331170
     canonical_board:
       board_id: Board 02
       source_path: docs/source/canonical/02_administrativo.png
@@ -21,19 +23,22 @@ canonical_deviations:
       quantitative_program_changed: false
       rule: 'A area bruta da placa administrativa nao substitui nem altera as areas uteis oficiais das salas.'
     observed:
-      measurement_source: 'Typed Horizun model query after cold reopen of the exact RUN-003 RVT'
+      measurement_source: 'Typed Horizun model query after cold reopen of the exact P6 RUN-003 checkpoint'
       area_measurement: HOST_AREA_COMPUTED
-      area_m2_per_floor: 237.407316
-      delta_m2_per_floor: 37.407316
-      delta_percent: 18.703658
-      calculation: '(237.407316 - 200.0) / 200.0 * 100'
+      area_m2_per_floor: 200.0
+      delta_m2_per_floor: 0.0
+      delta_percent: 0.0
+      calculation: '(200.0 - 200.0) / 200.0 * 100'
+      prior_checkpoint_area_m2_per_floor: 237.407316
+      prior_checkpoint_sha256: 3659990c6e1fb41a8c2b2e4e39cad75374b43fed0d85f27f74972d3029f81635
     verifiable_reason: >-
-      O readback tipado pos-reabertura mediu 237.407316 m2 em cada placa
-      administrativa do envelope RUN-003. A prancha 02 indica aproximadamente
-      200 m2 por pavimento. O programa oficial fixa capacidade e areas de salas,
-      mas nao fornece uma area bruta de footprint que justifique substituir
-      qualquer uma dessas duas medidas. Nao existe evidencia para alterar o
-      programa ou declarar conformidade geometrica da placa.
+      A geometria administrativa foi readequada para 10 x 20 m e os pisos foram
+      recriados nos Niveis 1 e 2, com o piso superior em 4.0 m. O readback tipado
+      apos cold reopen mediu 200 m2 em cada piso e confirmou que o caminho publico
+      termina na borda sul do envelope. A divergencia de footprint frente a
+      indicacao aproximada da prancha 02 fica reconciliada para este STUDY. As
+      areas uteis e quantidades do programa oficial nao foram usadas como area
+      bruta nem alteradas; nenhuma aprovacao pessoal de Amanda e reivindicada.
     alternatives_considered:
       - id: retain_reversible_study_envelope
         action: 'Manter o envelope atual apenas como checkpoint do STUDY reversivel ate a revisao.'
@@ -45,16 +50,16 @@ canonical_deviations:
         action: 'Modelar as salas oficiais no envelope atual e comparar areas uteis e footprint bruto com as duas fontes.'
         tradeoff: 'Pode demonstrar necessidade de revisao do envelope; nao elimina a diferenca impressa na prancha por si so.'
     impact:
-      - 'A placa medida excede a indicacao aproximada da prancha em 37.407316 m2 por pavimento (18.703658%).'
-      - 'A aceitacao visual/geometrica CANON-011 permanece pendente; este registro nao aprova o desvio.'
+      - 'O footprint das duas placas coincide com a aproximacao 10 x 20 m da prancha 02 no estudo atual.'
+      - 'As salas e atribuicoes internas nao estao modeladas; esta reconciliacao nao fecha CANON-011.'
       - 'As areas oficiais do programa PDF permanecem imutaveis e nao foram ajustadas para caber.'
-      - 'O desvio de nivel do piso superior e distinto: a face esta em 3.2 m e o Nivel 2 em 4.0 m (offset -0.8 m), ainda aberto no relatorio P6.'
+      - 'O nivel do piso superior foi alinhado ao Nivel 2 em 4.0 m; essa correcao e especifica ao STUDY RUN-003.'
     decision:
-      status: AMANDA_REVIEW_REQUIRED
+      status: RESOLVED_BY_DELEGATED_STUDY_RECONCILIATION
       approving_authority: Amanda
       approval_received: false
-      selected_alternative: null
-      note: 'A autorizacao para STUDY reversivel ate R04 nao constitui aprovacao pessoal desta divergencia.'
+      selected_alternative: refit_to_board_approximation
+      note: 'A geometria foi corrigida no escopo delegado e reversivel P6-T01. approval_received=false; nenhuma aprovacao pessoal de Amanda e alegada.'
     input_hashes:
       - role: canonical_board_02
         path: docs/source/canonical/02_administrativo.png
@@ -68,10 +73,14 @@ canonical_deviations:
       - role: pre_r04_reopened_run003_checkpoint
         path: revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-IMMUTABLE-SNAPSHOT.rvt
         sha256: 7097faf9b92a812e6488bed39b0dc573d37fe23790671179cd28cba607761095
+      - role: p6_pre_replacement_checkpoint
+        path: revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-PRE-FLOOR-REPLACEMENT-20260926.rvt
+        sha256: 3659990c6e1fb41a8c2b2e4e39cad75374b43fed0d85f27f74972d3029f81635
     output_hashes:
-      - role: saved_and_reopened_r04_run003_checkpoint
-        path: revit/production/evidence/AMANDA-RUN-003-R04/R04-T01-RUN003-POST-SAVE.rvt
-        sha256: 33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49
+      - role: saved_and_reopened_p6_t01_run003_checkpoint
+        path: revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-CANON-011-RECONCILED-20260926.rvt
+        sha256: 8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326
     evidence:
       spatial_model_evidence: revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json
       acceptance_report: docs/reports/P6-T01-run003-visual-geometric-acceptance.md
+      current_capture_manifest: revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/p6-canon-011-captures.json

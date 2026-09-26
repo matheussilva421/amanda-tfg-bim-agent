@@ -34,38 +34,36 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Provider health
 
-- Preferred provider: `horizun`
-- `custom-api`: AVAILABLE (fallback-last-resort)
-- `horizun-revit-mcp`: UNREACHABLE in the older persisted environment probe; superseded for this closeout by the healthy live P5-T01 check below (primary)
-- `revitcortex`: NOT_PROBED_THIS_SESSION (fallback-typed)
+Preferred provider: `horizun`.
 
-Live Revit check during the 2026-09-26 P4-T01 continuation: Horizun 1.3.3
-reported `healthy` on Revit 2027 build `27.2.0.39`, process 38296; command
-registry 73/73 clean, 80/80 tools visible. RUN-003 is active and matched by
-the exact target path; two documents are open (RUN-003 and the Horizun anchor),
-with zero other clients. The RUN-003 writer lease was released after final
-post-reopen verification. Current spatial evidence is
-`revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json`;
-the target/checkpoint SHA-256 is
-`33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49`.
+Fresh P6 closeout check: Horizun 1.3.3 `HEALTHY`; Revit 2027 build 27.2.0.39,
+PID 38296; registry 73/73 clean, 80/80 tools visible. The exact RUN-003 target
+was active and targetable; two documents were open (RUN-003 and `HZ_ANCHOR_2027`)
+with zero other clients. The P6 writer lease was released after save, cold reopen,
+and typed readback; the lock file is absent.
 
 ## Current RUN-003 R04 acceptance status
 
-The saved model contains seven masses, 14 floors, and four roofs. The five
-programmed external surfaces total 260 m². P6-T01 remains `PENDING` / CANON-011
-OPEN: admin area and level offsets, internal function assignments, and site
-evidence are unresolved. Eight fresh Revit captures now cover the site plan,
-massing, perspective, administration, residential, services, and child sector;
-their paths and hashes are in
-`revit/production/evidence/AMANDA-RUN-003-R04/current-view-captures.json`.
-The child relation image shows the mass and playground together and is linked
-to the post-reopen checkpoint hash and readback fingerprint; its temporary
-category/crop changes were rolled back. These captures support review but do
-not close CANON-011. The Board-02 administrative
-footprint difference is formally recorded as
-`CANONICAL_DEVIATION-ADM-001` in `docs/decisions/CANONICAL_DEVIATIONS.yaml`,
-`OPEN_FOR_REVIEW`; no official program area was changed. R05 has not been run
-or authorized.
+The P6 checkpoint SHA-256 is
+`8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326`
+(4,960,256 bytes). Its manifest agrees and `CheckpointManager.verify_checkpoint`
+returned true. The exact target was cold-reopened without upgrade. Fresh typed
+readback returned 25 spatial elements (7 masses, 14 floors, 4 roofs), complete
+coverage, zero unreadable; complete model summary returned 4,573 with complete
+coverage and zero unreadable.
+
+P6 reconciled the admin envelope to 10×20 m per floor, aligned the upper plate
+to Level 2 at 4.0 m, and connected the public admin route to the south edge.
+The Board-02 divergence record is `RESOLVED_FOR_STUDY`; personal approval remains
+false and official program areas/quantities were not changed. The five external
+program spaces remain 80/80/30/30/40 m².
+
+P6-T01 is still `PENDING` / CANON-011 OPEN because room/function and bedroom
+assignments are not modeled for independent area readback. Nine fresh views and
+one explicitly historical child/playground reference are documented in
+`revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/p6-canon-011-captures.json`.
+The near-blank P6 relation attempt is excluded. Five site-data limits remain;
+no cadastral/north/site-availability claim is made. R05 remains unauthorized.
 
 ## Capability counts
 
@@ -87,31 +85,15 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 
 - Selected design: `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C`
 - Revit stage: `R04`
-- Current checkpoint: `revit/production/evidence/AMANDA-RUN-003-R04/R04-T01-RUN003-POST-SAVE.rvt`
+- Current checkpoint: `revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-CANON-011-RECONCILED-20260926.rvt`
 
 ## Writer lease
 
-- Status: `FREE`
-- Owner: `NOT_RECORDED`
-- Fencing generation: `NOT_RECORDED`
+- Status: `RELEASED_AFTER_VERIFICATION`
+- Last owner: `amanda-P6-T01-RUN003-CANON-011`
+- Fencing generation: `1`
 
 ## Git verification
 
-- Latest R04 completion commit: `4289c6724cd3d980e746f1833ae434b6650bf0cd`
-- Commit was pushed; `git ls-remote origin refs/heads/main` matched `4289c6724cd3d980e746f1833ae434b6650bf0cd`.
-
-P4-T01 continuation on 2026-09-26: Horizun 1.3.3 HEALTHY, Revit 2027
-27.2.0.39, exact RUN-003 active, two documents open (RUN-003 and the Horizun
-anchor), zero other clients, 73/73 registry and 80/80 tools. Typed post-reopen
-query returned 25 elements: seven masses, 14 floors, and four roofs; coverage
-complete, zero unreadable. P6 remains PENDING / CANON-011 OPEN for room/function
-assignments, admin area/level discrepancies, visual acceptance, and site inputs.
-See `docs/reports/P4-T01-run003-r04-geometry-completion-2026-09-26.md`,
-`docs/reports/P6-T01-run003-visual-geometric-acceptance.md`, and
-`revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json`.
-The current writer lease is FREE.
-
-Closeout follow-up after independent review: the project-state dashboard now
-points at the post-save R04 checkpoint; the new capture set and open deviation
-record are covered by focused regression tests. P6-T01 remains the next task;
-CANON-011 is still open.
+P6 closeout commit and push verification are pending. The previous verified
+remote commit is recorded in `PROJECT_STATE.yaml`.

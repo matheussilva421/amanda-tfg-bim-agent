@@ -3307,37 +3307,42 @@ tasks:
     - P5-T01
     status: PENDING
     evidence:
-    - Current exact RUN-003 target was saved, cold-reopened without upgrade, and queried
-      after reopen; all 25 elements were read with complete coverage and zero unreadable.
-    - Five site surfaces match the program PDF at 80/80/30/30/40 m2 (260 m2 total);
-      board-printed areas were not used as official program areas.
-    - Four separate residential masses and four open-sided roofed connector pairs are
-      present; the protected patio remains 80 m2 with 2 m connector interfaces and no
-      measured intrusion. Services retain the curved six-ring courtyard composition;
-      the west child mass is adjacent to the official 40 m2 playground.
-    - Three marked access routes keep public/admin, public/services, and cargo paths
-      distinct; route widths are local study assumptions and excluded from the program.
-    - Open items include admin floor footprint differs from the board's approximate label;
-      Nível 2 is at 4.0 m while the upper plate is at 3.2 m; room/function and bedroom
-      assignments are not modeled; site inputs remain unsurveyed/unverified.
-    - Eight fresh captures from the active RUN-003 model cover top implantation, overall
-      massing and perspective, administration, residential, services, child sector, and a
-      single-view child/playground relation. The relation export visibly includes both
-      outlines after temporary mass-category visibility; crop/category restoration is
-      checked. The capture set is bound to the post-reopen checkpoint SHA and typed-readback
-      fingerprint in revit/production/evidence/AMANDA-RUN-003-R04/current-view-captures.json.
-      It is supporting evidence and does not close CANON-011; pre-R04 captures remain historical.
-    - Board-02 administration footprint difference is recorded as
-      CANONICAL_DEVIATION-ADM-001, OPEN_FOR_REVIEW, with three alternatives and verified
-      source/checkpoint hashes. No program areas or quantities changed; Amanda approval
-      is absent and the deviation remains unresolved.
-    - One temporary orientation capture was excluded because restoration was not
-      verified. It performed no geometry write; all temporary crops/styles in the formal
-      capture manifest report restoration verified, including the child mass visibility
-      override and crop rolled back in a Revit TransactionGroup with the document unmodified.
-    - See docs/reports/P4-T01-run003-r04-geometry-completion-2026-09-26.md,
-      docs/reports/P6-T01-run003-visual-geometric-acceptance.md, and
-      revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json and
-      revit/production/evidence/AMANDA-RUN-003-R04/current-view-captures.json.
-      CANON-011 remains open and P6-T01 remains PENDING.
-    - User instruction excludes GeoNatal, RC01, and R05; none was performed.
+    - >-
+      The exact RUN-003 target was saved, cold-reopened without upgrade, and freshly
+      queried. The P6 checkpoint SHA-256 is
+      8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326 (4,960,256 bytes);
+      its manifest agrees and CheckpointManager.verify_checkpoint returned true.
+      Typed readback fingerprint 4636abc6b294829b covers 25 elements with complete
+      coverage and zero unreadable; a separate complete model summary covers 4,573.
+    - >-
+      Admin mass 328657 is 10 x 20 m per floor and 6.4 m high. Replacement floors
+      331163/331170 are at 0.0/4.0 m and HOST_AREA_COMPUTED is 200.0 m2 each. Public
+      route 331177 reaches the south boundary at y=-52 m. The Board-02 geometric
+      footprint/level differences are reconciled for the reversible study; official
+      room areas and quantities remain unchanged. CANONICAL_DEVIATION-ADM-001 is
+      RESOLVED_FOR_STUDY with approval_received=false.
+    - >-
+      The four-board relations remain: south public administration; four separate
+      northern/interior residential pavilions around a free protected patio; curved
+      southeast services composition around a courtyard; child sector west near its
+      official playground; central therapeutic garden and eastern horta. Five program
+      areas remain 80/80/30/30/40 m2. Public and cargo routes remain distinct.
+    - >-
+      Nine fresh post-reopen captures and hashes are in
+      revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/p6-canon-011-captures.json.
+      The child/playground image is a separately identified reference from checkpoint
+      33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49; its two IDs
+      were confirmed in current typed readback. The near-blank P6 relation attempt is
+      excluded. Captures support review and do not close CANON-011.
+    - >-
+      P1-T01 documents the official functional crosswalk, but internal rooms and
+      assignments are not modeled in R04: admin functions, family bedrooms/bathrooms,
+      service uses, and child rooms cannot yet receive independent BIM area/readback.
+      Site coordinates remain local/unsurveyed and no cadastral or true-north claim is made.
+    - >-
+      docs/reports/P6-T01-run003-visual-geometric-acceptance.md and
+      revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json
+      record the current evidence. CANON-011 remains open and P6-T01 remains PENDING.
+    - >-
+      No GeoNatal search, RC01 operation, S01/S02/R12 reuse, official-program change,
+      or R05 operation was performed; R05 remains unauthorized.

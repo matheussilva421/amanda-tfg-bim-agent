@@ -1,39 +1,65 @@
-# P6-T01 — RUN-003 R04: evidência visual e geométrica
+# P6-T01 — RUN-003 R04: reconciliação canônica visual e geométrica
 
-**Atualização:** 2026-09-26 19:52 UTC
-**Status:** `PENDING` — `CANON-011` permanece aberto. Esta atualização registra a geometria R04 recém-salva; não encerra a aceitação nem autoriza R05.
+**Atualização:** 2026-09-26 22:00 UTC
+**Status:** `PENDING` — `CANON-011` permanece aberto. A reconciliação geométrica administrativa e a cadeia de persistência foram atualizadas; a evidência não sustenta PASS integral nem autoriza R05.
 
-## Referências e critérios
+## Autoridade e escopo
 
-As quatro pranchas canônicas atuais foram vinculadas, nesta ordem: `01_implantacao.png`, `02_administrativo.png`, `03_residencial.png` e `04_servicos.png`. Seus SHA-256 são `30d00935…20240`, `123b9563…a263`, `5b96c2d5…31381` e `c56b806f…c0386`. O PDF oficial `docs/source/programa_necessidades.pdf` (SHA-256 `11daa9ef…14a17`) continua sendo a autoridade para capacidade de 20 pessoas, 626 m² internos úteis e 260 m² externos programados. Áreas impressas nas pranchas não foram tratadas como áreas oficiais.
+A comparação usa exatamente as quatro pranchas em `docs/source/canonical/`, na ordem implantação, administrativo, residencial e serviços, vinculadas pelos hashes registrados no JSON de evidência. `docs/source/programa_necessidades.pdf` continua sendo a autoridade quantitativa: capacidade de 20 pessoas, 626 m² internos úteis e 260 m² externos programados. Nenhuma área, quantidade ou capacidade oficial foi alterada. As áreas anotadas nas pranchas orientam forma e organização, não substituem áreas oficiais de salas.
 
-Implantação segue em coordenadas locais normalizadas, não levantadas. As relações cardeais são interpretações do arranjo das pranchas no modelo de estudo; não comprovam norte geográfico, limites, frentes, topografia ou implantação cadastral.
+O RUN-003 é um `STUDY` local normalizado, não levantado. As relações cardeais abaixo descrevem a organização relativa do estudo; não afirmam norte geográfico, limite cadastral, disponibilidade do lote, topografia ou ajuste legal.
 
-## Geometria R04 criada e verificada no Revit
+## Estado real após a reconciliação
 
-Após BIM-00 `PASS`, a gravação tipada adicionou 18 elementos ao RUN-003: 14 pisos e quatro coberturas. A consulta tipada independente após salvar, fechar e reabrir retornou 25 elementos no total (sete massas existentes, 14 pisos e quatro coberturas), cobertura completa e zero elementos ilegíveis.
+O alvo exato `revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt` foi salvo, fechado, reaberto sem upgrade e lido novamente. O checkpoint P6 é `revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-CANON-011-RECONCILED-20260926.rvt`, SHA-256 `8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326`, 4.960.256 bytes. O manifesto do checkpoint confere com o arquivo e `CheckpointManager.verify_checkpoint` retornou `True`.
 
-- **Implantação:** cinco superfícies externas correspondem ao programa PDF: pátio protegido 80 m², jardim terapêutico 80 m², horta 30 m², exercícios 30 m² e playground 40 m². O administrativo permanece na borda pública sul; residencial no interior/norte do estudo; serviço/capacitação a sudeste; setor infantil a oeste; o jardim terapêutico ocupa a faixa central.
-- **Acessos:** pisos distintos marcam `PATH-PUBLIC-ADMIN`, `PATH-PUBLIC-SERVICE` e `PATH-SERVICE-CARGO`. As larguras 2/2/3 m são hipóteses geométricas do estudo e não entram no programa. Os percursos públicos e de carga não se sobrepõem; portas e entradas edificadas não foram modeladas.
-- **Administrativo:** pisos de térreo e superior foram modelados no envelope. A área medida é 237,407 m² por pavimento frente à indicação aproximada de 200 m² da prancha (+37,407 m² / +18,7%). A divergência está aberta. O nível Revit `Nível 2` está a 4,0 m enquanto a face superior do piso é 3,2 m (offset −0,8 m); isso também permanece registrado. Não foram modeladas salas nem atribuições de função.
-- **Residencial:** há quatro massas independentes (A/B/C familiares e D comunitária) e quatro pisos com coberturas, sem paredes de fechamento. Cada circulação coberta tem interface de 2 m com o pátio; o pátio de 80 m² permanece livre, sem intrusão medida. Contagem de dormitórios por família e dormitório comunitário ainda não está modelada como salas.
-- **Serviços/capacitação:** a composição curva existente envolve o pátio/jardim com seis anéis internos; não foi substituída por footprint retangular genérico. O percurso público chega pelo lado oeste e a rota de carga pelo lado leste. Funções impressas e áreas por função não foram convertidas em salas ou tomadas como áreas oficiais; a reconciliação funcional segue aberta.
-- **Infantil:** a superfície de playground de 40 m² foi colocada junto à massa infantil oeste. Brinquedoteca, apoio pedagógico, banheiro e depósito não foram modelados como salas; a reconciliação funcional segue aberta.
+A consulta tipada pós-reabertura retornou os 25 elementos do escopo (7 massas, 14 pisos e 4 coberturas), cobertura completa e zero ilegíveis; fingerprint `4636abc6b294829b`. Uma consulta completa separada retornou 4.573 elementos, cobertura total e zero ilegíveis. As capturas recentes e seus hashes estão em `revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/p6-canon-011-captures.json` e estão vinculadas ao novo checkpoint/fingerprint.
 
-## Persistência e evidência
+## Comparação das quatro pranchas
 
-Horizun 1.3.3 estava `HEALTHY`, registry 73/73 limpo, 80/80 ferramentas visíveis. Revit 2027, build 27.2.0.39, PID 38296; o arquivo RUN-003 exato estava ativo e targetable, sem outros clientes. Durante a gravação, o lease exclusivo `amanda-P4-T01-RUN003-R04` foi vinculado ao alvo e liberado após a verificação.
+### 01 — Implantação
 
-O salvamento alterou o arquivo de 4.612.096 para 4.952.064 bytes, SHA-256 de `7097faf9…761095` para `33a99c7c…cca27b49`. O checkpoint `R04-T01-RUN003-POST-SAVE.rvt` e manifesto foram verificados; o alvo foi fechado e reaberto no caminho exato sem upgrade. A leitura tipada pós-reabertura confirmou os 25 elementos.
+- Administrativo na borda pública sul; a massa ocupa x=[−5,5] m, y=[−52,−32] m.
+- Residencial protegido ao norte/interior, com quatro volumes independentes A, B, C e D comunitário.
+- Serviços/capacitação a sudeste, em composição curva com seis anéis internos envolvendo pátio/jardim.
+- Setor infantil a oeste, próximo ao playground oficial de 40 m²; o jardim terapêutico permanece central e a horta a leste.
+- Percursos públicos/administrativos, público/serviços e carga são elementos separados. A rota pública do administrativo termina na borda sul do envelope. As larguras são hipóteses de estudo, sem afirmar portas ou acessos cadastrais.
+- As cinco áreas externas modeladas continuam em 80/80/30/30/40 m² (260 m²), de acordo com o PDF.
 
-Depois do salvamento e readback do RUN-003, oito capturas foram exportadas novamente do modelo Revit ativo: implantação superior, implantação/massing, perspectiva geral, administração, residencial, serviços, setor infantil e relação infantil/playground. As capturas têm pelo menos 2400 px de largura; caminhos relativos, IDs de vista, dimensões, SHA-256 e restauração estão em `revit/production/evidence/AMANDA-RUN-003-R04/current-view-captures.json`. A captura de relação foi exportada da planta `Terreno` com a categoria `OST_Mass` e crop temporariamente ajustados em um `TransactionGroup` revertido; a imagem mostra o volume infantil e o playground na mesma vista. O estado da categoria, crop e documento foi conferido após o rollback; a evidência é ligada ao SHA do checkpoint pós-reabertura e ao fingerprint do readback. Não há calibração pixel-modelo. As opções temporárias de crop/estilo das outras capturas que as usaram também retornaram `view_restored=true`; a vista isométrica sem opções temporárias foi exportada diretamente. A vista top geral é wireframe, o enquadramento administrativo mostra as placas sem atribuições de salas e o setor infantil ainda não demonstra o programa interno. As imagens sustentam comparação de massa e relações, mas não encerram CANON-011. As seis capturas P6 antigas continuam históricas e não são usadas como evidência deste estado.
+### 02 — Administrativo / acolhimento
 
-Uma tentativa anterior de captura combinou orientação temporária e enquadramento na vista 3D. O export foi gerado, porém o provider retornou `view_restored=false`; essa imagem foi excluída do conjunto formal. A tentativa não iniciou escrita de geometria. As capturas usadas no manifesto foram feitas em chamadas posteriores com rollback/restauração verificados.
+A massa administrativa existente foi ajustada para 10×20 m por pavimento e 6,4 m de altura de estudo. Os pisos novos são IDs 331163 e 331170: o térreo no Nível 1 a 0,0 m e o superior no Nível 2 a 4,0 m. A leitura `HOST_AREA_COMPUTED` mediu 2.152,782083 ft², equivalente a 200,0 m² por piso. O caminho público 331177 alcança a borda sul em y=−52 m. Assim, o footprint aproximado da prancha e o nível da placa superior estão geometricamente reconciliados no estado atual do estudo.
 
-## Testes e decisão
+O registro `CANONICAL_DEVIATION-ADM-001` foi atualizado para `RESOLVED_FOR_STUDY`, com os IDs e hashes do novo checkpoint. `approval_received` permanece `false`; esta alteração não atribui aprovação pessoal a Amanda e não altera áreas úteis do programa.
 
-`tests/unit/test_run003_r04_spatial_evidence.py` foi executado em RED antes da atualização do registro; encontrou o placeholder de SHA no manifesto. Corrigido o manifesto com o hash verificado. Resultado GREEN: 1 teste espacial aprovado. A validação focada adicional de `test_task_graph.py` e `test_state_store.py` passou com 21 testes; `tests/policy/test_plan_order.py` passou com 7. O teste novo da cadeia P4→P5→P6 também foi RED antes de adicionar essas arestas auxiliares ao contrato. `CheckpointManager.verify_checkpoint` retornou `True`. Na revisão final, a suíte focada passou com 25 testes e o gate de ordem P4→P6 passou com 7; ambos foram executados novamente após as correções de evidência. O Python padrão não contém `ortools`; a coleta do teste `test_status_dashboard.py` foi bloqueada por essa dependência ausente. Os testes focados foram executados com `--confcutdir`, sem instalar ou atualizar dependências.
+As funções da prancha foram reconciliadas textualmente no P1-T01, mas não foram modeladas como salas no R04. Térreo: recepção, controle, triagem/acolhimento, espera, registro, psicologia, serviço social, jurídico, reunião e apoios. Superior: coordenação, administrativo, equipe, funcionários, multiuso/grupos e apoios. A distribuição interna e as áreas úteis ainda exigem geometria de salas para validação BIM.
 
-**Decisão:** manter `P6-T01` `PENDING` e `CANON-011` aberto. O desvio administrativo de footprint da prancha 02 está formalmente registrado em `docs/decisions/CANONICAL_DEVIATIONS.yaml` como `CANONICAL_DEVIATION-ADM-001`, com status `OPEN_FOR_REVIEW`, alternativas e hashes de entrada/saída; nenhuma alternativa foi aprovada e nenhuma área oficial foi alterada. As demais pendências são o desvio de nível, atribuições internas do administrativo/serviços/infantil e dormitórios, validação visual completa e cinco limitações de dados do terreno. Nenhuma pesquisa GeoNatal ocorreu; RC01 não foi alterado; R05 não foi executado nem autorizado.
+### 03 — Residencial
 
-**Revisão independente:** quatro observações foram registradas e corrigidas: captura infantil sem prova visual da adjacência, falta de vínculo da captura ao checkpoint, cabeçalho do handoff com revisão antiga e carimbo de atualização P6 defasado. O teste focado exige a captura `child_playground_relation`, os dois IDs visíveis, restauração, SHA do checkpoint, manifesto de checkpoint e fingerprint do readback pós-reabertura. A revisão final independente confirmou as correções e não encontrou novos problemas.
+As quatro massas independentes permanecem e as quatro circulações cobertas/semiabertas não fecham o pátio central protegido. O estudo preserva a organização de três pavilhões familiares e um pavilhão comunitário. A reconciliação oficial de P1 mantém três dormitórios por família e um dormitório comunitário, conforme o arranjo aceito; quartos e banheiros não foram criados como salas no R04, portanto sua contagem e áreas ainda não têm readback BIM.
+
+### 04 — Serviços / capacitação
+
+O envelope continua curvo e centrado no pátio, sem retornar ao footprint retangular genérico. Os caminhos público e de carga permanecem distintos. A reconciliação funcional e de duplicidades da prancha 04 está registrada no P1-T01: usos impressos que não têm sala oficial própria são tratados como modo/subzona, e o PDF controla todas as quantidades e áreas. A geometria atual não contém salas internas que demonstrem essas atribuições ou áreas.
+
+### Setor infantil
+
+O volume oeste e a proximidade com a área verde/playground permanecem. P1-T01 reconcilia as quatro funções oficiais do setor infantil: brinquedoteca 24 m², apoio pedagógico 18 m², banheiro 6 m² e depósito 4 m². Nenhuma delas foi modelada como sala no R04; a reconciliação documental não é apresentada como validação geométrica interna.
+
+## Evidência visual e seus limites
+
+O manifesto P6 contém nove capturas visuais novas feitas após a reabertura, com caminho, vista, IDs, dimensão, SHA-256 e restauração. A tentativa P6 `child-playground-relation.png` foi excluída por estar visualmente quase vazia. A captura anterior de relação infantil/playground é mantida separadamente como referência do checkpoint anterior `33a99c7c…cca27b49`, não como captura nova. Seu readback atual confirma os mesmos IDs 328658 e 329971 e seus limites geométricos; a manifestação da imagem histórica está identificada explicitamente no manifesto. Nenhuma captura tem calibração pixel-modelo.
+
+## Pendências e decisão
+
+`CANON-011` e P6-T01 continuam `PENDING` porque os cômodos internos e atribuições funcionais/dormitórios não existem no modelo e, portanto, não podem ser aceitos por leitura BIM independente. As cinco limitações do terreno continuam registradas e restringem apenas afirmações dependentes desses dados. O estudo não reivindica conformidade cadastral ou orientação geográfica.
+
+**R05 não foi executado nem está autorizado por este fechamento.** Não houve nova pesquisa GeoNatal, operação em RC01, reutilização de S01/S02/R12 ou alteração do programa oficial. S02 permanece `STALE_BY_CANONICAL_REFERENCE_EXPANSION`; o lease atual é apenas o lease exclusivo RUN-003 desta reconciliação e será liberado no fechamento.
+
+## Testes e rastreabilidade
+
+O teste espacial foi atualizado primeiro para as medidas pós-reabertura e falhou contra os valores antigos (L2 a 3,2 m em vez de 4,0 m), como esperado no RED. O teste do registro de divergência também falhou primeiro porque o status ainda estava `OPEN_FOR_REVIEW`; passou depois de o registro receber os IDs e hashes reconciliados. O teste de estado apontou o checkpoint desatualizado no dashboard e falha no formato do carimbo; ambos foram corrigidos antes do GREEN.
+
+Resultado GREEN focado: `tests/unit/test_run003_r04_spatial_evidence.py`, `test_canonical_deviation_record.py`, `test_run003_view_capture_evidence.py`, `test_status_checkpoint_consistency.py`, `test_task_graph.py` e `test_state_store.py`: **25 passaram, 0 falharam**. O gate de política `tests/policy/test_plan_order.py` passou **7/7**. Validação de parse YAML/JSON passou. `ruff` não está disponível no ambiente; nenhum pacote foi instalado. `python -m amanda_agent status` também não inicia porque o Python do host não tem `ortools`; o dashboard e o estado formal foram atualizados diretamente com o readback e os registros verificados.
+
+Evidência principal: `revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json`; manifesto visual P6: `revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/p6-canon-011-captures.json`; reconciliação funcional oficial: `docs/reports/P1-T01-four-board-reconciliation.md`.

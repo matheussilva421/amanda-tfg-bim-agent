@@ -1,16 +1,25 @@
 # Current Handoff
 
-## Current state — P4-T01 R04 closeout
+## Current state — P6-T01 RUN-003 reconciliation in progress
 
 This is the only current resume block. The historical records below and the
-detailed closeout record at the end do not introduce a second resume state.
+prior P4 closeout do not introduce a second active resume state.
 
-- RUN-003 R04 is saved at `revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt` and cold-reopened. Target/checkpoint SHA-256 is `33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49`; post-reopen typed readback returned 25 elements, complete coverage, zero unreadable.
-- Fresh `horizun_health` at 19:32 UTC reported Horizun 1.3.3 `HEALTHY`, Revit 2027 build 27.2.0.39, PID 38296; 73/73 registered commands, 80/80 tools visible, exact RUN-003 path active and matched, and zero other clients. The writer lease is released.
-- The child/playground relation capture was re-exported from Revit's `Terreno` view with both element outlines visible. `OST_Mass` visibility and the crop were temporary in a `TransactionGroup`; rollback reported `RolledBack`, view restoration was checked, and the document remained unmodified. The PNG hash, capture job, element IDs, checkpoint SHA and post-reopen fingerprint are registered in `revit/production/evidence/AMANDA-RUN-003-R04/current-view-captures.json` and checked by the focused test.
-- Independent review findings on the earlier crop, capture provenance, stale handoff header and report timestamp were corrected. Final independent follow-up review confirmed these corrections with no further findings. Final focused gates pass (25 unit, 7 policy); local commit/push closeout remains.
-- Board-02 administrative area divergence remains `OPEN_FOR_REVIEW`; official program areas remain unchanged. P6-T01/CANON-011 remain pending/open. Do not perform another GeoNatal search, alter RC01, or advance R05. S02 remains `STALE_BY_CANONICAL_REFERENCE_EXPANSION`; its lease was absent and not reclaimed.
-- R04 evidence commit `ac783be58c70c8fadcf5e43faeb59ddc3e15ca8f` was pushed to `origin/main`; a fresh `git ls-remote` matched local `HEAD`. This final handoff update is included in a follow-up closeout commit, also pushed and checked against the remote ref. RC01's pre-existing ACL-visible deletions remain unstaged and untouched.
+- P4-T01/BIM-00 and the requested real R04 creation/save are complete. This continuation is now reconciling P6/CANON-011; P6 remains `PENDING` and R05 is not authorized.
+- The RUN-003 admin mass 328657 was reshaped to x=[-5,5] m, y=[-52,-32] m, z=[0,6.4] m. Old admin floors/routes 329929, 329936, 331088 were removed with the reviewed dependent-sketch closure. Typed replacements are floor 331163 at Level 1/0 m, floor 331170 at Level 2/4 m, and public route 331177 terminating at y=-52 m. Both floors read back at 200.0 m² (`HOST_AREA_COMPUTED`).
+- Final P6 checkpoint: `revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-CANON-011-RECONCILED-20260926.rvt`, SHA-256 `8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326`, 4,960,256 bytes. Checkpoint manifest agrees; `CheckpointManager.verify_checkpoint=True`; exact RUN-003 target was cold-reopened without upgrade. Fresh typed readback covers 25 elements, complete coverage, 0 unreadable, fingerprint `4636abc6b294829b`; full model summary covers 4,573 elements, complete coverage, 0 unreadable.
+- Fresh Horizun health/target: 1.3.3 healthy, Revit 2027 build 27.2.0.39, PID 38296, exact target active/targetable, 73/73 registry, 80/80 tools, zero other clients. The P6 lease was released after save/reopen/readback and verified absent. No S02 lease was reclaimed; S02 remains `STALE_BY_CANONICAL_REFERENCE_EXPANSION`.
+- `CANONICAL_DEVIATION-ADM-001` is `RESOLVED_FOR_STUDY`; the record binds the old and new checkpoints and new element IDs. `approval_received=false`; do not imply Amanda personally approved it. Official program PDF and areas are unchanged.
+- Nine fresh post-reopen captures and hashes are recorded in `revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/p6-canon-011-captures.json`. The nearly blank P6 child/playground attempt is excluded. The accepted child/playground relationship image is explicitly a reference from the prior 33a99 checkpoint, not a new capture; the same two element IDs and current bounds were checked in the latest typed readback.
+- P6 remains open because administrative, residential, service/capacitation, and child rooms/function assignments are not present for independent BIM area readback. P1-T01 has the documentary official-program crosswalk. Five site-data limits remain; do not make cadastral/north/site-availability claims. No GeoNatal, RC01, program change, S01/S02/R12 reuse, or R05 occurred.
+- `amanda_agent status` cannot import the host's missing `ortools`. Focused pytest runs use `PYTHONPATH=src` and `--confcutdir=tests/unit`; do not install or update dependencies.
+- TDD RED was observed for the stale spatial evidence, deviation record and status/checkpoint contract. Final focused unit command passed 25/25; `tests/policy/test_plan_order.py` passed 7/7; YAML/JSON parse passed. `ruff` is unavailable in the host.
+- Local branch is `main`, current HEAD at entry `999146b4722a0b7cc2c9ccc68d8c7827b0b9e508`. Pre-existing deletions under `revit/lab/exports/p06t14/GOLDEN/RC01/` must remain untouched and unstaged. The current evidence/docs/tests need explicit-path staging, commit and push, then `git ls-remote origin refs/heads/main` verification.
+- Use only Luna 6 xhigh subagents if delegation is needed; otherwise review locally. No further Revit write is authorized by this handoff. Do not advance to R05.
+
+**Resume:** complete the final local diff review, run scoped `git diff --check`, stage only intended evidence/docs/tests/state files, commit and push `main`, then verify the remote ref. Update `PROJECT_STATE.yaml`'s `last_verified_commit` in the closeout commit if needed. Leave P6 `PENDING` / CANON-011 open because room/function readback is absent. R05 stays gated.
+
+## Prior closeout — P4-T01 R04
 
 ## Historical continuation — 2026-09-26 (P4-T01 / RUN-003 R04 geometry completion)
 

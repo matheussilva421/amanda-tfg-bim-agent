@@ -2327,3 +2327,14 @@ entries:
   - 'Board-02 administrative deviation remains OPEN_FOR_REVIEW, CANON-011 remains open and R05 remains unauthorized; no GeoNatal or RC01 operation.'
   recorded_utc: '2026-09-26T19:52:00Z'
   note: Independent review corrections recorded; P6 remains pending and R05 excluded.
+- task_id: P6-T01
+  status: PENDING
+  evidence:
+  - 'Fresh Horizun health/target: provider healthy, Revit 2027 build 27.2.0.39, exact RUN-003 target active/targetable, 80/80 tools, registry 73/73, and zero other clients. The P6 RUN-003 lease was held through save/reopen/readback, then explicitly released and verified absent; no S02 lease was reclaimed.'
+  - 'Admin mass 328657 was reconciled to 10 x 20 m per floor. Typed replacement floors 331163/331170 read back at 0.0/4.0 m, 200 m2 each; public route 331177 meets the south edge. The official program remained unchanged. Deviation CANONICAL_DEVIATION-ADM-001 is RESOLVED_FOR_STUDY with approval_received=false.'
+  - 'P6 checkpoint P6-T01-CANON-011-RECONCILED-20260926.rvt is SHA-256 8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326, 4,960,256 bytes; cold reopen without upgrade and typed query returned 25 elements, complete coverage, zero unreadable, fingerprint 4636abc6b294829b.'
+  - 'Nine fresh captures are bound to the P6 checkpoint. The nearly blank child/playground attempt is excluded; the valid relation image is an explicitly historical reference from the previous checkpoint, with both element IDs and bounds checked against current typed readback.'
+  - 'P6 remains PENDING / CANON-011 open: room/function and bedroom assignments remain unmodeled and cannot be independently area-verified. R05 remains unauthorized; no GeoNatal, RC01, S01/S02/R12, or program change.'
+  - 'TDD RED was observed for stale R04 spatial/deviation records and the mismatched status dashboard. Final focused unit gate passed 25/25; P4-to-P6 plan-order policy passed 7/7; YAML/JSON parse passed. Ruff is unavailable and amanda_agent status cannot import missing ortools; no dependencies were installed.'
+  recorded_utc: '2026-09-26T22:00:00Z'
+  note: Admin geometry and evidence reconciled; do not close P6 or advance to R05 until remaining acceptance evidence is complete.

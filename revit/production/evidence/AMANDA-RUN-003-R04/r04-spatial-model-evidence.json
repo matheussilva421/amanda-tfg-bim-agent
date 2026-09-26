@@ -3,7 +3,7 @@
   "status": "PASS_WITH_WARNINGS",
   "run": "RUN-003",
   "stage": "R04",
-  "task": "P4-T01 continuation; R04 real-model geometry completion",
+  "task": "P6-T01 CANON-011 scoped reconciliation; geometry correction and fresh persisted readback",
   "evidence_date": "2026-09-26",
   "source": {
     "solution_id": "AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C",
@@ -51,8 +51,8 @@
       "C:\\Users\\slvma\\.horizun\\anchor\\HZ_ANCHOR_2027.rvt"
     ],
     "other_clients_connected": 0,
-    "writer_lease_owner": "amanda-P4-T01-RUN003-R04",
-    "writer_lease_generation": 2,
+    "writer_lease_owner": "amanda-P6-T01-RUN003-CANON-011",
+    "writer_lease_generation": 1,
     "writer_lease_status": "released_after_verification"
   },
   "write": {
@@ -73,14 +73,74 @@
     },
     "no_rooms_created": true,
     "r05_performed": false,
-    "rc01_modified": false
+    "rc01_modified": false,
+    "p6_administration_reconciliation": {
+      "task": "P6-T01 / CANON-011",
+      "mass_update": {
+        "method": "horizun_execute_python with script-side checks; then independent typed model query",
+        "element_id": 328657,
+        "unique_id": "b7e45332-e04d-47e6-a37b-5347a9d3f22f-000503d1",
+        "result_state": "self_reported_then_independently_typed_readback",
+        "bounds_m": {
+          "min": [
+            -5.0,
+            -52.0,
+            0.0
+          ],
+          "max": [
+            5.0,
+            -32.0,
+            6.4
+          ]
+        }
+      },
+      "old_admin_floors_and_route": {
+        "deleted_element_ids": [
+          329929,
+          329936,
+          331088
+        ],
+        "dependent_sketches_deleted": 22,
+        "unresolved_dependents": 0,
+        "typed_delete_status": "Committed"
+      },
+      "replacement_elements": {
+        "typed_create_status": "Committed",
+        "floors": [
+          {
+            "id": 331163,
+            "mark": "R04-ADMIN-FLOOR-L1",
+            "level_id": 311,
+            "elevation_m": 0.0,
+            "area_m2": 200.0
+          },
+          {
+            "id": 331170,
+            "mark": "R04-ADMIN-FLOOR-L2",
+            "level_id": 694,
+            "elevation_m": 4.0,
+            "area_m2": 200.0
+          }
+        ],
+        "public_admin_route": {
+          "id": 331177,
+          "mark": "PATH-PUBLIC-ADMIN",
+          "level_id": 311,
+          "north_endpoint_y_m": -52.0
+        },
+        "typed_write_independently_re_read": true
+      },
+      "no_official_program_change": true,
+      "no_rc01_change": true,
+      "no_r05": true
+    }
   },
   "readback": {
-    "phase": "POST_REOPEN",
+    "phase": "POST_P6_SAVE_COLD_REOPEN",
     "coverage_complete": true,
     "unreadable_total": 0,
     "post_reopen_object_count": 25,
-    "result_set_fingerprint": "af388d16e3f57e32",
+    "result_set_fingerprint": "4636abc6b294829b",
     "mass_names": [
       "MASS-ADMIN_ACOLHIMENTO",
       "MASS-CHILD_SECTOR",
@@ -94,13 +154,13 @@
     "mass_bboxes_m": {
       "MASS-ADMIN_ACOLHIMENTO": {
         "min": [
-          -6.655034153776293,
-          -52.9183357386647,
-          0
+          -5.0,
+          -52.00000000000001,
+          0.0
         ],
         "max": [
-          6.655034153776293,
-          -35.08166426133529,
+          5.0,
+          -32.0,
           6.4
         ]
       },
@@ -187,11 +247,11 @@
     "administrative_storey_levels": {
       "1": {
         "level_id": 311,
-        "elevation_m": 0
+        "elevation_m": 0.0
       },
       "2": {
         "level_id": 694,
-        "elevation_m": 4
+        "elevation_m": 4.0
       }
     },
     "administrative_floor_marks": [
@@ -199,12 +259,12 @@
       "R04-ADMIN-FLOOR-L2"
     ],
     "administrative_floor_reference_elevations_m": {
-      "R04-ADMIN-FLOOR-L1": 0,
-      "R04-ADMIN-FLOOR-L2": 3.2
+      "R04-ADMIN-FLOOR-L1": 0.0,
+      "R04-ADMIN-FLOOR-L2": 4.0
     },
-    "administrative_floor_l2_level_offset_m": -0.8,
-    "administrative_footprint_per_floor_m2": 237.407316,
-    "administrative_board_approx_area_per_floor_m2": 200,
+    "administrative_floor_l2_level_offset_m": 0.0,
+    "administrative_footprint_per_floor_m2": 200.0,
+    "administrative_board_approx_area_per_floor_m2": 200.0,
     "administrative_function_assignments_modeled": false,
     "service_form": "CURVED_COURTYARD",
     "service_interior_ring_count": 6,
@@ -351,14 +411,14 @@
       "bounds_m": {
         "PATH-PUBLIC-ADMIN": {
           "min": [
-            -0.9999999999999999,
-            -62,
-            -0.14999999999999997
+            -1.0,
+            -61.081664261,
+            -0.15
           ],
           "max": [
-            0.9999999999999999,
-            -52.918335739,
-            0
+            1.0,
+            -52.00000000000001,
+            0.0
           ]
         },
         "PATH-PUBLIC-SERVICE": {
@@ -406,44 +466,69 @@
       "therapeutic_garden_central": true,
       "horta_east": true,
       "public_and_cargo_access_separate": true,
-      "administrative_board_area_difference_open": true
+      "administrative_board_area_difference_open": false,
+      "administrative_floor_levels_aligned": true,
+      "administration_public_route_meets_south_entry": true
+    },
+    "administrative_floor_element_ids": {
+      "R04-ADMIN-FLOOR-L1": 331163,
+      "R04-ADMIN-FLOOR-L2": 331170
+    },
+    "administrative_mass_element_id": 328657,
+    "administrative_public_route_element_id": 331177,
+    "administrative_footprint_measurement": {
+      "method": "HOST_AREA_COMPUTED",
+      "area_ft2": 2152.7820833419446,
+      "area_m2": 200.0,
+      "floor_ids": [
+        331163,
+        331170
+      ],
+      "revit_readback": true
     }
   },
   "persistence": {
     "saved": true,
-    "model_sha256": "33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49",
-    "model_sha256_before": "7097faf9b92a812e6488bed39b0dc573d37fe23790671179cd28cba607761095",
-    "model_bytes": 4952064,
-    "checkpoint_path": "revit/production/evidence/AMANDA-RUN-003-R04/R04-T01-RUN003-POST-SAVE.rvt",
-    "checkpoint_manifest_path": "revit/production/evidence/AMANDA-RUN-003-R04/R04-T01-RUN003-POST-SAVE.rvt.manifest.json",
-    "checkpoint_sha256": "33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49",
-    "checkpoint_bytes": 4952064,
+    "model_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+    "model_sha256_before": "3659990c6e1fb41a8c2b2e4e39cad75374b43fed0d85f27f74972d3029f81635",
+    "model_bytes": 4960256,
+    "checkpoint_path": "revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-CANON-011-RECONCILED-20260926.rvt",
+    "checkpoint_manifest_path": "revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-CANON-011-RECONCILED-20260926.rvt.manifest.json",
+    "checkpoint_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+    "checkpoint_bytes": 4960256,
     "checkpoint_manifest_verified": true,
     "closed_and_reopened_exact_target": true,
     "reopened_without_upgrade": true,
-    "final_post_reopen_typed_readback_complete": true
+    "final_post_reopen_typed_readback_complete": true,
+    "input_checkpoint_sha256": "3659990c6e1fb41a8c2b2e4e39cad75374b43fed0d85f27f74972d3029f81635",
+    "checkpoint_manager_verify_checkpoint": true,
+    "readback_result_set_fingerprint": "4636abc6b294829b",
+    "readback_timestamp_utc": "2026-09-26T21:57:09Z"
   },
   "visual_evidence": {
-    "path": "revit/production/evidence/AMANDA-RUN-003-R04/views/r04-canonical-site-revit-2026-09-26.png",
-    "sha256": "c3759ce98fe38e2eff63c0a09c8a91f635d5636b1289e4f917158a616d979b0f",
+    "path": "revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/implantation-top.png",
+    "sha256": "6c67b537df3e51a0b460e2ecb4e5c9befd975aa12b26621769eeff877c401b33",
     "width": 2400,
-    "height": 1459,
+    "height": 2281,
     "capture_status": "CAPTURED_SUPPORTING_ONLY",
-    "note": "Captura wireframe real do Revit, enquadramento parcial; apoia a existência da geometria, mas não fecha a aceitação visual CANON-011."
+    "capture_manifest_path": "revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/p6-canon-011-captures.json",
+    "capture_manifest_sha256": "bd65917f7a70c6e3cd9db510393500637e314dce97ef25da79a4e3321990a3f2",
+    "note": "Captura atual da implantacao apos o checkpoint P6; imagens nao substituem as funcoes internas nem fecham CANON-011."
   },
   "open_gaps": {
     "canon_011": true,
     "r05_authorized": false,
-    "administrative_board_area_difference": true,
-    "administrative_level_vs_plate_elevation": true,
+    "administrative_board_area_difference": false,
+    "administrative_level_vs_plate_elevation": false,
     "administrative_function_assignment": true,
-    "service_function_reconciliation": true,
-    "child_function_reconciliation": true,
+    "service_function_reconciliation": false,
+    "child_function_reconciliation": false,
     "site_boundary": true,
     "site_topography": true,
     "site_occupancy": true,
     "site_frontage_count": true,
-    "site_true_north": true
+    "site_true_north": true,
+    "residential_room_assignments": true
   },
   "independent_review": {
     "performed": true,

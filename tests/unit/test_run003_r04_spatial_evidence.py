@@ -111,7 +111,8 @@ def test_run003_r04_spatial_readback_matches_canonical_mass_and_site_geometry():
     assert live["target_document"].endswith(
         "AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt"
     )
-    assert live["writer_lease_owner"] == "amanda-P4-T01-RUN003-R04"
+    assert live["writer_lease_owner"] == "amanda-P6-T01-RUN003-CANON-011"
+    assert live["writer_lease_status"] == "released_after_verification"
     assert live["other_clients_connected"] == 0
     assert evidence["write"]["transaction_status"] == "Committed"
     assert evidence["write"]["committed_and_independently_re_read"] == 18
@@ -120,7 +121,7 @@ def test_run003_r04_spatial_readback_matches_canonical_mass_and_site_geometry():
     assert evidence["write"]["rc01_modified"] is False
 
     readback = evidence["readback"]
-    assert readback["phase"] == "POST_REOPEN"
+    assert readback["phase"] == "POST_P6_SAVE_COLD_REOPEN"
     assert readback["coverage_complete"] is True
     assert readback["unreadable_total"] == 0
     assert readback["post_reopen_object_count"] == 25
@@ -132,12 +133,28 @@ def test_run003_r04_spatial_readback_matches_canonical_mass_and_site_geometry():
     }
     assert readback["administrative_floor_reference_elevations_m"] == {
         "R04-ADMIN-FLOOR-L1": pytest.approx(0.0),
-        "R04-ADMIN-FLOOR-L2": pytest.approx(3.2),
+        "R04-ADMIN-FLOOR-L2": pytest.approx(4.0),
     }
-    assert readback["administrative_floor_l2_level_offset_m"] == pytest.approx(-0.8)
+    assert readback["administrative_floor_element_ids"] == {
+        "R04-ADMIN-FLOOR-L1": 331163,
+        "R04-ADMIN-FLOOR-L2": 331170,
+    }
+    assert readback["administrative_mass_element_id"] == 328657
+    assert readback["administrative_public_route_element_id"] == 331177
+    assert readback["administrative_floor_l2_level_offset_m"] == pytest.approx(0.0)
     assert readback["administrative_function_assignments_modeled"] is False
-    assert readback["administrative_footprint_per_floor_m2"] == pytest.approx(237.407316)
+    assert readback["administrative_footprint_per_floor_m2"] == pytest.approx(200.0)
+    assert readback["administrative_footprint_measurement"]["method"] == "HOST_AREA_COMPUTED"
+    assert readback["administrative_footprint_measurement"]["area_m2"] == pytest.approx(200.0)
     assert readback["administrative_board_approx_area_per_floor_m2"] == pytest.approx(200.0)
+    admin_bounds = readback["mass_bboxes_m"]["MASS-ADMIN_ACOLHIMENTO"]
+    assert admin_bounds["min"][0] == pytest.approx(-5.0)
+    assert admin_bounds["max"][0] == pytest.approx(5.0)
+    assert admin_bounds["min"][1] == pytest.approx(-52.0)
+    assert admin_bounds["max"][1] == pytest.approx(-32.0)
+    assert readback["access_routes"]["bounds_m"]["PATH-PUBLIC-ADMIN"]["max"][1] == pytest.approx(
+        admin_bounds["min"][1]
+    )
     assert set(readback["administrative_floor_marks"]) == {
         "R04-ADMIN-FLOOR-L1",
         "R04-ADMIN-FLOOR-L2",
@@ -270,17 +287,23 @@ def test_run003_r04_spatial_readback_matches_canonical_mass_and_site_geometry():
         "therapeutic_garden_central": True,
         "horta_east": True,
         "public_and_cargo_access_separate": True,
-        "administrative_board_area_difference_open": True,
+        "administrative_board_area_difference_open": False,
+        "administrative_floor_levels_aligned": True,
+        "administration_public_route_meets_south_entry": True,
     }
     assert evidence["open_gaps"]["canon_011"] is True
     assert evidence["open_gaps"]["r05_authorized"] is False
-    assert evidence["open_gaps"]["administrative_board_area_difference"] is True
-    assert evidence["open_gaps"]["administrative_level_vs_plate_elevation"] is True
-    assert evidence["open_gaps"]["service_function_reconciliation"] is True
-    assert evidence["open_gaps"]["child_function_reconciliation"] is True
+    assert evidence["open_gaps"]["administrative_board_area_difference"] is False
+    assert evidence["open_gaps"]["administrative_level_vs_plate_elevation"] is False
+    assert evidence["open_gaps"]["service_function_reconciliation"] is False
+    assert evidence["open_gaps"]["child_function_reconciliation"] is False
     assert evidence["persistence"]["saved"] is True
     assert evidence["persistence"]["checkpoint_manifest_verified"] is True
     assert evidence["persistence"]["closed_and_reopened_exact_target"] is True
+    assert evidence["persistence"]["model_sha256"] == "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326"
+    assert evidence["persistence"]["checkpoint_path"].endswith(
+        "P6-T01-CANON-011-RECONCILED-20260926.rvt"
+    )
     manifest = json.loads(
         (ROOT / evidence["persistence"]["checkpoint_manifest_path"]).read_text(
             encoding="utf-8"
@@ -288,7 +311,25 @@ def test_run003_r04_spatial_readback_matches_canonical_mass_and_site_geometry():
     )
     assert manifest["sha256"] == evidence["persistence"]["checkpoint_sha256"]
     assert manifest["source_sha256"] == evidence["persistence"]["model_sha256"]
-    assert manifest["provenance"]["saved_model_sha256"] == evidence["persistence"]["model_sha256"]
-    assert evidence["visual_evidence"]["capture_status"] == "CAPTURED_SUPPORTING_ONLY"
-    image_path = ROOT / evidence["visual_evidence"]["path"]
-    assert hashlib.sha256(image_path.read_bytes()).hexdigest() == evidence["visual_evidence"]["sha256"]
+    assert manifest["provenance"]["save_sha256"] == evidence["persistence"]["model_sha256"]
+    visual = evidence["visual_evidence"]
+    assert visual["capture_status"] == "CAPTURED_SUPPORTING_ONLY"
+    image_path = ROOT / visual["path"]
+    assert hashlib.sha256(image_path.read_bytes()).hexdigest() == visual["sha256"]
+    capture_manifest_path = ROOT / visual["capture_manifest_path"]
+    capture_manifest = json.loads(capture_manifest_path.read_text(encoding="utf-8"))
+    assert capture_manifest["source_checkpoint"]["sha256"] == evidence["persistence"]["checkpoint_sha256"]
+    assert capture_manifest["source_readback"]["result_set_fingerprint"] == readback["result_set_fingerprint"]
+    captures = {item["role"]: item for item in capture_manifest["captures"]}
+    assert {"implantation_top", "administration_mass", "administration_ground_route", "administration_upper_floor", "residential", "services", "child_sector"} <= captures.keys()
+    for item in captures.values():
+        capture_path = ROOT / item["path"]
+        assert hashlib.sha256(capture_path.read_bytes()).hexdigest() == item["sha256"]
+        assert item["capture_checkpoint_sha256"] == evidence["persistence"]["checkpoint_sha256"]
+        if item["temporary_options_used"]:
+            assert item["view_restored"] is True
+    relation = capture_manifest["reference_captures"]["child_playground_relation"]
+    assert relation["source_checkpoint_sha256"] == "33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49"
+    assert set(relation["visible_element_ids"]) == {328658, 329971}
+    relation_path = ROOT / relation["path"]
+    assert hashlib.sha256(relation_path.read_bytes()).hexdigest() == relation["sha256"]

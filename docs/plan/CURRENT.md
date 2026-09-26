@@ -45,33 +45,36 @@ elements, complete coverage, zero unreadable. See
 `docs/reports/P4-T01-run003-r04-geometry-completion-2026-09-26.md` and
 `revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json`.
 
-P5 is `PASS_WITH_WARNINGS`. The official PDF remains the authority for 20 people,
-626 m² internal and 260 m² external. Five modelled external areas are 80/80/30/30/40
-m². Coordinates remain local/unsurveyed; the admin board label discrepancy
-(+37.407 m² / +18.7%), Nível 2 at 4.0 m versus upper plate at 3.2 m, and missing
-room/function assignments remain open. No official area was changed.
+P5 closed as `PASS_WITH_WARNINGS`. Its closeout recorded the admin board-area
+difference and upper-plate offset that were present at that checkpoint. During
+P6-T01, the reversible study envelope was reconciled to 10×20 m per floor and
+the upper plate aligned to Nível 2 at 4.0 m; the official PDF remained unchanged.
+The 20-person, 626 m² internal and 260 m² external program remains authoritative,
+with five modeled external areas at 80/80/30/30/40 m². Internal room/function
+assignments are still not modeled, and coordinates remain local/unsurveyed.
 
-Live closeout confirmed Horizun 1.3.3 healthy, Revit 2027 build 27.2.0.39,
-73/73 registered commands and 80/80 tools. The exact RUN-003 target is active;
-the open anchor document is also present, with zero other clients. The exclusive
-RUN-003 lease was released after persistence verification. Save returned target
-SHA-256 `33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49`
-(4,952,064 bytes); the separate checkpoint and corrected manifest verify. Exact
-path close/reopen completed without upgrade and fresh typed queries confirmed
-the contents. Five site-data blockers remain. No R05 operation occurred.
+At P5 closeout, Horizun 1.3.3 was healthy and the exact RUN-003 target was
+saved, reopened, and read back. That checkpoint was superseded by the P6
+reconciliation recorded below. Five site-data blockers remain; no R05 operation
+occurred.
 ## P5 — R04 Revit
 
-`P5-T01` is complete with `PASS_WITH_WARNINGS`; see the current execution
-evidence above. `P6-T01` is next: accept the saved R04 geometry against all four
-canonical boards and close CANON-011. The current image is a cropped wireframe
-support capture; six earlier captures predate the latest geometry save. P6
-remains pending for visual review, room/function reconciliation, admin area and
-level discrepancies, and unresolved site inputs. R05 remains excluded and is
-not authorized by this continuation.
+`P5-T01` is complete with `PASS_WITH_WARNINGS`. P6-T01 then reconciled the
+administrative envelope and levels and refreshed the checkpoint/readback. P6
+remains pending for internal room/function and bedroom readback, complete visual
+acceptance, and site claims that require surveyed inputs. R05 remains excluded
+and unauthorized.
 
-## P6 — R04 visual/geometric acceptance
+## P6 — R04 visual/geometric acceptance (`PENDING`)
 
-Compare real Revit output to all four boards. R05 is blocked until PASS.
+P6-T01 has updated the real RUN-003 admin envelope and levels, saved and
+cold-reopened a new checkpoint, and refreshed typed readback and visual capture
+evidence. `CANONICAL_DEVIATION-ADM-001` is resolved for this reversible study;
+no Amanda approval or official-program change is claimed. CANON-011 remains
+open because internal administrative, residential, services, and child rooms
+are not modeled for independent program/area readback. The five site-data gaps
+remain limited to claims that depend on surveyed/cadastral inputs. R05 remains
+blocked and unauthorized until P6 reaches a fully evidenced PASS.
 
 ## P7 — Detailed production
 

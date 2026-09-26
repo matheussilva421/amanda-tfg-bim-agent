@@ -1,0 +1,331 @@
+{
+  "schema_version": 1,
+  "run": "RUN-003",
+  "task": "P6-T01 / CANON-011",
+  "stage": "R04",
+  "generated_utc": "2026-09-26T21:57:09Z",
+  "source_document": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "source_checkpoint": {
+    "path": "revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-CANON-011-RECONCILED-20260926.rvt",
+    "manifest_path": "revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-CANON-011-RECONCILED-20260926.rvt.manifest.json",
+    "sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+    "captured_after_cold_reopen": true,
+    "reopen_readback_count": 25
+  },
+  "source_readback": {
+    "phase": "POST_P6_SAVE_COLD_REOPEN",
+    "result_set_fingerprint": "4636abc6b294829b",
+    "typed_elements": 25,
+    "coverage_complete": true,
+    "unreadable_total": 0
+  },
+  "revit": "2027 build 27.2.0.39",
+  "provider": "Horizun 1.3.3",
+  "provider_status": "HEALTHY",
+  "capture_method": "Horizun typed capture_view after cold reopen; temporary view options were rolled back and restoration checked.",
+  "captures": [
+    {
+      "role": "implantation_top",
+      "path": "revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/implantation-top.png",
+      "view_name": "Terreno",
+      "view_id": 8251,
+      "view_type": "FloorPlan",
+      "sha256": "6c67b537df3e51a0b460e2ecb4e5c9befd975aa12b26621769eeff877c401b33",
+      "width": 2400,
+      "height": 2281,
+      "element_ids": [
+        328657,
+        328658,
+        328659,
+        328660,
+        328661,
+        328662,
+        328663,
+        329943,
+        329950,
+        329957,
+        329964,
+        329971,
+        331163,
+        331170,
+        331177
+      ],
+      "capture_checkpoint_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+      "captured_after_cold_reopen": true,
+      "temporary_options_used": true,
+      "view_restored": true,
+      "rollback_status": "RolledBack",
+      "capture_status": "CAPTURED_AFTER_P6_REOPEN",
+      "note": "Implantacao em planta apos a reconciliacao; coordenadas locais nao comprovam norte verdadeiro, limite cadastral ou levantamento.",
+      "hide_annotations": true
+    },
+    {
+      "role": "implantation_massing",
+      "path": "revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/implantation-massing.png",
+      "view_name": "P6-R04-RUN003-CANONICAL-MASSING",
+      "view_id": 328666,
+      "view_type": "ThreeD",
+      "sha256": "6e01d78c6b9ff20b39c532a49d7d0822ff9ee665838b3bcee3ee4f77d3a21a11",
+      "width": 2400,
+      "height": 2616,
+      "element_ids": [
+        328657,
+        328658,
+        328659,
+        328660,
+        328661,
+        328662,
+        328663
+      ],
+      "capture_checkpoint_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+      "captured_after_cold_reopen": true,
+      "temporary_options_used": false,
+      "view_restored": null,
+      "rollback_status": null,
+      "capture_status": "CAPTURED_AFTER_P6_REOPEN",
+      "note": "Vista de massas apos a reabertura, apoio visual topologico."
+    },
+    {
+      "role": "overall_perspective",
+      "path": "revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/overall-perspective.png",
+      "view_name": "P6-R04-RUN003-CANONICAL-ISOMETRIC",
+      "view_id": 328677,
+      "view_type": "ThreeD",
+      "sha256": "0bfae3b3d0262f4b91354058a0046e377433c8b2e86470c3075611a454f8c5f4",
+      "width": 2400,
+      "height": 1491,
+      "element_ids": [
+        328657,
+        328658,
+        328659,
+        328660,
+        328661,
+        328662,
+        328663
+      ],
+      "capture_checkpoint_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+      "captured_after_cold_reopen": true,
+      "temporary_options_used": false,
+      "view_restored": null,
+      "rollback_status": null,
+      "capture_status": "CAPTURED_AFTER_P6_REOPEN",
+      "note": "Vista isometrica geral; evidencia volumetria de estudo."
+    },
+    {
+      "role": "administration_mass",
+      "path": "revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/administration-mass.png",
+      "view_name": "P6-R04-RUN003-ADMINISTRATIVO",
+      "view_id": 328688,
+      "view_type": "ThreeD",
+      "sha256": "fb717f5e0e952d2ddc0ec2763b78c9bfb7bfd975fd60a50aba4395d010b3c333",
+      "width": 2400,
+      "height": 1976,
+      "element_ids": [
+        328657,
+        331163,
+        331170,
+        331177
+      ],
+      "capture_checkpoint_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+      "captured_after_cold_reopen": true,
+      "temporary_options_used": true,
+      "view_restored": true,
+      "rollback_status": "RolledBack",
+      "capture_status": "CAPTURED_AFTER_P6_REOPEN",
+      "note": "Enquadramento do envelope administrativo corrigido e das duas placas.",
+      "display_style": "Wireframe"
+    },
+    {
+      "role": "administration_ground_route",
+      "path": "revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/administration-ground-route.png",
+      "view_name": "Nível 1",
+      "view_id": 312,
+      "view_type": "FloorPlan",
+      "sha256": "0825655100fdb1a6587199e93262bc3adb411594a27ff33aae98bdafee4af5b2",
+      "width": 2400,
+      "height": 6979,
+      "element_ids": [
+        331163,
+        331177
+      ],
+      "capture_checkpoint_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+      "captured_after_cold_reopen": true,
+      "temporary_options_used": true,
+      "view_restored": true,
+      "rollback_status": "RolledBack",
+      "capture_status": "CAPTURED_AFTER_P6_REOPEN",
+      "note": "Planta do pavimento publico e ligacao da rota ao limite sul do envelope.",
+      "hide_annotations": true
+    },
+    {
+      "role": "administration_upper_floor",
+      "path": "revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/administration-upper-floor.png",
+      "view_name": "Nível 2",
+      "view_id": 695,
+      "view_type": "FloorPlan",
+      "sha256": "c6e91c135720af6c2ca8fe17d02fe6bcbae7f2afc3d20fbd71d6912d1f5eb899",
+      "width": 2400,
+      "height": 4800,
+      "element_ids": [
+        331170
+      ],
+      "capture_checkpoint_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+      "captured_after_cold_reopen": true,
+      "temporary_options_used": true,
+      "view_restored": true,
+      "rollback_status": "RolledBack",
+      "capture_status": "CAPTURED_AFTER_P6_REOPEN",
+      "note": "Planta da placa superior na elevacao do Nivel 2; salas internas nao modeladas.",
+      "hide_annotations": true
+    },
+    {
+      "role": "residential",
+      "path": "revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/residential.png",
+      "view_name": "P6-R04-RUN003-RESIDENCIAL",
+      "view_id": 328699,
+      "view_type": "ThreeD",
+      "sha256": "e9f92972b9481ef96d901c5cffc95ed25ac24c786df1222c530a31e0e9f6c189",
+      "width": 2400,
+      "height": 1476,
+      "element_ids": [
+        328659,
+        328660,
+        328661,
+        328662,
+        329978,
+        330024,
+        330068,
+        330125,
+        330174,
+        330397,
+        330599,
+        330863
+      ],
+      "capture_checkpoint_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+      "captured_after_cold_reopen": true,
+      "temporary_options_used": true,
+      "view_restored": true,
+      "rollback_status": "RolledBack",
+      "capture_status": "CAPTURED_AFTER_P6_REOPEN",
+      "note": "Quatro volumes independentes e circulacoes cobertas/externas; nao ha salas internas de dormitorios.",
+      "display_style": "Wireframe"
+    },
+    {
+      "role": "services",
+      "path": "revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/services.png",
+      "view_name": "P6-R04-RUN003-SERVICOS",
+      "view_id": 328710,
+      "view_type": "ThreeD",
+      "sha256": "8868f1e18b6ac4288b5c10d05387c2801a1304ac0849359dd9e8abe9a6cf6975",
+      "width": 2400,
+      "height": 1452,
+      "element_ids": [
+        328663,
+        331095,
+        331108,
+        329950
+      ],
+      "capture_checkpoint_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+      "captured_after_cold_reopen": true,
+      "temporary_options_used": true,
+      "view_restored": true,
+      "rollback_status": "RolledBack",
+      "capture_status": "CAPTURED_AFTER_P6_REOPEN",
+      "note": "Composicao curva ao redor de patio; mostra envelopes e acessos, sem atribuicao interna de funcoes.",
+      "display_style": "Wireframe"
+    },
+    {
+      "role": "child_sector",
+      "path": "revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/child-sector.png",
+      "view_name": "P6-R04-RUN003-INFANTIL",
+      "view_id": 328721,
+      "view_type": "ThreeD",
+      "sha256": "f341741efe214d0f4638027c529d8ddeb965ef1d72ad515dc952ce1984a7960b",
+      "width": 2400,
+      "height": 1840,
+      "element_ids": [
+        328658,
+        329971
+      ],
+      "capture_checkpoint_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+      "captured_after_cold_reopen": true,
+      "temporary_options_used": true,
+      "view_restored": true,
+      "rollback_status": "RolledBack",
+      "capture_status": "CAPTURED_AFTER_P6_REOPEN",
+      "note": "Envelope infantil; playground e comodo interno nao aparecem juntos nesta vista.",
+      "display_style": "Wireframe"
+    }
+  ],
+  "reference_captures": {
+    "child_playground_relation": {
+      "role": "child_playground_relation",
+      "path": "revit/production/evidence/AMANDA-RUN-003-R04/views/r04-child-playground-top-current.png",
+      "sha256": "da54f0dc1ff2e277963b3bf8e99a71d9596a532a8403b3324149dc2ab641095d",
+      "width": 3000,
+      "height": 1774,
+      "source_checkpoint_path": "revit/production/evidence/AMANDA-RUN-003-R04/R04-T01-RUN003-POST-SAVE.rvt",
+      "source_checkpoint_sha256": "33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49",
+      "view_id": 8251,
+      "visible_element_ids": [
+        328658,
+        329971
+      ],
+      "visible_element_names": [
+        "MASS-CHILD_SECTOR",
+        "SITE-PLAYGROUND"
+      ],
+      "view_restored": true,
+      "rollback_status": "RolledBack",
+      "use": "REFERENCE_ONLY_FOR_UNCHANGED_CHILD_PLAYGROUND_RELATION",
+      "current_revalidation": {
+        "checkpoint_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+        "typed_readback_fingerprint": "4636abc6b294829b",
+        "element_ids": [
+          328658,
+          329971
+        ],
+        "child_mass_bounds_m": {
+          "min": [
+            -38.22081008634282,
+            -14.524234614174768,
+            0
+          ],
+          "max": [
+            -27.77918991365718,
+            -5.475765385825232,
+            3.2
+          ]
+        },
+        "playground_bounds_m": {
+          "min": [
+            -36.99999999999999,
+            -22.5,
+            -0.14999999999999997
+          ],
+          "max": [
+            -29,
+            -17.499999999999996,
+            0
+          ]
+        },
+        "geometry_was_not_changed_by_admin_reconciliation": true
+      },
+      "note": "Imagem original pertence ao checkpoint R04 anterior. Ela nao e apresentada como nova captura; a relacao e mantida apenas como referencia, com ambos os IDs e limites conferidos no readback tipado do checkpoint P6 atual."
+    }
+  },
+  "excluded_captures": [
+    {
+      "role": "child_playground_relation_current_attempt",
+      "path": "revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/child-playground-relation.png",
+      "sha256": "baabdd0a74c3b815b1f71217e9b436a1b6affc5ea5026f36c0f478bf7d42a87c",
+      "reason": "Visually near blank and does not show the child/playground relation; excluded from accepted current captures."
+    }
+  ],
+  "limits": [
+    "O arquivo child-playground-relation.png gerado na rodada P6 foi excluido por nao mostrar a relacao; a captura de referencia anterior esta explicitamente vinculada ao checkpoint anterior.",
+    "Capturas apoiam a leitura topologica e de envelope; nao substituem rooms, atribuicoes funcionais ou aprovacao arquitetonica completa.",
+    "Coordenadas permanecem locais/nao levantadas; nao comprovam divisas, topografia, disponibilidade do lote, quantidade de frentes ou norte verdadeiro.",
+    "Nao ha calibracao pixel-modelo."
+  ]
+}
