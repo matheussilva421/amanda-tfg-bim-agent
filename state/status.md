@@ -4,15 +4,17 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Phase and task progress
 
-- Phase: `P4` — bim-00
-- Phase status: `RUNNING`
-- Next task: `P4-T01`
-- Last recorded task: `P3-T01`
-- Tasks: 182 total; READY: (none)
+- Phase: `P6` — r04-visual-geometric-acceptance
+- Phase status: `PENDING`
+- Next task: `P6-T01`
+- Last recorded task: `P5-T01`
+- Tasks: 184 total; READY: P6-T01
 - `P1`: 1/1 PASS
 - `P2`: 1/1 PASS
 - `P3`: 1/1 PASS
-- `P4`: 0/1 PASS
+- `P4`: 1/1 PASS
+- `P5`: 1/1 PASS
+- `P6`: 0/1 PASS
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -34,8 +36,13 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Preferred provider: `horizun`
 - `custom-api`: AVAILABLE (fallback-last-resort)
-- `horizun-revit-mcp`: UNREACHABLE (primary)
+- `horizun-revit-mcp`: UNREACHABLE in the older persisted environment probe; superseded for this closeout by the healthy live P5-T01 check below (primary)
 - `revitcortex`: NOT_PROBED_THIS_SESSION (fallback-typed)
+
+Live Revit check during the 2026-09-26 P5-T01 closeout: Horizun 1.3.3 reported
+`healthy` on Revit 2027 build `27.2.0.39`, process 38296; command registry
+73/73 clean, RUN-003 active as the sole open document, zero other clients.
+See `revit/production/evidence/AMANDA-RUN-003-R04/real-model-evidence.json`.
 
 ## Capability counts
 
@@ -56,16 +63,16 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 ## Design and Revit recovery
 
 - Selected design: `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C`
-- Revit stage: `PRE_R04`
-- Current checkpoint: `revit/production/checkpoints/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY-PRE-R04.rvt`
+- Revit stage: `R04`
+- Current checkpoint: `revit/production/checkpoints/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY-POST-R04.rvt`
 
 ## Writer lease
 
-- Status: `HELD`
-- Owner: `amanda-P4-T01-RUN003-R04`
-- Fencing generation: `2`
+- Status: `FREE`
+- Owner: `NOT_RECORDED`
+- Fencing generation: `NOT_RECORDED`
 
 ## Git verification
 
-- Last verified commit: `21848db0d5eb2defd2cfb5baffbe9e057b004a4e`
-- Observed HEAD: `21848db0d5eb2defd2cfb5baffbe9e057b004a4e`
+- Last verified commit: `b078685897a1601da948e2d6140736ff6fa5c132`
+- Observed HEAD: `b078685897a1601da948e2d6140736ff6fa5c132`

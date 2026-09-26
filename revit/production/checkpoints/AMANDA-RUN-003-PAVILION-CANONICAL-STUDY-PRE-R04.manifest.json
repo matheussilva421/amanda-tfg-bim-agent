@@ -1,0 +1,31 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    8725724279355908
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY-PRE-R04.rvt",
+  "created_utc": "2026-09-26T11:56:16.983667Z",
+  "document_id": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\checkpoints\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY-PRE-R04.manifest.json",
+  "provenance": {
+    "coordinate_site_mode": "LOCAL_NORMALIZED_STUDY_NOT_SURVEYED",
+    "purpose": "immutable pre-R04 rollback point",
+    "solution_id": "AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C",
+    "source_template": "C:/ProgramData/Autodesk/RVT 2027/Templates/Portuguese/DefaultBRAPTB.rte",
+    "source_template_sha256": "2CBFA55F22FD1316BF744CCEC31E468CC4584305ED5DBC6F2511122EBABF7CC8",
+    "task": "P4-T01 BIM-00 baseline"
+  },
+  "schema_version": 1,
+  "sha256": "4a506a267827f0c36f120084670ed5fb7f97f9f05c75283782904e9c2990fd4e",
+  "size_bytes": 4370432,
+  "source_document_id": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "source_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "source_file_id": [
+    9107472496377837229,
+    15481123720408850
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "source_sha256": "4a506a267827f0c36f120084670ed5fb7f97f9f05c75283782904e9c2990fd4e",
+  "stage": "MASSING",
+  "version": 1
+}

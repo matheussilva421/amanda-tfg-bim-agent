@@ -1,67 +1,53 @@
 # Current Handoff
 
-## Current continuation — 2026-09-26 (P4-T01, then authorized R04)
+## Current continuation — 2026-09-26 (P4-T01 and P5-T01 complete)
 
-The active task is the current P4-T01 retry. A fresh `horizun_health` returned
-`healthy` on Revit 2027 build 27.2.0.39, Horizun 1.3.3 / contract
-`8b9600f5274d7dffb6e5bd5f`; the registry is clean at 73/73 commands. Revit PID
-38296 is targetable. The only open document is
-`revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt`,
-non-workshared, saved, with zero other clients.
+P4-T01 BIM-00 passed, then the user-authorized P5-T01 R04 write ran in the
+actual Revit 2027 session. Horizun 1.3.3 health is `healthy`, contract
+`8b9600f5274d7dffb6e5bd5f`, registry 73/73 clean, and PID 38296 is targetable.
+At final live check the exact RUN-003 target was active, was the sole open
+document, and had zero other clients. The RUN-003 writer lease was released
+after model persistence closeout.
 
-The old S02 lease owner process was confirmed absent on this host. The lease
-was safely reclaimed with its fencing generation advanced and is held by
-`amanda-P4-T01-RUN003-R04`, bound to the exact RUN-003 target. A clean target
-was created from the stock `DefaultBRAPTB.rte` template after verifying its
-Revit 2027 version/hash. A separate pre-R04 checkpoint and manifest were
-created and verified; target and checkpoint both had SHA-256
-`4a506a267827f0c36f120084670ed5fb7f97f9f05c75283782904e9c2990fd4e` before
-any R04 geometry. No S01, S02 or R12 model was opened or reused. The superseded
-linear R12 RVT remains in its historical archive; its archive manifest records
-SHA-256 `ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29`,
-`opened=false`, and `may_reuse_linear_geometry=false`. This digest is retained
-only as a historical exclusion fingerprint.
+Seven canonical `OST_Mass` elements were written, queried, geometrically
+read back, saved, checkpointed, closed, cold-reopened, and queried again. Save
+returned target SHA-256
+`120935963a19af4c654894d00f057304237ec7f98115f0eecb266e3a91aaef20` and size
+4,603,904 bytes; the checkpoint file and manifest were independently rehashed
+and match. Direct filesystem hashing of the target was denied while Revit held
+it open. The independent typed queries confirm element identity and bounding
+boxes after reopen. Python readbacks are marked
+`self_reported_verified` / `host_verified=false`; retain that limitation.
 
-The selected RUN-003 solution, four current board hashes, and official program
-PDF revalidate. Rebuilding from the current official `program.json` and the
-four-board hash-validated canonical profile produces the exact selected layout
-hash `7fde3e34a162167ce27fe2e3158a38f446882816a7c81bb326d486bdfaaae2e2`.
-Comparison against saved current-snapshot WKT gives zero symmetric-difference
-area for all seven blocks. The R04 plan has seven operations: administration
-at 6.40 m for two storeys and the one-storey blocks at 3.20 m, explicitly a
-provisional 3.20 m per floor; the service/capacitation block retains six
-courtyard interior rings. Coordinates/datum remain local normalized, not
-surveyed.
+The service-profile write first rolled back because a 0.119 mm edge was below
+the live 0.7804 mm Revit ShortCurveTolerance. A new key and corrected script
+removed one vertex with 0.0232 mm maximum deviation, preserved six interior
+rings, and passed verification with 0.00000148 m² area difference. Coordinates
+are local normalized, not surveyed; floor heights are provisional. Capture
+attempts rolled back and produced no usable visual evidence, so CANON-011 and
+P6 acceptance remain open. No R05, GeoNatal research, or RC01 edit occurred.
 
-The mass capability registry initially refused because its indexed SHA did not
-match the checked-in evidence JSON. The JSON records the independent lab query
-and save-close-reopen result, with its `python_host_verified=false` limitation
-stated. `state/capabilities.yaml` now indexes the actual SHA-256
-`7d1d80815954d2619e033b159e18edff9ae64b429f37ec3815247d607ec885dc`; the
-production loader returns no warnings and the canonical R04 plan passes its
-static/provider preflight except for the expected BIM-00 block. This corrected
-index is the only implementation/configuration change so far.
+Evidence and next steps:
 
-**No mass geometry has been written yet.** Next, refresh RUN-003 target,
-checkpoint, lease, live provider, capability registry, units, source hashes,
-repository HEAD and `PROJECT_STATE.yaml` raw SHA; construct and run the typed
-BIM-00 gate against the exact seven-operation canonical R04 plan. Only on PASS
-continue immediately to R04 as directed: typed rehearsal first; if the mass
-kind grants the structured Python fallback, write once with idempotency; then
-independent query/readback, geometric verification, save, checkpoint, close,
-reopen and post-reopen query. Do not start R05 or GeoNatal. Do not stage, alter,
-or restore the pre-existing RC01 deletions. Release the RUN-003 writer lease
-cleanly after evidence and state closeout. User instruction on 2026-09-26
-authorizes the R04 continuation and no R05.
+- Model evidence: `revit/production/evidence/AMANDA-RUN-003-R04/real-model-evidence.json`.
+- Short report: `docs/reports/P5-T01-run003-r04-real-model.md`.
+- POST-R04 checkpoint: `revit/production/checkpoints/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY-POST-R04.rvt` and its manifest.
+- Focused adapter suite: 59 passed; no broad suite was run.
+- Next task: P6-T01 visual/geometric acceptance against all four boards. R05 remains blocked until it passes.
+- Formal pointer after task closeout: `PROJECT_STATE.yaml` revision 192, phase P6 `PENDING`, `last_completed_task: P5-T01`, `next_task: P6-T01`, `revit_stage: R04`; writer lease is free.
+- Pre-existing deletions under `revit/lab/exports/p06t14/GOLDEN/RC01/` must remain untouched and unstaged.
 
 
 ## Formal state and safety
 
+> Historical record follows. Older blocked-provider and no-write notes below
+> describe prior checkpoints and are superseded by the current continuation at
+> the top of this file and `PROJECT_STATE.yaml` revision 192. Resume at P6-T01.
+
 Repository recovery (P0), four-board reconciliation (P1-T01), identity
-assignment (P2-T01), and offline canonical QA (P3-T01) are complete.
-P4-T01 was attempted as a read-only BIM-00 preflight and is
-`BLOCKED_BY_INPUT`. `PROJECT_STATE.yaml` remains at P4 with `next_task: P4-T01`;
-P3-T01 is the last PASS task. The source-bound identity is recorded at
+assignment (P2-T01), offline canonical QA (P3-T01), BIM-00 (P4-T01), and R04
+model creation (P5-T01) are complete. `PROJECT_STATE.yaml` and the task graph
+point to P6-T01 next. The source-bound identity is recorded at
 `project/requirements/canonical-solution-identity.yaml`, while
 the selected design is RUN-003 for normalized study only; final/detailed
 eligibility remains false. The recovery anchor is
@@ -122,7 +108,9 @@ at `refs/heads/main`. This handoff status correction is being committed as a
 fast-forward follow-up. The pre-existing RC01 deletions were not staged or
 changed.
 
-### P4-T01 continuation — scoped study selection and BIM-00 hardening (2026-09-25)
+### Historical: P4-T01 continuation — scoped study selection and BIM-00 hardening (2026-09-25)
+
+> Superseded by the 2026-09-26 P4/P5 closeout at the top of this file.
 
 - The previously recorded site-data dependency was too broad for normalized
   academic STUDY. Successor decision `DEC-CANONICAL-DETAIL-004` selects RUN-003

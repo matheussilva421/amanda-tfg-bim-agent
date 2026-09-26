@@ -31,30 +31,38 @@ units, site-coordinate mode, family strategy, canonical selection, and
 official program source. BIM-00 is an evidence/authorization gate only; it
 does not execute an R04/R05 operation.
 
-**Current status (2026-09-26 continuation):** `P4-T01` is `RUNNING` against
- the exact RUN-003 study target and its separate verified pre-R04 checkpoint.
- Horizun 1.3.3 reports `healthy`, Revit 2027 build 27.2.0.39 is targetable, the
- only open document is RUN-003, and zero other Revit clients are connected. The
- orphaned S02 lease was reclaimed only after its recorded local process was
- proved absent; the active lease is bound to RUN-003. The clean target was
- created from the stock Portuguese Revit 2027 template. The current canonical
- layout hash rebuilds exactly to the selected snapshot; its R04 plan contains
- seven separate masses and retains all six service-court interior rings. The
- provider capability evidence index had a stale digest; it now matches the
- evidence file and the production capability loader reports no warnings.
- BIM-00 must still pass against fresh commit/state/source/checkpoint bindings
- before the first R04 write. If it passes, the user's current session
- instruction authorizes continuing immediately through real R04 save/close/
- reopen/query. `AMANDA_REVIEW_PENDING`, non-surveyed local coordinates, and
- CANON-011 remain in force. R05 remains blocked until four-board acceptance.
- The P4 blocker report describes the 2026-09-25 attempt; the 2026-09-26
- execution record will contain current evidence.
+**Completed status (2026-09-26):** `P4-T01` passed BIM-00 against the exact
+RUN-003 target, pre-R04 checkpoint, canonical sources, program, repository
+commit, and state revision. `P5-T01` then wrote seven real Revit masses and
+completed separate query/readback, save, POST-R04 checkpoint, close, cold
+reopen, and fresh post-reopen queries. The detail is in
+`docs/reports/P5-T01-run003-r04-real-model.md` and
+`revit/production/evidence/AMANDA-RUN-003-R04/real-model-evidence.json`.
+P5 is `PASS_WITH_WARNINGS`: Python geometry readbacks are explicitly
+`self_reported_verified` (`host_verified=false`), while typed queries confirmed
+all seven identities and bounding boxes both before and after reopen. One
+sub-tolerance service-profile vertex was omitted within measured Revit
+ShortCurveTolerance; six courtyard rings remain, and the measured area delta is
+0.00000148 m². Both attempted visual captures rolled back; neither yielded a
+usable artifact, so CANON-011 remains open.
+
+Live closeout confirmed Horizun 1.3.3 healthy, Revit 2027 build 27.2.0.39,
+clean 73/73 command registry, RUN-003 active as the sole open document, and no
+other clients. The exclusive RUN-003 lease was released after persistence
+verification. Save returned target SHA-256
+`120935963a19af4c654894d00f057304237ec7f98115f0eecb266e3a91aaef20`; the
+checkpoint file and manifest were independently rehashed and match. Direct file
+hashing of the working RVT was denied while Revit held it open; cold reopen and
+fresh typed queries verified the target contents.
+Coordinates remain local normalized and unsurveyed; floor heights remain
+provisional. All five site-data blockers remain open. No R05 operation occurred.
 ## P5 — R04 Revit
 
-`P5-T01` creates the seven canonical RUN-003 masses only after BIM-00 PASS,
-then performs independent geometry readback, save, close, reopen, and query.
-The current user instruction authorizes this immediate continuation from P4;
-it does not authorize R05.
+`P5-T01` is complete with `PASS_WITH_WARNINGS`; see the execution evidence
+above. `P6-T01` is next: compare the saved R04 geometry to all four canonical
+boards and close CANON-011. Revit visual acceptance is still pending because
+the available capture attempts did not produce a usable image. R05 remains
+blocked until P6 passes and is not authorized by this continuation.
 
 ## P6 — R04 visual/geometric acceptance
 
@@ -72,7 +80,6 @@ Run R14, R15 cold reopen, and exports.
 
 Run R16 only after every required gate and documented deviation passes.
 
-P0, P1-T01, P2-T01, and P3-T01 are closed. `PROJECT_STATE.yaml` is the
-formal task pointer; P4-T01 is `BLOCKED_BY_INPUT` and remains the retry pointer.
-Historical plans are archive material in Git history, not a second instruction
-source.
+P0 through P5-T01 are closed. `PROJECT_STATE.yaml` and `state/task-graph.yaml`
+point to P6-T01 as the next task. Historical plans are archive material in Git
+history, not a second instruction source.

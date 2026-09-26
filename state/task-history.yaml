@@ -2122,42 +2122,72 @@ entries:
 - task_id: P08-CAN-T07
   status: PASS_WITH_WARNINGS
   evidence:
-  - S02 created and reopened in Revit 2027 from the installed metric template; R01 checkpoint SHA-256 f5d4b0f52eca096a29ca3f34bb50d9a83d76f1461ee1d35bc3eb4563318678f7.
-  - BIM-00 PASS: seven R04 study masses authorized; site coordinates and mass heights remain provisional.
+  - S02 created and reopened in Revit 2027 from the installed metric template; R01
+    checkpoint SHA-256 f5d4b0f52eca096a29ca3f34bb50d9a83d76f1461ee1d35bc3eb4563318678f7.
+  - BIM-00 PASS: seven R04 study masses authorized; site coordinates and mass heights
+      remain provisional.
   recorded_utc: '2026-09-23T16:03:21Z'
-  note: Target creation and gate complete; proceed to R04 when a bounded mass capability is available.
+  note: Target creation and gate complete; proceed to R04 when a bounded mass capability
+    is available.
 - task_id: P08-CAN-T08
   status: BLOCKED_BY_TOOL
   evidence:
-  - Automatic review rejected request_python_access because it grants indefinite arbitrary Python across files, batches and Revit restarts; the exact R04 mass route currently maps to that executor. No production geometry was written.
-  - Live typed dry-run for kind=mass returned unsupported kind, 0 valid, transaction not started, and no write; the tool advertised Python fallback, which was not executed.
+  - Automatic review rejected request_python_access because it grants indefinite arbitrary
+    Python across files, batches and Revit restarts; the exact R04 mass route currently
+    maps to that executor. No production geometry was written.
+  - Live typed dry-run for kind=mass returned unsupported kind, 0 valid, transaction
+    not started, and no write; the tool advertised Python fallback, which was not
+    executed.
   recorded_utc: '2026-09-23T16:12:33Z'
-  note: Do not bypass via direct executor or indirect route. Resume with a bounded typed Horizun capability or policy-approved access.
+  note: Do not bypass via direct executor or indirect route. Resume with a bounded
+    typed Horizun capability or policy-approved access.
 - task_id: P1-T01
   status: PASS
   evidence:
-  - 'docs/reports/P1-T01-four-board-reconciliation.md: four exact canonical source hashes and official program SHA-256; implantation, administration, residential, service/capacitation, child-sector and board-to-program crosswalks documented.'
-  - 'Focused canonical implementation/state/repository gates: 100 passed, covering four-source binding, geometry/function assignment, selection refusal including both historical S01 identities, write-gate hash checks, runner guards, study package provenance, state routing, repository hygiene and plan order.'
-  - 'Canonical QA: 17 structural checks PASS; CANON-011 remains BLOCKED pending later Revit visual evidence. No BIM output, R04/R05, or Revit write.'
-  - 'AMANDA-RUN-002-PAVILION-S02 remains stale; current solution identity is unset and generator fails closed.'
+  - 'docs/reports/P1-T01-four-board-reconciliation.md: four exact canonical source
+    hashes and official program SHA-256; implantation, administration, residential,
+    service/capacitation, child-sector and board-to-program crosswalks documented.'
+  - 'Focused canonical implementation/state/repository gates: 100 passed, covering
+    four-source binding, geometry/function assignment, selection refusal including
+    both historical S01 identities, write-gate hash checks, runner guards, study package
+    provenance, state routing, repository hygiene and plan order.'
+  - 'Canonical QA: 17 structural checks PASS; CANON-011 remains BLOCKED pending later
+    Revit visual evidence. No BIM output, R04/R05, or Revit write.'
+  - AMANDA-RUN-002-PAVILION-S02 remains stale; current solution identity is unset
+    and generator fails closed.
   recorded_utc: '2026-09-25T01:34:05Z'
   note: P1-T01 completed from main; P2-T01 is pending new-identity assignment.
 - task_id: P2-T01
   status: PASS
   evidence:
-  - 'project/requirements/canonical-solution-identity.yaml assigns AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C and binds the four current board hashes, official program PDF hash, and P1-T01 report hash.'
-  - 'Focused identity and state gates pass 41/41; identity generation is deterministic and the idempotent writer re-verifies live hashes. S02 remains stale; both S01 aliases and other linear IDs are rejected.'
-  - 'selected_design and SELECTION_SOLUTION_ID remain unset; approval_hash is null. No layout, BIM-00, Revit/RVT access or write, R04, or R05 occurred.'
+  - project/requirements/canonical-solution-identity.yaml assigns AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C
+    and binds the four current board hashes, official program PDF hash, and P1-T01
+    report hash.
+  - Focused identity and state gates pass 41/41; identity generation is deterministic
+    and the idempotent writer re-verifies live hashes. S02 remains stale; both S01
+    aliases and other linear IDs are rejected.
+  - selected_design and SELECTION_SOLUTION_ID remain unset; approval_hash is null.
+    No layout, BIM-00, Revit/RVT access or write, R04, or R05 occurred.
   recorded_utc: '2026-09-25T10:22:34Z'
-  note: P2-T01 complete from main; P3-T01 is the next authorized task and was not started.
+  note: P2-T01 complete from main; P3-T01 is the next authorized task and was not
+    started.
 - task_id: P3-T01
   status: PASS
   evidence:
-  - 'docs/reports/P3-T01-canonical-qa-and-approval.md records the candidate identity, four board/PDF/P1 bindings, unresolved reconciliation differences, and non-Revit boundary.'
-  - 'Focused gate: 74 passed; state/task/session routing suite: 55 passed; changed-file Ruff clean; deterministic candidate regeneration succeeded; all six artifacts match manifest hashes and byte counts.'
-  - 'P3 QA contains exactly unique CANON-001..018: 17 PASS, 0 FAIL, CANON-011 BLOCKED. Candidate is BIM-ineligible, selected_design remains null, and revit_calls=0.'
-  - 'Independent review and follow-up re-review: no unresolved findings; writer boundary revalidates persisted P1 report binding, duplicate/missing QA IDs are rejected, and CLI remains valid.'
-  - 'Exploratory tests/unit/test_production_layout_bim.py: 26 passed, 5 failed at R04 projection_area: MASS-SERVICE_CAPACITATION; recorded for R04 planning and not modified.'
+  - docs/reports/P3-T01-canonical-qa-and-approval.md records the candidate identity,
+    four board/PDF/P1 bindings, unresolved reconciliation differences, and non-Revit
+    boundary.
+  - 'Focused gate: 74 passed; state/task/session routing suite: 55 passed; changed-file
+    Ruff clean; deterministic candidate regeneration succeeded; all six artifacts
+    match manifest hashes and byte counts.'
+  - 'P3 QA contains exactly unique CANON-001..018: 17 PASS, 0 FAIL, CANON-011 BLOCKED.
+    Candidate is BIM-ineligible, selected_design remains null, and revit_calls=0.'
+  - 'Independent review and follow-up re-review: no unresolved findings; writer boundary
+    revalidates persisted P1 report binding, duplicate/missing QA IDs are rejected,
+    and CLI remains valid.'
+  - 'Exploratory tests/unit/test_production_layout_bim.py: 26 passed, 5 failed at
+    R04 projection_area: MASS-SERVICE_CAPACITATION; recorded for R04 planning and
+    not modified.'
   recorded_utc: '2026-09-25T11:46:53Z'
   note: P3-T01 passed; P4-T01 is next and remains limited to BIM-00.
 - task_id: P4-T01
@@ -2183,15 +2213,71 @@ entries:
 - task_id: P4-T01
   status: BLOCKED_BY_INPUT
   evidence:
-  - 'DEC-CANONICAL-DETAIL-004 selects RUN-003 only for reversible normalized local-reference STUDY through R04; AMANDA_REVIEW_PENDING remains and R05 requires CANON-011 comparison against all four boards.'
-  - 'Offline snapshot design-engine/runs/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C-study-detail-004: decision hash 29d70f0e830708a3926abad14877f4c3941418630c5f0225b0bf5924f2dabd8b; content approval hash 961b6edc95bd097fe600b2ce968aacdf28876bf3c587b788a0b2358baddfc0b0; manifest 6/6 valid; QA 17 PASS, 0 FAIL, CANON-011 BLOCKED; revit_calls=0.'
-  - 'PROJECT_STATE revision 183 records scoped site gaps as DEGRADING and current blockers for provider reachability, the held S02 lease, and missing exact target/checkpoint.'
-  - 'Read-only Revit diagnostic: PID 38152 responds but has no targetable window; Horizun health reports no reachable Revit. No model was opened or written.'
-  - 'TDD focused R04/readback/geometric/BIM-00 suite: 154 passed; final independent review and closeout gates pending.'
-  - 'Consolidated 15-module state/provider/selection/R04/session/status/plan gate: 235 passed.'
-  - 'Independent review findings were fixed test-first: FINAL scenario refusal for R03/R04, P3-T01 as last completed task at PROJECT_STATE revision 185, claim-specific dashboard blocker scope, and an explicitly historical pre-DEC-004 handoff section. Follow-up independent review approved with no residual findings.'
-  - 'Final focused 19-module suite: 270 passed, 0 failed; scoped Ruff passed. No Revit write, BIM-00 authorization, R04, or R05 occurred.'
-  - 'Implementation commit on main: 3c816cb2e5bfb84b318ec043196551446fb70e9d; PROJECT_STATE.last_verified_commit points to this tested commit.'
-  - 'State closeout commit 9d3b255f3ffbb4aee4eae915d80522e397a39f91; final handoff/status update pushed fast-forward to origin/main, with a fresh remote read matching local main. No RC01 paths were staged or changed.'
+  - DEC-CANONICAL-DETAIL-004 selects RUN-003 only for reversible normalized local-reference
+    STUDY through R04; AMANDA_REVIEW_PENDING remains and R05 requires CANON-011 comparison
+    against all four boards.
+  - 'Offline snapshot design-engine/runs/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C-study-detail-004:
+    decision hash 29d70f0e830708a3926abad14877f4c3941418630c5f0225b0bf5924f2dabd8b;
+    content approval hash 961b6edc95bd097fe600b2ce968aacdf28876bf3c587b788a0b2358baddfc0b0;
+    manifest 6/6 valid; QA 17 PASS, 0 FAIL, CANON-011 BLOCKED; revit_calls=0.'
+  - PROJECT_STATE revision 183 records scoped site gaps as DEGRADING and current blockers
+    for provider reachability, the held S02 lease, and missing exact target/checkpoint.
+  - 'Read-only Revit diagnostic: PID 38152 responds but has no targetable window;
+    Horizun health reports no reachable Revit. No model was opened or written.'
+  - 'TDD focused R04/readback/geometric/BIM-00 suite: 154 passed; final independent
+    review and closeout gates pending.'
+  - 'Consolidated 15-module state/provider/selection/R04/session/status/plan gate:
+    235 passed.'
+  - 'Independent review findings were fixed test-first: FINAL scenario refusal for
+    R03/R04, P3-T01 as last completed task at PROJECT_STATE revision 185, claim-specific
+    dashboard blocker scope, and an explicitly historical pre-DEC-004 handoff section.
+    Follow-up independent review approved with no residual findings.'
+  - 'Final focused 19-module suite: 270 passed, 0 failed; scoped Ruff passed. No Revit
+    write, BIM-00 authorization, R04, or R05 occurred.'
+  - 'Implementation commit on main: 3c816cb2e5bfb84b318ec043196551446fb70e9d; PROJECT_STATE.last_verified_commit
+    points to this tested commit.'
+  - State closeout commit 9d3b255f3ffbb4aee4eae915d80522e397a39f91; final handoff/status
+    update pushed fast-forward to origin/main, with a fresh remote read matching local
+    main. No RC01 paths were staged or changed.
   recorded_utc: '2026-09-25T19:07:18Z'
-  note: 'P4-T01 continuation reconciled study scope; BIM-00 remains blocked and no Revit write was made.'
+  note: P4-T01 continuation reconciled study scope; BIM-00 remains blocked and no
+    Revit write was made.
+- task_id: P4-T01
+  status: PASS
+  evidence:
+  - 'BIM-00 PASS: revit/production/evidence/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY-BIM-00.json;
+    exact RUN-003 target, current four-board/program bindings, clean live provider
+    and exclusive lease were verified.'
+  recorded_utc: '2026-09-26T13:49:31Z'
+  note: BIM-00 gate passed; R04 is recorded separately as P5-T01.
+- task_id: PHASE_GATE
+  status: GO_WITH_LIMITATIONS
+  evidence:
+  - P4-T01 BIM-00 PASS; phase scope authorizes only the exact RUN-003 R04 study target;
+    site limitations and CANON-011 remain.
+  recorded_utc: '2026-09-26T13:49:32Z'
+  note: advanced to P5
+- task_id: P5-T01
+  status: PASS_WITH_WARNINGS
+  evidence:
+  - Seven RUN-003 R04 OST_Mass elements verified after write and after cold reopen;
+    typed queries confirm identities and bounds. See docs/reports/P5-T01-run003-r04-real-model.md
+    and revit/production/evidence/AMANDA-RUN-003-R04/real-model-evidence.json.
+  - Save, POST-R04 CheckpointManager verification, close, cold reopen without upgrade,
+    and fresh post-reopen queries passed; target/checkpoint SHA-256 120935963a19af4c654894d00f057304237ec7f98115f0eecb266e3a91aaef20.
+  - 'PASS_WITH_WARNINGS: Python readbacks are self_reported_verified/host_verified=false;
+    typed queries independently confirmed identity and bounding boxes. One service-profile
+    vertex was omitted within measured Revit ShortCurveTolerance; six interior rings
+    retained.'
+  - No usable visual capture; CANON-011 remains open. Coordinates are local normalized/unsurveyed,
+    heights provisional, five site-data blockers remain; no R05 performed.
+  recorded_utc: '2026-09-26T13:49:32Z'
+  note: Real-model R04 complete. Visual/geometric acceptance remains P6-T01; do not
+    start R05.
+- task_id: PHASE_GATE
+  status: GO_WITH_LIMITATIONS
+  evidence:
+  - P5-T01 R04 persisted and verified with warnings; P6 visual/geometric acceptance
+    is next; CANON-011 blocks R05.
+  recorded_utc: '2026-09-26T13:50:19Z'
+  note: advanced to P6

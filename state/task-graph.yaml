@@ -1421,9 +1421,9 @@ tasks:
       the three integration scopes, all passed, 0 failed'
     - ruff check on tool-lab/topologic/spike.py and tests/unit/test_topologic_spike.py
       is clean
-    - recovery evidence retained in tool-lab/topologic/README.md, results and task history; artefacts
-      hashed (report 53FF6517..., obj 07336714..., mtl B5152B57..., topology json
-      3B6F7416...) so a re-run can be compared byte for byte
+    - recovery evidence retained in tool-lab/topologic/README.md, results and task
+      history; artefacts hashed (report 53FF6517..., obj 07336714..., mtl B5152B57...,
+      topology json 3B6F7416...) so a re-run can be compared byte for byte
   P04-T21:
     id: P04-T21
     phase: PHASE_04
@@ -2979,8 +2979,11 @@ tasks:
     - P08-CAN-T06
     status: PASS_WITH_WARNINGS
     evidence:
-    - S02 created from the installed Revit 2027 metric template at the canonical target; immutable R01 checkpoint SHA-256 f5d4b0f52eca096a29ca3f34bb50d9a83d76f1461ee1d35bc3eb4563318678f7.
-    - BIM-00 PASS record revit/production/evidence/AMANDA-RUN-002-PAVILION-S02-BIM-00.json (SHA-256 f62c7d7de431fdbbdce82094239827ddb8901ef7ae503f01d3306ab65a1dcce9); STUDY site facts remain provisional.
+    - S02 created from the installed Revit 2027 metric template at the canonical target;
+      immutable R01 checkpoint SHA-256 f5d4b0f52eca096a29ca3f34bb50d9a83d76f1461ee1d35bc3eb4563318678f7.
+    - BIM-00 PASS record revit/production/evidence/AMANDA-RUN-002-PAVILION-S02-BIM-00.json
+      (SHA-256 f62c7d7de431fdbbdce82094239827ddb8901ef7ae503f01d3306ab65a1dcce9);
+      STUDY site facts remain provisional.
   P08-CAN-T08:
     id: P08-CAN-T08
     phase: PHASE_08
@@ -2990,8 +2993,13 @@ tasks:
     - P08-CAN-T07
     status: BLOCKED_BY_TOOL
     evidence:
-    - BIM-00 PASS and exactly seven R04 operations compile, but the current Horizun mass route maps to execute_python. The request for persistent arbitrary Python access was rejected by automatic review as broader than this one operation. No R04 production write was sent.
-    - Safe live typed dry-run on the active S02 target returned unsupported kind 'mass', valid=0, transaction_status=not_started, write_started=false. It offered Python fallback; no fallback execution was attempted.
+    - BIM-00 PASS and exactly seven R04 operations compile, but the current Horizun
+      mass route maps to execute_python. The request for persistent arbitrary Python
+      access was rejected by automatic review as broader than this one operation.
+      No R04 production write was sent.
+    - Safe live typed dry-run on the active S02 target returned unsupported kind 'mass',
+      valid=0, transaction_status=not_started, write_started=false. It offered Python
+      fallback; no fallback execution was attempted.
   P08-CAN-T09:
     id: P08-CAN-T09
     phase: PHASE_08
@@ -3001,7 +3009,8 @@ tasks:
     - P08-CAN-T08
     status: SUSPENDED
     evidence:
-    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not
+      resume the legacy S02 chain.'
   P08-CAN-T10:
     id: P08-CAN-T10
     phase: PHASE_08
@@ -3011,7 +3020,8 @@ tasks:
     - P08-CAN-T09
     status: SUSPENDED
     evidence:
-    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not
+      resume the legacy S02 chain.'
   P08-CAN-T11:
     id: P08-CAN-T11
     phase: PHASE_08
@@ -3021,7 +3031,8 @@ tasks:
     - P08-CAN-T10
     status: SUSPENDED
     evidence:
-    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not
+      resume the legacy S02 chain.'
   P08-CAN-T12:
     id: P08-CAN-T12
     phase: PHASE_08
@@ -3031,7 +3042,8 @@ tasks:
     - P08-CAN-T11
     status: SUSPENDED
     evidence:
-    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not
+      resume the legacy S02 chain.'
   P08-CAN-T13:
     id: P08-CAN-T13
     phase: PHASE_08
@@ -3041,7 +3053,8 @@ tasks:
     - P08-CAN-T12
     status: SUSPENDED
     evidence:
-    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not
+      resume the legacy S02 chain.'
   P08-CAN-T14:
     id: P08-CAN-T14
     phase: PHASE_08
@@ -3051,7 +3064,8 @@ tasks:
     - P08-CAN-T13
     status: SUSPENDED
     evidence:
-    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not
+      resume the legacy S02 chain.'
   P08-CAN-T15:
     id: P08-CAN-T15
     phase: PHASE_08
@@ -3061,7 +3075,8 @@ tasks:
     - P08-CAN-T14
     status: SUSPENDED
     evidence:
-    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not
+      resume the legacy S02 chain.'
   P08-CAN-T16:
     id: P08-CAN-T16
     phase: PHASE_08
@@ -3071,7 +3086,8 @@ tasks:
     - P08-CAN-T15
     status: SUSPENDED
     evidence:
-    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not
+      resume the legacy S02 chain.'
   P08-CAN-T17:
     id: P08-CAN-T17
     phase: PHASE_08
@@ -3081,7 +3097,8 @@ tasks:
     - P08-CAN-T16
     status: SUSPENDED
     evidence:
-    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not
+      resume the legacy S02 chain.'
   P08-CAN-T18:
     id: P08-CAN-T18
     phase: PHASE_08
@@ -3091,7 +3108,8 @@ tasks:
     - P08-CAN-T17
     status: SUSPENDED
     evidence:
-    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not
+      resume the legacy S02 chain.'
   P08-CAN-T19:
     id: P08-CAN-T19
     phase: PHASE_08
@@ -3101,7 +3119,8 @@ tasks:
     - P08-CAN-T18
     status: SUSPENDED
     evidence:
-    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not resume the legacy S02 chain.'
+    - 'Suspended 2026-09-24: superseded by four-board reconciliation P1-T01; do not
+      resume the legacy S02 chain.'
   P1-T01:
     id: P1-T01
     phase: P1
@@ -3110,11 +3129,18 @@ tasks:
     depends_on: []
     status: PASS
     evidence:
-    - docs/reports/P1-T01-four-board-reconciliation.md records all four source hashes, official floor/room mappings, the Board-02/Board-04 crosswalk, and unresolved unpriced functions and graphic deltas.
-    - 'Canonical QA has 18 checks: 17 structural relations PASS; CANON-011 stays BLOCKED pending later Revit visual evidence.'
-    - 'Focused implementation/state/repository/plan suite: 100 passed; changed-file Ruff check passes. Eight existing layout_bim.py lint findings also reproduce unchanged at main.'
-    - S02 remains stale and the current identity is unset; no BIM artifact, R04/R05 stage, or Revit write was created.
-    - Both historical linear solution IDs are rejected by selection; Laplace's final independent review APPROVED P1-T01 and its scope/evidence is recorded in state/HANDOFF.md.
+    - docs/reports/P1-T01-four-board-reconciliation.md records all four source hashes,
+      official floor/room mappings, the Board-02/Board-04 crosswalk, and unresolved
+      unpriced functions and graphic deltas.
+    - 'Canonical QA has 18 checks: 17 structural relations PASS; CANON-011 stays BLOCKED
+      pending later Revit visual evidence.'
+    - 'Focused implementation/state/repository/plan suite: 100 passed; changed-file
+      Ruff check passes. Eight existing layout_bim.py lint findings also reproduce
+      unchanged at main.'
+    - S02 remains stale and the current identity is unset; no BIM artifact, R04/R05
+      stage, or Revit write was created.
+    - Both historical linear solution IDs are rejected by selection; Laplace's final
+      independent review APPROVED P1-T01 and its scope/evidence is recorded in state/HANDOFF.md.
   P2-T01:
     id: P2-T01
     phase: P2
@@ -3124,24 +3150,42 @@ tasks:
     - P1-T01
     status: PASS
     evidence:
-    - 'project/requirements/canonical-solution-identity.yaml assigns AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C (fingerprint 4b1275558a6c2c40828dbba1422c0063703c182fd9d7b800b36a448499a073c4).'
-    - 'Identity binds exactly the four current canonical board SHA-256 values, the official program PDF SHA-256, and the P1-T01 reconciliation report SHA-256.'
-    - 'The identity is deterministic; its idempotent writer re-verifies live source hashes. Tests reject S02, both historical S01 identities, other linear IDs, incorrect self-consistent hashes, incomplete bindings, and authorization promotion.'
-    - 'selected_design and SELECTION_SOLUTION_ID remain unset; approval_hash is null; no layout, DesignSolution, BIM-00, Revit access/write, or R04/R05 artifact was created.'
+    - project/requirements/canonical-solution-identity.yaml assigns AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C
+      (fingerprint 4b1275558a6c2c40828dbba1422c0063703c182fd9d7b800b36a448499a073c4).
+    - Identity binds exactly the four current canonical board SHA-256 values, the
+      official program PDF SHA-256, and the P1-T01 reconciliation report SHA-256.
+    - The identity is deterministic; its idempotent writer re-verifies live source
+      hashes. Tests reject S02, both historical S01 identities, other linear IDs,
+      incorrect self-consistent hashes, incomplete bindings, and authorization promotion.
+    - selected_design and SELECTION_SOLUTION_ID remain unset; approval_hash is null;
+      no layout, DesignSolution, BIM-00, Revit access/write, or R04/R05 artifact was
+      created.
   P3-T01:
     id: P3-T01
     phase: P3
     plan_path: docs/plan/CURRENT.md
-    title: Run canonical hard QA and generate the new layout and selection approval hashes
+    title: Run canonical hard QA and generate the new layout and selection approval
+      hashes
     depends_on:
     - P2-T01
     status: PASS
     evidence:
-    - 'P3 candidate AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C binds exactly four canonical boards, the official program PDF SHA-256 11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17, and the P1-T01 report SHA-256 8d297d9c35e0fcdec8b36e5857e03c9e992cbfeb9dab082dddf2106a2ed5025b.'
-    - 'Candidate layout hash 7fde3e34a162167ce27fe2e3158a38f446882816a7c81bb326d486bdfaaae2e2; content approval hash eea4a342a4d732cbc986a16d01d93e3981e79a5931f8d99ebef82c61d24299ec; detail decision hash f37c5c8c2f4f43e957429bd05dbc659012a7f6eaa0b0be65e23cbf7f47c43efc.'
-    - 'Focused P3 gate: 74 passed; state/task/session routing suite: 55 passed; changed-file Ruff clean. Canonical QA has exactly unique CANON-001..018: 17 PASS, 0 FAIL, CANON-011 BLOCKED; zero critical failures. Six generated artifact hashes and byte counts match artifact-manifest.json.'
-    - 'Independent reviews recommended P3 PASS and found no Critical/Important issues in state routing; the minor missing-edge coverage gap is closed by tests for P1->P2, P2->P3, and P3->P4.'
-    - 'Candidate remains provisional and unselected: selected_design=null, bim_eligible=false, revit_calls=0; no Revit access/write or R04/R05 occurred. P4-T01 is the next plan gate.'
+    - P3 candidate AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C binds exactly four
+      canonical boards, the official program PDF SHA-256 11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17,
+      and the P1-T01 report SHA-256 8d297d9c35e0fcdec8b36e5857e03c9e992cbfeb9dab082dddf2106a2ed5025b.
+    - Candidate layout hash 7fde3e34a162167ce27fe2e3158a38f446882816a7c81bb326d486bdfaaae2e2;
+      content approval hash eea4a342a4d732cbc986a16d01d93e3981e79a5931f8d99ebef82c61d24299ec;
+      detail decision hash f37c5c8c2f4f43e957429bd05dbc659012a7f6eaa0b0be65e23cbf7f47c43efc.
+    - 'Focused P3 gate: 74 passed; state/task/session routing suite: 55 passed; changed-file
+      Ruff clean. Canonical QA has exactly unique CANON-001..018: 17 PASS, 0 FAIL,
+      CANON-011 BLOCKED; zero critical failures. Six generated artifact hashes and
+      byte counts match artifact-manifest.json.'
+    - Independent reviews recommended P3 PASS and found no Critical/Important issues
+      in state routing; the minor missing-edge coverage gap is closed by tests for
+      P1->P2, P2->P3, and P3->P4.
+    - 'Candidate remains provisional and unselected: selected_design=null, bim_eligible=false,
+      revit_calls=0; no Revit access/write or R04/R05 occurred. P4-T01 is the next
+      plan gate.'
   P4-T01:
     id: P4-T01
     phase: P4
@@ -3150,50 +3194,84 @@ tasks:
       and target
     depends_on:
     - P3-T01
-    status: RUNNING
+    status: PASS
     evidence:
     - Formal task record for the already-defined P4 BIM-00 phase; scope is unchanged
       and excludes R04/R05.
     - DEC-CANONICAL-DETAIL-004 selects RUN-003 only for reversible normalized local-reference
-      STUDY through R04. AMANDA_REVIEW_PENDING remains; final/detailed eligibility stays false.
+      STUDY through R04. AMANDA_REVIEW_PENDING remains; final/detailed eligibility
+      stays false.
     - docs/reports/P4-T01-bim00-blocker-report.md records current provider, S02 lease,
       and exact target/checkpoint blockers; no BIM-00 authorization was emitted.
     - 'Read-only SHA-256 recheck: four canonical boards, official program PDF, and
       P1-T01 report match the persisted canonical identity.'
-    - '2026-09-25 source recheck: the official PMRN service charter lists BPChoque at Av. Miguel Castro, s/n, Lagoa Nova; it does not bind the cadastral parcel or confirm transfer, so SITE_OCCUPANCY remains BLOCKING.'
-    - docs/reports/P4-T01-site-source-research-2026-09-25.md records a bounded search of official municipal/state sources. GeoNatal serves a 40,568-feature lot GeoJSON collection in CRS84, but no feature was validly tied to this project parcel; no lot-specific survey/elevation/datum, occupancy/transfer decision, frontage count, or true-north bearing was verified. The layer remains unadopted due to unverified provenance/applicability. No blocker was resolved or reclassified.
-    - 'Read-only environment check: doctor exited 0; Git/Codex/PowerShell/.NET available; Revit 2027 detected but no Revit process was running. The project venv is Python 3.12.14 although the host-only probe reports python312 MISSING; live provider health remains unverified. The S02 writer lease was not touched.'
-    - 'The user authorized a read-only candidate search. GeoNatal showed an institutional point in the general road/neighborhood context and lot polygons in the broader area, but no unique parcel could be tied to the TFG site or its reported 24,135 m2. No parcel feature was assigned; SITE_BOUNDARY remains unresolved. See docs/reports/P4-T01-site-source-research-2026-09-25.md.'
+    - '2026-09-25 source recheck: the official PMRN service charter lists BPChoque
+      at Av. Miguel Castro, s/n, Lagoa Nova; it does not bind the cadastral parcel
+      or confirm transfer, so SITE_OCCUPANCY remains BLOCKING.'
+    - docs/reports/P4-T01-site-source-research-2026-09-25.md records a bounded search
+      of official municipal/state sources. GeoNatal serves a 40,568-feature lot GeoJSON
+      collection in CRS84, but no feature was validly tied to this project parcel;
+      no lot-specific survey/elevation/datum, occupancy/transfer decision, frontage
+      count, or true-north bearing was verified. The layer remains unadopted due to
+      unverified provenance/applicability. No blocker was resolved or reclassified.
+    - 'Read-only environment check: doctor exited 0; Git/Codex/PowerShell/.NET available;
+      Revit 2027 detected but no Revit process was running. The project venv is Python
+      3.12.14 although the host-only probe reports python312 MISSING; live provider
+      health remains unverified. The S02 writer lease was not touched.'
+    - The user authorized a read-only candidate search. GeoNatal showed an institutional
+      point in the general road/neighborhood context and lot polygons in the broader
+      area, but no unique parcel could be tied to the TFG site or its reported 24,135
+      m2. No parcel feature was assigned; SITE_BOUNDARY remains unresolved. See docs/reports/P4-T01-site-source-research-2026-09-25.md.
     - RUN-003 remains an offline candidate for final/detailed production, bim_eligible=false,
-      revit_calls=0; PROJECT_STATE selects it only for the reversible R04 STUDY and keeps
-      current_checkpoint=null.
-    - No canonical RVT target or checkpoint is bound; CURRENT.rvt is absent. Revit 2027
-      process PID 38152 was started for read-only diagnostics but exposed no targetable UI
-      window. Horizun health failed twice with no reachable Revit; its add-in manifest and
-      DLL exist, but no active provider was proven. Existing writer lock remains HELD for
-      superseded S02 and was not touched.
+      revit_calls=0; PROJECT_STATE selects it only for the reversible R04 STUDY and
+      keeps current_checkpoint=null.
+    - No canonical RVT target or checkpoint is bound; CURRENT.rvt is absent. Revit
+      2027 process PID 38152 was started for read-only diagnostics but exposed no
+      targetable UI window. Horizun health failed twice with no reachable Revit; its
+      add-in manifest and DLL exist, but no active provider was proven. Existing writer
+      lock remains HELD for superseded S02 and was not touched.
     - 'P4 gate TDD: 38 RED failures / 1 pass; focused gate GREEN 41 passed; gate/status/state
       tests 57 passed; Ruff passed.'
-    - 'Continuation focused suite: 154 passed across R04 mass planning, Revit mass readback,
-      geometry verification, and BIM-00. TDD regression reproduced three independent
-      review findings as RED before code fixes.'
-    - 'Independent review found BIM-00 could authorize FINAL scenario plans, formal state marked blocked P4-T01 as completed, and a historical handoff resume section was stale. RED reproduced 4 failures; the gate now requires STUDY, last_completed_task is P3-T01, and stale resume text is superseded.'
-    - 'Follow-up review found the dashboard did not explain claim-specific blocker scope and an older handoff section lacked a historical label. Both were fixed with regression coverage; independent confirmation approved with no residual findings.'
-    - 'Focused final suite across 19 modules passed 270/270; scoped Ruff check passed. BIM-00 final-scenario refusal covers R03 and R04.'
-    - 'Consolidated 15-module state/provider/selection/R04/session/status/plan suite: 235 passed.'
+    - 'Continuation focused suite: 154 passed across R04 mass planning, Revit mass
+      readback, geometry verification, and BIM-00. TDD regression reproduced three
+      independent review findings as RED before code fixes.'
+    - Independent review found BIM-00 could authorize FINAL scenario plans, formal
+      state marked blocked P4-T01 as completed, and a historical handoff resume section
+      was stale. RED reproduced 4 failures; the gate now requires STUDY, last_completed_task
+      is P3-T01, and stale resume text is superseded.
+    - Follow-up review found the dashboard did not explain claim-specific blocker
+      scope and an older handoff section lacked a historical label. Both were fixed
+      with regression coverage; independent confirmation approved with no residual
+      findings.
+    - Focused final suite across 19 modules passed 270/270; scoped Ruff check passed.
+      BIM-00 final-scenario refusal covers R03 and R04.
+    - 'Consolidated 15-module state/provider/selection/R04/session/status/plan suite:
+      235 passed.'
     - DEC-CANONICAL-DETAIL-004 (approval hash 29d70f0e830708a3926abad14877f4c3941418630c5f0225b0bf5924f2dabd8b)
-      authorizes normalized local-reference STUDY through R04 only; Amanda review remains
-      pending, site-specific final claims remain blocked, and CANON-011 gates R05.
-    - 'Current offline snapshot: design-engine/runs/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C-study-detail-004; content approval hash 961b6edc95bd097fe600b2ce968aacdf28876bf3c587b788a0b2358baddfc0b0. The original P3 snapshot is preserved.'
-    - 'BIM-00 coordinate binding requires LOCAL_NORMALIZED_STUDY_NOT_SURVEYED; R04 mass payloads
-      carry this mode and STUDY scenario. Separate model geometry readback is required to
-      report mass verification; base elevation and courtyard interior ring are preserved.'
-    - 'Current PROJECT_STATE scope: site gaps are DEGRADING for normalized study; active BLOCKING
-      items are unreachable provider, S02 lease, and missing exact target/checkpoint.'
-    - 'PROJECT_STATE revision is 186; P3-T01 is last completed and P4-T01 remains BLOCKED_BY_INPUT.'
+      authorizes normalized local-reference STUDY through R04 only; Amanda review
+      remains pending, site-specific final claims remain blocked, and CANON-011 gates
+      R05.
+    - 'Current offline snapshot: design-engine/runs/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C-study-detail-004;
+      content approval hash 961b6edc95bd097fe600b2ce968aacdf28876bf3c587b788a0b2358baddfc0b0.
+      The original P3 snapshot is preserved.'
+    - BIM-00 coordinate binding requires LOCAL_NORMALIZED_STUDY_NOT_SURVEYED; R04
+      mass payloads carry this mode and STUDY scenario. Separate model geometry readback
+      is required to report mass verification; base elevation and courtyard interior
+      ring are preserved.
+    - 'Current PROJECT_STATE scope: site gaps are DEGRADING for normalized study;
+      active BLOCKING items are unreachable provider, S02 lease, and missing exact
+      target/checkpoint.'
+    - PROJECT_STATE revision is 186; P3-T01 is last completed and P4-T01 remains BLOCKED_BY_INPUT.
     - No Revit/RVT was opened or written; no R04/R05 work occurred.
-    - '2026-09-25 provider retry: PIDs 38152 and 40124 had no main window, RevitAPI.dll, Horizun.Revit.dll, or journal newer than 2026-09-24 and were stopped only after those checks. Clean PID 31152 started from the install directory; after 40 seconds it still had no window/API/add-in, and horizun_health again reported no Revit reachable. No RVT/model was opened or changed; provider blocker remains.'
-
+    - '2026-09-25 provider retry: PIDs 38152 and 40124 had no main window, RevitAPI.dll,
+      Horizun.Revit.dll, or journal newer than 2026-09-24 and were stopped only after
+      those checks. Clean PID 31152 started from the install directory; after 40 seconds
+      it still had no window/API/add-in, and horizun_health again reported no Revit
+      reachable. No RVT/model was opened or changed; provider blocker remains.'
+    - 'Final 2026-09-26 status: P4-T01 PASS. BIM-00 PASS evidence binds the exact RUN-003
+      target, current four-board/program sources, repository commit, PROJECT_STATE revision,
+      clean live provider, and exclusive lease. Older 2026-09-25 blocked/no-write entries
+      above are historical and superseded.'
   P5-T01:
     id: P5-T01
     phase: P5
@@ -3201,7 +3279,35 @@ tasks:
     title: Create and independently verify canonical RUN-003 massing in Revit
     depends_on:
     - P4-T01
+    status: PASS_WITH_WARNINGS
+    evidence:
+    - User instruction on 2026-09-26 authorizes immediate R04 execution only after
+      BIM-00 PASS; R05 is excluded.
+    - Requires seven canonical masses, separate readback, save, cold reopen, and post-reopen
+      query for exact RUN-003 target.
+    - Seven RUN-003 R04 OST_Mass elements verified after write and after cold reopen;
+      typed queries confirm identities and bounds. See docs/reports/P5-T01-run003-r04-real-model.md
+      and revit/production/evidence/AMANDA-RUN-003-R04/real-model-evidence.json.
+    - Save returned target SHA-256 120935963a19af4c654894d00f057304237ec7f98115f0eecb266e3a91aaef20;
+      the POST-R04 checkpoint file was independently hashed and its manifest and
+      CheckpointManager verification match. Direct hashing of the working RVT was
+      denied while Revit held it open; close, cold reopen without upgrade, and fresh
+      post-reopen queries passed.
+    - 'PASS_WITH_WARNINGS: Python readbacks are self_reported_verified/host_verified=false;
+      typed queries independently confirmed identity and bounding boxes. One service-profile
+      vertex was omitted within measured Revit ShortCurveTolerance; six interior rings
+      retained.'
+    - No usable visual capture; CANON-011 remains open. Coordinates are local normalized/unsurveyed,
+      heights provisional, five site-data blockers remain; no R05 performed.
+  P6-T01:
+    id: P6-T01
+    phase: P6
+    plan_path: docs/plan/CURRENT.md
+    title: Compare saved RUN-003 R04 geometry against all four canonical boards
+    depends_on:
+    - P5-T01
     status: PENDING
     evidence:
-    - User instruction on 2026-09-26 authorizes immediate R04 execution only after BIM-00 PASS; R05 is excluded.
-    - Requires seven canonical masses, separate readback, save, cold reopen, and post-reopen query for exact RUN-003 target.
+    - P5-T01 completed with warnings; seven masses persisted through save, checkpoint, cold reopen, and typed post-reopen query.
+    - CANON-011 remains open because neither attempted view capture produced a usable visual artifact; compare all four boards before authorizing R05.
+    - No R05 or additional Revit write is included in this task record.

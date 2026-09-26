@@ -4,16 +4,16 @@ blockers:
 - SITE_OCCUPANCY:DEGRADING
 - SITE_FRONTAGE_COUNT:DEGRADING
 - SITE_TRUE_NORTH:DEGRADING
-current_checkpoint: revit/production/checkpoints/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY-PRE-R04.rvt
-last_completed_task: P3-T01
-last_verified_commit: 21848db0d5eb2defd2cfb5baffbe9e057b004a4e
-next_task: P4-T01
+current_checkpoint: revit/production/checkpoints/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY-POST-R04.rvt
+last_completed_task: P5-T01
+last_verified_commit: b078685897a1601da948e2d6140736ff6fa5c132
+next_task: P6-T01
 phase_gate: GO_WITH_LIMITATIONS
-phase_id: P4
-phase_name: bim-00
-phase_status: RUNNING
+phase_id: P6
+phase_name: r04-visual-geometric-acceptance
+phase_status: PENDING
 project: Amanda TFG BIM Agent
-revit_stage: PRE_R04
+revit_stage: R04
 schema_version: 1
 selected_design: AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C
-state_revision: 187
+state_revision: 192
