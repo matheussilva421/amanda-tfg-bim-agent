@@ -777,7 +777,7 @@ else:
             M_TO_FT = 3.280839895013123
             solids = [
                 item for item in element.get_Geometry(Options())
-                if isinstance(item, Solid) and len(item.Faces) > 0
+                if isinstance(item, Solid) and item.Faces.Size > 0
             ]
             if len(solids) != 1:
                 raise RuntimeError('mass geometry readback requires exactly one non-empty solid')

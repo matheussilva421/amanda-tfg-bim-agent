@@ -225,6 +225,16 @@ def _execute_generated_mass_geometry_readback(code: str) -> dict[str, Any]:
     class FakeCurveLoop(list):
         pass
 
+    class FakeFaceArray:
+        """Match Revit's FaceArray: iterable with Size, but no Python len()."""
+
+        def __init__(self, faces: list[Any]) -> None:
+            self._faces = faces
+            self.Size = len(faces)
+
+        def __iter__(self):
+            return iter(self._faces)
+
     class FakePlanarFace:
         def __init__(self, z: float, normal_z: float, loops: list[FakeCurveLoop]) -> None:
             self.Origin = FakeXYZ(0.0, 0.0, z)
@@ -259,10 +269,10 @@ def _execute_generated_mass_geometry_readback(code: str) -> dict[str, Any]:
                 )
 
             bottom_loops = [loop_at_z(footprint, bottom_z), loop_at_z(courtyard, bottom_z)]
-            self.Faces = [
+            self.Faces = FakeFaceArray([
                 FakePlanarFace(bottom_z, -1.0, bottom_loops),
                 FakePlanarFace(top_z, 1.0, []),
-            ]
+            ])
 
     class FakeElement:
         Id = FakeElementId(901)
