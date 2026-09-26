@@ -10,7 +10,7 @@ detailed closeout record at the end do not introduce a second resume state.
 - The child/playground relation capture was re-exported from Revit's `Terreno` view with both element outlines visible. `OST_Mass` visibility and the crop were temporary in a `TransactionGroup`; rollback reported `RolledBack`, view restoration was checked, and the document remained unmodified. The PNG hash, capture job, element IDs, checkpoint SHA and post-reopen fingerprint are registered in `revit/production/evidence/AMANDA-RUN-003-R04/current-view-captures.json` and checked by the focused test.
 - Independent review findings on the earlier crop, capture provenance, stale handoff header and report timestamp were corrected. Final independent follow-up review confirmed these corrections with no further findings. Final focused gates pass (25 unit, 7 policy); local commit/push closeout remains.
 - Board-02 administrative area divergence remains `OPEN_FOR_REVIEW`; official program areas remain unchanged. P6-T01/CANON-011 remain pending/open. Do not perform another GeoNatal search, alter RC01, or advance R05. S02 remains `STALE_BY_CANONICAL_REFERENCE_EXPANSION`; its lease was absent and not reclaimed.
-- Local `main` was at `4289c6724cd3d980e746f1833ae434b6650bf0cd` before closeout edits. Preserve RC01's pre-existing ACL-visible deletions unstaged. Commit and push only the explicit closeout paths after final review; the initial `git ls-remote` attempt was blocked by unavailable GitHub network access.
+- R04 evidence commit `ac783be58c70c8fadcf5e43faeb59ddc3e15ca8f` was pushed to `origin/main`; a fresh `git ls-remote` matched local `HEAD`. This final handoff update is included in a follow-up closeout commit, also pushed and checked against the remote ref. RC01's pre-existing ACL-visible deletions remain unstaged and untouched.
 
 ## Historical continuation — 2026-09-26 (P4-T01 / RUN-003 R04 geometry completion)
 
@@ -857,8 +857,8 @@ handoff. First-review findings were fixed and the current focused gates pass;
 final follow-up review and commit/push status are recorded in the current-state
 block at the top. Do not stage the pre-existing RC01 ACL-visible deletion entries.
 
-**Exact resume:** finish the focused tests and independent review; inspect the
-scoped diff; stage only the files listed in this closeout; commit on `main`,
-push, and confirm `git ls-remote origin refs/heads/main` matches local `HEAD`.
-Keep `P6-T01` pending, CANON-011 open, and R05 unauthorized. Next authorized
-task is P6-T01 visual/geometric acceptance and scoped gap resolution, not R05.
+**Exact resume:** the P4-T01/RUN-003 closeout is committed and published on
+`main`; the remote ref was verified against local `HEAD`. Continue from
+`PROJECT_STATE.yaml` revision 196 with `P6-T01` pending and CANON-011 open.
+Resolve P6 visual/geometric gaps only when requested; do not advance R05, alter
+RC01, or repeat GeoNatal research.
