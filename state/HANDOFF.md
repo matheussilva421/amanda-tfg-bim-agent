@@ -1,6 +1,22 @@
 # Current Handoff
 
-## Current continuation — 2026-09-26 (P4-T01 / RUN-003 R04 geometry completion)
+## Current state — P4-T01 R04 closeout
+
+This is the only current resume block. The historical records below and the
+detailed closeout record at the end do not introduce a second resume state.
+
+- RUN-003 R04 is saved at `revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt` and cold-reopened. Target/checkpoint SHA-256 is `33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49`; post-reopen typed readback returned 25 elements, complete coverage, zero unreadable.
+- Fresh `horizun_health` at 19:32 UTC reported Horizun 1.3.3 `HEALTHY`, Revit 2027 build 27.2.0.39, PID 38296; 73/73 registered commands, 80/80 tools visible, exact RUN-003 path active and matched, and zero other clients. The writer lease is released.
+- The child/playground relation capture was re-exported from Revit's `Terreno` view with both element outlines visible. `OST_Mass` visibility and the crop were temporary in a `TransactionGroup`; rollback reported `RolledBack`, view restoration was checked, and the document remained unmodified. The PNG hash, capture job, element IDs, checkpoint SHA and post-reopen fingerprint are registered in `revit/production/evidence/AMANDA-RUN-003-R04/current-view-captures.json` and checked by the focused test.
+- Independent review findings on the earlier crop, capture provenance, stale handoff header and report timestamp were corrected. Final independent follow-up review confirmed these corrections with no further findings. Final focused gates pass (25 unit, 7 policy); local commit/push closeout remains.
+- Board-02 administrative area divergence remains `OPEN_FOR_REVIEW`; official program areas remain unchanged. P6-T01/CANON-011 remain pending/open. Do not perform another GeoNatal search, alter RC01, or advance R05. S02 remains `STALE_BY_CANONICAL_REFERENCE_EXPANSION`; its lease was absent and not reclaimed.
+- Local `main` was at `4289c6724cd3d980e746f1833ae434b6650bf0cd` before closeout edits. Preserve RC01's pre-existing ACL-visible deletions unstaged. Commit and push only the explicit closeout paths after final review; the initial `git ls-remote` attempt was blocked by unavailable GitHub network access.
+
+## Historical continuation — 2026-09-26 (P4-T01 / RUN-003 R04 geometry completion)
+
+This snapshot predates the closeout review corrections above and below. Use it
+for geometry-write details only; its revision 195 and capture notes are not the
+current repository state.
 
 The user requested resuming P4-T01 in the visible, interactive Revit 2027 session. BIM-00 had already passed, so this continuation completed its authorized R04 real-model geometry. No GeoNatal search, RC01 change, R05 write, or reuse of S01/S02/R12 occurred. S02 remains `STALE_BY_CANONICAL_REFERENCE_EXPANSION`; its lease was absent and was not reclaimed.
 
@@ -80,8 +96,8 @@ Evidence and next steps:
 ## Formal state and safety
 
 > Historical record follows. Older blocked-provider and no-write notes below
-> describe prior checkpoints and are superseded by the current continuation at
-> the top of this file and `PROJECT_STATE.yaml` revision 192. Resume at P6-T01.
+> describe prior checkpoints and are superseded by the current state section at
+> the top of this file and `PROJECT_STATE.yaml` revision 196. Resume at P6-T01.
 
 Repository recovery (P0), four-board reconciliation (P1-T01), identity
 assignment (P2-T01), offline canonical QA (P3-T01), BIM-00 (P4-T01), and R04
@@ -96,8 +112,8 @@ preserved under `superseded-p08-t08-concept-offline-2026-09-24`.
 ## P4-T01 attempt — BIM-00 blocked
 
 > Historical snapshot from the original P4-T01 attempt. Its eligibility and
-> runtime observations below are superseded by the current continuation section
-> later in this file; use that section and PROJECT_STATE.yaml for current state.
+> runtime observations below are superseded by the current state section at the
+> top of this file; use that section and PROJECT_STATE.yaml for current state.
 
 No BIM-00 evidence or authorization was emitted. RUN-003 remains
 `OFFLINE_CANDIDATE`, `bim_eligible=false`, `revit_calls=0`, with
@@ -777,3 +793,72 @@ after health passes, bind a fresh RUN-003 target/checkpoint, verify and safely
 reclaim the stale S02 lease using the project lock API, refresh gate bindings,
 and run BIM-00. Do not use S02, do not write to Revit before BIM-00 PASS, and do
 not advance R05.
+
+## P4-T01 R04 closeout follow-up — 2026-09-26
+
+This detailed closeout record adds evidence for the current state section at
+the top of this file; it is not a second resume block. Earlier P4
+startup/provider/lease blocker instructions above are historical and superseded
+by the completed BIM-00 and R04 evidence below; do not repeat GeoNatal research,
+startup diagnostics, or lease recovery.
+
+The real RUN-003 R04 geometry is already saved, checkpointed, cold-reopened,
+and typed-readback verified. The target/checkpoint SHA-256 is
+`33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49`; the
+post-reopen query returned 25 elements (seven masses, 14 floors, four roofs),
+complete coverage, zero unreadable. BIM-00 passed. No R05 or RC01 operation was
+performed. Do not search GeoNatal again. S02 remains
+`STALE_BY_CANONICAL_REFERENCE_EXPANSION`; its lease file was absent and was not
+reclaimed. RUN-003's lease is free.
+
+Fresh live check: Horizun 1.3.3 HEALTHY, Revit 2027 build 27.2.0.39, PID
+38296; 73/73 registered commands, 80/80 tools visible, target exact-path
+matched and active, two documents open (RUN-003 and HZ anchor), zero other
+clients. The writer lease is released.
+
+After the saved R04 reopen, current-model captures were exported for top
+implantation, massing, overall perspective, administration, residential,
+services, and child sector, plus a child/playground plan crop. Their PNGs,
+dimensions, hashes, source view IDs, and temporary-view restoration status are
+in `revit/production/evidence/AMANDA-RUN-003-R04/current-view-captures.json`.
+All temporary options in the accepted capture set report restoration verified.
+One earlier capture request combined orientation with a temporary crop and
+returned `view_restored=false`; that image was excluded. Its operation did not
+write geometry. Screenshots support review only; the plan is wireframe and the
+internal room functions are not modeled, so CANON-011 remains open.
+
+The Board-02 administrative footprint difference is now a formal
+`CANONICAL_DEVIATION` in `docs/decisions/CANONICAL_DEVIATIONS.yaml`:
+237.407316 m² per floor versus the board's approximate 200 m² (+37.407316 m²,
++18.703658%). The record is `OPEN_FOR_REVIEW`, lists alternatives, and binds
+the board, official PDF, RUN-003 source geometry, input checkpoint, and output
+checkpoint by SHA-256. No alternative was approved; official program quantities
+and areas remain unchanged. The separate upper-plate/Level-2 mismatch remains
+open in the P6 report.
+
+TDD follow-ups each demonstrated the expected RED before implementation:
+`test_canonical_deviation_record.py` failed while the formal record was absent;
+`test_run003_view_capture_evidence.py` failed while the capture manifest was
+absent. Both now pass with the status/checkpoint, R04 spatial, task graph, and
+state-store modules (25 passed in the final combined run). P4→P6 ordering
+passed 7/7. The passing commands were:
+
+- `$env:PYTHONPATH='src'; python -m pytest -q --confcutdir=tests/unit tests/unit/test_canonical_deviation_record.py tests/unit/test_run003_view_capture_evidence.py tests/unit/test_status_checkpoint_consistency.py tests/unit/test_run003_r04_spatial_evidence.py tests/unit/test_task_graph.py tests/unit/test_state_store.py`
+- `$env:PYTHONPATH='src'; python -m pytest -q --confcutdir=tests/policy tests/policy/test_plan_order.py`
+
+An initial attempt omitted `PYTHONPATH=src` and failed module collection; the
+corrected commands above passed. A dashboard test that imports `ortools`
+remains unavailable in the host Python; no dependency was installed.
+
+Files in this closeout: formal deviation register and decision update, P4/P6
+reports, eight current PNGs and capture manifest, regression tests, dashboard,
+`PROJECT_STATE.yaml` (revision 196, next `P6-T01`), task graph/history, and this
+handoff. First-review findings were fixed and the current focused gates pass;
+final follow-up review and commit/push status are recorded in the current-state
+block at the top. Do not stage the pre-existing RC01 ACL-visible deletion entries.
+
+**Exact resume:** finish the focused tests and independent review; inspect the
+scoped diff; stage only the files listed in this closeout; commit on `main`,
+push, and confirm `git ls-remote origin refs/heads/main` matches local `HEAD`.
+Keep `P6-T01` pending, CANON-011 open, and R05 unauthorized. Next authorized
+task is P6-T01 visual/geometric acceptance and scoped gap resolution, not R05.

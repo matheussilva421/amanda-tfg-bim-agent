@@ -3320,10 +3320,24 @@ tasks:
     - Open items include admin floor footprint differs from the board's approximate label;
       Nível 2 is at 4.0 m while the upper plate is at 3.2 m; room/function and bedroom
       assignments are not modeled; site inputs remain unsurveyed/unverified.
-    - The current real Revit wireframe capture is cropped and supplementary only. Earlier
-      P6 captures predate the current save and are not evidence of the current geometry.
+    - Eight fresh captures from the active RUN-003 model cover top implantation, overall
+      massing and perspective, administration, residential, services, child sector, and a
+      single-view child/playground relation. The relation export visibly includes both
+      outlines after temporary mass-category visibility; crop/category restoration is
+      checked. The capture set is bound to the post-reopen checkpoint SHA and typed-readback
+      fingerprint in revit/production/evidence/AMANDA-RUN-003-R04/current-view-captures.json.
+      It is supporting evidence and does not close CANON-011; pre-R04 captures remain historical.
+    - Board-02 administration footprint difference is recorded as
+      CANONICAL_DEVIATION-ADM-001, OPEN_FOR_REVIEW, with three alternatives and verified
+      source/checkpoint hashes. No program areas or quantities changed; Amanda approval
+      is absent and the deviation remains unresolved.
+    - One temporary orientation capture was excluded because restoration was not
+      verified. It performed no geometry write; all temporary crops/styles in the formal
+      capture manifest report restoration verified, including the child mass visibility
+      override and crop rolled back in a Revit TransactionGroup with the document unmodified.
     - See docs/reports/P4-T01-run003-r04-geometry-completion-2026-09-26.md,
       docs/reports/P6-T01-run003-visual-geometric-acceptance.md, and
-      revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json.
+      revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json and
+      revit/production/evidence/AMANDA-RUN-003-R04/current-view-captures.json.
       CANON-011 remains open and P6-T01 remains PENDING.
     - User instruction excludes GeoNatal, RC01, and R05; none was performed.

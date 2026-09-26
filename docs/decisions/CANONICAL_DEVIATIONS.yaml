@@ -1,0 +1,77 @@
+schema_version: 1
+canonical_deviations:
+  - id: CANONICAL_DEVIATION-ADM-001
+    recorded_on: '2026-09-26'
+    run: RUN-003
+    stage: R04
+    status: OPEN_FOR_REVIEW
+    affected_elements:
+      - mark: R04-ADMIN-FLOOR-L1
+        element_id: 329929
+      - mark: R04-ADMIN-FLOOR-L2
+        element_id: 329936
+    canonical_board:
+      board_id: Board 02
+      source_path: docs/source/canonical/02_administrativo.png
+      statement: 'Area aproximada: 200 m2 por pavimento (10.00 x 20.00 m)'
+      approximate_footprint_m2_per_floor: 200.0
+    official_program:
+      source_path: docs/source/programa_necessidades.pdf
+      authority: official_room_quantities_capacity_and_areas
+      quantitative_program_changed: false
+      rule: 'A area bruta da placa administrativa nao substitui nem altera as areas uteis oficiais das salas.'
+    observed:
+      measurement_source: 'Typed Horizun model query after cold reopen of the exact RUN-003 RVT'
+      area_measurement: HOST_AREA_COMPUTED
+      area_m2_per_floor: 237.407316
+      delta_m2_per_floor: 37.407316
+      delta_percent: 18.703658
+      calculation: '(237.407316 - 200.0) / 200.0 * 100'
+    verifiable_reason: >-
+      O readback tipado pos-reabertura mediu 237.407316 m2 em cada placa
+      administrativa do envelope RUN-003. A prancha 02 indica aproximadamente
+      200 m2 por pavimento. O programa oficial fixa capacidade e areas de salas,
+      mas nao fornece uma area bruta de footprint que justifique substituir
+      qualquer uma dessas duas medidas. Nao existe evidencia para alterar o
+      programa ou declarar conformidade geometrica da placa.
+    alternatives_considered:
+      - id: retain_reversible_study_envelope
+        action: 'Manter o envelope atual apenas como checkpoint do STUDY reversivel ate a revisao.'
+        tradeoff: 'Preserva o estado modelado; a divergencia de footprint e a aceitacao permanecem abertas.'
+      - id: refit_to_board_approximation
+        action: 'Reavaliar o envelope para aproximar cada pavimento a 200 m2 e testar o programa oficial sem alterar nenhuma area de sala.'
+        tradeoff: 'Pode aumentar a pressao de encaixe; exige modelagem e readback independente das areas uteis oficiais.'
+      - id: model_official_rooms_within_current_envelope
+        action: 'Modelar as salas oficiais no envelope atual e comparar areas uteis e footprint bruto com as duas fontes.'
+        tradeoff: 'Pode demonstrar necessidade de revisao do envelope; nao elimina a diferenca impressa na prancha por si so.'
+    impact:
+      - 'A placa medida excede a indicacao aproximada da prancha em 37.407316 m2 por pavimento (18.703658%).'
+      - 'A aceitacao visual/geometrica CANON-011 permanece pendente; este registro nao aprova o desvio.'
+      - 'As areas oficiais do programa PDF permanecem imutaveis e nao foram ajustadas para caber.'
+      - 'O desvio de nivel do piso superior e distinto: a face esta em 3.2 m e o Nivel 2 em 4.0 m (offset -0.8 m), ainda aberto no relatorio P6.'
+    decision:
+      status: AMANDA_REVIEW_REQUIRED
+      approving_authority: Amanda
+      approval_received: false
+      selected_alternative: null
+      note: 'A autorizacao para STUDY reversivel ate R04 nao constitui aprovacao pessoal desta divergencia.'
+    input_hashes:
+      - role: canonical_board_02
+        path: docs/source/canonical/02_administrativo.png
+        sha256: 123b95633ae1be643da84f2226c6337d65a74f7d1337d6b27d94bdead1c3a263
+      - role: official_program
+        path: docs/source/programa_necessidades.pdf
+        sha256: 11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17
+      - role: selected_run003_source_geometry
+        path: design-engine/runs/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C-study-detail-004/finalists/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C/geometry.json
+        sha256: fddfa5b10c031f50e873523d36c951fdc8d27dae0a51f0c2df090939b486dd49
+      - role: pre_r04_reopened_run003_checkpoint
+        path: revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-IMMUTABLE-SNAPSHOT.rvt
+        sha256: 7097faf9b92a812e6488bed39b0dc573d37fe23790671179cd28cba607761095
+    output_hashes:
+      - role: saved_and_reopened_r04_run003_checkpoint
+        path: revit/production/evidence/AMANDA-RUN-003-R04/R04-T01-RUN003-POST-SAVE.rvt
+        sha256: 33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49
+    evidence:
+      spatial_model_evidence: revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json
+      acceptance_report: docs/reports/P6-T01-run003-visual-geometric-acceptance.md

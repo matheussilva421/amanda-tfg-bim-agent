@@ -2307,3 +2307,23 @@ entries:
   - 'CANON-011 remains open; the authorized next task does not include R05.'
   recorded_utc: '2026-09-26T17:35:00Z'
   note: Current model persisted; finish P6 acceptance only after scoped gap resolution.
+- task_id: P6-T01
+  status: PENDING
+  evidence:
+  - 'Fresh current-model captures exported from the active RUN-003 Revit document for top implantation, massing, perspective, administration, residential, services and child sector. Hashes and rollback/restoration status are in revit/production/evidence/AMANDA-RUN-003-R04/current-view-captures.json.'
+  - 'Administrative footprint divergence from Board 02 is recorded as CANONICAL_DEVIATION-ADM-001, OPEN_FOR_REVIEW. Input board/PDF/source-geometry hashes and the output checkpoint hash are covered by tests/unit/test_canonical_deviation_record.py.'
+  - 'Focused final suite: 24 passed across canonical deviation, current Revit capture manifest, status/checkpoint, R04 spatial evidence, task graph, and state store; policy plan-order gate: 7 passed.'
+  - 'CANON-011 remains open; administration level/area differences, missing room/function assignments, and site evidence remain unresolved. No GeoNatal search, RC01 change, or R05 operation.'
+  recorded_utc: '2026-09-26T19:11:23Z'
+  note: P6 closeout evidence refreshed; keep PENDING and do not advance R05.
+- task_id: P6-T01
+  status: PENDING
+  evidence:
+  - 'Independent review correction: the child-playground relation is now a single Revit floor-plan export showing both outlines; temporary OST_Mass visibility and crop were rolled back, view state restored, and document remained unmodified.'
+  - 'The eight-capture manifest is bound to the post-reopen checkpoint SHA-256 33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49 and readback fingerprint af388d16e3f57e32; tests verify checkpoint bytes, checkpoint manifest, element IDs and capture hashes.'
+  - 'The current handoff is explicit at the top of state/HANDOFF.md; its prior geometry continuation is marked historical. P6 report update time matches this history entry.'
+  - 'Final focused unit command: 25 passed, 0 failed; P4-to-P6 plan-order policy: 7 passed, 0 failed. YAML parsing and scoped git diff --check passed.'
+  - 'Final independent follow-up review confirmed the handoff, timestamp, width statement and capture-test evidence corrections; no additional findings.'
+  - 'Board-02 administrative deviation remains OPEN_FOR_REVIEW, CANON-011 remains open and R05 remains unauthorized; no GeoNatal or RC01 operation.'
+  recorded_utc: '2026-09-26T19:52:00Z'
+  note: Independent review corrections recorded; P6 remains pending and R05 excluded.

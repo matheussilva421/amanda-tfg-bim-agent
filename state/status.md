@@ -54,8 +54,18 @@ the target/checkpoint SHA-256 is
 The saved model contains seven masses, 14 floors, and four roofs. The five
 programmed external surfaces total 260 m². P6-T01 remains `PENDING` / CANON-011
 OPEN: admin area and level offsets, internal function assignments, and site
-evidence are unresolved. The current wireframe image is supplementary only;
-R05 has not been run or authorized.
+evidence are unresolved. Eight fresh Revit captures now cover the site plan,
+massing, perspective, administration, residential, services, and child sector;
+their paths and hashes are in
+`revit/production/evidence/AMANDA-RUN-003-R04/current-view-captures.json`.
+The child relation image shows the mass and playground together and is linked
+to the post-reopen checkpoint hash and readback fingerprint; its temporary
+category/crop changes were rolled back. These captures support review but do
+not close CANON-011. The Board-02 administrative
+footprint difference is formally recorded as
+`CANONICAL_DEVIATION-ADM-001` in `docs/decisions/CANONICAL_DEVIATIONS.yaml`,
+`OPEN_FOR_REVIEW`; no official program area was changed. R05 has not been run
+or authorized.
 
 ## Capability counts
 
@@ -77,7 +87,7 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 
 - Selected design: `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C`
 - Revit stage: `R04`
-- Current checkpoint: `revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-IMMUTABLE-SNAPSHOT.rvt`
+- Current checkpoint: `revit/production/evidence/AMANDA-RUN-003-R04/R04-T01-RUN003-POST-SAVE.rvt`
 
 ## Writer lease
 
@@ -87,15 +97,21 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 
 ## Git verification
 
-- Last verified P6 evidence commit: `64ca74b9efa586142b7ee90687a840edc269a4a3`
-- P6 evidence commit was pushed; `origin/main` matched `64ca74b9efa586142b7ee90687a840edc269a4a3`.
+- Latest R04 completion commit: `4289c6724cd3d980e746f1833ae434b6650bf0cd`
+- Commit was pushed; `git ls-remote origin refs/heads/main` matched `4289c6724cd3d980e746f1833ae434b6650bf0cd`.
 
-P6-T01 live closeout on 2026-09-26: Horizun 1.3.3 HEALTHY, Revit 2027
-27.2.0.39, exact RUN-003 active, one document open, zero other clients, 73/73
-registry clean. Seven masses and six views passed fresh post-reopen typed
-queries; P6 remains PENDING / CANON-011 OPEN due unmodeled landscape/access/
-internal functions and an open administrative footprint discrepancy. See
-`docs/reports/P6-T01-run003-visual-geometric-acceptance.md` and
-`revit/production/evidence/AMANDA-RUN-003-R04/visual-geometric-evidence.json`.
-The current writer lease is FREE. This handoff/dashboard status update is in a
-follow-up closeout commit on `main` and is also pushed to `origin/main`.
+P4-T01 continuation on 2026-09-26: Horizun 1.3.3 HEALTHY, Revit 2027
+27.2.0.39, exact RUN-003 active, two documents open (RUN-003 and the Horizun
+anchor), zero other clients, 73/73 registry and 80/80 tools. Typed post-reopen
+query returned 25 elements: seven masses, 14 floors, and four roofs; coverage
+complete, zero unreadable. P6 remains PENDING / CANON-011 OPEN for room/function
+assignments, admin area/level discrepancies, visual acceptance, and site inputs.
+See `docs/reports/P4-T01-run003-r04-geometry-completion-2026-09-26.md`,
+`docs/reports/P6-T01-run003-visual-geometric-acceptance.md`, and
+`revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json`.
+The current writer lease is FREE.
+
+Closeout follow-up after independent review: the project-state dashboard now
+points at the post-save R04 checkpoint; the new capture set and open deviation
+record are covered by focused regression tests. P6-T01 remains the next task;
+CANON-011 is still open.
