@@ -1,0 +1,29 @@
+{
+  "checkpoint_file_id": [
+    9107472496377837229,
+    69242844270916859
+  ],
+  "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\evidence\\AMANDA-RUN-003-R04\\R04-T01-RUN003-POST-SAVE.rvt",
+  "created_utc": "2026-09-26T17:15:02.957027Z",
+  "document_id": "AMANDA-RUN-003-PAVILION-CANONICAL-STUDY",
+  "manifest_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\evidence\\AMANDA-RUN-003-R04\\R04-T01-RUN003-POST-SAVE.rvt.manifest.json",
+  "provenance": {
+    "elements": "18 typed elements read back before checkpoint",
+    "run": "RUN-003",
+    "saved_model_sha256": "33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49",
+    "task": "P4-T01 continuation"
+  },
+  "schema_version": 1,
+  "sha256": "33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49",
+  "size_bytes": 4952064,
+  "source_document_id": "AMANDA-RUN-003-PAVILION-CANONICAL-STUDY",
+  "source_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "source_file_id": [
+    9107472496377837229,
+    42784196461087930
+  ],
+  "source_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "source_sha256": "33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49",
+  "stage": "R04_CANONICAL_SITE_GEOMETRY",
+  "version": 1
+}

@@ -2281,3 +2281,29 @@ entries:
     is next; CANON-011 blocks R05.
   recorded_utc: '2026-09-26T13:50:19Z'
   note: advanced to P6
+- task_id: P5-T01
+  status: PASS_WITH_WARNINGS
+  evidence:
+  - 'P4-T01 continuation after BIM-00 PASS: 18 typed R04 elements committed and verified;
+    post-reopen typed readback returned 25 elements, complete coverage, zero unreadable.'
+  - 'Saved target SHA-256 33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49;
+    POST-SAVE checkpoint and corrected manifest verified; exact target cold-reopened without upgrade.'
+  - 'Five official external areas total 260 m2; four residential covered links, two admin plates,
+    three separate route marks. Room-function assignment, board-area/level offsets and CANON-011 remain open.'
+  recorded_utc: '2026-09-26T17:35:00Z'
+  note: R04 geometry saved and read back; keep P6 pending and do not advance R05.
+- task_id: PHASE_GATE
+  status: GO_WITH_LIMITATIONS
+  evidence:
+  - 'Current RUN-003 R04 geometry is persisted; P6-T01 canonical visual/geometric acceptance
+    remains the next task because functional, admin-area/level and site-evidence gaps remain.'
+  recorded_utc: '2026-09-26T17:35:00Z'
+  note: P6 remains active; R05 excluded.
+- task_id: P6-T01
+  status: PENDING
+  evidence:
+  - 'Updated P6 report and spatial evidence record current model SHA 33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49;
+    current wireframe capture is supplementary only.'
+  - 'CANON-011 remains open; the authorized next task does not include R05.'
+  recorded_utc: '2026-09-26T17:35:00Z'
+  note: Current model persisted; finish P6 acceptance only after scoped gap resolution.

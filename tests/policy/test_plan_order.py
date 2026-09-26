@@ -118,6 +118,34 @@ def test_missing_cross_phase_dependency_is_reported():
     )
 
 
+def test_run003_revit_gate_to_geometry_to_acceptance_chain_is_allowed():
+    registry = _registry()
+    registry.add(
+        TaskRecord(
+            id="P5-T01",
+            phase="P5",
+            plan_path="docs/plan/CURRENT.md",
+            title="RUN-003 R04 Revit geometry",
+            depends_on=["P4-T01"],
+        )
+    )
+    registry.add(
+        TaskRecord(
+            id="P6-T01",
+            phase="P6",
+            plan_path="docs/plan/CURRENT.md",
+            title="RUN-003 canonical acceptance",
+            depends_on=["P5-T01"],
+        )
+    )
+
+    report = diagnose_plan_order(registry)
+
+    assert report.passed is True, report.as_dict()["issues"]
+    assert ("P4", "P5") in report.phase_edges
+    assert ("P5", "P6") in report.phase_edges
+
+
 def test_revit_block_does_not_block_source_and_synthetic_solver_branch():
     report = diagnose_plan_order(
         _registry(revit_status=TaskStatus.BLOCKED_BY_TOOL)

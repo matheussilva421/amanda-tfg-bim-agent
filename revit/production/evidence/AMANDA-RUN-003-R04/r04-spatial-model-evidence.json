@@ -1,0 +1,458 @@
+{
+  "schema_version": 2,
+  "status": "PASS_WITH_WARNINGS",
+  "run": "RUN-003",
+  "stage": "R04",
+  "task": "P4-T01 continuation; R04 real-model geometry completion",
+  "evidence_date": "2026-09-26",
+  "source": {
+    "solution_id": "AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C",
+    "approval_hash": "961b6edc95bd097fe600b2ce968aacdf28876bf3c587b788a0b2358baddfc0b0",
+    "layout_hash": "7fde3e34a162167ce27fe2e3158a38f446882816a7c81bb326d486bdfaaae2e2",
+    "official_program_sha256": "11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17",
+    "canonical_board_sha256": [
+      "30d009357a095e7794e0e915dcd2fdb04cd6b9aab9f4d13f5663ed54d6f20240",
+      "123b95633ae1be643da84f2226c6337d65a74f7d1337d6b27d94bdead1c3a263",
+      "5b96c2d5cc770742ee32d51b83b25993fe8b8a1638bf94da56ba8ef771031381",
+      "c56b806f805d9c4aa1e6015ba6b56ac960204066721f93ef08cbadfb312c0386"
+    ],
+    "canonical_board_order": [
+      "01_implantacao.png",
+      "02_administrativo.png",
+      "03_residencial.png",
+      "04_servicos.png"
+    ],
+    "coordinate_mode": "LOCAL_NORMALIZED_STUDY_NOT_SURVEYED",
+    "source_geometry_path": "design-engine/runs/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C-study-detail-004/finalists/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C/geometry.json",
+    "source_geometry_sha256": "fddfa5b10c031f50e873523d36c951fdc8d27dae0a51f0c2df090939b486dd49",
+    "historical_geometry_reused": false,
+    "s02_status": "STALE_BY_CANONICAL_REFERENCE_EXPANSION",
+    "s02_lease_reclaimed": false
+  },
+  "live": {
+    "provider": "horizun",
+    "provider_status": "healthy",
+    "provider_version": "1.3.3",
+    "provider_commit": "cc4ea04e9ecfe547ad349f22e0864019ce1ead1f",
+    "registry_clean": true,
+    "registry_registered_commands": 73,
+    "registry_contract_commands": 73,
+    "tools_visible": 80,
+    "tools_total": 80,
+    "revit_version": "2027",
+    "revit_build": "27.2.0.39",
+    "revit_pid": 38296,
+    "target_document": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+    "target_active_and_targetable": true,
+    "target_match": "exact path",
+    "open_document_count": 2,
+    "open_document_paths": [
+      "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+      "C:\\Users\\slvma\\.horizun\\anchor\\HZ_ANCHOR_2027.rvt"
+    ],
+    "other_clients_connected": 0,
+    "writer_lease_owner": "amanda-P4-T01-RUN003-R04",
+    "writer_lease_generation": 2,
+    "writer_lease_status": "released_after_verification"
+  },
+  "write": {
+    "mode": "typed_rehearsal_then_commit",
+    "transaction_status": "Committed",
+    "requested": 18,
+    "committed_and_independently_re_read": 18,
+    "rehearsal_postconditions_passed": 18,
+    "additions": {
+      "floors": 14,
+      "roofs": 4,
+      "total": 18
+    },
+    "element_categories_after_write": {
+      "Massa": 7,
+      "Pisos": 14,
+      "Telhados": 4
+    },
+    "no_rooms_created": true,
+    "r05_performed": false,
+    "rc01_modified": false
+  },
+  "readback": {
+    "phase": "POST_REOPEN",
+    "coverage_complete": true,
+    "unreadable_total": 0,
+    "post_reopen_object_count": 25,
+    "result_set_fingerprint": "af388d16e3f57e32",
+    "mass_names": [
+      "MASS-ADMIN_ACOLHIMENTO",
+      "MASS-CHILD_SECTOR",
+      "MASS-RES_PAV_A",
+      "MASS-RES_PAV_B",
+      "MASS-RES_PAV_C",
+      "MASS-RES_PAV_D_COMMUNAL",
+      "MASS-SERVICE_CAPACITATION"
+    ],
+    "mass_count": 7,
+    "mass_bboxes_m": {
+      "MASS-ADMIN_ACOLHIMENTO": {
+        "min": [
+          -6.655034153776293,
+          -52.9183357386647,
+          0
+        ],
+        "max": [
+          6.655034153776293,
+          -35.08166426133529,
+          6.4
+        ]
+      },
+      "MASS-CHILD_SECTOR": {
+        "min": [
+          -38.22081008634282,
+          -14.524234614174768,
+          0
+        ],
+        "max": [
+          -27.77918991365718,
+          -5.475765385825232,
+          3.2
+        ]
+      },
+      "MASS-RES_PAV_A": {
+        "min": [
+          -17.664101615137756,
+          30.811810362346936,
+          0
+        ],
+        "max": [
+          -8.335898384862245,
+          43.18818963765306,
+          3.2
+        ]
+      },
+      "MASS-RES_PAV_B": {
+        "min": [
+          -18.721320343559643,
+          1.542187983336648,
+          0
+        ],
+        "max": [
+          -7.278679656440357,
+          12.457812016663352,
+          3.2
+        ]
+      },
+      "MASS-RES_PAV_C": {
+        "min": [
+          8.06794919243112,
+          2.539339828220178,
+          0
+        ],
+        "max": [
+          17.932050807568878,
+          11.460660171779821,
+          3.2
+        ]
+      },
+      "MASS-RES_PAV_D_COMMUNAL": {
+        "min": [
+          7.567949192431122,
+          30.361387212474167,
+          0
+        ],
+        "max": [
+          18.432050807568878,
+          43.63861278752583,
+          3.2000000000000015
+        ]
+      },
+      "MASS-SERVICE_CAPACITATION": {
+        "min": [
+          14.5,
+          -30.499999999999996,
+          0
+        ],
+        "max": [
+          49.5,
+          -2.0016775850497517,
+          3.2
+        ]
+      }
+    },
+    "residential_pavilion_count": 4,
+    "residential_pavilion_names": [
+      "MASS-RES_PAV_A",
+      "MASS-RES_PAV_B",
+      "MASS-RES_PAV_C",
+      "MASS-RES_PAV_D_COMMUNAL"
+    ],
+    "administrative_storey_levels": {
+      "1": {
+        "level_id": 311,
+        "elevation_m": 0
+      },
+      "2": {
+        "level_id": 694,
+        "elevation_m": 4
+      }
+    },
+    "administrative_floor_marks": [
+      "R04-ADMIN-FLOOR-L1",
+      "R04-ADMIN-FLOOR-L2"
+    ],
+    "administrative_floor_reference_elevations_m": {
+      "R04-ADMIN-FLOOR-L1": 0,
+      "R04-ADMIN-FLOOR-L2": 3.2
+    },
+    "administrative_floor_l2_level_offset_m": -0.8,
+    "administrative_footprint_per_floor_m2": 237.407316,
+    "administrative_board_approx_area_per_floor_m2": 200,
+    "administrative_function_assignments_modeled": false,
+    "service_form": "CURVED_COURTYARD",
+    "service_interior_ring_count": 6,
+    "service_geometry_authority": "selected RUN-003 source geometry; six interior rings retained through R04",
+    "service_functional_area_assignments_modeled": false,
+    "child_functional_rooms_modeled": false,
+    "site_surfaces": {
+      "items": [
+        {
+          "element_id": 329943,
+          "mark": "SITE-PROTECTED-PATIO",
+          "requirement_id": "REQ-07-01",
+          "area_m2": 80
+        },
+        {
+          "element_id": 329950,
+          "mark": "SITE-THERAPEUTIC-GARDEN",
+          "requirement_id": "REQ-07-02",
+          "area_m2": 80
+        },
+        {
+          "element_id": 329957,
+          "mark": "SITE-HORTA",
+          "requirement_id": "REQ-07-03",
+          "area_m2": 30
+        },
+        {
+          "element_id": 329964,
+          "mark": "SITE-EXERCISE",
+          "requirement_id": "REQ-07-04",
+          "area_m2": 30
+        },
+        {
+          "element_id": 329971,
+          "mark": "SITE-PLAYGROUND",
+          "requirement_id": "REQ-07-05",
+          "area_m2": 40
+        }
+      ],
+      "bounds_m": {
+        "SITE-PROTECTED-PATIO": {
+          "min": [
+            -3.9999999999999996,
+            17,
+            -0.14999999999999997
+          ],
+          "max": [
+            3.9999999999999996,
+            27,
+            0
+          ]
+        },
+        "SITE-THERAPEUTIC-GARDEN": {
+          "min": [
+            -4.999999999999999,
+            -13.999999999999998,
+            -0.14999999999999997
+          ],
+          "max": [
+            4.999999999999999,
+            -5.999999999999999,
+            0
+          ]
+        },
+        "SITE-HORTA": {
+          "min": [
+            55,
+            -2.4999999999999996,
+            -0.14999999999999997
+          ],
+          "max": [
+            60.99999999999999,
+            2.4999999999999996,
+            0
+          ]
+        },
+        "SITE-EXERCISE": {
+          "min": [
+            -2.9999999999999996,
+            -26.499999999999996,
+            -0.14999999999999997
+          ],
+          "max": [
+            2.9999999999999996,
+            -21.5,
+            0
+          ]
+        },
+        "SITE-PLAYGROUND": {
+          "min": [
+            -36.99999999999999,
+            -22.5,
+            -0.14999999999999997
+          ],
+          "max": [
+            -29,
+            -17.499999999999996,
+            0
+          ]
+        }
+      },
+      "official_program_total_m2": 260,
+      "official_program_internal_total_m2": 626,
+      "official_capacity_people": 20,
+      "area_authority": "docs/source/programa_necessidades.pdf",
+      "board_printed_areas_used_as_official": false
+    },
+    "covered_connectors": {
+      "ids": [
+        "COVERED-RES_PAV_A-TO-PROTECTED_PATIO",
+        "COVERED-RES_PAV_B-TO-PROTECTED_PATIO",
+        "COVERED-RES_PAV_C-TO-PROTECTED_PATIO",
+        "COVERED-RES_PAV_D_COMMUNAL-TO-PROTECTED_PATIO"
+      ],
+      "floor_marks": [
+        "FLOOR-COVERED-RES_PAV_A-TO-PROTECTED_PATIO",
+        "FLOOR-COVERED-RES_PAV_B-TO-PROTECTED_PATIO",
+        "FLOOR-COVERED-RES_PAV_C-TO-PROTECTED_PATIO",
+        "FLOOR-COVERED-RES_PAV_D_COMMUNAL-TO-PROTECTED_PATIO"
+      ],
+      "roof_marks": [
+        "ROOF-COVERED-RES_PAV_A-TO-PROTECTED_PATIO",
+        "ROOF-COVERED-RES_PAV_B-TO-PROTECTED_PATIO",
+        "ROOF-COVERED-RES_PAV_C-TO-PROTECTED_PATIO",
+        "ROOF-COVERED-RES_PAV_D_COMMUNAL-TO-PROTECTED_PATIO"
+      ],
+      "floor_count": 4,
+      "roof_count": 4,
+      "enclosing_wall_count": 0,
+      "patio_interfaces_m": {
+        "COVERED-RES_PAV_A-TO-PROTECTED_PATIO": 2,
+        "COVERED-RES_PAV_B-TO-PROTECTED_PATIO": 2,
+        "COVERED-RES_PAV_C-TO-PROTECTED_PATIO": 2,
+        "COVERED-RES_PAV_D_COMMUNAL-TO-PROTECTED_PATIO": 2
+      },
+      "patio_intrusion_area_m2": 0
+    },
+    "access_routes": {
+      "marks": [
+        "PATH-PUBLIC-ADMIN",
+        "PATH-PUBLIC-SERVICE",
+        "PATH-SERVICE-CARGO"
+      ],
+      "bounds_m": {
+        "PATH-PUBLIC-ADMIN": {
+          "min": [
+            -0.9999999999999999,
+            -62,
+            -0.14999999999999997
+          ],
+          "max": [
+            0.9999999999999999,
+            -52.918335739,
+            0
+          ]
+        },
+        "PATH-PUBLIC-SERVICE": {
+          "min": [
+            -0.7071067810000023,
+            -62.70710678100001,
+            -0.14999999999999997
+          ],
+          "max": [
+            15.643202818999999,
+            -27.775658350999997,
+            0
+          ]
+        },
+        "PATH-SERVICE-CARGO": {
+          "min": [
+            49.5,
+            -19.885786437999997,
+            -0.14999999999999997
+          ],
+          "max": [
+            62,
+            -16.885786438,
+            0
+          ]
+        }
+      },
+      "widths_m": {
+        "PATH_PUBLIC_ADMIN": 2,
+        "PATH_PUBLIC_SERVICE": 2,
+        "PATH_SERVICE_CARGO": 3
+      },
+      "widths_are_study_assumptions": true,
+      "public_and_cargo_separate": true,
+      "areas_excluded_from_official_program": true
+    },
+    "canonical_relations": {
+      "administration_south_public_edge": true,
+      "administration_two_levels": true,
+      "residences_north_interior_four_independent_pavilions": true,
+      "protected_residential_patio_free": true,
+      "covered_external_semiopen_circulation": true,
+      "services_southeast_curved_with_courtyard": true,
+      "child_west_near_playground": true,
+      "therapeutic_garden_central": true,
+      "horta_east": true,
+      "public_and_cargo_access_separate": true,
+      "administrative_board_area_difference_open": true
+    }
+  },
+  "persistence": {
+    "saved": true,
+    "model_sha256": "33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49",
+    "model_sha256_before": "7097faf9b92a812e6488bed39b0dc573d37fe23790671179cd28cba607761095",
+    "model_bytes": 4952064,
+    "checkpoint_path": "revit/production/evidence/AMANDA-RUN-003-R04/R04-T01-RUN003-POST-SAVE.rvt",
+    "checkpoint_manifest_path": "revit/production/evidence/AMANDA-RUN-003-R04/R04-T01-RUN003-POST-SAVE.rvt.manifest.json",
+    "checkpoint_sha256": "33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49",
+    "checkpoint_bytes": 4952064,
+    "checkpoint_manifest_verified": true,
+    "closed_and_reopened_exact_target": true,
+    "reopened_without_upgrade": true,
+    "final_post_reopen_typed_readback_complete": true
+  },
+  "visual_evidence": {
+    "path": "revit/production/evidence/AMANDA-RUN-003-R04/views/r04-canonical-site-revit-2026-09-26.png",
+    "sha256": "c3759ce98fe38e2eff63c0a09c8a91f635d5636b1289e4f917158a616d979b0f",
+    "width": 2400,
+    "height": 1459,
+    "capture_status": "CAPTURED_SUPPORTING_ONLY",
+    "note": "Captura wireframe real do Revit, enquadramento parcial; apoia a existência da geometria, mas não fecha a aceitação visual CANON-011."
+  },
+  "open_gaps": {
+    "canon_011": true,
+    "r05_authorized": false,
+    "administrative_board_area_difference": true,
+    "administrative_level_vs_plate_elevation": true,
+    "administrative_function_assignment": true,
+    "service_function_reconciliation": true,
+    "child_function_reconciliation": true,
+    "site_boundary": true,
+    "site_topography": true,
+    "site_occupancy": true,
+    "site_frontage_count": true,
+    "site_true_north": true
+  },
+  "independent_review": {
+    "performed": true,
+    "reviewer": "Pascal",
+    "mode": "read-only",
+    "findings": [
+      "public-service route endpoint corrected to avoid service mass overlap",
+      "four connector thresholds widened to 2 m patio interfaces with no patio intrusion"
+    ],
+    "conclusion": "Use measured post-reopen bounds and areas; keep CANON-011 pending."
+  }
+}

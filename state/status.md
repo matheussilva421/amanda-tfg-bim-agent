@@ -39,10 +39,23 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `horizun-revit-mcp`: UNREACHABLE in the older persisted environment probe; superseded for this closeout by the healthy live P5-T01 check below (primary)
 - `revitcortex`: NOT_PROBED_THIS_SESSION (fallback-typed)
 
-Live Revit check during the 2026-09-26 P5-T01 closeout: Horizun 1.3.3 reported
-`healthy` on Revit 2027 build `27.2.0.39`, process 38296; command registry
-73/73 clean, RUN-003 active as the sole open document, zero other clients.
-See `revit/production/evidence/AMANDA-RUN-003-R04/real-model-evidence.json`.
+Live Revit check during the 2026-09-26 P4-T01 continuation: Horizun 1.3.3
+reported `healthy` on Revit 2027 build `27.2.0.39`, process 38296; command
+registry 73/73 clean, 80/80 tools visible. RUN-003 is active and matched by
+the exact target path; two documents are open (RUN-003 and the Horizun anchor),
+with zero other clients. The RUN-003 writer lease was released after final
+post-reopen verification. Current spatial evidence is
+`revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json`;
+the target/checkpoint SHA-256 is
+`33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49`.
+
+## Current RUN-003 R04 acceptance status
+
+The saved model contains seven masses, 14 floors, and four roofs. The five
+programmed external surfaces total 260 m². P6-T01 remains `PENDING` / CANON-011
+OPEN: admin area and level offsets, internal function assignments, and site
+evidence are unresolved. The current wireframe image is supplementary only;
+R05 has not been run or authorized.
 
 ## Capability counts
 

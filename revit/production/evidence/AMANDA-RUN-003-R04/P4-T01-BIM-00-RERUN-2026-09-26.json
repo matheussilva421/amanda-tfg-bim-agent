@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "gate_id": "BIM-00",
+  "status": "PASS",
+  "authorized_at_utc": "2026-09-26T16:37:57.190669+00:00",
+  "evidence": {
+    "gate_id": "BIM-00",
+    "status": "PASS",
+    "target_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+    "target_sha256": "7097faf9b92a812e6488bed39b0dc573d37fe23790671179cd28cba607761095",
+    "checkpoint_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\evidence\\AMANDA-RUN-003-R04\\P6-T01-IMMUTABLE-SNAPSHOT.rvt",
+    "checkpoint_sha256": "7097faf9b92a812e6488bed39b0dc573d37fe23790671179cd28cba607761095",
+    "solution_id": "AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C",
+    "approval_hash": "961b6edc95bd097fe600b2ce968aacdf28876bf3c587b788a0b2358baddfc0b0",
+    "layout_hash": "7fde3e34a162167ce27fe2e3158a38f446882816a7c81bb326d486bdfaaae2e2",
+    "coordinate_site_mode": "LOCAL_NORMALIZED_STUDY_NOT_SURVEYED",
+    "canonical_source_hashes": [
+      "30d009357a095e7794e0e915dcd2fdb04cd6b9aab9f4d13f5663ed54d6f20240",
+      "123b95633ae1be643da84f2226c6337d65a74f7d1337d6b27d94bdead1c3a263",
+      "5b96c2d5cc770742ee32d51b83b25993fe8b8a1638bf94da56ba8ef771031381",
+      "c56b806f805d9c4aa1e6015ba6b56ac960204066721f93ef08cbadfb312c0386"
+    ],
+    "official_program_sha256": "11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17",
+    "repository_commit_sha": "da9b91ed17666ff192d57b610c33615e1f4aa767",
+    "project_state_revision": 194,
+    "project_state_sha256": "2eae209cfaa3071019438f7bc1cfa8c0ffd2dbf3a993fe00966f7767744a370d",
+    "historical_r12_sha256": "ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29",
+    "capability_registry_sha256": "1f0c52d81d6f96f8c38610c6f45c20422fe8f31c71a93910dc798107ec1ac4d2",
+    "revit_build": "27.2.0.39",
+    "provider_status": "healthy",
+    "active_document_path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+    "open_document_count": 1,
+    "open_document_paths": [
+      "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt"
+    ],
+    "other_clients_connected": 0,
+    "checks": [
+      {
+        "name": "target_path",
+        "status": "PASS",
+        "evidence": "RUN-003 target was created from the clean Revit 2027 template; exact active path C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt."
+      },
+      {
+        "name": "writer_lease",
+        "status": "PASS",
+        "evidence": "Exclusive owner amanda-P4-T01-RUN003-R04, live PID 39368, fencing generation 2, exact target-bound. The earlier S02 lease file was absent; no S02 lease was reclaimed."
+      },
+      {
+        "name": "checkpoint",
+        "status": "PASS",
+        "evidence": "CheckpointManager verified separate immutable P6-T01 snapshot and matching document identity; target/checkpoint SHA-256=7097faf9b92a812e6488bed39b0dc573d37fe23790671179cd28cba607761095; original clean PRE-R04 checkpoint preserved in project history."
+      },
+      {
+        "name": "historical_r12",
+        "status": "PASS",
+        "evidence": "Historical S01/R12 artifact is not the active target and was not reused; archived R12 SHA-256=ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29."
+      },
+      {
+        "name": "canonical_references",
+        "status": "PASS",
+        "evidence": "Four ordered current canonical board hashes rehashed and matched identity: ['30d009357a095e7794e0e915dcd2fdb04cd6b9aab9f4d13f5663ed54d6f20240', '123b95633ae1be643da84f2226c6337d65a74f7d1337d6b27d94bdead1c3a263', '5b96c2d5cc770742ee32d51b83b25993fe8b8a1638bf94da56ba8ef771031381', 'c56b806f805d9c4aa1e6015ba6b56ac960204066721f93ef08cbadfb312c0386']."
+      },
+      {
+        "name": "capability_registry",
+        "status": "PASS",
+        "evidence": "Current capability registry SHA-256=1f0c52d81d6f96f8c38610c6f45c20422fe8f31c71a93910dc798107ec1ac4d2; PASS scopes include mass, floor, roof and room; Horizun commit/hash match live health."
+      },
+      {
+        "name": "revit_provider",
+        "status": "PASS",
+        "evidence": "Fresh Horizun health healthy; Revit 2027 build 27.2.0.39 PID 38296; 73/73 registry clean; exact active target, one open document, zero other clients."
+      },
+      {
+        "name": "units",
+        "status": "PASS",
+        "evidence": "Read-only Revit API observation returned millimeters-1.0.1 length and squareMeters-1.0.1 area; doc.IsModifiable=false; Python observation completed_unverified, host_verified=false."
+      },
+      {
+        "name": "coordinate_site_mode",
+        "status": "PASS",
+        "evidence": "LOCAL_NORMALIZED_STUDY_NOT_SURVEYED"
+      },
+      {
+        "name": "family_strategy",
+        "status": "PASS",
+        "evidence": "Native OST_Mass direct-shape geometry and existing typed floor/roof system types; no project families or unverified family provider required."
+      },
+      {
+        "name": "canonical_selection",
+        "status": "PASS",
+        "evidence": "Selected solution AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C; content approval hash recomputed and matches 961b6edc95bd097fe600b2ce968aacdf28876bf3c587b788a0b2358baddfc0b0; DEC-CANONICAL-DETAIL-004 authorizes STUDY only; Amanda review remains pending."
+      },
+      {
+        "name": "official_program_sha256",
+        "status": "PASS",
+        "evidence": "Official source docs/source/programa_necessidades.pdf SHA-256=11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17; PDF/program remains the area and capacity authority."
+      },
+      {
+        "name": "repository_commit_sha",
+        "status": "PASS",
+        "evidence": "main HEAD=da9b91ed17666ff192d57b610c33615e1f4aa767."
+      },
+      {
+        "name": "project_state_revision",
+        "status": "PASS",
+        "evidence": "PROJECT_STATE revision=194; next task P6-T01."
+      },
+      {
+        "name": "project_state_sha256",
+        "status": "PASS",
+        "evidence": "Raw PROJECT_STATE.yaml SHA-256=2eae209cfaa3071019438f7bc1cfa8c0ffd2dbf3a993fe00966f7767744a370d."
+      }
+    ]
+  },
+  "authorized_plan_summary": {
+    "stage": "R04",
+    "scenario": "STUDY",
+    "operation_count": 1,
+    "operations": [
+      "RUN003-CANONICAL-MASSING"
+    ],
+    "authorized_mode": "LOCAL_NORMALIZED_STUDY_NOT_SURVEYED",
+    "remaining_gate": "CANONICAL_GEOMETRIC_ACCEPTANCE"
+  },
+  "continuation_scope": {
+    "purpose": "complete canonical R04 real model geometry from the already verified RUN-003 mass baseline",
+    "include": [
+      "administrative two-level plates",
+      "five programmed exterior study surfaces",
+      "four covered semi-open residential connectors",
+      "three separately marked public/admin, public/service and cargo routes"
+    ],
+    "exclude": [
+      "interior room construction",
+      "R05 walls/openings",
+      "survey/site claims",
+      "RC01"
+    ]
+  }
+}

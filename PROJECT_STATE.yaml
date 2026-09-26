@@ -4,9 +4,9 @@ blockers:
 - SITE_OCCUPANCY:DEGRADING
 - SITE_FRONTAGE_COUNT:DEGRADING
 - SITE_TRUE_NORTH:DEGRADING
-current_checkpoint: revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-IMMUTABLE-SNAPSHOT.rvt
+current_checkpoint: revit/production/evidence/AMANDA-RUN-003-R04/R04-T01-RUN003-POST-SAVE.rvt
 last_completed_task: P5-T01
-last_verified_commit: 64ca74b9efa586142b7ee90687a840edc269a4a3
+last_verified_commit: da9b91ed17666ff192d57b610c33615e1f4aa767
 next_task: P6-T01
 phase_gate: GO_WITH_LIMITATIONS
 phase_id: P6
@@ -16,4 +16,4 @@ project: Amanda TFG BIM Agent
 revit_stage: R04
 schema_version: 1
 selected_design: AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C
-state_revision: 194
+state_revision: 195

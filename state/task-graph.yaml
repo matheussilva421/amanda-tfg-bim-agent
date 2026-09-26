@@ -3281,24 +3281,23 @@ tasks:
     - P4-T01
     status: PASS_WITH_WARNINGS
     evidence:
-    - User instruction on 2026-09-26 authorizes immediate R04 execution only after
-      BIM-00 PASS; R05 is excluded.
-    - Requires seven canonical masses, separate readback, save, cold reopen, and post-reopen
-      query for exact RUN-003 target.
-    - Seven RUN-003 R04 OST_Mass elements verified after write and after cold reopen;
-      typed queries confirm identities and bounds. See docs/reports/P5-T01-run003-r04-real-model.md
-      and revit/production/evidence/AMANDA-RUN-003-R04/real-model-evidence.json.
-    - Save returned target SHA-256 120935963a19af4c654894d00f057304237ec7f98115f0eecb266e3a91aaef20;
-      the POST-R04 checkpoint file was independently hashed and its manifest and
-      CheckpointManager verification match. Direct hashing of the working RVT was
-      denied while Revit held it open; close, cold reopen without upgrade, and fresh
-      post-reopen queries passed.
-    - 'PASS_WITH_WARNINGS: Python readbacks are self_reported_verified/host_verified=false;
-      typed queries independently confirmed identity and bounding boxes. One service-profile
-      vertex was omitted within measured Revit ShortCurveTolerance; six interior rings
-      retained.'
-    - No usable visual capture; CANON-011 remains open. Coordinates are local normalized/unsurveyed,
-      heights provisional, five site-data blockers remain; no R05 performed.
+    - Original seven-mass RUN-003 baseline remains persisted; this P4-T01 continuation
+      completed the already-authorized R04 additions after BIM-00 PASS.
+    - Typed rehearsal and commit created 18 elements (14 floors, four roofs); the bridge
+      verified all 18 writes. After cold reopen, typed query returned 25 objects total,
+      seven masses, complete coverage, and zero unreadable. See the current R04 evidence.
+    - Current target SHA-256 is 33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49,
+      4,952,064 bytes. The POST-SAVE checkpoint and corrected manifest agree; a fresh
+      CheckpointManager.verify_checkpoint call returned true.
+    - The current stage includes two administrative plates, five official external
+      surfaces, four covered residential connectors with roofs, and three marked routes.
+      The official PDF remains the area/capacity authority; coordinates remain local and
+      unsurveyed.
+    - PASS_WITH_WARNINGS; admin board area (+37.407 m2 / +18.7%) and level/plate offset
+      remain open; interior function assignments are not modeled; the Revit image is
+      supporting-only. CANON-011 remains open, five site-data blockers remain, no R05.
+    - Current reports include docs/reports/P4-T01-run003-r04-geometry-completion-2026-09-26.md
+      and docs/reports/P6-T01-run003-visual-geometric-acceptance.md.
   P6-T01:
     id: P6-T01
     phase: P6
@@ -3308,10 +3307,23 @@ tasks:
     - P5-T01
     status: PENDING
     evidence:
-    - P5-T01 completed with warnings; seven masses persisted through save, checkpoint, cold reopen, and typed post-reopen query.
-    - Six dedicated Revit views and accepted PNG captures are saved under revit/production/evidence/AMANDA-RUN-003-R04; captures and all four boards plus the official program were SHA-256 verified.
-    - Current target SHA-256 is 7097faf9b92a812e6488bed39b0dc573d37fe23790671179cd28cba607761095; immutable evidence copy and manifest match and CheckpointManager.verify_checkpoint passed.
-    - After exact-path close/reopen without upgrade, typed queries returned all seven masses and six views; coverage complete, zero unreadable. Final Horizun health is healthy, exact target active, one document open, zero other clients; writer lease FREE.
-    - Independent read-only review by Bacon confirmed mass-only passes for broad zoning, residential count/separation, and curved services form; it confirmed landscape/access/internal-function gaps and the open administrative footprint discrepancy (+37.407 m2 / +18.7% against the board's approximate 200 m2 per-floor label).
-    - See docs/reports/P6-T01-run003-visual-geometric-acceptance.md and revit/production/evidence/AMANDA-RUN-003-R04/visual-geometric-evidence.json. P6-T01 remains PENDING and CANON-011 OPEN pending scoped gap resolution.
-    - No R05 or additional mass-geometry write is included in this task record.
+    - Current exact RUN-003 target was saved, cold-reopened without upgrade, and queried
+      after reopen; all 25 elements were read with complete coverage and zero unreadable.
+    - Five site surfaces match the program PDF at 80/80/30/30/40 m2 (260 m2 total);
+      board-printed areas were not used as official program areas.
+    - Four separate residential masses and four open-sided roofed connector pairs are
+      present; the protected patio remains 80 m2 with 2 m connector interfaces and no
+      measured intrusion. Services retain the curved six-ring courtyard composition;
+      the west child mass is adjacent to the official 40 m2 playground.
+    - Three marked access routes keep public/admin, public/services, and cargo paths
+      distinct; route widths are local study assumptions and excluded from the program.
+    - Open items include admin floor footprint differs from the board's approximate label;
+      Nível 2 is at 4.0 m while the upper plate is at 3.2 m; room/function and bedroom
+      assignments are not modeled; site inputs remain unsurveyed/unverified.
+    - The current real Revit wireframe capture is cropped and supplementary only. Earlier
+      P6 captures predate the current save and are not evidence of the current geometry.
+    - See docs/reports/P4-T01-run003-r04-geometry-completion-2026-09-26.md,
+      docs/reports/P6-T01-run003-visual-geometric-acceptance.md, and
+      revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json.
+      CANON-011 remains open and P6-T01 remains PENDING.
+    - User instruction excludes GeoNatal, RC01, and R05; none was performed.

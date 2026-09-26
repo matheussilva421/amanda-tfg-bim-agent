@@ -37,11 +37,12 @@ OPTIONAL_PHASE_DEPENDENCIES: tuple[tuple[str, str], ...] = (
     ("PHASE_08", "PHASE_09"),
 )
 
-# PHASE_00 is a local verification chain.  It is allowed to feed the normal
-# route if a future registry records that relationship, but it is not part of
-# the reviewed Phase 01--09 contract and is not required here.
+# These stage-specific routes can accompany the reviewed Phase 01--09
+# dependency contract without making their phases mandatory in every registry.
 ALLOWED_AUXILIARY_DEPENDENCIES: tuple[tuple[str, str], ...] = (
     ("PHASE_00", "PHASE_01"),
+    ("P4", "P5"),
+    ("P5", "P6"),
 )
 
 BRANCH_PHASES: Mapping[str, tuple[str, ...]] = {

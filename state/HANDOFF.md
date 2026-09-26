@@ -1,64 +1,42 @@
 # Current Handoff
 
-## Current continuation — 2026-09-26 (P6-T01 visual evidence and readback)
+## Current continuation — 2026-09-26 (P4-T01 / RUN-003 R04 geometry completion)
 
-The RUN-003 R04 model is saved, reopened, and active in Revit 2027. Horizun
-1.3.3 final health is HEALTHY, the exact target is matched by path, the registry
-is 73/73 clean, 80/80 tools are visible, there is one open document and no other
-client. Seven masses and six dedicated views were independently queried after
-reopen with complete coverage and zero unreadable elements. The writer lease is
-FREE. No mass geometry changed in this visual closeout.
+The user requested resuming P4-T01 in the visible, interactive Revit 2027 session. BIM-00 had already passed, so this continuation completed its authorized R04 real-model geometry. No GeoNatal search, RC01 change, R05 write, or reuse of S01/S02/R12 occurred. S02 remains `STALE_BY_CANONICAL_REFERENCE_EXPANSION`; its lease was absent and was not reclaimed.
 
-The current target hash is
-`7097faf9b92a812e6488bed39b0dc573d37fe23790671179cd28cba607761095` (4,612,096
-bytes). Revit close/reopen used the exact target without upgrade. The immutable
-P6 snapshot and CheckpointManager manifest match this hash and verification
-passed. The default `revit/production/checkpoints/` route was refused by the
-existing safety path-component guard; no guard was bypassed or edited. The
-verified copy is under `revit/production/evidence/AMANDA-RUN-003-R04/`.
-The repository ignores `*.rvt` at `.gitignore:44`; the target and snapshot
-binaries remain local, while their manifests, hashes, report, and PNG captures
-are versioned in this closeout.
+### Live Revit and write scope
 
-Six accepted, hashed PNG captures and the machine-readable record are in
-`revit/production/evidence/AMANDA-RUN-003-R04/visual-geometric-evidence.json`;
-the short comparison is `docs/reports/P6-T01-run003-visual-geometric-acceptance.md`.
-Broad mass zoning and the curved services courtyard are supported. P6 remains
-PENDING / CANON-011 OPEN because the model has no garden/horta/path/playground,
-separate entrances, or internal room/floor assignments. Admin mass footprint
-237.407 m² is 18.7% above the board's approximate 200 m² label; this remains an
-open board-geometry discrepancy. Official PDF areas were not changed. The
-independent read-only review by Bacon confirms PASS only for broad mass zoning,
-four-volume residential count/separation, and overall curved services form;
-all internal program, site landscape, access and child/playground findings
-remain pending. It also flagged the P5 `NOT_ACCEPTED` capture field as needing
-time-scoped clarification; the P5 report now states that it is the P5 snapshot
-and links the later P6 evidence without altering the P5 result.
+Fresh Horizun health: 1.3.3 `HEALTHY`; Revit 2027 build 27.2.0.39, PID 38296; registry 73/73 clean and 80/80 tools visible. `horizun_target` selected the one running Revit. RUN-003 target was active and matched by exact path. Two documents were open (RUN-003 and `HZ_ANCHOR_2027`); other Horizun clients: 0. The exclusive lease owner during write was `amanda-P4-T01-RUN003-R04`, generation 2, bound to the exact target.
 
-No software tests were run: this closeout changed views/evidence/state docs but
-no code or mass geometry. Revit verification was live typed query after cold
-reopen; checkpoint bytes/hash were checked independently. One failed checkpoint
-attempt at the conventional directory created no files; using the safe evidence
-directory succeeded. An initial close attempt included an unsupported `save`
-argument and a second was refused because the active document cannot be closed;
-the exact saved file was then closed using the bridge's supported activate-other
-option, reopened, and the temporary bridge anchor was closed again. No unsaved
-changes were discarded.
+Target: `revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt`.
 
-**Resume:** continue `P6-T01` only. Keep R05 blocked. Resolve the listed
-architectural gaps and the administrative footprint discrepancy with a scoped,
-source-backed decision before any further model write. Do not start GeoNatal
-research or modify RC01. `PROJECT_STATE.yaml` remains phase P6 / PENDING and
-points `next_task` to P6-T01.
+Typed rehearsal passed 18/18; the committed transaction created 14 floors and four roofs. Additions: two admin floor plates; five official external surfaces (80/80/30/30/40 m²); four open-sided covered residential connectors plus roofs; three separately marked public/admin, public/service, and cargo paths. There were no rooms or R05 shell elements. The existing seven masses remained the spatial base.
 
-GitHub closeout: commit `64ca74b9efa586142b7ee90687a840edc269a4a3` was created
-on `main`, pushed, and confirmed by `git ls-remote origin refs/heads/main`.
-The report/evidence commit did not include ignored RVT binaries. Seven
-worktree deletions under
-`design-engine/runs/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C-study-detail-004/`
-remain unstaged and were not part of this task;
-no RC01 path was included or edited. The handoff/status follow-up is committed
-separately and is pushed as part of the final closeout.
+### Persisted evidence
+
+Revit save changed the target from SHA-256 `7097faf9b92a812e6488bed39b0dc573d37fe23790671179cd28cba607761095` / 4,612,096 bytes to `33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49` / 4,952,064 bytes. Checkpoint: `revit/production/evidence/AMANDA-RUN-003-R04/R04-T01-RUN003-POST-SAVE.rvt`; manifest hash/size match. A placeholder in the manifest provenance SHA was corrected to the verified model SHA, then `CheckpointManager.verify_checkpoint` returned `True` again.
+
+The target was closed and reopened from the exact path in Revit 2027 without upgrade. Final typed query after reopen returned 25 objects (7 masses, 14 floors, 4 roofs), complete coverage and zero unreadable. The target remains active. Revit visual evidence is `revit/production/evidence/AMANDA-RUN-003-R04/views/r04-canonical-site-revit-2026-09-26.png` (2400×1459, SHA-256 `c3759ce98fe38e2eff63c0a09c8a91f635d5636b1289e4f917158a616d979b0f`). It is a cropped wireframe supporting capture; it does not close CANON-011.
+
+### Open reconciliation items
+
+- Admin plates are 237.407 m² each versus the board's approximate 200 m² label (+37.407 m² / +18.7%). The upper plate face is at 3.2 m while Revit `Nível 2` is at 4.0 m (−0.8 m offset). Both remain open; no official PDF area was altered.
+- The four residential masses are A/B/C family pavilions and D communal. Four roofed, wall-free connectors have 2 m patio interfaces and no measured intrusion into the 80 m² patio. Bedroom counts and residential functions are not room assignments yet.
+- The six-ring services/capacitation composition is curved and retained. Its board-listed functions and their official room-area assignments have not been modeled; the 446.501 m² source mass area is not an official programmed room area.
+- The west child mass is adjacent to the 40 m² playground. Brinquedoteca, apoio pedagógico, bathroom and deposit are not modeled as rooms.
+- Route widths (2/2/3 m) are study assumptions; paths are marked separately but doors and geographic/site access are not proven. Site boundary, topography, occupancy, frontage count and true north remain unresolved.
+
+### Tests, files and Git closeout
+
+Test-first record: the focused spatial test first failed at the intended RED status assertion while the evidence file was `RED`. After evidence implementation it exposed the literal `${save.sha256_after}` manifest placeholder; fixing it yielded GREEN. A pre-existing committed-graph test also reproduced the baseline rejection of P4→P5 and P5→P6. A new policy test was RED, then the narrowly scoped auxiliary-chain contract fix made it GREEN. Results: spatial/graph/state unit command, 21 passed; policy order command, 7 passed; `CheckpointManager.verify_checkpoint` returned `True`. The combined `test_status_dashboard.py` collection was blocked because the host Python lacks `ortools`; no dependency was installed or changed.
+
+Updated evidence/report/state files: `r04-spatial-model-evidence.json`, `P4-T01-BIM-00-RERUN-2026-09-26.json`, the checkpoint manifest, the current Revit PNG, `tests/unit/test_run003_r04_spatial_evidence.py`, `tests/policy/test_plan_order.py`, `src/amanda_agent/state/plan_order.py`, `docs/plan/CURRENT.md`, both P4/P6 reports, `PROJECT_STATE.yaml`, `state/task-graph.yaml`, `state/task-history.yaml`, `state/status.md`, and this handoff. RVT and checkpoint binaries are local/ignored.
+
+At task start, `main` and `origin/main` were both `da9b91ed17666ff192d57b610c33615e1f4aa767`. Do not stage broad paths: many pre-existing `revit/lab/exports/p06t14/GOLDEN/RC01/` deletions appear in `git status`; preserve them unstaged. Stage only the named R04 evidence, reports, state, manifest and test files. Record final commit and `git ls-remote` confirmation in this section before closing.
+
+### Resume
+
+`P6-T01` remains `PENDING`, `CANON-011` remains open, and `PROJECT_STATE.yaml` points to the new post-save checkpoint (revision 195). The next authorized work is scoped P6 visual/geometric acceptance and source-backed reconciliation of the open items; do not proceed automatically to R05. Preserve the live RUN-003 target and never alter RC01.
 
 ## Previous continuation — 2026-09-26 (P4-T01 and P5-T01 complete)
 

@@ -18,8 +18,10 @@ P3-T01 generated offline candidate `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A
 
 ## P4 — BIM-00
 
-`P4-T01` establishes BIM-00 evidence and can authorize only the exact new
-solution and target; it depends on P3-T01 and excludes R04/R05. Its evidence
+`P4-T01` establishes BIM-00 evidence for the exact new solution and target; it
+depends on P3-T01. BIM-00 remains an evidence/authorization gate. In the
+2026-09-26 user-directed continuation, a PASS immediately authorized the
+bounded R04 geometry listed under P5 below; R05 remains excluded. Its evidence
 must bind the `solution_id`, `layout_hash`, content `approval_hash`, exactly
 four canonical board hashes, official program PDF SHA-256, target RVT path and
 SHA-256, a separate checkpoint path and matching SHA-256, repository commit
@@ -28,42 +30,44 @@ is compared to the active expected value; an unbound or mismatched value fails
 closed. Required live checks include the writer lease, checkpoint, historical
 R12 exclusion, canonical references, capability registry, Revit provider,
 units, site-coordinate mode, family strategy, canonical selection, and
-official program source. BIM-00 is an evidence/authorization gate only; it
-does not execute an R04/R05 operation.
+official program source. BIM-00 itself does not execute a Revit operation; the
+explicit user continuation authorized R04 after its PASS and did not authorize
+R05.
 
 **Completed status (2026-09-26):** `P4-T01` passed BIM-00 against the exact
-RUN-003 target, pre-R04 checkpoint, canonical sources, program, repository
-commit, and state revision. `P5-T01` then wrote seven real Revit masses and
-completed separate query/readback, save, POST-R04 checkpoint, close, cold
-reopen, and fresh post-reopen queries. The detail is in
-`docs/reports/P5-T01-run003-r04-real-model.md` and
-`revit/production/evidence/AMANDA-RUN-003-R04/real-model-evidence.json`.
-P5 is `PASS_WITH_WARNINGS`: Python geometry readbacks are explicitly
-`self_reported_verified` (`host_verified=false`), while typed queries confirmed
-all seven identities and bounding boxes both before and after reopen. One
-sub-tolerance service-profile vertex was omitted within measured Revit
-ShortCurveTolerance; six courtyard rings remain, and the measured area delta is
-0.00000148 m². Both attempted visual captures rolled back; neither yielded a
-usable artifact, so CANON-011 remains open.
+RUN-003 target, pre-R04 checkpoint, four canonical sources, official program,
+repository commit, and state revision. The user then explicitly authorized
+continuing to R04. The original seven-mass baseline remains, and the continuation
+added 18 typed elements (14 floors, four roofs): two administrative plates, five
+program-area site surfaces, four roofed open-sided residential connectors, and
+three separately marked access routes. Typed post-reopen query returned 25
+elements, complete coverage, zero unreadable. See
+`docs/reports/P4-T01-run003-r04-geometry-completion-2026-09-26.md` and
+`revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json`.
+
+P5 is `PASS_WITH_WARNINGS`. The official PDF remains the authority for 20 people,
+626 m² internal and 260 m² external. Five modelled external areas are 80/80/30/30/40
+m². Coordinates remain local/unsurveyed; the admin board label discrepancy
+(+37.407 m² / +18.7%), Nível 2 at 4.0 m versus upper plate at 3.2 m, and missing
+room/function assignments remain open. No official area was changed.
 
 Live closeout confirmed Horizun 1.3.3 healthy, Revit 2027 build 27.2.0.39,
-clean 73/73 command registry, RUN-003 active as the sole open document, and no
-other clients. The exclusive RUN-003 lease was released after persistence
-verification. Save returned target SHA-256
-`120935963a19af4c654894d00f057304237ec7f98115f0eecb266e3a91aaef20`; the
-checkpoint file and manifest were independently rehashed and match. Direct file
-hashing of the working RVT was denied while Revit held it open; cold reopen and
-fresh typed queries verified the target contents.
-Coordinates remain local normalized and unsurveyed; floor heights remain
-provisional. All five site-data blockers remain open. No R05 operation occurred.
+73/73 registered commands and 80/80 tools. The exact RUN-003 target is active;
+the open anchor document is also present, with zero other clients. The exclusive
+RUN-003 lease was released after persistence verification. Save returned target
+SHA-256 `33a99c7c760125da434017210b7ea2d506a3914ae59e002769a14138cca27b49`
+(4,952,064 bytes); the separate checkpoint and corrected manifest verify. Exact
+path close/reopen completed without upgrade and fresh typed queries confirmed
+the contents. Five site-data blockers remain. No R05 operation occurred.
 ## P5 — R04 Revit
 
-`P5-T01` is complete with `PASS_WITH_WARNINGS`; see the execution evidence
-above. `P6-T01` is next: compare the saved R04 geometry to all four canonical
-boards and close CANON-011. Six dedicated views and usable Revit captures now
-exist, but the comparison records unmodeled landscape/access/internal functions
-and an open administrative footprint discrepancy. P6 remains pending; R05
-remains blocked and is not authorized by this continuation.
+`P5-T01` is complete with `PASS_WITH_WARNINGS`; see the current execution
+evidence above. `P6-T01` is next: accept the saved R04 geometry against all four
+canonical boards and close CANON-011. The current image is a cropped wireframe
+support capture; six earlier captures predate the latest geometry save. P6
+remains pending for visual review, room/function reconciliation, admin area and
+level discrepancies, and unresolved site inputs. R05 remains excluded and is
+not authorized by this continuation.
 
 ## P6 — R04 visual/geometric acceptance
 
