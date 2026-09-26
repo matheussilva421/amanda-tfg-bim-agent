@@ -1,6 +1,6 @@
 # P6-T01 — RUN-003 R04: reconciliação canônica visual e geométrica
 
-**Atualização:** 2026-09-26 23:07 UTC
+**Atualização:** 2026-09-26 23:23 UTC
 **Status:** `PASS` — `CANON-011` passa para a topologia espacial do `STUDY` normalizado. R05–R13 ficam autorizados pelo DEC-010 após este gate; esta aceitação não valida cômodos internos, dados cadastrais ou aprovação pessoal.
 
 ## Autoridade e escopo
@@ -61,14 +61,14 @@ O manifesto P6 contém nove capturas atuais feitas após a reabertura, com vista
 
 `CANON-011` e P6-T01 passam para o escopo declarado: geometria, implantação, organização e relações espaciais comparadas às quatro pranchas, com áreas externas conferidas contra o PDF. O readback confirma todas as relações espaciais aceitas; as duas divergências administrativas estão resolvidas para o STUDY.
 
-As salas e atribuições internas não estão no R04. Não foram usadas como gate espacial de P6: o layout e a reconciliação de áreas úteis BIM pertencem ao R06 e continuarão obrigados a seguir o PDF e o cruzamento P1-T01. Os cinco bloqueios de terreno limitam claims cadastrais, topográficos, de disponibilidade, orientação e acessibilidade altimétrica; não bloqueiam a topologia local normalizada. O estudo não reivindica conformidade cadastral, norte verdadeiro ou ajuste legal.
+As salas e atribuições internas não estão no R04. Não foram usadas como gate espacial de P6: R06 executa o layout interno; R08 cria as Rooms e verifica suas áreas conforme o PDF e o cruzamento P1-T01. Os cinco bloqueios de terreno limitam claims cadastrais, topográficos, de disponibilidade, orientação e acessibilidade altimétrica; não bloqueiam a topologia local normalizada. O estudo não reivindica conformidade cadastral, norte verdadeiro ou ajuste legal.
 
 **R05 ainda não foi executado.** Após este PASS, a autorização operacional do usuário registrada em DEC-010 libera a sequência atual P7-T01 a P7-T09 (R05–R13), sem nova confirmação entre gates verdes. A identidade canônica segue sem aprovação pessoal atribuída; R14+ e GOLDEN não estão incluídos. Não houve pesquisa GeoNatal, operação em RC01, reutilização de S01/S02/R12 nem alteração do programa oficial. S02 permanece `STALE_BY_CANONICAL_REFERENCE_EXPANSION`.
 
 ## Testes e rastreabilidade
 
-O teste espacial foi atualizado primeiro para as medidas pós-reabertura e falhou contra os valores antigos (L2 a 3,2 m em vez de 4,0 m), como esperado no RED. O teste do registro de divergência também falhou primeiro porque o status ainda estava `OPEN_FOR_REVIEW`; passou depois de o registro receber os IDs e hashes reconciliados. O teste de estado apontou o checkpoint desatualizado no dashboard e falha no formato do carimbo; ambos foram corrigidos antes do GREEN.
+O teste espacial foi atualizado primeiro para as medidas pós-reabertura e falhou contra os valores antigos (L2 a 3,2 m em vez de 4,0 m), como esperado no RED. O teste do registro de divergência também falhou primeiro porque o status ainda estava `OPEN_FOR_REVIEW`; passou depois de o registro receber os IDs e hashes reconciliados. O teste de estado apontou o checkpoint desatualizado no dashboard e falha no formato do carimbo; ambos foram corrigidos antes do GREEN. A revisão independente do fechamento encontrou uma conclusão antiga ainda pendente no JSON e uma divergência de atribuição R06/R08; os testes de regressão ficaram RED antes de marcar a revisão antiga como superada e alinhar layout interno em R06 com criação/readback de Rooms em R08.
 
-Resultado GREEN focado: `tests/unit/test_run003_r04_spatial_evidence.py`, `test_canonical_deviation_record.py`, `test_run003_view_capture_evidence.py`, `test_status_checkpoint_consistency.py`, `test_task_graph.py` e `test_state_store.py`: **26 passaram, 0 falharam**. O gate de política `tests/policy/test_plan_order.py` passou **8/8**, incluindo a nova dependência P6→P7 do RUN-003. Validação de parse YAML/JSON passou. `ruff` não está disponível no ambiente; nenhum pacote foi instalado. `python -m amanda_agent status` também não inicia porque o Python do host não tem `ortools`; o dashboard e o estado formal foram atualizados diretamente com o readback e os registros verificados.
+Resultado GREEN focado: `tests/unit/test_run003_r04_spatial_evidence.py`, `test_canonical_deviation_record.py`, `test_run003_view_capture_evidence.py`, `test_status_checkpoint_consistency.py`, `test_task_graph.py` e `test_state_store.py`: **27 passaram, 0 falharam**. O gate de política `tests/policy/test_plan_order.py` passou **8/8**, incluindo a nova dependência P6→P7 do RUN-003. Validação de parse YAML/JSON passou. `ruff` não está disponível no ambiente; nenhum pacote foi instalado. `python -m amanda_agent status` também não inicia porque o Python do host não tem `ortools`; o dashboard e o estado formal foram atualizados diretamente com o readback e os registros verificados.
 
 Evidência principal: `revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json`; manifesto visual P6: `revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/p6-canon-011-captures.json`; reconciliação funcional oficial: `docs/reports/P1-T01-four-board-reconciliation.md`.

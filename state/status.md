@@ -60,9 +60,9 @@ The Board-02 divergence record is `RESOLVED_FOR_STUDY`; personal approval remain
 false and official program areas/quantities were not changed. The five external
 program spaces remain 80/80/30/30/40 m².
 
-P6-T01 is `PASS` for normalized-study spatial topology / CANON-011. Room/function
-and bedroom assignments are not modeled for independent BIM area readback and
-belong to R06. Nine fresh views and one explicitly historical child/playground reference are documented in
+P6-T01 is `PASS` for normalized-study spatial topology / CANON-011. R06 owns the
+internal layout; R08 owns Revit Room creation and official area readback. Nine
+fresh views and one explicitly historical child/playground reference are documented in
 `revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/p6-canon-011-captures.json`.
 The near-blank P6 relation attempt is excluded. Five site-data limits remain;
 no cadastral/north/site-availability claim is made. DEC-010 records conditional
@@ -98,13 +98,12 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 
 ## Git verification
 
-P6 baseline commit `4d69f5fc301bfef37ba6d36cdf6e73a09fca9a1e` is on
-`origin/main`. P6 PASS/P7 task-graph changes are being validated locally; the
-new changes are not yet committed or pushed. Preserve pre-existing RC01
-deletions and exclude them from staging.
+P6 PASS commit `13a2581aa13b2a580fc20fa9d5b27e3009569edd` was pushed from `main`;
+`git ls-remote origin refs/heads/main` returned the same SHA. Preserve
+pre-existing RC01 deletions and exclude them from staging.
 
 The P6 normalized-study acceptance does not create internal rooms or verify
-their areas; that work is assigned to R06. R05 code execution remains technically
+their areas; R06 owns internal layout and R08 owns Revit Room/area readback. R05 code execution remains technically
 blocked until a bounded P6/DEC-010 RUN-003 authorization, source-backed wall
 heights, and R05-start dispatch are implemented and tested. One temporary view
 capture reported `view_restored:false`; a no-save close and Python API preflight

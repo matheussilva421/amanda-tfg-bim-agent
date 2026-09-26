@@ -3342,8 +3342,9 @@ tasks:
     - >-
       docs/reports/P6-T01-run003-visual-geometric-acceptance.md and
       revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json
-      record PASS for normalized-study spatial topology. R06 owns internal-room
-      modeling and program-area readback; site inputs remain nonblocking for this scope.
+      record PASS for normalized-study spatial topology. R06 owns internal layout;
+      R08 owns Revit Room creation and program-area readback; site inputs remain
+      nonblocking for this scope.
     - >-
       No GeoNatal search, RC01 operation, S01/S02/R12 reuse, official-program change,
       or R05 operation was performed before this gate. DEC-010 records the user's

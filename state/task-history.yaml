@@ -2345,17 +2345,18 @@ entries:
   - 'Accepted spatial scope: normalized RUN-003 STUDY topology reconciled against exactly four canonical boards; official program PDF, capacities, and areas remain unchanged.'
   - 'P6 checkpoint SHA-256 8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326; post-reopen typed readback fingerprint 4636abc6b294829b, 25 scoped elements, complete coverage, zero unreadable.'
   - 'Child/playground current relation is backed by current typed bounds at 2.976 m and the current overall-site capture; the historical close-up and excluded near-blank capture are labeled honestly.'
-  - 'Internal rooms, functions, bedrooms, and independent program-area readback are deferred to R06; site/cadastral/true-north claims remain limited. Independent Luna xhigh review accepted the P6 scope.'
-  - 'Final focused suite: 26 passed, 0 failed; plan-order policy: 8 passed, 0 failed; YAML/JSON parse passed.'
+  - 'Internal layout is deferred to R06; Revit Room creation and independent program-area readback are deferred to R08. Site/cadastral/true-north claims remain limited. Independent Luna xhigh review accepted the P6 scope.'
+  - 'Final focused suite: 27 passed, 0 failed; plan-order policy: 8 passed, 0 failed; YAML/JSON parse passed.'
+  - 'P6 PASS commit 13a2581aa13b2a580fc20fa9d5b27e3009569edd was pushed from main and confirmed equal to origin/main; independent-review corrections are recorded in the follow-up change.'
   - >-
     DEC-010 is the user's explicit conditional authorization for RUN-003 R05-R13
     after P6 PASS; it does not grant personal approval, R14+, FINAL, or GOLDEN.
-  recorded_utc: '2026-09-26T23:07:00Z'
+  recorded_utc: '2026-09-26T23:23:00Z'
   note: P6 normalized-study spatial acceptance passed; P7-T01 is next.
 - task_id: P7-T01
   status: PENDING
   evidence:
   - 'R05 actual-Revit work is explicitly authorized after P6 PASS, but the production code path still requires a narrowly scoped P6/DEC-010 authorization, source-backed wall heights, and dispatch starting at R05 on the saved RUN-003 target.'
   - 'No R05 model write has occurred in this continuation; retain the P6 checkpoint and verify the live target and writer lease before any future write.'
-  recorded_utc: '2026-09-26T23:07:00Z'
+  recorded_utc: '2026-09-26T23:23:00Z'
   note: Ready in the task graph; technical implementation gates remain before Revit execution.

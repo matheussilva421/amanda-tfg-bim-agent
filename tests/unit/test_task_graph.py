@@ -194,6 +194,23 @@ def test_run003_p6_acceptance_unlocks_the_current_p7_stage_chain():
     assert tasks["P05-T13"]["status"] == "PASS"
 
 
+def test_current_plan_separates_r06_layout_from_r08_room_area_readback():
+    plan = " ".join(
+        (REPO_ROOT / "docs" / "plan" / "CURRENT.md")
+        .read_text(encoding="utf-8")
+        .split()
+    )
+    report = (
+        REPO_ROOT
+        / "docs"
+        / "reports"
+        / "P6-T01-run003-visual-geometric-acceptance.md"
+    ).read_text(encoding="utf-8")
+
+    assert "R06 owns internal layout; R08 owns Revit Room creation and area readback." in plan
+    assert "R06 executa o layout interno; R08 cria as Rooms e verifica suas áreas" in report
+
+
 def test_regenerating_the_graph_keeps_recorded_outcomes(tmp_path: Path):
     """A plan edit must refresh dependencies without erasing history.
 

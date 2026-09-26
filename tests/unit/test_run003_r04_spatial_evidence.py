@@ -314,7 +314,15 @@ def test_run003_r04_spatial_readback_matches_canonical_mass_and_site_geometry():
     assert evidence["p6_acceptance"]["status"] == "PASS"
     assert evidence["p6_acceptance"]["scope"] == "NORMALIZED_STUDY_SPATIAL_TOPOLOGY"
     assert evidence["p6_acceptance"]["rooms_deferred_to"] == "R06"
+    assert evidence["p6_acceptance"]["room_area_readback_deferred_to"] == "R08"
     assert evidence["p6_acceptance"]["site_claims_status"] == "LIMITED_TO_SURVEYED_DATA"
+    prior_review = evidence["independent_review"]
+    assert prior_review["status"] == "SUPERSEDED_BY_SCOPED_P6_ACCEPTANCE"
+    assert "room layout to R06" in prior_review["conclusion"]
+    assert "area readback to R08" in prior_review["conclusion"]
+    assert evidence["p6_acceptance"]["independent_review"]["status"] == (
+        "PASS_NORMALIZED_STUDY_TOPOLOGY"
+    )
     assert evidence["open_gaps"]["administrative_board_area_difference"] is False
     assert evidence["open_gaps"]["administrative_level_vs_plate_elevation"] is False
     assert evidence["open_gaps"]["service_function_reconciliation"] is False

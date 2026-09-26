@@ -534,11 +534,12 @@
     "performed": true,
     "reviewer": "Pascal",
     "mode": "read-only",
+    "status": "SUPERSEDED_BY_SCOPED_P6_ACCEPTANCE",
     "findings": [
       "public-service route endpoint corrected to avoid service mass overlap",
       "four connector thresholds widened to 2 m patio interfaces with no patio intrusion"
     ],
-    "conclusion": "Use measured post-reopen bounds and areas; keep CANON-011 pending."
+    "conclusion": "This historical review treated internal room geometry and area readback as part of CANON-011. The current scoped P6 acceptance passes spatial topology; defer internal room layout to R06 and Revit Room area readback to R08."
   },
   "p6_acceptance": {
     "status": "PASS",
@@ -592,6 +593,7 @@
     "administrative_deviation_status": "RESOLVED_FOR_STUDY",
     "administrative_personal_approval_received": false,
     "rooms_deferred_to": "R06",
+    "room_area_readback_deferred_to": "R08",
     "site_claims_status": "LIMITED_TO_SURVEYED_DATA",
     "nonblocking_site_gaps": [
       "SITE_BOUNDARY",

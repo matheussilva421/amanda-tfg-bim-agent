@@ -58,7 +58,7 @@ P1-T01 leaves the selected design identity unset. The signed three-source DEC-CA
 
 Status: ACTIVE — `DEC-CANONICAL-DETAIL-004`
 
-RUN-003 is selected by agent delegation for a reversible, normalized local-reference STUDY. Its coordinates are not surveyed site data. Missing boundary, topography, occupancy/transfer, frontage, and true-north evidence blocks only the dependent parcel and final claims. `AMANDA_REVIEW_PENDING` remains; the content approval hash is not personal approval. P4-T01 passed BIM-00 and persisted the R04 geometry. P6-T01 / CANON-011 now passes for four-board spatial topology; room/function modeling and area readback are assigned to R06. The Board-02 administrative deviations are `RESOLVED_FOR_STUDY` in `CANONICAL_DEVIATIONS.yaml`, with no personal approval recorded. DEC-010 separately records the user's conditional operational authorization for R05–R13 after P6 PASS.
+RUN-003 is selected by agent delegation for a reversible, normalized local-reference STUDY. Its coordinates are not surveyed site data. Missing boundary, topography, occupancy/transfer, frontage, and true-north evidence blocks only the dependent parcel and final claims. `AMANDA_REVIEW_PENDING` remains; the content approval hash is not personal approval. P4-T01 passed BIM-00 and persisted the R04 geometry. P6-T01 / CANON-011 now passes for four-board spatial topology; R06 owns internal layout, and R08 owns Revit Room creation and area readback. The Board-02 administrative deviations are `RESOLVED_FOR_STUDY` in `CANONICAL_DEVIATIONS.yaml`, with no personal approval recorded. DEC-010 separately records the user's conditional operational authorization for R05–R13 after P6 PASS.
 
 ## DEC-010 — RUN-003 detailed STUDY continuation after P6
 

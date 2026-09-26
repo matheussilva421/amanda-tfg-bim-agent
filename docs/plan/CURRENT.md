@@ -68,8 +68,8 @@ P6-T01 has updated the real RUN-003 admin envelope and levels, saved and
 cold-reopened a new checkpoint, and refreshed typed readback and visual capture
 evidence. `CANONICAL_DEVIATION-ADM-001` is resolved for this reversible study;
 no Amanda approval or official-program change is claimed. CANON-011 passes for
-the normalized STUDY's four-board spatial topology. Internal room layouts and
-room-area readback are deferred to R06; five site-data gaps continue to limit
+the normalized STUDY's four-board spatial topology. R06 owns internal layout;
+R08 owns Revit Room creation and area readback. Five site-data gaps continue to limit
 only claims dependent on surveyed or cadastral inputs. The focused
 child/playground image from the prior checkpoint remains reference-only; current
 typed bounds and the current full-implantation capture support that relation.
