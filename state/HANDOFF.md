@@ -16,9 +16,11 @@ was created from the stock `DefaultBRAPTB.rte` template after verifying its
 Revit 2027 version/hash. A separate pre-R04 checkpoint and manifest were
 created and verified; target and checkpoint both had SHA-256
 `4a506a267827f0c36f120084670ed5fb7f97f9f05c75283782904e9c2990fd4e` before
-any R04 geometry. No S01, S02 or R12 model was opened or reused; the old R12
-file is absent and only its manifest digest is retained as a historical
-exclusion fingerprint.
+any R04 geometry. No S01, S02 or R12 model was opened or reused. The superseded
+linear R12 RVT remains in its historical archive; its archive manifest records
+SHA-256 `ac814642296cbc7074603b703f8db20a63ae1c1475f435756a248516d1856e29`,
+`opened=false`, and `may_reuse_linear_geometry=false`. This digest is retained
+only as a historical exclusion fingerprint.
 
 The selected RUN-003 solution, four current board hashes, and official program
 PDF revalidate. Rebuilding from the current official `program.json` and the
