@@ -74,8 +74,8 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 
 ## Git verification
 
-- Last verified commit at P6-T01 entry: `c705b04dea8cb76edb69d71e03440c152611f6ff`
-- Observed HEAD at P6-T01 entry: `c705b04dea8cb76edb69d71e03440c152611f6ff`
+- Last verified P6 evidence commit: `64ca74b9efa586142b7ee90687a840edc269a4a3`
+- P6 evidence commit was pushed; `origin/main` matched `64ca74b9efa586142b7ee90687a840edc269a4a3`.
 
 P6-T01 live closeout on 2026-09-26: Horizun 1.3.3 HEALTHY, Revit 2027
 27.2.0.39, exact RUN-003 active, one document open, zero other clients, 73/73
@@ -84,5 +84,5 @@ queries; P6 remains PENDING / CANON-011 OPEN due unmodeled landscape/access/
 internal functions and an open administrative footprint discrepancy. See
 `docs/reports/P6-T01-run003-visual-geometric-acceptance.md` and
 `revit/production/evidence/AMANDA-RUN-003-R04/visual-geometric-evidence.json`.
-The current writer lease is FREE. The P4/P5 remote push record above predates
-this P6 evidence update.
+The current writer lease is FREE. This handoff/dashboard status update is in a
+follow-up closeout commit on `main` and is also pushed to `origin/main`.

@@ -51,6 +51,15 @@ source-backed decision before any further model write. Do not start GeoNatal
 research or modify RC01. `PROJECT_STATE.yaml` remains phase P6 / PENDING and
 points `next_task` to P6-T01.
 
+GitHub closeout: commit `64ca74b9efa586142b7ee90687a840edc269a4a3` was created
+on `main`, pushed, and confirmed by `git ls-remote origin refs/heads/main`.
+The report/evidence commit did not include ignored RVT binaries. Seven
+worktree deletions under
+`design-engine/runs/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C-study-detail-004/`
+remain unstaged and were not part of this task;
+no RC01 path was included or edited. The handoff/status follow-up is committed
+separately and is pushed as part of the final closeout.
+
 ## Previous continuation — 2026-09-26 (P4-T01 and P5-T01 complete)
 
 P4-T01 BIM-00 passed, then the user-authorized P5-T01 R04 write ran in the
