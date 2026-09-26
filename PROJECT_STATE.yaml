@@ -1,22 +1,19 @@
-project: Amanda TFG BIM Agent
-phase_id: P4
-phase_name: bim-00
-phase_status: BLOCKED_BY_INPUT
-last_completed_task: P3-T01
-next_task: P4-T01
-schema_version: 1
-state_revision: 186
-phase_gate: GO_WITH_LIMITATIONS
-selected_design: AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C
-revit_stage: PRE_R04
-current_checkpoint: null
 blockers:
 - SITE_TOPOGRAPHY:DEGRADING
 - SITE_BOUNDARY:DEGRADING
 - SITE_OCCUPANCY:DEGRADING
 - SITE_FRONTAGE_COUNT:DEGRADING
 - SITE_TRUE_NORTH:DEGRADING
-- REVIT_PROVIDER_UNREACHABLE:BLOCKING
-- WRITER_LEASE_HELD_FOR_SUPERSEDED_S02:BLOCKING
-- RUN003_TARGET_CHECKPOINT_UNBOUND:BLOCKING
-last_verified_commit: 4322402593c416fdf343c81a9f47102ecfa629c9
+current_checkpoint: revit/production/checkpoints/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY-PRE-R04.rvt
+last_completed_task: P3-T01
+last_verified_commit: 21848db0d5eb2defd2cfb5baffbe9e057b004a4e
+next_task: P4-T01
+phase_gate: GO_WITH_LIMITATIONS
+phase_id: P4
+phase_name: bim-00
+phase_status: RUNNING
+project: Amanda TFG BIM Agent
+revit_stage: PRE_R04
+schema_version: 1
+selected_design: AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C
+state_revision: 187

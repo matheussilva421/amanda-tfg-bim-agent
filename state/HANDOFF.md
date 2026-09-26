@@ -1,5 +1,58 @@
 # Current Handoff
 
+## Current continuation — 2026-09-26 (P4-T01, then authorized R04)
+
+The active task is the current P4-T01 retry. A fresh `horizun_health` returned
+`healthy` on Revit 2027 build 27.2.0.39, Horizun 1.3.3 / contract
+`8b9600f5274d7dffb6e5bd5f`; the registry is clean at 73/73 commands. Revit PID
+38296 is targetable. The only open document is
+`revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt`,
+non-workshared, saved, with zero other clients.
+
+The old S02 lease owner process was confirmed absent on this host. The lease
+was safely reclaimed with its fencing generation advanced and is held by
+`amanda-P4-T01-RUN003-R04`, bound to the exact RUN-003 target. A clean target
+was created from the stock `DefaultBRAPTB.rte` template after verifying its
+Revit 2027 version/hash. A separate pre-R04 checkpoint and manifest were
+created and verified; target and checkpoint both had SHA-256
+`4a506a267827f0c36f120084670ed5fb7f97f9f05c75283782904e9c2990fd4e` before
+any R04 geometry. No S01, S02 or R12 model was opened or reused; the old R12
+file is absent and only its manifest digest is retained as a historical
+exclusion fingerprint.
+
+The selected RUN-003 solution, four current board hashes, and official program
+PDF revalidate. Rebuilding from the current official `program.json` and the
+four-board hash-validated canonical profile produces the exact selected layout
+hash `7fde3e34a162167ce27fe2e3158a38f446882816a7c81bb326d486bdfaaae2e2`.
+Comparison against saved current-snapshot WKT gives zero symmetric-difference
+area for all seven blocks. The R04 plan has seven operations: administration
+at 6.40 m for two storeys and the one-storey blocks at 3.20 m, explicitly a
+provisional 3.20 m per floor; the service/capacitation block retains six
+courtyard interior rings. Coordinates/datum remain local normalized, not
+surveyed.
+
+The mass capability registry initially refused because its indexed SHA did not
+match the checked-in evidence JSON. The JSON records the independent lab query
+and save-close-reopen result, with its `python_host_verified=false` limitation
+stated. `state/capabilities.yaml` now indexes the actual SHA-256
+`7d1d80815954d2619e033b159e18edff9ae64b429f37ec3815247d607ec885dc`; the
+production loader returns no warnings and the canonical R04 plan passes its
+static/provider preflight except for the expected BIM-00 block. This corrected
+index is the only implementation/configuration change so far.
+
+**No mass geometry has been written yet.** Next, refresh RUN-003 target,
+checkpoint, lease, live provider, capability registry, units, source hashes,
+repository HEAD and `PROJECT_STATE.yaml` raw SHA; construct and run the typed
+BIM-00 gate against the exact seven-operation canonical R04 plan. Only on PASS
+continue immediately to R04 as directed: typed rehearsal first; if the mass
+kind grants the structured Python fallback, write once with idempotency; then
+independent query/readback, geometric verification, save, checkpoint, close,
+reopen and post-reopen query. Do not start R05 or GeoNatal. Do not stage, alter,
+or restore the pre-existing RC01 deletions. Release the RUN-003 writer lease
+cleanly after evidence and state closeout. User instruction on 2026-09-26
+authorizes the R04 continuation and no R05.
+
+
 ## Formal state and safety
 
 Repository recovery (P0), four-board reconciliation (P1-T01), identity

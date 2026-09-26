@@ -5,7 +5,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 ## Phase and task progress
 
 - Phase: `P4` — bim-00
-- Phase status: `BLOCKED_BY_INPUT`
+- Phase status: `RUNNING`
 - Next task: `P4-T01`
 - Last recorded task: `P3-T01`
 - Tasks: 182 total; READY: (none)
@@ -57,15 +57,15 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 
 - Selected design: `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C`
 - Revit stage: `PRE_R04`
-- Current checkpoint: `NOT_RECORDED`
+- Current checkpoint: `revit/production/checkpoints/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY-PRE-R04.rvt`
 
 ## Writer lease
 
 - Status: `HELD`
-- Owner: `amanda-P08-CAN-T09-R03`
-- Fencing generation: `1`
+- Owner: `amanda-P4-T01-RUN003-R04`
+- Fencing generation: `2`
 
 ## Git verification
 
-- Last verified commit: `4322402593c416fdf343c81a9f47102ecfa629c9`
-- Observed HEAD: `79ba4784e2193b1c7f865f9dc74acccbeca9b46d`
+- Last verified commit: `21848db0d5eb2defd2cfb5baffbe9e057b004a4e`
+- Observed HEAD: `21848db0d5eb2defd2cfb5baffbe9e057b004a4e`

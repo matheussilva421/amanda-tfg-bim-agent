@@ -201,7 +201,7 @@ entries:
   transport_healthy: true
   warnings_delta: 0
   evidence:
-  - tool-lab/horizun/results/p08-can-t07-r04-mass-capability-20260923.json::sha256=6f9351548304b4962224302e14f76f6ddeedca35324e197a7846a7582c2c8d86
+  - tool-lab/horizun/results/p08-can-t07-r04-mass-capability-20260923.json::sha256=7d1d80815954d2619e033b159e18edff9ae64b429f37ec3815247d607ec885dc
   limitations:
   - evidence is a real Revit lab run; canonical production results must be independently read and visually reviewed
 - provider: horizun

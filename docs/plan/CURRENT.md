@@ -31,21 +31,30 @@ units, site-coordinate mode, family strategy, canonical selection, and
 official program source. BIM-00 is an evidence/authorization gate only; it
 does not execute an R04/R05 operation.
 
-**Current status:** `P4-T01` is `BLOCKED_BY_INPUT`. DEC-CANONICAL-DETAIL-004
-selects RUN-003 for reversible normalized local-reference STUDY through R04;
-`AMANDA_REVIEW_PENDING` remains, `bim_eligible=false` remains for detailed/final
-production, and CANON-011 awaits real comparison with all four boards. Missing
-survey/site inputs constrain their dependent final claims but do not block this
-study. BIM-00 still cannot pass: Horizun cannot reach the installed Revit
-provider, the writer lease is held for superseded S02, and no exact RUN-003
-target/checkpoint is bound. P4-T01 remains the retry pointer; R04 writes stay
-blocked until BIM-00 PASS, and R05 stays blocked until CANON-011 PASS. See
-`docs/reports/P4-T01-bim00-blocker-report.md`; the selected offline STUDY
-snapshot is `design-engine/runs/AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C-study-detail-004/`.
-
+**Current status (2026-09-26 continuation):** `P4-T01` is `RUNNING` against
+ the exact RUN-003 study target and its separate verified pre-R04 checkpoint.
+ Horizun 1.3.3 reports `healthy`, Revit 2027 build 27.2.0.39 is targetable, the
+ only open document is RUN-003, and zero other Revit clients are connected. The
+ orphaned S02 lease was reclaimed only after its recorded local process was
+ proved absent; the active lease is bound to RUN-003. The clean target was
+ created from the stock Portuguese Revit 2027 template. The current canonical
+ layout hash rebuilds exactly to the selected snapshot; its R04 plan contains
+ seven separate masses and retains all six service-court interior rings. The
+ provider capability evidence index had a stale digest; it now matches the
+ evidence file and the production capability loader reports no warnings.
+ BIM-00 must still pass against fresh commit/state/source/checkpoint bindings
+ before the first R04 write. If it passes, the user's current session
+ instruction authorizes continuing immediately through real R04 save/close/
+ reopen/query. `AMANDA_REVIEW_PENDING`, non-surveyed local coordinates, and
+ CANON-011 remain in force. R05 remains blocked until four-board acceptance.
+ The P4 blocker report describes the 2026-09-25 attempt; the 2026-09-26
+ execution record will contain current evidence.
 ## P5 — R04 Revit
 
-Create canonical massing, save, close, reopen, and query.
+`P5-T01` creates the seven canonical RUN-003 masses only after BIM-00 PASS,
+then performs independent geometry readback, save, close, reopen, and query.
+The current user instruction authorizes this immediate continuation from P4;
+it does not authorize R05.
 
 ## P6 — R04 visual/geometric acceptance
 

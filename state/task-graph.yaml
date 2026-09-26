@@ -3150,7 +3150,7 @@ tasks:
       and target
     depends_on:
     - P3-T01
-    status: BLOCKED_BY_INPUT
+    status: RUNNING
     evidence:
     - Formal task record for the already-defined P4 BIM-00 phase; scope is unchanged
       and excludes R04/R05.
@@ -3193,3 +3193,15 @@ tasks:
     - 'PROJECT_STATE revision is 186; P3-T01 is last completed and P4-T01 remains BLOCKED_BY_INPUT.'
     - No Revit/RVT was opened or written; no R04/R05 work occurred.
     - '2026-09-25 provider retry: PIDs 38152 and 40124 had no main window, RevitAPI.dll, Horizun.Revit.dll, or journal newer than 2026-09-24 and were stopped only after those checks. Clean PID 31152 started from the install directory; after 40 seconds it still had no window/API/add-in, and horizun_health again reported no Revit reachable. No RVT/model was opened or changed; provider blocker remains.'
+
+  P5-T01:
+    id: P5-T01
+    phase: P5
+    plan_path: docs/plan/CURRENT.md
+    title: Create and independently verify canonical RUN-003 massing in Revit
+    depends_on:
+    - P4-T01
+    status: PENDING
+    evidence:
+    - User instruction on 2026-09-26 authorizes immediate R04 execution only after BIM-00 PASS; R05 is excluded.
+    - Requires seven canonical masses, separate readback, save, cold reopen, and post-reopen query for exact RUN-003 target.
