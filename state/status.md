@@ -76,3 +76,7 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 
 - Last verified commit: `b078685897a1601da948e2d6140736ff6fa5c132`
 - Observed HEAD: `b078685897a1601da948e2d6140736ff6fa5c132`
+
+The P4/P5 evidence closeout was pushed as `ed1a7ab`; a post-push
+`git ls-remote origin refs/heads/main` matched local `main`. This dashboard's
+generated HEAD snapshot above predates that documentation/evidence commit.

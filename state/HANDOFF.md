@@ -33,6 +33,7 @@ Evidence and next steps:
 - Short report: `docs/reports/P5-T01-run003-r04-real-model.md`.
 - POST-R04 checkpoint: `revit/production/checkpoints/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY-POST-R04.rvt` and its manifest.
 - Focused adapter suite: 59 passed; no broad suite was run.
+- GitHub: closeout evidence commit `ed1a7ab` was pushed to `origin/main`; the post-push `git ls-remote` matched local `main` at `ed1a7ab`. This final handoff/status refresh is included in a follow-up commit.
 - Next task: P6-T01 visual/geometric acceptance against all four boards. R05 remains blocked until it passes.
 - Formal pointer after task closeout: `PROJECT_STATE.yaml` revision 192, phase P6 `PENDING`, `last_completed_task: P5-T01`, `next_task: P6-T01`, `revit_stage: R04`; writer lease is free.
 - Pre-existing deletions under `revit/lab/exports/p06t14/GOLDEN/RC01/` must remain untouched and unstaged.
