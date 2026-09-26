@@ -2336,5 +2336,6 @@ entries:
   - 'Nine fresh captures are bound to the P6 checkpoint. The nearly blank child/playground attempt is excluded; the valid relation image is an explicitly historical reference from the previous checkpoint, with both element IDs and bounds checked against current typed readback.'
   - 'P6 remains PENDING / CANON-011 open: room/function and bedroom assignments remain unmodeled and cannot be independently area-verified. R05 remains unauthorized; no GeoNatal, RC01, S01/S02/R12, or program change.'
   - 'TDD RED was observed for stale R04 spatial/deviation records and the mismatched status dashboard. Final focused unit gate passed 25/25; P4-to-P6 plan-order policy passed 7/7; YAML/JSON parse passed. Ruff is unavailable and amanda_agent status cannot import missing ortools; no dependencies were installed.'
+  - 'Commit 4d69f5fc301bfef37ba6d36cdf6e73a09fca9a1e was pushed from main and verified against origin/main; RC01 deletions were excluded.'
   recorded_utc: '2026-09-26T22:00:00Z'
   note: Admin geometry and evidence reconciled; do not close P6 or advance to R05 until remaining acceptance evidence is complete.

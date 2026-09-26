@@ -14,10 +14,10 @@ prior P4 closeout do not introduce a second active resume state.
 - P6 remains open because administrative, residential, service/capacitation, and child rooms/function assignments are not present for independent BIM area readback. P1-T01 has the documentary official-program crosswalk. Five site-data limits remain; do not make cadastral/north/site-availability claims. No GeoNatal, RC01, program change, S01/S02/R12 reuse, or R05 occurred.
 - `amanda_agent status` cannot import the host's missing `ortools`. Focused pytest runs use `PYTHONPATH=src` and `--confcutdir=tests/unit`; do not install or update dependencies.
 - TDD RED was observed for the stale spatial evidence, deviation record and status/checkpoint contract. Final focused unit command passed 25/25; `tests/policy/test_plan_order.py` passed 7/7; YAML/JSON parse passed. `ruff` is unavailable in the host.
-- Local branch is `main`, current HEAD at entry `999146b4722a0b7cc2c9ccc68d8c7827b0b9e508`. Pre-existing deletions under `revit/lab/exports/p06t14/GOLDEN/RC01/` must remain untouched and unstaged. The current evidence/docs/tests need explicit-path staging, commit and push, then `git ls-remote origin refs/heads/main` verification.
+- The P6 evidence/docs/tests commit `4d69f5fc301bfef37ba6d36cdf6e73a09fca9a1e` is on `main`; push succeeded and `git ls-remote origin refs/heads/main` returned the same SHA. `PROJECT_STATE.yaml` now records that verified commit at revision 198. Pre-existing deletions under `revit/lab/exports/p06t14/GOLDEN/RC01/` remain untouched and unstaged.
 - Use only Luna 6 xhigh subagents if delegation is needed; otherwise review locally. No further Revit write is authorized by this handoff. Do not advance to R05.
 
-**Resume:** complete the final local diff review, run scoped `git diff --check`, stage only intended evidence/docs/tests/state files, commit and push `main`, then verify the remote ref. Update `PROJECT_STATE.yaml`'s `last_verified_commit` in the closeout commit if needed. Leave P6 `PENDING` / CANON-011 open because room/function readback is absent. R05 stays gated.
+**Resume:** continue only within P6-T01's remaining acceptance scope after checking its exact authorization. The current P6 checkpoint and evidence are committed; outstanding internal rooms/functions/bedroom assignments lack independent BIM area readback. Keep official program values fixed, preserve the RC01 deletions, and do not perform R05.
 
 ## Prior closeout — P4-T01 R04
 

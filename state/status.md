@@ -95,5 +95,7 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 
 ## Git verification
 
-P6 closeout commit and push verification are pending. The previous verified
-remote commit is recorded in `PROJECT_STATE.yaml`.
+P6 reconciliation commit: `4d69f5fc301bfef37ba6d36cdf6e73a09fca9a1e`.
+It was pushed to `origin/main`; `git ls-remote origin refs/heads/main` matched
+that SHA. `PROJECT_STATE.yaml` records this verified commit and remains at P6
+`PENDING` / CANON-011 open.
