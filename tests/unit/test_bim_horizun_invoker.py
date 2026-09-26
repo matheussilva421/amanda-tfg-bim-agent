@@ -920,6 +920,9 @@ def test_mass_geometry_is_reread_from_revit_after_write():
     assert geometry["base_elevation_m"] == pytest.approx(2.75)
     assert geometry["height_m"] == pytest.approx(3.0)
     assert result.read_payload["geometry_readback_provenance"] == "SELF_REPORTED_PYTHON_READBACK"
+    verification = result.read_payload["verification"]
+    assert verification["checked"] is True
+    assert verification["evidence"]
 
 
 def test_mass_model_readback_overrides_geometry_claims_from_write_response():

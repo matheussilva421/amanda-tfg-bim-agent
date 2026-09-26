@@ -845,6 +845,17 @@ else:
                     'base_elevation_m': base_elevation_m,
                     'height_m': height_m,
                 },
+                'verification': {
+                    'checked': True,
+                    'evidence': [
+                        'element_id=%s' % int(element.Id.Value),
+                        'unique_id=%s' % str(element.UniqueId),
+                        'non_empty_solid_count=%s' % len(solids),
+                        'profile_ring_count=%s' % len(rings),
+                        'base_elevation_m=%s' % base_elevation_m,
+                        'height_m=%s' % height_m,
+                    ],
+                },
             }
         """
         return dedent(script).replace("__ELEMENT_ID__", str(int(element_id))).lstrip()
@@ -1272,6 +1283,9 @@ else:
                     geometry = payload.get("geometry")
                     memo["geometry_readback_provenance"] = "SELF_REPORTED_PYTHON_READBACK"
                     memo["geometry_readback_element_id"] = observed_id
+                    verification = payload.get("verification")
+                    if isinstance(verification, Mapping):
+                        memo["verification"] = dict(verification)
                     if isinstance(unique_id, str) and unique_id.strip():
                         memo["unique_id"] = unique_id
                     if isinstance(geometry, Mapping):
