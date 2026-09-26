@@ -21,7 +21,7 @@ P3-T01 generated offline candidate `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A
 `P4-T01` establishes BIM-00 evidence for the exact new solution and target; it
 depends on P3-T01. BIM-00 remains an evidence/authorization gate. In the
 2026-09-26 user-directed continuation, a PASS immediately authorized the
-bounded R04 geometry listed under P5 below; R05 remains excluded. Its evidence
+bounded R04 geometry listed under P5 below; R05 was excluded at that milestone. Its evidence
 must bind the `solution_id`, `layout_hash`, content `approval_hash`, exactly
 four canonical board hashes, official program PDF SHA-256, target RVT path and
 SHA-256, a separate checkpoint path and matching SHA-256, repository commit
@@ -59,26 +59,43 @@ reconciliation recorded below. Five site-data blockers remain; no R05 operation
 occurred.
 ## P5 — R04 Revit
 
-`P5-T01` is complete with `PASS_WITH_WARNINGS`. P6-T01 then reconciled the
-administrative envelope and levels and refreshed the checkpoint/readback. P6
-remains pending for internal room/function and bedroom readback, complete visual
-acceptance, and site claims that require surveyed inputs. R05 remains excluded
-and unauthorized.
+`P5-T01` is complete with `PASS_WITH_WARNINGS`. P6-T01 reconciled the
+administrative envelope and levels and refreshed the checkpoint/readback.
 
-## P6 — R04 visual/geometric acceptance (`PENDING`)
+## P6 — R04 visual/geometric acceptance (`PASS`)
 
 P6-T01 has updated the real RUN-003 admin envelope and levels, saved and
 cold-reopened a new checkpoint, and refreshed typed readback and visual capture
 evidence. `CANONICAL_DEVIATION-ADM-001` is resolved for this reversible study;
-no Amanda approval or official-program change is claimed. CANON-011 remains
-open because internal administrative, residential, services, and child rooms
-are not modeled for independent program/area readback. The five site-data gaps
-remain limited to claims that depend on surveyed/cadastral inputs. R05 remains
-blocked and unauthorized until P6 reaches a fully evidenced PASS.
+no Amanda approval or official-program change is claimed. CANON-011 passes for
+the normalized STUDY's four-board spatial topology. Internal room layouts and
+room-area readback are deferred to R06; five site-data gaps continue to limit
+only claims dependent on surveyed or cadastral inputs. The focused
+child/playground image from the prior checkpoint remains reference-only; current
+typed bounds and the current full-implantation capture support that relation.
 
 ## P7 — Detailed production
 
-Run R05 through R13 with required regression gates.
+DEC-010 records the user's conditional operational authorization after P6 PASS.
+The current RUN-003 sequence is materialized below; each stage requires its own
+focused test, typed readback, independent verification, QA, evidence, checkpoint
+where specified, commit and push before the next green stage.
+
+| Task | Stage | Scope | Hard predecessor |
+|---|---|---|---|
+| P7-T01 | R05 | Architectural shell: exterior walls, floor plates, roofs, voids and covered circulation | P6-T01 |
+| P7-T02 | R06 | Internal rooms/layout, reconciled exactly to P1-T01 and the official program PDF | P7-T01 |
+| P7-T03 | R07 | Hosted doors, windows and openings; verify hosts and access | P7-T02 |
+| P7-T04 | R08 | Revit Rooms, exact room IDs/counts/areas and program reconciliation schedule | P7-T03 |
+| P7-T05 | R09 | Accessibility geometry and evidence; unsupported numeric claims remain UNVERIFIED/BLOCKED | P7-T04 |
+| P7-T06 | R10 | Functional furniture/equipment for use and scale checks | P7-T05 |
+| P7-T07 | R11 | Landscape, preserving the five official exterior areas totaling 260 m² | P7-T06 |
+| P7-T08 | R12 | Study materials, without changing canonical design decisions | P7-T07 |
+| P7-T09 | R13 | Plans, sections, elevations, schedules, sheets and explicit STUDY labeling | P7-T08 |
+
+The P7 authorization is limited to this normalized RUN-003 STUDY and R05–R13.
+It does not establish personal Amanda approval, verified site fit, FINAL status,
+R14–R16, or a GOLDEN release.
 
 ## P8 — QA/RC
 
@@ -88,6 +105,6 @@ Run R14, R15 cold reopen, and exports.
 
 Run R16 only after every required gate and documented deviation passes.
 
-P0 through P5-T01 are closed. `PROJECT_STATE.yaml` and `state/task-graph.yaml`
-point to P6-T01 as the next task. Historical plans are archive material in Git
+P0 through P6-T01 are closed. `PROJECT_STATE.yaml` and `state/task-graph.yaml`
+point to P7-T01 as the next task. Historical plans are archive material in Git
 history, not a second instruction source.

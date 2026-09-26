@@ -154,13 +154,14 @@ authorize installs, process termination, cloud uploads, or other external
 actions outside the task's existing authorization; preserve applicable human
 gates for those actions.
 
-The normalized RUN-003 candidate is authorized as a reversible academic STUDY
-through R04 under `DEC-CANONICAL-DETAIL-004`. This authority does not assert
-surveyed coordinates, verified parcel fit, site availability/transfer, or a
-final site decision. `AMANDA_REVIEW_PENDING` remains in force; the content
-approval hash is not her personal approval. CANON-011 remains pending until
-actual R04 geometry is compared with all four boards, and R05 remains gated on
-that acceptance.
+RUN-003 remains a reversible, normalized local-reference academic STUDY. The
+user's `DEC-010` operational authorization permits only R05–R13 after P6/CANON-011
+passes on saved R04 geometry against all four current boards. P6 accepts spatial
+topology; R06 owns internal room layout and program-area readback. This authority
+does not assert surveyed coordinates, verified parcel fit, site availability or
+transfer, true north, or a final site decision. `AMANDA_REVIEW_PENDING` remains
+in force; the content approval hash is not personal approval. Site evidence gaps
+block only claims that depend on surveyed/cadastral inputs.
 
 A technical `GOLDEN` release is a BIM artifact milestone, not proof that the
 academic TFG is complete. Academic authorship, advisor review, defense, and
@@ -169,7 +170,7 @@ institutional submission retain their own owners and evidence. Do not claim
 
 ## Current stale state
 
-`AMANDA-RUN-002-PAVILION-S02` remains `STALE_BY_CANONICAL_REFERENCE_EXPANSION`. It is bound to an obsolete subset of the canonical references; the current architecture requires all four boards. S02 is not authorized to advance to R05. Historical linear identities `AMANDA-RUN-001-S01` and `AMANDA-RUN-002-PAVILION-S01` are superseded and cannot authorize a canonical selection or be reused as the final solution. P2-T01 assigned the new identity `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C`; P3-T01 passed its offline QA and candidate checks, generating content hashes for that identity. DEC-CANONICAL-DETAIL-004 selects RUN-003 only for reversible normalized STUDY through R04, with Amanda review pending. The candidate remains `bim_eligible=false` for final/detailed production. CANON-011 remains BLOCKED pending comparison of actual R04 geometry against all four boards. Its content `approval_hash` is not Amanda's approval or BIM authorization. See `docs/reports/P3-T01-canonical-qa-and-approval.md` and `docs/reports/P4-T01-bim00-blocker-report.md` for evidence and open divergences.
+`AMANDA-RUN-002-PAVILION-S02` remains `STALE_BY_CANONICAL_REFERENCE_EXPANSION`. It is bound to an obsolete subset of the canonical references; the current architecture requires all four boards. S02 is never authorized to advance. Historical linear identities `AMANDA-RUN-001-S01` and `AMANDA-RUN-002-PAVILION-S01` are superseded. P2-T01 assigned `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C`; its four-board and program identity hashes remain unchanged. The identity record's `bim_eligible=false` is not itself permission: DEC-010 separately authorizes only RUN-003 normalized-study stages R05–R13 after P6 PASS. It does not authorize FINAL/GOLDEN or claim Amanda's personal approval. CANON-011 and P6-T01 pass for spatial topology as recorded in `docs/reports/P6-T01-run003-visual-geometric-acceptance.md`; internal rooms and room areas remain an R06 gate. See `docs/reports/P3-T01-canonical-qa-and-approval.md` for the source-bound identity.
 
 ## Site limitations
 
@@ -177,7 +178,7 @@ Survey boundary, topography, occupancy, frontage count, and true north remain li
 
 ## Revit contract
 
-One production writer. Every BIM mutation follows WRITE → independent READ → VERIFY. The current sequence is: four-board reconciliation → source-bound RUN-003 identity and offline QA → BIM-00 for the exact selected study/target, including typed coordinate mode `LOCAL_NORMALIZED_STUDY_NOT_SURVEYED` → R04 save/close/reopen/query → real four-board visual/geometric acceptance resolving CANON-011 → only then R05 and later stages. R04 masses must carry both the `STUDY` scenario and explicit local-not-surveyed coordinate basis. Repository recovery performs no Revit or model work.
+One production writer. Every BIM mutation follows WRITE → independent READ → VERIFY. The current sequence is: four-board reconciliation → source-bound RUN-003 identity and offline QA → BIM-00 for the exact selected study/target, including typed coordinate mode `LOCAL_NORMALIZED_STUDY_NOT_SURVEYED` → R04 save/close/reopen/query → P6/CANON-011 four-board spatial acceptance → DEC-010-authorized R05–R13, each behind its stage gate. R06/R08 own internal-room and area reconciliation. R04 masses retain the `STUDY` scenario and local-not-surveyed coordinate basis. Do not advance R14–R16 or claim GOLDEN from this authorization.
 
 ## Definition of Done
 

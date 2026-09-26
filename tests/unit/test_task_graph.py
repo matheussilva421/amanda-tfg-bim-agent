@@ -166,6 +166,34 @@ def test_committed_task_graph_satisfies_the_reviewed_phase_contract():
     assert report.passed is True, report.as_dict()["issues"]
 
 
+def test_run003_p6_acceptance_unlocks_the_current_p7_stage_chain():
+    graph = yaml.safe_load(
+        (REPO_ROOT / "state" / "task-graph.yaml").read_text(encoding="utf-8")
+    )
+    tasks = graph["tasks"]
+
+    assert tasks["P6-T01"]["status"] == "PASS"
+    expected = [
+        ("P7-T01", "R05 architectural shell", "P6-T01"),
+        ("P7-T02", "R06 internal layout", "P7-T01"),
+        ("P7-T03", "R07 doors and openings", "P7-T02"),
+        ("P7-T04", "R08 program rooms", "P7-T03"),
+        ("P7-T05", "R09 accessibility", "P7-T04"),
+        ("P7-T06", "R10 furniture and equipment", "P7-T05"),
+        ("P7-T07", "R11 landscape", "P7-T06"),
+        ("P7-T08", "R12 materials", "P7-T07"),
+        ("P7-T09", "R13 documentation", "P7-T08"),
+    ]
+    for task_id, title, predecessor in expected:
+        task = tasks[task_id]
+        assert task["phase"] == "P7"
+        assert task["title"] == title
+        assert task["status"] == "PENDING"
+        assert task["depends_on"] == [predecessor]
+
+    assert tasks["P05-T13"]["status"] == "PASS"
+
+
 def test_regenerating_the_graph_keeps_recorded_outcomes(tmp_path: Path):
     """A plan edit must refresh dependencies without erasing history.
 

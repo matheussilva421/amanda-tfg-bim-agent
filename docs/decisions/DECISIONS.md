@@ -58,4 +58,20 @@ P1-T01 leaves the selected design identity unset. The signed three-source DEC-CA
 
 Status: ACTIVE — `DEC-CANONICAL-DETAIL-004`
 
-RUN-003 is selected by agent delegation only for a reversible, normalized local-reference STUDY through R04. Its coordinates are not surveyed site data. Missing boundary, topography, occupancy/transfer, frontage, and true-north evidence continues to block the dependent parcel and final claims. `AMANDA_REVIEW_PENDING` remains; the content approval hash is not personal approval. P4-T01 subsequently passed BIM-00, added 18 typed R04 elements, saved the target, and completed a cold reopen with typed readback of 25 elements. P6-T01 / CANON-011 remains pending for four-board visual/geometric acceptance, internal function assignments, the administrative footprint and level differences, and site inputs. The Board-02 administrative footprint difference is formally recorded as `CANONICAL_DEVIATION-ADM-001` in `CANONICAL_DEVIATIONS.yaml`, with Amanda review required and no approval recorded. The earlier provider/lease/target blocker statement is superseded by `docs/reports/P4-T01-run003-r04-geometry-completion-2026-09-26.md`. R05 remains gated and was not performed.
+RUN-003 is selected by agent delegation for a reversible, normalized local-reference STUDY. Its coordinates are not surveyed site data. Missing boundary, topography, occupancy/transfer, frontage, and true-north evidence blocks only the dependent parcel and final claims. `AMANDA_REVIEW_PENDING` remains; the content approval hash is not personal approval. P4-T01 passed BIM-00 and persisted the R04 geometry. P6-T01 / CANON-011 now passes for four-board spatial topology; room/function modeling and area readback are assigned to R06. The Board-02 administrative deviations are `RESOLVED_FOR_STUDY` in `CANONICAL_DEVIATIONS.yaml`, with no personal approval recorded. DEC-010 separately records the user's conditional operational authorization for R05–R13 after P6 PASS.
+
+## DEC-010 — RUN-003 detailed STUDY continuation after P6
+
+Status: ACTIVE — explicit user operational authorization, 2026-09-26
+
+After P6-T01 / CANON-011 reaches PASS against the saved RUN-003 R04 model and
+all four current canonical boards, continue in the actual Revit session through
+R05–R13 without asking for confirmation between green stage gates. Scope is the
+same reversible, normalized local-reference `STUDY`; each stage must preserve
+the official PDF program and follow WRITE → independent READ → VERIFY. R06/R08
+must reconcile actual Revit Rooms to the official program and P1-T01 crosswalk.
+
+This operational authorization does not claim Amanda's personal approval,
+surveyed or cadastral site truth, parcel fit, true north, site availability,
+FINAL, R14–R16, or GOLDEN. No GeoNatal research, RC01 modification, S01/S02/R12
+reuse, official program change, force push, or ZIP creation is authorized.

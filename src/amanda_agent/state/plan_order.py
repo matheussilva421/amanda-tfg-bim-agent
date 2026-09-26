@@ -43,6 +43,9 @@ ALLOWED_AUXILIARY_DEPENDENCIES: tuple[tuple[str, str], ...] = (
     ("PHASE_00", "PHASE_01"),
     ("P4", "P5"),
     ("P5", "P6"),
+    # RUN-003's normalized STUDY sequence is explicitly released by P6
+    # acceptance; this does not authorize GOLDEN or later release phases.
+    ("P6", "P7"),
 )
 
 BRANCH_PHASES: Mapping[str, tuple[str, ...]] = {

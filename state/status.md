@@ -4,17 +4,18 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 ## Phase and task progress
 
-- Phase: `P6` — r04-visual-geometric-acceptance
+- Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P6-T01`
-- Last recorded task: `P5-T01`
-- Tasks: 184 total; READY: P6-T01
+- Next task: `P7-T01` (R05 architectural shell)
+- Last recorded task: `P6-T01`
+- Tasks: 193 total; READY: P7-T01
 - `P1`: 1/1 PASS
 - `P2`: 1/1 PASS
 - `P3`: 1/1 PASS
 - `P4`: 1/1 PASS
 - `P5`: 1/1 PASS
-- `P6`: 0/1 PASS
+- `P6`: 1/1 PASS
+- `P7`: 0/9 PASS
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -36,11 +37,12 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-Fresh P6 closeout check: Horizun 1.3.3 `HEALTHY`; Revit 2027 build 27.2.0.39,
-PID 38296; registry 73/73 clean, 80/80 tools visible. The exact RUN-003 target
-was active and targetable; two documents were open (RUN-003 and `HZ_ANCHOR_2027`)
-with zero other clients. The P6 writer lease was released after save, cold reopen,
-and typed readback; the lock file is absent.
+Latest recorded provider check: Horizun 1.3.3 `HEALTHY`; Revit 2027 build
+27.2.0.39, PID 38296; registry 73/73 clean, 80/80 tools visible. The exact
+RUN-003 target was active and targetable; two documents were open (RUN-003 and
+`HZ_ANCHOR_2027`) with zero other clients. P6's lease was released after its
+save/cold-reopen/readback. Current P7 writer lease: `amanda-P7-RUN003-production`,
+PID 28364, generation 2, exact target; owner process is alive.
 
 ## Current RUN-003 R04 acceptance status
 
@@ -58,12 +60,13 @@ The Board-02 divergence record is `RESOLVED_FOR_STUDY`; personal approval remain
 false and official program areas/quantities were not changed. The five external
 program spaces remain 80/80/30/30/40 m².
 
-P6-T01 is still `PENDING` / CANON-011 OPEN because room/function and bedroom
-assignments are not modeled for independent area readback. Nine fresh views and
-one explicitly historical child/playground reference are documented in
+P6-T01 is `PASS` for normalized-study spatial topology / CANON-011. Room/function
+and bedroom assignments are not modeled for independent BIM area readback and
+belong to R06. Nine fresh views and one explicitly historical child/playground reference are documented in
 `revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/p6-canon-011-captures.json`.
 The near-blank P6 relation attempt is excluded. Five site-data limits remain;
-no cadastral/north/site-availability claim is made. R05 remains unauthorized.
+no cadastral/north/site-availability claim is made. DEC-010 records conditional
+authorization for the bounded RUN-003 R05–R13 sequence after P6 PASS.
 
 ## Capability counts
 
@@ -89,13 +92,21 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 
 ## Writer lease
 
-- Status: `RELEASED_AFTER_VERIFICATION`
-- Last owner: `amanda-P6-T01-RUN003-CANON-011`
-- Fencing generation: `1`
+- Status: `HELD_FOR_P7`
+- Owner: `amanda-P7-RUN003-production` (PID 28364, alive)
+- Fencing generation: `2`
 
 ## Git verification
 
-P6 reconciliation commit: `4d69f5fc301bfef37ba6d36cdf6e73a09fca9a1e`.
-It was pushed to `origin/main`; `git ls-remote origin refs/heads/main` matched
-that SHA. `PROJECT_STATE.yaml` records this verified commit and remains at P6
-`PENDING` / CANON-011 open.
+P6 baseline commit `4d69f5fc301bfef37ba6d36cdf6e73a09fca9a1e` is on
+`origin/main`. P6 PASS/P7 task-graph changes are being validated locally; the
+new changes are not yet committed or pushed. Preserve pre-existing RC01
+deletions and exclude them from staging.
+
+The P6 normalized-study acceptance does not create internal rooms or verify
+their areas; that work is assigned to R06. R05 code execution remains technically
+blocked until a bounded P6/DEC-010 RUN-003 authorization, source-backed wall
+heights, and R05-start dispatch are implemented and tested. One temporary view
+capture reported `view_restored:false`; a no-save close and Python API preflight
+were rejected by automatic review. Do not bypass; resolve via an allowed typed
+route before saving further model changes.

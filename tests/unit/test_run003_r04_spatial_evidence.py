@@ -257,6 +257,22 @@ def test_run003_r04_spatial_readback_matches_canonical_mass_and_site_geometry():
         (site_surfaces["bounds_m"]["SITE-PLAYGROUND"]["min"][1]
          + site_surfaces["bounds_m"]["SITE-PLAYGROUND"]["max"][1]) / 2,
     )
+    child_bounds = bboxes["MASS-CHILD_SECTOR"]
+    playground_bounds = site_surfaces["bounds_m"]["SITE-PLAYGROUND"]
+    child_playground_gap_x = max(
+        0.0,
+        child_bounds["min"][0] - playground_bounds["max"][0],
+        playground_bounds["min"][0] - child_bounds["max"][0],
+    )
+    child_playground_gap_y = max(
+        0.0,
+        child_bounds["min"][1] - playground_bounds["max"][1],
+        playground_bounds["min"][1] - child_bounds["max"][1],
+    )
+    child_playground_clearance_m = math.hypot(
+        child_playground_gap_x,
+        child_playground_gap_y,
+    )
     assert admin_center[1] < min(y for _, y in residential_centers)
     assert all(
         bboxes[name]["min"][1] > 0
@@ -264,6 +280,8 @@ def test_run003_r04_spatial_readback_matches_canonical_mass_and_site_geometry():
         if name.startswith("MASS-RES_")
     )
     assert child_center[0] < 0 < service_center[0]
+    assert child_playground_clearance_m == pytest.approx(2.975765385825232)
+    assert child_playground_clearance_m <= 3.0
     assert math.dist(child_center, playground_center) < 20
     assert min(x for x, _ in residential_centers) < 0 < max(x for x, _ in residential_centers)
     patio_center_y = (patio_bounds["min"][1] + patio_bounds["max"][1]) / 2
@@ -291,8 +309,12 @@ def test_run003_r04_spatial_readback_matches_canonical_mass_and_site_geometry():
         "administrative_floor_levels_aligned": True,
         "administration_public_route_meets_south_entry": True,
     }
-    assert evidence["open_gaps"]["canon_011"] is True
-    assert evidence["open_gaps"]["r05_authorized"] is False
+    assert evidence["open_gaps"]["canon_011"] is False
+    assert evidence["open_gaps"]["r05_authorized"] is True
+    assert evidence["p6_acceptance"]["status"] == "PASS"
+    assert evidence["p6_acceptance"]["scope"] == "NORMALIZED_STUDY_SPATIAL_TOPOLOGY"
+    assert evidence["p6_acceptance"]["rooms_deferred_to"] == "R06"
+    assert evidence["p6_acceptance"]["site_claims_status"] == "LIMITED_TO_SURVEYED_DATA"
     assert evidence["open_gaps"]["administrative_board_area_difference"] is False
     assert evidence["open_gaps"]["administrative_level_vs_plate_elevation"] is False
     assert evidence["open_gaps"]["service_function_reconciliation"] is False

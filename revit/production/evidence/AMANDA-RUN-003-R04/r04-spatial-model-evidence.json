@@ -516,8 +516,8 @@
     "note": "Captura atual da implantacao apos o checkpoint P6; imagens nao substituem as funcoes internas nem fecham CANON-011."
   },
   "open_gaps": {
-    "canon_011": true,
-    "r05_authorized": false,
+    "canon_011": false,
+    "r05_authorized": true,
     "administrative_board_area_difference": false,
     "administrative_level_vs_plate_elevation": false,
     "administrative_function_assignment": true,
@@ -539,5 +539,76 @@
       "four connector thresholds widened to 2 m patio interfaces with no patio intrusion"
     ],
     "conclusion": "Use measured post-reopen bounds and areas; keep CANON-011 pending."
+  },
+  "p6_acceptance": {
+    "status": "PASS",
+    "gate": "CANON-011",
+    "scope": "NORMALIZED_STUDY_SPATIAL_TOPOLOGY",
+    "solution_id": "AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C",
+    "checkpoint_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+    "canonical_board_order": [
+      "01_implantacao.png",
+      "02_administrativo.png",
+      "03_residencial.png",
+      "04_servicos.png"
+    ],
+    "canonical_board_sha256": [
+      "30d009357a095e7794e0e915dcd2fdb04cd6b9aab9f4d13f5663ed54d6f20240",
+      "123b95633ae1be643da84f2226c6337d65a74f7d1337d6b27d94bdead1c3a263",
+      "5b96c2d5cc770742ee32d51b83b25993fe8b8a1638bf94da56ba8ef771031381",
+      "c56b806f805d9c4aa1e6015ba6b56ac960204066721f93ef08cbadfb312c0386"
+    ],
+    "official_program_sha256": "11daa9efc4d1b022407d8bd02999e85b604a16539f29ae598dc45b339de14a17",
+    "r04_readback_fingerprint": "4636abc6b294829b",
+    "r04_readback_count": 25,
+    "r04_readback_coverage_complete": true,
+    "r04_readback_unreadable_total": 0,
+    "canonical_relations": {
+      "administration_south_public_edge": true,
+      "administration_two_levels": true,
+      "residences_north_interior_four_independent_pavilions": true,
+      "protected_residential_patio_free": true,
+      "covered_external_semiopen_circulation": true,
+      "services_southeast_curved_with_courtyard": true,
+      "child_west_near_playground": true,
+      "therapeutic_garden_central": true,
+      "horta_east": true,
+      "public_and_cargo_access_separate": true,
+      "administrative_board_area_difference_open": false,
+      "administrative_floor_levels_aligned": true,
+      "administration_public_route_meets_south_entry": true
+    },
+    "child_playground": {
+      "child_element_id": 328658,
+      "playground_element_id": 329971,
+      "clearance_m": 2.975765385825232,
+      "clearance_limit_m": 3.0,
+      "current_bounds_readback": true,
+      "focused_current_capture": false,
+      "historical_image_use": "REFERENCE_ONLY",
+      "full_implantation_capture_is_current": true
+    },
+    "administrative_deviation_id": "CANONICAL_DEVIATION-ADM-001",
+    "administrative_deviation_status": "RESOLVED_FOR_STUDY",
+    "administrative_personal_approval_received": false,
+    "rooms_deferred_to": "R06",
+    "site_claims_status": "LIMITED_TO_SURVEYED_DATA",
+    "nonblocking_site_gaps": [
+      "SITE_BOUNDARY",
+      "SITE_TOPOGRAPHY",
+      "SITE_OCCUPANCY",
+      "SITE_FRONTAGE_COUNT",
+      "SITE_TRUE_NORTH"
+    ],
+    "authorization_basis": "DEC-010_USER_DIRECTED_CONDITIONAL_R05_R13_AFTER_P6_PASS",
+    "independent_review": {
+      "status": "PASS_NORMALIZED_STUDY_TOPOLOGY",
+      "reviewer": "Raman",
+      "model": "gpt-6-luna",
+      "reasoning_effort": "xhigh",
+      "mode": "read-only",
+      "rooms_are_r06_scope": true,
+      "site_gaps_do_not_block_normalized_topology": true
+    }
   }
 }

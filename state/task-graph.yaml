@@ -3305,7 +3305,7 @@ tasks:
     title: Compare saved RUN-003 R04 geometry against all four canonical boards
     depends_on:
     - P5-T01
-    status: PENDING
+    status: PASS
     evidence:
     - >-
       The exact RUN-003 target was saved, cold-reopened without upgrade, and freshly
@@ -3342,7 +3342,120 @@ tasks:
     - >-
       docs/reports/P6-T01-run003-visual-geometric-acceptance.md and
       revit/production/evidence/AMANDA-RUN-003-R04/r04-spatial-model-evidence.json
-      record the current evidence. CANON-011 remains open and P6-T01 remains PENDING.
+      record PASS for normalized-study spatial topology. R06 owns internal-room
+      modeling and program-area readback; site inputs remain nonblocking for this scope.
     - >-
       No GeoNatal search, RC01 operation, S01/S02/R12 reuse, official-program change,
-      or R05 operation was performed; R05 remains unauthorized.
+      or R05 operation was performed before this gate. DEC-010 records the user's
+      conditional authorization for the RUN-003 R05-R13 sequence after P6 PASS.
+  P7-T01:
+    id: P7-T01
+    phase: P7
+    plan_path: docs/plan/CURRENT.md
+    title: R05 architectural shell
+    depends_on:
+    - P6-T01
+    status: PENDING
+    evidence:
+    - >-
+      User-authorized RUN-003 actual-Revit shell stage. Create and independently
+      read back walls, definitive study floor plates, roofs, voids, and covered
+      circulation; bind stage evidence to P6 checkpoint and DEC-010. Required
+      checkpoint and save/close/reopen/readback before stage PASS.
+  P7-T02:
+    id: P7-T02
+    phase: P7
+    plan_path: docs/plan/CURRENT.md
+    title: R06 internal layout
+    depends_on:
+    - P7-T01
+    status: PENDING
+    evidence:
+    - >-
+      Place internal layout from the four boards and P1-T01 mapping. Preserve
+      official room requirements; do not infer board-printed areas as official.
+  P7-T03:
+    id: P7-T03
+    phase: P7
+    plan_path: docs/plan/CURRENT.md
+    title: R07 doors and openings
+    depends_on:
+    - P7-T02
+    status: PENDING
+    evidence:
+    - >-
+      Create hosted doors, windows, and openings; verify hosts, IDs, access
+      connections, and lighting/ventilation study relations.
+  P7-T04:
+    id: P7-T04
+    phase: P7
+    plan_path: docs/plan/CURRENT.md
+    title: R08 program rooms
+    depends_on:
+    - P7-T03
+    status: PENDING
+    evidence:
+    - >-
+      Create Revit Rooms with official logical IDs, names, numbers, areas,
+      sectors, levels, and requirement links. Reconcile every room to the
+      official program; do not add rooms to close area deltas.
+  P7-T05:
+    id: P7-T05
+    phase: P7
+    plan_path: docs/plan/CURRENT.md
+    title: R09 accessibility
+    depends_on:
+    - P7-T04
+    status: PENDING
+    evidence:
+    - >-
+      Verify accessible route, maneuvering areas, accessible WC/bedroom,
+      transitions, and levels. Unsupported source values remain UNVERIFIED or
+      BLOCKED rather than being inferred.
+  P7-T06:
+    id: P7-T06
+    phase: P7
+    plan_path: docs/plan/CURRENT.md
+    title: R10 furniture and equipment
+    depends_on:
+    - P7-T05
+    status: PENDING
+    evidence:
+    - >-
+      Add only functional furniture/equipment needed for use and scale review.
+  P7-T07:
+    id: P7-T07
+    phase: P7
+    plan_path: docs/plan/CURRENT.md
+    title: R11 landscape
+    depends_on:
+    - P7-T06
+    status: PENDING
+    evidence:
+    - >-
+      Develop landscape while preserving the official 80/80/30/30/40 m2 external
+      areas (260 m2 total).
+  P7-T08:
+    id: P7-T08
+    phase: P7
+    plan_path: docs/plan/CURRENT.md
+    title: R12 materials
+    depends_on:
+    - P7-T07
+    status: PENDING
+    evidence:
+    - >-
+      Apply study materiality for welcoming, legible spaces without changing
+      canonical geometry or program requirements.
+  P7-T09:
+    id: P7-T09
+    phase: P7
+    plan_path: docs/plan/CURRENT.md
+    title: R13 documentation
+    depends_on:
+    - P7-T08
+    status: PENDING
+    evidence:
+    - >-
+      Create Revit plans, sections, elevations, site plan, 3D views, schedules,
+      area tables, and study sheets; clearly distinguish STUDY from FINAL.
