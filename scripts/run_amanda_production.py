@@ -556,6 +556,121 @@ def _require_accepted_p6_fingerprint(observed: str, accepted: str) -> str:
     return observed
 
 
+def _write_p6_fingerprint_diagnostic(
+    *,
+    journal_path: Path,
+    run_key: str,
+    checkpoint: Path,
+    authorization,
+    checkpoint_verified: bool,
+    compact_payload: dict,
+    detail_payload: dict,
+) -> Path:
+    """Persist a bounded read-only comparison artifact without accepting drift."""
+
+    if not run_key or any(character not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_" for character in run_key):
+        raise ValueError("RUN-003 P6 diagnostic run key is not a safe filename component")
+    if checkpoint_verified is not True:
+        raise ValueError("RUN-003 P6 diagnostic requires a verified checkpoint manifest")
+    rows = detail_payload.get("rows")
+    if not isinstance(rows, list) or len(rows) != 25:
+        raise ValueError("RUN-003 P6 diagnostic requires exactly 25 detailed rows")
+
+    selected_rows = []
+    for row in rows:
+        if not isinstance(row, dict):
+            raise TypeError("RUN-003 P6 diagnostic contains a non-object row")
+        bounding_box = row.get("bounding_box")
+        if not isinstance(bounding_box, dict):
+            raise TypeError("RUN-003 P6 diagnostic row has no bounding box")
+        bounds = {}
+        for bound in ("min", "max"):
+            coordinates = bounding_box.get(bound)
+            if (
+                not isinstance(coordinates, list)
+                or len(coordinates) != 3
+                or any(not math.isfinite(float(value)) for value in coordinates)
+            ):
+                raise ValueError("RUN-003 P6 diagnostic row has invalid bounding coordinates")
+            bounds[bound] = [float(value) for value in coordinates]
+        element_id = row.get("element_id")
+        unique_id = row.get("unique_id")
+        category = row.get("category")
+        name = row.get("name")
+        if (
+            not isinstance(element_id, int)
+            or not isinstance(unique_id, str)
+            or not unique_id
+            or not isinstance(category, str)
+            or not isinstance(name, str)
+        ):
+            raise TypeError("RUN-003 P6 diagnostic row is missing typed identity fields")
+        selected_rows.append(
+            {
+                "element_id": element_id,
+                "unique_id": unique_id,
+                "category": category,
+                "name": name,
+                "bounding_box": bounds,
+            }
+        )
+    selected_rows.sort(key=lambda row: row["element_id"])
+    if len({row["element_id"] for row in selected_rows}) != 25:
+        raise ValueError("RUN-003 P6 diagnostic ElementIds are not unique")
+    if len({row["unique_id"] for row in selected_rows}) != 25:
+        raise ValueError("RUN-003 P6 diagnostic UniqueIds are not unique")
+
+    compact_summary = compact_payload.get("summary", {}).get("by_category")
+    detail_summary = detail_payload.get("summary", {}).get("by_category")
+    if compact_summary != {"Massa": 7, "Pisos": 14, "Telhados": 4}:
+        raise ValueError("RUN-003 P6 diagnostic compact category summary is unexpected")
+    canonical_rows = json.dumps(
+        selected_rows, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    diagnostic = {
+        "schema_version": 1,
+        "status": "DIAGNOSTIC_ONLY_FINGERPRINT_MISMATCH",
+        "run_key": run_key,
+        "checkpoint": {
+            "path": str(Path(checkpoint).resolve()),
+            "sha256": authorization.checkpoint_sha256,
+            "manifest_verified": True,
+            "opened_file_version": "2027",
+            "upgrade_allowed": False,
+        },
+        "fingerprints": {
+            "accepted": authorization.p6_readback_fingerprint,
+            "observed_compact": compact_payload.get("result_set_fingerprint"),
+            "observed_detailed": detail_payload.get("result_set_fingerprint"),
+        },
+        "readback": {
+            "matched_total": compact_payload.get("matched_total"),
+            "returned": compact_payload.get("returned"),
+            "coverage_complete": compact_payload.get("coverage_complete"),
+            "unreadable_total": compact_payload.get("unreadable_total"),
+            "categories": compact_summary,
+            "detailed_categories": detail_summary,
+            "row_count": len(selected_rows),
+            "rows_sha256": hashlib.sha256(canonical_rows).hexdigest(),
+            "rows": selected_rows,
+        },
+        "model_write_performed": False,
+        "acceptance_gate_passed": False,
+    }
+    journal = Path(journal_path).resolve()
+    output_path = journal.with_name(
+        f"{journal.stem}-p6-readback-diagnostic-{run_key}.json"
+    )
+    try:
+        output_path.relative_to(REPOSITORY_ROOT.resolve())
+    except ValueError as exc:
+        raise ValueError("RUN-003 P6 diagnostic path is outside the repository") from exc
+    with output_path.open("x", encoding="utf-8", newline="\n") as stream:
+        json.dump(diagnostic, stream, ensure_ascii=False, indent=2, sort_keys=True)
+        stream.write("\n")
+    return output_path
+
+
 def _verify_p6_live_readback(transport, authorization) -> str:
     """Require the live model to match the complete accepted R04 baseline."""
 
@@ -916,9 +1031,6 @@ def _restore_known_failed_r05_partial(
             },
         )
         checkpoint_fingerprint = _validate_p6_live_readback(checkpoint_payload, authorization)
-        checkpoint_fingerprint = _require_accepted_p6_fingerprint(
-            checkpoint_fingerprint, authorization.p6_readback_fingerprint
-        )
         checkpoint_detail_payload = _read_tool(
             transport,
             "horizun_query_model",
@@ -937,6 +1049,28 @@ def _restore_known_failed_r05_partial(
         checkpoint_detail_fingerprint = _validate_p6_live_readback(
             checkpoint_detail_payload, authorization
         )
+        if checkpoint_fingerprint != authorization.p6_readback_fingerprint:
+            diagnostic_path = _write_p6_fingerprint_diagnostic(
+                journal_path=journal_path,
+                run_key=run_key,
+                checkpoint=checkpoint,
+                authorization=authorization,
+                checkpoint_verified=checkpoint_verified,
+                compact_payload=checkpoint_payload,
+                detail_payload=checkpoint_detail_payload,
+            )
+            try:
+                _require_accepted_p6_fingerprint(
+                    checkpoint_fingerprint, authorization.p6_readback_fingerprint
+                )
+            except ValueError as exc:
+                raise ValueError(
+                    f"{exc}; detailed diagnostic saved to {diagnostic_path}"
+                ) from exc
+        else:
+            checkpoint_fingerprint = _require_accepted_p6_fingerprint(
+                checkpoint_fingerprint, authorization.p6_readback_fingerprint
+            )
         _activate(transport, target)
         target_active = _active_path(_document_info(transport))
         if not target_active or Path(target_active).resolve() != target:

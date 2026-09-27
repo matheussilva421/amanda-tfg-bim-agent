@@ -1958,3 +1958,88 @@ def test_known_r05_partial_recovery_refuses_unexpected_model_rows_before_close(
         )
 
     assert not any(tool == "horizun_document_session" for tool, _ in calls)
+
+
+def test_p6_fingerprint_mismatch_persists_detailed_checkpoint_readback_before_failing(
+    tmp_path, monkeypatch
+):
+    target = tmp_path / "RUN-003.rvt"
+    target.write_bytes(b"target")
+    checkpoint = tmp_path / "P6-checkpoint.rvt"
+    checkpoint.write_bytes(b"accepted-checkpoint")
+    journal_path = tmp_path / "R05-failed.json"
+    journal_path.write_text(json.dumps(_known_failed_r05_journal()), encoding="utf-8")
+    authorization = SimpleNamespace(
+        checkpoint_sha256="a" * 64,
+        checkpoint_path=checkpoint.name,
+        p6_readback_fingerprint="accepted-p6-fingerprint",
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO", "CHILD_SECTOR", "RES_PAV_A", "RES_PAV_B",
+                "RES_PAV_C", "RES_PAV_D_COMMUNAL", "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+        permits_target_path=lambda path: Path(path).resolve() == target.resolve(),
+    )
+    active_path = [str(target)]
+    checkpoint_closes = []
+    monkeypatch.setattr(production_runner, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(
+        production_runner,
+        "_document_info",
+        lambda _transport: {"path": active_path[0]},
+    )
+    monkeypatch.setattr(production_runner.CheckpointManager, "verify_checkpoint", lambda *_: True)
+
+    def close_checkpoint(_transport, _target, _checkpoint, _run_key):
+        checkpoint_closes.append(True)
+        active_path[0] = str(target)
+        return {"closed": True, "save_on_close": False}
+
+    monkeypatch.setattr(
+        production_runner, "_close_p6_inspection_checkpoint", close_checkpoint
+    )
+
+    def read_tool(_transport, tool, arguments):
+        if tool == "horizun_query_model":
+            if Path(active_path[0]).resolve() == checkpoint.resolve():
+                payload = _known_p6_model(authorization)
+                if arguments.get("return_fields"):
+                    payload["rows"][0]["unrequested_debug_value"] = "must-not-persist"
+                return payload
+            return _known_partial_model(authorization)
+        if tool == "horizun_document_session" and arguments["operation"] == "open":
+            active_path[0] = arguments["file_path"]
+            return _verified_open_result(checkpoint)
+        raise AssertionError(f"unexpected tool {tool}")
+
+    monkeypatch.setattr(production_runner, "_read_tool", read_tool)
+    diagnostic_path = journal_path.with_name(
+        f"{journal_path.stem}-p6-readback-diagnostic-run-1.json"
+    )
+
+    with pytest.raises(ValueError, match="detailed diagnostic saved to"):
+        production_runner._restore_known_failed_r05_partial(
+            object(),
+            target,
+            authorization,
+            journal_path=journal_path,
+            run_key="run-1",
+        )
+
+    diagnostic = json.loads(diagnostic_path.read_text(encoding="utf-8"))
+    assert diagnostic["status"] == "DIAGNOSTIC_ONLY_FINGERPRINT_MISMATCH"
+    assert diagnostic["checkpoint"]["sha256"] == "a" * 64
+    assert diagnostic["fingerprints"] == {
+        "accepted": "accepted-p6-fingerprint",
+        "observed_compact": "p6-fingerprint",
+        "observed_detailed": "p6-fingerprint",
+    }
+    rows = diagnostic["readback"]["rows"]
+    assert len(rows) == 25
+    assert all(set(row) <= {"element_id", "unique_id", "category", "name", "bounding_box"} for row in rows)
+    assert all(row.get("unrequested_debug_value") is None for row in rows)
+    assert checkpoint_closes == [True]
+    assert active_path[0] == str(target)

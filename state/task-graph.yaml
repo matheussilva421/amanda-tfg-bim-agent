@@ -3595,6 +3595,16 @@ tasks:
       cleanup closed P6 without saving and reactivated the target; no cleanup
       error, R05 write, save, or checkpoint was reported. Preserve the accepted
       fingerprint gate and wait until 09:51:00Z before a new runner call.
+    - >-
+      At about 09:51Z health/client/target/lease passed and PID 38296 plus the
+      existing lease were retained. Exact P6 reopened as Revit 2027 without
+      upgrade. The 25-row readback passed count, coverage, categories, mass
+      bounds, and admin floor IDs, but fingerprint 2f12a578c8451f3f still
+      differed from accepted 4636abc6b294829b. Runner stopped before R05; guarded
+      cleanup closed P6 without saving and restored target activation. TDD adds a
+      diagnostic-only JSON with the checkpoint SHA and detailed identity/bounds
+      rows before the mismatch error; acceptance remains blocked. Focused suite
+      202/202; Ruff has the same 9 baseline findings. P7-T01 remains PENDING.
   P7-T02:
     id: P7-T02
     phase: P7

@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; authorized; latest runner passed health/target selection but stopped because an already-open P6 returned `already_open_activated`, rejected by the new-open validator; no R05 write; prior P6 fingerprint gate remains unresolved)
+- Next task: `P7-T01` (R05 architectural shell; authorized; latest runner reopened exact P6 and confirmed 25 rows, but stopped on repeated fingerprint mismatch; no R05 write; read-only row diagnostic is now implemented)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -16,7 +16,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `P5`: 1/1 PASS
 - `P6`: 1/1 PASS
 - `P7`: 0/9 PASS
-- Latest P7-T01 runner (~09:40Z): health/client checks passed; Revit PID 38296 selected and lease PID 28364/generation 2 retained. The known unsaved 8-floor partial validated as 33 elements and routed to guarded recovery. P6 was already open; bridge returned `already_open_activated` with exact path and Revit 2027, `upgraded=false`. The strict validator expected evidence for a newly opened file and rejected this response before checkpoint query. Its exception cleanup closed P6 without saving and reactivated the target; no cleanup error was reported. No R05 write/save/checkpoint occurred. Earlier P6 query fingerprint remains `2f12a578c8451f3f` vs accepted `4636abc6b294829b`; do not waive. The target and checkpoint were last verified byte-identical at 4,960,256 bytes, SHA-256 `8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326`. Keep P7-T01 `PENDING`; next provider call only after 09:51:00Z through the health-first runner.
+- Latest P7-T01 runner (~09:51Z): health/client/target/lease passed; Revit PID 38296 selected and lease PID 28364/generation 2 retained. The known 33-element unsaved partial routed to recovery. Exact P6 reopened as 2027 without upgrade; typed readback passed count 25, categories 7/14/4, coverage, mass bounds, and admin floor IDs. Fingerprint remained `2f12a578c8451f3f` vs accepted `4636abc6b294829b`; runner stopped before R05. Exception cleanup closed P6 without saving and reactivated the target; no cleanup error was reported. No R05 write/save/checkpoint occurred. A TDD diagnostic artifact writer now preserves the detailed 25-row P6 readback and both fingerprints, while the acceptance gate still fails closed. Focused suite 202/202; Ruff has 9 unchanged baseline findings. P7-T01 stays `PENDING`.
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -38,24 +38,28 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-Latest runner call was about 09:40Z. Health and client checks passed, Revit PID
-38296 was selected, and the RUN-003 lease was retained. The target query
-confirmed the known 33-element partial, then guarded recovery activated the
-exact P6 checkpoint, which was already open. The bridge returned
-`already_open_activated`, exact path, host/file version 2027, and
-`upgraded=false`; the strict validator rejected it because this was not a new
-open and fields such as `opened_from` and `version_guard` were absent. The
-exception cleanup closed P6 without saving and verified the target active; no
-cleanup error was reported. No model write/save/checkpoint occurred. The 07:37Z exact P6 query still returned fingerprint
+Latest runner call was about 09:51Z. Health/client/target/lease checks passed;
+Revit PID 38296 was selected and the RUN-003 lease retained. The target query
+confirmed the known 33-element partial. The exact P6 checkpoint was newly
+opened as Revit 2027 without upgrade; readback passed 25 rows, complete
+coverage, categories 7/14/4, mass bounds, and admin floor IDs, but fingerprint
+`2f12a578c8451f3f` still differed from accepted `4636abc6b294829b`. The runner
+stopped before R05. Guarded exception cleanup closed P6 without saving and
+reactivated the target; no cleanup error was reported. No model write/save/
+checkpoint occurred. A new test-first diagnostic writer records the verified
+P6 file SHA and a bounded detailed 25-row identity/geometry set on mismatch,
+then preserves the failing gate.
 `2f12a578c8451f3f` vs accepted `4636abc6b294829b` even with cache bypass. Both
 RVT files last verified byte-identical at SHA-256
 `8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326` and
 4,960,256 bytes; no save/write occurred. Preserve lease PID 28364, generation 2.
 The runner now reports bounded MCP reply structure for untyped health results;
 RED/GREEN covers three malformed/absent response cases. Focused production
-suite: 201/201. Commit 0a8db3c5898a59b66daf89b5c7b709c9365e70d2 is pushed. The
-provider quiet deadline is 09:51:00Z. Retry only through the health-first
-runner and preserve the P6 fingerprint gate. P7-T01 remains PENDING.
+suite: 201/201. Commit 0a8db3c5898a59b66daf89b5c7b709c9365e70d2 is pushed.
+The 09:51Z quiet window has elapsed. The diagnostic code and tests pass 202/202
+focused production tests; Ruff reports the same 9 baseline findings as before.
+Push the code/handoff commit, then retry only through the health-first runner.
+Preserve the P6 fingerprint gate; P7-T01 remains PENDING.
 
 ## Current RUN-003 R04 acceptance status
 

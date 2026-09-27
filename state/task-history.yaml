@@ -2586,3 +2586,12 @@ entries:
   - 'No R05 geometry write, target save, checkpoint, or persistence operation occurred. The accepted P6 fingerprint mismatch remains unresolved; this runner stopped before the checkpoint query.'
   recorded_utc: '2026-09-27T09:47:37Z'
   note: The conservative no-provider-call deadline is 09:51:00Z. Retry only through the health-first runner after that time; preserve exact P6 evidence and all recovery gates. P7-T01 remains PENDING.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'At about 09:51Z the health/client/target/lease gates passed, Revit PID 38296 was selected, and the existing lease retained. The exact P6 checkpoint was newly opened as Revit 2027 without upgrade.'
+  - 'Typed checkpoint readback passed 25 rows, complete coverage, zero unreadable, expected categories, seven mass bounds, and required administrative floor IDs. Its fingerprint again observed 2f12a578c8451f3f vs accepted 4636abc6b294829b; runner stopped before R05.'
+  - 'Guarded exception cleanup closed the P6 inspection without saving and reactivated the target; no cleanup error was reported. No R05 write/save/checkpoint occurred.'
+  - 'TDD added a bounded diagnostic-only JSON artifact for the verified checkpoint SHA, accepted/observed fingerprints, row digest, and 25 typed identity/geometry rows. Fingerprint mismatch still fails closed. Focused suite: 202 passed, 0 failed. Ruff baseline remains 9 findings (8 runner, 1 test), no new findings.'
+  recorded_utc: '2026-09-27T10:06:45Z'
+  note: After the diagnostic code and state update are pushed, run only the health-first R05 runner. On mismatch, inspect the generated P6 readback diagnostic and reconcile it explicitly; do not write R05 or waive accepted fingerprint without complete evidence. P7-T01 stays PENDING.
