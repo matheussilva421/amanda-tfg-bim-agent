@@ -3484,6 +3484,17 @@ tasks:
       Revit PID 38296 is still present. No standalone Horizun call followed.
       P7-T01 remains PENDING. Retry only through the runner after the quiet
       window; diagnose host transport mode if health is still untyped.
+    - >-
+      Commit b9022e1092877218c1e8d862ff7d4a621f61c62d adds count/category detail
+      to known-partial recovery rejections; TDD observed the generic-message RED
+      and detailed-error GREEN. Focused production suite passes 183/183 and the
+      R05-only dry-run remains no-write. The next runner health-first call passed
+      health schema and transport pinning but failed the zero-other-client guard:
+      current PID 14596 was listed with PID 28628 (`unknown`, not alive, age 595
+      seconds) inside the 600-second window. It stopped before target selection,
+      document readback, checkpoint inspection, or model action. The existing
+      lease was retained and the working RVT size/timestamp remain unchanged.
+      Do not call Horizun before 06:46:30Z; P7-T01 remains PENDING.
   P7-T02:
     id: P7-T02
     phase: P7

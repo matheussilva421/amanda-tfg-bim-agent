@@ -2490,3 +2490,11 @@ entries:
   - 'Read-only local check confirms Revit PID 38296 is present. No standalone Horizun call or model write followed the failed health gate.'
   recorded_utc: '2026-09-27T06:15:17Z'
   note: Observe the provider quiet window from this runner health request, then retry only through the health-first runner using an approved host-context execution. If health remains untyped, fail closed and capture the raw tool reply before further action.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Commit b9022e1092877218c1e8d862ff7d4a621f61c62d added count/category diagnostics to known-partial recovery rejection. The regression first failed on the generic error then passed with the detailed diagnostic. Focused production suite: 183 passed, 0 failed; R05-only dry-run remains no-write.'
+  - 'At about 2026-09-27T06:35:53Z, the health-first runner accepted health schema and pinned its own Horizun transport PID, then failed the zero-other-client guard before Revit target selection. clients_seen contained PID 14596 (horizun-mcp, age 0, alive) and PID 28628 (unknown, age 595 seconds, not alive), inside the 600-second window.'
+  - 'The existing RUN-003 lease was retained. No target/document read, checkpoint inspection, close, save, or model write occurred. Working target remains 4,960,256 bytes with its 2026-09-26 21:34Z timestamp; direct hashing was denied because Revit holds the file open.'
+  recorded_utc: '2026-09-27T06:35:53Z'
+  note: Keep the provider quiet until at least 06:46:30Z, then retry only through the health-first R05 runner; continue solely if client count is zero and every capability, target, lease, P6 recovery, and model persistence gate passes.

@@ -20,10 +20,11 @@ def test_status_dashboard_checkpoint_matches_project_state():
 def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     handoff = (ROOT / "state" / "HANDOFF.md").read_text(encoding="utf-8")
     assert (
-        "## Current state — P6-T01 PASS; P7-T01 awaiting explicit R05 write authorization"
+        "## Current state — P7-T01/R05 blocked by shared-client guard; recovery readback pending"
         in handoff.splitlines()[:8]
     )
-    assert "P7-T01 remains PENDING until the user explicitly authorizes the R05 production write." in handoff
+    assert "P7-T01 stays `PENDING`; this continuation is restricted to R05." in handoff
+    assert "authorized live R05 runner attempt" in handoff
     assert "## Prior closeout — P4-T01 R04" in handoff
     assert "## Historical continuation — 2026-09-26 (P4-T01 / RUN-003 R04 geometry completion)" in handoff
     assert "## Current continuation — 2026-09-26 (P4-T01 / RUN-003 R04 geometry completion)" not in handoff

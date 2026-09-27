@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; authorized; prior unsaved partial remains in Revit memory, while the latest health-first retry failed on an untyped health payload before target access)
+- Next task: `P7-T01` (R05 architectural shell; authorized; the unsaved eight-floor partial may remain in Revit memory; latest runner stopped at the ten-minute shared-client guard before target selection)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -16,7 +16,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `P5`: 1/1 PASS
 - `P6`: 1/1 PASS
 - `P7`: 0/9 PASS
-- Latest P7-T01 write attempt: `FAILED`, 8/705 verified in the live unsaved session; no save/checkpoint/reopen. Its exact journal is tracked. Code commit `02ed2d3` plus state commit `b601c2d` are pushed and verified. A subsequent health-first runner retry returned an untyped health payload and stopped before capabilities, target, or model access. P7-T01 remains `PENDING`.
+- Latest P7-T01 write attempt: `FAILED`, 8/705 verified in the live unsaved session; no save/checkpoint/reopen. Its exact journal is tracked. Follow-up fixes are committed/pushed. The latest runner passed health schema/transport pinning but found another client entry (PID 28628, not alive, age 595 seconds) inside the 600-second window and stopped before target selection, document readback, P6 comparison, or any model action. P7-T01 remains `PENDING`.
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -38,19 +38,16 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-Latest raw provider health is from 04:19:06Z: Horizun 1.3.3 `HEALTHY`; Revit
-2027 build 27.2.0.39/PID 38296; registry 73/73 clean, 80/80 tools visible;
-`full_write`, not paused; exact saved RUN-003 target active. The actual schema
-reports `clients.other_clients_connected=1`, with two listed entries including
-the direct caller and an exited runner transport. That R05 attempt failed closed
-before target selection because code on pushed commit `176c2cf` expected a
-top-level count; no model/checkpoint/lease mutation occurred. The corrected
-validator now requires complete consistent nested metadata and zero distinct
-other clients, and pins the validated transport PID so later calls cannot
-silently restart on a replacement process. The focused suite passes 141/141 and
-the dry-run plans only R05. No provider call has occurred since 04:19:06Z; a
-fresh runner health/capability/targetability check is required before any write.
-The existing P7 lease remains held by live owner PID 28364. P7-T01 stays PENDING.
+Latest health-first runner call was about 06:35:53Z. Health schema and transport
+identity passed, but the strict shared-client guard rejected a second recent
+entry: PID 28628, process name unknown, age 595 seconds, process not alive.
+Current transport PID 14596 was listed as alive at age 0. The runner stopped
+before target selection, so this call did not freshly establish targetability
+or capabilities. Wait until at least 06:46:30Z before another provider call.
+The production writer lease remains recorded under live owner PID 28364,
+generation 2; preserve it. The diagnostic guard regression and full focused
+production suite pass 183/183, and dry-run still plans only R05. P7-T01 stays
+PENDING.
 
 ## Current RUN-003 R04 acceptance status
 
