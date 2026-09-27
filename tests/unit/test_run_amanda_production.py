@@ -961,6 +961,68 @@ def test_resume_reuses_only_a_live_lease_bound_to_the_exact_run003_target(
         )
 
 
+def _verified_open_result(path: Path) -> dict:
+    return {
+        "status": "opened",
+        "opened_now": True,
+        "active_document_verified": True,
+        "path": str(path),
+        "path_is_the_one_requested": True,
+        "opened_from": str(path),
+        "identified_by": "path",
+        "expected_version": "2027",
+        "host_version": "2027",
+        "file_version_before_open": "2027",
+        "upgraded": False,
+        "version_guard": "checked",
+    }
+
+
+def test_document_open_result_requires_exact_verified_unupgraded_file(tmp_path: Path):
+    requested = tmp_path / "P6.rvt"
+    payload = _verified_open_result(requested)
+
+    assert production_runner._validate_document_open_result(
+        payload,
+        requested,
+        expected_version="2027",
+        context="P6 inspection",
+    ) is payload
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("status", "failed"),
+        ("opened_now", False),
+        ("active_document_verified", False),
+        ("path_is_the_one_requested", False),
+        ("path", "C:/other/WRONG.rvt"),
+        ("opened_from", "C:/other/WRONG.rvt"),
+        ("identified_by", "title"),
+        ("expected_version", "2026"),
+        ("host_version", "2026"),
+        ("file_version_before_open", "2026"),
+        ("upgraded", True),
+        ("version_guard", "unchecked"),
+    ],
+)
+def test_document_open_result_rejects_mismatched_or_unsafe_evidence(
+    tmp_path: Path, field: str, value: object
+):
+    requested = tmp_path / "P6.rvt"
+    payload = _verified_open_result(requested)
+    payload[field] = value
+
+    with pytest.raises(RuntimeError, match="failed verification"):
+        production_runner._validate_document_open_result(
+            payload,
+            requested,
+            expected_version="2027",
+            context="P6 inspection",
+        )
+
+
 def test_run003_live_readback_must_match_the_accepted_p6_baseline(
     monkeypatch: pytest.MonkeyPatch,
 ):
@@ -1458,9 +1520,18 @@ class _PersistenceTransport:
         elif tool == "horizun_document_session" and arguments["operation"] == "open":
             self.closed = False
             payload = {
-                "opened": True,
-                "path_matches_request": True,
-                "upgraded_on_open": False,
+                "status": "opened",
+                "opened_now": True,
+                "active_document_verified": True,
+                "path": str(self.target),
+                "path_is_the_one_requested": True,
+                "opened_from": str(self.target),
+                "identified_by": "path",
+                "expected_version": "2027",
+                "host_version": "2027",
+                "file_version_before_open": "2027",
+                "upgraded": False,
+                "version_guard": "checked",
             }
         elif tool == "get_document_info":
             payload = {"path": str(self.target)}
@@ -1742,7 +1813,20 @@ def test_known_r05_partial_is_reopened_without_saving_only_after_exact_state_che
             return {"closed": True}
         if tool == "horizun_document_session" and arguments["operation"] == "open":
             active_path[0] = arguments.get("file_path", "")
-            return {"opened": True, "path_matches_request": True, "upgraded_on_open": False}
+            return {
+                "status": "opened",
+                "opened_now": True,
+                "active_document_verified": True,
+                "path": active_path[0],
+                "path_is_the_one_requested": True,
+                "opened_from": active_path[0],
+                "identified_by": "path",
+                "expected_version": "2027",
+                "host_version": "2027",
+                "file_version_before_open": "2027",
+                "upgraded": False,
+                "version_guard": "checked",
+            }
         raise AssertionError(f"unexpected tool {tool}")
 
     monkeypatch.setattr(production_runner, "_read_tool", read_tool)

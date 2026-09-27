@@ -385,6 +385,40 @@ def _document_info(transport):
     return _read_tool(transport, "get_document_info", {})
 
 
+def _validate_document_open_result(
+    payload: object,
+    requested_path: Path,
+    *,
+    expected_version: str,
+    context: str,
+) -> dict:
+    """Require the installed bridge's exact-path, no-upgrade open evidence."""
+
+    requested = Path(requested_path).resolve()
+    if not isinstance(payload, dict):
+        raise RuntimeError(f"{context} failed verification: {payload!r}")
+    observed_paths = (payload.get("path"), payload.get("opened_from"))
+    paths_match = all(
+        isinstance(value, str) and Path(value).resolve() == requested
+        for value in observed_paths
+    )
+    if (
+        payload.get("status") != "opened"
+        or payload.get("opened_now") is not True
+        or payload.get("active_document_verified") is not True
+        or payload.get("path_is_the_one_requested") is not True
+        or payload.get("identified_by") != "path"
+        or not paths_match
+        or payload.get("expected_version") != expected_version
+        or payload.get("host_version") != expected_version
+        or payload.get("file_version_before_open") != expected_version
+        or payload.get("upgraded") is not False
+        or payload.get("version_guard") != "checked"
+    ):
+        raise RuntimeError(f"{context} failed verification: {payload!r}")
+    return payload
+
+
 def _select_revit_target(transport, revit_pid: int) -> dict:
     """Select one Revit process inside this MCP session and verify the result."""
 
@@ -798,14 +832,14 @@ def _restore_known_failed_r05_partial(
         checkpoint_opened = bool(
             checkpoint_active and Path(checkpoint_active).resolve() == checkpoint
         )
-        if (
-            not isinstance(opened_checkpoint, dict)
-            or opened_checkpoint.get("opened") is not True
-            or opened_checkpoint.get("path_matches_request") is not True
-            or opened_checkpoint.get("upgraded_on_open") is not False
-            or not checkpoint_opened
-        ):
-            raise RuntimeError(f"RUN-003 P6 checkpoint open was not verified: {opened_checkpoint!r}")
+        _validate_document_open_result(
+            opened_checkpoint,
+            checkpoint,
+            expected_version="2027",
+            context="RUN-003 P6 checkpoint open",
+        )
+        if not checkpoint_opened:
+            raise RuntimeError("RUN-003 P6 checkpoint was not active after open")
         checkpoint_payload = _read_tool(
             transport,
             "horizun_query_model",
@@ -879,13 +913,12 @@ def _restore_known_failed_r05_partial(
             "idempotency_key": _new_idempotency_key("reopen-p6", run_key),
         },
     )
-    if (
-        not isinstance(reopened, dict)
-        or reopened.get("opened") is not True
-        or reopened.get("path_matches_request") is not True
-        or reopened.get("upgraded_on_open") is not False
-    ):
-        raise RuntimeError(f"RUN-003 P6 target reopen was not verified: {reopened!r}")
+    _validate_document_open_result(
+        reopened,
+        target,
+        expected_version="2027",
+        context="RUN-003 P6 target reopen",
+    )
     active_after = _document_info(transport)
     active_path = _active_path(active_after)
     if not active_path or Path(active_path).resolve() != target:
@@ -1093,13 +1126,12 @@ def _save_checkpoint_reopen_stage(
             "idempotency_key": _new_idempotency_key("reopen", run_key),
         },
     )
-    if (
-        not isinstance(reopened, dict)
-        or reopened.get("opened") is not True
-        or reopened.get("path_matches_request") is not True
-        or reopened.get("upgraded_on_open") is not False
-    ):
-        raise RuntimeError(f"{result.stage.name} exact cold reopen failed: {reopened!r}")
+    _validate_document_open_result(
+        reopened,
+        target,
+        expected_version="2027",
+        context=f"{result.stage.name} exact cold reopen",
+    )
     active_after_reopen = _document_info(transport)
     if (
         not isinstance(active_after_reopen, dict)
