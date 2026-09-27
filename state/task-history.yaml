@@ -2471,3 +2471,14 @@ entries:
   - 'The existing RUN-003 writer lease remains held by live PID 28364, generation 2; the P6 checkpoint remains the last verified model state.'
   recorded_utc: '2026-09-27T05:00:51Z'
   note: Run one fresh health-first R05 attempt after updating the state pointer; continue only if provider, capability, target, lease, and P6 readback gates pass.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'The authorized real R05 runner attempt reached WRITE/READ and ended FAILED at 8/705. Exactly eight journaled floor creations were verified in the unsaved Revit session; 697 operations failed. No save, checkpoint, or cold reopen occurred. Journal: revit/production/journals/R05-2f373fcb3511.json.'
+  - 'The working target remained 4,960,256 bytes with its pre-attempt 2026-09-26 21:34Z timestamp; the existing RUN-003 lease was retained. P6 checkpoint remains the persisted baseline.'
+  - 'RED/GREEN: reproduced wall type ID resolution, service micro-edge rejection, and roof profile-Z/offset mismatch; implementation uses the source-backed wall type name, topology-preserving simplification bounded to 1 mm, and roof vertices at accepted absolute elevation.'
+  - 'RED/GREEN: the known-partial recovery now verifies and opens the exact P6 checkpoint, confirms its accepted 25-row fingerprint, and compares all baseline IDs, unique IDs, categories, names, and bounds against the live target before closing the unsaved partial.'
+  - 'Focused command .venv\Scripts\python.exe -m pytest tests/unit/test_production_layout_bim.py tests/unit/test_bim_horizun_invoker.py tests/unit/test_stage_shell.py tests/unit/test_run_amanda_production.py tests/unit/test_run003_study_authorization.py tests/unit/test_task_graph.py tests/unit/test_bim_transport_env.py tests/unit/test_mcp_probe_transport_pinning.py -q: 182 passed, 0 failed. R05 dry-run planned only R05 and wrote nothing.'
+  - 'Commit 02ed2d334b18714dbedc5d6ec78ced305f8d0f55 is local on main; state/handoff follow-up and push are in progress. P7-T01 remains PENDING.'
+  recorded_utc: '2026-09-27T06:06:08Z'
+  note: Run one fresh health-first attempt. Recovery must prove the target equals the P6 checkpoint plus exactly the eight journaled unsaved floors before discarding anything; then execute only R05 and require save/checkpoint/cold-reopen/readback before PASS.

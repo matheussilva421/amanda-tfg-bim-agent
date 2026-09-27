@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; authorized, strict health/transport gate fixed, fresh live preflight pending)
+- Next task: `P7-T01` (R05 architectural shell; authorized; previous live attempt left eight verified unsaved floors, and exact P6 recovery guard is ready for fresh health-first preflight)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -16,6 +16,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `P5`: 1/1 PASS
 - `P6`: 1/1 PASS
 - `P7`: 0/9 PASS
+- Latest P7-T01 attempt: `FAILED`, 8/705 verified in the live unsaved session; no save/checkpoint/reopen. The exact failed journal is tracked. The R05 recovery/code fix is committed locally as `02ed2d3`; 182 focused tests and the R05-only dry-run passed. P7-T01 remains `PENDING`.
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS

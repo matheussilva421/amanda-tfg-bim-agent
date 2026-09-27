@@ -3454,6 +3454,27 @@ tasks:
        exact SHA match. No provider call or Revit write followed the 04:19:06Z
        health snapshot; P7-T01 stays PENDING for fresh live preflight and R05
        persistence verification.
+    - >-
+      The next real R05 runner attempt reached WRITE/READ but failed at 8/705
+      verified: eight residential/child floor plates landed only in the unsaved
+      Revit session; 697 writes failed typed validation. The stage did not save,
+      checkpoint, or cold-reopen. Its exact failed journal is
+      revit/production/journals/R05-2f373fcb3511.json; the working RVT remains
+      4,960,256 bytes with its pre-attempt 2026-09-26 21:34Z file timestamp.
+      The existing RUN-003 lease is retained. TDD corrected the external wall
+      type reference, bounded 1 mm R05 profile simplification, and roof absolute-Z
+      and level-offset mismatch. A further safety review found that count/mass
+      checks alone were insufficient before discarding the unsaved partial.
+      Recovery now verifies the P6 checkpoint manifest and 25-row fingerprint,
+      compares each baseline ElementId/UniqueId/category/name/bounds row with
+      the live partial, and only then closes without saving. The regression was
+      RED for the missing comparison and is now GREEN. Focused suite: 182 passed;
+      R05-only dry-run passed with no writes. No new Ruff findings occur on
+      changed lines; legacy findings remain in these modules. Commit
+      02ed2d334b18714dbedc5d6ec78ced305f8d0f55 contains code/tests/journal.
+      No additional agent started because the session thread limit was reached;
+      only Luna 6 xhigh was attempted. P7-T01 remains PENDING until the next
+      health-first runner attempt and full R05 persistence evidence.
   P7-T02:
     id: P7-T02
     phase: P7
