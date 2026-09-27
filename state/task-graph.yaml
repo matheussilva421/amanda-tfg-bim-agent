@@ -3586,6 +3586,15 @@ tasks:
       HZ_ANCHOR_2027 tabs open and no visible modal. No controls, save, close, or
       model writes occurred. Preserve the P6 fingerprint and files; quiet deadline
       08:12:30Z elapsed. P7-T01 stays PENDING.
+    - >-
+      At about 09:40Z the health/client gates passed; Revit PID 38296 was selected
+      and the existing RUN-003 lease retained. Recovery confirmed the 33-element
+      unsaved partial. The exact P6 checkpoint was already open and returned
+      already_open_activated with exact path, host/file 2027, upgraded=false.
+      Strict new-open validation stopped before the P6 query. Guarded exception
+      cleanup closed P6 without saving and reactivated the target; no cleanup
+      error, R05 write, save, or checkpoint was reported. Preserve the accepted
+      fingerprint gate and wait until 09:51:00Z before a new runner call.
   P7-T02:
     id: P7-T02
     phase: P7

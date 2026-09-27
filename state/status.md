@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; authorized; latest health-first retry reported a Revit modal in an untyped health payload; later read-only UI saw RUN-003 active with the P6 tab still open; prior P6 fingerprint and cleanup gates remain unresolved)
+- Next task: `P7-T01` (R05 architectural shell; authorized; latest runner passed health/target selection but stopped because an already-open P6 returned `already_open_activated`, rejected by the new-open validator; no R05 write; prior P6 fingerprint gate remains unresolved)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -16,7 +16,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `P5`: 1/1 PASS
 - `P6`: 1/1 PASS
 - `P7`: 0/9 PASS
-- Latest P7-T01 runner (~08:02Z): `horizun_health` returned an untyped response reporting a Revit modal titled `Projeto não recentemente salvo`; runner stopped before transport PID pinning, capabilities, target/document checks, or writes and retained lease PID 28364/generation 2. Read-only UI inspection (~08:04Z) then showed RUN-003 active and P6 plus `HZ_ANCHOR_2027` tabs open; no modal was visible. No controls clicked and no save/close/write occurred. The known unsaved 8-floor partial remains. The earlier exact P6 read still has fingerprint `2f12a578c8451f3f` vs accepted `4636abc6b294829b`; do not waive. Target and checkpoint last verified byte-identical at 4,960,256 bytes, SHA-256 `8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326`. Quiet deadline 08:12:30Z has elapsed; retry only through the health-first runner. P7-T01 remains `PENDING`.
+- Latest P7-T01 runner (~09:40Z): health/client checks passed; Revit PID 38296 selected and lease PID 28364/generation 2 retained. The known unsaved 8-floor partial validated as 33 elements and routed to guarded recovery. P6 was already open; bridge returned `already_open_activated` with exact path and Revit 2027, `upgraded=false`. The strict validator expected evidence for a newly opened file and rejected this response before checkpoint query. Its exception cleanup closed P6 without saving and reactivated the target; no cleanup error was reported. No R05 write/save/checkpoint occurred. Earlier P6 query fingerprint remains `2f12a578c8451f3f` vs accepted `4636abc6b294829b`; do not waive. The target and checkpoint were last verified byte-identical at 4,960,256 bytes, SHA-256 `8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326`. Keep P7-T01 `PENDING`; next provider call only after 09:51:00Z through the health-first runner.
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -38,13 +38,15 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-Latest runner call was about 08:02Z. Its first `horizun_health` result was an
-untyped payload reporting a Revit modal titled `Projeto não recentemente salvo`,
-so the runner stopped before transport pinning, capability/build checks, target
-selection, document reads, or writes. The existing RUN-003 lease was retained.
-Read-only UI inspection around 08:04Z showed the RUN-003 target active and the
-P6 and `HZ_ANCHOR_2027` tabs open, with no modal visible. No controls were
-clicked and no save or close was attempted. The 07:37Z exact P6 query still returned fingerprint
+Latest runner call was about 09:40Z. Health and client checks passed, Revit PID
+38296 was selected, and the RUN-003 lease was retained. The target query
+confirmed the known 33-element partial, then guarded recovery activated the
+exact P6 checkpoint, which was already open. The bridge returned
+`already_open_activated`, exact path, host/file version 2027, and
+`upgraded=false`; the strict validator rejected it because this was not a new
+open and fields such as `opened_from` and `version_guard` were absent. The
+exception cleanup closed P6 without saving and verified the target active; no
+cleanup error was reported. No model write/save/checkpoint occurred. The 07:37Z exact P6 query still returned fingerprint
 `2f12a578c8451f3f` vs accepted `4636abc6b294829b` even with cache bypass. Both
 RVT files last verified byte-identical at SHA-256
 `8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326` and
@@ -52,8 +54,8 @@ RVT files last verified byte-identical at SHA-256
 The runner now reports bounded MCP reply structure for untyped health results;
 RED/GREEN covers three malformed/absent response cases. Focused production
 suite: 201/201. Commit 0a8db3c5898a59b66daf89b5c7b709c9365e70d2 is pushed. The
-provider quiet deadline 08:12:30Z has elapsed. Retry only through the
-health-first runner. P7-T01 remains PENDING.
+provider quiet deadline is 09:51:00Z. Retry only through the health-first
+runner and preserve the P6 fingerprint gate. P7-T01 remains PENDING.
 
 ## Current RUN-003 R04 acceptance status
 

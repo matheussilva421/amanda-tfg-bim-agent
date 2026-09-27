@@ -2578,3 +2578,11 @@ entries:
   - 'Target and P6 checkpoint were last verified byte-identical at 4,960,256 bytes, SHA-256 8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326. The P6 fingerprint mismatch 2f12a578c8451f3f vs accepted 4636abc6b294829b remains unresolved. No R05 write/save/checkpoint occurred.'
   recorded_utc: '2026-09-27T09:36:08Z'
   note: The ten-minute quiet deadline 08:12:30Z has elapsed. Retry only through the health-first runner; preserve the lease, exact P6 evidence, and no-save boundary. Leave P7-T01 PENDING unless all recovery and persistence gates pass.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'At about 09:40Z the health/client gates passed, Revit PID 38296 was selected, and the existing RUN-003 lease was retained. The known unsaved partial passed exact journal validation as 33 live elements.'
+  - 'P6 recovery activation returned already_open_activated with exact checkpoint path, active_document_verified=true, expected/host/file version 2027, and upgraded=false. The strict validator rejected it because it requires a newly opened document and version_guard/opened_from fields. Recovery cleanup closed the checkpoint without saving and reactivated RUN-003; no cleanup error was raised.'
+  - 'No R05 geometry write, target save, checkpoint, or persistence operation occurred. The accepted P6 fingerprint mismatch remains unresolved; this runner stopped before the checkpoint query.'
+  recorded_utc: '2026-09-27T09:47:37Z'
+  note: The conservative no-provider-call deadline is 09:51:00Z. Retry only through the health-first runner after that time; preserve exact P6 evidence and all recovery gates. P7-T01 remains PENDING.
