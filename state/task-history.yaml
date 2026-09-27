@@ -2513,3 +2513,11 @@ entries:
   - 'Focused production suite: 184 passed, 0 failed. The code change is committed as 3eb4618776b4967d2b0ae8596543d67a7dc9783c and origin/main SHA was verified. No provider call or Revit write followed the about-06:47Z query; the live field request is not yet verified.'
   recorded_utc: '2026-09-27T06:54:40Z'
   note: After the quiet deadline, rerun only the health-first R05 runner. Continue only if exact target, zero other clients, lease, full P6 identity/geometry reconciliation, and save/checkpoint/reopen readback gates pass.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Actual health-first runner passed the exclusive-client gate, selected Revit PID 38296, and read the exact 33-row partial with complete coverage, zero unreadable, and summary categories 7/22/4. Explicit unique_id/category/name fields were requested. No write/save/checkpoint occurred.'
+  - 'Exact P6 checkpoint open returned status opened, path/opened_from exact, active_document_verified=true, host/file version 2027, upgraded=false, version_guard=checked. The previous guard expected old key names and stopped before checkpoint row query. Exception cleanup closed the checkpoint without save and reactivated RUN-003 successfully; no cleanup error masked the original validator failure.'
+  - 'TDD RED reproduced the response-shape mismatch. GREEN added a strict helper requiring exact path, active document, path identity, expected/host/file version, no upgrade, and checked guard for P6 inspection, target recovery reopen, and stage cold reopen. Twelve unsafe/mismatched fields are rejected. Focused production suite: 197 passed, 0 failed. Commit 81bc4bde32b2411b1516d959f2970cf91579655 pushed and remote SHA verified.'
+  recorded_utc: '2026-09-27T07:01:30Z'
+  note: Keep the provider quiet until at least 07:12:00Z. Then retry only the health-first R05 runner; query the exact checkpoint rows, compare all 25 baseline rows, and continue only when each subsequent gate passes.

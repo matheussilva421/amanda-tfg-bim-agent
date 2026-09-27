@@ -3515,6 +3515,17 @@ tasks:
       184/184. Commit 3eb4618776b4967d2b0ae8596543d67a7dc9783c is pushed; live
       verification is pending. Numeric ElementId remains a hard requirement and
       exact P6 identity/geometry checks are unchanged.
+    - >-
+      Commit 81bc4bde32b2411b1516d959f2970cf91579655 updates all RUN-003 P6
+      inspection and cold-reopen gates to the returned document_session schema.
+      RED reproduced rejection of the actual open payload; GREEN verifies exact
+      requested/opened path, active document, expected/host/file version 2027,
+      no upgrade, and checked version guard. Twelve negative field cases plus
+      recovery and persistence paths pass; the focused suite passes 197/197.
+      The live P6 checkpoint had opened at the exact path with no upgrade, but
+      the prior runner stopped before querying it. Its guarded no-save cleanup
+      closed the inspection and reactivated RUN-003 without cleanup error. No
+      model write/save occurred. Wait until 07:12:00Z; P7-T01 stays PENDING.
   P7-T02:
     id: P7-T02
     phase: P7
