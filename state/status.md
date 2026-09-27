@@ -56,8 +56,9 @@ relations against the P6 spatial evidence. The historical P6 acceptance remains
 unchanged; the fingerprint cause is unresolved. Focused production/state/provider
 suite plus state-consistency and plan-order gates: 227/227. Ruff reports the same 9 pre-existing findings;
 new files and edited import blocks are clean. The provider quiet window has elapsed.
-After review and push, retry only through the health-first R05 runner. P7-T01
-remains PENDING.
+The two commits are pushed; the push response updated main, while a follow-up
+`git ls-remote` could not reach TCP 443. Retry only through the health-first
+R05 runner. P7-T01 remains PENDING.
 
 ## Current RUN-003 R04 acceptance status
 
