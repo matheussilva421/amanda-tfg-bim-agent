@@ -44,8 +44,10 @@ complete coverage, zero unreadable, and category summary 7 masses / 22 floors /
 4 roofs. The fail-closed partial recovery could not match per-row ElementId,
 UniqueId, or category fields and stopped before checkpoint inspection. No save,
 close, or write occurred. The diagnostic suite passes 184/184; dry-run plans
-only R05. Preserve the lease held by PID 28364, generation 2. Wait until at
-least 06:57:30Z before another provider call. P7-T01 stays PENDING.
+only R05. The runner now explicitly requests unique_id/category/name, but that
+change has not yet been verified live. Preserve the lease held by PID 28364,
+generation 2. Wait until at least 06:57:30Z before another provider call.
+P7-T01 stays PENDING.
 
 ## Current RUN-003 R04 acceptance status
 

@@ -3507,6 +3507,14 @@ tasks:
       failed before checkpoint inspection or any close/save/write. RVT size and
       timestamp remain unchanged. Do not call Horizun before 06:57:30Z; keep
       P7-T01 PENDING.
+    - >-
+      TDD observed RED when live P6/recovery query arguments omitted explicit
+      return_fields, then GREEN after they requested unique_id/category/name on
+      baseline, partial, checkpoint, and post-activation readbacks. The official
+      local query contract permits these fields. The focused suite passes
+      184/184. Commit 3eb4618776b4967d2b0ae8596543d67a7dc9783c is pushed; live
+      verification is pending. Numeric ElementId remains a hard requirement and
+      exact P6 identity/geometry checks are unchanged.
   P7-T02:
     id: P7-T02
     phase: P7

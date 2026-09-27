@@ -2506,3 +2506,10 @@ entries:
   - 'The failure occurred before P6 checkpoint inspection, document close, save, or model write. Working RVT remains 4,960,256 bytes with its 2026-09-26 21:34Z timestamp. No raw row values were logged; the next diagnostic reports only row types and field names.'
   recorded_utc: '2026-09-27T06:47:05Z'
   note: Keep Horizun quiet until at least 06:57:30Z, then repeat only the health-first R05 runner. Use row-key diagnostics to identify typed readback contract; never relax P6 identity/geometry comparison or discard the unsaved partial without exact evidence.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Local tool schema confirms horizun_query_model accepts explicit return_fields unique_id/category/name. RED: live-readback and recovery tests failed when these fields were omitted; GREEN: all four P6/partial/checkpoint/live-again queries now request them explicitly.'
+  - 'Focused production suite: 184 passed, 0 failed. The code change is committed as 3eb4618776b4967d2b0ae8596543d67a7dc9783c and origin/main SHA was verified. No provider call or Revit write followed the about-06:47Z query; the live field request is not yet verified.'
+  recorded_utc: '2026-09-27T06:54:40Z'
+  note: After the quiet deadline, rerun only the health-first R05 runner. Continue only if exact target, zero other clients, lease, full P6 identity/geometry reconciliation, and save/checkpoint/reopen readback gates pass.
