@@ -530,17 +530,38 @@ def _validate_known_r05_partial_model(payload: object, records, authorization) -
     if not isinstance(payload, dict):
         raise TypeError(expected_message)
     rows = payload.get("rows")
+    summary = payload.get("summary")
+    reported_categories = (
+        summary.get("by_category") if isinstance(summary, dict) else None
+    )
+    row_categories: dict[str, int] = {}
+    if isinstance(rows, list):
+        for row in rows:
+            if isinstance(row, dict) and isinstance(row.get("category"), str):
+                category = row["category"]
+                row_categories[category] = row_categories.get(category, 0) + 1
+    observed = (
+        f"observed matched_total={payload.get('matched_total')!r}, "
+        f"returned={payload.get('returned')!r}, row_count={len(rows) if isinstance(rows, list) else None!r}, "
+        f"coverage_complete={payload.get('coverage_complete')!r}, "
+        f"unreadable_total={payload.get('unreadable_total')!r}, "
+        f"reported_categories={reported_categories!r}, row_categories={row_categories!r}"
+    )
+
+    def reject(detail: str) -> None:
+        raise ValueError(f"{expected_message}: {detail}; {observed}")
+
     expected_live_categories = {"Massa": 7, "Pisos": 22, "Telhados": 4}
     if (
         payload.get("matched_total") != 33
         or payload.get("returned") != 33
         or payload.get("coverage_complete") is not True
         or payload.get("unreadable_total") != 0
-        or payload.get("summary", {}).get("by_category") != expected_live_categories
+        or reported_categories != expected_live_categories
         or not isinstance(rows, list)
         or len(rows) != 33
     ):
-        raise ValueError(expected_message)
+        reject("live completeness or expected 7/22/4 category counts differ")
     by_id = {
         row.get("element_id"): row
         for row in rows
@@ -553,7 +574,7 @@ def _validate_known_r05_partial_model(payload: object, records, authorization) -
         or set(by_id) != {row.get("element_id") for row in rows}
         or len({row.get("unique_id") for row in rows if isinstance(row.get("unique_id"), str)}) != 33
     ):
-        raise ValueError(expected_message)
+        reject("element IDs or unique IDs are missing, duplicated, or malformed")
     expected_partial = {record["element_id"]: record for record in records}
     for element_id, expected in expected_partial.items():
         row = by_id.get(element_id)
@@ -562,17 +583,17 @@ def _validate_known_r05_partial_model(payload: object, records, authorization) -
             or row.get("category") != "Pisos"
             or row.get("unique_id") != expected["unique_id"]
         ):
-            raise ValueError(expected_message)
+            reject(f"journaled partial element {element_id} is missing or mismatched")
 
     baseline_rows = [row for element_id, row in by_id.items() if element_id not in expected_partial]
     baseline_categories: dict[str, int] = {}
     for row in baseline_rows:
         category = row.get("category")
         if not isinstance(category, str):
-            raise TypeError(expected_message)
+            reject("a P6 baseline row has no category")
         baseline_categories[category] = baseline_categories.get(category, 0) + 1
     if baseline_categories != {"Massa": 7, "Pisos": 14, "Telhados": 4}:
-        raise ValueError(expected_message)
+        reject(f"baseline categories are {baseline_categories!r}, expected 7/14/4")
 
     mass_rows = {
         row.get("name"): row
@@ -583,11 +604,11 @@ def _validate_known_r05_partial_model(payload: object, records, authorization) -
         f"MASS-{component}" for component in authorization.mass_bounding_boxes_m
     }
     if set(mass_rows) != expected_mass_names:
-        raise ValueError(expected_message)
+        reject(f"baseline mass names are {sorted(mass_rows)!r}")
     for component, expected_bounds in authorization.mass_bounding_boxes_m.items():
         actual = mass_rows[f"MASS-{component}"].get("bounding_box")
         if not isinstance(actual, dict):
-            raise TypeError(expected_message)
+            reject(f"baseline mass {component} has no bounding box")
         for bound in ("min", "max"):
             coordinates = actual.get(bound)
             reference = expected_bounds.get(bound)
@@ -601,10 +622,15 @@ def _validate_known_r05_partial_model(payload: object, records, authorization) -
                     for value, expected in zip(coordinates, reference, strict=True)
                 )
             ):
-                raise ValueError(expected_message)
+                reject(f"baseline mass {component} {bound} coordinates differ")
     baseline_ids = {row.get("element_id") for row in baseline_rows}
-    if any(element_id not in baseline_ids for element_id in authorization.administrative_floor_element_ids.values()):
-        raise ValueError(expected_message)
+    missing_admin_ids = [
+        element_id
+        for element_id in authorization.administrative_floor_element_ids.values()
+        if element_id not in baseline_ids
+    ]
+    if missing_admin_ids:
+        reject(f"administrative P6 floor IDs are missing: {missing_admin_ids!r}")
     return {
         "matched_total": 33,
         "partial_element_ids": sorted(expected_partial),
