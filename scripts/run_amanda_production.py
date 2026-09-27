@@ -921,9 +921,6 @@ def run(
     print("lease acquired:" if owns_lock else "using existing RUN-003 lease")
     try:
         with McpProbeTransport(timeout=900.0) as transport:
-            if revit_pid is not None:
-                selected = _select_revit_target(transport, revit_pid)
-                print("selected Revit PID:", selected["selected_pid"])
             if study_authorization is not None:
                 health = _read_tool(transport, "horizun_health", {})
                 _validate_revit_session(
@@ -932,6 +929,10 @@ def run(
                     revit_pid=revit_pid,
                     target_path=rvt,
                 )
+            if revit_pid is not None:
+                selected = _select_revit_target(transport, revit_pid)
+                print("selected Revit PID:", selected["selected_pid"])
+            if study_authorization is not None:
                 info = _document_info(transport)
                 active = _active_path(info)
                 if not active or Path(active).resolve() != rvt:

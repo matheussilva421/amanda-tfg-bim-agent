@@ -2413,3 +2413,20 @@ entries:
   - 'Focused tests passed 39/39; R05-only dry-run bound all four canonical PNG hashes, retained P6 approval/layout hashes, and wrote nothing.'
   recorded_utc: '2026-09-27T03:22:36Z'
   note: Push confirmed; continue with one live R05 preflight attempt after the quiet window.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Fourth authorized runner attempt selected Revit PID 38296 and retained the RUN-003 lease, then failed closed before baseline readback because Horizun reported PID 28680 (horizun-mcp, age 2 seconds, alive).'
+  - 'After runner exit, Get-Process -Id 28680 found no process; CIM lookup was denied. No model write, save, checkpoint, or lease mutation occurred.'
+  - 'Do not call Horizun until more than 10 minutes after this health (~03:24Z). Independent Luna 6 xhigh read-only diagnosis is pending; preserve the zero-other-client guard.'
+  recorded_utc: '2026-09-27T03:28:17Z'
+  note: R05 remains pending; the client-count anomaly is not explained by external process inspection.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Independent Luna 6 xhigh review attributed PID 28680 with high confidence to the runner transport child because target selection preceded health and the PID disappeared after runner exit; exact parent identity remains unproven.'
+  - 'TDD call-order assertion failed RED with current target-before-health sequence, then passed GREEN after moving authorized RUN-003 health validation before target selection. Other run modes were not changed.'
+  - 'Focused command pytest tests/unit/test_run_amanda_production.py tests/unit/test_run003_study_authorization.py -q: 39 passed, 0 failed; YAML parse passed; task graph suite 15 passed; scoped diff check passed.'
+  - 'No live attempt has tested the call-order correction. Publish it before one quiet-window R05 attempt; keep the guard and task pending until full model persistence evidence passes.'
+  recorded_utc: '2026-09-27T03:35:53Z'
+  note: Health-before-target correction ready for review and push; no Revit write occurred.

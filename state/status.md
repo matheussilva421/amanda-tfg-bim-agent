@@ -42,7 +42,13 @@ Latest recorded provider check: Horizun 1.3.3 `HEALTHY`; Revit 2027 build
 RUN-003 target was active and targetable; two documents were open (RUN-003 and
 `HZ_ANCHOR_2027`) with zero other clients. P6's lease was released after its
 save/cold-reopen/readback. Current P7 writer lease: `amanda-P7-RUN003-production`,
-PID 28364, generation 2, exact target; owner process is alive. Three authorized host-runner attempts stopped before baseline readback/write. The latest direct health around 03:08Z saw one recent other client, PID 32236, already exited about 23 seconds earlier; the active direct connector was PID 1708. Wait more than 10 minutes after that health call without Horizun traffic, then make one host-profile runner attempt. No write occurred.
+PID 28364, generation 2, exact target; owner process is alive. Four authorized
+host-runner attempts stopped before baseline readback/write. The latest runner
+selected Revit PID 38296 and held the lease, then health rejected recent other
+client PID 28680 (`horizun-mcp`, age 2 seconds, alive at the health response).
+That PID was gone by the post-exit local process query. No model/checkpoint/lease
+mutation occurred. The next attempt must wait more than 10 minutes from ~03:24Z
+and proceed only if runner preflight itself reports zero other clients.
 
 ## Current RUN-003 R04 acceptance status
 
@@ -123,17 +129,18 @@ review found no P1/P2 findings; the six R05 modules passed 77/77 and the
 expanded combined R05 plus task-state command passed 101/101. The write attempt
 was blocked by automatic approval review because the available explicit
 authorization then named R04. The user's later RUN-003 R05-R13 authorization
-supersedes that hold. Two host-profile attempts after direct target verification
+supersedes that hold. Four host-profile attempts after direct target verification
 stopped before P6 baseline readback because a recent second client was still
 visible. No R05 write, save, or checkpoint occurred. The latest direct health
-around 03:08Z identified the other client as exited PID 32236, last seen about
-23 seconds earlier. Test-first diagnostics preserve the zero-client guard while
-escaping control characters in logged identity; the focused runner/auth modules
-pass 39/39. The latest `git ls-remote` could not reach GitHub port 443. Wait more
-than 10 minutes after that health without Horizun traffic and require zero other
-clients. Commit `8fd51710941c52be7a97d2e3dd09f45fdfebf5cf` contains the diagnostic,
-test and state updates; push and `git ls-remote` confirmed `origin/main` at that
-SHA. Independent Luna 6 xhigh final review found no P1/P2 findings. A typed close rehearsal confirmed
+around 03:24Z identified the other client as PID 28680 (`horizun-mcp`), alive at
+the health response and no longer present after runner exit. Independent Luna 6
+xhigh review attributed this with high confidence to the runner's own short-lived
+MCP child, since target selection preceded health; exact parent identity remains
+unproven because CIM access was denied. A test-first correction now validates
+health before target selection in RUN-003 resume mode; the focused runner/auth
+modules pass 39/39, with a RED/GREEN call-order regression. Diagnostic commit `8fd51710941c52be7a97d2e3dd09f45fdfebf5cf`
+and state/handoff commit `6e0b2e824f47189a5d0b7bbabb1ba979643537bc` are on
+origin/main. The reorder has not yet been tried live. Independent Luna 6 xhigh review found no P1/P2 findings. A typed close rehearsal confirmed
 `is_modified=false` and `would_discard_unsaved=false`; it made no session
 change. The stage runner requires save, close-with-save, post-close checkpoint,
 exact cold reopen, and complete typed geometry readback.

@@ -233,6 +233,7 @@ def test_run003_resume_uses_the_existing_target_without_template_or_save_as(
         },
     }
     captured = {}
+    live_preflight_order = []
     class FakeLock:
         owner_token = "run003-test-token"
 
@@ -283,7 +284,11 @@ def test_run003_resume_uses_the_existing_target_without_template_or_save_as(
 
     monkeypatch.setattr(production_runner, "build_layout_stage_plans", capture_plan_arguments)
     monkeypatch.setattr(production_runner, "find_project_template", lambda *_: pytest.fail("resume must not open a template"))
-    monkeypatch.setattr(production_runner, "_read_tool", lambda _transport, tool, _arguments: health if tool == "horizun_health" else {"path": str(target)})
+    def record_live_tool(_transport, tool, _arguments):
+        live_preflight_order.append(tool)
+        return health if tool == "horizun_health" else {"path": str(target)}
+
+    monkeypatch.setattr(production_runner, "_read_tool", record_live_tool)
     def verify_baseline(_transport, grant):
         captured["readback_authorization"] = grant
         return "p6-baseline-fingerprint"
@@ -291,7 +296,11 @@ def test_run003_resume_uses_the_existing_target_without_template_or_save_as(
     monkeypatch.setattr(production_runner, "_verify_p6_live_readback", verify_baseline)
     monkeypatch.setattr(production_runner, "_document_info", lambda _transport: {"path": str(target)})
     monkeypatch.setattr(production_runner, "execute_stage", lambda *_args, **_kwargs: result)
-    monkeypatch.setattr(production_runner, "_select_revit_target", lambda *_args: {"selected_pid": 38296})
+    def record_target_selection(*_args):
+        live_preflight_order.append("horizun_target")
+        return {"selected_pid": 38296}
+
+    monkeypatch.setattr(production_runner, "_select_revit_target", record_target_selection)
     monkeypatch.setattr(production_runner, "_activate", lambda *_args: None)
 
     def record_persistence(*_args, **kwargs):
@@ -320,6 +329,7 @@ def test_run003_resume_uses_the_existing_target_without_template_or_save_as(
     assert captured["readback_authorization"] is authorization
     assert captured["persistence_call"]["p6_checkpoint_sha256"] == authorization.checkpoint_sha256
     assert all(tool != "horizun_document_session" for tool, _ in captured["transport_calls"])
+    assert live_preflight_order[:2] == ["horizun_health", "horizun_target"]
 
 
 def test_run003_resume_dry_run_compiles_r05_without_lock_or_provider(

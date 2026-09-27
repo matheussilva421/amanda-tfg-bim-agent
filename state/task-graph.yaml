@@ -3385,9 +3385,22 @@ tasks:
       characters escaped, without weakening the zero-client gate; focused tests
       pass 39/39. Commit 8fd51710941c52be7a97d2e3dd09f45fdfebf5cf was pushed and
       `git ls-remote` verified origin/main at the same SHA. Independent Luna 6
-      xhigh final review found no P1/P2 issues. Wait more than 10 minutes after
-      the latest direct health without Horizun traffic, then retry only when the
-      host-runner preflight reports zero other clients.
+      xhigh final review found no P1/P2 issues. This preceding PID-32236 health
+      record is superseded by the fourth attempt below. Observe the 10-minute
+      quiet window from the newest provider health, then retry only when host-runner
+      preflight reports zero other clients.
+    - >-
+      The fourth authorized attempt selected Revit PID 38296 and retained the
+      RUN-003 lease, then failed closed before baseline readback because health
+      saw PID 28680 (`horizun-mcp`) alive 2 seconds after its request. A local
+      process query after runner exit found no such process; CIM access was
+      denied. No model, checkpoint, or lease mutation occurred. Independent Luna
+      6 xhigh review attributes the PID with high confidence to the runner's own
+      short-lived MCP child; exact parent identity could not be proven. The
+      runner called target selection before health, so the call-order fix now
+      validates health before target selection for RUN-003 resume only. TDD
+      observed RED then GREEN; focused tests pass 39/39. This order change has
+      not been tried live. Push it before at most one retry after a quiet window.
     - >-
       Independent Luna 6 xhigh review accepted P6 only for normalized spatial
       topology. Before R06, reconcile user-directed three bedrooms per family
