@@ -418,6 +418,36 @@ def test_run003_resume_dry_run_compiles_r05_without_lock_or_provider(
     assert captured["plan"]["run003_study_authorization"] is authorization
 
 
+@pytest.mark.parametrize(
+    ("reply", "expected"),
+    [
+        (None, "no JSON-RPC reply"),
+        (
+            {
+                "jsonrpc": "2.0",
+                "id": 1,
+                "result": {
+                    "content": [{"type": "text", "text": "provider warming"}]
+                },
+            },
+            "content_types=['text']",
+        ),
+        (
+            {"jsonrpc": "2.0", "id": 1, "result": [1]},
+            "result_type=list",
+        ),
+    ],
+)
+def test_untyped_health_reply_reports_only_structural_diagnostics(reply, expected):
+    class FakeTransport:
+        def call(self, _tool, _arguments):
+            return reply
+
+    with pytest.raises(TypeError) as error:
+        production_runner._read_tool(FakeTransport(), "horizun_health", {})
+    assert expected in str(error.value)
+
+
 def test_live_revit_preflight_requires_single_idle_writer_target():
     healthy = {
         "status": "healthy",

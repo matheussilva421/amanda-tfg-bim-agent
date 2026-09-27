@@ -364,11 +364,57 @@ def _payload(result):
     return None
 
 
+def _health_reply_diagnostic(reply: object) -> str:
+    if reply is None:
+        return "no JSON-RPC reply"
+    if not isinstance(reply, dict):
+        return f"reply_type={type(reply).__name__}"
+    result = reply.get("result")
+    result_type = type(result).__name__ if "result" in reply else "missing"
+    result_keys = sorted(result) if isinstance(result, dict) else []
+    content = result.get("content", []) if isinstance(result, dict) else []
+    content_types = [
+        item.get("type") for item in content if isinstance(item, dict)
+    ] if isinstance(content, list) else []
+    text_preview = next(
+        (
+            " ".join(item["text"].split())[:160]
+            for item in content
+            if isinstance(item, dict) and isinstance(item.get("text"), str)
+        ),
+        None,
+    ) if isinstance(content, list) else None
+    error = reply.get("error")
+    if isinstance(error, dict):
+        error = {
+            "code": error.get("code"),
+            "message": str(error.get("message", ""))[:160],
+        }
+    return (
+        f"reply_keys={sorted(reply)}, result_type={result_type}, "
+        f"result_keys={result_keys}, "
+        f"content_types={content_types}, error={error!r}, "
+        f"text_preview={text_preview!r}"
+    )
+
+
 def _read_tool(transport, tool, arguments):
     reply = transport.call(tool, arguments)
     if reply is None:
+        if tool == "horizun_health":
+            raise TypeError(
+                "Horizun health reply was untyped: "
+                f"{_health_reply_diagnostic(reply)}"
+            )
         return None
-    result = reply.get("result") or {}
+    result = reply.get("result")
+    if not isinstance(result, dict):
+        if tool == "horizun_health":
+            raise TypeError(
+                "Horizun health reply was untyped: "
+                f"{_health_reply_diagnostic(reply)}"
+            )
+        result = {}
     payload = result.get("structuredContent")
     if payload is not None:
         return payload
@@ -378,6 +424,11 @@ def _read_tool(transport, tool, arguments):
                 return json.loads(item["text"])
             except json.JSONDecodeError:
                 continue
+    if tool == "horizun_health":
+        raise TypeError(
+            "Horizun health reply was untyped: "
+            f"{_health_reply_diagnostic(reply)}"
+        )
     return None
 
 
