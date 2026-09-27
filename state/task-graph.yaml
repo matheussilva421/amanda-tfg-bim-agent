@@ -3571,6 +3571,13 @@ tasks:
       The target and accepted P6 checkpoint last verified byte-identical at
       SHA-256 8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326;
       no save/write occurred. Wait until 08:00:30Z; P7-T01 remains PENDING.
+    - >-
+      TDD added bounded MCP reply-shape diagnostics for untyped horizun_health
+      responses, including no reply, result type, keys, content types, bounded
+      text preview, and summarized MCP error. RED/GREEN covers three cases.
+      Focused production suite passes 201/201. Commit
+      0a8db3c5898a59b66daf89b5c7b709c9365e70d2 is pushed to main. No provider
+      call followed 07:50Z; the quiet window has elapsed. Retry only via runner.
   P7-T02:
     id: P7-T02
     phase: P7

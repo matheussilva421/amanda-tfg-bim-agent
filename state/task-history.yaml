@@ -2562,3 +2562,11 @@ entries:
   - 'The prior accepted P6 fingerprint mismatch remains 2f12a578c8451f3f vs 4636abc6b294829b even with cache bypass. Target and checkpoint files last verified byte-identical, 4,960,256 bytes, SHA-256 8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326.'
   recorded_utc: '2026-09-27T07:50:36Z'
   note: No Horizun calls before 08:00:30Z. Retry only with the health-first runner. Continue only if health, capabilities, target, lease, active document, and exact P6 recovery gates pass; otherwise leave P7-T01 PENDING.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'TDD added bounded diagnostics for untyped Horizun health replies. RED reproduced the loss of response-shape information; GREEN reports reply/result keys, result type, content types, bounded text preview, and summarized MCP error without dumping model payloads.'
+  - 'Three absent/malformed response cases pass. Focused production suite: 201 passed, 0 failed. Commit 0a8db3c5898a59b66daf89b5c7b709c9365e70d2 pushed to main.'
+  - 'No live provider call followed the 07:50Z untyped health result; ten-minute quiet window elapsed. Exact P6 fingerprint and post-close document state remain unresolved.'
+  recorded_utc: '2026-09-27T08:01:09Z'
+  note: Retry only through the health-first RUN-003 runner. Do not call Horizun standalone, and stop before R05 if health, target, active document, or P6 recovery cannot be verified.

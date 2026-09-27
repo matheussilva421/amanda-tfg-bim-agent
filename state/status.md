@@ -48,7 +48,11 @@ unknown. The 07:37Z exact P6 query still returned fingerprint
 RVT files last verified byte-identical at SHA-256
 `8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326` and
 4,960,256 bytes; no save/write occurred. Preserve lease PID 28364, generation 2.
-Wait until 08:00:30Z before another provider call. P7-T01 remains PENDING.
+The runner now reports bounded MCP reply structure for untyped health results;
+RED/GREEN covers three malformed/absent response cases. Focused production
+suite: 201/201. Commit 0a8db3c5898a59b66daf89b5c7b709c9365e70d2 is pushed. No
+provider call followed the 07:50Z retry; the quiet window has elapsed. Retry
+only through the health-first runner. P7-T01 remains PENDING.
 
 ## Current RUN-003 R04 acceptance status
 
