@@ -3443,16 +3443,17 @@ tasks:
       cases. TDD observed RED for health->pin->target ordering and absent pin API,
       then GREEN. The seven-module focused suite passes 141/141. The dry-run
       binds all four current canonical boards and the accepted P6 hashes and
-      plans only R05 with no writes. Follow-up Luna review could not be reopened
-      or spawned because the session agent-thread limit was reached; the fix was
-       reviewed. Scoped Luna 6 xhigh follow-up confirmed both implementation
-       findings addressed and found no new Critical/Important issue, but noted
-       that its diff package omitted the then-untracked transport regression
-       test. The test is staged and included in a regenerated nine-file review
-       package; another independent pass was unavailable due the session agent
-       limit. Local review and staged-diff checks confirm inclusion. No provider
-       call or Revit write followed the 04:19:06Z health snapshot; P7-T01 stays
-       PENDING for fresh live preflight and R05 persistence verification.
+       plans only R05 with no writes. Scoped Luna 6 xhigh follow-up confirmed
+       both implementation findings addressed and found no new Critical or
+       Important issue, but noted its review package omitted the then-untracked
+       transport regression test. That test is now staged in the nine-file patch
+       and a regenerated package. A second confirmation could not be started
+       because the session agent-thread limit was reached; local review and
+       staged-diff checks confirmed inclusion. Commit
+       f25b5e9080b2c4a9b5994bec918743c584ad00cb is pushed to origin/main with
+       exact SHA match. No provider call or Revit write followed the 04:19:06Z
+       health snapshot; P7-T01 stays PENDING for fresh live preflight and R05
+       persistence verification.
   P7-T02:
     id: P7-T02
     phase: P7

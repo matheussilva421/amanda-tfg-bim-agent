@@ -2463,3 +2463,11 @@ entries:
   - 'No Horizun call or Revit write followed the 04:19:06Z health snapshot.'
   recorded_utc: '2026-09-27T04:58:54Z'
   note: Publish tested changes, then make one fresh health-first R05 runner attempt; retain lease and keep P7-T01 PENDING until full persistence and QA pass.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Commit f25b5e9080b2c4a9b5994bec918743c584ad00cb was pushed to main; git ls-remote origin refs/heads/main returned the same SHA.'
+  - 'The published patch contains the strict health validator, transport PID pin/no-restart guard, focused regression coverage, and P7 pending state; no model or checkpoint files were included.'
+  - 'The existing RUN-003 writer lease remains held by live PID 28364, generation 2; the P6 checkpoint remains the last verified model state.'
+  recorded_utc: '2026-09-27T05:00:51Z'
+  note: Run one fresh health-first R05 attempt after updating the state pointer; continue only if provider, capability, target, lease, and P6 readback gates pass.

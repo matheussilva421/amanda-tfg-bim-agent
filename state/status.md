@@ -109,6 +109,11 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 
 ## Git verification
 
+P7-T01 health-schema/transport-pin commit `f25b5e9080b2c4a9b5994bec918743c584ad00cb`
+is pushed to `origin/main`; a fresh `git ls-remote` matched. It contains the
+strict health validator, pinned transport lifecycle, regression tests and
+pending-task state only. No Revit model write occurred in that commit.
+
 P6 PASS commit `13a2581aa13b2a580fc20fa9d5b27e3009569edd` was pushed from `main`;
 `git ls-remote origin refs/heads/main` returned the same SHA. The R05 runner
 and regression-test checkpoint `0848cd199ff4905abe0bcbf1ae7f857511c22c20` is
