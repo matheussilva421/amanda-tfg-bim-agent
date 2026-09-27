@@ -1632,6 +1632,39 @@ def test_known_partial_recovery_error_includes_observed_counts_and_categories():
         )
 
 
+def test_known_partial_recovery_error_reports_unrecognized_row_field_names():
+    authorization = SimpleNamespace(
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO", "CHILD_SECTOR", "RES_PAV_A", "RES_PAV_B",
+                "RES_PAV_C", "RES_PAV_D_COMMUNAL", "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+    )
+    payload = _known_partial_model(authorization)
+    payload["rows"] = [
+        {
+            "id": row["element_id"],
+            "uniqueId": row["unique_id"],
+            "categoryName": row["category"],
+            "name": row["name"],
+        }
+        for row in payload["rows"]
+    ]
+
+    with pytest.raises(
+        ValueError,
+        match=r"row_keys_sample=.*'categoryName'.*'id'.*'uniqueId'",
+    ):
+        production_runner._validate_known_r05_partial_model(
+            payload,
+            _known_failed_r05_journal()["records"][:8],
+            authorization,
+        )
+
+
 def test_known_partial_recovery_rejects_changed_existing_p6_element_geometry():
     authorization = SimpleNamespace(
         mass_bounding_boxes_m={

@@ -535,8 +535,18 @@ def _validate_known_r05_partial_model(payload: object, records, authorization) -
         summary.get("by_category") if isinstance(summary, dict) else None
     )
     row_categories: dict[str, int] = {}
+    row_types: dict[str, int] = {}
+    row_keys_sample: list[list[str] | str] = []
     if isinstance(rows, list):
         for row in rows:
+            row_type = type(row).__name__
+            row_types[row_type] = row_types.get(row_type, 0) + 1
+            if len(row_keys_sample) < 3:
+                row_keys_sample.append(
+                    sorted(str(key) for key in row)[:32]
+                    if isinstance(row, dict)
+                    else row_type
+                )
             if isinstance(row, dict) and isinstance(row.get("category"), str):
                 category = row["category"]
                 row_categories[category] = row_categories.get(category, 0) + 1
@@ -545,7 +555,8 @@ def _validate_known_r05_partial_model(payload: object, records, authorization) -
         f"returned={payload.get('returned')!r}, row_count={len(rows) if isinstance(rows, list) else None!r}, "
         f"coverage_complete={payload.get('coverage_complete')!r}, "
         f"unreadable_total={payload.get('unreadable_total')!r}, "
-        f"reported_categories={reported_categories!r}, row_categories={row_categories!r}"
+        f"reported_categories={reported_categories!r}, row_categories={row_categories!r}, "
+        f"row_types={row_types!r}, row_keys_sample={row_keys_sample!r}"
     )
 
     def reject(detail: str) -> None:
