@@ -151,9 +151,49 @@ def _validate_revit_session(
             f"live Revit PID {health.get('process_id')!r} does not match requested {revit_pid}"
         )
     if health.get("other_clients_connected") != 0:
+        client_state = health.get("clients")
+        clients_seen = (
+            client_state.get("clients_seen")
+            if isinstance(client_state, dict)
+            else None
+        )
+        client_details = []
+        if isinstance(clients_seen, list):
+            def safe_client_value(value: object) -> str:
+                rendered = str(value)
+                return "".join(
+                    char
+                    if char.isprintable()
+                    else char.encode("unicode_escape").decode("ascii")
+                    for char in rendered
+                )
+
+            for client in clients_seen:
+                if not isinstance(client, dict):
+                    continue
+                client_details.append(
+                    "pid={pid}, process_name={process_name}, "
+                    "seconds_since_last_request={age}, process_alive={alive}".format(
+                        pid=safe_client_value(client.get("pid", "unknown")),
+                        process_name=safe_client_value(
+                            client.get("process_name") or "unknown"
+                        ),
+                        age=safe_client_value(
+                            client.get("seconds_since_last_request", "unknown")
+                        ),
+                        alive=safe_client_value(
+                            str(client.get("process_alive", "unknown")).lower()
+                        ),
+                    )
+                )
+        detail = (
+            f"; clients_seen=[{'; '.join(client_details)}]"
+            if client_details
+            else ""
+        )
         raise ValueError(
             "Revit reports another MCP client in the 10-minute window; wait until "
-            "the shared-session count returns to zero"
+            f"the shared-session count returns to zero{detail}"
         )
     if target_path is None:
         if (

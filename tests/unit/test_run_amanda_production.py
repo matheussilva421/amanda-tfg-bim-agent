@@ -450,6 +450,81 @@ def test_live_revit_resume_requires_the_exact_saved_active_target(tmp_path: Path
             )
 
 
+def test_live_client_gate_error_reports_recent_client_identity(tmp_path: Path):
+    target = tmp_path / "RUN-003.rvt"
+    health = {
+        "status": "healthy",
+        "revit_build": "27.2.0.39",
+        "process_id": 38296,
+        "other_clients_connected": 1,
+        "open_document_count": 2,
+        "active_document": {
+            "path": str(target),
+            "is_active": True,
+            "has_been_saved_to_disk": True,
+        },
+        "clients": {
+            "other_clients_connected": 1,
+            "clients_seen": [
+                {
+                    "pid": 21076,
+                    "process_name": None,
+                    "seconds_since_last_request": 29,
+                    "process_alive": False,
+                }
+            ],
+        },
+    }
+
+    with pytest.raises(ValueError, match=r"pid=21076.*process_alive=false"):
+        production_runner._validate_revit_session(
+            health,
+            expected_build="27.2.0.39",
+            revit_pid=38296,
+            target_path=target,
+        )
+
+
+def test_live_client_gate_error_escapes_control_characters(tmp_path: Path):
+    target = tmp_path / "RUN-003.rvt"
+    health = {
+        "status": "healthy",
+        "revit_build": "27.2.0.39",
+        "process_id": 38296,
+        "other_clients_connected": 1,
+        "open_document_count": 2,
+        "active_document": {
+            "path": str(target),
+            "is_active": True,
+            "has_been_saved_to_disk": True,
+        },
+        "clients": {
+            "other_clients_connected": 1,
+            "clients_seen": [
+                {
+                    "pid": 21076,
+                    "process_name": "runner\nrole\x1b[31m",
+                    "seconds_since_last_request": 29,
+                    "process_alive": False,
+                }
+            ],
+        },
+    }
+
+    with pytest.raises(ValueError) as exc_info:
+        production_runner._validate_revit_session(
+            health,
+            expected_build="27.2.0.39",
+            revit_pid=38296,
+            target_path=target,
+        )
+
+    message = str(exc_info.value)
+    assert "process_name=runner\\nrole\\x1b[31m" in message
+    assert "\nrole" not in message
+    assert "\x1b" not in message
+
+
 def test_resume_reuses_only_a_live_lease_bound_to_the_exact_run003_target(
     tmp_path: Path,
 ):

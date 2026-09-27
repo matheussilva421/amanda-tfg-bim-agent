@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; user-authorized, waiting for zero other Horizun clients)
+- Next task: `P7-T01` (R05 architectural shell; user-authorized, waiting for the recent exited host-runner client window to expire)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -42,7 +42,7 @@ Latest recorded provider check: Horizun 1.3.3 `HEALTHY`; Revit 2027 build
 RUN-003 target was active and targetable; two documents were open (RUN-003 and
 `HZ_ANCHOR_2027`) with zero other clients. P6's lease was released after its
 save/cold-reopen/readback. Current P7 writer lease: `amanda-P7-RUN003-production`,
-PID 28364, generation 2, exact target; owner process is alive. Two authorized host-runner attempts stopped before baseline readback/write. The latest direct health saw one recent other client, PID 21076, already exited 29 seconds earlier; the active direct connector was PID 1708. Wait more than 10 minutes after that health call without Horizun traffic, then recheck through the host-profile runner. No write occurred.
+PID 28364, generation 2, exact target; owner process is alive. Three authorized host-runner attempts stopped before baseline readback/write. The latest direct health around 03:08Z saw one recent other client, PID 32236, already exited about 23 seconds earlier; the active direct connector was PID 1708. Wait more than 10 minutes after that health call without Horizun traffic, then make one host-profile runner attempt. No write occurred.
 
 ## Current RUN-003 R04 acceptance status
 
@@ -126,9 +126,12 @@ authorization then named R04. The user's later RUN-003 R05-R13 authorization
 supersedes that hold. Two host-profile attempts after direct target verification
 stopped before P6 baseline readback because a recent second client was still
 visible. No R05 write, save, or checkpoint occurred. The latest direct health
-identified the other client as exited PID 21076, last seen 29 seconds earlier;
-wait more than 10 minutes after that health without Horizun traffic and require
-zero other clients. A typed close rehearsal confirmed
+around 03:08Z identified the other client as exited PID 32236, last seen about
+23 seconds earlier. Test-first diagnostics preserve the zero-client guard while
+escaping control characters in logged identity; the focused runner/auth modules
+pass 39/39. The latest `git ls-remote` could not reach GitHub port 443. Wait more
+than 10 minutes after that health without Horizun traffic and require zero other
+clients. A typed close rehearsal confirmed
 `is_modified=false` and `would_discard_unsaved=false`; it made no session
 change. The stage runner requires save, close-with-save, post-close checkpoint,
 exact cold reopen, and complete typed geometry readback.

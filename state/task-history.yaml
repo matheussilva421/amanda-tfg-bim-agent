@@ -2396,3 +2396,12 @@ entries:
   - 'Do not call Horizun again until more than 10 minutes after this health. Retry the host-profile runner only if its own preflight reports zero other clients.'
   recorded_utc: '2026-09-27T02:57:27Z'
   note: Root cause isolated to recent exited host-runner client; no R05 write occurred.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'A third authorized R05 runner attempt stopped before P6 baseline readback/write. The lease was retained and no model, checkpoint, or lease mutation occurred.'
+  - 'Follow-up direct health around 03:08Z showed other_clients_connected=1 from exited PID 32236, last request about 23 seconds earlier; the direct connector remained PID 1708.'
+  - 'Test-first diagnostic enhancement reports recent client identity with control characters escaped. RED then GREEN; pytest tests/unit/test_run_amanda_production.py tests/unit/test_run003_study_authorization.py -q: 39 passed, 0 failed; scoped git diff --check passed.'
+  - 'The latest git ls-remote origin refs/heads/main failed because github.com:443 was unreachable. Do not call Horizun until more than 10 minutes after the latest health; retry R05 only if runner preflight sees zero other clients.'
+  recorded_utc: '2026-09-27T03:12:52Z'
+  note: Diagnostic change locally verified; preserve P7-T01 PENDING and the P6 checkpoint.
