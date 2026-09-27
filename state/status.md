@@ -70,10 +70,12 @@ findings; changed lines add no finding. Local second-pass review found no
 additional acceptance-path issue. The requested Luna 6 xhigh review could not
 spawn because the app agent-thread limit is full; no other subagent was used.
 Next action is the health-first R05-only runner.
-The reconciliation/state commits are pushed through `170cb4f`; a subsequent
-`git ls-remote` could not reach GitHub over TCP 443. The explicit R05
-authorization and current resume route are recorded in the active handoff.
-P7-T01 remains PENDING.
+R05 code/evidence commit `581cacb30ca679f4d08549f7536f01315bad0257` and state
+commit `561f84136f531695d6948f6a0c4c67a1dfdf76fa` were pushed to `origin/main`;
+`git push` exited 0 and local `HEAD`/`origin/main` match `561f841`. A separate
+`git ls-remote` could not connect to GitHub on TCP 443. RC01 deletions remain
+unstaged. The current R05 health failure and resume route are in the active
+handoff. P7-T01 remains PENDING.
 
 ## Current RUN-003 R04 acceptance status
 
