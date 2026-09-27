@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; authorized; the unsaved eight-floor partial may remain in Revit memory; latest runner validated the partial, then stopped on an open-result response schema mismatch before P6 checkpoint readback)
+- Next task: `P7-T01` (R05 architectural shell; authorized; the unsaved eight-floor partial may remain in Revit memory; latest runner validated the partial and opened P6, then failed the accepted fingerprint comparison before row-by-row comparison or partial discard)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -16,7 +16,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `P5`: 1/1 PASS
 - `P6`: 1/1 PASS
 - `P7`: 0/9 PASS
-- Latest P7-T01 write attempt: `FAILED`, 8/705 verified in the live unsaved session; no save/checkpoint/reopen. Its exact journal is tracked. Explicit query fields validated the live 33-row partial. The runner opened the exact 2027 P6 checkpoint without upgrade but stopped before querying it because it expected old confirmation keys. Guarded cleanup closed the inspection document without saving and reactivated the target; no geometry write/save/checkpoint occurred. Updated open-result validation and 12 negative cases are pushed; P7-T01 remains `PENDING`.
+- Latest P7-T01 write attempt: `FAILED`, 8/705 verified in the live unsaved session; no save/checkpoint/reopen. Its exact journal is tracked. Explicit query fields validated the live 33-row partial. The exact 2027 P6 checkpoint opened without upgrade and passed row count/category/mass/ElementId checks, but its fingerprint differed from accepted evidence; the runner stopped before full row comparison or partial discard. Guarded cleanup closed inspection without saving and reactivated the target. The separate accepted-fingerprint/detail-query fix is pushed but not live-verified; P7-T01 remains `PENDING`.
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -38,14 +38,15 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-Latest health-first runner call was about 07:00Z. It passed shared-client
-validation, selected Revit PID 38296, and validated the complete 33-row partial
-with category summary 7 masses / 22 floors / 4 roofs. The exact P6 checkpoint
-opened as Revit 2027 with path verification and no upgrade, but the old
-confirmation-key validator stopped before querying its rows. Cleanup closed the
-P6 inspection without saving and restored the working target. The focused suite
-passes 197/197; P7-T01 remains PENDING. Preserve lease PID 28364, generation 2.
-Wait until at least 07:12:00Z before another provider call.
+Latest runner call was about 07:12Z. It passed health/client/target/lease gates,
+validated the complete 33-row partial, and opened the exact P6 checkpoint as
+Revit 2027 without upgrade. Its query passed count/category/mass/ElementId checks
+but returned a fingerprint different from accepted evidence. Cleanup closed the
+inspection without saving and reactivated the target. No write or save occurred.
+The code now separates the original accepted compact fingerprint query from the
+detailed row query; live verification is pending. Focused suite: 198/198.
+Preserve lease PID 28364, generation 2. Wait until at least 07:22:30Z before
+another provider call. P7-T01 remains PENDING.
 
 ## Current RUN-003 R04 acceptance status
 

@@ -2521,3 +2521,11 @@ entries:
   - 'TDD RED reproduced the response-shape mismatch. GREEN added a strict helper requiring exact path, active document, path identity, expected/host/file version, no upgrade, and checked guard for P6 inspection, target recovery reopen, and stage cold reopen. Twelve unsafe/mismatched fields are rejected. Focused production suite: 197 passed, 0 failed. Commit 81bc4bde32b2411b1516d959f2970cf91579655 pushed and remote SHA verified.'
   recorded_utc: '2026-09-27T07:01:30Z'
   note: Keep the provider quiet until at least 07:12:00Z. Then retry only the health-first R05 runner; query the exact checkpoint rows, compare all 25 baseline rows, and continue only when each subsequent gate passes.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Latest runner passed health/client/target/lease and current open-result gates, validated the 33-row partial, and opened the exact P6 checkpoint as Revit 2027 without upgrade.'
+  - 'Checkpoint query passed 25-row count/category/mass/ElementId checks but returned a result_set_fingerprint different from accepted P6 evidence. The previous error did not print expected/observed values. It stopped before detailed row comparison and before discarding the unsaved partial. Guarded cleanup closed checkpoint without saving and reactivated target; no geometry write/save occurred.'
+  - 'RED/GREEN keeps the original compact P6 query signature for accepted fingerprint validation and runs a separate explicit-field query for exact row comparison. Mismatch errors now print expected and observed fingerprints. Focused production suite: 198 passed, 0 failed. Commit e73ee60ca8bf8449fe1b04a73fc938849202b551 was pushed and origin/main verified; two-query sequence remains live-unverified.'
+  recorded_utc: '2026-09-27T07:13:05Z'
+  note: No Horizun calls before 07:22:30Z. Then retry only the health-first R05 runner; require accepted fingerprint plus exact 25-row checkpoint/partial comparison before any recovery close or write.

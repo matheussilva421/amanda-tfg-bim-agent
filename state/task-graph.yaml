@@ -3526,6 +3526,19 @@ tasks:
       the prior runner stopped before querying it. Its guarded no-save cleanup
       closed the inspection and reactivated RUN-003 without cleanup error. No
       model write/save occurred. Wait until 07:12:00Z; P7-T01 stays PENDING.
+    - >-
+      The next runner passed all health/client/target/lease/open-result gates,
+      validated the 33-row partial, and opened exact P6. Its checkpoint query
+      passed count/category/mass/ElementId checks but returned a fingerprint
+      different from accepted P6 evidence; the previous error omitted both
+      values. It stopped before detailed row comparison or partial discard.
+      Guarded cleanup closed inspection without saving and reactivated RUN-003.
+      TDD restores the original compact query signature for accepted fingerprint
+      validation and uses a separate explicit-field query for exact row-by-row
+      comparison; mismatch output now includes expected/observed strings. The
+      focused suite passes 198/198. Commit e73ee60ca8bf8449fe1b04a73fc938849202b551
+      is pushed; the new sequence is not yet live-verified. No provider calls
+      before 07:22:30Z; P7-T01 remains PENDING.
   P7-T02:
     id: P7-T02
     phase: P7
