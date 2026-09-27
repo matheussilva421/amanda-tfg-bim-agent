@@ -2360,3 +2360,12 @@ entries:
   - 'No R05 model write has occurred in this continuation; retain the P6 checkpoint and verify the live target and writer lease before any future write.'
   recorded_utc: '2026-09-26T23:23:00Z'
   note: Ready in the task graph; technical implementation gates remain before Revit execution.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'ACL-safe resume loader falls back to repository HEAD blobs only after PermissionError for paths contained in the repository; missing files fail closed and no ACL or source file is changed.'
+  - 'Stage grant/planner expose exactly R05 per invocation; direct R06/R13 preflight and multi-stage plans are rejected. TDD RED was observed for the R06 authorization gap before the correction.'
+  - 'Fresh focused command across the six R05 modules: 77 passed, 0 failed. Expanded combined run including task-graph, state-store, and checkpoint-consistency modules: 101 passed, 0 failed. Dry-run bound all four canonical PNG hashes, retained P6 approval/layout hashes, and planned only R05.'
+  - 'Final independent Luna 6 xhigh review found no P1/P2 findings. No live Horizun/Revit write or model operation occurred in this follow-up; preserve the P6 checkpoint and leave P7-T01 PENDING.'
+  recorded_utc: '2026-09-27T02:16:21Z'
+  note: Pre-write hardening reviewed and locally verified; publish, then retry the exact RUN-003 R05 runner with fresh live preflight.

@@ -1,8 +1,9 @@
 """Verified, narrowly scoped authorization to continue RUN-003 after P6.
 
 The canonical identity remains BIM-ineligible. This module validates the saved
-P6 evidence, current four-board/program sources, and checkpoint, then issues an
-operational grant only for the same normalized STUDY and R05-R13.
+P6 evidence, current four-board/program sources, and checkpoint. DEC-010 bounds
+the future normalized-STUDY sequence to R05-R13; the current P7-T01 runtime
+grant exposes only R05, with later stages gated by their own task.
 """
 
 from __future__ import annotations
@@ -10,6 +11,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import subprocess
 from pathlib import Path
 from typing import Literal
 
@@ -71,7 +73,7 @@ class Run003StudyAuthorizationError(ValueError):
 
 
 class Run003StudyAuthorization(BaseModel):
-    """Operational continuation grant tied to current P6 sources and readback."""
+    """P6-bound continuation evidence with the current P7-T01 gate scoped to R05."""
 
     model_config = ConfigDict(extra="forbid", frozen=True)
 
@@ -98,10 +100,10 @@ class Run003StudyAuthorization(BaseModel):
     storey_element_ids: dict[int, int]
 
     def permits_stage(self, stage: object) -> bool:
+        """Expose only this task's stage; later stages need their own task gate."""
+
         name = getattr(stage, "name", stage)
-        return isinstance(name, str) and name in {
-            f"R{value:02d}" for value in range(5, 14)
-        }
+        return name == "R05"
 
     def permits_target(self, solution_id: str) -> bool:
         return solution_id == self.solution_id
@@ -155,10 +157,53 @@ class Run003StudyAuthorization(BaseModel):
         return tuple(result)
 
 
-def _read_json(path: Path, label: str) -> dict:
+def _read_repository_bytes(
+    path: Path, label: str, *, repository_root: Path | None = None
+) -> bytes:
+    path = Path(path)
     try:
-        value = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        return path.read_bytes()
+    except PermissionError as exc:
+        if repository_root is None:
+            raise Run003StudyAuthorizationError(
+                f"cannot read {label}: {path}"
+            ) from exc
+        root = Path(repository_root).resolve()
+        try:
+            relative_path = path.resolve().relative_to(root).as_posix()
+        except (OSError, ValueError) as path_error:
+            raise Run003StudyAuthorizationError(
+                f"cannot read {label}: {path}"
+            ) from path_error
+        try:
+            result = subprocess.run(
+                ["git", "show", f"HEAD:{relative_path}"],
+                cwd=root,
+                capture_output=True,
+                check=False,
+            )
+        except OSError as git_error:
+            raise Run003StudyAuthorizationError(
+                f"cannot read committed {label}: {relative_path}"
+            ) from git_error
+        if result.returncode != 0:
+            raise Run003StudyAuthorizationError(
+                f"cannot read committed {label}: {relative_path}"
+            ) from exc
+        return result.stdout
+    except OSError as exc:
+        raise Run003StudyAuthorizationError(f"cannot read {label}: {path}") from exc
+
+
+def _read_json(
+    path: Path, label: str, *, repository_root: Path | None = None
+) -> dict:
+    try:
+        content = _read_repository_bytes(
+            path, label, repository_root=repository_root
+        ).decode("utf-8")
+        value = json.loads(content)
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise Run003StudyAuthorizationError(f"cannot read {label}: {path}") from exc
     if not isinstance(value, dict):
         raise Run003StudyAuthorizationError(f"{label} must be a JSON object")
@@ -177,7 +222,7 @@ def load_run003_study_authorization(
 
     root = Path(repository_root).resolve()
     path = Path(evidence_path) if evidence_path is not None else root / P6_EVIDENCE_PATH
-    evidence = _read_json(path, "P6 spatial evidence")
+    evidence = _read_json(path, "P6 spatial evidence", repository_root=root)
     try:
         identity = load_canonical_solution_identity(root)
     except (CanonicalIdentityError, OSError, ValueError) as exc:
@@ -420,13 +465,21 @@ def load_run003_study_selection(
         ) from exc
 
     run_dir = root / RUN003_SELECTION_DIR
-    manifest = _read_json(run_dir / "artifact-manifest.json", "RUN-003 artifact manifest")
+    manifest = _read_json(
+        run_dir / "artifact-manifest.json",
+        "RUN-003 artifact manifest",
+        repository_root=root,
+    )
     selection_path = run_dir / "selection.json"
     solution_path = (
         run_dir / "finalists" / authorization.solution_id / "solution.json"
     )
-    selection_data = _read_json(selection_path, "RUN-003 persisted selection")
-    solution_data = _read_json(solution_path, "RUN-003 persisted solution")
+    selection_data = _read_json(
+        selection_path, "RUN-003 persisted selection", repository_root=root
+    )
+    solution_data = _read_json(
+        solution_path, "RUN-003 persisted solution", repository_root=root
+    )
 
     _require(
         identity.solution_id == authorization.solution_id,
@@ -467,12 +520,11 @@ def load_run003_study_selection(
     indexed = {entry.get("path"): entry for entry in artifacts if isinstance(entry, dict)}
     for relative, path in expected_artifacts.items():
         record = indexed.get(relative)
-        try:
-            data = path.read_bytes()
-        except OSError as exc:
-            raise Run003StudyAuthorizationError(
-                f"persisted RUN-003 selection artifact is missing: {relative}"
-            ) from exc
+        data = _read_repository_bytes(
+            path,
+            f"persisted RUN-003 selection artifact {relative}",
+            repository_root=root,
+        )
         _require(
             record is not None
             and record.get("bytes") == len(data)

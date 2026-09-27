@@ -3363,6 +3363,14 @@ tasks:
       read back walls, definitive study floor plates, roofs, voids, and covered
       circulation; bind stage evidence to P6 checkpoint and DEC-010. Required
       checkpoint and save/close/reopen/readback before stage PASS.
+    - >-
+      Pre-write follow-up now limits the runtime grant and planner to R05,
+      rejects direct R06/R13 preflight and multi-stage plans, and reads committed
+      selection artifacts only after a contained-path PermissionError. Final
+      independent Luna 6 xhigh review found no P1/P2 findings; the six R05
+      modules passed 77/77, the expanded state/task validation passed 101/101,
+      and dry-run plans only R05. No live R05 write has occurred; task remains
+      PENDING.
   P7-T02:
     id: P7-T02
     phase: P7

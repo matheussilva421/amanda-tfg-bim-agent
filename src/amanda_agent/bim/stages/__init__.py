@@ -503,7 +503,7 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
             if authorized
             else _fail(
                 "run003_study_authorization",
-                "a matching P6 grant for RUN-003 R05-R13 STUDY is required; canonical BIM eligibility remains false",
+                "the current P7-T01 grant permits only RUN-003 R05 STUDY; later stages require their own task gate and canonical BIM eligibility remains false",
             )
         )
 

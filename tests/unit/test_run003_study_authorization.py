@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import importlib
 import json
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -28,7 +29,7 @@ def _api():
         pytest.fail(f"RUN-003 post-P6 authorization gate is missing: {exc}")
 
 
-def test_current_p6_grant_is_source_bound_and_limited_to_r05_through_r13():
+def test_current_p6_grant_is_source_bound_and_stage_scoped_to_r05():
     api = _api()
 
     grant = api.load_run003_study_authorization(ROOT)
@@ -66,7 +67,8 @@ def test_current_p6_grant_is_source_bound_and_limited_to_r05_through_r13():
     assert grant.permits_target_path(ROOT / grant.target_path) is True
     assert grant.permits_target_path(ROOT / "revit/production/archive/linear-r12-superseded.rvt") is False
     assert grant.permits_stage("R05") is True
-    assert grant.permits_stage("R13") is True
+    assert grant.permits_stage("R06") is False
+    assert grant.permits_stage("R13") is False
     assert grant.permits_stage("R04") is False
     assert grant.permits_stage("R14") is False
     assert grant.wall_elevations_m("ADMIN_ACOLHIMENTO", (1, 2)) == (
@@ -86,6 +88,98 @@ def test_resume_loads_the_exact_p6_bound_selection_artifacts():
     assert selection.solution.approval_hash == grant.approval_hash
     assert selection.approval_hash == grant.approval_hash
     assert selection.layout_hash == grant.layout_hash
+
+
+def test_resume_reads_committed_artifacts_when_worktree_access_is_denied(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    api = _api()
+    grant = api.load_run003_study_authorization(ROOT)
+    run_dir = ROOT / api.RUN003_SELECTION_DIR
+    paths = {
+        "artifact-manifest.json": run_dir / "artifact-manifest.json",
+        "selection.json": run_dir / "selection.json",
+        f"finalists/{SOLUTION_ID}/solution.json": (
+            run_dir / "finalists" / SOLUTION_ID / "solution.json"
+        ),
+    }
+    blobs = {}
+    for path in paths.values():
+        relative = path.resolve().relative_to(ROOT.resolve()).as_posix()
+        blobs[relative] = subprocess.run(
+            ["git", "show", f"HEAD:{relative}"],
+            cwd=ROOT,
+            capture_output=True,
+            check=True,
+        ).stdout
+    protected_paths = {path.resolve() for path in paths.values()}
+    original_read_text = Path.read_text
+    original_read_bytes = Path.read_bytes
+
+    def denied_read_text(path, *args, **kwargs):
+        if path.resolve() in protected_paths:
+            raise PermissionError("simulated restricted worktree artifact")
+        return original_read_text(path, *args, **kwargs)
+
+    def denied_read_bytes(path, *args, **kwargs):
+        if path.resolve() in protected_paths:
+            raise PermissionError("simulated restricted worktree artifact")
+        return original_read_bytes(path, *args, **kwargs)
+
+    shown_paths = []
+
+    def git_show(args, *, cwd, capture_output, check):
+        assert args[:2] == ["git", "show"]
+        assert cwd == ROOT
+        assert capture_output is True
+        assert check is False
+        relative = args[2].removeprefix("HEAD:")
+        shown_paths.append(relative)
+        return type("GitResult", (), {"returncode": 0, "stdout": blobs[relative]})()
+
+    monkeypatch.setattr(Path, "read_text", denied_read_text)
+    monkeypatch.setattr(Path, "read_bytes", denied_read_bytes)
+    monkeypatch.setattr(api, "subprocess", type("Subprocess", (), {"run": staticmethod(git_show)})(), raising=False)
+
+    selection = api.load_run003_study_selection(ROOT, grant)
+
+    assert selection.solution.solution_id == grant.solution_id
+    relative_paths = {
+        key: path.resolve().relative_to(ROOT.resolve()).as_posix()
+        for key, path in paths.items()
+    }
+    assert shown_paths.count(relative_paths["artifact-manifest.json"]) == 1
+    assert shown_paths.count(relative_paths["selection.json"]) == 2
+    assert shown_paths.count(relative_paths[f"finalists/{SOLUTION_ID}/solution.json"]) == 2
+
+
+def test_resume_does_not_fallback_to_head_for_a_missing_artifact(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    api = _api()
+    grant = api.load_run003_study_authorization(ROOT)
+    manifest = (ROOT / api.RUN003_SELECTION_DIR / "artifact-manifest.json").resolve()
+    original_read_bytes = Path.read_bytes
+
+    def missing_manifest(path, *args, **kwargs):
+        if path.resolve() == manifest:
+            raise FileNotFoundError("manifest is missing")
+        return original_read_bytes(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "read_bytes", missing_manifest)
+    monkeypatch.setattr(
+        api,
+        "subprocess",
+        type(
+            "Subprocess",
+            (),
+            {"run": staticmethod(lambda *_args, **_kwargs: pytest.fail("missing file must not fall back"))},
+        )(),
+        raising=False,
+    )
+
+    with pytest.raises(api.Run003StudyAuthorizationError, match="cannot read RUN-003 artifact manifest"):
+        api.load_run003_study_selection(ROOT, grant)
 
 
 @pytest.mark.parametrize(

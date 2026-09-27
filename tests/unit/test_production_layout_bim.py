@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 from shapely.geometry import LineString, Polygon
@@ -1145,3 +1146,40 @@ def test_run003_builder_begins_at_r05_and_requires_a_matching_p6_grant(
         build_layout_stage_plans(
             **{**arguments, "start_stage": BimStage.R04}
         )
+    with pytest.raises(ProductionBimError, match="R05 only"):
+        build_layout_stage_plans(
+            **{**arguments, "max_stage": BimStage.R13}
+        )
+
+    broad_authorization = SimpleNamespace(
+        permits_target=lambda candidate: candidate == solution.solution_id,
+        permits_stage=lambda _stage: True,
+        identity_bim_eligible=False,
+        identity_revit_write_authorized=False,
+    )
+    with pytest.raises(ProductionBimError, match="one stage per invocation"):
+        build_layout_stage_plans(
+            **{
+                **arguments,
+                "max_stage": BimStage.R13,
+                "run003_study_authorization": broad_authorization,
+            }
+        )
+
+    r06_request = _request(
+        BimStage.R06,
+        registry=registry,
+        revit_build=BUILD,
+        tool_schema_hash=SCHEMA,
+        generation_run=solution.run_id,
+        mode="NORMALIZED_STUDY_POST_P6",
+        solution=solution,
+        expected_approval_hash=solution.approval_hash,
+        run003_study_authorization=authorization,
+    )
+    assert (
+        run_preflight(r06_request)
+        .get("run003_study_authorization")
+        .status.value
+        == "FAIL"
+    )

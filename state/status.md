@@ -108,10 +108,17 @@ deletions under `revit/lab/exports/p06t14/GOLDEN/RC01/`; they were not staged.
 The P6 normalized-study acceptance does not create internal rooms or verify
 their areas; R06 owns internal layout and R08 owns Revit Room/area readback. The
 bounded P6/DEC-010 RUN-003 authorization, P6-derived wall heights, and R05-only
-dispatch are implemented locally; the focused suite passes 79/79 and the R05
-dry-run produces only R05. Persistence compares typed pre-save and post-reopen
-bounds as well as identity, and every attempt retains its own journal. Actual
-R05 writes remain pending. A typed close rehearsal confirmed
+dispatch are implemented; the focused suite passes 81/81 and the R05 dry-run
+produces only R05. Persistence compares typed pre-save and post-reopen bounds
+as well as identity, and every attempt retains its own journal. A local follow-up
+lets the host-profile loader read ACL-blocked selection inputs from committed
+Git blobs after a PermissionError without restoring files; missing inputs still
+fail closed. The same follow-up narrows the stage grant and planner to exactly
+R05 per task and rejects direct R06 preflight. Final independent Luna 6 xhigh
+review found no P1/P2 findings; the six R05 modules passed 77/77 and the
+expanded combined R05 plus task-state command passed 101/101. This pre-write
+follow-up is ready for commit; P7-T01 remains pending.
+Actual R05 writes remain pending. A typed close rehearsal confirmed
 `is_modified=false` and `would_discard_unsaved=false`; it made no session
 change. The stage runner requires save, close-with-save, post-close checkpoint,
 exact cold reopen, and complete typed geometry readback.

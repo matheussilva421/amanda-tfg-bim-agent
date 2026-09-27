@@ -1714,10 +1714,16 @@ def build_layout_stage_plans(
             )
         if not run003_study_authorization.permits_stage(max_stage):
             raise ProductionBimError(
-                "RUN-003 P6 continuation is limited to R05 through R13"
+                "RUN-003 P7-T01 authorization permits R05 only"
             )
-        if stage_at_or_before(max_stage, start_stage) is False:
-            raise ProductionBimError("RUN-003 P6 continuation max_stage cannot precede R05")
+        if not stage_at_or_before(start_stage, max_stage):
+            raise ProductionBimError(
+                "RUN-003 P7-T01 max_stage cannot precede its start stage"
+            )
+        if max_stage is not start_stage:
+            raise ProductionBimError(
+                "RUN-003 study planning requires one stage per invocation"
+            )
     if mode in {
         ExecutionMode.DETAILED_BIM,
         ExecutionMode.PLANNING_ONLY,
