@@ -231,7 +231,13 @@ def _merge_collinear_edges(
 def _polygon_geometry(polygon: Polygon) -> dict[str, Any]:
     return {
         "type": "Polygon",
-        "coordinates": [[[float(x), float(y)] for x, y in polygon.exterior.coords]],
+        "coordinates": [
+            [[float(x), float(y)] for x, y in polygon.exterior.coords],
+            *[
+                [[float(x), float(y)] for x, y in ring.coords]
+                for ring in polygon.interiors
+            ],
+        ],
     }
 
 

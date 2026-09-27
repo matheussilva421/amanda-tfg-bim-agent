@@ -103,9 +103,12 @@ P6 PASS commit `13a2581aa13b2a580fc20fa9d5b27e3009569edd` was pushed from `main`
 pre-existing RC01 deletions and exclude them from staging.
 
 The P6 normalized-study acceptance does not create internal rooms or verify
-their areas; R06 owns internal layout and R08 owns Revit Room/area readback. R05 code execution remains technically
-blocked until a bounded P6/DEC-010 RUN-003 authorization, source-backed wall
-heights, and R05-start dispatch are implemented and tested. One temporary view
-capture reported `view_restored:false`; a no-save close and Python API preflight
-were rejected by automatic review. Do not bypass; resolve via an allowed typed
-route before saving further model changes.
+their areas; R06 owns internal layout and R08 owns Revit Room/area readback. The
+bounded P6/DEC-010 RUN-003 authorization, P6-derived wall heights, and R05-only
+dispatch are implemented locally; the focused suite passes 79/79 and the R05
+dry-run produces only R05. Persistence compares typed pre-save and post-reopen
+bounds as well as identity, and every attempt retains its own journal. Actual
+R05 writes remain pending. A typed close rehearsal confirmed
+`is_modified=false` and `would_discard_unsaved=false`; it made no session
+change. The stage runner requires save, close-with-save, post-close checkpoint,
+exact cold reopen, and complete typed geometry readback.

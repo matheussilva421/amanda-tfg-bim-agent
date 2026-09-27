@@ -15,7 +15,7 @@ import pytest
 from shapely.geometry import LineString, Polygon
 
 from amanda_agent.bim.models import BimStage
-from amanda_agent.bim.stages import ExecutionMode, StagePreflightError
+from amanda_agent.bim.stages import ExecutionMode, StagePreflightError, run_preflight
 from amanda_agent.bim.stages.accessibility import (
     AccessibilityInput,
     AccessibleRoute,
@@ -23,6 +23,10 @@ from amanda_agent.bim.stages.accessibility import (
 )
 from amanda_agent.bim.stages.shell import execute_shell_stage
 from amanda_agent.design.architectural_layout import build_courtyard_layout
+from amanda_agent.design.canonical_pavilion_layout import (
+    build_canonical_pavilion_layout,
+)
+from amanda_agent.design.canonical_reference import CanonicalReferenceProfile
 from amanda_agent.design.models import (
     DesignStatus,
 )
@@ -33,6 +37,9 @@ from amanda_agent.models.capability import (
     ProviderCapability,
 )
 from amanda_agent.production import layout_bim
+from amanda_agent.production.canonical_identity import (
+    load_canonical_solution_identity,
+)
 from amanda_agent.production.layout_bim import (
     ProductionBimError,
     _plan_r03,
@@ -47,6 +54,9 @@ from amanda_agent.production.layout_bim import (
 from amanda_agent.production.selection import (
     build_canonical_selection,
     build_legacy_selection,
+)
+from amanda_agent.production.run003_study import (
+    load_run003_study_authorization,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -532,15 +542,10 @@ def test_canonical_shell_plan_has_separate_admin_service_and_residential_footpri
         if operation.semantic_capability == "revit.create_floor"
     }
 
-    assert "FLOOR-ADMIN_ACOLHIMENTO-L1" in floor_ids
-    assert "FLOOR-ADMIN_ACOLHIMENTO-L2" in floor_ids
-    assert "FLOOR-SERVICE_CAPACITATION-L1" in floor_ids
-    assert {
-        "FLOOR-RES_PAV_A-L1",
-        "FLOOR-RES_PAV_B-L1",
-        "FLOOR-RES_PAV_C-L1",
-        "FLOOR-RES_PAV_D_COMMUNAL-L1",
-    } <= floor_ids
+    for block in canonical_layout.blocks:
+        for level in block.floor_footprints:
+            prefix = f"FLOOR-{block.component_id}-L{level}"
+            assert any(logical_id.startswith(prefix) for logical_id in floor_ids)
 
 
 def test_canonical_room_operations_keep_admin_level_two_and_residential_ground_level(
@@ -594,13 +599,19 @@ def test_canonical_shell_plan_does_not_create_a_linear_gallery(
         for logical_id in operation_ids
     )
     assert "FLOOR-001" not in floor_ids
-    assert len(floor_ids) == 8
-    assert {
+    expected_floor_parts = sum(
+        len(getattr(geometry, "geoms", (geometry,)))
+        for block in canonical_layout.blocks
+        for geometry in block.floor_footprints.values()
+    )
+    assert len(floor_ids) == expected_floor_parts
+    assert not {
         "SLAB-COVERED-RES_PAV_A-TO-PROTECTED_PATIO",
         "SLAB-COVERED-RES_PAV_B-TO-PROTECTED_PATIO",
         "SLAB-COVERED-RES_PAV_C-TO-PROTECTED_PATIO",
         "SLAB-COVERED-RES_PAV_D_COMMUNAL-TO-PROTECTED_PATIO",
-    } <= operation_ids
+    } & operation_ids
+    assert plan.area_reconciliation["covered_connector_count"] == 4.0
     assert not any(
         operation.semantic_capability == "revit.create_roof"
         for operation in plan.operations
@@ -966,3 +977,171 @@ def test_canonical_shell_executor_refuses_before_geometric_acceptance(
 
     with pytest.raises(StagePreflightError, match="canonical geometric acceptance"):
         execute_shell_stage(plan, invoker=UnexpectedInvoker())
+
+
+def test_p6_authorized_r05_shell_uses_readback_heights_and_preserves_existing_elements(
+    registry, canonical_program
+):
+    profile = CanonicalReferenceProfile.load(ROOT)
+    layout = build_canonical_pavilion_layout(canonical_program, profile)
+    identity = load_canonical_solution_identity(ROOT)
+    authorization = load_run003_study_authorization(ROOT)
+    selection = build_canonical_selection(
+        layout,
+        profile,
+        generation_run="AMANDA-RUN-003-PAVILION-CANONICAL",
+        timestamp="2026-09-26T00:00:00Z",
+        solution_identity=identity,
+    ).solution
+    request = _request(
+        BimStage.R05,
+        registry=registry,
+        revit_build=BUILD,
+        tool_schema_hash=SCHEMA,
+        generation_run=selection.run_id,
+        mode="NORMALIZED_STUDY_POST_P6",
+        solution=selection,
+        expected_approval_hash=selection.approval_hash,
+        run003_study_authorization=authorization,
+    )
+
+    plan = layout_bim.plan_canonical_shell_stage(
+        request, layout, authorization=authorization
+    )
+
+    assert selection.solution_id == authorization.solution_id
+    assert selection.bim_eligible is False
+    assert plan.preflight.get("canonical_geometric_acceptance").status.value == "PASS"
+    assert all(
+        "CANONICAL_GEOMETRIC_ACCEPTANCE" not in operation.blocked_by
+        for operation in plan.operations
+    )
+
+    floors = [
+        operation
+        for operation in plan.operations
+        if operation.semantic_capability == "revit.create_floor"
+    ]
+    slabs = [
+        operation
+        for operation in plan.operations
+        if operation.semantic_capability == "revit.create_slab"
+    ]
+    roofs = [
+        operation
+        for operation in plan.operations
+        if operation.semantic_capability == "revit.create_roof"
+    ]
+    walls = [
+        operation
+        for operation in plan.operations
+        if operation.semantic_capability == "revit.create_wall"
+    ]
+    assert {
+        operation.payload["properties"]["component_id"] for operation in floors
+    } == {
+        "CHILD_SECTOR",
+        "RES_PAV_A",
+        "RES_PAV_B",
+        "RES_PAV_C",
+        "RES_PAV_D_COMMUNAL",
+        "SERVICE_CAPACITATION",
+    }
+    assert slabs == []  # R04 already owns all four covered-link slabs.
+    assert {
+        operation.payload["properties"]["component_id"] for operation in roofs
+    } == {
+        "ADMIN_ACOLHIMENTO",
+        "CHILD_SECTOR",
+        "RES_PAV_A",
+        "RES_PAV_B",
+        "RES_PAV_C",
+        "RES_PAV_D_COMMUNAL",
+        "SERVICE_CAPACITATION",
+    }
+    assert walls
+    for operation in walls:
+        properties = operation.payload["properties"]
+        component_id = properties["component_id"]
+        level = properties["level"]
+        component_levels = tuple(
+            sorted(layout.block(component_id).floor_footprints)
+        )
+        expected = {
+            value[0]: value[2] - value[1]
+            for value in authorization.wall_elevations_m(
+                component_id, component_levels
+            )
+        }
+        assert properties["height"] == pytest.approx(expected[level - 1])
+
+    service_walls = [
+        operation
+        for operation in walls
+        if operation.payload["properties"]["component_id"]
+        == "SERVICE_CAPACITATION"
+    ]
+    exterior_edges = len(
+        list(layout.block("SERVICE_CAPACITATION").footprint.exterior.coords)
+    ) - 1
+    assert len(service_walls) > exterior_edges
+
+
+def test_run003_builder_begins_at_r05_and_requires_a_matching_p6_grant(
+    registry, canonical_program
+):
+    profile = CanonicalReferenceProfile.load(ROOT)
+    layout = build_canonical_pavilion_layout(canonical_program, profile)
+    identity = load_canonical_solution_identity(ROOT)
+    authorization = load_run003_study_authorization(ROOT)
+    solution = build_canonical_selection(
+        layout,
+        profile,
+        generation_run="AMANDA-RUN-003-PAVILION-CANONICAL",
+        timestamp="2026-09-26T00:00:00Z",
+        solution_identity=identity,
+    ).solution
+    arguments = {
+        "program": canonical_program,
+        "layout": layout,
+        "registry": registry,
+        "revit_build": BUILD,
+        "tool_schema_hash": SCHEMA,
+        "generation_run": solution.run_id,
+        "solution_id": solution.solution_id,
+        "approval_hash": solution.approval_hash,
+        "solution": solution,
+        "mode": "NORMALIZED_STUDY_POST_P6",
+        "start_stage": BimStage.R05,
+        "max_stage": BimStage.R05,
+        "run003_study_authorization": authorization,
+    }
+
+    plans = build_layout_stage_plans(**arguments)
+
+    assert [plan.stage for plan in plans] == [BimStage.R05]
+    assert solution.bim_eligible is False
+    unauthorized_request = _request(
+        BimStage.R05,
+        registry=registry,
+        revit_build=BUILD,
+        tool_schema_hash=SCHEMA,
+        generation_run=solution.run_id,
+        mode="NORMALIZED_STUDY_POST_P6",
+        solution=solution,
+        expected_approval_hash=solution.approval_hash,
+    )
+    assert (
+        run_preflight(unauthorized_request)
+        .get("run003_study_authorization")
+        .status.value
+        == "FAIL"
+    )
+    with pytest.raises(ProductionBimError, match="requires the matching verified P6"):
+        build_layout_stage_plans(
+            **{**arguments, "run003_study_authorization": None}
+        )
+    with pytest.raises(ProductionBimError, match="must start at R05"):
+        build_layout_stage_plans(
+            **{**arguments, "start_stage": BimStage.R04}
+        )

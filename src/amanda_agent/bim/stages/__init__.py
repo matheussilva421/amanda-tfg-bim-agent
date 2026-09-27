@@ -44,6 +44,7 @@ from amanda_agent.site.models import (
     SourceTopographyState,
     TopographyRepresentation,
 )
+from amanda_agent.production.run003_study import Run003StudyAuthorization
 
 from ..checkpoints import CheckpointManager, CheckpointManifest
 from ..models import BimStage
@@ -68,6 +69,7 @@ class ExecutionMode(StrEnum):
     SYNTHETIC_LAB = "SYNTHETIC_LAB"
     PLANNING_ONLY = "PLANNING_ONLY"
     CANONICAL_PREACCEPTANCE = "CANONICAL_PREACCEPTANCE"
+    NORMALIZED_STUDY_POST_P6 = "NORMALIZED_STUDY_POST_P6"
     DETAILED_BIM = "DETAILED_BIM"
 
 
@@ -162,6 +164,7 @@ class PreflightRequest(BaseModel):
     generation_run: str = Field(default="RUN-0001", min_length=1)
     last_checkpoint_verified: bool | None = None
     registry_warnings: tuple[str, ...] = ()
+    run003_study_authorization: Run003StudyAuthorization | None = None
 
     @classmethod
     def from_production_state(
@@ -480,6 +483,30 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
             )
         )
 
+    if request.mode is ExecutionMode.NORMALIZED_STUDY_POST_P6:
+        authorization = request.run003_study_authorization
+        authorized = (
+            authorization is not None
+            and authorization.permits_stage(request.stage)
+            and request.scenario is DecisionScenario.STUDY
+            and solution is not None
+            and authorization.permits_target(solution.solution_id)
+            and solution.bim_eligible is False
+            and authorization.identity_bim_eligible is False
+            and authorization.identity_revit_write_authorized is False
+        )
+        checks.append(
+            _pass(
+                "run003_study_authorization",
+                "verified P6 grant permits this RUN-003 STUDY stage",
+            )
+            if authorized
+            else _fail(
+                "run003_study_authorization",
+                "a matching P6 grant for RUN-003 R05-R13 STUDY is required; canonical BIM eligibility remains false",
+            )
+        )
+
     # 2. A mode must match what it is allowed to write for.
     if request.mode is ExecutionMode.SYNTHETIC_LAB and not request.fixture:
         checks.append(
@@ -491,6 +518,7 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
     elif request.mode in {
         ExecutionMode.DETAILED_BIM,
         ExecutionMode.CANONICAL_PREACCEPTANCE,
+        ExecutionMode.NORMALIZED_STUDY_POST_P6,
     } and request.fixture:
         checks.append(_fail("fixture_scope", "a fixture target cannot authorize production writes"))
     else:
@@ -551,6 +579,33 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
                     f"unaccepted canonical selection under {solution.selection_authority.value}",
                 )
             )
+    elif request.mode is ExecutionMode.NORMALIZED_STUDY_POST_P6:
+        if solution is None:
+            checks.append(_fail("selection_record", "post-P6 STUDY continuation requires a source-bound selection"))
+        elif solution.status not in (
+            DesignStatus.CANDIDATE,
+            DesignStatus.AMANDA_REVIEW_PENDING,
+        ):
+            checks.append(
+                _fail(
+                    "selection_record",
+                    f"status {solution.status.value} is not eligible for delegated STUDY continuation",
+                )
+            )
+        elif solution.bim_eligible:
+            checks.append(
+                _fail(
+                    "selection_record",
+                    "RUN-003 continuation must preserve BIM-ineligible identity status",
+                )
+            )
+        else:
+            checks.append(
+                _pass(
+                    "selection_record",
+                    "RUN-003 selection remains BIM-ineligible under the bounded P6 STUDY grant",
+                )
+            )
     elif request.mode is not ExecutionMode.DETAILED_BIM:
         checks.append(
             _pass("selection_record", "mode does not require a design selection record")
@@ -597,6 +652,7 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
         ExecutionMode.PLANNING_ONLY,
         ExecutionMode.DETAILED_BIM,
         ExecutionMode.CANONICAL_PREACCEPTANCE,
+        ExecutionMode.NORMALIZED_STUDY_POST_P6,
     }:
         checks.append(
             _pass("approval_hash", "mode does not require a content-bound approval hash")
@@ -649,6 +705,7 @@ def run_preflight(request: PreflightRequest) -> PreflightReport:
         ExecutionMode.PLANNING_ONLY,
         ExecutionMode.DETAILED_BIM,
         ExecutionMode.CANONICAL_PREACCEPTANCE,
+        ExecutionMode.NORMALIZED_STUDY_POST_P6,
     } and solution is not None:
         pinned = {
             "requirements_version": solution.requirements_version,

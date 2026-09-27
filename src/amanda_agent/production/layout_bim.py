@@ -471,6 +471,7 @@ def _request(
     solution=None,
     site=None,
     expected_approval_hash=None,
+    run003_study_authorization=None,
 ):
     merged = []
     for operation in (*_REQUIRED_OPERATIONS.get(stage, ()), *required):
@@ -509,6 +510,7 @@ def _request(
         site=site,
         expected_approval_hash=expected_approval_hash,
         generation_run=generation_run,
+        run003_study_authorization=run003_study_authorization,
     )
 
 
@@ -817,13 +819,32 @@ def _plan_r04(request, layout):
     return massing_stage.plan_massing_stage(request, blocks=blocks)
 
 
-def plan_canonical_shell_stage(request, layout: CanonicalPavilionLayout):
-    """Build a non-executable study plan with one shell footprint per block/level.
+def _polygon_parts(geometry: Any) -> list[Polygon]:
+    """Return every polygonal component without flattening holes or islands."""
 
-    The normalized layout provides footprints and logical floor numbers, but
-    does not provide wall heights or the upper-floor datum. Every operation is
-    attached to the geometric-acceptance gate, enforced by the stage executor
-    and shared dispatcher before any provider invocation.
+    if isinstance(geometry, Polygon):
+        return [geometry]
+    parts = getattr(geometry, "geoms", None)
+    if parts is not None:
+        polygons = [part for part in parts if isinstance(part, Polygon)]
+        if polygons and len(polygons) == len(parts):
+            return polygons
+    raise ProductionBimError(
+        f"canonical shell geometry must be Polygon or MultiPolygon, got {type(geometry).__name__}"
+    )
+
+
+def plan_canonical_shell_stage(
+    request,
+    layout: CanonicalPavilionLayout,
+    *,
+    authorization=None,
+):
+    """Compile canonical R05 geometry, optionally under the verified P6 grant.
+
+    Without the narrow RUN-003 P6 grant this remains a blocked planning result.
+    With it, heights and level references come from the post-reopen typed
+    readback; R04 admin floors and covered-link slabs/roofs are retained.
     """
 
     if request.stage is not BimStage.R05:
@@ -831,28 +852,88 @@ def plan_canonical_shell_stage(request, layout: CanonicalPavilionLayout):
     if not isinstance(layout, CanonicalPavilionLayout):
         raise ProductionBimError("canonical shell planning requires pavilion geometry")
 
+    authorization = authorization or request.run003_study_authorization
+    continuation = request.mode is ExecutionMode.NORMALIZED_STUDY_POST_P6
+    if continuation and (
+        authorization is None
+        or not authorization.permits_stage(request.stage)
+        or request.solution is None
+        or not authorization.permits_target(request.solution.solution_id)
+        or request.solution.bim_eligible
+        or authorization.identity_bim_eligible
+        or authorization.identity_revit_write_authorized
+    ):
+        raise ProductionBimError(
+            "RUN-003 R05 requires the matching verified P6 STUDY continuation grant"
+        )
+
     elements = []
     operations = []
-    warnings = [
+    warnings = [] if continuation else [
         "CANONICAL_GEOMETRIC_ACCEPTANCE required before R05 detailing or writes",
         "wall heights and LEVEL-02 elevation remain unresolved; no vertical dimensions were inferred",
     ]
+    if continuation:
+        warnings.append(
+            "R04 admin floors and covered-link floors/roofs are retained from the verified P6 readback"
+        )
     first_plan = None
     floor_projection = 0.0
     for block in layout.blocks:
-        for level in sorted(block.floor_footprints):
-            footprint = block.footprint
+        levels = tuple(sorted(block.floor_footprints))
+        wall_elevations = (
+            {
+                level_index + 1: (base, top)
+                for level_index, base, top in authorization.wall_elevations_m(
+                    block.component_id, levels
+                )
+            }
+            if continuation
+            else {}
+        )
+        for level in levels:
+            floor_polygons = _polygon_parts(block.floor_footprints[level])
+            envelope_polygons = _polygon_parts(block.footprint)
             envelope_id = f"ENVELOPE-{block.component_id}-L{level}"
-            connector_loops = [
-                connector
-                for connector in layout.covered_connectors
-                if connector.from_component == block.component_id and level == 1
+            courtyard_rooms = [
+                {
+                    "logical_id": f"{envelope_id}-P{part_index:02d}-COURTYARD-{ring_index:02d}",
+                    "polygon": Polygon(ring),
+                }
+                for part_index, polygon in enumerate(envelope_polygons, start=1)
+                for ring_index, ring in enumerate(polygon.interiors, start=1)
             ]
+            envelope_rooms = [
+                {
+                    "logical_id": f"{envelope_id}-P{index:02d}",
+                    "polygon": polygon,
+                }
+                for index, polygon in enumerate(envelope_polygons, start=1)
+            ]
+            is_existing_admin_floor = continuation and block.component_id == "ADMIN_ACOLHIMENTO"
+            creates_roof = continuation and level == levels[-1]
+            if creates_roof and len(envelope_polygons) != 1:
+                raise ProductionBimError(
+                    f"R05 roof for {block.component_id} requires one connected envelope"
+                )
+            base_elevation, top_elevation = (
+                wall_elevations[level] if continuation else (0.0, 0.0)
+            )
+            roof = (
+                {
+                    "geometry": envelope_polygons[0],
+                    "type": "verified-target-default",
+                    "offset": top_elevation - base_elevation,
+                }
+                if creates_roof
+                else None
+            )
             subplan = shell_stage.plan_shell_stage(
                 request,
-                rooms=[{"logical_id": envelope_id, "polygon": footprint}],
-                floor_loops=[footprint],
-                slab_loops=[connector.footprint for connector in connector_loops],
+                rooms=[*envelope_rooms, *courtyard_rooms],
+                floor_loops=[] if is_existing_admin_floor else floor_polygons,
+                slab_loops=[],
+                roof=roof,
                 wall_types={
                     "external": str(EXTERNAL_WALL_TYPE_ID),
                     "internal": str(INTERNAL_WALL_TYPE_ID),
@@ -864,15 +945,17 @@ def plan_canonical_shell_stage(request, layout: CanonicalPavilionLayout):
             )
             if first_plan is None:
                 first_plan = subplan
-            floor_projection += float(footprint.area)
+            if not is_existing_admin_floor:
+                floor_projection += sum(float(polygon.area) for polygon in floor_polygons)
 
             updated_by_old_id = {}
             for element in subplan.desired_state.elements:
                 if element.category == "FLOOR":
-                    logical_id = f"FLOOR-{block.component_id}-L{level}"
-                elif element.category == "SLAB":
-                    connector_index = int(element.properties["loop_index"]) - 1
-                    logical_id = f"SLAB-{connector_loops[connector_index].connector_id}"
+                    loop_index = int(element.properties["loop_index"])
+                    suffix = f"-P{loop_index:02d}" if len(floor_polygons) > 1 else ""
+                    logical_id = f"FLOOR-{block.component_id}-L{level}{suffix}"
+                elif element.category == "ROOF":
+                    logical_id = f"ROOF-{block.component_id}-L{level}"
                 else:
                     logical_id = f"{element.logical_id}-{block.component_id}-L{level}"
                 properties = dict(element.properties)
@@ -884,9 +967,16 @@ def plan_canonical_shell_stage(request, layout: CanonicalPavilionLayout):
                     }
                 )
                 if element.category == "WALL":
-                    properties["height_status"] = (
-                        "UNRESOLVED_CANONICAL_GEOMETRIC_ACCEPTANCE"
-                    )
+                    if continuation:
+                        properties["height"] = top_elevation - base_elevation
+                        properties["base_offset"] = 0.0
+                        properties["height_basis"] = "P6_POST_REOPEN_TYPED_MASS_VERTICAL_BOUNDS"
+                    else:
+                        properties["height_status"] = (
+                            "UNRESOLVED_CANONICAL_GEOMETRIC_ACCEPTANCE"
+                        )
+                if element.category == "ROOF" and continuation:
+                    properties["offset"] = top_elevation - base_elevation
                 updated = element.model_copy(
                     update={"logical_id": logical_id, "properties": properties}
                 )
@@ -896,21 +986,49 @@ def plan_canonical_shell_stage(request, layout: CanonicalPavilionLayout):
             for operation in subplan.operations:
                 element = updated_by_old_id[operation.logical_id]
                 payload = element.model_dump(mode="json")
+                geometry = payload.get("geometry")
+                coordinates = (
+                    geometry.get("coordinates")
+                    if isinstance(geometry, Mapping)
+                    else None
+                )
+                if element.category == "WALL":
+                    if (
+                        not isinstance(coordinates, list)
+                        or len(coordinates) != 2
+                        or any(not isinstance(point, list) or len(point) != 2 for point in coordinates)
+                    ):
+                        raise ProductionBimError(
+                            f"R05 wall {element.logical_id} is not one verified line segment"
+                        )
+                    payload["geometry"] = {
+                        "start": coordinates[0],
+                        "end": coordinates[1],
+                    }
+                elif element.category in {"FLOOR", "ROOF"}:
+                    if not isinstance(coordinates, list) or not coordinates:
+                        raise ProductionBimError(
+                            f"R05 {element.category.lower()} {element.logical_id} has no closed profile"
+                        )
+                    payload["geometry"] = {"footprint": coordinates}
                 if operation.semantic_capability in _NEEDS_LEVEL:
-                    payload["level_id"] = f"LEVEL-{level:02d}"
+                    payload["level_id"] = (
+                        authorization.storey_element_ids[level]
+                        if continuation
+                        else f"LEVEL-{level:02d}"
+                    )
                 operations.append(
                     operation.model_copy(
                         update={
                             "logical_id": element.logical_id,
                             "payload": payload,
-                            "blocked_by": ["CANONICAL_GEOMETRIC_ACCEPTANCE"],
+                            "blocked_by": (
+                                []
+                                if continuation
+                                else ["CANONICAL_GEOMETRIC_ACCEPTANCE"]
+                            ),
                         }
                     )
-                )
-            if connector_loops:
-                warnings.append(
-                    f"covered links from {block.component_id} remain external slab loops "
-                    "without enclosing gallery walls or assumed roof heights"
                 )
 
     if first_plan is None:
@@ -918,9 +1036,11 @@ def plan_canonical_shell_stage(request, layout: CanonicalPavilionLayout):
 
     acceptance_check = StageCheck(
         name="canonical_geometric_acceptance",
-        status=CheckStatus.BLOCKED,
+        status=CheckStatus.PASS if continuation else CheckStatus.BLOCKED,
         detail=(
-            "R05 detailing is blocked until CANONICAL_GEOMETRIC_ACCEPTANCE binds "
+            "P6 verified this RUN-003 geometry against all four current canonical boards"
+            if continuation
+            else "R05 detailing is blocked until CANONICAL_GEOMETRIC_ACCEPTANCE binds "
             "accepted geometry to all four canonical board hashes"
         ),
     )
@@ -929,7 +1049,11 @@ def plan_canonical_shell_stage(request, layout: CanonicalPavilionLayout):
             "checks": [*first_plan.preflight.checks, acceptance_check],
             "notes": [
                 *first_plan.preflight.notes,
-                "each candidate operation is non-executable while canonical geometric acceptance is BLOCKED",
+                (
+                    "R05 is executable only under the source-bound P6 RUN-003 STUDY grant"
+                    if continuation
+                    else "each candidate operation is non-executable while canonical geometric acceptance is BLOCKED"
+                ),
             ],
         }
     )
@@ -1531,7 +1655,9 @@ def build_layout_stage_plans(
     accessibility_input=None,
     template_root=None,
     mode=ExecutionMode.DETAILED_BIM,
+    start_stage=BimStage.R01,
     max_stage=BimStage.R13,
+    run003_study_authorization=None,
 ):
     """Return the ordered stage plans for the adopted layout.
 
@@ -1547,6 +1673,10 @@ def build_layout_stage_plans(
     """
 
     mode = mode if isinstance(mode, ExecutionMode) else ExecutionMode(mode)
+    start_stage = (
+        start_stage if isinstance(start_stage, BimStage) else BimStage[start_stage]
+    )
+    max_stage = max_stage if isinstance(max_stage, BimStage) else BimStage[max_stage]
 
     if mode is ExecutionMode.CONCEPT_ONLY:
         raise ProductionBimError(
@@ -1566,10 +1696,33 @@ def build_layout_stage_plans(
             raise ProductionBimError(
                 "CANONICAL_PREACCEPTANCE is only for a selection awaiting geometric acceptance"
             )
+    if mode is ExecutionMode.NORMALIZED_STUDY_POST_P6:
+        if (
+            run003_study_authorization is None
+            or solution is None
+            or not run003_study_authorization.permits_target(solution.solution_id)
+            or solution.bim_eligible
+            or run003_study_authorization.identity_bim_eligible
+            or run003_study_authorization.identity_revit_write_authorized
+        ):
+            raise ProductionBimError(
+                "NORMALIZED_STUDY_POST_P6 requires the matching verified P6 RUN-003 grant"
+            )
+        if start_stage is not BimStage.R05:
+            raise ProductionBimError(
+                "RUN-003 P6 continuation must start at R05; skipped stage evidence is required to resume later"
+            )
+        if not run003_study_authorization.permits_stage(max_stage):
+            raise ProductionBimError(
+                "RUN-003 P6 continuation is limited to R05 through R13"
+            )
+        if stage_at_or_before(max_stage, start_stage) is False:
+            raise ProductionBimError("RUN-003 P6 continuation max_stage cannot precede R05")
     if mode in {
         ExecutionMode.DETAILED_BIM,
         ExecutionMode.PLANNING_ONLY,
         ExecutionMode.CANONICAL_PREACCEPTANCE,
+        ExecutionMode.NORMALIZED_STUDY_POST_P6,
     }:
         if solution is None:
             raise ProductionBimError(
@@ -1607,6 +1760,7 @@ def build_layout_stage_plans(
             solution=solution,
             site=site,
             expected_approval_hash=(approval_hash if solution is not None else None),
+            run003_study_authorization=run003_study_authorization,
         )
 
     handlers = {
@@ -1630,7 +1784,7 @@ def build_layout_stage_plans(
     }
 
     plans = []
-    for stage in _STAGE_ORDER:
+    for stage in _STAGE_ORDER[_STAGE_ORDER.index(start_stage) :]:
         plan = handlers[stage]()
         if mode is ExecutionMode.PLANNING_ONLY:
             capability_check = plan.preflight.get("capability_registry")

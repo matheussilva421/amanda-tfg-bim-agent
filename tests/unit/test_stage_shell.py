@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pytest
 from shapely.geometry import box
+from shapely.geometry import Polygon
 
 from amanda_agent.bim.models import BimStage, DesiredElement
 from amanda_agent.bim.stages import (
@@ -118,6 +119,36 @@ def test_shell_derives_one_shared_wall_and_reconciles_net_area(tmp_path: Path):
         "SLAB",
         "ROOF",
     }
+
+
+def test_shell_polygon_floor_and_roof_preserve_courtyard_hole_loops(tmp_path: Path):
+    outer = [(0, 0), (12, 0), (12, 10), (0, 10), (0, 0)]
+    courtyard = [(4, 3), (8, 3), (8, 7), (4, 7), (4, 3)]
+    footprint = Polygon(outer, [courtyard])
+
+    plan = _api().plan_shell_stage(
+        _request(tmp_path),
+        [{"logical_id": "service-shell", "polygon": footprint}],
+        floor_loops=[footprint],
+        roof={"geometry": footprint, "elevation_m": 3.2},
+    )
+
+    floor = next(
+        element
+        for element in plan.desired_state.elements
+        if element.category == "FLOOR"
+    )
+    roof = next(
+        element
+        for element in plan.desired_state.elements
+        if element.category == "ROOF"
+    )
+    expected_loops = [
+        [[float(x), float(y)] for x, y in ring]
+        for ring in (outer, courtyard)
+    ]
+    assert floor.geometry["coordinates"] == expected_loops
+    assert roof.geometry["coordinates"] == expected_loops
 
 
 def test_shell_merges_overlapping_and_touching_collinear_runs():
