@@ -99,8 +99,11 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 ## Git verification
 
 P6 PASS commit `13a2581aa13b2a580fc20fa9d5b27e3009569edd` was pushed from `main`;
-`git ls-remote origin refs/heads/main` returned the same SHA. Preserve
-pre-existing RC01 deletions and exclude them from staging.
+`git ls-remote origin refs/heads/main` returned the same SHA. The R05 runner
+and regression-test checkpoint `0848cd199ff4905abe0bcbf1ae7f857511c22c20` is
+also on `main`; its push was verified by `git ls-remote`. It does not mark
+P7-T01 PASS: the actual Revit stage is still pending. Preserve the pre-existing
+deletions under `revit/lab/exports/p06t14/GOLDEN/RC01/`; they were not staged.
 
 The P6 normalized-study acceptance does not create internal rooms or verify
 their areas; R06 owns internal layout and R08 owns Revit Room/area readback. The
