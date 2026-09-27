@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; the user-provided `goal-objective.md` explicitly authorizes R05 only; the latest runner stopped at the zero-other-client guard before model access; no R05 write)
+- Next task: `P7-T01` (R05 architectural shell; explicit authorization ends at R05; local partial-floor reconciliation and focused gates pass, while the live R05 retry remains pending)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -16,7 +16,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `P5`: 1/1 PASS
 - `P6`: 1/1 PASS
 - `P7`: 0/9 PASS
-- Latest P7-T01 runner (2026-09-27): standalone `horizun_health` returned HEALTHY (Horizun 1.3.3; Revit 2027 build 27.2.0.39/PID 38296; exact saved RUN-003 target active; registry 73/73; 80/80 tools; zero other clients). The authorized health-first runner then stopped before target selection, document info, P6 readback, or model access: its MCP client PID 8124 saw standalone-health client PID 1708 at age 29 seconds, violating the 600-second zero-other-client gate. Existing RUN-003 lease retained. No Revit write/save/checkpoint occurred. Retry only after the client window has expired, using the R05-only runner and no standalone provider calls; authorization terminates at R05. P7-T01 remains `PENDING`.
+- Latest P7-T01 runner (2026-09-27): after the shared-client window expired, the health-first R05-only runner passed health, zero-other-client, Revit 2027 PID 38296 selection, exact active RUN-003 target, and retained the existing RUN-003 lease. It reconciled the exact P6 checkpoint rows to the recorded 25-row digest and identified eight journaled floor additions. It closed the target without saving, reopened the exact target, then stopped when post-reopen typed readback still failed the 25-element P6 count gate. No new R05 write/save/checkpoint occurred. Target metadata was 5,152,768 bytes (modified 2026-09-27 09:30:38Z); its hash could not be read while Revit held it. A local follow-up now reconciles those exact eight floors to current-plan identity, XY bounds, Area, and level, then omits only those operations on resume. Typed query does not expose outline vertices, so exact curved-contour equality is not claimed. R05 remains `PENDING`; authorization ends at R05.
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -38,20 +38,18 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-The prior diagnostic runner call around 10:07Z passed health/client/target/lease,
-read the exact P6 checkpoint as Revit 2027 without upgrade, and recorded the
-25-row fingerprint discrepancy below; guarded cleanup closed P6 without
-saving and restored the target. The current 2026-09-27 attempt received a fresh
-HEALTHY response, but the runner's separate client was blocked before target
-selection because PID 1708 was still recent. No model write/save/checkpoint
-occurred in either call.
+The latest health-first runner call was around 11:35:33Z. It passed health,
+client, target, and lease gates; reconciled P6; then preserved the target without
+saving and stopped after the reopened-target query failed the 25-element P6
+count gate. No new R05 write/save/checkpoint occurred. The shared-client window
+has elapsed; no direct Horizun calls have followed.
 
-The previous automatic-review hold was resolved by the user's attached
-`goal-objective.md`, which explicitly authorizes RUN-003 P7-T01/R05 and ends at
-R05. The subsequent runner attempt failed closed on the shared-client quiet
-window described above. No target selection, model read, or Revit write was
-performed by that attempt. P7-T01 remains `PENDING` until the live R05 and
-persistence gates pass.
+The user's explicit authorization covers RUN-003 P7-T01/R05 and ends at R05.
+The local retry path now compares the eight existing floor rows with current
+R05 plan identity, XY bounds, Area, and level, filters only those exact
+operations, and merges their records into stage verification. The typed query
+contract does not expose floor-outline vertices; exact contour equality is not
+claimed. P7-T01 remains `PENDING` until live R05 and persistence gates pass.
 
 The additive record
 `revit/production/evidence/AMANDA-RUN-003-R04/p6-readback-fingerprint-reconciliation.json`
@@ -59,15 +57,17 @@ binds the exact checkpoint SHA, prior diagnostic SHA, both observed query
 fingerprints, and the 25-row identity/geometry digest. The runner will require
 those exact values, current compact/detailed bounds agreement, and geometry
 relations against the P6 spatial evidence. The historical P6 acceptance remains
-unchanged; the fingerprint cause is unresolved. Focused production/state/provider
-suite plus state-consistency and plan-order gates: 227/227. Ruff reports the same 9 pre-existing findings;
-new files and edited import blocks are clean. The prior quiet window expired
-before the current attempt; the current provider window must expire before retry.
-All three reconciliation/state commits are pushed; push output advanced main
-to `170cb4f`, while a follow-up `git ls-remote` could not reach TCP 443. The
-new explicit authorization is recorded in the active handoff; after the
-provider's 600-second client window expires, retry only through the health-first
-R05 runner.
+unchanged; the fingerprint cause is unresolved. Earlier focused
+production/state/provider suite plus state-consistency and plan-order gates:
+227/227. Current scoped gates: production runner 76/76, repository/state
+hygiene 12/12, and `compileall` passed. Ruff reports the same 9 pre-existing
+findings; changed lines add no finding. Local second-pass review found no
+additional acceptance-path issue. The requested Luna 6 xhigh review could not
+spawn because the app agent-thread limit is full; no other subagent was used.
+Next action is the health-first R05-only runner.
+The reconciliation/state commits are pushed through `170cb4f`; a subsequent
+`git ls-remote` could not reach GitHub over TCP 443. The explicit R05
+authorization and current resume route are recorded in the active handoff.
 P7-T01 remains PENDING.
 
 ## Current RUN-003 R04 acceptance status

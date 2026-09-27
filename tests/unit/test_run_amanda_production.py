@@ -1697,6 +1697,8 @@ def _known_partial_model(authorization):
                 "category": "Pisos",
                 "name": record["logical_id"],
                 "bounding_box": {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 0.1]},
+                "level": "Level 1",
+                "parameters": {"Area": 1.0},
             }
         )
     return {
@@ -1722,6 +1724,188 @@ def _known_p6_model(authorization):
         "result_set_fingerprint": "p6-fingerprint",
         "rows": rows,
     }
+
+
+def _known_r05_floor_operations():
+    return [
+        SimpleNamespace(
+            logical_id=record["logical_id"],
+            semantic_capability="revit.create_floor",
+            payload={
+                "geometry": {
+                    "footprint": [
+                        [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [1.0, 1.0, 0.0],
+                         [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]]
+                    ]
+                },
+                "level_id": 311,
+            },
+        )
+        for record in _known_failed_r05_journal()["records"][:8]
+    ]
+
+
+def test_known_r05_partial_rows_match_current_plan_bounds_area_and_level():
+    authorization = SimpleNamespace(
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO", "CHILD_SECTOR", "RES_PAV_A", "RES_PAV_B",
+                "RES_PAV_C", "RES_PAV_D_COMMUNAL", "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+    )
+    payload = _known_partial_model(authorization)
+    records = _known_failed_r05_journal()["records"][:8]
+
+    evidence = production_runner._validate_known_r05_partial_geometry(
+        payload,
+        records,
+        _known_r05_floor_operations(),
+        {311: "Level 1"},
+    )
+
+    assert evidence["verified_partial_floor_ids"] == sorted(
+        production_runner.RUN003_FAILED_R05_FLOOR_IDS.values()
+    )
+    assert evidence["geometry_checks"] == {
+        "bounds_xy": "PASS",
+        "area_m2": "PASS",
+        "level_name": "PASS",
+        "expected_geometry_source": "current_R05_plan",
+        "observed_geometry_scope": "typed_bounds_area_level",
+    }
+
+
+def test_floor_operation_geometry_rejects_an_open_profile():
+    operation = _known_r05_floor_operations()[0]
+    operation.payload["geometry"]["footprint"][0][-1] = [2.0, 0.0, 0.0]
+
+    with pytest.raises(ValueError, match="profile is not closed"):
+        production_runner._floor_operation_geometry(operation)
+
+
+@pytest.mark.parametrize(
+    ("mutation", "expected_error"),
+    [
+        ("bounds", "floor bounds differ"),
+        ("area", "floor area differs"),
+        ("level", "floor level differs"),
+        ("missing_area", "typed Area parameter is missing"),
+    ],
+)
+def test_known_r05_partial_geometry_rejects_unmatched_typed_floor_readback(
+    mutation, expected_error
+):
+    authorization = SimpleNamespace(
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO", "CHILD_SECTOR", "RES_PAV_A", "RES_PAV_B",
+                "RES_PAV_C", "RES_PAV_D_COMMUNAL", "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+    )
+    payload = _known_partial_model(authorization)
+    floor_row = next(row for row in payload["rows"] if row["category"] == "Pisos"
+                     and row["element_id"] in production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
+    if mutation == "bounds":
+        floor_row["bounding_box"]["max"][0] = 1.1
+    elif mutation == "area":
+        floor_row["parameters"]["Area"] = 0.9
+    elif mutation == "level":
+        floor_row["level"] = "Level 2"
+    else:
+        floor_row["parameters"].pop("Area")
+
+    with pytest.raises(ValueError, match=expected_error):
+        production_runner._validate_known_r05_partial_geometry(
+            payload,
+            _known_failed_r05_journal()["records"][:8],
+            _known_r05_floor_operations(),
+            {311: "Level 1"},
+        )
+
+
+def test_r05_resume_skips_only_the_eight_fully_reconciled_floor_operations():
+    floors = _known_r05_floor_operations()
+    operations = [
+        SimpleNamespace(
+            logical_id="WALL-KEEP",
+            semantic_capability="revit.create_wall",
+            payload={},
+        ),
+        *floors,
+        SimpleNamespace(
+            logical_id="ROOF-KEEP",
+            semantic_capability="revit.create_roof",
+            payload={},
+        ),
+    ]
+    verified_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS)
+
+    remaining = production_runner._remaining_r05_operations(operations, verified_ids)
+
+    assert [operation.logical_id for operation in remaining] == [
+        "WALL-KEEP", "ROOF-KEEP"
+    ]
+    with pytest.raises(ValueError, match="exact known eight-floor set"):
+        production_runner._remaining_r05_operations(operations, verified_ids - {next(iter(verified_ids))})
+
+
+def test_reconciled_partial_floor_records_rejoin_the_full_r05_result():
+    floors = _known_r05_floor_operations()
+    wall = SimpleNamespace(
+        logical_id="WALL-CREATED-NOW",
+        semantic_capability="revit.create_wall",
+        preferred_provider="horizun",
+        payload={},
+    )
+    plan = SimpleNamespace(operations=[floors[0], wall, *floors[1:]])
+    current_result = SimpleNamespace(
+        status=production_runner.RunStatus.VERIFIED,
+        records=[
+            SimpleNamespace(
+                logical_id=wall.logical_id,
+                semantic_capability=wall.semantic_capability,
+                provider="horizun",
+                tool="horizun_create_elements",
+                reported_success=True,
+                status=production_runner.RunStatus.VERIFIED,
+                unique_id="new-wall-uid",
+                evidence={"element_id": 440001, "unique_id": "new-wall-uid"},
+                error=None,
+            )
+        ],
+    )
+    authorization = SimpleNamespace(
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO", "CHILD_SECTOR", "RES_PAV_A", "RES_PAV_B",
+                "RES_PAV_C", "RES_PAV_D_COMMUNAL", "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+    )
+    partial = production_runner._validate_known_r05_partial_geometry(
+        _known_partial_model(authorization),
+        _known_failed_r05_journal()["records"][:8],
+        floors,
+        {311: "Level 1"},
+    )
+
+    merged = production_runner._merge_reconciled_r05_records(
+        plan, current_result, {"reconciled_partial_floors": partial}
+    )
+
+    assert merged.status is production_runner.RunStatus.VERIFIED
+    assert [record.logical_id for record in merged.records] == [
+        operation.logical_id for operation in plan.operations
+    ]
+    assert sum(record.evidence.get("reconciled_existing", False) for record in merged.records) == 8
 
 
 def test_known_partial_recovery_error_includes_observed_counts_and_categories():
@@ -1805,7 +1989,7 @@ def test_known_partial_recovery_rejects_changed_existing_p6_element_geometry():
         )
 
 
-def test_known_r05_partial_is_reopened_without_saving_only_after_exact_state_checks(
+def test_known_r05_partial_is_reconciled_without_closing_target_after_exact_checks(
     tmp_path, monkeypatch
 ):
     target = tmp_path / "RUN-003.rvt"
@@ -1844,6 +2028,21 @@ def test_known_r05_partial_is_reopened_without_saving_only_after_exact_state_che
         if tool == "horizun_query_model":
             if Path(active_path[0]).resolve() == checkpoint.resolve():
                 return _known_p6_model(authorization)
+            if arguments.get("categories") == ["OST_Levels"]:
+                return {
+                    "matched_total": 1,
+                    "returned": 1,
+                    "coverage_complete": True,
+                    "unreadable_total": 0,
+                    "rows": [
+                        {
+                            "element_id": 311,
+                            "unique_id": "level-311",
+                            "category": "Levels",
+                            "name": "Level 1",
+                        }
+                    ],
+                }
             return _known_partial_model(authorization)
         if tool == "horizun_document_session" and arguments["operation"] == "close":
             if Path(arguments.get("target_document", "")).resolve() == target.resolve():
@@ -1896,23 +2095,27 @@ def test_known_r05_partial_is_reopened_without_saving_only_after_exact_state_che
         authorization,
         journal_path=journal_path,
         run_key="restore-test",
+        operations=_known_r05_floor_operations(),
     )
 
-    assert evidence["reopened_exact_target"] is True
+    assert evidence["target_preserved_active"] is True
+    assert evidence["reconciled_partial_floors"]["geometry_checks"]["bounds_xy"] == "PASS"
     assert evidence["p6_baseline_fingerprint"] == "p6-fingerprint"
     assert len(reconciliation_calls) == 1
     assert reconciliation_calls[0][1] == {}
     query_arguments = [
         args for tool, args in tool_calls if tool == "horizun_query_model"
     ]
-    assert len(query_arguments) == 4
+    assert len(query_arguments) == 5
     assert query_arguments[0]["return_fields"] == ["unique_id", "category", "name"]
     assert "return_fields" not in query_arguments[1]
     assert query_arguments[1]["cache_mode"] == "bypass"
     assert query_arguments[2]["return_fields"] == ["unique_id", "category", "name"]
-    assert query_arguments[3]["return_fields"] == ["unique_id", "category", "name"]
+    assert query_arguments[3]["return_fields"] == ["unique_id", "category", "name", "level"]
+    assert query_arguments[3]["return_parameters"] == ["Area"]
+    assert query_arguments[4]["categories"] == ["OST_Levels"]
     closes = [args for tool, args in tool_calls if tool == "horizun_document_session" and args["operation"] == "close"]
-    assert len(closes) == 2
+    assert len(closes) == 1
     assert all(args["save_on_close"] is False for args in closes)
     checkpoint_open = next(
         i for i, (tool, args) in enumerate(tool_calls)
@@ -1920,13 +2123,19 @@ def test_known_r05_partial_is_reopened_without_saving_only_after_exact_state_che
         and args["operation"] == "open"
         and Path(args.get("file_path", "")).resolve() == checkpoint.resolve()
     )
-    target_close = next(
+    checkpoint_close = next(
         i for i, (tool, args) in enumerate(tool_calls)
         if tool == "horizun_document_session"
         and args["operation"] == "close"
-        and Path(args.get("target_document", "")).resolve() == target.resolve()
+        and Path(args.get("target_document", "")).resolve() == checkpoint.resolve()
     )
-    assert checkpoint_open < target_close
+    assert checkpoint_open < checkpoint_close
+    assert not any(
+        tool == "horizun_document_session"
+        and args["operation"] == "close"
+        and Path(args.get("target_document", "")).resolve() == target.resolve()
+        for tool, args in tool_calls
+    )
 
 
 def test_known_r05_partial_recovery_refuses_unexpected_model_rows_before_close(
@@ -1966,7 +2175,8 @@ def test_known_r05_partial_recovery_refuses_unexpected_model_rows_before_close(
 
     with pytest.raises(ValueError, match="does not match the known RUN-003 partial"):
         production_runner._restore_known_failed_r05_partial(
-            object(), target, authorization, journal_path=journal_path, run_key="restore-test"
+            object(), target, authorization, journal_path=journal_path,
+            run_key="restore-test", operations=_known_r05_floor_operations()
         )
 
     assert not any(tool == "horizun_document_session" for tool, _ in calls)
@@ -2039,6 +2249,7 @@ def test_p6_fingerprint_mismatch_persists_detailed_checkpoint_readback_before_fa
             authorization,
             journal_path=journal_path,
             run_key="run-1",
+            operations=_known_r05_floor_operations(),
         )
 
     diagnostic = json.loads(diagnostic_path.read_text(encoding="utf-8"))

@@ -42,7 +42,11 @@ RUN003_FAILED_R05_FLOOR_IDS = {
 from amanda_agent.bim.checkpoints import CheckpointManager
 from amanda_agent.bim.models import BimStage
 from amanda_agent.bim.providers import HorizunInvoker, McpProbeTransport
-from amanda_agent.bim.runner import RunStatus, execute_stage
+from amanda_agent.bim.runner import (
+    OperationRunRecord,
+    RunStatus,
+    execute_stage,
+)
 from amanda_agent.bim.stages import (
     ExecutionMode,
     stage_at_or_before,
@@ -907,6 +911,264 @@ def _validate_known_r05_partial_model(payload: object, records, authorization) -
     }
 
 
+def _floor_operation_geometry(operation) -> dict:
+    """Summarize one current R05 floor profile for typed readback comparison."""
+
+    payload = getattr(operation, "payload", None)
+    geometry = payload.get("geometry") if isinstance(payload, dict) else None
+    rings = geometry.get("footprint") if isinstance(geometry, dict) else None
+    level_id = payload.get("level_id") if isinstance(payload, dict) else None
+    if (
+        not isinstance(rings, list)
+        or not rings
+        or isinstance(level_id, bool)
+        or not isinstance(level_id, int)
+        or level_id <= 0
+    ):
+        raise ValueError("known R05 floor operation lacks a typed profile or level")
+
+    all_points: list[tuple[float, float]] = []
+    ring_areas = []
+    for ring in rings:
+        if not isinstance(ring, list) or len(ring) < 4:
+            raise ValueError("known R05 floor operation has an invalid closed profile")
+        points = []
+        for point in ring:
+            if (
+                not isinstance(point, (list, tuple))
+                or len(point) not in {2, 3}
+                or any(
+                    isinstance(value, bool)
+                    or not isinstance(value, (int, float))
+                    or not math.isfinite(value)
+                    for value in point
+                )
+            ):
+                raise ValueError("known R05 floor operation has non-finite profile points")
+            points.append((float(point[0]), float(point[1])))
+        if any(
+            not math.isclose(points[0][axis], points[-1][axis], abs_tol=1e-8)
+            for axis in range(2)
+        ):
+            raise ValueError("known R05 floor operation profile is not closed")
+        signed_area = sum(
+            points[index][0] * points[index + 1][1]
+            - points[index + 1][0] * points[index][1]
+            for index in range(len(points) - 1)
+        ) / 2.0
+        ring_areas.append(abs(signed_area))
+        all_points.extend(points[:-1])
+
+    area_m2 = ring_areas[0] - sum(ring_areas[1:])
+    if not math.isfinite(area_m2) or area_m2 <= 0:
+        raise ValueError("known R05 floor operation has non-positive plan area")
+    return {
+        "level_id": level_id,
+        "area_m2": area_m2,
+        "bounds_xy_m": {
+            "min": [min(point[index] for point in all_points) for index in range(2)],
+            "max": [max(point[index] for point in all_points) for index in range(2)],
+        },
+    }
+
+
+def _validate_known_r05_partial_geometry(
+    payload: object, records, operations, level_names: dict[int, str]
+) -> dict:
+    """Match all eight persisted partial floors to current plan extents, areas and levels."""
+
+    expected_ids = set(RUN003_FAILED_R05_FLOOR_IDS)
+    records_by_logical = {
+        record.get("logical_id"): record for record in records if isinstance(record, dict)
+    }
+    operations_by_logical = {
+        getattr(operation, "logical_id", None): operation for operation in operations
+    }
+    if (
+        set(records_by_logical) != expected_ids
+        or set(operations_by_logical) != expected_ids
+        or len(operations_by_logical) != len(operations)
+        or any(
+            getattr(operations_by_logical[logical_id], "semantic_capability", None)
+            != "revit.create_floor"
+            for logical_id in expected_ids
+        )
+    ):
+        raise ValueError("current R05 plan does not contain the exact known eight-floor set")
+
+    rows = payload.get("rows") if isinstance(payload, dict) else None
+    if not isinstance(rows, list):
+        raise TypeError("known R05 floor readback has no typed rows")
+    expected_by_id = {
+        int(record["element_id"]): (logical_id, record)
+        for logical_id, record in records_by_logical.items()
+    }
+    partial_rows = [
+        row
+        for row in rows
+        if isinstance(row, dict) and row.get("element_id") in expected_by_id
+    ]
+    if len(partial_rows) != len(expected_ids):
+        raise ValueError("known R05 floor readback is missing a journaled floor")
+    observed_by_id = {row.get("element_id"): row for row in partial_rows}
+    if len(observed_by_id) != len(expected_ids):
+        raise ValueError("known R05 floor readback has duplicated ElementIds")
+
+    verified_floors = []
+    for element_id, (logical_id, journal_record) in expected_by_id.items():
+        row = observed_by_id[element_id]
+        if (
+            row.get("category") != "Pisos"
+            or row.get("unique_id") != journal_record.get("unique_id")
+            or row.get("name") != logical_id
+        ):
+            raise ValueError(f"known R05 floor identity differs for {logical_id}")
+        expected = _floor_operation_geometry(operations_by_logical[logical_id])
+        expected_level_name = level_names.get(expected["level_id"])
+        if not isinstance(expected_level_name, str) or not expected_level_name.strip():
+            raise ValueError(f"current R05 floor level name is unavailable for {logical_id}")
+        if row.get("level") != expected_level_name:
+            raise ValueError(f"known R05 floor level differs for {logical_id}")
+
+        bbox = row.get("bounding_box")
+        if not isinstance(bbox, dict):
+            raise TypeError(f"known R05 floor bounds are missing for {logical_id}")
+        for axis in range(2):
+            for bound in ("min", "max"):
+                actual = bbox.get(bound)
+                expected_value = expected["bounds_xy_m"][bound][axis]
+                if (
+                    not isinstance(actual, (list, tuple))
+                    or len(actual) != 3
+                    or isinstance(actual[axis], bool)
+                    or not isinstance(actual[axis], (int, float))
+                    or not math.isfinite(actual[axis])
+                    or not math.isclose(
+                        float(actual[axis]), expected_value, rel_tol=0.0, abs_tol=1e-3
+                    )
+                ):
+                    raise ValueError(f"known R05 floor bounds differ for {logical_id}")
+
+        parameters = row.get("parameters")
+        actual_area = parameters.get("Area") if isinstance(parameters, dict) else None
+        if isinstance(actual_area, dict):
+            unit = str(actual_area.get("unit", "")).strip().casefold()
+            actual_area = actual_area.get("value")
+            if unit not in {"m2", "m²", "square meters", "square metre"}:
+                raise ValueError(f"known R05 floor Area unit is not m2 for {logical_id}")
+        if (
+            isinstance(actual_area, bool)
+            or not isinstance(actual_area, (int, float))
+            or not math.isfinite(actual_area)
+        ):
+            raise ValueError(f"typed Area parameter is missing for {logical_id}")
+        if not math.isclose(
+            float(actual_area), expected["area_m2"], rel_tol=0.0, abs_tol=1e-2
+        ):
+            raise ValueError(f"known R05 floor area differs for {logical_id}")
+        verified_floors.append(
+            {
+                "logical_id": logical_id,
+                "element_id": element_id,
+                "unique_id": row["unique_id"],
+                "level_id": expected["level_id"],
+                "level": expected_level_name,
+                "area_m2": float(actual_area),
+                "expected_area_m2": expected["area_m2"],
+                "bounding_box": bbox,
+                "readback_status": "VERIFIED",
+            }
+        )
+    verified_floors.sort(key=lambda floor: floor["logical_id"])
+    return {
+        "verified_partial_floor_ids": sorted(expected_by_id),
+        "geometry_checks": {
+            "bounds_xy": "PASS",
+            "area_m2": "PASS",
+            "level_name": "PASS",
+            "expected_geometry_source": "current_R05_plan",
+            "observed_geometry_scope": "typed_bounds_area_level",
+        },
+        "floors": verified_floors,
+    }
+
+
+def _remaining_r05_operations(operations, reconciled_logical_ids: set[str]) -> list:
+    """Filter only the exact eight floor operations already read and reconciled."""
+
+    expected_ids = set(RUN003_FAILED_R05_FLOOR_IDS)
+    if reconciled_logical_ids != expected_ids:
+        raise ValueError("reconciled IDs do not match the exact known eight-floor set")
+    operation_ids = [getattr(operation, "logical_id", None) for operation in operations]
+    matching = [logical_id for logical_id in operation_ids if logical_id in expected_ids]
+    if (
+        set(matching) != expected_ids
+        or len(matching) != len(expected_ids)
+        or any(
+            getattr(operation, "semantic_capability", None) != "revit.create_floor"
+            for operation in operations
+            if getattr(operation, "logical_id", None) in expected_ids
+        )
+    ):
+        raise ValueError("current R05 plan does not contain the exact known eight-floor set")
+    return [
+        operation
+        for operation in operations
+        if getattr(operation, "logical_id", None) not in expected_ids
+    ]
+
+
+def _merge_reconciled_r05_records(plan, result, recovery_evidence: dict):
+    """Combine current R05 writes with the eight independently re-read prior floors."""
+
+    reconciled = recovery_evidence.get("reconciled_partial_floors")
+    if not isinstance(reconciled, dict) or not isinstance(reconciled.get("floors"), list):
+        raise TypeError("RUN-003 partial floor reconciliation evidence is incomplete")
+    floors_by_id = {floor.get("logical_id"): floor for floor in reconciled["floors"]}
+    expected_ids = set(RUN003_FAILED_R05_FLOOR_IDS)
+    if set(floors_by_id) != expected_ids or len(floors_by_id) != len(reconciled["floors"]):
+        raise ValueError("RUN-003 partial floor reconciliation evidence is not the exact eight-floor set")
+    all_operations = {operation.logical_id: operation for operation in plan.operations}
+    if set(expected_ids) - set(all_operations):
+        raise ValueError("full R05 plan lost a reconciled floor operation")
+
+    existing_ids = {record.logical_id for record in result.records}
+    if existing_ids & expected_ids:
+        raise ValueError("R05 execution unexpectedly repeated a reconciled floor write")
+    for logical_id, floor in floors_by_id.items():
+        if floor.get("readback_status") != "VERIFIED":
+            raise ValueError(f"RUN-003 partial floor is not verified: {logical_id}")
+        operation = all_operations[logical_id]
+        result.records.append(
+            OperationRunRecord(
+                stage=BimStage.R05,
+                logical_id=logical_id,
+                semantic_capability="revit.create_floor",
+                provider=getattr(operation, "preferred_provider", None) or "horizun",
+                tool="reconciled_existing_readback",
+                reported_success=True,
+                status=RunStatus.VERIFIED,
+                unique_id=floor["unique_id"],
+                evidence={
+                    "element_id": floor["element_id"],
+                    "unique_id": floor["unique_id"],
+                    "level": floor["level"],
+                    "level_id": floor["level_id"],
+                    "area_m2": floor["area_m2"],
+                    "bounding_box": floor["bounding_box"],
+                    "reconciled_existing": True,
+                    "prior_journal_status": "VERIFIED",
+                    "geometry_checks": reconciled["geometry_checks"],
+                },
+            )
+        )
+    order = {operation.logical_id: index for index, operation in enumerate(plan.operations)}
+    result.records.sort(key=lambda record: order.get(record.logical_id, len(order)))
+    if result.status is RunStatus.VERIFIED and len(result.records) == len(plan.operations):
+        result.status = RunStatus.VERIFIED
+    return result
+
+
 def _row_model_snapshot(row: object) -> tuple:
     if not isinstance(row, dict):
         raise TypeError("P6 checkpoint rows differ from the known RUN-003 partial")
@@ -971,6 +1233,56 @@ def _compare_known_partial_to_p6_checkpoint(partial_payload, checkpoint_payload,
             raise ValueError("P6 checkpoint rows differ from the known RUN-003 partial")
 
 
+def _query_r05_level_names(transport, operations) -> dict[int, str]:
+    level_ids = sorted(
+        {
+            _floor_operation_geometry(operation)["level_id"]
+            for operation in operations
+        }
+    )
+    payload = _read_tool(
+        transport,
+        "horizun_query_model",
+        {
+            "element_ids": level_ids,
+            "categories": ["OST_Levels"],
+            "cache_mode": "bypass",
+            "include_types": False,
+            "max_rows": len(level_ids),
+            "response_mode": "compact",
+            "return_fields": ["unique_id", "category", "name"],
+        },
+    )
+    rows = payload.get("rows") if isinstance(payload, dict) else None
+    if (
+        not isinstance(rows, list)
+        or payload.get("matched_total") != len(level_ids)
+        or payload.get("returned") != len(level_ids)
+        or payload.get("coverage_complete") is not True
+        or payload.get("unreadable_total") != 0
+        or len(rows) != len(level_ids)
+    ):
+        raise ValueError("RUN-003 R05 level readback is incomplete")
+    names: dict[int, str] = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            raise TypeError("RUN-003 R05 level row is not typed")
+        element_id = row.get("element_id")
+        name = row.get("name")
+        if (
+            isinstance(element_id, bool)
+            or not isinstance(element_id, int)
+            or not isinstance(name, str)
+            or not name.strip()
+            or element_id in names
+        ):
+            raise ValueError("RUN-003 R05 level identity or name is invalid")
+        names[element_id] = name
+    if set(names) != set(level_ids) or len(set(names.values())) != len(names):
+        raise ValueError("RUN-003 R05 levels do not match the plan's exact level IDs")
+    return names
+
+
 def _close_p6_inspection_checkpoint(transport, target: Path, checkpoint: Path, run_key: str):
     _activate(transport, target)
     closed = _read_tool(
@@ -1000,8 +1312,9 @@ def _restore_known_failed_r05_partial(
     *,
     journal_path: Path,
     run_key: str,
+    operations,
 ) -> dict:
-    """Discard only the exactly identified unsaved writes and reopen the P6 file."""
+    """Reconcile the persisted eight-floor partial against P6 and current R05."""
 
     target = Path(target).resolve()
     permits_target_path = getattr(authorization, "permits_target_path", None)
@@ -1141,12 +1454,20 @@ def _restore_known_failed_r05_partial(
                 "max_rows": 100,
                 "response_mode": "compact",
                 "cache_mode": "bypass",
-                "return_fields": ["unique_id", "category", "name"],
+                "return_fields": ["unique_id", "category", "name", "level"],
+                "return_parameters": ["Area"],
+                "parameter_format": "full",
             },
         )
-        _validate_known_r05_partial_model(live_again, records, authorization)
+        live_state = _validate_known_r05_partial_model(
+            live_again, records, authorization
+        )
         _compare_known_partial_to_p6_checkpoint(
             live_again, checkpoint_detail_payload, records
+        )
+        level_names = _query_r05_level_names(transport, operations)
+        partial_geometry = _validate_known_r05_partial_geometry(
+            live_again, records, operations, level_names
         )
     except Exception:
         if checkpoint_opened:
@@ -1160,45 +1481,15 @@ def _restore_known_failed_r05_partial(
     checkpoint_closed = _close_p6_inspection_checkpoint(
         transport, target, checkpoint, run_key
     )
-    closed = _read_tool(
-        transport,
-        "horizun_document_session",
-        {
-            "operation": "close",
-            "target_document": str(target),
-            "save_on_close": False,
-            "activate_other": True,
-            "idempotency_key": _new_idempotency_key("discard-unsaved-r05", run_key),
-        },
-    )
-    if not isinstance(closed, dict) or closed.get("closed") is not True:
-        raise RuntimeError(f"RUN-003 unsaved R05 close was not verified: {closed!r}")
-    reopened = _read_tool(
-        transport,
-        "horizun_document_session",
-        {
-            "operation": "open",
-            "file_path": str(target),
-            "expected_version": "2027",
-            "allow_upgrade": False,
-            "idempotency_key": _new_idempotency_key("reopen-p6", run_key),
-        },
-    )
-    _validate_document_open_result(
-        reopened,
-        target,
-        expected_version="2027",
-        context="RUN-003 P6 target reopen",
-    )
     active_after = _document_info(transport)
     active_path = _active_path(active_after)
     if not active_path or Path(active_path).resolve() != target:
-        raise RuntimeError("RUN-003 restore reopened a different active document")
-    baseline_fingerprint = _verify_p6_live_readback(transport, authorization)
+        raise RuntimeError("RUN-003 target was not preserved after P6 inspection")
     return {
         "journal_path": str(Path(journal_path).resolve()),
-        "discarded_unsaved_writes": state["partial_element_ids"],
-        "pre_close_live_state": state,
+        "reconciled_persisted_writes": state["partial_element_ids"],
+        "pre_close_live_state": live_state,
+        "reconciled_partial_floors": partial_geometry,
         "p6_checkpoint": {
             "path": str(checkpoint),
             "checkpoint_manager_verified": checkpoint_verified,
@@ -1208,10 +1499,8 @@ def _restore_known_failed_r05_partial(
             "target_matches_p6_plus_partial": True,
             "inspection_close": checkpoint_closed,
         },
-        "close_without_save": closed,
-        "reopen": reopened,
-        "reopened_exact_target": True,
-        "p6_baseline_fingerprint": baseline_fingerprint,
+        "target_preserved_active": True,
+        "p6_baseline_fingerprint": checkpoint_fingerprint,
     }
 
 
@@ -1756,11 +2045,15 @@ def run(
                         study_authorization,
                         journal_path=RUN003_FAILED_R05_JOURNAL,
                         run_key=uuid.uuid4().hex[:12],
+                        operations=plans[0].operations,
                     )
                     baseline_fingerprint = recovery_evidence[
                         "p6_baseline_fingerprint"
                     ]
-                    print("restored exact P6 baseline after guarded unsaved R05 partial")
+                    print(
+                        "reconciled persisted R05 partial against P6 and the current plan; "
+                        "target remains open"
+                    )
                 print("P6 baseline readback:", baseline_fingerprint)
             run_key = uuid.uuid4().hex[:12]
             if study_authorization is None:
@@ -1824,12 +2117,30 @@ def run(
                 if plan.stage.name == "R01":
                     print("R01 handled by the document session above")
                     continue
+                execution_plan = plan
+                if recovery_evidence is not None and plan.stage is BimStage.R05:
+                    remaining = _remaining_r05_operations(
+                        plan.operations,
+                        set(recovery_evidence["reconciled_persisted_writes"]),
+                    )
+                    execution_plan = plan.model_copy(update={"operations": remaining})
+                    print(
+                        "R05 idempotent resume:",
+                        len(recovery_evidence["reconciled_persisted_writes"]),
+                        "reconciled floor operations skipped;",
+                        len(remaining),
+                        "current plan operations remain",
+                    )
                 # Several attempts are open at once, and Revit's active document
                 # moves between them.  The provider acts on the ACTIVE document
                 # and refuses to switch by itself, so the target is activated
                 # before each stage rather than left to whatever was in front.
                 _activate(transport, rvt)
-                result = execute_stage(plan, invoker=invoker)
+                result = execute_stage(execution_plan, invoker=invoker)
+                if recovery_evidence is not None and plan.stage is BimStage.R05:
+                    result = _merge_reconciled_r05_records(
+                        plan, result, recovery_evidence
+                    )
                 journal = _stage_journal_path(plan.stage, run_key)
                 journal.parent.mkdir(parents=True, exist_ok=True)
                 record_evidence = [

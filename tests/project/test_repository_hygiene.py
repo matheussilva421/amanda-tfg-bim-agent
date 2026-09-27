@@ -216,14 +216,17 @@ def test_current_state_routes_only_to_pending_live_run003_r05():
     assert "`P3`: 1/1 PASS" in dashboard
     assert "`P4`: 1/1 PASS" in dashboard
     assert "`P7`: 0/9 PASS" in dashboard
-    assert "zero-other-client guard" in dashboard
-    assert "authorization terminates at R05" in dashboard
+    assert "zero-other-client" in dashboard
+    assert "authorization ends at R05" in dashboard
+    assert "post-reopen typed readback still failed the 25-element P6 count gate" in dashboard
 
     handoff = (ROOT / "state/HANDOFF.md").read_text(encoding="utf-8")
     normalized_handoff = " ".join(handoff.split())
-    assert "P7-T01/R05 blocked by Horizun shared-client quiet window" in normalized_handoff
+    assert "P7-T01/R05 pending live retry" in normalized_handoff
     assert "explicitly authorizes P7-T01/R05" in normalized_handoff
-    assert "After at least 600 seconds" in normalized_handoff
+    assert "XY bounds, Revit Area, and resolved level name" in normalized_handoff
+    assert "typed query contract exposes bounds and parameters but no floor-outline vertices" in normalized_handoff
+    assert "the next live action is the R05-only production runner" in normalized_handoff
     assert "R06 stays NOT STARTED" in normalized_handoff
 
     superseded_tasks = [f"P08-CAN-T{number:02}" for number in range(9, 20)]

@@ -1,8 +1,19 @@
 # Current Handoff
 
-## Current state — P7-T01/R05 blocked by Horizun shared-client quiet window
+## Current state — P7-T01/R05 pending live retry
 
 This is the sole active resume point. P4-T01/BIM-00, R04, and P6-T01 remain complete. P7-T01 stays `PENDING`; this continuation is restricted to R05.
+
+### 2026-09-27 R05 partial reconciliation implementation
+
+- After the previous 600-second shared-client window expired, the exact R05-only runner passed Horizun health, the zero-other-client check, Revit 2027 PID 38296 selection, exact RUN-003 target identity, and retained the existing RUN-003 lease. It opened/read the exact P6 checkpoint and reconciled compact/detailed fingerprints to the recorded 25-row digest `3732c3c44c405a6453df8157243b7695b442b9969c979c141c6e829011940c0d`.
+- The live target matched P6 plus the eight journaled floor additions by ElementId/UniqueId/category and preserved the exact P6 baseline rows. Guarded recovery closed the target without saving, reopened the exact path, then stopped because the post-reopen query still applied the 25-element P6 count gate. No new R05 operations, save, or checkpoint occurred.
+- Target metadata at that readback was 5,152,768 bytes / 2026-09-27 09:30:38Z versus the P6 checkpoint's 4,960,256 bytes / 2026-09-26 21:34:00Z. `Get-FileHash` was denied while Revit held the target open. Preserve it; do not overwrite, delete, save, or duplicate the floors.
+- The runner wrote diagnostic-only `revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-0df224235764.json` (SHA-256 `b944255f50568e388d57b0e5a84ec6c407c504c1c2642dea7fbb715d3a48e867`). It describes the exact P6 checkpoint readback only; it does not contain the reopened target rows and does not mark P6 acceptance anew.
+- TDD has added an exact-eight-floor reconciliation against the current R05 operation plan. The runner checks typed ElementId/UniqueId/category/name, XY bounds, Revit Area, and resolved level name, filters only those eight exact floor operations, and merges their independent readback records into the stage result. A mismatch fails closed before new R05 writes.
+- The typed query contract exposes bounds and parameters but no floor-outline vertices. The check therefore proves extents, area, level, and identity; it does not claim vertex-for-vertex equality of the curved residential contours. The prior typed write records remain supporting evidence, and the final saved-stage readback must still pass.
+- Focused local gates pass: runner unit suite 76/76, repository/state hygiene 12/12, and `compileall` succeeds. Ruff still reports nine baseline findings; the new/changed code introduces none. A local second-pass review found no additional acceptance-path issue. The requested Luna 6 xhigh review could not spawn because the app agent-thread limit is full; no other subagent was used.
+- No provider request has followed the approximately 11:35:33Z runner call. The 600-second shared-client window has elapsed. No direct Horizun call is permitted; the next live action is the R05-only production runner. R06 stays `NOT STARTED`.
 
 ### 2026-09-27 explicit R05 authorization and health-first retry
 

@@ -3643,6 +3643,27 @@ tasks:
       without further provider calls, then retry only the exact R05 health-first
       runner. The explicit user authorization ends at R05; R06 remains NOT
       STARTED.
+    - >-
+      After the shared-client window expired, the 2026-09-27 R05-only runner
+      passed health, zero-other-client, Revit 2027 PID 38296 selection, exact
+      RUN-003 target, and the existing lease. The exact P6 checkpoint readback
+      reconciled to the accepted 25-row digest. The live target matched P6 plus
+      eight journaled floors by identity/category and baseline comparison, but
+      the guard did not compare those floor footprints to generated R05 desired
+      geometry. It closed the target without saving and reopened the exact path;
+      the post-reopen query still failed the 25-element P6 count gate. No new
+      R05 write, save, or checkpoint occurred. Target metadata was 5,152,768
+      bytes at 2026-09-27 09:30:38Z; hashing was unavailable while Revit held
+      it open. The
+      subsequent local TDD change compares only the exact eight journaled floors
+      with current R05-plan identity, XY bounds, Area, and level, and filters
+      only those operations before retry. Typed query exposes no outline
+      vertices, so exact curved-contour equality is not claimed. Focused local
+      gates pass: runner 76/76, repository/state hygiene 12/12, and compileall.
+      Ruff has the same nine baseline findings. Local second-pass review found
+      no additional issue; the requested Luna 6 xhigh spawn was refused because
+      the app agent-thread limit is full, and no other subagent was used.
+      P7-T01 remains PENDING; R06 is NOT STARTED.
   P7-T02:
     id: P7-T02
     phase: P7
