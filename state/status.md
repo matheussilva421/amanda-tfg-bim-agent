@@ -131,7 +131,9 @@ around 03:08Z identified the other client as exited PID 32236, last seen about
 escaping control characters in logged identity; the focused runner/auth modules
 pass 39/39. The latest `git ls-remote` could not reach GitHub port 443. Wait more
 than 10 minutes after that health without Horizun traffic and require zero other
-clients. A typed close rehearsal confirmed
+clients. Commit `8fd51710941c52be7a97d2e3dd09f45fdfebf5cf` contains the diagnostic,
+test and state updates; push and `git ls-remote` confirmed `origin/main` at that
+SHA. Independent Luna 6 xhigh final review found no P1/P2 findings. A typed close rehearsal confirmed
 `is_modified=false` and `would_discard_unsaved=false`; it made no session
 change. The stage runner requires save, close-with-save, post-close checkpoint,
 exact cold reopen, and complete typed geometry readback.

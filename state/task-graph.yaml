@@ -3383,10 +3383,11 @@ tasks:
       direct connector is PID 1708. No model/checkpoint/lease mutation occurred.
       Test-first diagnostics report recent client identity with control
       characters escaped, without weakening the zero-client gate; focused tests
-      pass 39/39. The latest `git ls-remote` could not connect to GitHub port
-      443. Wait more than 10 minutes after the latest direct health without
-      Horizun traffic, then retry only when the host-runner preflight reports
-      zero other clients.
+      pass 39/39. Commit 8fd51710941c52be7a97d2e3dd09f45fdfebf5cf was pushed and
+      `git ls-remote` verified origin/main at the same SHA. Independent Luna 6
+      xhigh final review found no P1/P2 issues. Wait more than 10 minutes after
+      the latest direct health without Horizun traffic, then retry only when the
+      host-runner preflight reports zero other clients.
     - >-
       Independent Luna 6 xhigh review accepted P6 only for normalized spatial
       topology. Before R06, reconcile user-directed three bedrooms per family
