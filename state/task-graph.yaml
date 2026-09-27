@@ -3359,12 +3359,12 @@ tasks:
     status: PENDING
     evidence:
     - >-
-      Conditional RUN-003 R05-R13 sequence is recorded in DEC-010. The actual
-      R05 production write is awaiting explicit user authorization after the
-      automatic-review gate rejected the prior invocation. Create and
-      independently read back walls, definitive study floor plates, roofs,
-      voids, and covered circulation; bind evidence to P6 and require checkpoint
-      plus save/close/reopen/readback before stage PASS.
+      The user's explicit RUN-003 R05-R13 authorization supersedes the earlier
+      automatic-review rejection. P6 is independently reviewed PASS for
+      normalized spatial topology. Create and independently read back walls,
+      definitive study floor plates, roofs, voids, and covered circulation;
+      bind evidence to P6 and require checkpoint plus save/close/reopen/readback
+      before stage PASS.
     - >-
       Pre-write follow-up now limits the runtime grant and planner to R05,
       rejects direct R06/R13 preflight and multi-stage plans, and reads committed
@@ -3374,10 +3374,18 @@ tasks:
       and dry-run plans only R05. No live R05 write has occurred; task remains
       PENDING.
     - >-
-      Fresh Horizun health is healthy with 80/80 tools, 73/73 registry commands,
-      full_write/unpaused, zero other clients, exact active RUN-003 target, and
-      targetable PID 38296. The runner attempt was blocked before process launch
-      by automatic approval review; no model operation occurred.
+      Fresh Horizun health/target confirms 80/80 tools, 73/73 registered
+      commands, full_write/unpaused, Revit 2027 PID 38296, and the exact saved
+      active RUN-003 target. The authorized host-profile runner stopped before
+      P6 baseline readback/write because its preflight counted a recent second
+      client. No model/checkpoint/lease mutation occurred; wait 10 minutes from
+      this attempt and retry only when the preflight reports zero other clients.
+    - >-
+      Independent Luna 6 xhigh review accepted P6 only for normalized spatial
+      topology. Before R06, reconcile user-directed three bedrooms per family
+      pavilion against current 4/3/2 code/spec/report while preserving every
+      official PDF count and area; also correct the stale CANON-011 sentence in
+      CANONICAL_DEVIATIONS.yaml. Neither documentation item blocks R05 shell.
   P7-T02:
     id: P7-T02
     phase: P7

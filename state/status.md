@@ -6,9 +6,9 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; explicit write authorization required)
+- Next task: `P7-T01` (R05 architectural shell; user-authorized, waiting for zero other Horizun clients)
 - Last recorded task: `P6-T01`
-- Tasks: 193 total; P7-T01 remains PENDING pending write authorization
+- Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
 - `P2`: 1/1 PASS
 - `P3`: 1/1 PASS
@@ -42,7 +42,7 @@ Latest recorded provider check: Horizun 1.3.3 `HEALTHY`; Revit 2027 build
 RUN-003 target was active and targetable; two documents were open (RUN-003 and
 `HZ_ANCHOR_2027`) with zero other clients. P6's lease was released after its
 save/cold-reopen/readback. Current P7 writer lease: `amanda-P7-RUN003-production`,
-PID 28364, generation 2, exact target; owner process is alive.
+PID 28364, generation 2, exact target; owner process is alive. The direct health/target check was followed by one authorized host-runner attempt; its internal preflight counted a recent second client and stopped before baseline readback or write. Wait 10 minutes after that runner attempt, then recheck through the host-profile runner. No write occurred.
 
 ## Current RUN-003 R04 acceptance status
 
@@ -66,7 +66,11 @@ fresh views and one explicitly historical child/playground reference are documen
 `revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/p6-canon-011-captures.json`.
 The near-blank P6 relation attempt is excluded. Five site-data limits remain;
 no cadastral/north/site-availability claim is made. DEC-010 records conditional
-authorization for the bounded RUN-003 R05–R13 sequence after P6 PASS.
+authorization for the bounded RUN-003 R05–R13 sequence after P6 PASS; the user
+has since explicitly authorized that sequence. Independent Luna 6 xhigh review
+reconfirmed P6 PASS for spatial topology only. Before R06, correct the 3/3/3
+family-pavilion bedroom allocation conflict in current code/spec/report while
+preserving official PDF quantities and areas; this does not block R05.
 
 ## Capability counts
 
@@ -118,10 +122,11 @@ R05 per task and rejects direct R06 preflight. Final independent Luna 6 xhigh
 review found no P1/P2 findings; the six R05 modules passed 77/77 and the
 expanded combined R05 plus task-state command passed 101/101. The write attempt
 was blocked by automatic approval review because the available explicit
-authorization names R04; P7-T01 remains pending until the user explicitly
-authorizes the R05 write.
-Actual R05 writes remain pending. No runner process or Revit write started
-after the automatic-review rejection. A typed close rehearsal confirmed
+authorization then named R04. The user's later RUN-003 R05-R13 authorization
+supersedes that hold. A host-profile attempt after direct target verification
+stopped before P6 baseline readback because a recent second client was still
+visible. No R05 write, save, or checkpoint occurred; wait 10 minutes after that
+attempt and require zero other clients. A typed close rehearsal confirmed
 `is_modified=false` and `would_discard_unsaved=false`; it made no session
 change. The stage runner requires save, close-with-save, post-close checkpoint,
 exact cold reopen, and complete typed geometry readback.
