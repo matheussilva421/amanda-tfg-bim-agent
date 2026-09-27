@@ -2498,3 +2498,11 @@ entries:
   - 'The existing RUN-003 lease was retained. No target/document read, checkpoint inspection, close, save, or model write occurred. Working target remains 4,960,256 bytes with its 2026-09-26 21:34Z timestamp; direct hashing was denied because Revit holds the file open.'
   recorded_utc: '2026-09-27T06:35:53Z'
   note: Keep the provider quiet until at least 06:46:30Z, then retry only through the health-first R05 runner; continue solely if client count is zero and every capability, target, lease, P6 recovery, and model persistence gate passes.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Commit 709661c65511305796681f659b0c1c3ccca5464e adds row type and up to three field-name samples to the known-partial rejection. RED/GREEN regression passed; focused production suite: 184 passed, 0 failed. Ruff found no E/F findings on changed lines; 121 pre-existing module findings remain. State/task graph/store gates passed 24/24 and state YAML parsed 3/3.'
+  - 'At about 2026-09-27T06:47Z, the runner passed health/client validation, selected Revit PID 38296, and retained the existing RUN-003 lease. P6 query correctly rejected 33 versus 25 rows. Recovery readback reported matched_total=33, returned=33, row_count=33, complete coverage, zero unreadable, and summary categories Massa=7/Pisos=22/Telhados=4; it failed closed because row IDs/UniqueIds/categories were not in the expected fields.'
+  - 'The failure occurred before P6 checkpoint inspection, document close, save, or model write. Working RVT remains 4,960,256 bytes with its 2026-09-26 21:34Z timestamp. No raw row values were logged; the next diagnostic reports only row types and field names.'
+  recorded_utc: '2026-09-27T06:47:05Z'
+  note: Keep Horizun quiet until at least 06:57:30Z, then repeat only the health-first R05 runner. Use row-key diagnostics to identify typed readback contract; never relax P6 identity/geometry comparison or discard the unsaved partial without exact evidence.

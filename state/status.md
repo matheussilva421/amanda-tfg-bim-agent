@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; authorized; the unsaved eight-floor partial may remain in Revit memory; latest runner stopped at the ten-minute shared-client guard before target selection)
+- Next task: `P7-T01` (R05 architectural shell; authorized; the unsaved eight-floor partial may remain in Revit memory; latest runner selected the target but failed closed on row identity schema before checkpoint inspection)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -16,7 +16,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `P5`: 1/1 PASS
 - `P6`: 1/1 PASS
 - `P7`: 0/9 PASS
-- Latest P7-T01 write attempt: `FAILED`, 8/705 verified in the live unsaved session; no save/checkpoint/reopen. Its exact journal is tracked. Follow-up fixes are committed/pushed. The latest runner passed health schema/transport pinning but found another client entry (PID 28628, not alive, age 595 seconds) inside the 600-second window and stopped before target selection, document readback, P6 comparison, or any model action. P7-T01 remains `PENDING`.
+- Latest P7-T01 write attempt: `FAILED`, 8/705 verified in the live unsaved session; no save/checkpoint/reopen. Its exact journal is tracked. The latest runner passed health/client guards and selected Revit PID 38296, then found 33 complete rows and summary categories 7/22/4; recovery rejected missing expected row identity fields before opening the checkpoint. No save, close, or model write occurred. The new diagnostic commit is pushed; P7-T01 remains `PENDING`.
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -38,16 +38,14 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-Latest health-first runner call was about 06:35:53Z. Health schema and transport
-identity passed, but the strict shared-client guard rejected a second recent
-entry: PID 28628, process name unknown, age 595 seconds, process not alive.
-Current transport PID 14596 was listed as alive at age 0. The runner stopped
-before target selection, so this call did not freshly establish targetability
-or capabilities. Wait until at least 06:46:30Z before another provider call.
-The production writer lease remains recorded under live owner PID 28364,
-generation 2; preserve it. The diagnostic guard regression and full focused
-production suite pass 183/183, and dry-run still plans only R05. P7-T01 stays
-PENDING.
+Latest health-first runner call was about 06:47Z. It passed shared-client
+validation and selected Revit 2027 PID 38296. The query returned 33 rows with
+complete coverage, zero unreadable, and category summary 7 masses / 22 floors /
+4 roofs. The fail-closed partial recovery could not match per-row ElementId,
+UniqueId, or category fields and stopped before checkpoint inspection. No save,
+close, or write occurred. The diagnostic suite passes 184/184; dry-run plans
+only R05. Preserve the lease held by PID 28364, generation 2. Wait until at
+least 06:57:30Z before another provider call. P7-T01 stays PENDING.
 
 ## Current RUN-003 R04 acceptance status
 

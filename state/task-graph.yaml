@@ -3495,6 +3495,18 @@ tasks:
       document readback, checkpoint inspection, or model action. The existing
       lease was retained and the working RVT size/timestamp remain unchanged.
       Do not call Horizun before 06:46:30Z; P7-T01 remains PENDING.
+    - >-
+      Commit 709661c65511305796681f659b0c1c3ccca5464e adds row-type and field-name
+      samples to the recovery error, without exposing row values or changing
+      acceptance. RED/GREEN regression and the eight-module focused production
+      suite pass 184/184; Ruff found no E/F issue on changed lines (121 existing
+      module findings remain). The subsequent runner passed health/client guards,
+      selected Revit PID 38296, and retained the RUN-003 lease. Live readback
+      reported 33 complete rows, zero unreadable, category summary 7/22/4, but
+      lacked expected per-row element_id/unique_id/category fields; recovery
+      failed before checkpoint inspection or any close/save/write. RVT size and
+      timestamp remain unchanged. Do not call Horizun before 06:57:30Z; keep
+      P7-T01 PENDING.
   P7-T02:
     id: P7-T02
     phase: P7
