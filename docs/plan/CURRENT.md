@@ -76,10 +76,11 @@ typed bounds and the current full-implantation capture support that relation.
 
 ## P7 — Detailed production
 
-DEC-010 records the user's conditional operational authorization after P6 PASS.
-The current RUN-003 sequence is materialized below; each stage requires its own
-focused test, typed readback, independent verification, QA, evidence, checkpoint
-where specified, commit and push before the next green stage.
+DEC-010 records historical conditional authorization after P6 PASS. The current
+user authorization covers `P7-T01/R05` only. Each later stage requires its own
+task gate; completing R05 does not start R06. Each authorized stage requires its
+own focused test, typed readback, independent verification, QA, evidence,
+checkpoint where specified, commit and push before any later stage.
 
 | Task | Stage | Scope | Hard predecessor |
 |---|---|---|---|
@@ -93,9 +94,10 @@ where specified, commit and push before the next green stage.
 | P7-T08 | R12 | Study materials, without changing canonical design decisions | P7-T07 |
 | P7-T09 | R13 | Plans, sections, elevations, schedules, sheets and explicit STUDY labeling | P7-T08 |
 
-The P7 authorization is limited to this normalized RUN-003 STUDY and R05–R13.
-It does not establish personal Amanda approval, verified site fit, FINAL status,
-R14–R16, or a GOLDEN release.
+The current P7 authorization is limited to this normalized RUN-003 STUDY and
+`P7-T01/R05`. R06 and later stages are not authorized by this task; completing
+R05 does not start R06. This does not establish personal Amanda approval,
+verified site fit, FINAL status, R14–R16, or a GOLDEN release.
 
 ## P8 — QA/RC
 

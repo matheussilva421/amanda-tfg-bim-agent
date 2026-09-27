@@ -1,8 +1,25 @@
 # Current Handoff
 
-## Current state — P7-T01/R05 pending live retry
+## Current state — P7-T01/R05 pending live provider recovery
 
-This is the sole active resume point. P4-T01/BIM-00, R04, and P6-T01 remain complete. P7-T01 stays `PENDING`; this continuation is restricted to R05.
+This is the sole active resume point. P4-T01/BIM-00, R04, and P6-T01 remain complete. P7-T01 is `BLOCKED_BY_TOOL` while Revit targetability is unverified; current authorization is R05 only. R06 and later stages require their own task gates, and completing R05 does not start R06.
+
+### 2026-09-27 current gates and resume state
+
+- The latest health-first runner attempt (about 13:44Z) returned `no Revit is reachable` and stopped before provider capabilities, exact target, checkpoint, or model access. The existing RUN-003 lease was retained; no R05 write, save, or checkpoint occurred.
+- Read-only window enumeration found the RUN-003 Revit 2027 window but marked it minimized. After activation, the captured window content was Chrome. Revit interactive targetability is therefore unverified; the window snapshot is not evidence of a Revit document read.
+- `PROJECT_STATE.yaml` and `state/blockers.yaml` now record `REVIT_SESSION_NOT_TARGETABLE:BLOCKING` for P7-T01, whose task status is `BLOCKED_BY_TOOL`. The phase remains pending and P7-T01 remains the resume task. Its graph entry has four concise items: authorization, blocker, latest evidence, and resume condition; detailed retry history remains here and in runner journals.
+- Unsupported Area units still fail closed. The error now retains the raw provider unit, normalized unit, and logical ID. Supported m²/ft² conversion rules are unchanged.
+- Current operational authorization is P7-T01/R05 only. DEC-010 remains historical context. Do not start R06; it requires its own task gate.
+- TDD reproduced the missing raw-unit diagnostic and absent formal blocker. The focused RUN-003/state/hygiene suite passes 118/118; plan-order passes 8/8; compileall, three YAML parses, and scoped `git diff --check` pass. The live conversion remains unverified until the R05 runner reaches the eight-floor readback gate.
+- A Luna 6 xhigh review was requested for the current diff but could not start because the active-agent thread limit is full; no other subagent/model was used. Local second-pass review found no defect in the scoped changes. Ruff reports 11 pre-existing findings, with none on changed production lines; they were left outside scope.
+- Changed files: `PROJECT_STATE.yaml`, `docs/spec/CURRENT.md`, `docs/plan/CURRENT.md`, `scripts/run_amanda_production.py`, `state/HANDOFF.md`, `state/blockers.yaml`, `state/status.md`, `state/task-graph.yaml`, `tests/unit/test_run_amanda_production.py`, `tests/unit/test_status_checkpoint_consistency.py`, `tests/unit/test_task_graph.py`, and `tests/project/test_repository_hygiene.py`.
+- Before this sanitation, local `main` and `origin/main` both pointed to `9e19186cbba6b72b32f759fb5dd6fc356bccc3ea`. Pre-existing deletions under RC01 remain unstaged and untouched. Commit/push status for this sanitation is recorded after the micro-commit.
+- After the single sanitation commit is pushed, inspect the current Revit process, window, assemblies, provider endpoint, journal, and RUN-003 lease. Resume only when the interactive target and Horizun health/capability gates pass, using the exact R05-only runner below. If any preflight gate fails, preserve the lease and model and leave P7-T01 incomplete.
+
+```powershell
+.venv\Scripts\python.exe scripts\run_amanda_production.py --rvt 'revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt' --resume-run003-study --reuse-existing-run003-lease --max-stage R05 --revit-pid 38296 --execute
+```
 
 ### 2026-09-27 R05 partial reconciliation implementation
 

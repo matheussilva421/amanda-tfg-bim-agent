@@ -1062,9 +1062,10 @@ def _validate_known_r05_partial_geometry(
         actual_area = parameters.get("Area") if isinstance(parameters, dict) else None
         area_source_unit = "scalar_without_reported_unit"
         if isinstance(actual_area, dict):
-            area_source_unit = str(actual_area.get("unit", "")).strip()
-            unit = (
-                area_source_unit.casefold()
+            raw_area_unit = actual_area.get("unit", "")
+            area_source_unit = str(raw_area_unit)
+            normalized_unit = (
+                area_source_unit.strip().casefold()
                 .replace("\u00b2", "2")
                 .replace("^", "")
                 .replace(".", "")
@@ -1084,10 +1085,11 @@ def _validate_known_r05_partial_geometry(
                 "square feet": 0.09290304,
                 "square foot": 0.09290304,
             }
-            conversion = unit_to_m2.get(unit)
+            conversion = unit_to_m2.get(normalized_unit)
             if conversion is None:
                 raise ValueError(
-                    f"known R05 floor Area unit is unsupported for {logical_id}: {unit!r}"
+                    f"known R05 floor Area unit is unsupported for {logical_id}: "
+                    f"raw={raw_area_unit!r}, normalized={normalized_unit!r}"
                 )
             actual_area = actual_area.get("value")
             if (

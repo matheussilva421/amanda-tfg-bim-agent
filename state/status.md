@@ -6,9 +6,13 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; authorization ends at R05; local gates pass, latest runner stopped because Revit was unreachable)
+- Next task: `P7-T01` (R05 architectural shell; currently blocked at the provider gate)
 - Last recorded task: `P6-T01`
-- Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
+- Tasks: 193 total; P7-T01 is `BLOCKED_BY_TOOL` until live R05 persistence gates pass
+- Current authorization: P7-T01/R05 only; authorization ends at R05. Every later stage needs its own task gate; R05 completion does not start R06.
+- Current blocker: `REVIT_SESSION_NOT_TARGETABLE:BLOCKING`; provider health and interactive targetability are not verified.
+- Latest health-first runner (~13:44Z) returned `no Revit is reachable` and stopped before capabilities, target, lease, checkpoint, or model access. The existing RUN-003 lease was retained; no model write/save/checkpoint occurred.
+- CUA listed the RUN-003 window as minimized. After activation, the captured window content was Chrome, so Revit targetability remains unverified.
 - `P1`: 1/1 PASS
 - `P2`: 1/1 PASS
 - `P3`: 1/1 PASS
@@ -16,9 +20,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `P5`: 1/1 PASS
 - `P6`: 1/1 PASS
 - `P7`: 0/9 PASS
-- Latest R05-only runner attempt (2026-09-27 13:32Z) stopped at `horizun_health`, which returned `Error: no Revit is reachable. Is Revit running with the Horizun add-in loaded?` It did not reach capability, targetability, checkpoint, or model gates. The existing RUN-003 lease was retained; no write/save/checkpoint occurred. Read-only process checks found only Revit PID 38296, responsive with `Horizun.Revit.dll` loaded but no main-window handle/title, so targetability is unverified. This is the third consecutive health-gate failure. Do not retry until the interactive Revit session is restored; the conservative quiet-window end is 13:42:35Z.
-- Earlier runner attempts at 13:22Z and 13:11Z stopped at the same first health gate. No Revit/model/checkpoint write occurred.
-- The preceding runner attempt (~12:56Z) passed health/capability, target/lease, P6 checkpoint/digest, and known-floor identity/bounds/level checks, then failed closed on an unsupported typed `Area` unit before R05 writes. Diagnostic `R05-2f373fcb3511-p6-readback-diagnostic-ee99ee2f171a.json` has SHA-256 `edd6f4b86c33fc82705ed8826828ce45d8e7d18475640bb00f6895b08b5de043`, records no model write, and contains the 25-row P6 digest. TDD added supported m²/ft² unit conversions with source-unit evidence and fail-closed rejection for unknown units. Production-runner unit tests pass 87/87; `compileall` and scoped `git diff --check` pass. Ruff reports the same 9 baseline findings, none on changed lines. Luna 6 xhigh review could not start because the app agent-thread limit is full; no other subagent was used. R05 remains `PENDING`; authorization ends at R05.
+
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -40,44 +42,21 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-The latest health-first runner call was at about 13:32Z. It failed its first
-health gate with `no Revit is reachable`, before capabilities, targetability,
-checkpoint inspection, or model access. The existing RUN-003 lease was
-retained, and no model write/save/checkpoint occurred. The conservative
-10-minute quiet window ends at 13:42:35Z; no direct Horizun calls should be made.
+The latest health-first runner (~13:44Z) returned `no Revit is reachable`.
+It did not reach capabilities, targetability, checkpoint, or model readback.
+The RUN-003 lease was retained; no model write/save/checkpoint occurred.
 
-The user's explicit authorization covers RUN-003 P7-T01/R05 and ends at R05.
-The local retry path now compares the eight existing floor rows with current
-R05 plan identity, XY bounds, Area, and level, filters only those exact
-operations, and merges their records into stage verification. The typed query
-contract does not expose floor-outline vertices; exact contour equality is not
-claimed. The preceding ~12:56Z live attempt passed those checks but rejected an
-unsupported typed `Area` unit before R05 writes; the local parser now converts
-known m²/ft² aliases and rejects unknown units. Its focused runner suite passes
-87/87. P7-T01 remains `PENDING` until live R05 and persistence gates pass.
+The only Revit process previously observed is PID 38296 with
+`Horizun.Revit.dll` loaded. CUA listed the RUN-003 window as minimized; after
+activation, its capture displayed Chrome. These observations do not prove an
+interactive Revit target. The formal blocker is
+`REVIT_SESSION_NOT_TARGETABLE:BLOCKING`.
 
-The additive record
-`revit/production/evidence/AMANDA-RUN-003-R04/p6-readback-fingerprint-reconciliation.json`
-binds the exact checkpoint SHA, prior diagnostic SHA, both observed query
-fingerprints, and the 25-row identity/geometry digest. The runner will require
-those exact values, current compact/detailed bounds agreement, and geometry
-relations against the P6 spatial evidence. The historical P6 acceptance remains
-unchanged; the fingerprint cause is unresolved. Earlier focused
-production/state/provider suite plus state-consistency and plan-order gates:
-227/227. Current scoped gates: production runner 87/87, repository hygiene
-12/12, task-graph/status consistency 17/17, YAML parsing, and `compileall`
-passed. Ruff reports the same 9 pre-existing
-findings; changed lines add no finding. Local second-pass review found no
-additional acceptance-path issue. The requested Luna 6 xhigh review could not
-spawn because the app agent-thread limit is full; no other subagent was used.
-Next action is the health-first R05-only runner.
-R05 code/evidence commit `581cacb30ca679f4d08549f7536f01315bad0257` and state
-commits through `1670e0d7c87bec0689f2ba588d860aba6290792e` were pushed to
-`origin/main`; the latest `git push` exited 0 and advanced `a46e7df..1670e0d`.
-Local `HEAD`/`origin/main` match `1670e0d`. A separate `git ls-remote` could not
-connect to GitHub on TCP 443. RC01 deletions remain unstaged. The current R05
-health failure and resume route are in the active handoff. P7-T01 remains
-PENDING.
+Resume only after a live interactive Revit 2027 RUN-003 target and provider
+health/capability are proven: 73/73 registered commands, 80/80 visible tools,
+`full_write`, unpaused, and zero other clients. Respect the provider quiet
+window and use only the exact R05-only health-first runner. Preserve the lease
+and model state.
 
 ## Current RUN-003 R04 acceptance status
 
@@ -100,9 +79,9 @@ internal layout; R08 owns Revit Room creation and official area readback. Nine
 fresh views and one explicitly historical child/playground reference are documented in
 `revit/production/evidence/AMANDA-RUN-003-R04/views/p6-canon-011-20260926/p6-canon-011-captures.json`.
 The near-blank P6 relation attempt is excluded. Five site-data limits remain;
-no cadastral/north/site-availability claim is made. DEC-010 records conditional
-authorization for the bounded RUN-003 R05–R13 sequence after P6 PASS; the user
-has since explicitly authorized that sequence. Independent Luna 6 xhigh review
+no cadastral/north/site-availability claim is made. DEC-010 preserves historical conditional
+authorization for R05–R13 after P6 PASS. The current user authorization is only
+P7-T01/R05; each later stage requires its own task gate, and R05 completion does not start R06. Independent Luna 6 xhigh review
 reconfirmed P6 PASS for spatial topology only. Before R06, correct the 3/3/3
 family-pavilion bedroom allocation conflict in current code/spec/report while
 preserving official PDF quantities and areas; this does not block R05.
@@ -122,6 +101,7 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 - `SITE_OCCUPANCY` [BLOCKING]: confirmation of the current use of the lot and of the relocation premise for the police company unit
 - `SITE_FRONTAGE_COUNT` [DEGRADING]: whether the lot has three or four frontages
 - `SITE_TRUE_NORTH` [DEGRADING]: a verified true-north bearing with a source drawing datum
+- `REVIT_SESSION_NOT_TARGETABLE` [BLOCKING, P7-T01 only]: interactive RUN-003 Revit target and healthy Horizun provider have not been verified
 
 ## Design and Revit recovery
 
@@ -151,8 +131,8 @@ deletions under `revit/lab/exports/p06t14/GOLDEN/RC01/`; they were not staged.
 
 The P6 normalized-study acceptance does not create internal rooms or verify
 their areas; R06 owns internal layout and R08 owns Revit Room/area readback. The
-bounded P6/DEC-010 RUN-003 authorization, P6-derived wall heights, and R05-only
-dispatch are implemented; the focused suite passes 81/81 and the R05 dry-run
+current authorization is P7-T01/R05 only; P6-derived wall heights and R05-only
+dispatch are implemented. DEC-010 remains historical context. The focused suite passes 81/81 and the R05 dry-run
 produces only R05. Persistence compares typed pre-save and post-reopen bounds
 as well as identity, and every attempt retains its own journal. A local follow-up
 lets the host-profile loader read ACL-blocked selection inputs from committed
@@ -162,8 +142,8 @@ R05 per task and rejects direct R06 preflight. Final independent Luna 6 xhigh
 review found no P1/P2 findings; the six R05 modules passed 77/77 and the
 expanded combined R05 plus task-state command passed 101/101. The write attempt
 was blocked by automatic approval review because the available explicit
-authorization then named R04. The user's later RUN-003 R05-R13 authorization
-supersedes that hold. Five host-profile attempts after direct target verification
+authorization then named R04. The current user authorization is P7-T01/R05 only;
+later stages require their own task gate. Five host-profile attempts after direct target verification
 stopped before P6 baseline readback because a recent second client was still
 visible. No R05 write, save, or checkpoint occurred. After health was moved
 before target selection, the ~03:36Z attempt reported only PID 40000

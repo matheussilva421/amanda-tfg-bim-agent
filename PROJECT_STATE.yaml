@@ -4,6 +4,7 @@ blockers:
 - SITE_OCCUPANCY:DEGRADING
 - SITE_FRONTAGE_COUNT:DEGRADING
 - SITE_TRUE_NORTH:DEGRADING
+- REVIT_SESSION_NOT_TARGETABLE:BLOCKING
 current_checkpoint: revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-CANON-011-RECONCILED-20260926.rvt
 last_completed_task: P6-T01
 last_verified_commit: 581cacb30ca679f4d08549f7536f01315bad0257
@@ -16,4 +17,4 @@ project: Amanda TFG BIM Agent
 revit_stage: R04
 schema_version: 1
 selected_design: AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C
-state_revision: 242
+state_revision: 243

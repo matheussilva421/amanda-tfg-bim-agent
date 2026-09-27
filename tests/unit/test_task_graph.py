@@ -166,7 +166,7 @@ def test_committed_task_graph_satisfies_the_reviewed_phase_contract():
     assert report.passed is True, report.as_dict()["issues"]
 
 
-def test_run003_p6_acceptance_unlocks_the_current_p7_stage_chain():
+def test_run003_p6_keeps_r05_blocked_and_later_stages_pending():
     graph = yaml.safe_load(
         (REPO_ROOT / "state" / "task-graph.yaml").read_text(encoding="utf-8")
     )
@@ -188,8 +188,16 @@ def test_run003_p6_acceptance_unlocks_the_current_p7_stage_chain():
         task = tasks[task_id]
         assert task["phase"] == "P7"
         assert task["title"] == title
-        assert task["status"] == "PENDING"
+        expected_status = "BLOCKED_BY_TOOL" if task_id == "P7-T01" else "PENDING"
+        assert task["status"] == expected_status
         assert task["depends_on"] == [predecessor]
+
+    assert "REVIT_SESSION_NOT_TARGETABLE:BLOCKING" in " ".join(
+        tasks["P7-T01"]["evidence"]
+    )
+    assert "completing R05 does not start R06" in " ".join(
+        tasks["P7-T01"]["evidence"]
+    )
 
     assert tasks["P05-T13"]["status"] == "PASS"
 

@@ -1983,6 +1983,35 @@ def test_known_r05_partial_geometry_rejects_unmatched_typed_floor_readback(
         )
 
 
+def test_unknown_r05_area_unit_error_preserves_raw_and_normalized_unit():
+    authorization = SimpleNamespace(
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO", "CHILD_SECTOR", "RES_PAV_A", "RES_PAV_B",
+                "RES_PAV_C", "RES_PAV_D_COMMUNAL", "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+    )
+    payload = _known_partial_model(authorization)
+    floor_row = next(row for row in payload["rows"] if row["element_id"] == 331188)
+    floor_row["parameters"]["Area"] = {"value": 1.0, "unit": "ACRES"}
+
+    with pytest.raises(ValueError) as error:
+        production_runner._validate_known_r05_partial_geometry(
+            payload,
+            _known_failed_r05_journal()["records"][:8],
+            _known_r05_floor_operations(),
+            {311: "Level 1"},
+        )
+
+    assert str(error.value) == (
+        "known R05 floor Area unit is unsupported for FLOOR-RES_PAV_A-L1: "
+        "raw='ACRES', normalized='acres'"
+    )
+
+
 def test_r05_resume_skips_only_the_eight_fully_reconciled_floor_operations():
     floors = _known_r05_floor_operations()
     operations = [

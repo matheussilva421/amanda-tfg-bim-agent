@@ -1,8 +1,9 @@
-from pathlib import Path
 from datetime import datetime, timezone
+from pathlib import Path
 
 import yaml
 
+from amanda_agent.commands.status import load_blockers
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -20,10 +21,12 @@ def test_status_dashboard_checkpoint_matches_project_state():
 def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     handoff = (ROOT / "state" / "HANDOFF.md").read_text(encoding="utf-8")
     assert (
-        "## Current state — P7-T01/R05 pending live retry"
+        "## Current state — P7-T01/R05 pending live provider recovery"
         in handoff.splitlines()[:8]
     )
-    assert "P7-T01 stays `PENDING`; this continuation is restricted to R05." in handoff
+    assert "current authorization is R05 only." in handoff
+    assert "REVIT_SESSION_NOT_TARGETABLE:BLOCKING" in handoff
+    assert "captured window content was Chrome" in handoff
     assert "The third health-first retry at about 13:32Z" in handoff
     assert "RUN-003 lease was retained" in handoff
     assert "## Prior closeout — P4-T01 R04" in handoff
@@ -38,3 +41,19 @@ def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     assert current_p6["status"] == "PASS"
     recorded = datetime.fromisoformat(current_p6["recorded_utc"].replace("Z", "+00:00"))
     assert report_minute == recorded.replace(second=0, microsecond=0)
+
+
+def test_non_targetable_revit_is_a_formal_p7_blocker():
+    project_state = yaml.safe_load(
+        (ROOT / "PROJECT_STATE.yaml").read_text(encoding="utf-8")
+    )
+    blocker = next(
+        item
+        for item in load_blockers(ROOT / "state")
+        if item.id == "REVIT_SESSION_NOT_TARGETABLE"
+    )
+
+    assert "REVIT_SESSION_NOT_TARGETABLE:BLOCKING" in project_state["blockers"]
+    assert blocker.severity.value == "BLOCKING"
+    assert blocker.affected_tasks == ["P7-T01"]
+    assert blocker.is_open
