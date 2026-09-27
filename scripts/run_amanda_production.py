@@ -25,10 +25,24 @@ from pathlib import Path
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPOSITORY_ROOT / "src"))
 
+RUN003_FAILED_R05_JOURNAL = (
+    REPOSITORY_ROOT / "revit/production/journals/R05-2f373fcb3511.json"
+)
+RUN003_FAILED_R05_FLOOR_IDS = {
+    "FLOOR-RES_PAV_A-L1": 331188,
+    "FLOOR-RES_PAV_B-L1": 331289,
+    "FLOOR-RES_PAV_C-L1": 331377,
+    "FLOOR-RES_PAV_D_COMMUNAL-L1": 331474,
+    "FLOOR-CHILD_SECTOR-L1-P01": 331548,
+    "FLOOR-CHILD_SECTOR-L1-P02": 331556,
+    "FLOOR-CHILD_SECTOR-L1-P03": 331564,
+    "FLOOR-CHILD_SECTOR-L1-P04": 331572,
+}
+
+from amanda_agent.bim.checkpoints import CheckpointManager
 from amanda_agent.bim.models import BimStage
 from amanda_agent.bim.providers import HorizunInvoker, McpProbeTransport
 from amanda_agent.bim.runner import RunStatus, execute_stage
-from amanda_agent.bim.checkpoints import CheckpointManager
 from amanda_agent.bim.stages import (
     ExecutionMode,
     stage_at_or_before,
@@ -45,13 +59,13 @@ from amanda_agent.production.layout_bim import (
     build_layout_stage_plans,
     find_project_template,
 )
-from amanda_agent.production.selection import (
-    build_selection,
-    legacy_selection_history,
-)
 from amanda_agent.production.run003_study import (
     load_run003_study_authorization,
     load_run003_study_selection,
+)
+from amanda_agent.production.selection import (
+    build_selection,
+    legacy_selection_history,
 )
 from amanda_agent.state.locks import LockHeldByAnotherOwner, WriterLock
 
@@ -382,28 +396,9 @@ def _select_revit_target(transport, revit_pid: int) -> dict:
     return payload
 
 
-def _verify_p6_live_readback(transport, authorization) -> str:
-    """Require the live model to match the complete accepted R04 baseline."""
+def _validate_p6_live_readback(payload: object, authorization) -> str:
+    """Require a typed query payload to match the accepted R04 baseline."""
 
-    payload = _read_tool(
-        transport,
-        "horizun_query_model",
-        {
-            "categories": [
-                "OST_Mass",
-                "OST_Floors",
-                "OST_Roofs",
-                "OST_Walls",
-                "OST_Rooms",
-            ],
-            "coordinate_units": "m",
-            "include_bounding_box": True,
-            "include_types": False,
-            "max_rows": 100,
-            "parameter_format": "compact",
-            "response_mode": "compact",
-        },
-    )
     if not isinstance(payload, dict):
         raise TypeError("RUN-003 P6 baseline query did not return a typed object")
     if (
@@ -465,6 +460,413 @@ def _verify_p6_live_readback(transport, authorization) -> str:
     if not isinstance(fingerprint, str) or not fingerprint:
         raise ValueError("RUN-003 P6 live query has no result fingerprint")
     return fingerprint
+
+
+def _verify_p6_live_readback(transport, authorization) -> str:
+    """Require the live model to match the complete accepted R04 baseline."""
+
+    payload = _read_tool(
+        transport,
+        "horizun_query_model",
+        {
+            "categories": [
+                "OST_Mass",
+                "OST_Floors",
+                "OST_Roofs",
+                "OST_Walls",
+                "OST_Rooms",
+            ],
+            "coordinate_units": "m",
+            "include_bounding_box": True,
+            "include_types": False,
+            "max_rows": 100,
+            "parameter_format": "compact",
+            "response_mode": "compact",
+        },
+    )
+    return _validate_p6_live_readback(payload, authorization)
+
+
+def _load_known_failed_r05_records(journal_path: Path) -> list[dict]:
+    """Accept only the recorded eight-floor, unsaved R05 partial from this run."""
+
+    try:
+        journal = json.loads(Path(journal_path).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError("known RUN-003 failed R05 journal is unavailable") from exc
+    if not isinstance(journal, dict):
+        raise TypeError("known RUN-003 failed R05 journal is malformed")
+    records = journal.get("records")
+    if (
+        journal.get("stage") != "R05"
+        or journal.get("status") != "FAILED"
+        or journal.get("persistence") is not None
+        or not isinstance(records, list)
+        or len(records) != 705
+        or not all(isinstance(record, dict) for record in records)
+    ):
+        raise ValueError("journal does not describe the known RUN-003 partial R05 attempt")
+    verified = [record for record in records if record.get("status") == "VERIFIED"]
+    observed = {record.get("logical_id"): record for record in verified}
+    if set(observed) != set(RUN003_FAILED_R05_FLOOR_IDS):
+        raise ValueError("journal does not describe the known RUN-003 partial R05 attempt")
+    if any(
+        record.get("element_id") != RUN003_FAILED_R05_FLOOR_IDS[logical_id]
+        or record.get("capability") != "revit.create_floor"
+        or not isinstance(record.get("unique_id"), str)
+        or not record["unique_id"].strip()
+        for logical_id, record in observed.items()
+    ) or len({record["unique_id"] for record in observed.values()}) != 8:
+        raise ValueError("journal identities do not match the known RUN-003 partial R05 attempt")
+    if len(verified) != 8 or sum(record.get("status") == "FAILED" for record in records) != 697:
+        raise ValueError("journal record statuses do not match the known RUN-003 partial R05 attempt")
+    return list(observed.values())
+
+
+def _validate_known_r05_partial_model(payload: object, records, authorization) -> dict:
+    """Prove the live document is exactly P6 plus the eight journaled floor writes."""
+
+    expected_message = "live document does not match the known RUN-003 partial R05 state"
+    if not isinstance(payload, dict):
+        raise TypeError(expected_message)
+    rows = payload.get("rows")
+    expected_live_categories = {"Massa": 7, "Pisos": 22, "Telhados": 4}
+    if (
+        payload.get("matched_total") != 33
+        or payload.get("returned") != 33
+        or payload.get("coverage_complete") is not True
+        or payload.get("unreadable_total") != 0
+        or payload.get("summary", {}).get("by_category") != expected_live_categories
+        or not isinstance(rows, list)
+        or len(rows) != 33
+    ):
+        raise ValueError(expected_message)
+    by_id = {
+        row.get("element_id"): row
+        for row in rows
+        if isinstance(row, dict)
+        and isinstance(row.get("element_id"), int)
+        and not isinstance(row.get("element_id"), bool)
+    }
+    if (
+        len(by_id) != 33
+        or set(by_id) != {row.get("element_id") for row in rows}
+        or len({row.get("unique_id") for row in rows if isinstance(row.get("unique_id"), str)}) != 33
+    ):
+        raise ValueError(expected_message)
+    expected_partial = {record["element_id"]: record for record in records}
+    for element_id, expected in expected_partial.items():
+        row = by_id.get(element_id)
+        if (
+            not isinstance(row, dict)
+            or row.get("category") != "Pisos"
+            or row.get("unique_id") != expected["unique_id"]
+        ):
+            raise ValueError(expected_message)
+
+    baseline_rows = [row for element_id, row in by_id.items() if element_id not in expected_partial]
+    baseline_categories: dict[str, int] = {}
+    for row in baseline_rows:
+        category = row.get("category")
+        if not isinstance(category, str):
+            raise TypeError(expected_message)
+        baseline_categories[category] = baseline_categories.get(category, 0) + 1
+    if baseline_categories != {"Massa": 7, "Pisos": 14, "Telhados": 4}:
+        raise ValueError(expected_message)
+
+    mass_rows = {
+        row.get("name"): row
+        for row in baseline_rows
+        if row.get("category") == "Massa" and isinstance(row.get("name"), str)
+    }
+    expected_mass_names = {
+        f"MASS-{component}" for component in authorization.mass_bounding_boxes_m
+    }
+    if set(mass_rows) != expected_mass_names:
+        raise ValueError(expected_message)
+    for component, expected_bounds in authorization.mass_bounding_boxes_m.items():
+        actual = mass_rows[f"MASS-{component}"].get("bounding_box")
+        if not isinstance(actual, dict):
+            raise TypeError(expected_message)
+        for bound in ("min", "max"):
+            coordinates = actual.get(bound)
+            reference = expected_bounds.get(bound)
+            if (
+                not isinstance(coordinates, (list, tuple))
+                or not isinstance(reference, (list, tuple))
+                or len(coordinates) != 3
+                or len(reference) != 3
+                or any(
+                    not math.isclose(float(value), float(expected), abs_tol=1e-6)
+                    for value, expected in zip(coordinates, reference, strict=True)
+                )
+            ):
+                raise ValueError(expected_message)
+    baseline_ids = {row.get("element_id") for row in baseline_rows}
+    if any(element_id not in baseline_ids for element_id in authorization.administrative_floor_element_ids.values()):
+        raise ValueError(expected_message)
+    return {
+        "matched_total": 33,
+        "partial_element_ids": sorted(expected_partial),
+        "p6_element_count_after_excluding_partial": 25,
+        "p6_categories_after_excluding_partial": baseline_categories,
+    }
+
+
+def _row_model_snapshot(row: object) -> tuple:
+    if not isinstance(row, dict):
+        raise TypeError("P6 checkpoint rows differ from the known RUN-003 partial")
+    element_id = row.get("element_id")
+    unique_id = row.get("unique_id")
+    category = row.get("category")
+    name = row.get("name")
+    bounds = row.get("bounding_box")
+    if (
+        isinstance(element_id, bool)
+        or not isinstance(element_id, int)
+        or not isinstance(unique_id, str)
+        or not unique_id.strip()
+        or not isinstance(category, str)
+        or not isinstance(name, str)
+        or not isinstance(bounds, dict)
+    ):
+        raise TypeError("P6 checkpoint rows differ from the known RUN-003 partial")
+    normalized_bounds = []
+    for bound in ("min", "max"):
+        coordinates = bounds.get(bound)
+        if not isinstance(coordinates, (list, tuple)) or len(coordinates) != 3:
+            raise TypeError("P6 checkpoint rows differ from the known RUN-003 partial")
+        values = []
+        for value in coordinates:
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+                raise TypeError("P6 checkpoint rows differ from the known RUN-003 partial")
+            values.append(float(value))
+        normalized_bounds.extend(values)
+    return element_id, unique_id, category, name, tuple(normalized_bounds)
+
+
+def _compare_known_partial_to_p6_checkpoint(partial_payload, checkpoint_payload, records) -> None:
+    """Require the unsaved target to equal the P6 checkpoint plus eight floors."""
+
+    partial_ids = {record["element_id"] for record in records}
+    partial_rows = partial_payload.get("rows") if isinstance(partial_payload, dict) else None
+    checkpoint_rows = checkpoint_payload.get("rows") if isinstance(checkpoint_payload, dict) else None
+    if not isinstance(partial_rows, list) or not isinstance(checkpoint_rows, list):
+        raise TypeError("P6 checkpoint rows differ from the known RUN-003 partial")
+    try:
+        partial_by_id = {_row_model_snapshot(row)[0]: _row_model_snapshot(row) for row in partial_rows}
+        checkpoint_by_id = {
+            _row_model_snapshot(row)[0]: _row_model_snapshot(row)
+            for row in checkpoint_rows
+        }
+    except (TypeError, ValueError) as exc:
+        raise ValueError("P6 checkpoint rows differ from the known RUN-003 partial") from exc
+    if (
+        len(partial_by_id) != len(partial_rows)
+        or len(checkpoint_by_id) != len(checkpoint_rows)
+        or set(partial_by_id) - partial_ids != set(checkpoint_by_id)
+        or set(partial_by_id) & partial_ids != partial_ids
+    ):
+        raise ValueError("P6 checkpoint rows differ from the known RUN-003 partial")
+    for element_id, expected in checkpoint_by_id.items():
+        actual = partial_by_id[element_id]
+        if actual[:4] != expected[:4] or any(
+            not math.isclose(left, right, abs_tol=1e-6)
+            for left, right in zip(actual[4], expected[4], strict=True)
+        ):
+            raise ValueError("P6 checkpoint rows differ from the known RUN-003 partial")
+
+
+def _close_p6_inspection_checkpoint(transport, target: Path, checkpoint: Path, run_key: str):
+    _activate(transport, target)
+    closed = _read_tool(
+        transport,
+        "horizun_document_session",
+        {
+            "operation": "close",
+            "target_document": str(checkpoint),
+            "save_on_close": False,
+            "activate_other": True,
+            "idempotency_key": _new_idempotency_key("close-p6-inspection", run_key),
+        },
+    )
+    if not isinstance(closed, dict) or closed.get("closed") is not True:
+        raise RuntimeError(f"RUN-003 P6 checkpoint close was not verified: {closed!r}")
+    _activate(transport, target)
+    active = _active_path(_document_info(transport))
+    if not active or Path(active).resolve() != target:
+        raise RuntimeError("RUN-003 target is not active after P6 checkpoint inspection")
+    return closed
+
+
+def _restore_known_failed_r05_partial(
+    transport,
+    target: Path,
+    authorization,
+    *,
+    journal_path: Path,
+    run_key: str,
+) -> dict:
+    """Discard only the exactly identified unsaved writes and reopen the P6 file."""
+
+    target = Path(target).resolve()
+    permits_target_path = getattr(authorization, "permits_target_path", None)
+    if not callable(permits_target_path) or not permits_target_path(target):
+        raise ValueError("cannot restore RUN-003 partial: target is outside the P6 grant")
+    info = _document_info(transport)
+    active = _active_path(info)
+    if not active or Path(active).resolve() != target:
+        raise ValueError("cannot restore RUN-003 partial: exact target is not active")
+    records = _load_known_failed_r05_records(journal_path)
+    live = _read_tool(
+        transport,
+        "horizun_query_model",
+        {
+            "categories": ["OST_Mass", "OST_Floors", "OST_Roofs", "OST_Walls", "OST_Rooms"],
+            "coordinate_units": "m",
+            "include_bounding_box": True,
+            "include_types": False,
+            "max_rows": 100,
+            "response_mode": "compact",
+            "cache_mode": "bypass",
+        },
+    )
+    state = _validate_known_r05_partial_model(live, records, authorization)
+    checkpoint = (REPOSITORY_ROOT / authorization.checkpoint_path).resolve()
+    if not checkpoint.is_file() or checkpoint == target:
+        raise ValueError("RUN-003 P6 checkpoint path is unavailable or aliases the target")
+    try:
+        checkpoint.relative_to(REPOSITORY_ROOT.resolve())
+    except ValueError as exc:
+        raise ValueError("RUN-003 P6 checkpoint is outside the repository") from exc
+    checkpoint_manifest = checkpoint.with_suffix(checkpoint.suffix + ".manifest.json")
+    checkpoint_verified = CheckpointManager().verify_checkpoint(checkpoint_manifest)
+    checkpoint_opened = False
+    try:
+        opened_checkpoint = _read_tool(
+            transport,
+            "horizun_document_session",
+            {
+                "operation": "open",
+                "file_path": str(checkpoint),
+                "expected_version": "2027",
+                "allow_upgrade": False,
+                "idempotency_key": _new_idempotency_key("inspect-p6-checkpoint", run_key),
+            },
+        )
+        checkpoint_info = _document_info(transport)
+        checkpoint_active = _active_path(checkpoint_info)
+        checkpoint_opened = bool(
+            checkpoint_active and Path(checkpoint_active).resolve() == checkpoint
+        )
+        if (
+            not isinstance(opened_checkpoint, dict)
+            or opened_checkpoint.get("opened") is not True
+            or opened_checkpoint.get("path_matches_request") is not True
+            or opened_checkpoint.get("upgraded_on_open") is not False
+            or not checkpoint_opened
+        ):
+            raise RuntimeError(f"RUN-003 P6 checkpoint open was not verified: {opened_checkpoint!r}")
+        checkpoint_payload = _read_tool(
+            transport,
+            "horizun_query_model",
+            {
+                "categories": ["OST_Mass", "OST_Floors", "OST_Roofs", "OST_Walls", "OST_Rooms"],
+                "coordinate_units": "m",
+                "include_bounding_box": True,
+                "include_types": False,
+                "max_rows": 100,
+                "parameter_format": "compact",
+                "response_mode": "compact",
+            },
+        )
+        checkpoint_fingerprint = _validate_p6_live_readback(checkpoint_payload, authorization)
+        if checkpoint_fingerprint != authorization.p6_readback_fingerprint:
+            raise ValueError("opened RUN-003 P6 checkpoint fingerprint differs from accepted evidence")
+        _activate(transport, target)
+        target_active = _active_path(_document_info(transport))
+        if not target_active or Path(target_active).resolve() != target:
+            raise RuntimeError("RUN-003 partial target could not be reactivated for comparison")
+        live_again = _read_tool(
+            transport,
+            "horizun_query_model",
+            {
+                "categories": ["OST_Mass", "OST_Floors", "OST_Roofs", "OST_Walls", "OST_Rooms"],
+                "coordinate_units": "m",
+                "include_bounding_box": True,
+                "include_types": False,
+                "max_rows": 100,
+                "response_mode": "compact",
+                "cache_mode": "bypass",
+            },
+        )
+        _validate_known_r05_partial_model(live_again, records, authorization)
+        _compare_known_partial_to_p6_checkpoint(live_again, checkpoint_payload, records)
+    except Exception:
+        if checkpoint_opened:
+            try:
+                _close_p6_inspection_checkpoint(transport, target, checkpoint, run_key)
+            except Exception as cleanup_exc:
+                raise RuntimeError(
+                    "RUN-003 P6 comparison failed and its inspection document could not be closed"
+                ) from cleanup_exc
+        raise
+    checkpoint_closed = _close_p6_inspection_checkpoint(
+        transport, target, checkpoint, run_key
+    )
+    closed = _read_tool(
+        transport,
+        "horizun_document_session",
+        {
+            "operation": "close",
+            "target_document": str(target),
+            "save_on_close": False,
+            "activate_other": True,
+            "idempotency_key": _new_idempotency_key("discard-unsaved-r05", run_key),
+        },
+    )
+    if not isinstance(closed, dict) or closed.get("closed") is not True:
+        raise RuntimeError(f"RUN-003 unsaved R05 close was not verified: {closed!r}")
+    reopened = _read_tool(
+        transport,
+        "horizun_document_session",
+        {
+            "operation": "open",
+            "file_path": str(target),
+            "expected_version": "2027",
+            "allow_upgrade": False,
+            "idempotency_key": _new_idempotency_key("reopen-p6", run_key),
+        },
+    )
+    if (
+        not isinstance(reopened, dict)
+        or reopened.get("opened") is not True
+        or reopened.get("path_matches_request") is not True
+        or reopened.get("upgraded_on_open") is not False
+    ):
+        raise RuntimeError(f"RUN-003 P6 target reopen was not verified: {reopened!r}")
+    active_after = _document_info(transport)
+    active_path = _active_path(active_after)
+    if not active_path or Path(active_path).resolve() != target:
+        raise RuntimeError("RUN-003 restore reopened a different active document")
+    baseline_fingerprint = _verify_p6_live_readback(transport, authorization)
+    return {
+        "journal_path": str(Path(journal_path).resolve()),
+        "discarded_unsaved_writes": state["partial_element_ids"],
+        "pre_close_live_state": state,
+        "p6_checkpoint": {
+            "path": str(checkpoint),
+            "checkpoint_manager_verified": checkpoint_verified,
+            "readback_fingerprint": checkpoint_fingerprint,
+            "baseline_element_count": len(checkpoint_payload["rows"]),
+            "target_matches_p6_plus_partial": True,
+            "inspection_close": checkpoint_closed,
+        },
+        "close_without_save": closed,
+        "reopen": reopened,
+        "reopened_exact_target": True,
+        "p6_baseline_fingerprint": baseline_fingerprint,
+    }
 
 
 def _save_checkpoint_reopen_stage(
@@ -973,6 +1375,7 @@ def run(
     print("lease acquired:" if owns_lock else "using existing RUN-003 lease")
     try:
         with McpProbeTransport(timeout=900.0) as transport:
+            recovery_evidence = None
             if study_authorization is not None:
                 health = _read_tool(transport, "horizun_health", {})
                 mcp_client_pid = transport.pin_process_identity()
@@ -991,9 +1394,28 @@ def run(
                 active = _active_path(info)
                 if not active or Path(active).resolve() != rvt:
                     raise ValueError("Horizun document readback does not match RUN-003")
-                baseline_fingerprint = _verify_p6_live_readback(
-                    transport, study_authorization
-                )
+                try:
+                    baseline_fingerprint = _verify_p6_live_readback(
+                        transport, study_authorization
+                    )
+                except ValueError:
+                    exact_run003_target = (
+                        REPOSITORY_ROOT
+                        / "revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt"
+                    ).resolve()
+                    if rvt != exact_run003_target or not RUN003_FAILED_R05_JOURNAL.is_file():
+                        raise
+                    recovery_evidence = _restore_known_failed_r05_partial(
+                        transport,
+                        rvt,
+                        study_authorization,
+                        journal_path=RUN003_FAILED_R05_JOURNAL,
+                        run_key=uuid.uuid4().hex[:12],
+                    )
+                    baseline_fingerprint = recovery_evidence[
+                        "p6_baseline_fingerprint"
+                    ]
+                    print("restored exact P6 baseline after guarded unsaved R05 partial")
                 print("P6 baseline readback:", baseline_fingerprint)
             run_key = uuid.uuid4().hex[:12]
             if study_authorization is None:
@@ -1093,6 +1515,7 @@ def run(
                                 "status": result.status.value,
                                 "records": record_evidence,
                                 "persistence": None,
+                                "recovery": recovery_evidence,
                             },
                             indent=2,
                             sort_keys=True,
@@ -1125,6 +1548,7 @@ def run(
                                         "type": type(exc).__name__,
                                         "message": str(exc),
                                     },
+                                    "recovery": recovery_evidence,
                                 },
                                 indent=2,
                                 sort_keys=True,
@@ -1146,6 +1570,7 @@ def run(
                             "status": result.status.value,
                             "records": record_evidence,
                             "persistence": persistence,
+                            "recovery": recovery_evidence,
                         },
                         indent=2,
                         sort_keys=True,

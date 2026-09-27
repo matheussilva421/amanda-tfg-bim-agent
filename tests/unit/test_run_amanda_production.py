@@ -1494,3 +1494,277 @@ def test_active_runner_has_no_legacy_linear_layout_builder_import():
     source = Path(production_runner.__file__).read_text(encoding="utf-8")
 
     assert "build_courtyard_layout" not in source
+
+
+def _known_failed_r05_journal():
+    expected_ids = {
+        "FLOOR-RES_PAV_A-L1": 331188,
+        "FLOOR-RES_PAV_B-L1": 331289,
+        "FLOOR-RES_PAV_C-L1": 331377,
+        "FLOOR-RES_PAV_D_COMMUNAL-L1": 331474,
+        "FLOOR-CHILD_SECTOR-L1-P01": 331548,
+        "FLOOR-CHILD_SECTOR-L1-P02": 331556,
+        "FLOOR-CHILD_SECTOR-L1-P03": 331564,
+        "FLOOR-CHILD_SECTOR-L1-P04": 331572,
+    }
+    records = [
+        {
+            "logical_id": logical_id,
+            "status": "VERIFIED",
+            "element_id": element_id,
+            "unique_id": f"uid-{element_id}",
+            "capability": "revit.create_floor",
+            "error": None,
+        }
+        for logical_id, element_id in expected_ids.items()
+    ]
+    records.extend(
+        {
+            "logical_id": f"FAILED-{index}",
+            "status": "FAILED",
+            "element_id": None,
+            "unique_id": None,
+            "capability": "revit.create_wall",
+            "error": {"message": "preflight refusal"},
+        }
+        for index in range(697)
+    )
+    return {"stage": "R05", "status": "FAILED", "persistence": None, "records": records}
+
+
+def _known_partial_model(authorization):
+    categories = {"Massa": 7, "Pisos": 22, "Telhados": 4}
+    rows = []
+    for index, (component, bounds) in enumerate(authorization.mass_bounding_boxes_m.items()):
+        rows.append(
+            {
+                "element_id": 320000 + index,
+                "unique_id": f"mass-{index}",
+                "category": "Massa",
+                "name": f"MASS-{component}",
+                "bounding_box": bounds,
+            }
+        )
+    for element_id in authorization.administrative_floor_element_ids.values():
+        rows.append(
+            {
+                "element_id": element_id,
+                "unique_id": f"admin-floor-{element_id}",
+                "category": "Pisos",
+                "name": f"R04-ADMIN-FLOOR-{element_id}",
+                "bounding_box": {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 0.1]},
+            }
+        )
+    rows.extend(
+        {
+            "element_id": 321000 + index,
+            "unique_id": f"floor-{index}",
+            "category": "Pisos",
+            "name": f"floor-{index}",
+            "bounding_box": {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 0.1]},
+        }
+        for index in range(12)
+    )
+    rows.extend(
+        {
+            "element_id": 322000 + index,
+            "unique_id": f"roof-{index}",
+            "category": "Telhados",
+            "name": f"roof-{index}",
+            "bounding_box": {"min": [0.0, 0.0, 3.0], "max": [1.0, 1.0, 3.1]},
+        }
+        for index in range(4)
+    )
+    for record in _known_failed_r05_journal()["records"][:8]:
+        rows.append(
+            {
+                "element_id": record["element_id"],
+                "unique_id": record["unique_id"],
+                "category": "Pisos",
+                "name": record["logical_id"],
+                "bounding_box": {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 0.1]},
+            }
+        )
+    return {
+        "matched_total": 33,
+        "returned": 33,
+        "coverage_complete": True,
+        "unreadable_total": 0,
+        "summary": {"by_category": categories},
+        "rows": rows,
+    }
+
+
+def _known_p6_model(authorization):
+    partial = _known_partial_model(authorization)
+    partial_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
+    rows = [row for row in partial["rows"] if row["element_id"] not in partial_ids]
+    return {
+        "matched_total": 25,
+        "returned": 25,
+        "coverage_complete": True,
+        "unreadable_total": 0,
+        "summary": {"by_category": {"Massa": 7, "Pisos": 14, "Telhados": 4}},
+        "result_set_fingerprint": "p6-fingerprint",
+        "rows": rows,
+    }
+
+
+def test_known_partial_recovery_rejects_changed_existing_p6_element_geometry():
+    authorization = SimpleNamespace(
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO", "CHILD_SECTOR", "RES_PAV_A", "RES_PAV_B",
+                "RES_PAV_C", "RES_PAV_D_COMMUNAL", "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+    )
+    partial = _known_partial_model(authorization)
+    checkpoint = _known_p6_model(authorization)
+    checkpoint["rows"][0]["bounding_box"] = {
+        "min": [0.0, 0.0, 0.0],
+        "max": [1.25, 1.0, 1.0],
+    }
+
+    with pytest.raises(ValueError, match="P6 checkpoint rows differ"):
+        production_runner._compare_known_partial_to_p6_checkpoint(
+            partial,
+            checkpoint,
+            _known_failed_r05_journal()["records"][:8],
+        )
+
+
+def test_known_r05_partial_is_reopened_without_saving_only_after_exact_state_checks(
+    tmp_path, monkeypatch
+):
+    target = tmp_path / "RUN-003.rvt"
+    target.write_bytes(b"p6-checkpoint-bytes")
+    checkpoint = tmp_path / "P6-checkpoint.rvt"
+    checkpoint.write_bytes(b"p6-checkpoint-bytes")
+    journal_path = tmp_path / "R05-failed.json"
+    journal_path.write_text(json.dumps(_known_failed_r05_journal()), encoding="utf-8")
+    authorization = SimpleNamespace(
+        checkpoint_sha256="a" * 64,
+        checkpoint_path="P6-checkpoint.rvt",
+        p6_readback_fingerprint="p6-fingerprint",
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO",
+                "CHILD_SECTOR",
+                "RES_PAV_A",
+                "RES_PAV_B",
+                "RES_PAV_C",
+                "RES_PAV_D_COMMUNAL",
+                "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+        permits_target_path=lambda path: Path(path).resolve() == target.resolve(),
+    )
+    tool_calls = []
+    active_path = [str(target)]
+    monkeypatch.setattr(production_runner, "REPOSITORY_ROOT", tmp_path)
+
+    def read_tool(_transport, tool, arguments):
+        tool_calls.append((tool, arguments))
+        if tool == "get_document_info":
+            return {"path": active_path[0]}
+        if tool == "horizun_query_model":
+            if Path(active_path[0]).resolve() == checkpoint.resolve():
+                return _known_p6_model(authorization)
+            return _known_partial_model(authorization)
+        if tool == "horizun_document_session" and arguments["operation"] == "close":
+            if Path(arguments.get("target_document", "")).resolve() == target.resolve():
+                active_path[0] = str(tmp_path / "another-document.rvt")
+            else:
+                active_path[0] = str(target)
+            return {"closed": True}
+        if tool == "horizun_document_session" and arguments["operation"] == "open":
+            active_path[0] = arguments.get("file_path", "")
+            return {"opened": True, "path_matches_request": True, "upgraded_on_open": False}
+        raise AssertionError(f"unexpected tool {tool}")
+
+    monkeypatch.setattr(production_runner, "_read_tool", read_tool)
+    monkeypatch.setattr(production_runner, "_document_info", lambda _transport: {"path": active_path[0]})
+    monkeypatch.setattr(production_runner, "_verify_p6_live_readback", lambda *_: "p6-fingerprint")
+    monkeypatch.setattr(production_runner.CheckpointManager, "verify_checkpoint", lambda *_: True)
+
+    class FakeTransport:
+        def call(self, tool, arguments):
+            tool_calls.append((tool, arguments))
+            if tool == "horizun_document_session" and arguments.get("operation") == "open":
+                active_path[0] = arguments.get("file_path", "")
+            return {"result": {"structuredContent": {}}}
+
+    evidence = production_runner._restore_known_failed_r05_partial(
+        FakeTransport(),
+        target,
+        authorization,
+        journal_path=journal_path,
+        run_key="restore-test",
+    )
+
+    assert evidence["reopened_exact_target"] is True
+    assert evidence["p6_baseline_fingerprint"] == "p6-fingerprint"
+    closes = [args for tool, args in tool_calls if tool == "horizun_document_session" and args["operation"] == "close"]
+    assert len(closes) == 2
+    assert all(args["save_on_close"] is False for args in closes)
+    checkpoint_open = next(
+        i for i, (tool, args) in enumerate(tool_calls)
+        if tool == "horizun_document_session"
+        and args["operation"] == "open"
+        and Path(args.get("file_path", "")).resolve() == checkpoint.resolve()
+    )
+    target_close = next(
+        i for i, (tool, args) in enumerate(tool_calls)
+        if tool == "horizun_document_session"
+        and args["operation"] == "close"
+        and Path(args.get("target_document", "")).resolve() == target.resolve()
+    )
+    assert checkpoint_open < target_close
+
+
+def test_known_r05_partial_recovery_refuses_unexpected_model_rows_before_close(
+    tmp_path, monkeypatch
+):
+    target = tmp_path / "RUN-003.rvt"
+    journal_path = tmp_path / "R05-failed.json"
+    journal_path.write_text(json.dumps(_known_failed_r05_journal()), encoding="utf-8")
+    authorization = SimpleNamespace(
+        checkpoint_sha256="a" * 64,
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO", "CHILD_SECTOR", "RES_PAV_A", "RES_PAV_B",
+                "RES_PAV_C", "RES_PAV_D_COMMUNAL", "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+        permits_target_path=lambda path: Path(path).resolve() == target.resolve(),
+    )
+    calls = []
+
+    def read_tool(_transport, tool, arguments):
+        calls.append((tool, arguments))
+        if tool == "horizun_file_info":
+            return {"files": [{"path": str(target), "sha256": authorization.checkpoint_sha256}]}
+        if tool == "horizun_query_model":
+            payload = _known_partial_model(authorization)
+            payload["rows"].append({"element_id": 999999, "unique_id": "unexpected", "category": "Paredes"})
+            payload["matched_total"] = payload["returned"] = 34
+            payload["summary"]["by_category"]["Paredes"] = 1
+            return payload
+        raise AssertionError(f"unexpected tool {tool}")
+
+    monkeypatch.setattr(production_runner, "_read_tool", read_tool)
+    monkeypatch.setattr(production_runner, "_document_info", lambda _transport: {"path": str(target)})
+
+    with pytest.raises(ValueError, match="does not match the known RUN-003 partial"):
+        production_runner._restore_known_failed_r05_partial(
+            object(), target, authorization, journal_path=journal_path, run_key="restore-test"
+        )
+
+    assert not any(tool == "horizun_document_session" for tool, _ in calls)

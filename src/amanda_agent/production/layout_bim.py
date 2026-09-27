@@ -24,6 +24,7 @@ import hashlib
 import json
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
+from itertools import pairwise
 from math import hypot
 from pathlib import Path
 from typing import Any
@@ -31,11 +32,10 @@ from typing import Any
 from shapely.geometry import LineString, Polygon  # type: ignore[import-untyped]
 
 from amanda_agent.bim.models import BimStage, DesiredState
-from amanda_agent.bim.write_gate import CoordinateSiteMode
 from amanda_agent.bim.stages import (
     CheckStatus,
-    ExecutionMode,
     EvidenceScope,
+    ExecutionMode,
     PreflightRequest,
     StageCheck,
     run_preflight,
@@ -54,6 +54,7 @@ from amanda_agent.bim.stages import project as project_stage
 from amanda_agent.bim.stages import rooms as rooms_stage
 from amanda_agent.bim.stages import shell as shell_stage
 from amanda_agent.bim.stages import site as site_stage
+from amanda_agent.bim.write_gate import CoordinateSiteMode
 from amanda_agent.design.architectural_layout import CourtyardLayout
 from amanda_agent.design.canonical_pavilion_layout import CanonicalPavilionLayout
 from amanda_agent.design.models import compute_design_approval_hash
@@ -96,6 +97,11 @@ DEFAULT_TEMPLATE_ROOTS: tuple[Path, ...] = (
 #: The Brazilian Portuguese architectural template of the installed build.
 DEFAULT_TEMPLATE_NAME = "Default_M_PTB.rte"
 
+# The canonical services curve includes one 0.119 mm edge. Simplifying by at
+# most 1 mm removes that numerical artifact while keeping the plan within a
+# sub-millimeter-scale modeling tolerance.
+R05_PROFILE_SIMPLIFICATION_TOLERANCE_M = 0.001
+
 #: The level the plan builds on.  It is the logical id the level carries in the
 #: model, which is what the bridge resolves a level reference against.
 LEVEL_LOGICAL_ID = "LEVEL-01"
@@ -107,6 +113,7 @@ LEVEL_LOGICAL_ID = "LEVEL-01"
 #: reference is resolved by the bridge against an instance listing, which cannot
 #: hold a type, so resolving a name there always finds nothing.
 EXTERNAL_WALL_TYPE_ID = 250  # "Genérico - 250 mm"
+EXTERNAL_WALL_TYPE_NAME = "Genérico - 250 mm"
 INTERNAL_WALL_TYPE_ID = 220  # "Interior - 138 mm Divisória (1-hr)"
 
 #: Operations that Revit refuses unless they name their level.
@@ -834,6 +841,32 @@ def _polygon_parts(geometry: Any) -> list[Polygon]:
     )
 
 
+def _simplify_r05_profile(polygon: Polygon) -> Polygon:
+    """Remove Revit-invalid micro-edges within a bounded geometry tolerance."""
+
+    tolerance = R05_PROFILE_SIMPLIFICATION_TOLERANCE_M
+    simplified = polygon.simplify(tolerance, preserve_topology=True)
+    if (
+        not isinstance(simplified, Polygon)
+        or not simplified.is_valid
+        or len(simplified.interiors) != len(polygon.interiors)
+        or polygon.hausdorff_distance(simplified) > tolerance
+    ):
+        raise ProductionBimError(
+            "R05 profile simplification changed topology or exceeded its 1 mm bound"
+        )
+    for ring in (simplified.exterior, *simplified.interiors):
+        coordinates = list(ring.coords)
+        if any(
+            hypot(end[0] - start[0], end[1] - start[1]) < tolerance
+            for start, end in pairwise(coordinates)
+        ):
+            raise ProductionBimError(
+                "R05 profile still contains an edge shorter than 1 mm"
+            )
+    return simplified
+
+
 def plan_canonical_shell_stage(
     request,
     layout: CanonicalPavilionLayout,
@@ -892,8 +925,14 @@ def plan_canonical_shell_stage(
             else {}
         )
         for level in levels:
-            floor_polygons = _polygon_parts(block.floor_footprints[level])
-            envelope_polygons = _polygon_parts(block.footprint)
+            floor_polygons = [
+                _simplify_r05_profile(polygon)
+                for polygon in _polygon_parts(block.floor_footprints[level])
+            ]
+            envelope_polygons = [
+                _simplify_r05_profile(polygon)
+                for polygon in _polygon_parts(block.footprint)
+            ]
             envelope_id = f"ENVELOPE-{block.component_id}-L{level}"
             courtyard_rooms = [
                 {
@@ -935,11 +974,13 @@ def plan_canonical_shell_stage(
                 slab_loops=[],
                 roof=roof,
                 wall_types={
-                    "external": str(EXTERNAL_WALL_TYPE_ID),
+                    "external": EXTERNAL_WALL_TYPE_NAME,
                     "internal": str(INTERNAL_WALL_TYPE_ID),
                 },
                 wall_type_source=(
-                    "read from installed Revit 2027 template Default_M_PTB.rte on build 27.2.0.39"
+                    "type name read from installed Revit 2027 template "
+                    "Default_M_PTB.rte; Horizun resolves one exact OST_Walls "
+                    "match in the target before each dry run"
                 ),
                 include_shared_walls=False,
             )
@@ -977,8 +1018,29 @@ def plan_canonical_shell_stage(
                         )
                 if element.category == "ROOF" and continuation:
                     properties["offset"] = top_elevation - base_elevation
+                element_geometry = element.geometry
+                if element.category == "ROOF" and continuation:
+                    source_rings = element_geometry.get("coordinates")
+                    if not isinstance(source_rings, list) or not source_rings:
+                        raise ProductionBimError(
+                            f"R05 roof {logical_id} has no polygon rings"
+                        )
+                    element_geometry = {
+                        **element_geometry,
+                        "coordinates": [
+                            [
+                                [float(point[0]), float(point[1]), top_elevation]
+                                for point in ring
+                            ]
+                            for ring in source_rings
+                        ],
+                    }
                 updated = element.model_copy(
-                    update={"logical_id": logical_id, "properties": properties}
+                    update={
+                        "logical_id": logical_id,
+                        "properties": properties,
+                        "geometry": element_geometry,
+                    }
                 )
                 elements.append(updated)
                 updated_by_old_id[element.logical_id] = updated

@@ -1562,13 +1562,8 @@ def _created_elements(transport: FakeMcpTransport) -> list[dict[str, Any]]:
     return batches[-1]
 
 
-def test_floor_profile_is_emitted_as_a_closed_loop_of_three_dimensional_points():
-    """Live probe: "profile[0][0] must contain exactly three coordinates."
-
-    The bridge accepts a floor slab footprint only as List[CurveLoop]; a flat
-    ring of XY pairs is refused before anything is written, so the generated
-    request has to close the ring and lift every point to 3D.
-    """
+def test_floor_profile_preserves_closed_3d_loops_including_courtyard_holes():
+    """Live probe: slab profiles are closed 3D loops, including inner rings."""
 
     transport = FakeMcpTransport(
         _reply({"title": "LAB_AMANDA", "path": "LAB_AMANDA.rvt", "version": "2027"}),
@@ -1580,7 +1575,10 @@ def test_floor_profile_is_emitted_as_a_closed_loop_of_three_dimensional_points()
         "revit.create_floor",
         BimStage.R06,
         geometry={
-            "footprint": [[0.0, 0.0], [3.0, 0.0], [3.0, 3.0], [0.0, 3.0]],
+            "footprint": [
+                [[0.0, 0.0], [3.0, 0.0], [3.0, 3.0], [0.0, 3.0]],
+                [[1.0, 1.0], [2.0, 1.0], [2.0, 2.0], [1.0, 2.0]],
+            ],
             "level_id": 311,
         },
     )
@@ -1588,11 +1586,39 @@ def test_floor_profile_is_emitted_as_a_closed_loop_of_three_dimensional_points()
     invoker.invoke(call)
 
     profile = _created_elements(transport)[0]["profile"]
+    assert len(profile) == 2, "the inner courtyard loop must reach Revit"
     assert isinstance(profile[0][0], list), "a floor profile is a list of loops"
     assert all(
         len(point) == 3 for loop in profile for point in loop
     ), "every profile point needs three coordinates"
-    assert profile[0][0] == profile[0][-1], "the loop must close on its first point"
+    assert all(loop[0] == loop[-1] for loop in profile), "every loop must close"
+
+
+def test_roof_profile_preserves_absolute_z_and_level_relative_offset():
+    transport = FakeMcpTransport(
+        _reply({"title": "LAB_AMANDA"}),
+        _reply({"rows": [{"element_id": 694}]}),
+        _reply({"dry_run": True, "state": "rehearsed"}),
+    )
+    invoker = HorizunInvoker(transport=transport)
+    call = _python_call(
+        "revit.create_roof",
+        BimStage.R05,
+        geometry={
+            "footprint": [
+                [[0.0, 0.0, 7.5], [4.0, 0.0, 7.5], [4.0, 4.0, 7.5], [0.0, 4.0, 7.5]]
+            ],
+            "level_id": 694,
+        },
+        properties={"offset": 3.5},
+        dry_run=True,
+    )
+
+    invoker.invoke(call)
+
+    roof = _created_elements(transport)[0]
+    assert roof["offset"] == pytest.approx(3.5)
+    assert {point[2] for point in roof["profile"][0]} == {7.5}
 
 
 def test_room_point_is_emitted_as_xy_because_revit_ignores_its_z():

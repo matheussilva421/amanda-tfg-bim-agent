@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from itertools import pairwise
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -52,12 +53,12 @@ from amanda_agent.production.layout_bim import (
     build_walls,
     layout_stage_order,
 )
+from amanda_agent.production.run003_study import (
+    load_run003_study_authorization,
+)
 from amanda_agent.production.selection import (
     build_canonical_selection,
     build_legacy_selection,
-)
-from amanda_agent.production.run003_study import (
-    load_run003_study_authorization,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -1183,3 +1184,151 @@ def test_run003_builder_begins_at_r05_and_requires_a_matching_p6_grant(
         .status.value
         == "FAIL"
     )
+
+
+def _p6_run003_r05_plan(registry, canonical_program):
+    profile = CanonicalReferenceProfile.load(ROOT)
+    layout = build_canonical_pavilion_layout(canonical_program, profile)
+    identity = load_canonical_solution_identity(ROOT)
+    authorization = load_run003_study_authorization(ROOT)
+    selection = build_canonical_selection(
+        layout,
+        profile,
+        generation_run="AMANDA-RUN-003-PAVILION-CANONICAL",
+        timestamp="2026-09-26T00:00:00Z",
+        solution_identity=identity,
+    ).solution
+    request = _request(
+        BimStage.R05,
+        registry=registry,
+        revit_build=BUILD,
+        tool_schema_hash=SCHEMA,
+        generation_run=selection.run_id,
+        mode="NORMALIZED_STUDY_POST_P6",
+        solution=selection,
+        expected_approval_hash=selection.approval_hash,
+        run003_study_authorization=authorization,
+    )
+    plan = layout_bim.plan_canonical_shell_stage(
+        request, layout, authorization=authorization
+    )
+    return _stamp(plan, selection.solution_id, selection.approval_hash), layout, authorization
+
+
+def _profile_rings(operation):
+    profile = operation.payload["geometry"]["footprint"]
+    if profile and all(
+        isinstance(point, (list, tuple))
+        and len(point) in {2, 3}
+        and all(isinstance(value, (int, float)) for value in point)
+        for point in profile
+    ):
+        return [profile]
+    return profile
+
+
+def test_run003_roof_absolute_profile_z_agrees_with_level_and_offset(
+    registry, canonical_program
+):
+    plan, layout, authorization = _p6_run003_r05_plan(registry, canonical_program)
+    roofs = [
+        operation
+        for operation in plan.operations
+        if operation.semantic_capability == "revit.create_roof"
+    ]
+
+    assert roofs
+    for operation in roofs:
+        properties = operation.payload["properties"]
+        component_id = properties["component_id"]
+        level = properties["level"]
+        levels = tuple(sorted(layout.block(component_id).floor_footprints))
+        elevations = {
+            level_index + 1: (base, top)
+            for level_index, base, top in authorization.wall_elevations_m(
+                component_id, levels
+            )
+        }
+        base_elevation, top_elevation = elevations[level]
+        assert properties["offset"] == pytest.approx(
+            top_elevation - base_elevation
+        )
+        assert all(
+            len(point) == 3 and point[2] == pytest.approx(top_elevation)
+            for ring in _profile_rings(operation)
+            for point in ring
+        )
+
+
+def test_run003_service_floor_and_roof_preserve_curved_courtyard_voids(
+    registry, canonical_program
+):
+    plan, layout, _authorization = _p6_run003_r05_plan(registry, canonical_program)
+    source = layout.block("SERVICE_CAPACITATION").footprint
+    operations = [
+        operation
+        for operation in plan.operations
+        if operation.semantic_capability
+        in {"revit.create_floor", "revit.create_roof"}
+        and operation.payload["properties"].get("component_id")
+        == "SERVICE_CAPACITATION"
+    ]
+
+    assert {operation.semantic_capability for operation in operations} == {
+        "revit.create_floor",
+        "revit.create_roof",
+    }
+    for operation in operations:
+        rings = _profile_rings(operation)
+        assert len(rings) == 1 + len(source.interiors)
+        rebuilt = Polygon(
+            [(point[0], point[1]) for point in rings[0]],
+            holes=[[(point[0], point[1]) for point in ring] for ring in rings[1:]],
+        )
+        assert rebuilt.is_valid
+        assert rebuilt.hausdorff_distance(source) <= 0.001
+        assert abs(rebuilt.area - source.area) <= 0.001
+
+
+def test_run003_service_profiles_have_no_submillimeter_edges(
+    registry, canonical_program
+):
+    plan, _layout, _authorization = _p6_run003_r05_plan(registry, canonical_program)
+    operations = [
+        operation
+        for operation in plan.operations
+        if operation.semantic_capability
+        in {"revit.create_floor", "revit.create_roof", "revit.create_wall"}
+        and operation.payload["properties"].get("component_id")
+        == "SERVICE_CAPACITATION"
+    ]
+
+    for operation in operations:
+        if operation.semantic_capability == "revit.create_wall":
+            start = operation.payload["geometry"]["start"]
+            end = operation.payload["geometry"]["end"]
+            assert ((end[0] - start[0]) ** 2 + (end[1] - start[1]) ** 2) ** 0.5 >= 0.001
+            continue
+        for ring in _profile_rings(operation):
+            edge_lengths = [
+                ((second[0] - first[0]) ** 2 + (second[1] - first[1]) ** 2)
+                ** 0.5
+                for first, second in pairwise(ring)
+            ]
+            assert min(edge_lengths) >= 0.001
+
+
+def test_run003_external_walls_use_the_source_backed_template_type_name(
+    registry, canonical_program
+):
+    plan, _layout, _authorization = _p6_run003_r05_plan(registry, canonical_program)
+    walls = [
+        operation
+        for operation in plan.operations
+        if operation.semantic_capability == "revit.create_wall"
+    ]
+
+    assert walls
+    assert {operation.payload["properties"]["type_id"] for operation in walls} == {
+        "Genérico - 250 mm"
+    }
