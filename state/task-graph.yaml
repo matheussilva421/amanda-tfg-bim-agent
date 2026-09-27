@@ -3732,6 +3732,15 @@ tasks:
       unverified. No restart or UI action was taken. Quiet window ends at
       13:32:14Z; retry only through the runner.
       P7-T01 remains PENDING; R06 is NOT STARTED.
+    - >-
+      Third post-cooldown R05 runner attempt at about 13:32Z returned the same
+      no-Revit-reachable health failure. It retained the RUN-003 lease and
+      stopped before capabilities, targetability, checkpoint, or model access;
+      no model write/save/checkpoint occurred. The same provider/session
+      condition has now blocked three consecutive runner attempts. Wait until
+      the interactive Revit session is restored and targetable, and until the
+      quiet deadline 13:42:35Z has passed, before resuming through the exact
+      health-first R05 runner. P7-T01 remains PENDING; R06 is NOT STARTED.
   P7-T02:
     id: P7-T02
     phase: P7

@@ -24,7 +24,7 @@ def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
         in handoff.splitlines()[:8]
     )
     assert "P7-T01 stays `PENDING`; this continuation is restricted to R05." in handoff
-    assert "The post-cooldown retry at about 13:22Z returned the same `no Revit is reachable` health error" in handoff
+    assert "The third health-first retry at about 13:32Z" in handoff
     assert "RUN-003 lease was retained" in handoff
     assert "## Prior closeout — P4-T01 R04" in handoff
     assert "## Historical continuation — 2026-09-26 (P4-T01 / RUN-003 R04 geometry completion)" in handoff
