@@ -2388,3 +2388,11 @@ entries:
   - 'Independent Luna 6 xhigh review accepted P6 for spatial topology only. Before R06, resolve the user-directed 3 bedrooms per family pavilion versus current 4/3/2 mapping without changing official PDF quantities/areas; correct the contradictory stale CANON-011 sentence in CANONICAL_DEVIATIONS.yaml.'
   recorded_utc: '2026-09-27T02:49:08Z'
   note: Authorization is active; retry after the zero-other-client window, keep P7-T01 PENDING until full R05 persistence evidence passes.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Second authorized R05 runner attempt again stopped before P6 baseline readback/write; the RUN-003 lease was retained and no model or checkpoint mutation occurred.'
+  - 'Follow-up direct health confirms the same saved RUN-003 target and healthy provider, but shows other_clients_connected=1 from exited PID 21076, last request 29 seconds earlier; the active direct connector PID is 1708.'
+  - 'Do not call Horizun again until more than 10 minutes after this health. Retry the host-profile runner only if its own preflight reports zero other clients.'
+  recorded_utc: '2026-09-27T02:57:27Z'
+  note: Root cause isolated to recent exited host-runner client; no R05 write occurred.

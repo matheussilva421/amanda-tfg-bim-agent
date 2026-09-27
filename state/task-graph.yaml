@@ -3376,10 +3376,13 @@ tasks:
     - >-
       Fresh Horizun health/target confirms 80/80 tools, 73/73 registered
       commands, full_write/unpaused, Revit 2027 PID 38296, and the exact saved
-      active RUN-003 target. The authorized host-profile runner stopped before
-      P6 baseline readback/write because its preflight counted a recent second
-      client. No model/checkpoint/lease mutation occurred; wait 10 minutes from
-      this attempt and retry only when the preflight reports zero other clients.
+      active RUN-003 target. Two authorized host-profile runner attempts stopped
+      before P6 baseline readback/write because preflight counted a recent
+      second client. A fresh direct health identified that client as exited PID
+      21076, last seen 29 seconds earlier; the direct connector is PID 1708.
+      No model/checkpoint/lease mutation occurred. Wait more than 10 minutes
+      after the latest direct health with no Horizun traffic, then retry only
+      when the host-runner preflight reports zero other clients.
     - >-
       Independent Luna 6 xhigh review accepted P6 only for normalized spatial
       topology. Before R06, reconcile user-directed three bedrooms per family
