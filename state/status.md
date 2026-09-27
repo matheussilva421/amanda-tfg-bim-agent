@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; authorized; the unsaved eight-floor partial may remain in Revit memory; latest runner validated the partial and opened P6, then failed the accepted fingerprint comparison before row-by-row comparison or partial discard)
+- Next task: `P7-T01` (R05 architectural shell; authorized; the unsaved eight-floor partial remains in Revit memory; latest runner opened exact P6 but failed accepted fingerprint integrity before row comparison or partial discard)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -16,7 +16,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `P5`: 1/1 PASS
 - `P6`: 1/1 PASS
 - `P7`: 0/9 PASS
-- Latest P7-T01 write attempt: `FAILED`, 8/705 verified in the live unsaved session; no save/checkpoint/reopen. Its exact journal is tracked. Explicit query fields validated the live 33-row partial. The exact 2027 P6 checkpoint opened without upgrade and passed row count/category/mass/ElementId checks, but its fingerprint differed from accepted evidence; the runner stopped before full row comparison or partial discard. Guarded cleanup closed inspection without saving and reactivated the target. The separate accepted-fingerprint/detail-query fix is pushed but not live-verified; P7-T01 remains `PENDING`.
+- Latest P7-T01 runner (~07:26Z): health/client/target/lease gates passed; existing lease retained. The unsaved 8-floor partial remains in memory. Exact P6 opened as Revit 2027 without upgrade and passed count/category/mass/ElementId checks, then returned fingerprint `2f12a578c8451f3f` vs accepted `4636abc6b294829b`. Recovery closed the inspection without saving and stopped before partial discard or R05. No R05 write/save/checkpoint occurred. P6 local SHA-256 matches its manifest (`8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326`). Preserve lease PID 28364/generation 2; P7-T01 remains `PENDING`.
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -38,15 +38,19 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-Latest runner call was about 07:12Z. It passed health/client/target/lease gates,
-validated the complete 33-row partial, and opened the exact P6 checkpoint as
-Revit 2027 without upgrade. Its query passed count/category/mass/ElementId checks
-but returned a fingerprint different from accepted evidence. Cleanup closed the
-inspection without saving and reactivated the target. No write or save occurred.
-The code now separates the original accepted compact fingerprint query from the
-detailed row query; live verification is pending. Focused suite: 198/198.
-Preserve lease PID 28364, generation 2. Wait until at least 07:22:30Z before
-another provider call. P7-T01 remains PENDING.
+Latest runner call was about 07:26Z. It passed health/client/target/lease gates,
+validated the known 33-row partial, and opened the exact P6 checkpoint as Revit
+2027 without upgrade. Count/category/mass/ElementId checks passed, but the
+checkpoint fingerprint was `2f12a578c8451f3f` vs accepted `4636abc6b294829b`.
+Guarded cleanup closed the inspection without saving; the partial target remains
+unsaved and was not discarded. The checkpoint file hash matches its manifest
+and accepted SHA. No R05 write/save/checkpoint occurred. The two-query code is
+still unverified live. Focused suite: 198/198. Preserve lease PID 28364,
+generation 2. Wait until at least 07:36:30Z before another provider call.
+The local tool contract calls for cache bypass during fresh verification. TDD
+added bypass to both compact P6 queries; focused production suite: 198/198.
+Commit 7be2101276053e88c9f778dfe58f00e9743e97e4 is pushed; live effect is
+unverified. P7-T01 remains PENDING.
 
 ## Current RUN-003 R04 acceptance status
 

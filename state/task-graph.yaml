@@ -3539,6 +3539,23 @@ tasks:
       focused suite passes 198/198. Commit e73ee60ca8bf8449fe1b04a73fc938849202b551
       is pushed; the new sequence is not yet live-verified. No provider calls
       before 07:22:30Z; P7-T01 remains PENDING.
+    - >-
+      The next health-first runner passed health/client/target/lease and retained
+      the RUN-003 lease. The known 33-row, unsaved 8-floor partial routed to
+      guarded recovery. Exact P6 opened as Revit 2027 without upgrade and passed
+      row-count/category/mass/ElementId checks, but compact fingerprint
+      2f12a578c8451f3f differed from accepted 4636abc6b294829b. Recovery closed
+      the P6 inspection without saving; it did not close/save/discard the target.
+      No R05 write/save/checkpoint occurred. Local P6 SHA-256 still matches its
+      manifest: 8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326.
+      Do not waive the mismatch. Wait until 07:36:30Z; P7-T01 remains PENDING.
+    - >-
+      TDD followed the local query contract for fresh verification: RED asserted
+      cache_mode=bypass in the live baseline and checkpoint fingerprint queries
+      and both assertions failed. GREEN added bypass to both compact reads. The
+      focused production suite passes 198/198. Commit
+      7be2101276053e88c9f778dfe58f00e9743e97e4 is pushed to main. Live effect is
+      unverified; accepted fingerprint remains mandatory. Retry after 07:36:30Z.
   P7-T02:
     id: P7-T02
     phase: P7

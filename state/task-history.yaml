@@ -2529,3 +2529,19 @@ entries:
   - 'RED/GREEN keeps the original compact P6 query signature for accepted fingerprint validation and runs a separate explicit-field query for exact row comparison. Mismatch errors now print expected and observed fingerprints. Focused production suite: 198 passed, 0 failed. Commit e73ee60ca8bf8449fe1b04a73fc938849202b551 was pushed and origin/main verified; two-query sequence remains live-unverified.'
   recorded_utc: '2026-09-27T07:13:05Z'
   note: No Horizun calls before 07:22:30Z. Then retry only the health-first R05 runner; require accepted fingerprint plus exact 25-row checkpoint/partial comparison before any recovery close or write.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Health-first runner passed health/client/target/lease and retained the RUN-003 lease. The known unsaved 8-floor partial routed to guarded recovery.'
+  - 'Exact P6 checkpoint opened as Revit 2027 without upgrade. Query passed count/category/mass/ElementId checks but returned fingerprint 2f12a578c8451f3f rather than accepted 4636abc6b294829b. Error cleanup closed P6 inspection without saving; target partial was not closed or discarded. No R05 write/save/checkpoint occurred.'
+  - 'Local P6 RVT SHA-256 remains 8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326 and matches manifest. Fingerprint mismatch remains unresolved; fail closed.'
+  recorded_utc: '2026-09-27T07:29:39Z'
+  note: Do not call Horizun before 07:36:30Z. Then retry only via the health-first runner after maintaining exact checkpoint integrity; do not waive the P6 fingerprint gate. P7-T01 stays PENDING.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Local Horizun tool contract recommends cache_mode=bypass for fresh verification. RED: assertions for bypass in the compact baseline/checkpoint queries failed because the arguments were absent.'
+  - 'GREEN: bypass added to both compact P6 reads. Focused production suite: 198 passed, 0 failed. Commit 7be2101276053e88c9f778dfe58f00e9743e97e4 pushed to main.'
+  - 'The previous live fingerprint mismatch remains unresolved; this adjustment is a diagnostic hypothesis and has not yet been exercised in Revit.'
+  recorded_utc: '2026-09-27T07:36:03Z'
+  note: No provider calls before 07:36:30Z. Then retry only the health-first RUN-003 R05 runner; require accepted P6 fingerprint, no-save recovery, and the full R05 write/read/verify/persistence gate.
