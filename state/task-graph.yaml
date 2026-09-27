@@ -3721,6 +3721,16 @@ tasks:
       Retry only after the conservative 13:21:07Z quiet-window end, using the
       health-first runner and no direct Horizun call. P7-T01 remains PENDING;
       R06 is NOT STARTED.
+    - >-
+      After the 13:21:07Z quiet deadline, the health-first R05 runner retried at
+      about 13:22Z and again received "no Revit is reachable" from
+      horizun_health. It stopped before capability/target/checkpoint/model
+      gates and retained the RUN-003 lease; no model write/save/checkpoint
+      occurred. Read-only process inspection found only Revit PID 38296,
+      responding at the Revit 2027 executable, but MainWindowHandle=0 and an
+      empty title; targetability remains unverified. No restart or UI action
+      was taken. Quiet window ends at 13:32:14Z; retry only through the runner.
+      P7-T01 remains PENDING; R06 is NOT STARTED.
   P7-T02:
     id: P7-T02
     phase: P7

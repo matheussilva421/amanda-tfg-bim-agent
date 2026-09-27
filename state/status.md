@@ -16,7 +16,8 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `P5`: 1/1 PASS
 - `P6`: 1/1 PASS
 - `P7`: 0/9 PASS
-- Latest R05-only runner attempt (2026-09-27 13:11Z) stopped at `horizun_health`, which returned `Error: no Revit is reachable. Is Revit running with the Horizun add-in loaded?` It did not reach capability, targetability, checkpoint, or model gates. The existing RUN-003 lease was retained; no write/save/checkpoint occurred. Retry only after the conservative 13:21:07Z quiet-window end.
+- Latest R05-only runner attempt (2026-09-27 13:22Z) stopped at `horizun_health`, which returned `Error: no Revit is reachable. Is Revit running with the Horizun add-in loaded?` It did not reach capability, targetability, checkpoint, or model gates. The existing RUN-003 lease was retained; no write/save/checkpoint occurred. A read-only process check found only Revit PID 38296; it was responsive but had no main-window handle/title, so targetability is unverified. Retry only after the conservative 13:32:14Z quiet-window end.
+- The preceding runner attempt at 13:11Z stopped at the same first health gate. No Revit/model/checkpoint write occurred.
 - The preceding runner attempt (~12:56Z) passed health/capability, target/lease, P6 checkpoint/digest, and known-floor identity/bounds/level checks, then failed closed on an unsupported typed `Area` unit before R05 writes. Diagnostic `R05-2f373fcb3511-p6-readback-diagnostic-ee99ee2f171a.json` has SHA-256 `edd6f4b86c33fc82705ed8826828ce45d8e7d18475640bb00f6895b08b5de043`, records no model write, and contains the 25-row P6 digest. TDD added supported m²/ft² unit conversions with source-unit evidence and fail-closed rejection for unknown units. Production-runner unit tests pass 87/87; `compileall` and scoped `git diff --check` pass. Ruff reports the same 9 baseline findings, none on changed lines. Luna 6 xhigh review could not start because the app agent-thread limit is full; no other subagent was used. R05 remains `PENDING`; authorization ends at R05.
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
@@ -39,11 +40,11 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-The latest health-first runner call was at about 13:11Z. It failed its first
+The latest health-first runner call was at about 13:22Z. It failed its first
 health gate with `no Revit is reachable`, before capabilities, targetability,
 checkpoint inspection, or model access. The existing RUN-003 lease was
 retained, and no model write/save/checkpoint occurred. The conservative
-10-minute quiet window ends at 13:21:07Z; no direct Horizun calls should be made.
+10-minute quiet window ends at 13:32:14Z; no direct Horizun calls should be made.
 
 The user's explicit authorization covers RUN-003 P7-T01/R05 and ends at R05.
 The local retry path now compares the eight existing floor rows with current
@@ -71,11 +72,12 @@ additional acceptance-path issue. The requested Luna 6 xhigh review could not
 spawn because the app agent-thread limit is full; no other subagent was used.
 Next action is the health-first R05-only runner.
 R05 code/evidence commit `581cacb30ca679f4d08549f7536f01315bad0257` and state
-commit `561f84136f531695d6948f6a0c4c67a1dfdf76fa` were pushed to `origin/main`;
-`git push` exited 0 and local `HEAD`/`origin/main` match `561f841`. A separate
-`git ls-remote` could not connect to GitHub on TCP 443. RC01 deletions remain
-unstaged. The current R05 health failure and resume route are in the active
-handoff. P7-T01 remains PENDING.
+commits through `3c5aeadee613669b42cd85bc3b00080655cf0984` were pushed to
+`origin/main`; the latest `git push` exited 0 and advanced `561f841..3c5aead`.
+Local `HEAD`/`origin/main` match `3c5aead`. A separate `git ls-remote` could not
+connect to GitHub on TCP 443. RC01 deletions remain unstaged. The current R05
+health failure and resume route are in the active handoff. P7-T01 remains
+PENDING.
 
 ## Current RUN-003 R04 acceptance status
 
