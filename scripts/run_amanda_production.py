@@ -496,6 +496,15 @@ def _validate_p6_live_readback(payload: object, authorization) -> str:
     return fingerprint
 
 
+def _require_accepted_p6_fingerprint(observed: str, accepted: str) -> str:
+    if observed != accepted:
+        raise ValueError(
+            "opened RUN-003 P6 checkpoint fingerprint differs from accepted "
+            f"evidence: expected={accepted!r}, observed={observed!r}"
+        )
+    return observed
+
+
 def _verify_p6_live_readback(transport, authorization) -> str:
     """Require the live model to match the complete accepted R04 baseline."""
 
@@ -516,7 +525,6 @@ def _verify_p6_live_readback(transport, authorization) -> str:
             "max_rows": 100,
             "parameter_format": "compact",
             "response_mode": "compact",
-            "return_fields": ["unique_id", "category", "name"],
         },
     )
     return _validate_p6_live_readback(payload, authorization)
@@ -840,6 +848,7 @@ def _restore_known_failed_r05_partial(
         )
         if not checkpoint_opened:
             raise RuntimeError("RUN-003 P6 checkpoint was not active after open")
+        # Match the accepted compact-query signature for the P6 fingerprint.
         checkpoint_payload = _read_tool(
             transport,
             "horizun_query_model",
@@ -851,12 +860,30 @@ def _restore_known_failed_r05_partial(
                 "max_rows": 100,
                 "parameter_format": "compact",
                 "response_mode": "compact",
-                "return_fields": ["unique_id", "category", "name"],
             },
         )
         checkpoint_fingerprint = _validate_p6_live_readback(checkpoint_payload, authorization)
-        if checkpoint_fingerprint != authorization.p6_readback_fingerprint:
-            raise ValueError("opened RUN-003 P6 checkpoint fingerprint differs from accepted evidence")
+        checkpoint_fingerprint = _require_accepted_p6_fingerprint(
+            checkpoint_fingerprint, authorization.p6_readback_fingerprint
+        )
+        checkpoint_detail_payload = _read_tool(
+            transport,
+            "horizun_query_model",
+            {
+                "categories": ["OST_Mass", "OST_Floors", "OST_Roofs", "OST_Walls", "OST_Rooms"],
+                "coordinate_units": "m",
+                "include_bounding_box": True,
+                "include_types": False,
+                "max_rows": 100,
+                "parameter_format": "compact",
+                "response_mode": "compact",
+                "cache_mode": "bypass",
+                "return_fields": ["unique_id", "category", "name"],
+            },
+        )
+        checkpoint_detail_fingerprint = _validate_p6_live_readback(
+            checkpoint_detail_payload, authorization
+        )
         _activate(transport, target)
         target_active = _active_path(_document_info(transport))
         if not target_active or Path(target_active).resolve() != target:
@@ -876,7 +903,9 @@ def _restore_known_failed_r05_partial(
             },
         )
         _validate_known_r05_partial_model(live_again, records, authorization)
-        _compare_known_partial_to_p6_checkpoint(live_again, checkpoint_payload, records)
+        _compare_known_partial_to_p6_checkpoint(
+            live_again, checkpoint_detail_payload, records
+        )
     except Exception:
         if checkpoint_opened:
             try:
@@ -932,7 +961,8 @@ def _restore_known_failed_r05_partial(
             "path": str(checkpoint),
             "checkpoint_manager_verified": checkpoint_verified,
             "readback_fingerprint": checkpoint_fingerprint,
-            "baseline_element_count": len(checkpoint_payload["rows"]),
+            "baseline_element_count": len(checkpoint_detail_payload["rows"]),
+            "detailed_readback_fingerprint": checkpoint_detail_fingerprint,
             "target_matches_p6_plus_partial": True,
             "inspection_close": checkpoint_closed,
         },

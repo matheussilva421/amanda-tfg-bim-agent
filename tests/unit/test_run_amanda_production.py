@@ -1092,13 +1092,21 @@ def test_run003_live_readback_must_match_the_accepted_p6_baseline(
     assert calls[0][0] == "horizun_query_model"
     assert calls[0][1]["include_types"] is False
     assert calls[0][1]["coordinate_units"] == "m"
-    assert calls[0][1]["return_fields"] == [
-        "unique_id", "category", "name"
-    ]
+    assert "return_fields" not in calls[0][1]
 
     rows[0]["bounding_box"]["max"] = [1.0, 1.0, 6.4]
     with pytest.raises(ValueError, match="P6 mass bounding boxes"):
         production_runner._verify_p6_live_readback(object(), authorization)
+
+
+def test_p6_fingerprint_mismatch_reports_accepted_and_observed_values():
+    with pytest.raises(
+        ValueError,
+        match=r"expected='p6-approved', observed='queried-payload'",
+    ):
+        production_runner._require_accepted_p6_fingerprint(
+            "queried-payload", "p6-approved"
+        )
 
 
 def test_execute_stops_before_writer_lock_for_unaccepted_selection(
@@ -1854,12 +1862,11 @@ def test_known_r05_partial_is_reopened_without_saving_only_after_exact_state_che
     query_arguments = [
         args for tool, args in tool_calls if tool == "horizun_query_model"
     ]
-    assert len(query_arguments) == 3
-    assert all(
-        args["return_fields"]
-        == ["unique_id", "category", "name"]
-        for args in query_arguments
-    )
+    assert len(query_arguments) == 4
+    assert query_arguments[0]["return_fields"] == ["unique_id", "category", "name"]
+    assert "return_fields" not in query_arguments[1]
+    assert query_arguments[2]["return_fields"] == ["unique_id", "category", "name"]
+    assert query_arguments[3]["return_fields"] == ["unique_id", "category", "name"]
     closes = [args for tool, args in tool_calls if tool == "horizun_document_session" and args["operation"] == "close"]
     assert len(closes) == 2
     assert all(args["save_on_close"] is False for args in closes)
