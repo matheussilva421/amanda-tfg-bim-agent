@@ -3659,7 +3659,7 @@ tasks:
       with current R05-plan identity, XY bounds, Area, and level, and filters
       only those operations before retry. Typed query exposes no outline
       vertices, so exact curved-contour equality is not claimed. Focused local
-      gates pass: runner 78/78, repository/state hygiene 12/12, and compileall.
+      gates pass: runner 79/79, repository/state hygiene 12/12, and compileall.
       Ruff has the same nine baseline findings. Local second-pass review found
       no additional issue; the requested Luna 6 xhigh spawn was refused because
       the app agent-thread limit is full, and no other subagent was used.
@@ -3681,6 +3681,21 @@ tasks:
       filtering assumption in the geometry validator. Current scoped tests pass
       78/78 and 12/12; compileall passes. The provider cooldown must expire before
       another runner call. P7-T01 remains PENDING; R06 is NOT STARTED.
+    - >-
+      A third health-first R05-only runner around 12:44Z passed provider health
+      and capability, Revit target/build and lease, and exact P6 digest. It
+      reached partial-floor checks and stopped before any R05 write because the
+      display Name did not equal the logical ID; the earlier ElementId,
+      UniqueId, and category checks passed. No model write, save, or checkpoint
+      occurred. Diagnostic
+      revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-2814233abec1.json
+      records model_write_performed=false, digest
+      3732c3c44c405a6453df8157243b7695b442b9969c979c141c6e829011940c0d, and
+      SHA-256 d87a07720d631c157058984428064dd32883828d7d092c858f9c8ad33524d38a.
+      TDD removed display-name equality while retaining stable identity,
+      bounds, Area, and level checks. Runner tests pass 79/79 and project/state
+      tests pass 12/12; compileall passes. Cooldown before retry is 12:55:36Z.
+      P7-T01 remains PENDING; R06 is NOT STARTED.
   P7-T02:
     id: P7-T02
     phase: P7

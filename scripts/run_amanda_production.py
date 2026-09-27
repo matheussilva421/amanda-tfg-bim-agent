@@ -1025,10 +1025,11 @@ def _validate_known_r05_partial_geometry(
     verified_floors = []
     for element_id, (logical_id, journal_record) in expected_by_id.items():
         row = observed_by_id[element_id]
+        # Revit's floor Name is a display/type label; journaled ElementId and
+        # UniqueId bind the logical operation, while category checks element kind.
         if (
             row.get("category") != "Pisos"
             or row.get("unique_id") != journal_record.get("unique_id")
-            or row.get("name") != logical_id
         ):
             raise ValueError(f"known R05 floor identity differs for {logical_id}")
         expected = _floor_operation_geometry(operations_by_logical[logical_id])

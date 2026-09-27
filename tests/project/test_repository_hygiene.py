@@ -226,7 +226,7 @@ def test_current_state_routes_only_to_pending_live_run003_r05():
     assert "explicitly authorizes P7-T01/R05" in normalized_handoff
     assert "XY bounds, Revit Area, and resolved level name" in normalized_handoff
     assert "typed query contract exposes bounds and parameters but no floor-outline vertices" in normalized_handoff
-    assert "the next live action is the R05-only production runner" in normalized_handoff
+    assert "After cooldown and local gates, retry only R05" in normalized_handoff
     assert "R06 stays NOT STARTED" in normalized_handoff
 
     superseded_tasks = [f"P08-CAN-T{number:02}" for number in range(9, 20)]

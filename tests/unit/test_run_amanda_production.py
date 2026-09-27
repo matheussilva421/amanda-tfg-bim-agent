@@ -1858,6 +1858,35 @@ def test_known_r05_partial_geometry_accepts_full_plan_and_selects_only_known_flo
     assert evidence["geometry_checks"]["observed_geometry_scope"] == "typed_bounds_area_level"
 
 
+def test_known_r05_partial_geometry_does_not_treat_display_name_as_identity():
+    authorization = SimpleNamespace(
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO", "CHILD_SECTOR", "RES_PAV_A", "RES_PAV_B",
+                "RES_PAV_C", "RES_PAV_D_COMMUNAL", "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+    )
+    payload = _known_partial_model(authorization)
+    partial_floor = next(
+        row
+        for row in payload["rows"]
+        if row["element_id"] in production_runner.RUN003_FAILED_R05_FLOOR_IDS.values()
+    )
+    partial_floor["name"] = "Generic Floor Type"
+
+    evidence = production_runner._validate_known_r05_partial_geometry(
+        payload,
+        _known_failed_r05_journal()["records"][:8],
+        _known_r05_floor_operations(),
+        {311: "Level 1"},
+    )
+
+    assert len(evidence["floors"]) == 8
+
+
 def test_floor_operation_geometry_rejects_an_open_profile():
     operation = _known_r05_floor_operations()[0]
     operation.payload["geometry"]["footprint"][0][-1] = [2.0, 0.0, 0.0]
