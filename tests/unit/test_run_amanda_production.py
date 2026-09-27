@@ -457,6 +457,168 @@ def test_live_revit_resume_requires_the_exact_saved_active_target(tmp_path: Path
                 expected_build="27.2.0.39",
                 revit_pid=38296,
                 target_path=target,
+                mcp_client_pid=40000,
+            )
+
+
+def test_live_revit_resume_excludes_only_its_current_mcp_transport_pid(
+    tmp_path: Path,
+):
+    target = tmp_path / "RUN-003.rvt"
+    health = {
+        "status": "healthy",
+        "revit_build": "27.2.0.39",
+        "process_id": 38296,
+        "other_clients_connected": 1,
+        "open_document_count": 2,
+        "no_active_document": False,
+        "active_document": {
+            "path": str(target),
+            "is_active": True,
+            "has_been_saved_to_disk": True,
+        },
+        "clients": {
+            "other_clients_connected": 1,
+            "clients_seen": [
+                {
+                    "pid": 40000,
+                    "process_name": "horizun-mcp",
+                    "seconds_since_last_request": 0,
+                    "process_alive": True,
+                }
+            ],
+        },
+    }
+
+    production_runner._validate_revit_session(
+        health,
+        expected_build="27.2.0.39",
+        revit_pid=38296,
+        target_path=target,
+        mcp_client_pid=40000,
+    )
+
+    malformed_count = {
+        **health,
+        "clients": {**health["clients"], "other_clients_connected": True},
+    }
+    with pytest.raises(ValueError):
+        production_runner._validate_revit_session(
+            malformed_count,
+            expected_build="27.2.0.39",
+            revit_pid=38296,
+            target_path=target,
+            mcp_client_pid=40000,
+        )
+
+
+def test_live_revit_resume_still_blocks_a_distinct_recent_mcp_client(
+    tmp_path: Path,
+):
+    target = tmp_path / "RUN-003.rvt"
+    health = {
+        "status": "healthy",
+        "revit_build": "27.2.0.39",
+        "process_id": 38296,
+        "other_clients_connected": 2,
+        "open_document_count": 2,
+        "no_active_document": False,
+        "active_document": {
+            "path": str(target),
+            "is_active": True,
+            "has_been_saved_to_disk": True,
+        },
+        "clients": {
+            "other_clients_connected": 2,
+            "clients_seen": [
+                {
+                    "pid": 40000,
+                    "process_name": "horizun-mcp",
+                    "seconds_since_last_request": 0,
+                    "process_alive": True,
+                },
+                {
+                    "pid": 40123,
+                    "process_name": "horizun-mcp",
+                    "seconds_since_last_request": 15,
+                    "process_alive": True,
+                },
+            ],
+        },
+    }
+
+    with pytest.raises(ValueError, match=r"pid=40123.*process_alive=true"):
+        production_runner._validate_revit_session(
+            health,
+            expected_build="27.2.0.39",
+            revit_pid=38296,
+            target_path=target,
+            mcp_client_pid=40000,
+        )
+
+
+@pytest.mark.parametrize("malformed_count", [False, 0.0])
+def test_live_revit_resume_rejects_non_integer_client_count(
+    tmp_path: Path, malformed_count: object
+):
+    target = tmp_path / "RUN-003.rvt"
+    health = {
+        "status": "healthy",
+        "revit_build": "27.2.0.39",
+        "process_id": 38296,
+        "other_clients_connected": malformed_count,
+        "open_document_count": 2,
+        "active_document": {
+            "path": str(target),
+            "is_active": True,
+            "has_been_saved_to_disk": True,
+        },
+    }
+
+    with pytest.raises(ValueError, match="invalid other-client count"):
+        production_runner._validate_revit_session(
+            health,
+            expected_build="27.2.0.39",
+            revit_pid=38296,
+            target_path=target,
+            mcp_client_pid=40000,
+        )
+
+
+def test_live_revit_resume_rejects_inconsistent_nested_client_metadata(
+    tmp_path: Path,
+):
+    target = tmp_path / "RUN-003.rvt"
+    health = {
+        "status": "healthy",
+        "revit_build": "27.2.0.39",
+        "process_id": 38296,
+        "other_clients_connected": 0,
+        "open_document_count": 2,
+        "active_document": {
+            "path": str(target),
+            "is_active": True,
+            "has_been_saved_to_disk": True,
+        },
+    }
+    unseen_client = {
+        "pid": 40123,
+        "process_name": "horizun-mcp",
+        "seconds_since_last_request": 15,
+        "process_alive": True,
+    }
+
+    for client_state in (
+        {"other_clients_connected": 1, "clients_seen": [unseen_client]},
+        {"other_clients_connected": 0, "clients_seen": [unseen_client]},
+    ):
+        with pytest.raises(ValueError, match="inconsistent client metadata"):
+            production_runner._validate_revit_session(
+                {**health, "clients": client_state},
+                expected_build="27.2.0.39",
+                revit_pid=38296,
+                target_path=target,
+                mcp_client_pid=40000,
             )
 
 
@@ -492,6 +654,7 @@ def test_live_client_gate_error_reports_recent_client_identity(tmp_path: Path):
             expected_build="27.2.0.39",
             revit_pid=38296,
             target_path=target,
+            mcp_client_pid=40000,
         )
 
 

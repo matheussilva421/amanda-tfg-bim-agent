@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; user-authorized, waiting for the recent exited host-runner client window to expire)
+- Next task: `P7-T01` (R05 architectural shell; authorized, awaiting publication and one health-gated live attempt)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -42,13 +42,13 @@ Latest recorded provider check: Horizun 1.3.3 `HEALTHY`; Revit 2027 build
 RUN-003 target was active and targetable; two documents were open (RUN-003 and
 `HZ_ANCHOR_2027`) with zero other clients. P6's lease was released after its
 save/cold-reopen/readback. Current P7 writer lease: `amanda-P7-RUN003-production`,
-PID 28364, generation 2, exact target; owner process is alive. Four authorized
+PID 28364, generation 2, exact target; owner process is alive. Five authorized
 host-runner attempts stopped before baseline readback/write. The latest runner
-selected Revit PID 38296 and held the lease, then health rejected recent other
-client PID 28680 (`horizun-mcp`, age 2 seconds, alive at the health response).
-That PID was gone by the post-exit local process query. No model/checkpoint/lease
-mutation occurred. The next attempt must wait more than 10 minutes from ~03:24Z
-and proceed only if runner preflight itself reports zero other clients.
+checked health first; it reported one live client PID 40000 (`horizun-mcp`, age
+0). That PID was gone by the post-exit local process query. Target selection
+was never called. No model/checkpoint/lease mutation occurred. The next attempt
+must strictly identify the current transport PID and keep every other PID
+blocked.
 
 ## Current RUN-003 R04 acceptance status
 
@@ -129,18 +129,22 @@ review found no P1/P2 findings; the six R05 modules passed 77/77 and the
 expanded combined R05 plus task-state command passed 101/101. The write attempt
 was blocked by automatic approval review because the available explicit
 authorization then named R04. The user's later RUN-003 R05-R13 authorization
-supersedes that hold. Four host-profile attempts after direct target verification
+supersedes that hold. Five host-profile attempts after direct target verification
 stopped before P6 baseline readback because a recent second client was still
-visible. No R05 write, save, or checkpoint occurred. The latest direct health
-around 03:24Z identified the other client as PID 28680 (`horizun-mcp`), alive at
-the health response and no longer present after runner exit. Independent Luna 6
-xhigh review attributed this with high confidence to the runner's own short-lived
-MCP child, since target selection preceded health; exact parent identity remains
-unproven because CIM access was denied. A test-first correction now validates
-health before target selection in RUN-003 resume mode; the focused runner/auth
-modules pass 39/39, with a RED/GREEN call-order regression. Diagnostic commit `8fd51710941c52be7a97d2e3dd09f45fdfebf5cf`
-and state/handoff commit `6e0b2e824f47189a5d0b7bbabb1ba979643537bc` are on
-origin/main. The reorder has not yet been tried live. Independent Luna 6 xhigh review found no P1/P2 findings. A typed close rehearsal confirmed
+visible. No R05 write, save, or checkpoint occurred. After health was moved
+before target selection, the ~03:36Z attempt reported only PID 40000
+(`horizun-mcp`, age 0, alive) and stopped before selection; local process lookup
+could not find it after transport exit. This supports that the current transport
+child is included in the count. A strict exact-PID filter now requires one typed,
+live `horizun-mcp` entry matching this transport and rejects every extra,
+unknown, duplicate, or malformed client. RED/GREEN coverage passes; fresh
+focused shell, runner, authorization, and task-graph tests passed 70/70, YAML
+parsing passed 3/3, and the R05 dry-run planned only R05 without writes.
+Independent Luna 6 xhigh review found no P1/P2 findings. The remaining review
+assumption is that Horizun's client count/list are complete and consistent and
+the reported transport PID identifies this invocation. This filter has not been
+tried live; the last provider call was ~03:36Z and the quiet window has elapsed.
+The exact-self filter is pending commit. A typed close rehearsal confirmed
 `is_modified=false` and `would_discard_unsaved=false`; it made no session
 change. The stage runner requires save, close-with-save, post-close checkpoint,
 exact cold reopen, and complete typed geometry readback.

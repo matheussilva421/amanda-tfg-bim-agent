@@ -128,12 +128,48 @@ def _execution_scope(
     return ExecutionMode.CANONICAL_PREACCEPTANCE, BimStage.R04
 
 
+def _is_only_current_mcp_client(
+    health: dict, mcp_client_pid: int | None
+) -> bool:
+    """Identify health responses that count only this call's MCP transport."""
+
+    if type(mcp_client_pid) is not int or mcp_client_pid <= 0:
+        return False
+    if type(health.get("other_clients_connected")) is not int:
+        return False
+    if health.get("other_clients_connected") != 1:
+        return False
+    client_state = health.get("clients")
+    if not isinstance(client_state, dict):
+        return False
+    if type(client_state.get("other_clients_connected")) is not int:
+        return False
+    if client_state.get("other_clients_connected") != 1:
+        return False
+    clients_seen = client_state.get("clients_seen")
+    if not isinstance(clients_seen, list) or len(clients_seen) != 1:
+        return False
+    client = clients_seen[0]
+    if not isinstance(client, dict):
+        return False
+    age = client.get("seconds_since_last_request")
+    return (
+        type(client.get("pid")) is int
+        and client.get("pid") == mcp_client_pid
+        and str(client.get("process_name", "")).casefold() == "horizun-mcp"
+        and type(age) in (int, float)
+        and 0 <= age <= 600
+        and client.get("process_alive") is True
+    )
+
+
 def _validate_revit_session(
     health: object,
     *,
     expected_build: str,
     revit_pid: int | None,
     target_path: Path | None = None,
+    mcp_client_pid: int | None = None,
 ) -> dict:
     """Require a healthy, exclusive Revit process and the intended document."""
 
@@ -150,51 +186,69 @@ def _validate_revit_session(
         raise ValueError(
             f"live Revit PID {health.get('process_id')!r} does not match requested {revit_pid}"
         )
-    if health.get("other_clients_connected") != 0:
+    other_clients = health.get("other_clients_connected")
+    if type(other_clients) is not int or other_clients < 0:
+        raise ValueError("Horizun health has an invalid other-client count")
+    clients_seen = None
+    if "clients" in health:
         client_state = health.get("clients")
-        clients_seen = (
-            client_state.get("clients_seen")
-            if isinstance(client_state, dict)
-            else None
-        )
-        client_details = []
-        if isinstance(clients_seen, list):
-            def safe_client_value(value: object) -> str:
-                rendered = str(value)
-                return "".join(
-                    char
-                    if char.isprintable()
-                    else char.encode("unicode_escape").decode("ascii")
-                    for char in rendered
-                )
-
-            for client in clients_seen:
-                if not isinstance(client, dict):
-                    continue
-                client_details.append(
-                    "pid={pid}, process_name={process_name}, "
-                    "seconds_since_last_request={age}, process_alive={alive}".format(
-                        pid=safe_client_value(client.get("pid", "unknown")),
-                        process_name=safe_client_value(
-                            client.get("process_name") or "unknown"
-                        ),
-                        age=safe_client_value(
-                            client.get("seconds_since_last_request", "unknown")
-                        ),
-                        alive=safe_client_value(
-                            str(client.get("process_alive", "unknown")).lower()
-                        ),
+        if not isinstance(client_state, dict):
+            raise ValueError("Horizun health has inconsistent client metadata")
+        nested_count = client_state.get("other_clients_connected")
+        if (
+            type(nested_count) is not int
+            or nested_count < 0
+            or nested_count != other_clients
+        ):
+            raise ValueError("Horizun health has inconsistent client metadata")
+        clients_seen = client_state.get("clients_seen")
+        if not isinstance(clients_seen, list) or len(clients_seen) != nested_count:
+            raise ValueError("Horizun health has inconsistent client metadata")
+    if other_clients != 0:
+        if _is_only_current_mcp_client(health, mcp_client_pid):
+            print(
+                "Horizun health listed only the current transport client "
+                f"(PID {mcp_client_pid}); no distinct recent client is present"
+            )
+        else:
+            client_details = []
+            if isinstance(clients_seen, list):
+                def safe_client_value(value: object) -> str:
+                    rendered = str(value)
+                    return "".join(
+                        char
+                        if char.isprintable()
+                        else char.encode("unicode_escape").decode("ascii")
+                        for char in rendered
                     )
-                )
-        detail = (
-            f"; clients_seen=[{'; '.join(client_details)}]"
-            if client_details
-            else ""
-        )
-        raise ValueError(
-            "Revit reports another MCP client in the 10-minute window; wait until "
-            f"the shared-session count returns to zero{detail}"
-        )
+
+                for client in clients_seen:
+                    if not isinstance(client, dict):
+                        continue
+                    client_details.append(
+                        "pid={pid}, process_name={process_name}, "
+                        "seconds_since_last_request={age}, process_alive={alive}".format(
+                            pid=safe_client_value(client.get("pid", "unknown")),
+                            process_name=safe_client_value(
+                                client.get("process_name") or "unknown"
+                            ),
+                            age=safe_client_value(
+                                client.get("seconds_since_last_request", "unknown")
+                            ),
+                            alive=safe_client_value(
+                                str(client.get("process_alive", "unknown")).lower()
+                            ),
+                        )
+                    )
+            detail = (
+                f"; clients_seen=[{'; '.join(client_details)}]"
+                if client_details
+                else ""
+            )
+            raise ValueError(
+                "Revit reports another MCP client in the 10-minute window; wait until "
+                f"the shared-session count returns to zero{detail}"
+            )
     if target_path is None:
         if (
             health.get("open_document_count") != 0
@@ -923,11 +977,13 @@ def run(
         with McpProbeTransport(timeout=900.0) as transport:
             if study_authorization is not None:
                 health = _read_tool(transport, "horizun_health", {})
+                transport_process = getattr(transport, "process", None)
                 _validate_revit_session(
                     health,
                     expected_build=build,
                     revit_pid=revit_pid,
                     target_path=rvt,
+                    mcp_client_pid=getattr(transport_process, "pid", None),
                 )
             if revit_pid is not None:
                 selected = _select_revit_target(transport, revit_pid)

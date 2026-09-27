@@ -2430,3 +2430,13 @@ entries:
   - 'No live attempt has tested the call-order correction. Publish it before one quiet-window R05 attempt; keep the guard and task pending until full model persistence evidence passes.'
   recorded_utc: '2026-09-27T03:35:53Z'
   note: Health-before-target correction ready for review and push; no Revit write occurred.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Strict self-transport PID classification now rejects malformed, inconsistent, duplicate, additional, or distinct client entries; Luna 6 xhigh independent review found no P1/P2 findings.'
+  - 'Residual review assumption: Horizun client count/list metadata is complete and consistent, and the reported transport PID identifies this invocation. The filter has not yet been exercised in a live R05 run.'
+  - 'Fresh command .venv\Scripts\python.exe -m pytest tests/unit/test_stage_shell.py tests/unit/test_run_amanda_production.py tests/unit/test_run003_study_authorization.py tests/unit/test_task_graph.py -q: 70 passed, 0 failed.'
+  - 'R05 no-write dry-run verified all four canonical board hashes and accepted P6 approval/layout hashes; planned stages were exactly R05. YAML parse passed 3/3; diff check passed.'
+  - 'Latest provider call was around 03:36Z and reported only transient transport child PID 40000 (horizun-mcp, age 0); no target selection, document mutation, checkpoint, or lease change occurred. The 10-minute quiet window has elapsed.'
+  recorded_utc: '2026-09-27T03:57:48Z'
+  note: Publish reviewed filter and state, then make at most one live R05 attempt if health, capabilities, and exact targetability pass; retain PENDING until persistence evidence is complete.

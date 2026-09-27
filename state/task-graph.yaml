@@ -3397,10 +3397,24 @@ tasks:
       denied. No model, checkpoint, or lease mutation occurred. Independent Luna
       6 xhigh review attributes the PID with high confidence to the runner's own
       short-lived MCP child; exact parent identity could not be proven. The
-      runner called target selection before health, so the call-order fix now
-      validates health before target selection for RUN-003 resume only. TDD
-      observed RED then GREEN; focused tests pass 39/39. This order change has
-      not been tried live. Push it before at most one retry after a quiet window.
+      runner called target selection before health, so the call-order fix moved
+      health validation before target selection for RUN-003 resume only. TDD
+      observed RED then GREEN; focused tests pass 39/39. A subsequent health-first
+      attempt is recorded below.
+    - >-
+      The fifth attempt used health-first ordering and failed before target
+      selection: Horizun reported only PID 40000 (`horizun-mcp`, age 0, alive).
+      A post-exit local process query found no such PID. No model, checkpoint, or
+      lease mutation occurred. The code now excludes the current transport only
+      if the response has exactly one client and PID, name, alive status, age,
+      and integer counts all match; every extra, unknown, duplicate, or malformed
+      client remains blocked. TDD recorded RED for missing PID support, boolean
+      and float counts, and inconsistent nested metadata, then GREEN. Fresh
+      shell/runner/authorization/task-graph tests pass 70/70, YAML parses 3/3,
+      and dry-run plans only R05. Luna 6 xhigh review found no P1/P2 findings;
+      residual assumption: provider client count/list are complete and consistent
+      and the reported transport PID identifies this invocation. The filter has
+      not been tried live.
     - >-
       Independent Luna 6 xhigh review accepted P6 only for normalized spatial
       topology. Before R06, reconcile user-directed three bedrooms per family
