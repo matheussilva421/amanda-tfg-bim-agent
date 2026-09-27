@@ -1090,6 +1090,7 @@ def test_run003_live_readback_must_match_the_accepted_p6_baseline(
 
     assert fingerprint == "p6-live-fingerprint"
     assert calls[0][0] == "horizun_query_model"
+    assert calls[0][1]["cache_mode"] == "bypass"
     assert calls[0][1]["include_types"] is False
     assert calls[0][1]["coordinate_units"] == "m"
     assert "return_fields" not in calls[0][1]
@@ -1865,6 +1866,7 @@ def test_known_r05_partial_is_reopened_without_saving_only_after_exact_state_che
     assert len(query_arguments) == 4
     assert query_arguments[0]["return_fields"] == ["unique_id", "category", "name"]
     assert "return_fields" not in query_arguments[1]
+    assert query_arguments[1]["cache_mode"] == "bypass"
     assert query_arguments[2]["return_fields"] == ["unique_id", "category", "name"]
     assert query_arguments[3]["return_fields"] == ["unique_id", "category", "name"]
     closes = [args for tool, args in tool_calls if tool == "horizun_document_session" and args["operation"] == "close"]
