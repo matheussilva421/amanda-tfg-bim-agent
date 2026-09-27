@@ -1,5 +1,15 @@
 # Current Handoff
 
+## 2026-09-27 — R04 presentation deliverable attempt
+
+The requested intermediate orientation presentation from the accepted P6 checkpoint is **not started in Revit**. No derivative RVT, sheet, export, or PDF was created, and no model was opened or changed. The task remains active and must resume from the exact P6 checkpoint below after the single-writer lease is released normally.
+
+- Read-only checks confirm the P6 checkpoint `revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-CANON-011-RECONCILED-20260926.rvt` is Revit 2027, non-workshared, 4,960,256 bytes, with SHA-256 `8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326`, matching its manifest. Horizun is HEALTHY on Revit 2027 build 27.2.0.39, PID 56064; target selection is explicit, registry clean, 80/80 tools visible, and no document is open.
+- The existing P6 capture manifest is bound to this checkpoint. It contains nine current captures. The child/playground attempt is excluded as near-blank; the only readable child/playground image is explicitly reference-only from the earlier `R04-T01` checkpoint. Do not present that older image as a current P6 capture.
+- `state/locks/revit-writer.lock` still names `amanda-P7-RUN003-production`, generation 2, PID 28364, document identity `revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt`. The Windows process-start check inside the canonical `WriterLock` API returns the exact recorded start time `2026-09-26T22:38:20Z`, and `is_held_by_live_owner()` is true. An attempted `acquire(reclaim_abandoned=True)` correctly refused. Do not unlink, rewrite, bypass, or force-release this active lease. The current Codex thread has no attached terminal session for its `input()` keeper, and the P7 owner thread was not located in the visible thread list.
+- The unrelated P7/R05 formal task remains unchanged in `PROJECT_STATE.yaml` and `state/task-graph.yaml`; this presentation request does not authorize P7/R05 or R06. RC01 deletions remain pre-existing and untouched. Only Luna 6 xhigh subagents are permitted; none were used.
+- Resume only after the existing lease owner releases through its own keeper (`input()` prompt), then acquire a fresh lease through `src/amanda_agent/state/locks.py`, generation-fenced. Copy the P6 checkpoint byte-for-byte to a dedicated presentation path, verify the copy hash, inspect/read the active derivative, and make view/sheet/annotation-only changes. Verify geometry unchanged, reopen/read back, export and visually inspect all requested views and sheet, then update the formal state/handoff and Git evidence. Keep R05 and R06 unstarted.
+
 ## Current state — P7-T01/R05 blocked at production runner transport
 
 This is the sole active resume point. P4-T01/BIM-00, R04, and P6-T01 remain complete. P7-T01 is `BLOCKED_BY_TOOL` because the approved production runner's installed stdio transport cannot reach the Revit session, although the direct app Horizun health call can. Current authorization is R05 only. R06 and later stages require their own task gates, and completing R05 does not start R06.
