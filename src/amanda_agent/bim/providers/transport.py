@@ -43,6 +43,7 @@ class McpProbeTransport:
         self._next_id = 0
         self._lock = threading.Lock()
         self._started = False
+        self._pinned_process_pid: int | None = None
 
     def __enter__(self) -> "McpProbeTransport":
         self._ensure_started()
@@ -79,7 +80,39 @@ class McpProbeTransport:
         )
         return self._await_reply(request_id)
 
+    def pin_process_identity(self) -> int:
+        """Pin the live stdio child identity after its health check."""
+
+        process = self.process
+        if not self._started or process is None:
+            raise McpTransportError("Horizun MCP process is not running")
+        pid = process.pid
+        if type(pid) is not int or pid <= 0:
+            raise McpTransportError("Horizun MCP process has no valid PID")
+        if process.poll() is not None:
+            raise McpTransportError(
+                "Horizun MCP process exited before its identity could be pinned"
+            )
+        if self._pinned_process_pid is not None and self._pinned_process_pid != pid:
+            raise McpTransportError("Horizun MCP process identity changed")
+        self._pinned_process_pid = pid
+        return pid
+
     def _ensure_started(self) -> None:
+        if self._pinned_process_pid is not None:
+            process = self.process
+            if (
+                not self._started
+                or process is None
+                or type(process.pid) is not int
+                or process.pid != self._pinned_process_pid
+                or process.poll() is not None
+            ):
+                raise McpTransportError(
+                    "Horizun MCP transport pinned during health validation exited; "
+                    "refusing automatic restart"
+                )
+            return
         if self._started and self.process is not None and self.process.poll() is None:
             return
         if not self.server.is_file():

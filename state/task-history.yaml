@@ -2440,3 +2440,26 @@ entries:
   - 'Latest provider call was around 03:36Z and reported only transient transport child PID 40000 (horizun-mcp, age 0); no target selection, document mutation, checkpoint, or lease change occurred. The 10-minute quiet window has elapsed.'
   recorded_utc: '2026-09-27T03:57:48Z'
   note: Publish reviewed filter and state, then make at most one live R05 attempt if health, capabilities, and exact targetability pass; retain PENDING until persistence evidence is complete.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Live runner on pushed commit 176c2cf retained the existing RUN-003 lease but stopped in health validation before target selection, document info, P6 baseline readback, or any Revit mutation because it expected other_clients_connected at the top level.'
+  - 'Read-only Horizun health confirmed HEALTHY, version 1.3.3, Revit 2027 build 27.2.0.39/PID 38296, 80/80 visible tools, 73/73 registered commands, full_write/unpaused, and the exact saved RUN-003 target active.'
+  - 'Health reports nested clients.other_clients_connected=1, distinct_clients_in_window=2, unidentified_connections_in_window=0, and clients_seen containing caller PID 1708 plus exited runner PID 26784 at age 51 seconds. Provider note says the current caller is excluded from the other-client count; therefore one other recent client is present.'
+  - 'Prior positive-count exact-self exemption is superseded. TDD RED covered nested-only zero count with the current transport listed, nested positive count with current plus another client, and null client metadata. Updated validator accepts nested counts, checks count/list consistency, and fails closed unless the other-client count is zero.'
+  - 'Focused shell/runner/authorization/task-graph tests: 71 passed, 0 failed; YAML parse 3/3; diff check passed. Independent Luna 6 xhigh review is pending because the first delegated response did not review the code.'
+  recorded_utc: '2026-09-27T04:19:06Z'
+  note: No provider call until at least 04:29:06Z. Review and publish the corrected gate, then re-run only after a fresh health/capability and exact-target check; retain P7-T01 PENDING until full R05 persistence evidence passes.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Luna 6 xhigh independent review found P2: McpProbeTransport could silently replace the health-validated child between Revit calls. It also identified missing regression cases for absent nested other_clients_connected and nonzero unidentified connections.'
+  - 'RED: RUN-003 preflight test expected health -> pin transport PID -> target but observed health -> target; direct transport pin test failed because pin_process_identity did not exist.'
+  - 'GREEN: RUN-003 now pins the live MCP child immediately after horizun_health, passes that exact PID to strict client validation, and refuses to transparently start a replacement if the pinned child exits or changes. Added fail-closed regression cases for both client metadata gaps.'
+  - 'Focused command .venv\Scripts\python.exe -m pytest tests/unit/test_stage_shell.py tests/unit/test_run_amanda_production.py tests/unit/test_run003_study_authorization.py tests/unit/test_task_graph.py tests/unit/test_bim_transport_env.py tests/unit/test_mcp_probe_transport_pinning.py tests/unit/test_bim_horizun_invoker.py -q: 141 passed, 0 failed.'
+  - 'R05 dry-run verified all four canonical PNG hashes, P6 approval/layout hashes, and exactly R05 planned; nothing was written. YAML parse passed for PROJECT_STATE.yaml, state/task-graph.yaml, state/task-history.yaml; diff check is recorded at closeout.'
+  - 'Scoped Luna 6 xhigh follow-up confirmed both implementation findings addressed and found no new Critical/Important issue. It reported that its review package omitted the then-untracked transport regression test.'
+  - 'The test was staged, and the exact nine-file staged patch was regenerated into a follow-up package. A second confirmation could not be started because the session agent-thread limit was reached. Local checks confirmed package inclusion, staged diff check passed, and the focused suite remained 141/141.'
+  - 'No Horizun call or Revit write followed the 04:19:06Z health snapshot.'
+  recorded_utc: '2026-09-27T04:58:54Z'
+  note: Publish tested changes, then make one fresh health-first R05 runner attempt; retain lease and keep P7-T01 PENDING until full persistence and QA pass.

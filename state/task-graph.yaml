@@ -3421,6 +3421,38 @@ tasks:
       pavilion against current 4/3/2 code/spec/report while preserving every
       official PDF count and area; also correct the stale CANON-011 sentence in
       CANONICAL_DEVIATIONS.yaml. Neither documentation item blocks R05 shell.
+    - >-
+      One live R05 attempt on pushed commit 176c2cf retained the existing lease
+      and stopped in health validation before target selection, document info,
+      P6 baseline readback, or mutation because the code expected a top-level
+      client count. Follow-up raw Horizun health confirmed the actual nested
+      `clients.other_clients_connected` field, 80/80 tools, 73/73 registered
+      commands, full_write/unpaused, and active saved RUN-003 target. It reported
+      one other recent client; `clients_seen` included the direct health caller
+      and the exited runner PID. The earlier positive-count self-exemption was
+      incorrect and is superseded. TDD RED reproduced nested-only client count,
+      current-plus-other client list, and null metadata cases; corrected
+      fail-closed zero-count handling passes 71 focused tests. Luna 6 xhigh
+      review remains pending; P7-T01 stays PENDING.
+    - >-
+      Luna 6 xhigh review identified a P2 stale-transport-PID risk and P3 gaps
+      for missing nested other_clients_connected and nonzero unidentified
+      connection counts. RUN-003 now pins the transport PID used for health and
+      refuses transparent process restart for the remainder of the session;
+      direct regression tests cover process exit/no respawn and both metadata
+      cases. TDD observed RED for health->pin->target ordering and absent pin API,
+      then GREEN. The seven-module focused suite passes 141/141. The dry-run
+      binds all four current canonical boards and the accepted P6 hashes and
+      plans only R05 with no writes. Follow-up Luna review could not be reopened
+      or spawned because the session agent-thread limit was reached; the fix was
+       reviewed. Scoped Luna 6 xhigh follow-up confirmed both implementation
+       findings addressed and found no new Critical/Important issue, but noted
+       that its diff package omitted the then-untracked transport regression
+       test. The test is staged and included in a regenerated nine-file review
+       package; another independent pass was unavailable due the session agent
+       limit. Local review and staged-diff checks confirm inclusion. No provider
+       call or Revit write followed the 04:19:06Z health snapshot; P7-T01 stays
+       PENDING for fresh live preflight and R05 persistence verification.
   P7-T02:
     id: P7-T02
     phase: P7

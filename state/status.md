@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; authorized, awaiting publication and one health-gated live attempt)
+- Next task: `P7-T01` (R05 architectural shell; authorized, strict health/transport gate fixed, fresh live preflight pending)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -37,18 +37,19 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-Latest recorded provider check: Horizun 1.3.3 `HEALTHY`; Revit 2027 build
-27.2.0.39, PID 38296; registry 73/73 clean, 80/80 tools visible. The exact
-RUN-003 target was active and targetable; two documents were open (RUN-003 and
-`HZ_ANCHOR_2027`) with zero other clients. P6's lease was released after its
-save/cold-reopen/readback. Current P7 writer lease: `amanda-P7-RUN003-production`,
-PID 28364, generation 2, exact target; owner process is alive. Five authorized
-host-runner attempts stopped before baseline readback/write. The latest runner
-checked health first; it reported one live client PID 40000 (`horizun-mcp`, age
-0). That PID was gone by the post-exit local process query. Target selection
-was never called. No model/checkpoint/lease mutation occurred. The next attempt
-must strictly identify the current transport PID and keep every other PID
-blocked.
+Latest raw provider health is from 04:19:06Z: Horizun 1.3.3 `HEALTHY`; Revit
+2027 build 27.2.0.39/PID 38296; registry 73/73 clean, 80/80 tools visible;
+`full_write`, not paused; exact saved RUN-003 target active. The actual schema
+reports `clients.other_clients_connected=1`, with two listed entries including
+the direct caller and an exited runner transport. That R05 attempt failed closed
+before target selection because code on pushed commit `176c2cf` expected a
+top-level count; no model/checkpoint/lease mutation occurred. The corrected
+validator now requires complete consistent nested metadata and zero distinct
+other clients, and pins the validated transport PID so later calls cannot
+silently restart on a replacement process. The focused suite passes 141/141 and
+the dry-run plans only R05. No provider call has occurred since 04:19:06Z; a
+fresh runner health/capability/targetability check is required before any write.
+The existing P7 lease remains held by live owner PID 28364. P7-T01 stays PENDING.
 
 ## Current RUN-003 R04 acceptance status
 
@@ -133,18 +134,14 @@ supersedes that hold. Five host-profile attempts after direct target verificatio
 stopped before P6 baseline readback because a recent second client was still
 visible. No R05 write, save, or checkpoint occurred. After health was moved
 before target selection, the ~03:36Z attempt reported only PID 40000
-(`horizun-mcp`, age 0, alive) and stopped before selection; local process lookup
-could not find it after transport exit. This supports that the current transport
-child is included in the count. A strict exact-PID filter now requires one typed,
-live `horizun-mcp` entry matching this transport and rejects every extra,
-unknown, duplicate, or malformed client. RED/GREEN coverage passes; fresh
-focused shell, runner, authorization, and task-graph tests passed 70/70, YAML
-parsing passed 3/3, and the R05 dry-run planned only R05 without writes.
-Independent Luna 6 xhigh review found no P1/P2 findings. The remaining review
-assumption is that Horizun's client count/list are complete and consistent and
-the reported transport PID identifies this invocation. This filter has not been
-tried live; the last provider call was ~03:36Z and the quiet window has elapsed.
-The exact-self filter is pending commit. A typed close rehearsal confirmed
+(`horizun-mcp`, age 0, alive) and stopped before selection. A follow-up raw
+health call showed the authoritative count nested under `clients`; `clients_seen`
+includes the caller and any distinct recent clients. The prior positive-count
+self-exemption was incorrect and is superseded. Current tests now enforce
+nested count handling, count/list consistency, and a zero-other-client gate;
+fresh shell/runner/authorization/task-graph tests passed 71/71, YAML parsing
+passed 3/3, and `git diff --check` passed. Luna 6 xhigh review is pending. The
+corrected gate has not been tried live. A typed close rehearsal confirmed
 `is_modified=false` and `would_discard_unsaved=false`; it made no session
 change. The stage runner requires save, close-with-save, post-close checkpoint,
 exact cold reopen, and complete typed geometry readback.
