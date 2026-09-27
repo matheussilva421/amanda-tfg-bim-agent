@@ -3563,6 +3563,14 @@ tasks:
       target activation succeeded immediately before close. Do not assume the
       inspection is closed. Preserve lease/journal and wait until 07:50:00Z;
       P7-T01 pending.
+    - >-
+      The 07:50Z health-first retry received an untyped horizun_health payload
+      and stopped before transport pinning, capability/build validation, target
+      selection, document reads, or writes. The existing lease was retained.
+      Prior P6 close remains unverified and active/open-document state is unknown.
+      The target and accepted P6 checkpoint last verified byte-identical at
+      SHA-256 8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326;
+      no save/write occurred. Wait until 08:00:30Z; P7-T01 remains PENDING.
   P7-T02:
     id: P7-T02
     phase: P7

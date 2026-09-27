@@ -1,6 +1,6 @@
 # Current Handoff
 
-## Current state — P7-T01/R05 blocked at P6 checkpoint fingerprint integrity
+## Current state — P7-T01/R05 blocked at health and P6 integrity gates
 
 This is the sole active resume point. P4-T01/BIM-00, R04, and P6-T01 remain complete. P7-T01 stays `PENDING`; this continuation is restricted to R05.
 
@@ -21,9 +21,10 @@ This is the sole active resume point. P4-T01/BIM-00, R04, and P6-T01 remain comp
 - Latest health-first runner (~07:26Z) passed health/client/target/lease and retained the existing lease. The target still had the known unsaved 8-floor partial, so baseline count validation routed to guarded recovery. The exact P6 file opened as Revit 2027 without upgrade; count/category/mass/ElementId checks passed, but the compact query returned fingerprint `2f12a578c8451f3f` instead of accepted `4636abc6b294829b`. Exception cleanup closed the P6 inspection without saving and did not close or save the partial target. No R05 stage write/save/checkpoint occurred. Local P6 bytes remain 4,960,256 bytes with SHA-256 `8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326`, matching the manifest. Do not waive the mismatch or change the checkpoint. Luna 6 xhigh review dispatch hit the app agent-thread limit; review remained local. Wait until 07:36:30Z before another runner attempt.
 - TDD applied the documented fresh-verification cache policy: RED added assertions for `cache_mode="bypass"` to both compact P6 reads and both failed because the argument was absent; GREEN added the argument to the baseline and checkpoint queries. The focused production suite passes 198/198. Commit `7be2101276053e88c9f778dfe58f00e9743e97e4` is pushed to `main`. This diagnostic change has not been exercised live; the fingerprint mismatch remains an active gate. Retry only after 07:36:30Z.
 - Live retry at about 07:37Z still returned fingerprint `2f12a578c8451f3f` instead of accepted `4636abc6b294829b`, so cache use does not explain the mismatch. Recovery called checkpoint close with `save_on_close=false`, but its result was `None`; the runner could not verify closure. `_activate(target)` completed before this close attempt; active document/open-document count after the attempt is unverified. No R05 write/save/checkpoint occurred. Preserve the lease and journal; do not issue another provider call before 07:50:00Z.
+- The 07:50Z health-first retry failed immediately because `horizun_health` returned an untyped payload. The runner stopped before transport PID pinning, capabilities, Revit target selection, document reads, or writes. It retained the existing RUN-003 lease. Post-close active/open-document state remains unknown; the working target and P6 checkpoint still need a runner-led health/readback. No R05 write/save/checkpoint occurred. Wait until at least 08:00:30Z before another provider call.
 - The recorded RUN-003 writer lease owner is `amanda-P7-RUN003-production`, PID 28364, generation 2. Revalidate it through the runner; never reclaim or release it. Use only `gpt-6-luna` with `xhigh` if a subagent can be started. One Luna 6 xhigh review spawn was attempted but the app's agent-thread limit was full, so this continuation used local review.
 
-**Resume:** maintain the no-provider-call window until at least 07:50:00Z, then use only this health-first runner command under the approved host context:
+**Resume:** maintain the no-provider-call window until at least 08:00:30Z, then use only this health-first runner command under the approved host context:
 
 ```powershell
 .venv\Scripts\python.exe scripts/run_amanda_production.py --rvt 'revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt' --resume-run003-study --reuse-existing-run003-lease --max-stage R05 --revit-pid 38296 --execute

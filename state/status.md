@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; authorized; the unsaved eight-floor partial remains in Revit memory; latest runner opened exact P6 but failed accepted fingerprint integrity before row comparison or partial discard)
+- Next task: `P7-T01` (R05 architectural shell; authorized; latest health-first retry returned an untyped health response before capability/target/document checks; prior P6 fingerprint and cleanup gates remain unresolved)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -38,17 +38,17 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-Latest runner call was about 07:37Z. It passed health/client/target/lease gates,
-validated the known partial, and opened exact P6 as Revit 2027 without upgrade.
-The checkpoint passed count/category/mass/ElementId checks, but fingerprint
-`2f12a578c8451f3f` still differs from accepted `4636abc6b294829b` with cache
-bypass enabled. Cleanup attempted a no-save close; response was `None`, so close
-and post-close document state are unverified. The target had been activated
-before that close call. No R05 write/save/checkpoint occurred. P6 SHA still
-matches its manifest. Preserve lease PID 28364, generation 2. The cache-bypass
-fix passes the focused production suite (198/198); its live effect did not
-resolve this mismatch. Wait until 07:50:00Z before another provider call.
-P7-T01 remains PENDING.
+Latest runner call was about 07:50Z. Its first `horizun_health` result was not a
+typed object, so the runner stopped before transport pinning, capability/build
+checks, target selection, document reads, or writes. The existing RUN-003 lease
+was retained. Immediately before this retry, the previous cleanup attempt had
+failed to verify P6 close (`None`); active/open-document state is therefore
+unknown. The 07:37Z exact P6 query still returned fingerprint
+`2f12a578c8451f3f` vs accepted `4636abc6b294829b` even with cache bypass. Both
+RVT files last verified byte-identical at SHA-256
+`8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326` and
+4,960,256 bytes; no save/write occurred. Preserve lease PID 28364, generation 2.
+Wait until 08:00:30Z before another provider call. P7-T01 remains PENDING.
 
 ## Current RUN-003 R04 acceptance status
 

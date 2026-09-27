@@ -20,7 +20,7 @@ def test_status_dashboard_checkpoint_matches_project_state():
 def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     handoff = (ROOT / "state" / "HANDOFF.md").read_text(encoding="utf-8")
     assert (
-        "## Current state — P7-T01/R05 blocked at P6 checkpoint fingerprint integrity"
+        "## Current state — P7-T01/R05 blocked at health and P6 integrity gates"
         in handoff.splitlines()[:8]
     )
     assert "P7-T01 stays `PENDING`; this continuation is restricted to R05." in handoff
