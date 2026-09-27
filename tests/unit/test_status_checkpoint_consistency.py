@@ -20,9 +20,10 @@ def test_status_dashboard_checkpoint_matches_project_state():
 def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     handoff = (ROOT / "state" / "HANDOFF.md").read_text(encoding="utf-8")
     assert (
-        "## Current state — P7-T01/R05 awaiting health-first live retry"
+        "## Current state — P7-T01/R05 blocked pending explicit write authorization"
         in handoff.splitlines()[:8]
     )
+    assert "user explicitly authorizes the RUN-003 R05 write in the current conversation" in handoff
     assert "P7-T01 stays `PENDING`; this continuation is restricted to R05." in handoff
     assert "authorized live R05 runner attempt" in handoff
     assert "## Prior closeout — P4-T01 R04" in handoff

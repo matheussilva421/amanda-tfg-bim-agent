@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; authorized; exact P6 fingerprint reconciliation is implemented, but awaits a fresh health-first live recheck; no R05 write)
+- Next task: `P7-T01` (R05 architectural shell; exact P6 fingerprint reconciliation is implemented; automatic review blocked the live write invocation pending explicit current user authorization; no R05 write)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -47,6 +47,13 @@ categories 7/14/4, mass bounds, and admin floor IDs. Compact fingerprint
 historical accepted `4636abc6b294829b`. Guarded cleanup closed P6 without
 saving and reactivated the target. No model write/save/checkpoint occurred.
 
+A later invocation of the health-first R05 runner was rejected by automatic
+approval review before the process launched. The review found only current
+P4/R04 authorization visible in user messages and did not accept P7/R05
+authorization found in assistant/tool history. No provider health, target,
+lease, or Revit operation ran from that rejected invocation. P7-T01 remains
+`PENDING`; wait for explicit current user authorization before retrying.
+
 The additive record
 `revit/production/evidence/AMANDA-RUN-003-R04/p6-readback-fingerprint-reconciliation.json`
 binds the exact checkpoint SHA, prior diagnostic SHA, both observed query
@@ -56,9 +63,10 @@ relations against the P6 spatial evidence. The historical P6 acceptance remains
 unchanged; the fingerprint cause is unresolved. Focused production/state/provider
 suite plus state-consistency and plan-order gates: 227/227. Ruff reports the same 9 pre-existing findings;
 new files and edited import blocks are clean. The provider quiet window has elapsed.
-The two commits are pushed; the push response updated main, while a follow-up
-`git ls-remote` could not reach TCP 443. Retry only through the health-first
-R05 runner. P7-T01 remains PENDING.
+All three reconciliation/state commits are pushed; push output advanced main
+to `170cb4f`, while a follow-up `git ls-remote` could not reach TCP 443. After
+explicit authorization, retry only through the health-first R05 runner.
+P7-T01 remains PENDING.
 
 ## Current RUN-003 R04 acceptance status
 

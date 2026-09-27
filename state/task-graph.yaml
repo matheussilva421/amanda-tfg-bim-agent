@@ -3621,6 +3621,14 @@ tasks:
       origin/main updated; subsequent git ls-remote failed because TCP 443 was
       unavailable. No Revit write/save/checkpoint occurred. P7-T01 remains
       PENDING.
+    - >-
+      The subsequent R05 runner invocation was rejected by automatic approval
+      review before process launch. The review cited that the explicit user
+      authorization visible here covers P4/R04, while P7/R05 authorization
+      occurs only in assistant/tool history. No runner, Horizun health call,
+      lease operation, or Revit write was executed by that invocation. Do not
+      retry or use another path until the user explicitly authorizes RUN-003
+      R05 writes in the current conversation. P7-T01 remains PENDING.
   P7-T02:
     id: P7-T02
     phase: P7
