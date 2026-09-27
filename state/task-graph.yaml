@@ -3556,6 +3556,13 @@ tasks:
       focused production suite passes 198/198. Commit
       7be2101276053e88c9f778dfe58f00e9743e97e4 is pushed to main. Live effect is
       unverified; accepted fingerprint remains mandatory. Retry after 07:36:30Z.
+    - >-
+      A live retry still returned 2f12a578c8451f3f rather than accepted
+      4636abc6b294829b with cache bypass. No R05 write/save/checkpoint occurred.
+      The no-save inspection close returned None, so cleanup is unverified;
+      target activation succeeded immediately before close. Do not assume the
+      inspection is closed. Preserve lease/journal and wait until 07:50:00Z;
+      P7-T01 pending.
   P7-T02:
     id: P7-T02
     phase: P7

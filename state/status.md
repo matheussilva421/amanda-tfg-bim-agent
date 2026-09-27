@@ -16,7 +16,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `P5`: 1/1 PASS
 - `P6`: 1/1 PASS
 - `P7`: 0/9 PASS
-- Latest P7-T01 runner (~07:26Z): health/client/target/lease gates passed; existing lease retained. The unsaved 8-floor partial remains in memory. Exact P6 opened as Revit 2027 without upgrade and passed count/category/mass/ElementId checks, then returned fingerprint `2f12a578c8451f3f` vs accepted `4636abc6b294829b`. Recovery closed the inspection without saving and stopped before partial discard or R05. No R05 write/save/checkpoint occurred. P6 local SHA-256 matches its manifest (`8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326`). Preserve lease PID 28364/generation 2; P7-T01 remains `PENDING`.
+- Latest P7-T01 runner (~07:37Z): health/client/target/lease gates passed; lease retained. The known unsaved 8-floor partial remains. Exact P6 opened as Revit 2027 without upgrade and passed count/category/mass/ElementId checks; fingerprint remained `2f12a578c8451f3f` vs accepted `4636abc6b294829b` with cache bypass. Cleanup attempted close with `save_on_close=false`, but response was `None`; close and post-close document state are unverified. Target activation succeeded immediately before close. No R05 write/save/checkpoint occurred. P6 local SHA-256 matches manifest (`8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326`). Preserve lease PID 28364/generation 2; P7-T01 remains `PENDING`.
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -38,19 +38,17 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-Latest runner call was about 07:26Z. It passed health/client/target/lease gates,
-validated the known 33-row partial, and opened the exact P6 checkpoint as Revit
-2027 without upgrade. Count/category/mass/ElementId checks passed, but the
-checkpoint fingerprint was `2f12a578c8451f3f` vs accepted `4636abc6b294829b`.
-Guarded cleanup closed the inspection without saving; the partial target remains
-unsaved and was not discarded. The checkpoint file hash matches its manifest
-and accepted SHA. No R05 write/save/checkpoint occurred. The two-query code is
-still unverified live. Focused suite: 198/198. Preserve lease PID 28364,
-generation 2. Wait until at least 07:36:30Z before another provider call.
-The local tool contract calls for cache bypass during fresh verification. TDD
-added bypass to both compact P6 queries; focused production suite: 198/198.
-Commit 7be2101276053e88c9f778dfe58f00e9743e97e4 is pushed; live effect is
-unverified. P7-T01 remains PENDING.
+Latest runner call was about 07:37Z. It passed health/client/target/lease gates,
+validated the known partial, and opened exact P6 as Revit 2027 without upgrade.
+The checkpoint passed count/category/mass/ElementId checks, but fingerprint
+`2f12a578c8451f3f` still differs from accepted `4636abc6b294829b` with cache
+bypass enabled. Cleanup attempted a no-save close; response was `None`, so close
+and post-close document state are unverified. The target had been activated
+before that close call. No R05 write/save/checkpoint occurred. P6 SHA still
+matches its manifest. Preserve lease PID 28364, generation 2. The cache-bypass
+fix passes the focused production suite (198/198); its live effect did not
+resolve this mismatch. Wait until 07:50:00Z before another provider call.
+P7-T01 remains PENDING.
 
 ## Current RUN-003 R04 acceptance status
 

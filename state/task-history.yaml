@@ -2545,3 +2545,12 @@ entries:
   - 'The previous live fingerprint mismatch remains unresolved; this adjustment is a diagnostic hypothesis and has not yet been exercised in Revit.'
   recorded_utc: '2026-09-27T07:36:03Z'
   note: No provider calls before 07:36:30Z. Then retry only the health-first RUN-003 R05 runner; require accepted P6 fingerprint, no-save recovery, and the full R05 write/read/verify/persistence gate.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Health-first runner passed health/client/target/lease and retained the RUN-003 lease. The unsaved 8-floor partial remains.'
+  - 'Exact P6 opened as Revit 2027 without upgrade and passed count/category/mass/ElementId checks; fingerprint remained 2f12a578c8451f3f rather than accepted 4636abc6b294829b with cache_mode=bypass.'
+  - 'Recovery attempted close with save_on_close=false, but the tool response was None and the runner could not verify closure. Target activation had succeeded immediately before close; post-close active/open-document state is unknown. No R05 stage write/save/checkpoint occurred.'
+  - 'P6 file SHA-256 matches manifest. Focused production suite: 198 passed, 0 failed; state suite: 24 passed, 0 failed. Commit 7be2101276053e88c9f778dfe58f00e9743e97e4 pushed.'
+  recorded_utc: '2026-09-27T07:39:38Z'
+  note: Do not call Horizun before 07:50:00Z. Resume only through the health-first runner. Verify active target/document state and preserve exact P6 fingerprint/lease; if inspection cleanup remains uncertain, stop before R05.
