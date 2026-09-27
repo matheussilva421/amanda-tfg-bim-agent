@@ -3605,6 +3605,20 @@ tasks:
       diagnostic-only JSON with the checkpoint SHA and detailed identity/bounds
       rows before the mismatch error; acceptance remains blocked. Focused suite
       202/202; Ruff has the same 9 baseline findings. P7-T01 remains PENDING.
+    - >-
+      Additive P6 readback reconciliation preserves historical fingerprint
+      4636abc6b294829b and binds the exact checkpoint SHA, compact/detailed
+      fingerprints, diagnostic SHA, 25-row digest, and typed spatial invariants.
+      The original P6 gate is not rewritten; the root cause remains unresolved.
+      TDD observed RED then GREEN for the reconciliation and compact/detail row
+      comparison; the focused RUN-003/state suite plus plan-order gate passed
+      227/227.
+      Local second-pass review found and closed the compact/detail bounds gap.
+      Luna 6 xhigh review spawn was refused by the active agent-thread limit; no
+      other agent was used. Implementation/evidence commit
+      f96995af4d381bffb16b646f9d36e189bc426b09 is on local main; the state/handoff
+      closeout commit and push are next. No Revit write/save/checkpoint occurred.
+      P7-T01 remains PENDING.
   P7-T02:
     id: P7-T02
     phase: P7
