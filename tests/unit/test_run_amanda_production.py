@@ -1030,6 +1030,9 @@ def test_run003_live_readback_must_match_the_accepted_p6_baseline(
     assert calls[0][0] == "horizun_query_model"
     assert calls[0][1]["include_types"] is False
     assert calls[0][1]["coordinate_units"] == "m"
+    assert calls[0][1]["return_fields"] == [
+        "unique_id", "category", "name"
+    ]
 
     rows[0]["bounding_box"]["max"] = [1.0, 1.0, 6.4]
     with pytest.raises(ValueError, match="P6 mass bounding boxes"):
@@ -1764,6 +1767,15 @@ def test_known_r05_partial_is_reopened_without_saving_only_after_exact_state_che
 
     assert evidence["reopened_exact_target"] is True
     assert evidence["p6_baseline_fingerprint"] == "p6-fingerprint"
+    query_arguments = [
+        args for tool, args in tool_calls if tool == "horizun_query_model"
+    ]
+    assert len(query_arguments) == 3
+    assert all(
+        args["return_fields"]
+        == ["unique_id", "category", "name"]
+        for args in query_arguments
+    )
     closes = [args for tool, args in tool_calls if tool == "horizun_document_session" and args["operation"] == "close"]
     assert len(closes) == 2
     assert all(args["save_on_close"] is False for args in closes)

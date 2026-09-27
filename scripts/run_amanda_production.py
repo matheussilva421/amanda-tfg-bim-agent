@@ -482,6 +482,7 @@ def _verify_p6_live_readback(transport, authorization) -> str:
             "max_rows": 100,
             "parameter_format": "compact",
             "response_mode": "compact",
+            "return_fields": ["unique_id", "category", "name"],
         },
     )
     return _validate_p6_live_readback(payload, authorization)
@@ -766,6 +767,7 @@ def _restore_known_failed_r05_partial(
             "max_rows": 100,
             "response_mode": "compact",
             "cache_mode": "bypass",
+            "return_fields": ["unique_id", "category", "name"],
         },
     )
     state = _validate_known_r05_partial_model(live, records, authorization)
@@ -815,6 +817,7 @@ def _restore_known_failed_r05_partial(
                 "max_rows": 100,
                 "parameter_format": "compact",
                 "response_mode": "compact",
+                "return_fields": ["unique_id", "category", "name"],
             },
         )
         checkpoint_fingerprint = _validate_p6_live_readback(checkpoint_payload, authorization)
@@ -835,6 +838,7 @@ def _restore_known_failed_r05_partial(
                 "max_rows": 100,
                 "response_mode": "compact",
                 "cache_mode": "bypass",
+                "return_fields": ["unique_id", "category", "name"],
             },
         )
         _validate_known_r05_partial_model(live_again, records, authorization)
