@@ -1,0 +1,22 @@
+{
+  "accepted_fingerprint": "4636abc6b294829b",
+  "category_counts": {
+    "Massa": 7,
+    "Pisos": 14,
+    "Telhados": 4
+  },
+  "checkpoint_path": "revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-CANON-011-RECONCILED-20260926.rvt",
+  "checkpoint_sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+  "diagnostic_path": "revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-559bb4edc356.json",
+  "diagnostic_sha256": "d2d0cec6bd53c37b211a9eed168a2959009f05ba577cd7f0dd7dce63d73072d6",
+  "model_write_performed": false,
+  "observed_compact_fingerprint": "2f12a578c8451f3f",
+  "observed_detailed_fingerprint": "1aac5d79b05b159a",
+  "p6_acceptance_gate_passed": false,
+  "root_cause": "UNRESOLVED_QUERY_PROJECTION_OR_SERIALIZATION",
+  "row_count": 25,
+  "rows_sha256": "3732c3c44c405a6453df8157243b7695b442b9969c979c141c6e829011940c0d",
+  "schema_version": 1,
+  "scope": "RUN003_P6_CHECKPOINT_READBACK_IDENTITY",
+  "status": "RECONCILED_EXACT_READBACK_ONLY"
+}

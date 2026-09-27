@@ -59,6 +59,10 @@ from amanda_agent.production.layout_bim import (
     build_layout_stage_plans,
     find_project_template,
 )
+from amanda_agent.production.p6_fingerprint_reconciliation import (
+    P6FingerprintReconciliationError,
+    verify_reconciled_p6_readback,
+)
 from amanda_agent.production.run003_study import (
     load_run003_study_authorization,
     load_run003_study_selection,
@@ -694,7 +698,50 @@ def _verify_p6_live_readback(transport, authorization) -> str:
             "response_mode": "compact",
         },
     )
-    return _validate_p6_live_readback(payload, authorization)
+    fingerprint = _validate_p6_live_readback(payload, authorization)
+    if fingerprint == authorization.p6_readback_fingerprint:
+        return fingerprint
+
+    detailed_payload = _read_tool(
+        transport,
+        "horizun_query_model",
+        {
+            "categories": [
+                "OST_Mass",
+                "OST_Floors",
+                "OST_Roofs",
+                "OST_Walls",
+                "OST_Rooms",
+            ],
+            "coordinate_units": "m",
+            "include_bounding_box": True,
+            "include_types": False,
+            "max_rows": 100,
+            "parameter_format": "compact",
+            "response_mode": "compact",
+            "cache_mode": "bypass",
+            "return_fields": ["unique_id", "category", "name"],
+        },
+    )
+    _validate_p6_live_readback(detailed_payload, authorization)
+    try:
+        reconciliation = verify_reconciled_p6_readback(
+            REPOSITORY_ROOT, authorization, payload, detailed_payload
+        )
+    except P6FingerprintReconciliationError as exc:
+        raise ValueError(
+            "RUN-003 P6 fingerprint mismatch is not covered by exact readback "
+            f"reconciliation: {exc}"
+        ) from exc
+    print(
+        "P6 exact-readback reconciliation:",
+        reconciliation["historical_accepted_fingerprint"],
+        "->",
+        reconciliation["observed_compact_fingerprint"],
+        "rows_sha256=",
+        reconciliation["rows_sha256"],
+    )
+    return fingerprint
 
 
 def _load_known_failed_r05_records(journal_path: Path) -> list[dict]:
@@ -1060,13 +1107,21 @@ def _restore_known_failed_r05_partial(
                 detail_payload=checkpoint_detail_payload,
             )
             try:
-                _require_accepted_p6_fingerprint(
-                    checkpoint_fingerprint, authorization.p6_readback_fingerprint
+                reconciliation = verify_reconciled_p6_readback(
+                    REPOSITORY_ROOT,
+                    authorization,
+                    checkpoint_payload,
+                    checkpoint_detail_payload,
                 )
-            except ValueError as exc:
+            except P6FingerprintReconciliationError as exc:
                 raise ValueError(
-                    f"{exc}; detailed diagnostic saved to {diagnostic_path}"
+                    "P6 fingerprint mismatch is not covered by exact readback "
+                    f"reconciliation: {exc}; detailed diagnostic saved to {diagnostic_path}"
                 ) from exc
+            print(
+                "P6 checkpoint fingerprint reconciled against exact typed rows:",
+                reconciliation["rows_sha256"],
+            )
         else:
             checkpoint_fingerprint = _require_accepted_p6_fingerprint(
                 checkpoint_fingerprint, authorization.p6_readback_fingerprint

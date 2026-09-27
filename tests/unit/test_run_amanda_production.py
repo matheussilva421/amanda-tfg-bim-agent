@@ -1076,6 +1076,7 @@ def test_run003_live_readback_must_match_the_accepted_p6_baseline(
     authorization = SimpleNamespace(
         mass_bounding_boxes_m=boxes,
         administrative_floor_element_ids=floor_ids,
+        p6_readback_fingerprint="p6-live-fingerprint",
     )
     rows = [
         {
@@ -1816,7 +1817,7 @@ def test_known_r05_partial_is_reopened_without_saving_only_after_exact_state_che
     authorization = SimpleNamespace(
         checkpoint_sha256="a" * 64,
         checkpoint_path="P6-checkpoint.rvt",
-        p6_readback_fingerprint="p6-fingerprint",
+        p6_readback_fingerprint="historical-p6-fingerprint",
         mass_bounding_boxes_m={
             name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
             for name in (
@@ -1871,6 +1872,15 @@ def test_known_r05_partial_is_reopened_without_saving_only_after_exact_state_che
     monkeypatch.setattr(production_runner, "_read_tool", read_tool)
     monkeypatch.setattr(production_runner, "_document_info", lambda _transport: {"path": active_path[0]})
     monkeypatch.setattr(production_runner, "_verify_p6_live_readback", lambda *_: "p6-fingerprint")
+    reconciliation_calls = []
+
+    def verify_reconciliation(*args, **kwargs):
+        reconciliation_calls.append((args, kwargs))
+        return {"rows_sha256": "a" * 64}
+
+    monkeypatch.setattr(
+        production_runner, "verify_reconciled_p6_readback", verify_reconciliation
+    )
     monkeypatch.setattr(production_runner.CheckpointManager, "verify_checkpoint", lambda *_: True)
 
     class FakeTransport:
@@ -1890,6 +1900,8 @@ def test_known_r05_partial_is_reopened_without_saving_only_after_exact_state_che
 
     assert evidence["reopened_exact_target"] is True
     assert evidence["p6_baseline_fingerprint"] == "p6-fingerprint"
+    assert len(reconciliation_calls) == 1
+    assert reconciliation_calls[0][1] == {}
     query_arguments = [
         args for tool, args in tool_calls if tool == "horizun_query_model"
     ]
@@ -2043,3 +2055,51 @@ def test_p6_fingerprint_mismatch_persists_detailed_checkpoint_readback_before_fa
     assert all(row.get("unrequested_debug_value") is None for row in rows)
     assert checkpoint_closes == [True]
     assert active_path[0] == str(target)
+
+
+def test_live_p6_query_requires_exact_addendum_when_fingerprint_projection_differs(
+    monkeypatch,
+):
+    from amanda_agent.production.p6_fingerprint_reconciliation import (
+        RECONCILIATION_PATH,
+    )
+    from amanda_agent.production.run003_study import (
+        load_run003_study_authorization,
+    )
+
+    root = Path(__file__).resolve().parents[2]
+    authorization = load_run003_study_authorization(root)
+    record_path = root / RECONCILIATION_PATH
+    record = json.loads(record_path.read_text(encoding="utf-8"))
+    diagnostic = json.loads((root / record["diagnostic_path"]).read_text(encoding="utf-8"))
+    detailed = {
+        "matched_total": 25,
+        "returned": 25,
+        "coverage_complete": True,
+        "unreadable_total": 0,
+        "summary": {"by_category": {"Massa": 7, "Pisos": 14, "Telhados": 4}},
+        "result_set_fingerprint": record["observed_detailed_fingerprint"],
+        "rows": diagnostic["readback"]["rows"],
+    }
+    compact = {
+        **detailed,
+        "result_set_fingerprint": record["observed_compact_fingerprint"],
+    }
+    calls = []
+
+    def read_tool(_transport, tool, arguments):
+        calls.append((tool, arguments))
+        assert tool == "horizun_query_model"
+        if arguments.get("return_fields"):
+            return detailed
+        return compact
+
+    monkeypatch.setattr(production_runner, "REPOSITORY_ROOT", root)
+    monkeypatch.setattr(production_runner, "_read_tool", read_tool)
+
+    result = production_runner._verify_p6_live_readback(object(), authorization)
+
+    assert result == record["observed_compact_fingerprint"]
+    assert len(calls) == 2
+    assert calls[1][1]["return_fields"] == ["unique_id", "category", "name"]
+    assert calls[1][1]["cache_mode"] == "bypass"
