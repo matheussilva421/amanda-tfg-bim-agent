@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; authorized; latest health-first retry returned an untyped health response before capability/target/document checks; prior P6 fingerprint and cleanup gates remain unresolved)
+- Next task: `P7-T01` (R05 architectural shell; authorized; latest health-first retry reported a Revit modal in an untyped health payload; later read-only UI saw RUN-003 active with the P6 tab still open; prior P6 fingerprint and cleanup gates remain unresolved)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -16,7 +16,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `P5`: 1/1 PASS
 - `P6`: 1/1 PASS
 - `P7`: 0/9 PASS
-- Latest P7-T01 runner (~07:37Z): health/client/target/lease gates passed; lease retained. The known unsaved 8-floor partial remains. Exact P6 opened as Revit 2027 without upgrade and passed count/category/mass/ElementId checks; fingerprint remained `2f12a578c8451f3f` vs accepted `4636abc6b294829b` with cache bypass. Cleanup attempted close with `save_on_close=false`, but response was `None`; close and post-close document state are unverified. Target activation succeeded immediately before close. No R05 write/save/checkpoint occurred. P6 local SHA-256 matches manifest (`8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326`). Preserve lease PID 28364/generation 2; P7-T01 remains `PENDING`.
+- Latest P7-T01 runner (~08:02Z): `horizun_health` returned an untyped response reporting a Revit modal titled `Projeto não recentemente salvo`; runner stopped before transport PID pinning, capabilities, target/document checks, or writes and retained lease PID 28364/generation 2. Read-only UI inspection (~08:04Z) then showed RUN-003 active and P6 plus `HZ_ANCHOR_2027` tabs open; no modal was visible. No controls clicked and no save/close/write occurred. The known unsaved 8-floor partial remains. The earlier exact P6 read still has fingerprint `2f12a578c8451f3f` vs accepted `4636abc6b294829b`; do not waive. Target and checkpoint last verified byte-identical at 4,960,256 bytes, SHA-256 `8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326`. Quiet deadline 08:12:30Z has elapsed; retry only through the health-first runner. P7-T01 remains `PENDING`.
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -38,21 +38,22 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-Latest runner call was about 07:50Z. Its first `horizun_health` result was not a
-typed object, so the runner stopped before transport pinning, capability/build
-checks, target selection, document reads, or writes. The existing RUN-003 lease
-was retained. Immediately before this retry, the previous cleanup attempt had
-failed to verify P6 close (`None`); active/open-document state is therefore
-unknown. The 07:37Z exact P6 query still returned fingerprint
+Latest runner call was about 08:02Z. Its first `horizun_health` result was an
+untyped payload reporting a Revit modal titled `Projeto não recentemente salvo`,
+so the runner stopped before transport pinning, capability/build checks, target
+selection, document reads, or writes. The existing RUN-003 lease was retained.
+Read-only UI inspection around 08:04Z showed the RUN-003 target active and the
+P6 and `HZ_ANCHOR_2027` tabs open, with no modal visible. No controls were
+clicked and no save or close was attempted. The 07:37Z exact P6 query still returned fingerprint
 `2f12a578c8451f3f` vs accepted `4636abc6b294829b` even with cache bypass. Both
 RVT files last verified byte-identical at SHA-256
 `8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326` and
 4,960,256 bytes; no save/write occurred. Preserve lease PID 28364, generation 2.
 The runner now reports bounded MCP reply structure for untyped health results;
 RED/GREEN covers three malformed/absent response cases. Focused production
-suite: 201/201. Commit 0a8db3c5898a59b66daf89b5c7b709c9365e70d2 is pushed. No
-provider call followed the 07:50Z retry; the quiet window has elapsed. Retry
-only through the health-first runner. P7-T01 remains PENDING.
+suite: 201/201. Commit 0a8db3c5898a59b66daf89b5c7b709c9365e70d2 is pushed. The
+provider quiet deadline 08:12:30Z has elapsed. Retry only through the
+health-first runner. P7-T01 remains PENDING.
 
 ## Current RUN-003 R04 acceptance status
 

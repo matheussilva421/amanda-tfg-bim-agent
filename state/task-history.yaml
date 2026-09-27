@@ -2570,3 +2570,11 @@ entries:
   - 'No live provider call followed the 07:50Z untyped health result; ten-minute quiet window elapsed. Exact P6 fingerprint and post-close document state remain unresolved.'
   recorded_utc: '2026-09-27T08:01:09Z'
   note: Retry only through the health-first RUN-003 runner. Do not call Horizun standalone, and stop before R05 if health, target, active document, or P6 recovery cannot be verified.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'At about 08:02Z, the health-first runner received an untyped horizun_health payload reporting a Revit modal titled Projeto não recentemente salvo. It stopped before transport pinning, capability checks, target/document access, or writes and retained the RUN-003 lease.'
+  - 'Read-only UI inspection around 08:04Z showed the RUN-003 target active and P6 plus HZ_ANCHOR_2027 tabs open; no modal was visible. No UI control was clicked and no save, close, or model write occurred.'
+  - 'Target and P6 checkpoint were last verified byte-identical at 4,960,256 bytes, SHA-256 8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326. The P6 fingerprint mismatch 2f12a578c8451f3f vs accepted 4636abc6b294829b remains unresolved. No R05 write/save/checkpoint occurred.'
+  recorded_utc: '2026-09-27T09:36:08Z'
+  note: The ten-minute quiet deadline 08:12:30Z has elapsed. Retry only through the health-first runner; preserve the lease, exact P6 evidence, and no-save boundary. Leave P7-T01 PENDING unless all recovery and persistence gates pass.

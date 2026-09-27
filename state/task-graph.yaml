@@ -3578,6 +3578,14 @@ tasks:
       Focused production suite passes 201/201. Commit
       0a8db3c5898a59b66daf89b5c7b709c9365e70d2 is pushed to main. No provider
       call followed 07:50Z; the quiet window has elapsed. Retry only via runner.
+    - >-
+      The ~08:02Z health-first retry returned an untyped health payload reporting
+      a Revit modal titled 'Projeto não recentemente salvo'; runner stopped before
+      transport pinning, capability, target, or document checks and retained the
+      lease. Read-only UI around 08:04Z showed RUN-003 active with P6 and
+      HZ_ANCHOR_2027 tabs open and no visible modal. No controls, save, close, or
+      model writes occurred. Preserve the P6 fingerprint and files; quiet deadline
+      08:12:30Z elapsed. P7-T01 stays PENDING.
   P7-T02:
     id: P7-T02
     phase: P7
