@@ -17,6 +17,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `P6`: 1/1 PASS
 - `P7`: 0/9 PASS
 - Latest P7-T01 runner (2026-09-27): after the shared-client window expired, the health-first R05-only runner passed health, zero-other-client, Revit 2027 PID 38296 selection, exact active RUN-003 target, and retained the existing RUN-003 lease. It reconciled the exact P6 checkpoint rows to the recorded 25-row digest and identified eight journaled floor additions. It closed the target without saving, reopened the exact target, then stopped when post-reopen typed readback still failed the 25-element P6 count gate. No new R05 write/save/checkpoint occurred. Target metadata was 5,152,768 bytes (modified 2026-09-27 09:30:38Z); its hash could not be read while Revit held it. A local follow-up now reconciles those exact eight floors to current-plan identity, XY bounds, Area, and level, then omits only those operations on resume. Typed query does not expose outline vertices, so exact curved-contour equality is not claimed. R05 remains `PENDING`; authorization ends at R05.
+- Latest runner retry around 12:34Z again passed health/capability, target PID/build, and lease checks, and reconciled the P6 checkpoint digest. It failed closed while resolving levels because the helper attempted to parse every stage operation as a floor; this happened before any R05 write. Diagnostic `R05-2f373fcb3511-p6-readback-diagnostic-104062613e0c.json` records `model_write_performed=false`, SHA-256 `96aeb03316dca4222c8142e68846b1a97bb41f220a47a9cdcc7e6d9bd8372e4a`. Offline RED/GREEN tests fixed both full-plan selectors: level resolution and partial-floor geometry now filter and validate exactly the eight known floors. Current runner tests pass 78/78, project hygiene 12/12, and `compileall` passes. R05 remains `PENDING` until a post-cooldown run persists.
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -59,7 +60,7 @@ those exact values, current compact/detailed bounds agreement, and geometry
 relations against the P6 spatial evidence. The historical P6 acceptance remains
 unchanged; the fingerprint cause is unresolved. Earlier focused
 production/state/provider suite plus state-consistency and plan-order gates:
-227/227. Current scoped gates: production runner 76/76, repository/state
+227/227. Current scoped gates: production runner 78/78, repository/state
 hygiene 12/12, and `compileall` passed. Ruff reports the same 9 pre-existing
 findings; changed lines add no finding. Local second-pass review found no
 additional acceptance-path issue. The requested Luna 6 xhigh review could not

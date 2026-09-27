@@ -1745,6 +1745,50 @@ def _known_r05_floor_operations():
     ]
 
 
+def test_r05_level_query_uses_only_the_exact_reconciled_floor_operations(monkeypatch):
+    floors = _known_r05_floor_operations()
+    other_operations = [
+        SimpleNamespace(
+            logical_id="WALL-OTHER",
+            semantic_capability="revit.create_wall",
+            payload={},
+        ),
+        SimpleNamespace(
+            logical_id="FLOOR-OTHER",
+            semantic_capability="revit.create_floor",
+            payload={},
+        ),
+    ]
+    calls = []
+
+    def read_tool(_transport, tool, arguments):
+        calls.append((tool, arguments))
+        return {
+            "matched_total": 1,
+            "returned": 1,
+            "coverage_complete": True,
+            "unreadable_total": 0,
+            "rows": [
+                {
+                    "element_id": 311,
+                    "unique_id": "level-311",
+                    "category": "Levels",
+                    "name": "Level 1",
+                }
+            ],
+        }
+
+    monkeypatch.setattr(production_runner, "_read_tool", read_tool)
+
+    names = production_runner._query_r05_level_names(
+        object(), [*floors, *other_operations]
+    )
+
+    assert names == {311: "Level 1"}
+    assert calls[0][0] == "horizun_query_model"
+    assert calls[0][1]["element_ids"] == [311]
+
+
 def test_known_r05_partial_rows_match_current_plan_bounds_area_and_level():
     authorization = SimpleNamespace(
         mass_bounding_boxes_m={
@@ -1776,6 +1820,42 @@ def test_known_r05_partial_rows_match_current_plan_bounds_area_and_level():
         "expected_geometry_source": "current_R05_plan",
         "observed_geometry_scope": "typed_bounds_area_level",
     }
+
+
+def test_known_r05_partial_geometry_accepts_full_plan_and_selects_only_known_floors():
+    authorization = SimpleNamespace(
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO", "CHILD_SECTOR", "RES_PAV_A", "RES_PAV_B",
+                "RES_PAV_C", "RES_PAV_D_COMMUNAL", "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+    )
+    operations = [
+        *_known_r05_floor_operations(),
+        SimpleNamespace(
+            logical_id="WALL-OTHER",
+            semantic_capability="revit.create_wall",
+            payload={},
+        ),
+        SimpleNamespace(
+            logical_id="FLOOR-OTHER",
+            semantic_capability="revit.create_floor",
+            payload={},
+        ),
+    ]
+
+    evidence = production_runner._validate_known_r05_partial_geometry(
+        _known_partial_model(authorization),
+        _known_failed_r05_journal()["records"][:8],
+        operations,
+        {311: "Level 1"},
+    )
+
+    assert len(evidence["floors"]) == 8
+    assert evidence["geometry_checks"]["observed_geometry_scope"] == "typed_bounds_area_level"
 
 
 def test_floor_operation_geometry_rejects_an_open_profile():

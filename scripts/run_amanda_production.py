@@ -978,16 +978,24 @@ def _validate_known_r05_partial_geometry(
     """Match all eight persisted partial floors to current plan extents, areas and levels."""
 
     expected_ids = set(RUN003_FAILED_R05_FLOOR_IDS)
+    records = list(records)
     records_by_logical = {
         record.get("logical_id"): record for record in records if isinstance(record, dict)
     }
+    known_floor_operations = [
+        operation
+        for operation in operations
+        if getattr(operation, "logical_id", None) in expected_ids
+    ]
     operations_by_logical = {
-        getattr(operation, "logical_id", None): operation for operation in operations
+        getattr(operation, "logical_id", None): operation
+        for operation in known_floor_operations
     }
     if (
         set(records_by_logical) != expected_ids
+        or len(records_by_logical) != len(records)
         or set(operations_by_logical) != expected_ids
-        or len(operations_by_logical) != len(operations)
+        or len(operations_by_logical) != len(known_floor_operations)
         or any(
             getattr(operations_by_logical[logical_id], "semantic_capability", None)
             != "revit.create_floor"
@@ -1234,10 +1242,27 @@ def _compare_known_partial_to_p6_checkpoint(partial_payload, checkpoint_payload,
 
 
 def _query_r05_level_names(transport, operations) -> dict[int, str]:
+    expected_floor_ids = set(RUN003_FAILED_R05_FLOOR_IDS)
+    operations = list(operations)
+    known_floors = [
+        operation
+        for operation in operations
+        if getattr(operation, "logical_id", None) in expected_floor_ids
+    ]
+    known_floor_ids = [getattr(operation, "logical_id", None) for operation in known_floors]
+    if (
+        set(known_floor_ids) != expected_floor_ids
+        or len(known_floor_ids) != len(expected_floor_ids)
+        or any(
+            getattr(operation, "semantic_capability", None) != "revit.create_floor"
+            for operation in known_floors
+        )
+    ):
+        raise ValueError("current R05 plan does not contain the exact known eight-floor set")
     level_ids = sorted(
         {
             _floor_operation_geometry(operation)["level_id"]
-            for operation in operations
+            for operation in known_floors
         }
     )
     payload = _read_tool(
