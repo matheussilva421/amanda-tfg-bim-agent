@@ -2482,3 +2482,11 @@ entries:
   - 'Commit 02ed2d334b18714dbedc5d6ec78ced305f8d0f55 is local on main; state/handoff follow-up and push are in progress. P7-T01 remains PENDING.'
   recorded_utc: '2026-09-27T06:06:08Z'
   note: Run one fresh health-first attempt. Recovery must prove the target equals the P6 checkpoint plus exactly the eight journaled unsaved floors before discarding anything; then execute only R05 and require save/checkpoint/cold-reopen/readback before PASS.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'After commits 02ed2d334b18714dbedc5d6ec78ced305f8d0f55 and b601c2d2dc7a827d5ae8c90a8fa8899a38e9ae32 were pushed and origin/main verified, a fresh runner health-first attempt returned an untyped Horizun health payload.'
+  - 'The runner failed before transport identity pin, capability checks, target selection, document info, P6 comparison, or model operation. It retained the RUN-003 lease; the exact working RVT remains 4,960,256 bytes with pre-attempt timestamp 2026-09-26 21:34Z.'
+  - 'Read-only local check confirms Revit PID 38296 is present. No standalone Horizun call or model write followed the failed health gate.'
+  recorded_utc: '2026-09-27T06:15:17Z'
+  note: Observe the provider quiet window from this runner health request, then retry only through the health-first runner using an approved host-context execution. If health remains untyped, fail closed and capture the raw tool reply before further action.

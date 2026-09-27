@@ -1,6 +1,6 @@
 # Current Handoff
 
-## Current state — P7-T01/R05 failed before persistence; exact recovery guard ready
+## Current state — P7-T01/R05 failed before persistence; live health retry untyped
 
 This is the sole active resume point. P4-T01/BIM-00, R04, and P6-T01 remain complete. P7-T01 stays `PENDING`; no later stage is to be run by this continuation.
 
@@ -9,16 +9,17 @@ This is the sole active resume point. P4-T01/BIM-00, R04, and P6-T01 remain comp
 - Code fixes: resolve external walls by source-backed template type name `Genérico - 250 mm`; simplify R05 profiles with topology preservation and a 1 mm Hausdorff/edge bound; set roof profile vertices to the accepted absolute top elevation while preserving the relative offset. Courtyard holes remain in profiles.
 - Recovery guard: when the live 33-element document differs from P6, require the exact fixed journal and element identities; verify the P6 checkpoint manifest; open that checkpoint in Revit without upgrade; require its accepted 25-element fingerprint; compare every baseline ElementId, UniqueId, category, name, and bounding-box coordinate to the live partial; then close the P6 inspection document without saving and discard the eight known unsaved additions. Any mismatch must fail before closing the working target. This path is unit tested but has not yet run live.
 - TDD evidence: focused regressions first failed for the missing geometry/comparator behavior, then passed. The focused suite passed 182/182. The R05-only dry-run confirmed the four canonical PNG hashes and unchanged P6 approval/layout hashes and wrote nothing. Ruff reports only existing findings elsewhere in these modules; changed lines have no Ruff finding. `git diff --check` passed.
-- Code/journal commit `02ed2d334b18714dbedc5d6ec78ced305f8d0f55` is on local `main`. State and handoff updates are being committed next; push confirmation is pending. Protected RC01 ACL-visible deletions remain unstaged and untouched.
+- Code/journal commit `02ed2d334b18714dbedc5d6ec78ced305f8d0f55` and state/handoff commit `b601c2d2dc7a827d5ae8c90a8fa8899a38e9ae32` are on `main`; `git push origin main` succeeded and `git ls-remote` confirmed exact origin/main SHA `b601c2d2dc7a827d5ae8c90a8fa8899a38e9ae32`. Protected RC01 ACL-visible deletions remain unstaged and untouched.
+- A subsequent runner attempt correctly called `horizun_health` first but received an untyped payload. Validation stopped before transport pinning, capability checks, target selection, document info, or model access. The existing RUN-003 lease was retained; the working file still has its P6 size/timestamp; local process inspection found Revit PID 38296. No standalone Horizun call followed. The provider result content was not captured, so a repeated untyped response requires better diagnostic output before further action.
 - The recorded RUN-003 writer lease owner is `amanda-P7-RUN003-production`, PID 28364, generation 2. Revalidate it through the runner; never reclaim or release it. Use only `gpt-6-luna` with `xhigh` if a subagent can be started. One Luna 6 xhigh review spawn was attempted but the app's agent-thread limit was full, so this continuation used local review.
 
-**Resume:** after state/handoff commit and push, run exactly:
+**Resume:** after the quiet period expires (conservatively after 06:25:17Z), run exactly; the code and state commits are already published:
 
 ```powershell
 .venv\Scripts\python.exe scripts/run_amanda_production.py --rvt 'revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt' --resume-run003-study --reuse-existing-run003-lease --max-stage R05 --revit-pid 38296 --execute
 ```
 
-The runner's first provider operation must be `horizun_health`. Continue only if health, pinned transport identity, capabilities, Revit 2027 build 27.2.0.39/PID 38296, exact targetability, zero-other-client rule, and existing lease all pass. If baseline readback invokes recovery, require successful checkpoint inspection and exact 25-row comparison before no-save close/reopen. Then execute R05 only and require typed WRITE → READ → VERIFY, save, checkpoint, close/reopen, and independent readback before marking PASS. If any gate fails, preserve the lease and journal, do not save the partial target, and leave P7-T01 pending. No GeoNatal; no RC01/S01/S02/R12; no R06+; no FINAL/GOLDEN.
+The runner's first provider operation must be `horizun_health`. Continue only if health, pinned transport identity, capabilities, Revit 2027 build 27.2.0.39/PID 38296, exact targetability, zero-other-client rule, and existing lease all pass. If the same runner again receives an untyped health payload, first capture the raw reply in a reviewed diagnostic change or retry the same runner under an approved host-context execution; never substitute standalone Horizun calls. If baseline readback invokes recovery, require successful checkpoint inspection and exact 25-row comparison before no-save close/reopen. Then execute R05 only and require typed WRITE → READ → VERIFY, save, checkpoint, close/reopen, and independent readback before marking PASS. If any gate fails, preserve the lease and journal, do not save the partial target, and leave P7-T01 pending. No GeoNatal; no RC01/S01/S02/R12; no R06+; no FINAL/GOLDEN.
 
 ## Prior closeout — P4-T01 R04
 

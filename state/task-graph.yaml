@@ -3475,6 +3475,15 @@ tasks:
       No additional agent started because the session thread limit was reached;
       only Luna 6 xhigh was attempted. P7-T01 remains PENDING until the next
       health-first runner attempt and full R05 persistence evidence.
+    - >-
+      After commits 02ed2d3 and b601c2d were pushed and origin/main verified,
+      one health-first runner retry returned an untyped Horizun health payload.
+      It failed before transport pin, capabilities, target selection, document
+      info, P6 comparison, or any model operation. The RUN-003 lease was retained;
+      the working file remains 4,960,256 bytes at its pre-attempt timestamp and
+      Revit PID 38296 is still present. No standalone Horizun call followed.
+      P7-T01 remains PENDING. Retry only through the runner after the quiet
+      window; diagnose host transport mode if health is still untyped.
   P7-T02:
     id: P7-T02
     phase: P7
