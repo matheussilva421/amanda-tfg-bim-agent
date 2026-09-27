@@ -3363,19 +3363,22 @@ tasks:
       Current authorization covers P7-T01/R05 only. Every later stage requires
       its own task gate; completing R05 does not start R06. R06 remains NOT STARTED.
     - >-
-      Current blocker: REVIT_SESSION_NOT_TARGETABLE:BLOCKING. The latest
-      health-first runner returned "no Revit is reachable" before capabilities,
-      target, lease, or model gates. No model write, save, or checkpoint occurred.
+      Current blocker: RUNNER_TRANSPORT_UNREACHABLE:BLOCKING. Direct app Horizun
+      health reports HEALTHY for the exact active RUN-003 document, 73/73 registry
+      commands, 80/80 tools, and zero other clients. The production runner's
+      installed stdio server returned "no Revit is reachable" before its own
+      capability/client/target, checkpoint, or model gates. No write, save, or
+      checkpoint occurred; the existing lease was retained.
     - >-
-      The RUN-003 window was listed as minimized; after activation the captured
-      state displayed Chrome. Revit targetability is unverified. Details are in
-      state/HANDOFF.md.
+      Earlier UI inspection listed the RUN-003 window as minimized and the
+      captured state displayed Chrome; the later direct app health call proves
+      API access to the exact active path. The stdio transport discrepancy is
+      unresolved. Details are in state/HANDOFF.md.
     - >-
-      Resume only after an interactive Revit 2027 RUN-003 target is proven and
-      Horizun reports HEALTHY with 73/73 registry commands, 80/80 tools,
-      full_write, unpaused, and zero other clients. Then require the valid lease,
-      exact P6 reconciliation, and reconciled partial floors/Area units. Use the
-      R05-only health-first runner and stop at R05.
+      Resume only after the production runner's own Horizun stdio transport
+      reports HEALTHY, zero other clients, and the exact active RUN-003 path.
+      Then require the retained lease, exact P6 reconciliation, and reconciled
+      partial floors/Area units. Use the R05-only runner and stop at R05.
   P7-T02:
     id: P7-T02
     phase: P7

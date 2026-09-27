@@ -119,28 +119,30 @@ blockers:
   - study-orientation-reasoning
   resolution_action: supply a source drawing or survey that fixes true north
   reason: null
-- id: REVIT_SESSION_NOT_TARGETABLE
-  summary: Revit 2027 RUN-003 is not yet proven targetable through Horizun
+- id: RUNNER_TRANSPORT_UNREACHABLE
+  summary: Production R05 runner transport cannot reach the active Horizun/Revit session
   severity: BLOCKING
   owner_phase: P7
   affected_tasks:
   - P7-T01
   evidence: >-
-    The latest health-first runner returned "no Revit is reachable". CUA listed
-    the RUN-003 window as minimized; after activation its captured content was
-    Chrome, so an interactive Revit target remains unverified. See state/HANDOFF.md.
+    Direct app Horizun health reported HEALTHY for Revit 2027 PID 38296 with the
+    exact RUN-003 path active, a clean 73/73 registry, 80/80 tools and zero other
+    clients. The production runner's installed stdio server instead returned
+    "no Revit is reachable" before target/checkpoint/model access. See handoff.
   resolution: >-
-    Restore and verify the interactive Revit 2027 RUN-003 session, then pass
-    Horizun health, capability, and exact-target checks.
+    Reconcile why the production runner's installed Horizun stdio transport
+    cannot discover the active Revit session. Resume only after that same runner
+    transport passes health, client, exact-target and P6/partial-floor gates.
   requires_user_action: false
-  created_utc: '2026-09-27T14:01:00Z'
+  created_utc: '2026-09-27T14:43:39Z'
   resolved_utc: null
-  source: P7-T01-live-session-gate
+  source: P7-T01-runner-transport-gate
   tasks_blocked:
   - P7-T01
   tasks_still_allowed: []
   allowed_tasks: []
   resolution_action: >-
-    Restore and verify the interactive Revit 2027 RUN-003 session, then pass
-    Horizun health, capability, and exact-target checks.
-  reason: REVIT_SESSION_NOT_TARGETABLE:BLOCKING
+    Reconcile the installed runner transport and then pass its health, client,
+    exact-target, P6, and partial-floor verification gates.
+  reason: RUNNER_TRANSPORT_UNREACHABLE:BLOCKING

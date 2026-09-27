@@ -21,11 +21,12 @@ def test_status_dashboard_checkpoint_matches_project_state():
 def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     handoff = (ROOT / "state" / "HANDOFF.md").read_text(encoding="utf-8")
     assert (
-        "## Current state — P7-T01/R05 pending live provider recovery"
+        "## Current state — P7-T01/R05 blocked at production runner transport"
         in handoff.splitlines()[:8]
     )
-    assert "current authorization is R05 only." in handoff
-    assert "REVIT_SESSION_NOT_TARGETABLE:BLOCKING" in handoff
+    assert "Current authorization is R05 only." in handoff
+    assert "RUNNER_TRANSPORT_UNREACHABLE:BLOCKING" in handoff
+    assert "direct Horizun health reports HEALTHY" in handoff
     assert "captured window content was Chrome" in handoff
     assert "The third health-first retry at about 13:32Z" in handoff
     assert "RUN-003 lease was retained" in handoff
@@ -43,17 +44,17 @@ def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     assert report_minute == recorded.replace(second=0, microsecond=0)
 
 
-def test_non_targetable_revit_is_a_formal_p7_blocker():
+def test_unreachable_production_runner_transport_is_a_formal_p7_blocker():
     project_state = yaml.safe_load(
         (ROOT / "PROJECT_STATE.yaml").read_text(encoding="utf-8")
     )
     blocker = next(
         item
         for item in load_blockers(ROOT / "state")
-        if item.id == "REVIT_SESSION_NOT_TARGETABLE"
+        if item.id == "RUNNER_TRANSPORT_UNREACHABLE"
     )
 
-    assert "REVIT_SESSION_NOT_TARGETABLE:BLOCKING" in project_state["blockers"]
+    assert "RUNNER_TRANSPORT_UNREACHABLE:BLOCKING" in project_state["blockers"]
     assert blocker.severity.value == "BLOCKING"
     assert blocker.affected_tasks == ["P7-T01"]
     assert blocker.is_open

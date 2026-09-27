@@ -10,9 +10,9 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 is `BLOCKED_BY_TOOL` until live R05 persistence gates pass
 - Current authorization: P7-T01/R05 only; authorization ends at R05. Every later stage needs its own task gate; R05 completion does not start R06.
-- Current blocker: `REVIT_SESSION_NOT_TARGETABLE:BLOCKING`; provider health and interactive targetability are not verified.
-- Latest health-first runner (~13:44Z) returned `no Revit is reachable` and stopped before capabilities, target, lease, checkpoint, or model access. The existing RUN-003 lease was retained; no model write/save/checkpoint occurred.
-- CUA listed the RUN-003 window as minimized. After activation, the captured window content was Chrome, so Revit targetability remains unverified.
+- Current blocker: `RUNNER_TRANSPORT_UNREACHABLE:BLOCKING`; the production runner's installed stdio transport cannot reach the active Revit session.
+- The direct app Horizun health reports HEALTHY for Revit 2027 build `27.2.0.39`, PID `38296`, with the exact RUN-003 path active and matched; registry 73/73, tools 80/80, `full_write`, unpaused, and the zero-other-client gate passed.
+- The production runner transport returned `no Revit is reachable` before capabilities, target, checkpoint, or model access. It retained the RUN-003 lease; no model write/save/checkpoint occurred. The transport mismatch is unresolved.
 - `P1`: 1/1 PASS
 - `P2`: 1/1 PASS
 - `P3`: 1/1 PASS
@@ -42,21 +42,22 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-The latest health-first runner (~13:44Z) returned `no Revit is reachable`.
-It did not reach capabilities, targetability, checkpoint, or model readback.
-The RUN-003 lease was retained; no model write/save/checkpoint occurred.
+The direct app Horizun health call reports HEALTHY and identifies the active,
+saved document as the exact RUN-003 path (`active_document_match=Matched`;
+Revit 2027 build `27.2.0.39`, PID `38296`). It reports 73/73 registry commands,
+80/80 visible tools, `full_write`, unpaused, and zero other clients.
 
-The only Revit process previously observed is PID 38296 with
-`Horizun.Revit.dll` loaded. CUA listed the RUN-003 window as minimized; after
-activation, its capture displayed Chrome. These observations do not prove an
-interactive Revit target. The formal blocker is
-`REVIT_SESSION_NOT_TARGETABLE:BLOCKING`.
+The production runner starts
+`C:\Users\slvma\AppData\Local\Programs\Horizun\MCP\server\horizun-mcp.exe`
+(version 1.3.3.0), whose health call instead returns `no Revit is reachable`.
+It stops before capabilities, target, checkpoint, or model readback. The reason
+for the disagreement is unresolved; do not route a model write through another
+client. The formal blocker is `RUNNER_TRANSPORT_UNREACHABLE:BLOCKING`.
 
-Resume only after a live interactive Revit 2027 RUN-003 target and provider
-health/capability are proven: 73/73 registered commands, 80/80 visible tools,
-`full_write`, unpaused, and zero other clients. Respect the provider quiet
-window and use only the exact R05-only health-first runner. Preserve the lease
-and model state.
+Resume only after the production runner can target the active Revit 2027 RUN-003
+document and its own transport reports healthy, zero other clients, and the exact active path, then passes the existing lease,
+P6 reconciliation, eight-partial-floor, Area-unit and other R05 gates. Preserve
+the lease and model state; the current lease owner process remains alive.
 
 ## Current RUN-003 R04 acceptance status
 
@@ -101,7 +102,7 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 - `SITE_OCCUPANCY` [BLOCKING]: confirmation of the current use of the lot and of the relocation premise for the police company unit
 - `SITE_FRONTAGE_COUNT` [DEGRADING]: whether the lot has three or four frontages
 - `SITE_TRUE_NORTH` [DEGRADING]: a verified true-north bearing with a source drawing datum
-- `REVIT_SESSION_NOT_TARGETABLE` [BLOCKING, P7-T01 only]: interactive RUN-003 Revit target and healthy Horizun provider have not been verified
+- `RUNNER_TRANSPORT_UNREACHABLE` [BLOCKING, P7-T01 only]: the runner's stdio Horizun server cannot discover the active Revit session although direct app health reports the exact RUN-003 target healthy
 
 ## Design and Revit recovery
 
