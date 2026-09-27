@@ -6,9 +6,9 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell)
+- Next task: `P7-T01` (R05 architectural shell; explicit write authorization required)
 - Last recorded task: `P6-T01`
-- Tasks: 193 total; READY: P7-T01
+- Tasks: 193 total; P7-T01 remains PENDING pending write authorization
 - `P1`: 1/1 PASS
 - `P2`: 1/1 PASS
 - `P3`: 1/1 PASS
@@ -116,9 +116,12 @@ Git blobs after a PermissionError without restoring files; missing inputs still
 fail closed. The same follow-up narrows the stage grant and planner to exactly
 R05 per task and rejects direct R06 preflight. Final independent Luna 6 xhigh
 review found no P1/P2 findings; the six R05 modules passed 77/77 and the
-expanded combined R05 plus task-state command passed 101/101. This pre-write
-follow-up is ready for commit; P7-T01 remains pending.
-Actual R05 writes remain pending. A typed close rehearsal confirmed
+expanded combined R05 plus task-state command passed 101/101. The write attempt
+was blocked by automatic approval review because the available explicit
+authorization names R04; P7-T01 remains pending until the user explicitly
+authorizes the R05 write.
+Actual R05 writes remain pending. No runner process or Revit write started
+after the automatic-review rejection. A typed close rehearsal confirmed
 `is_modified=false` and `would_discard_unsaved=false`; it made no session
 change. The stage runner requires save, close-with-save, post-close checkpoint,
 exact cold reopen, and complete typed geometry readback.

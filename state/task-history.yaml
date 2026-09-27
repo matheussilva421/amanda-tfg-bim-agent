@@ -2369,3 +2369,12 @@ entries:
   - 'Final independent Luna 6 xhigh review found no P1/P2 findings. No live Horizun/Revit write or model operation occurred in this follow-up; preserve the P6 checkpoint and leave P7-T01 PENDING.'
   recorded_utc: '2026-09-27T02:16:21Z'
   note: Pre-write hardening reviewed and locally verified; publish, then retry the exact RUN-003 R05 runner with fresh live preflight.
+- task_id: P7-T01
+  status: PENDING
+  evidence:
+  - 'Commit e198c55c2460a4e842becaa6f71092fe44fe9aff was pushed; git ls-remote confirmed origin/main at the same SHA. RC01 deletions were not staged.'
+  - 'Fresh read-only Horizun health: 1.3.3 healthy, Revit 2027 build 27.2.0.39/PID 38296, 80/80 tools, 73/73 registered commands, full_write, unpaused, zero other clients, exact saved RUN-003 active document. horizun_target selected the sole PID 38296 target with 73 commands and ambiguous=false.'
+  - 'The host-profile R05 runner launch was rejected by automatic approval review before process start because current explicit authorization names R04; no runner transport, model write, lease change, or checkpoint occurred. Do not retry through another route.'
+  - 'P7-T01 remains PENDING. Ask for explicit authorization for the R05 production geometry write; after authorization, wait 10 minutes without Horizun calls before live preflight.'
+  recorded_utc: '2026-09-27T02:20:17Z'
+  note: R05 write held at explicit authorization gate; preserve P6 and resume only after user authorization.
