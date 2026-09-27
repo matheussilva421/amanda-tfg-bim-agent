@@ -1,8 +1,15 @@
 # Current Handoff
 
-## Current state — P7-T01/R05 blocked pending explicit write authorization
+## Current state — P7-T01/R05 blocked by Horizun shared-client quiet window
 
 This is the sole active resume point. P4-T01/BIM-00, R04, and P6-T01 remain complete. P7-T01 stays `PENDING`; this continuation is restricted to R05.
+
+### 2026-09-27 explicit R05 authorization and health-first retry
+
+- The user-provided `C:\Users\slvma\.codex\attachments\01b76853-5ab7-4aa1-9d85-52233700ef84\goal-objective.md` explicitly authorizes P7-T01/R05 for `AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C`, ending at R05. The prior automatic-review authorization hold is superseded; no R06 or later stage is authorized in this task.
+- A fresh standalone `horizun_health` call returned HEALTHY: Horizun 1.3.3; Revit 2027 build 27.2.0.39, PID 38296; active saved target path exactly matched RUN-003; 73/73 registry commands, 80/80 visible tools, full_write/unpaused, and zero other clients. It reported two open documents and RUN-003 active.
+- The exact health-first production runner was then invoked with `--max-stage R05`. Its own health response detected client PID 1708 (the standalone health call) 29 seconds old while runner client PID 8124 was current. `_validate_revit_session` failed closed on the 600-second zero-other-client gate before target selection, document info, checkpoint readback, or model access. It printed that the existing RUN-003 lease was retained. No Revit/model/checkpoint write occurred; P7-T01 remains `PENDING`.
+- Do not call Horizun directly during the quiet window. After at least 600 seconds from the runner's health request (use 11:35Z or later as the conservative retry time), invoke only `.venv\Scripts\python.exe scripts\run_amanda_production.py --rvt 'revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt' --resume-run003-study --reuse-existing-run003-lease --max-stage R05 --revit-pid 38296 --execute`. Preserve the lease and target. If the runner passes health, client, target, capability, checkpoint, fingerprint, and partial-floor recovery gates, continue only through R05 WRITE → READ → VERIFY and save/checkpoint/cold-reopen/readback. Any failed gate leaves R05 pending. R06 stays NOT STARTED.
 
 ### 2026-09-27 fingerprint reconciliation update
 

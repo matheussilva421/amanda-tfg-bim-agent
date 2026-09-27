@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; exact P6 fingerprint reconciliation is implemented; automatic review blocked the live write invocation pending explicit current user authorization; no R05 write)
+- Next task: `P7-T01` (R05 architectural shell; the user-provided `goal-objective.md` explicitly authorizes R05 only; the latest runner stopped at the zero-other-client guard before model access; no R05 write)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -16,7 +16,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `P5`: 1/1 PASS
 - `P6`: 1/1 PASS
 - `P7`: 0/9 PASS
-- Latest P7-T01 runner (~10:07Z): health/client/target/lease passed; Revit PID 38296 selected and RUN-003 lease PID 28364/generation 2 retained. The known 33-element unsaved partial routed to recovery. Exact P6 readback again returned 25 rows, categories 7/14/4, and full coverage; fingerprints remained `2f12a578c8451f3f` (compact), `1aac5d79b05b159a` (detailed), vs historical `4636abc6b294829b`. Cleanup closed P6 without saving and reactivated the target. No R05 write/save/checkpoint occurred. An additive exact-readback record now binds checkpoint SHA, diagnostic SHA, both fingerprints, and row digest; original P6 acceptance is unchanged and root cause unresolved. Runner requires compact/detailed row geometry equality. Focused suite plus state and plan-order gates: 227/227; Ruff has 9 unchanged baseline findings. P7-T01 stays `PENDING`.
+- Latest P7-T01 runner (2026-09-27): standalone `horizun_health` returned HEALTHY (Horizun 1.3.3; Revit 2027 build 27.2.0.39/PID 38296; exact saved RUN-003 target active; registry 73/73; 80/80 tools; zero other clients). The authorized health-first runner then stopped before target selection, document info, P6 readback, or model access: its MCP client PID 8124 saw standalone-health client PID 1708 at age 29 seconds, violating the 600-second zero-other-client gate. Existing RUN-003 lease retained. No Revit write/save/checkpoint occurred. Retry only after the client window has expired, using the R05-only runner and no standalone provider calls; authorization terminates at R05. P7-T01 remains `PENDING`.
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -38,21 +38,20 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-Latest runner call was about 10:07Z. Health/client/target/lease checks passed;
-Revit PID 38296 was selected and the RUN-003 lease retained. The target query
-confirmed the known 33-element partial. The exact P6 checkpoint was opened as
-Revit 2027 without upgrade; readback passed 25 rows, complete coverage,
-categories 7/14/4, mass bounds, and admin floor IDs. Compact fingerprint
-`2f12a578c8451f3f` and detailed fingerprint `1aac5d79b05b159a` differ from the
-historical accepted `4636abc6b294829b`. Guarded cleanup closed P6 without
-saving and reactivated the target. No model write/save/checkpoint occurred.
+The prior diagnostic runner call around 10:07Z passed health/client/target/lease,
+read the exact P6 checkpoint as Revit 2027 without upgrade, and recorded the
+25-row fingerprint discrepancy below; guarded cleanup closed P6 without
+saving and restored the target. The current 2026-09-27 attempt received a fresh
+HEALTHY response, but the runner's separate client was blocked before target
+selection because PID 1708 was still recent. No model write/save/checkpoint
+occurred in either call.
 
-A later invocation of the health-first R05 runner was rejected by automatic
-approval review before the process launched. The review found only current
-P4/R04 authorization visible in user messages and did not accept P7/R05
-authorization found in assistant/tool history. No provider health, target,
-lease, or Revit operation ran from that rejected invocation. P7-T01 remains
-`PENDING`; wait for explicit current user authorization before retrying.
+The previous automatic-review hold was resolved by the user's attached
+`goal-objective.md`, which explicitly authorizes RUN-003 P7-T01/R05 and ends at
+R05. The subsequent runner attempt failed closed on the shared-client quiet
+window described above. No target selection, model read, or Revit write was
+performed by that attempt. P7-T01 remains `PENDING` until the live R05 and
+persistence gates pass.
 
 The additive record
 `revit/production/evidence/AMANDA-RUN-003-R04/p6-readback-fingerprint-reconciliation.json`
@@ -62,10 +61,13 @@ those exact values, current compact/detailed bounds agreement, and geometry
 relations against the P6 spatial evidence. The historical P6 acceptance remains
 unchanged; the fingerprint cause is unresolved. Focused production/state/provider
 suite plus state-consistency and plan-order gates: 227/227. Ruff reports the same 9 pre-existing findings;
-new files and edited import blocks are clean. The provider quiet window has elapsed.
+new files and edited import blocks are clean. The prior quiet window expired
+before the current attempt; the current provider window must expire before retry.
 All three reconciliation/state commits are pushed; push output advanced main
-to `170cb4f`, while a follow-up `git ls-remote` could not reach TCP 443. After
-explicit authorization, retry only through the health-first R05 runner.
+to `170cb4f`, while a follow-up `git ls-remote` could not reach TCP 443. The
+new explicit authorization is recorded in the active handoff; after the
+provider's 600-second client window expires, retry only through the health-first
+R05 runner.
 P7-T01 remains PENDING.
 
 ## Current RUN-003 R04 acceptance status
