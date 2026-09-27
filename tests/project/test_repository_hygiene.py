@@ -206,6 +206,7 @@ def test_current_state_routes_only_to_pending_live_run003_r05():
     assert registry.ready_tasks() == ["P7-T01"]
 
     dashboard = (ROOT / "state/status.md").read_text(encoding="utf-8")
+    normalized_dashboard = " ".join(dashboard.split())
     assert "Phase: `P7` — detailed-production" in dashboard
     assert "Phase status: `PENDING`" in dashboard
     assert "Next task: `P7-T01`" in dashboard
@@ -218,7 +219,9 @@ def test_current_state_routes_only_to_pending_live_run003_r05():
     assert "`P7`: 0/9 PASS" in dashboard
     assert "zero-other-client" in dashboard
     assert "authorization ends at R05" in dashboard
-    assert "post-reopen typed readback still failed the 25-element P6 count gate" in dashboard
+    assert "no Revit is reachable" in dashboard
+    assert "13:21:07Z quiet-window end" in dashboard
+    assert "focused runner suite passes 87/87" in normalized_dashboard
 
     handoff = (ROOT / "state/HANDOFF.md").read_text(encoding="utf-8")
     normalized_handoff = " ".join(handoff.split())

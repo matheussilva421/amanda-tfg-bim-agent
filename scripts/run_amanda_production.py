@@ -1060,11 +1060,43 @@ def _validate_known_r05_partial_geometry(
 
         parameters = row.get("parameters")
         actual_area = parameters.get("Area") if isinstance(parameters, dict) else None
+        area_source_unit = "scalar_without_reported_unit"
         if isinstance(actual_area, dict):
-            unit = str(actual_area.get("unit", "")).strip().casefold()
+            area_source_unit = str(actual_area.get("unit", "")).strip()
+            unit = (
+                area_source_unit.casefold()
+                .replace("\u00b2", "2")
+                .replace("^", "")
+                .replace(".", "")
+            )
+            unit_to_m2 = {
+                "m2": 1.0,
+                "sq m": 1.0,
+                "sqm": 1.0,
+                "square meter": 1.0,
+                "square meters": 1.0,
+                "square metre": 1.0,
+                "square metres": 1.0,
+                "ft2": 0.09290304,
+                "sf": 0.09290304,
+                "sq ft": 0.09290304,
+                "sqft": 0.09290304,
+                "square feet": 0.09290304,
+                "square foot": 0.09290304,
+            }
+            conversion = unit_to_m2.get(unit)
+            if conversion is None:
+                raise ValueError(
+                    f"known R05 floor Area unit is unsupported for {logical_id}: {unit!r}"
+                )
             actual_area = actual_area.get("value")
-            if unit not in {"m2", "m²", "square meters", "square metre"}:
-                raise ValueError(f"known R05 floor Area unit is not m2 for {logical_id}")
+            if (
+                isinstance(actual_area, bool)
+                or not isinstance(actual_area, (int, float))
+                or not math.isfinite(actual_area)
+            ):
+                raise ValueError(f"typed Area parameter is missing for {logical_id}")
+            actual_area = float(actual_area) * conversion
         if (
             isinstance(actual_area, bool)
             or not isinstance(actual_area, (int, float))
@@ -1084,6 +1116,7 @@ def _validate_known_r05_partial_geometry(
                 "level": expected_level_name,
                 "area_m2": float(actual_area),
                 "expected_area_m2": expected["area_m2"],
+                "area_source_unit": area_source_unit,
                 "bounding_box": bbox,
                 "readback_status": "VERIFIED",
             }
@@ -1164,6 +1197,7 @@ def _merge_reconciled_r05_records(plan, result, recovery_evidence: dict):
                     "level": floor["level"],
                     "level_id": floor["level_id"],
                     "area_m2": floor["area_m2"],
+                    "area_source_unit": floor["area_source_unit"],
                     "bounding_box": floor["bounding_box"],
                     "reconciled_existing": True,
                     "prior_journal_status": "VERIFIED",

@@ -3696,6 +3696,31 @@ tasks:
       bounds, Area, and level checks. Runner tests pass 79/79 and project/state
       tests pass 12/12; compileall passes. Cooldown before retry is 12:55:36Z.
       P7-T01 remains PENDING; R06 is NOT STARTED.
+    - >-
+      Around 12:56Z the health-first R05 runner passed health/capability,
+      target/lease, exact P6 checkpoint/digest, and the known-floor
+      identity/bounds/level checks, then failed closed because the typed Revit
+      Area unit was unsupported. It stopped before any R05 write, save, or
+      checkpoint. Diagnostic
+      revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-ee99ee2f171a.json
+      has SHA-256 edd6f4b86c33fc82705ed8826828ce45d8e7d18475640bb00f6895b08b5de043,
+      records model_write_performed=false, and binds the 25-row P6 digest
+      3732c3c44c405a6453df8157243b7695b442b9969c979c141c6e829011940c0d; it
+      does not contain the partial-floor Area payload or rejected unit string.
+      TDD added explicit supported m2/ft2 conversions with source-unit
+      evidence and unknown-unit rejection. The focused runner suite passes
+      87/87, repository hygiene passes 12/12, and task-graph/status consistency
+      passes 17/17; compileall, YAML parsing, and scoped diff-check pass. Ruff
+      retains nine baseline findings, none on changed lines. A Luna 6 xhigh review spawn was refused
+      by the app agent-thread limit; no other subagent was used.
+    - >-
+      The next exact R05-only runner at about 13:11Z stopped at its first gate:
+      horizun_health returned "no Revit is reachable". It did not reach
+      capabilities, targetability, checkpoint, or model readback. The existing
+      RUN-003 lease was retained; no Revit/model/checkpoint write occurred.
+      Retry only after the conservative 13:21:07Z quiet-window end, using the
+      health-first runner and no direct Horizun call. P7-T01 remains PENDING;
+      R06 is NOT STARTED.
   P7-T02:
     id: P7-T02
     phase: P7

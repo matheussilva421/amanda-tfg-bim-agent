@@ -6,7 +6,7 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; explicit authorization ends at R05; local partial-floor reconciliation and focused gates pass, while the live R05 retry remains pending)
+- Next task: `P7-T01` (R05 architectural shell; authorization ends at R05; local gates pass, latest runner stopped because Revit was unreachable)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 remains PENDING until live R05 write/readback/checkpoint pass
 - `P1`: 1/1 PASS
@@ -16,9 +16,8 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - `P5`: 1/1 PASS
 - `P6`: 1/1 PASS
 - `P7`: 0/9 PASS
-- Latest P7-T01 runner (2026-09-27): after the shared-client window expired, the health-first R05-only runner passed health, zero-other-client, Revit 2027 PID 38296 selection, exact active RUN-003 target, and retained the existing RUN-003 lease. It reconciled the exact P6 checkpoint rows to the recorded 25-row digest and identified eight journaled floor additions. It closed the target without saving, reopened the exact target, then stopped when post-reopen typed readback still failed the 25-element P6 count gate. No new R05 write/save/checkpoint occurred. Target metadata was 5,152,768 bytes (modified 2026-09-27 09:30:38Z); its hash could not be read while Revit held it. A local follow-up now reconciles those exact eight floors to current-plan identity, XY bounds, Area, and level, then omits only those operations on resume. Typed query does not expose outline vertices, so exact curved-contour equality is not claimed. R05 remains `PENDING`; authorization ends at R05.
-- Latest runner retry around 12:34Z again passed health/capability, target PID/build, and lease checks, and reconciled the P6 checkpoint digest. It failed closed while resolving levels because the helper attempted to parse every stage operation as a floor; this happened before any R05 write. Diagnostic `R05-2f373fcb3511-p6-readback-diagnostic-104062613e0c.json` records `model_write_performed=false`, SHA-256 `96aeb03316dca4222c8142e68846b1a97bb41f220a47a9cdcc7e6d9bd8372e4a`. Offline RED/GREEN tests fixed both full-plan selectors: level resolution and partial-floor geometry now filter and validate exactly the eight known floors. Current runner tests pass 78/78, project hygiene 12/12, and `compileall` passes. R05 remains `PENDING` until a post-cooldown run persists.
-- Latest runner retry around 12:44Z passed provider/capability, target, lease, and P6 digest gates, then failed closed at partial-floor comparison because Revit's floor display `Name` differed from the logical ID. ElementId/UniqueId/category had matched; no R05 write/save/checkpoint occurred. Diagnostic `R05-2f373fcb3511-p6-readback-diagnostic-2814233abec1.json` records `model_write_performed=false`, digest `3732c3c44c405a6453df8157243b7695b442b9969c979c141c6e829011940c0d`, SHA-256 `d87a07720d631c157058984428064dd32883828d7d092c858f9c8ad33524d38a`. TDD removed only that display-name equality; exact IDs/UIDs/category plus bounds, Area, and level remain required. The live retry remains pending until cooldown and persistence pass.
+- Latest R05-only runner attempt (2026-09-27 13:11Z) stopped at `horizun_health`, which returned `Error: no Revit is reachable. Is Revit running with the Horizun add-in loaded?` It did not reach capability, targetability, checkpoint, or model gates. The existing RUN-003 lease was retained; no write/save/checkpoint occurred. Retry only after the conservative 13:21:07Z quiet-window end.
+- The preceding runner attempt (~12:56Z) passed health/capability, target/lease, P6 checkpoint/digest, and known-floor identity/bounds/level checks, then failed closed on an unsupported typed `Area` unit before R05 writes. Diagnostic `R05-2f373fcb3511-p6-readback-diagnostic-ee99ee2f171a.json` has SHA-256 `edd6f4b86c33fc82705ed8826828ce45d8e7d18475640bb00f6895b08b5de043`, records no model write, and contains the 25-row P6 digest. TDD added supported m²/ft² unit conversions with source-unit evidence and fail-closed rejection for unknown units. Production-runner unit tests pass 87/87; `compileall` and scoped `git diff --check` pass. Ruff reports the same 9 baseline findings, none on changed lines. Luna 6 xhigh review could not start because the app agent-thread limit is full; no other subagent was used. R05 remains `PENDING`; authorization ends at R05.
 - `PHASE_00`: 3/3 PASS
 - `PHASE_01`: 13/13 PASS
 - `PHASE_02`: 20/20 PASS
@@ -40,18 +39,21 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-The latest health-first runner call was around 11:35:33Z. It passed health,
-client, target, and lease gates; reconciled P6; then preserved the target without
-saving and stopped after the reopened-target query failed the 25-element P6
-count gate. No new R05 write/save/checkpoint occurred. The shared-client window
-has elapsed; no direct Horizun calls have followed.
+The latest health-first runner call was at about 13:11Z. It failed its first
+health gate with `no Revit is reachable`, before capabilities, targetability,
+checkpoint inspection, or model access. The existing RUN-003 lease was
+retained, and no model write/save/checkpoint occurred. The conservative
+10-minute quiet window ends at 13:21:07Z; no direct Horizun calls should be made.
 
 The user's explicit authorization covers RUN-003 P7-T01/R05 and ends at R05.
 The local retry path now compares the eight existing floor rows with current
 R05 plan identity, XY bounds, Area, and level, filters only those exact
 operations, and merges their records into stage verification. The typed query
 contract does not expose floor-outline vertices; exact contour equality is not
-claimed. P7-T01 remains `PENDING` until live R05 and persistence gates pass.
+claimed. The preceding ~12:56Z live attempt passed those checks but rejected an
+unsupported typed `Area` unit before R05 writes; the local parser now converts
+known m²/ft² aliases and rejects unknown units. Its focused runner suite passes
+87/87. P7-T01 remains `PENDING` until live R05 and persistence gates pass.
 
 The additive record
 `revit/production/evidence/AMANDA-RUN-003-R04/p6-readback-fingerprint-reconciliation.json`
@@ -61,8 +63,9 @@ those exact values, current compact/detailed bounds agreement, and geometry
 relations against the P6 spatial evidence. The historical P6 acceptance remains
 unchanged; the fingerprint cause is unresolved. Earlier focused
 production/state/provider suite plus state-consistency and plan-order gates:
-227/227. Current scoped gates: production runner 79/79, repository/state
-hygiene 12/12, and `compileall` passed. Ruff reports the same 9 pre-existing
+227/227. Current scoped gates: production runner 87/87, repository hygiene
+12/12, task-graph/status consistency 17/17, YAML parsing, and `compileall`
+passed. Ruff reports the same 9 pre-existing
 findings; changed lines add no finding. Local second-pass review found no
 additional acceptance-path issue. The requested Luna 6 xhigh review could not
 spawn because the app agent-thread limit is full; no other subagent was used.

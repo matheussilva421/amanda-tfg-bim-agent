@@ -1887,6 +1887,48 @@ def test_known_r05_partial_geometry_does_not_treat_display_name_as_identity():
     assert len(evidence["floors"]) == 8
 
 
+@pytest.mark.parametrize(
+    ("unit", "factor"),
+    [
+        ("ft^2", 0.09290304),
+        ("sq ft", 0.09290304),
+        ("square feet", 0.09290304),
+        ("\u0066\u0074\u00b2", 0.09290304),
+        ("m^2", 1.0),
+        ("sqm", 1.0),
+        ("\u006d\u00b2", 1.0),
+    ],
+)
+def test_known_r05_partial_geometry_normalizes_supported_area_units_to_m2(unit, factor):
+    authorization = SimpleNamespace(
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO", "CHILD_SECTOR", "RES_PAV_A", "RES_PAV_B",
+                "RES_PAV_C", "RES_PAV_D_COMMUNAL", "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+    )
+    payload = _known_partial_model(authorization)
+    for row in payload["rows"]:
+        if row["element_id"] in production_runner.RUN003_FAILED_R05_FLOOR_IDS.values():
+            row["parameters"]["Area"] = {
+                "value": 1.0 / factor,
+                "unit": unit,
+            }
+
+    evidence = production_runner._validate_known_r05_partial_geometry(
+        payload,
+        _known_failed_r05_journal()["records"][:8],
+        _known_r05_floor_operations(),
+        {311: "Level 1"},
+    )
+
+    assert all(floor["area_m2"] == pytest.approx(1.0) for floor in evidence["floors"])
+    assert all(floor["area_source_unit"] == unit for floor in evidence["floors"])
+
+
 def test_floor_operation_geometry_rejects_an_open_profile():
     operation = _known_r05_floor_operations()[0]
     operation.payload["geometry"]["footprint"][0][-1] = [2.0, 0.0, 0.0]
@@ -1902,6 +1944,7 @@ def test_floor_operation_geometry_rejects_an_open_profile():
         ("area", "floor area differs"),
         ("level", "floor level differs"),
         ("missing_area", "typed Area parameter is missing"),
+        ("unknown_area_unit", "Area unit is unsupported"),
     ],
 )
 def test_known_r05_partial_geometry_rejects_unmatched_typed_floor_readback(
@@ -1926,6 +1969,8 @@ def test_known_r05_partial_geometry_rejects_unmatched_typed_floor_readback(
         floor_row["parameters"]["Area"] = 0.9
     elif mutation == "level":
         floor_row["level"] = "Level 2"
+    elif mutation == "unknown_area_unit":
+        floor_row["parameters"]["Area"] = {"value": 1.0, "unit": "acres"}
     else:
         floor_row["parameters"].pop("Area")
 
