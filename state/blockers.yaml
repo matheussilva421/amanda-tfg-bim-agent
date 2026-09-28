@@ -127,23 +127,23 @@ blockers:
   - P7-T01
   evidence: >-
     Historical direct-app health (PIDs 38296/9128) is not current evidence. Two
-    .venv production-runner attempts on 2026-09-28 returned "no Revit is
-    reachable" before PID pinning, capability/target/checkpoint reads, lease
-    acquisition, or model access. Revit journal 0037 binds the exact RUN-003 path
-    and Horizun MCP startup to PID 12660; a fresh process check found PIDs 12660
-    and 3364 responding. Discovery is at
-    %USERPROFILE%/.horizun/discovery/revit-2027-12660.json. Its ACL grants
-    FullControl only to the current user;
-    its token-bearing contents were not read. Whether the restricted runner
-    context causes the mismatch remains a hypothesis. Typed health and
-    zero-other-client status are unverified. The project lock is absent; the
-    open RVT could not be hashed because Revit holds it. No save or model write
-    occurred. See state/HANDOFF.md.
+    sandboxed .venv production-runner attempts on 2026-09-28 returned "no Revit
+    is reachable" before PID pinning. A later invocation of the same official
+    runner in the current user's elevated context reached typed health/session
+    checks, selected PID 12660, acquired and released the normal writer lease,
+    and entered P6/partial recovery. This supports an access-context cause for
+    discovery behavior; the owner-only discovery file was not opened and its
+    token was not read. The attempt stopped before R05 write because the known
+    floor Area response had no unit. The new clean-registry, full tools/list,
+    full_write and unpaused gates have not had live evidence. A diagnostic-only
+    P6 readback is recorded in state/HANDOFF.md. No model save/write/checkpoint
+    occurred; the project lock is absent and the target remains open.
   resolution: >-
-    Test the exact R05-only production runner once in the current user context
-    that can read its owner-only discovery file, without reading the token.
-    Resolve the blocker only if that same runner passes health, client,
-    exact-target and P6/partial-floor gates.
+    Run the exact R05-only production runner once in the current user context.
+    Require health, zero other clients, exact target/build/PID, clean complete
+    command and tool registries, full_write, mcp_paused=false, runner-managed
+    lease, P6 reconciliation, and complete typed Area readings explicitly in
+    m2. Resolve the blocker only after the authorized R05 persistence gates pass.
   requires_user_action: false
   created_utc: '2026-09-27T14:43:39Z'
   resolved_utc: null
@@ -153,6 +153,6 @@ blockers:
   tasks_still_allowed: []
   allowed_tasks: []
   resolution_action: >-
-    Reconcile the installed runner transport and then pass its health, client,
-    exact-target, P6, and partial-floor verification gates.
+    Complete the one controlled exact R05 runner attempt through current
+    transport/readiness, P6 and partial-floor gates, then pass R05 persistence.
   reason: RUNNER_TRANSPORT_UNREACHABLE:BLOCKING

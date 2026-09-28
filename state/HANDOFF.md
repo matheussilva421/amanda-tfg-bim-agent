@@ -1,8 +1,28 @@
 # Current Handoff
 
-## Current state — P7-T01/R05 blocked at production runner transport
+## Current state — P7-T01/R05, controlled runner retry ready
 
-The user explicitly authorizes P7-T01/R05 on RUN-003. Current authorization is R05 only; do not execute R06 or later. This is the latest transport discovery diagnosis and supersedes the prior continuation below.
+Authorization remains limited to P7-T01/R05 on RUN-003. Do not start R06 or later.
+
+- `PROJECT_STATE.yaml` is revision 247; `P7-T01` remains `BLOCKED_BY_TOOL`, `revit_stage` remains R04, and R06 is NOT STARTED. The latest locally verified code commit is `c679db483dede056cd0223488f8444d45cf2b229`.
+- The ACL hypothesis is now supported by a discriminating run: ordinary sandboxed `.venv` runner attempts failed at `horizun_health` with “no Revit is reachable”; the same official runner in the current user's elevated context reached typed health/session checks, selected Revit PID 12660, acquired and released the normal writer lease, and entered P6/partial recovery. No discovery token was read. This proves the access context changes discovery behavior, while the provider's full readiness gates still need fresh live evidence.
+- That live attempt stopped before any R05 write because the existing `horizun_query_model` Area value for `FLOOR-RES_PAV_A-L1` contained no unit. No unit was inferred. The runner closed the inspected P6 checkpoint without saving and released its lease. The diagnostic `revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-77140d89d42a.json` records the 25-row readback and the accepted/observed fingerprint mismatch; it is diagnostic-only, not an acceptance pass.
+- The implementation now requires a clean, complete provider command registry; an unrestricted tool pack; `full_write`; `mcp_paused=false`; and an unpaginated MCP `tools/list` matching provider health, all on the same MCP process. During partial recovery it requests Area for exactly the eight known floors through `horizun_quantities` with an explicit `m2` contract, and fails closed on incomplete coverage, identity, unit, or provenance. TDD and focused suites pass; live use of these new gates is pending.
+- Test command: `.venv\\Scripts\\python.exe -m pytest tests/unit/test_run_amanda_production.py tests/unit/test_production_layout_bim.py tests/unit/test_run003_study_authorization.py tests/unit/test_bim_production_contract.py tests/unit/test_persistence_plan.py tests/unit/test_mcp_probe_transport_pinning.py tests/unit/test_bim_transport_env.py -q -k "not test_production_registry_binds_r04_mass_and_preview_visibility_to_lab_proof"` -> 156 passed, 1 deselected, 0 failed. The deselected R04 lab-evidence hash mismatch predates this task. Ruff reports 10 existing findings (8 in the runner and 2 transport annotations); no new finding remains. Scoped `git diff --check` passed.
+- The code/tests/diagnostic are committed as `c679db483dede056cd0223488f8444d45cf2b229`. The state/handoff update is pending its own commit. A fresh GitHub ref read previously failed over TCP 443; remote status is not verified. RC01 deletions and R04 presentation artifacts remain unstaged and untouched.
+- Revit PIDs 12660 and 3364 were recently responsive; PID 3364 remains untouched. The RUN-003 document remains open. Do not hash or close it. No R05 save, model write, or checkpoint has occurred. Recheck the process and ensure the project lock is absent before the next invocation.
+
+Next, after publishing the state update, perform one exact `.venv` production-runner invocation with `sandbox_permissions=require_escalated`. Do not use a separate Horizun client. Require current health, zero other clients, exact RUN-003 path/build/PID, the complete registry/tool-list/full-write/unpaused gates, runner-managed lease, P6 reconciliation, and all eight explicit `m2` Area readings before any R05 write. Continue through R05 WRITE → independent READ → VERIFY → SAVE/CHECKPOINT → CLOSE/REOPEN/READBACK and capture evidence only if every gate passes. Stop at R05. On failure, update this handoff and wait a full 600 seconds before another provider call.
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_amanda_production.py --rvt 'revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt' --resume-run003-study --reuse-existing-run003-lease --max-stage R05 --revit-pid 12660 --execute
+```
+
+- State validation: focused task-graph/dashboard gate passed 18/18; all four edited YAML files parsed; scoped diff check passed. A wider legacy migration command returned 3 failures because its frozen assertions still expect the former P4 snapshot while this checkout is at P7 and P4-T01 is PASS. No current state was changed to satisfy those historical assertions.
+
+## Previous update — P7-T01/R05 transport discovery (superseded)
+
+The user explicitly authorizes P7-T01/R05 on RUN-003. Current authorization is R05 only; do not execute R06 or later. The update above supersedes this transport discovery diagnosis.
 
 - The exact objective file was reread. `PROJECT_STATE.yaml` is now revision 246; P7-T01 remains `BLOCKED_BY_TOOL`, `revit_stage` remains R04, and `last_verified_commit` remains the runner code commit `73f71e0c15bb169d88729c0530bffafc975a81c0`.
 - A second invocation of the `.venv` production runner returned the same `no Revit is reachable` error. It stopped at `horizun_health`; no PID pinning, capability/target/checkpoint reads, lease acquisition, or model operation followed. The 600-second quiet window has now elapsed. No standalone Horizun client was used.

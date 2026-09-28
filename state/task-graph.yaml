@@ -3363,16 +3363,15 @@ tasks:
       Current authorization covers P7-T01/R05 only. Every later stage requires
       its own task gate; completing R05 does not start R06. R06 remains NOT STARTED.
     - >-
-      Current blocker: RUNNER_TRANSPORT_UNREACHABLE:BLOCKING. Historical direct-app
-      health is stale. Two 2026-09-28 .venv production-runner attempts returned
-      "no Revit is reachable" before PID pinning, capabilities, target,
-      checkpoint, lease, or model access. Revit journal 0037 binds the exact
-      RUN-003 path and Horizun add-in startup to PID 12660; a fresh process check
-      found PID 12660 responding. Discovery is under %USERPROFILE%\.horizun and
-      its ACL grants FullControl only to the current user. Its token-bearing
-      contents were not read. Restricted-context access as the cause remains a
-      hypothesis. Typed health and zero-other-client status are unverified. The
-      project lease file is absent; no model write, save, or checkpoint occurred.
+      Current blocker: RUNNER_TRANSPORT_UNREACHABLE:BLOCKING. Two sandboxed
+      2026-09-28 .venv attempts returned "no Revit is reachable". The same
+      official runner in the current user's elevated context reached typed
+      health/session checks, selected PID 12660, acquired/released the normal
+      lease and entered P6/partial recovery. This supports the owner-only
+      discovery access-context hypothesis; the token-bearing file was not read.
+      It stopped before R05 write because a known floor Area response had no
+      unit. The new registry/tools-list/full_write/unpaused gates still require
+      fresh live evidence. No model save, write or checkpoint occurred.
     - >-
       The current journal records Session12660_P0MainQueue, the exact document
       open, and Horizun MCP startup. Another responding process 3364 exists and
@@ -3380,12 +3379,12 @@ tasks:
       this journal evidence. The discovery ACL hypothesis and next controlled
       runner attempt are recorded in state/HANDOFF.md.
     - >-
-      The 600-second quiet window after the second failure has elapsed. Run the
-      exact production runner once in the current user context to test discovery
-      ACL access; require its own transport to report HEALTHY, zero other clients,
-      and the exact active RUN-003 path.
-      Then acquire the lease through the runner and pass exact P6 reconciliation
-      plus partial-floor/Area-unit gates. Use the R05-only runner and stop at R05.
+      The 600-second quiet window after the last runner call has elapsed. Run the
+      exact production runner once in the current user context; require HEALTHY,
+      zero other clients, exact RUN-003/build/PID, complete command/tool registries,
+      full_write, mcp_paused=false, runner-managed lease, exact P6 reconciliation,
+      and complete Area readings with explicit m2 units. Use the R05-only runner
+      and stop at R05.
   P7-T02:
     id: P7-T02
     phase: P7

@@ -7,7 +7,7 @@ blockers:
 - RUNNER_TRANSPORT_UNREACHABLE:BLOCKING
 current_checkpoint: revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-CANON-011-RECONCILED-20260926.rvt
 last_completed_task: P6-T01
-last_verified_commit: 73f71e0c15bb169d88729c0530bffafc975a81c0
+last_verified_commit: c679db483dede056cd0223488f8444d45cf2b229
 next_task: P7-T01
 phase_gate: GO_WITH_LIMITATIONS
 phase_id: P7
@@ -17,4 +17,4 @@ project: Amanda TFG BIM Agent
 revit_stage: R04
 schema_version: 1
 selected_design: AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C
-state_revision: 246
+state_revision: 247

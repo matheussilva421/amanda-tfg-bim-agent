@@ -2595,3 +2595,11 @@ entries:
   - 'TDD added a bounded diagnostic-only JSON artifact for the verified checkpoint SHA, accepted/observed fingerprints, row digest, and 25 typed identity/geometry rows. Fingerprint mismatch still fails closed. Focused suite: 202 passed, 0 failed. Ruff baseline remains 9 findings (8 runner, 1 test), no new findings.'
   recorded_utc: '2026-09-27T10:06:45Z'
   note: After the diagnostic code and state update are pushed, run only the health-first R05 runner. On mismatch, inspect the generated P6 readback diagnostic and reconcile it explicitly; do not write R05 or waive accepted fingerprint without complete evidence. P7-T01 stays PENDING.
+- task_id: P7-T01
+  status: BLOCKED_BY_TOOL
+  evidence:
+  - 'Same official .venv runner, elevated under the current user, reached typed health/session checks, selected Revit PID 12660, acquired/released the normal lease, and entered P6/partial recovery; two sandboxed attempts had failed discovery.'
+  - 'Recovery stopped before R05 write because the known FLOOR-RES_PAV_A-L1 Area response had no unit. No model write/save/checkpoint occurred. The diagnostic-only P6 readback is committed at revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-77140d89d42a.json.'
+  - 'TDD added complete provider registry/tools-list/full_write/unpaused gates and an exact eight-floor Area takeoff using explicit m2 units. Focused R05 suite: 156 passed, 1 unrelated R04 evidence-hash test deselected, 0 failed. Implementation commit c679db483dede056cd0223488f8444d45cf2b229.'
+  recorded_utc: '2026-09-28T22:12:03Z'
+  note: Run one exact R05-only production attempt under the current user's elevated context after publishing this state. Require all fresh live readiness, target, lease, P6 and typed m2 gates; stop on any failure and wait 600 seconds before another provider call. R06 remains NOT STARTED.
