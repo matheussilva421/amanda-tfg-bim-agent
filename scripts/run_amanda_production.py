@@ -20,6 +20,7 @@ import math
 import sys
 import time
 import uuid
+from decimal import Decimal
 from pathlib import Path
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
@@ -1084,9 +1085,15 @@ def _query_r05_partial_area_measurements(
         "classification_parameter": "Comments",
         "quantities": [
             {
-                "name": "floor_area",
+                "name": "floor_area_english",
                 "source": "parameter",
                 "parameter": "Area",
+                "unit": "m2",
+            },
+            {
+                "name": "floor_area_localized",
+                "source": "parameter",
+                "parameter": "\u00c1rea",
                 "unit": "m2",
             }
         ],
@@ -1097,21 +1104,39 @@ def _query_r05_partial_area_measurements(
     if not isinstance(payload, dict):
         raise TypeError("R05 Area takeoff did not return a typed object")
     definitions = payload.get("quantity_definitions")
-    expected_definition = {
-        "name": "floor_area",
-        "source": "parameter",
-        "parameter": "Area",
-        "unit": "m2",
-    }
+    expected_definitions = (
+        {
+            "name": "floor_area_english",
+            "source": "parameter",
+            "parameter": "Area",
+            "unit": "m2",
+        },
+        {
+            "name": "floor_area_localized",
+            "source": "parameter",
+            "parameter": "\u00c1rea",
+            "unit": "m2",
+        },
+    )
     if (
         payload.get("mode") != "takeoff"
         or payload.get("classification_parameter") != "Comments"
         or not isinstance(definitions, list)
-        or len(definitions) != 1
-        or not isinstance(definitions[0], dict)
-        or any(definitions[0].get(key) != value for key, value in expected_definition.items())
+        or len(definitions) != len(expected_definitions)
+        or any(
+            not isinstance(definition, dict)
+            or any(
+                definition.get(key) != value
+                for key, value in expected.items()
+            )
+            for definition, expected in zip(
+                definitions, expected_definitions, strict=False
+            )
+        )
     ):
-        raise ValueError("R05 Area takeoff definition does not match parameter Area in m2")
+        raise ValueError(
+            "R05 Area takeoff definitions do not match Area and localized \u00c1rea in m2"
+        )
     coverage = payload.get("coverage")
     rows = payload.get("rows")
     if (
@@ -1131,6 +1156,51 @@ def _query_r05_partial_area_measurements(
         or len(rows) != len(expected_ids)
     ):
         raise ValueError("R05 Area takeoff coverage is incomplete")
+
+    def is_measured_m2(reading):
+        if not isinstance(reading, dict) or reading.get("state") != "measured":
+            return False
+        value = reading.get("value")
+        measured_in = reading.get("measured_in")
+        return (
+            reading.get("unit") == "m2"
+            and not isinstance(value, bool)
+            and isinstance(value, (int, float))
+            and math.isfinite(value)
+            and isinstance(measured_in, str)
+            and bool(measured_in.strip())
+        )
+
+    def is_absent_m2(reading):
+        return (
+            isinstance(reading, dict)
+            and reading.get("state") == "absent"
+            and reading.get("unit") == "m2"
+            and reading.get("value") is None
+            and reading.get("measured_in") is None
+        )
+
+    def reject_reading(element_id, parameter, reading):
+        value = reading.get("value") if isinstance(reading, dict) else None
+        measured_in = reading.get("measured_in") if isinstance(reading, dict) else None
+
+        def safe_label(raw_value):
+            if raw_value is None:
+                return "None"
+            if not isinstance(raw_value, str):
+                return type(raw_value).__name__
+            return repr(raw_value.replace("\r", " ").replace("\n", " ")[:40])
+
+        state = reading.get("state") if isinstance(reading, dict) else None
+        unit = reading.get("unit") if isinstance(reading, dict) else None
+        value_type = type(value).__name__ if value is not None else "None"
+        measured_in_present = isinstance(measured_in, str) and bool(measured_in.strip())
+        raise ValueError(
+            f"R05 Area reading for ElementId {element_id} parameter={parameter!r} "
+            "must report a measured value in m2 "
+            f"(state={safe_label(state)}, unit={safe_label(unit)}, "
+            f"value_type={value_type}, measured_in_present={measured_in_present})"
+        )
 
     measurements = {}
     for row in rows:
@@ -1156,40 +1226,54 @@ def _query_r05_partial_area_measurements(
         ):
             raise ValueError("R05 Area takeoff row identity does not match the exact target")
         quantities = row.get("quantities")
-        reading = quantities.get("floor_area") if isinstance(quantities, dict) else None
-        value = reading.get("value") if isinstance(reading, dict) else None
-        measured_in = reading.get("measured_in") if isinstance(reading, dict) else None
         if (
-            not isinstance(reading, dict)
-            or reading.get("state") != "measured"
-            or reading.get("unit") != "m2"
-            or isinstance(value, bool)
-            or not isinstance(value, (int, float))
-            or not math.isfinite(value)
-            or not isinstance(measured_in, str)
-            or not measured_in.strip()
+            not isinstance(quantities, dict)
+            or set(quantities)
+            != {"floor_area_english", "floor_area_localized"}
         ):
-            def safe_label(raw_value):
-                if raw_value is None:
-                    return "None"
-                if not isinstance(raw_value, str):
-                    return type(raw_value).__name__
-                return repr(raw_value.replace("\r", " ").replace("\n", " ")[:40])
-
-            state = reading.get("state") if isinstance(reading, dict) else None
-            unit = reading.get("unit") if isinstance(reading, dict) else None
-            value_type = type(value).__name__ if value is not None else "None"
-            measured_in_present = isinstance(measured_in, str) and bool(measured_in.strip())
             raise ValueError(
-                f"R05 Area reading for ElementId {element_id} must report a measured value in m2 "
-                f"(state={safe_label(state)}, unit={safe_label(unit)}, "
-                f"value_type={value_type}, measured_in_present={measured_in_present})"
+                "R05 Area takeoff readings do not match the exact requested parameters"
             )
+        english = quantities.get("floor_area_english")
+        localized = quantities.get("floor_area_localized")
+        english_state = english.get("state") if isinstance(english, dict) else None
+        localized_state = localized.get("state") if isinstance(localized, dict) else None
+
+        if english_state == "measured":
+            if not is_measured_m2(english):
+                reject_reading(element_id, "Area", english)
+            if localized_state == "measured":
+                if not is_measured_m2(localized):
+                    reject_reading(element_id, "\u00c1rea", localized)
+                english_value = Decimal(str(english["value"]))
+                localized_value = Decimal(str(localized["value"]))
+                if abs(english_value - localized_value) > Decimal("0.01"):
+                    raise ValueError(
+                        "R05 Area parameters disagree for "
+                        f"ElementId {element_id} beyond 0.01 m2"
+                    )
+            elif localized_state == "absent":
+                if not is_absent_m2(localized):
+                    reject_reading(element_id, "\u00c1rea", localized)
+            else:
+                reject_reading(element_id, "\u00c1rea", localized)
+            reading = english
+            parameter = "Area"
+        elif english_state == "absent":
+            if not is_absent_m2(english):
+                reject_reading(element_id, "Area", english)
+            if not is_measured_m2(localized):
+                reject_reading(element_id, "\u00c1rea", localized)
+            reading = localized
+            parameter = "\u00c1rea"
+        else:
+            reject_reading(element_id, "Area", english)
         measurements[element_id] = {
-            "value": float(value),
+            "value": float(reading["value"]),
             "unit": "m2",
-            "measured_in": measured_in,
+            "measured_in": reading["measured_in"],
             "state": "measured",
+            "parameter": parameter,
         }
     if set(measurements) != expected_ids:
         raise ValueError("R05 Area takeoff rows do not match the exact known floor IDs")
@@ -1307,7 +1391,10 @@ def _validate_known_r05_partial_geometry(
                 or not area_reading["measured_in"].strip()
             ):
                 raise ValueError(f"typed m2 Area takeoff is missing for {logical_id}")
-            area_source = "horizun_quantities:parameter:Area"
+            parameter = area_reading.get("parameter", "Area")
+            if parameter not in {"Area", "\u00c1rea"}:
+                raise ValueError(f"typed m2 Area source is unsupported for {logical_id}")
+            area_source = f"horizun_quantities:parameter:{parameter}"
             actual_area = float(actual_area)
         else:
             parameters = row.get("parameters")
@@ -1357,9 +1444,9 @@ def _validate_known_r05_partial_geometry(
             or not math.isfinite(actual_area)
         ):
             raise ValueError(f"typed Area parameter is missing for {logical_id}")
-        if not math.isclose(
-            float(actual_area), expected["area_m2"], rel_tol=0.0, abs_tol=1e-2
-        ):
+        if abs(
+            Decimal(str(actual_area)) - Decimal(str(expected["area_m2"]))
+        ) > Decimal("0.01"):
             raise ValueError(f"known R05 floor area differs for {logical_id}")
         floor_evidence = {
             "logical_id": logical_id,

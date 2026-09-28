@@ -182,7 +182,7 @@ def test_exactly_four_canonical_board_images_are_active():
     ]
 
 
-def test_current_state_blocks_run003_r05_until_runner_transport_is_reachable():
+def test_current_state_blocks_run003_r05_until_partial_recovery_is_verified():
     state = StateStore(ROOT / "PROJECT_STATE.yaml").load()
     registry = load_registry(ROOT / "state/task-graph.yaml")
 
@@ -194,7 +194,8 @@ def test_current_state_blocks_run003_r05_until_runner_transport_is_reachable():
     assert "SITE_TOPOGRAPHY:DEGRADING" in state.blockers
     assert "SITE_BOUNDARY:DEGRADING" in state.blockers
     assert "SITE_OCCUPANCY:DEGRADING" in state.blockers
-    assert "RUNNER_TRANSPORT_UNREACHABLE:BLOCKING" in state.blockers
+    assert "RUNNER_TRANSPORT_UNREACHABLE:BLOCKING" not in state.blockers
+    assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" in state.blockers
     assert "P1-T01" in registry.tasks
     assert registry.tasks["P1-T01"].status.value == "PASS"
     assert registry.tasks["P2-T01"].status.value == "PASS"
@@ -220,14 +221,14 @@ def test_current_state_blocks_run003_r05_until_runner_transport_is_reachable():
     assert "`P7`: 0/9 PASS" in dashboard
     assert "zero-other-client" in dashboard
     assert "authorization ends at R05" in dashboard
-    assert "production runner transport returned `no Revit is reachable`" in dashboard
-    assert "direct app Horizun health reports HEALTHY" in dashboard
-    assert "RUNNER_TRANSPORT_UNREACHABLE:BLOCKING" in dashboard
-    assert "Resume only after the production runner can target the active Revit 2027 RUN-003 document" in normalized_dashboard
+    assert "`RUNNER_TRANSPORT_UNREACHABLE` [RESOLVED" in dashboard
+    assert "`R05_PARTIAL_RECOVERY_UNVERIFIED` [BLOCKING, P7-T01 only]" in dashboard
+    assert "English Area parameter state=absent" in normalized_dashboard
 
     handoff = (ROOT / "state/HANDOFF.md").read_text(encoding="utf-8")
     normalized_handoff = " ".join(handoff.split())
-    assert "P7-T01/R05 blocked at production runner transport" in normalized_handoff
+    assert "## Current state — P7-T01/R05 blocked at partial recovery" in handoff.splitlines()[:8]
+    assert "Localized Área remains unconfirmed by live takeoff" in normalized_handoff
     assert "explicitly authorizes P7-T01/R05" in normalized_handoff
     assert "XY bounds, Revit Area, and resolved level name" in normalized_handoff
     assert "typed query contract exposes bounds and parameters but no floor-outline vertices" in normalized_handoff

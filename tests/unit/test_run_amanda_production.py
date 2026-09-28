@@ -1875,12 +1875,19 @@ def _known_area_takeoff_response(target_path):
         "classification_parameter": "Comments",
         "quantity_definitions": [
             {
-                "name": "floor_area",
+                "name": "floor_area_english",
                 "source": "parameter",
                 "parameter": "Area",
                 "unit": "m2",
                 "measured_in": "the parameter's own unit",
-            }
+            },
+            {
+                "name": "floor_area_localized",
+                "source": "parameter",
+                "parameter": "\u00c1rea",
+                "unit": "m2",
+                "measured_in": "the parameter's own unit",
+            },
         ],
         "elements_requested": len(floor_ids),
         "coverage_complete": True,
@@ -1903,18 +1910,67 @@ def _known_area_takeoff_response(target_path):
                 "link_instance_id": None,
                 "placement": None,
                 "quantities": {
-                    "floor_area": {
+                    "floor_area_english": {
                         "value": 1.0,
                         "state": "measured",
                         "unit": "m2",
                         "measured_in": "Area parameter",
                         "reason": None,
+                    },
+                    "floor_area_localized": {
+                        "value": None,
+                        "state": "absent",
+                        "unit": "m2",
+                        "measured_in": None,
+                        "reason": "parameter absent",
                     }
                 },
             }
             for element_id in floor_ids
         ],
     }
+
+
+def _localized_area_takeoff_response(
+    target_path,
+    *,
+    english_state="absent",
+    english_value=None,
+    localized_state="measured",
+    localized_value=1.0,
+):
+    response = _known_area_takeoff_response(target_path)
+    english_definition = response["quantity_definitions"][0]
+    english_definition.update(name="floor_area_english", parameter="Area")
+    response["quantity_definitions"] = [
+        english_definition,
+        {
+            "name": "floor_area_localized",
+            "source": "parameter",
+            "parameter": "\u00c1rea",
+            "unit": "m2",
+        },
+    ]
+    for row in response["rows"]:
+        english = row["quantities"].pop("floor_area_english")
+        english.update(
+            {
+                "state": english_state,
+                "value": english_value,
+                "measured_in": "Area parameter" if english_state == "measured" else None,
+            }
+        )
+        row["quantities"]["floor_area_english"] = english
+        row["quantities"]["floor_area_localized"] = {
+            "value": localized_value if localized_state == "measured" else None,
+            "state": localized_state,
+            "unit": "m2",
+            "measured_in": (
+                "\u00c1rea parameter" if localized_state == "measured" else None
+            ),
+            "reason": None,
+        }
+    return response
 
 
 def test_r05_partial_area_query_uses_exact_ids_and_explicit_m2(monkeypatch, tmp_path):
@@ -1944,9 +2000,15 @@ def test_r05_partial_area_query_uses_exact_ids_and_explicit_m2(monkeypatch, tmp_
                 "classification_parameter": "Comments",
                 "quantities": [
                     {
-                        "name": "floor_area",
+                        "name": "floor_area_english",
                         "source": "parameter",
                         "parameter": "Area",
+                        "unit": "m2",
+                    },
+                    {
+                        "name": "floor_area_localized",
+                        "source": "parameter",
+                        "parameter": "\u00c1rea",
                         "unit": "m2",
                     }
                 ],
@@ -1957,11 +2019,186 @@ def test_r05_partial_area_query_uses_exact_ids_and_explicit_m2(monkeypatch, tmp_
     ]
 
 
+def test_r05_partial_area_uses_localized_parameter_when_area_is_absent(
+    monkeypatch, tmp_path
+):
+    target = tmp_path / "RUN-003.rvt"
+    expected_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
+    response = _localized_area_takeoff_response(target)
+    calls = []
+    monkeypatch.setattr(
+        production_runner,
+        "_read_tool",
+        lambda _transport, tool, arguments: (
+            calls.append((tool, arguments)) or response
+        ),
+    )
+
+    readings = production_runner._query_r05_partial_area_measurements(
+        object(), target, target.stem, expected_ids
+    )
+
+    assert all(reading["parameter"] == "\u00c1rea" for reading in readings.values())
+    assert calls[0][1]["quantities"] == [
+        {
+            "name": "floor_area_english",
+            "source": "parameter",
+            "parameter": "Area",
+            "unit": "m2",
+        },
+        {
+            "name": "floor_area_localized",
+            "source": "parameter",
+            "parameter": "\u00c1rea",
+            "unit": "m2",
+        },
+    ]
+
+
+def test_r05_partial_area_rejects_disagreeing_english_and_localized_parameters(
+    monkeypatch, tmp_path
+):
+    target = tmp_path / "RUN-003.rvt"
+    expected_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
+    response = _localized_area_takeoff_response(
+        target,
+        english_state="measured",
+        english_value=1.0,
+        localized_value=2.0,
+    )
+    monkeypatch.setattr(
+        production_runner, "_read_tool", lambda *_args: response
+    )
+
+    with pytest.raises(ValueError, match="Area parameters disagree"):
+        production_runner._query_r05_partial_area_measurements(
+            object(), target, target.stem, expected_ids
+        )
+
+
+def test_r05_partial_area_accepts_parameter_difference_at_exact_tolerance(
+    monkeypatch, tmp_path
+):
+    target = tmp_path / "RUN-003.rvt"
+    expected_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
+    response = _localized_area_takeoff_response(
+        target,
+        english_state="measured",
+        english_value=1.01,
+        localized_value=1.0,
+    )
+    monkeypatch.setattr(
+        production_runner, "_read_tool", lambda *_args: response
+    )
+
+    readings = production_runner._query_r05_partial_area_measurements(
+        object(), target, target.stem, expected_ids
+    )
+
+    authorization = SimpleNamespace(
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO", "CHILD_SECTOR", "RES_PAV_A", "RES_PAV_B",
+                "RES_PAV_C", "RES_PAV_D_COMMUNAL", "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+    )
+    evidence = production_runner._validate_known_r05_partial_geometry(
+        _known_partial_model(authorization),
+        _known_failed_r05_journal()["records"][:8],
+        _known_r05_floor_operations(),
+        {311: "Level 1"},
+        area_measurements=readings,
+    )
+
+    assert all(reading["parameter"] == "Area" for reading in readings.values())
+    assert all(floor["area_m2"] == 1.01 for floor in evidence["floors"])
+
+
+def test_r05_partial_area_rejects_parameter_difference_just_over_tolerance(
+    monkeypatch, tmp_path
+):
+    target = tmp_path / "RUN-003.rvt"
+    expected_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
+    response = _localized_area_takeoff_response(
+        target,
+        english_state="measured",
+        english_value=1.0,
+        localized_value=1.0100000000000002,
+    )
+    monkeypatch.setattr(
+        production_runner, "_read_tool", lambda *_args: response
+    )
+
+    with pytest.raises(ValueError, match="Area parameters disagree"):
+        production_runner._query_r05_partial_area_measurements(
+            object(), target, target.stem, expected_ids
+        )
+
+
+def test_r05_partial_area_does_not_fallback_when_english_parameter_is_invalid(
+    monkeypatch, tmp_path
+):
+    target = tmp_path / "RUN-003.rvt"
+    expected_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
+    response = _localized_area_takeoff_response(
+        target, english_state="empty", localized_value=1.0
+    )
+    monkeypatch.setattr(
+        production_runner, "_read_tool", lambda *_args: response
+    )
+
+    with pytest.raises(ValueError) as exc_info:
+        production_runner._query_r05_partial_area_measurements(
+            object(), target, target.stem, expected_ids
+        )
+
+    assert "state='empty'" in str(exc_info.value)
+    assert "value=1.0" not in str(exc_info.value)
+
+
+def test_r05_partial_area_rejects_when_both_area_parameters_are_absent(
+    monkeypatch, tmp_path
+):
+    target = tmp_path / "RUN-003.rvt"
+    expected_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
+    response = _localized_area_takeoff_response(
+        target, english_state="absent", localized_state="absent"
+    )
+    monkeypatch.setattr(
+        production_runner, "_read_tool", lambda *_args: response
+    )
+
+    with pytest.raises(ValueError, match="Area reading.*m2"):
+        production_runner._query_r05_partial_area_measurements(
+            object(), target, target.stem, expected_ids
+        )
+
+
+def test_r05_partial_area_rejects_malformed_absent_english_reading(
+    monkeypatch, tmp_path
+):
+    target = tmp_path / "RUN-003.rvt"
+    expected_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
+    response = _localized_area_takeoff_response(target)
+    response["rows"][0]["quantities"]["floor_area_english"]["value"] = 99.0
+    monkeypatch.setattr(
+        production_runner, "_read_tool", lambda *_args: response
+    )
+
+    with pytest.raises(ValueError, match="parameter='Area'"):
+        production_runner._query_r05_partial_area_measurements(
+            object(), target, target.stem, expected_ids
+        )
+
+
 def test_r05_partial_area_query_rejects_untyped_or_incomplete_area(monkeypatch, tmp_path):
     target = tmp_path / "RUN-003.rvt"
     expected_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
     response = _known_area_takeoff_response(target)
-    response["rows"][0]["quantities"]["floor_area"]["unit"] = ""
+    response["rows"][0]["quantities"]["floor_area_english"]["unit"] = ""
     monkeypatch.setattr(
         production_runner,
         "_read_tool",
@@ -1980,7 +2217,7 @@ def test_r05_partial_area_failure_reports_safe_state_and_unit_diagnostics(
     target = tmp_path / "RUN-003.rvt"
     expected_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
     response = _known_area_takeoff_response(target)
-    reading = response["rows"][0]["quantities"]["floor_area"]
+    reading = response["rows"][0]["quantities"]["floor_area_english"]
     reading.update({"state": "unavailable", "unit": "", "value": None})
     monkeypatch.setattr(
         production_runner,
@@ -2100,6 +2337,7 @@ def test_known_r05_partial_geometry_uses_independent_m2_measurements_when_area_u
             "unit": "m2",
             "measured_in": "Area parameter",
             "state": "measured",
+            "parameter": "\u00c1rea",
         }
         for element_id in floor_ids
     }
@@ -2114,7 +2352,7 @@ def test_known_r05_partial_geometry_uses_independent_m2_measurements_when_area_u
 
     assert all(floor["area_source_unit"] == "m2" for floor in evidence["floors"])
     assert all(
-        floor["area_source"] == "horizun_quantities:parameter:Area"
+        floor["area_source"] == "horizun_quantities:parameter:\u00c1rea"
         for floor in evidence["floors"]
     )
 
