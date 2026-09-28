@@ -2,15 +2,14 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
 import json
 import os
-from pathlib import Path
 import subprocess
 import threading
 import time
+from collections.abc import Mapping
+from pathlib import Path
 from typing import Any, Protocol
-
 
 DEFAULT_SERVER = Path(os.environ.get("LOCALAPPDATA", "")) / "Programs" / "Horizun" / "MCP" / "server" / "horizun-mcp.exe"
 
@@ -42,6 +41,10 @@ class McpProbeTransport:
         self._notifications: list[dict[str, Any]] = []
         self._next_id = 0
         self._lock = threading.Lock()
+        self._stderr_lock = threading.Lock()
+        self._stderr_reader: threading.Thread | None = None
+        self._stderr_bytes_drained = 0
+        self._stderr_reader_error: str | None = None
         self._started = False
         self._pinned_process_pid: int | None = None
 
@@ -71,6 +74,19 @@ class McpProbeTransport:
                 process.wait(timeout=5)
             except subprocess.TimeoutExpired:
                 process.kill()
+        reader = self._stderr_reader
+        if reader is not None:
+            reader.join(timeout=0.5)
+
+    @property
+    def stderr_diagnostics(self) -> dict[str, int | str | None]:
+        """Return bounded stderr metadata without exposing provider output."""
+
+        with self._stderr_lock:
+            return {
+                "bytes_drained": self._stderr_bytes_drained,
+                "reader_error": self._stderr_reader_error,
+            }
 
     def call(self, tool: str, arguments: Mapping[str, Any]) -> Mapping[str, Any] | None:
         self._ensure_started()
@@ -79,6 +95,18 @@ class McpProbeTransport:
             {"name": tool, "arguments": dict(arguments)},
         )
         return self._await_reply(request_id)
+
+    def list_tools(self) -> Mapping[str, Any]:
+        """Read the MCP tool registry from this already-started server process."""
+
+        self._ensure_started()
+        request_id = self._send("tools/list", {})
+        reply = self._await_reply(request_id)
+        if reply is None:
+            raise McpTransportError("Horizun MCP tools/list timed out")
+        if reply.get("error"):
+            raise McpTransportError(f"Horizun MCP tools/list failed: {reply['error']}")
+        return reply
 
     def pin_process_identity(self) -> int:
         """Pin the live stdio child identity after its health check."""
@@ -128,6 +156,14 @@ class McpProbeTransport:
             errors="replace",
             bufsize=1,
         )
+        process = self.process
+        if process.stderr is not None:
+            self._stderr_reader = threading.Thread(
+                target=self._drain_stderr,
+                args=(process.stderr,),
+                daemon=True,
+            )
+            self._stderr_reader.start()
         self._replies.clear()
         self._notifications.clear()
         self._next_id = 0
@@ -150,6 +186,21 @@ class McpProbeTransport:
             raise McpTransportError(f"Horizun MCP initialize failed: {reply['error']}")
         self._notify("notifications/initialized")
         self._started = True
+
+    def _drain_stderr(self, stream) -> None:
+        """Drain fixed-size chunks and retain only a byte count, never text."""
+
+        try:
+            while True:
+                chunk = stream.read(256)
+                if not chunk:
+                    return
+                size = len(chunk.encode("utf-8", errors="replace"))
+                with self._stderr_lock:
+                    self._stderr_bytes_drained += size
+        except (OSError, ValueError) as exc:
+            with self._stderr_lock:
+                self._stderr_reader_error = type(exc).__name__
 
     def _pump(self) -> None:
         process = self.process

@@ -41,3 +41,22 @@ def test_health_pinned_transport_refuses_automatic_restart(
         client._ensure_started()
 
     assert spawned == []
+
+
+def test_list_tools_uses_the_existing_started_mcp_process():
+    process = _FakeProcess(pid=40002)
+    client = transport.McpProbeTransport()
+    client.process = process  # type: ignore[assignment]
+    client._started = True
+    calls = []
+    reply = {"jsonrpc": "2.0", "id": 2, "result": {"tools": [{"name": "horizun_health"}]}}
+
+    def send(method, params=None):
+        calls.append((method, params))
+        return 2
+
+    client._send = send
+    client._await_reply = lambda _request_id: reply
+
+    assert client.list_tools() is reply
+    assert calls == [("tools/list", {})]

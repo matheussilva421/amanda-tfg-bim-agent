@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from copy import deepcopy
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -228,6 +229,7 @@ def test_run003_health_gate_passes_before_writer_lease_is_acquired(
         "open_document_count": 2,
         "no_active_document": False,
         "active_document": {
+            "title": target.stem,
             "path": str(target),
             "is_active": True,
             "has_been_saved_to_disk": True,
@@ -246,6 +248,7 @@ def test_run003_health_gate_passes_before_writer_lease_is_acquired(
             ],
         },
     }
+    health.update(_valid_horizun_production_readiness())
     captured = {}
     live_preflight_order = []
     execution_events = []
@@ -266,8 +269,6 @@ def test_run003_health_gate_passes_before_writer_lease_is_acquired(
             return True
 
     class FakeTransport:
-        calls = []
-
         def __init__(self, **_kwargs):
             self.calls = []
             self.process = SimpleNamespace(pid=40000)
@@ -282,6 +283,10 @@ def test_run003_health_gate_passes_before_writer_lease_is_acquired(
         def pin_process_identity(self):
             live_preflight_order.append("pin_transport")
             return self.process.pid
+
+        def list_tools(self):
+            live_preflight_order.append("tools/list")
+            return _valid_mcp_tool_list()
 
         def call(self, tool, arguments):
             self.calls.append((tool, arguments))
@@ -299,6 +304,17 @@ def test_run003_health_gate_passes_before_writer_lease_is_acquired(
     monkeypatch.setattr(production_runner, "build_canonical_pavilion_layout", lambda *_args: SimpleNamespace(content_hash="layout"))
     monkeypatch.setattr(production_runner, "build_selection", lambda *args, **kwargs: selection)
     monkeypatch.setattr(production_runner.CapabilityRegistry, "load_for_production", lambda *_args: (registry, []))
+    readiness_validator = production_runner._validate_horizun_write_readiness
+
+    def record_readiness_validation(payload):
+        live_preflight_order.append("validate_horizun_write_readiness")
+        return readiness_validator(payload)
+
+    monkeypatch.setattr(
+        production_runner,
+        "_validate_horizun_write_readiness",
+        record_readiness_validation,
+    )
 
     def capture_plan_arguments(**kwargs):
         captured["plan_arguments"] = kwargs
@@ -367,9 +383,11 @@ def test_run003_health_gate_passes_before_writer_lease_is_acquired(
     assert captured["readback_authorization"] is authorization
     assert captured["persistence_call"]["p6_checkpoint_sha256"] == authorization.checkpoint_sha256
     assert all(tool != "horizun_document_session" for tool, _ in captured["transport_calls"])
-    assert live_preflight_order[:3] == [
+    assert live_preflight_order[:5] == [
         "horizun_health",
         "pin_transport",
+        "validate_horizun_write_readiness",
+        "tools/list",
         "horizun_target",
     ]
 
@@ -466,6 +484,91 @@ def test_untyped_health_reply_reports_only_structural_diagnostics(reply, expecte
     with pytest.raises(TypeError) as error:
         production_runner._read_tool(FakeTransport(), "horizun_health", {})
     assert expected in str(error.value)
+
+
+def _valid_horizun_production_readiness():
+    return {
+        "registry": {
+            "clean": True,
+            "registered": 73,
+            "contract_commands": 73,
+            "missing": [],
+            "unadvertised": [],
+            "duplicates": [],
+            "case_mismatches": [],
+        },
+        "tool_packs": {
+            "restricting": False,
+            "tools_visible": 80,
+            "tools_total": 80,
+        },
+        "operational_controls": {
+            "permission_profile": "full_write",
+            "mcp_paused": False,
+        },
+    }
+
+
+def _valid_mcp_tool_list():
+    required = {
+        "get_document_info",
+        "horizun_create_elements",
+        "horizun_document_session",
+        "horizun_health",
+        "horizun_quantities",
+        "horizun_query_model",
+        "horizun_save_document",
+        "horizun_target",
+    }
+    names = sorted(required)
+    names.extend(f"horizun_test_tool_{index}" for index in range(80 - len(names)))
+    return {"result": {"tools": [{"name": name} for name in names]}}
+
+
+def test_horizun_production_readiness_requires_complete_write_enabled_registries():
+    valid = _valid_horizun_production_readiness()
+    production_runner._validate_horizun_write_readiness(valid)
+
+    rejected = [
+        ({**valid, "registry": None}, "registry"),
+        ({**valid, "registry": {**valid["registry"], "clean": False}}, "registry"),
+        ({**valid, "registry": {**valid["registry"], "registered": 72}}, "registry"),
+        ({**valid, "registry": {**valid["registry"], "missing": ["create_wall"]}}, "registry"),
+        ({**valid, "tool_packs": {**valid["tool_packs"], "restricting": True}}, "tool"),
+        ({**valid, "tool_packs": {**valid["tool_packs"], "tools_visible": 79}}, "tool"),
+        ({**valid, "operational_controls": {**valid["operational_controls"], "permission_profile": "read_only"}}, "full_write"),
+        ({**valid, "operational_controls": {**valid["operational_controls"], "mcp_paused": True}}, "paused"),
+        ({**valid, "operational_controls": {"permission_profile": "full_write"}}, "paused"),
+    ]
+    for payload, expected_error in rejected:
+        with pytest.raises((TypeError, ValueError), match=expected_error):
+            production_runner._validate_horizun_write_readiness(payload)
+
+
+def test_live_mcp_tool_registry_matches_health_and_contains_r05_contract_tools():
+    tools_reply = _valid_mcp_tool_list()
+
+    assert production_runner._validate_horizun_tool_list(
+        tools_reply, expected_visible=80
+    ) == 80
+
+    truncated = deepcopy(tools_reply)
+    truncated["result"]["tools"].pop()
+    duplicate = deepcopy(tools_reply)
+    duplicate["result"]["tools"][-1] = duplicate["result"]["tools"][0]
+    paginated = deepcopy(tools_reply)
+    paginated["result"]["nextCursor"] = "continue"
+    missing_required = deepcopy(tools_reply)
+    missing_required["result"]["tools"] = [
+        tool
+        for tool in missing_required["result"]["tools"]
+        if tool["name"] != "horizun_quantities"
+    ]
+    for invalid in (truncated, duplicate, paginated, missing_required):
+        with pytest.raises((TypeError, ValueError)):
+            production_runner._validate_horizun_tool_list(
+                invalid, expected_visible=80
+            )
 
 
 def test_live_revit_preflight_requires_single_idle_writer_target():
@@ -1765,6 +1868,112 @@ def _known_r05_floor_operations():
     ]
 
 
+def _known_area_takeoff_response(target_path):
+    floor_ids = sorted(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
+    return {
+        "mode": "takeoff",
+        "classification_parameter": "Comments",
+        "quantity_definitions": [
+            {
+                "name": "floor_area",
+                "source": "parameter",
+                "parameter": "Area",
+                "unit": "m2",
+                "measured_in": "the parameter's own unit",
+            }
+        ],
+        "elements_requested": len(floor_ids),
+        "coverage_complete": True,
+        "coverage": {
+            "unreadable_readings": 0,
+            "invalid_readings": 0,
+            "all_worksets_open": True,
+            "links_not_loaded": 0,
+        },
+        "links_not_loaded": [],
+        "rows_matching": len(floor_ids),
+        "shown": len(floor_ids),
+        "top": len(floor_ids),
+        "truncated": False,
+        "failed": [],
+        "rows": [
+            {
+                "element_id": str(element_id),
+                "document_path": str(Path(target_path).resolve()),
+                "link_instance_id": None,
+                "placement": None,
+                "quantities": {
+                    "floor_area": {
+                        "value": 1.0,
+                        "state": "measured",
+                        "unit": "m2",
+                        "measured_in": "Area parameter",
+                        "reason": None,
+                    }
+                },
+            }
+            for element_id in floor_ids
+        ],
+    }
+
+
+def test_r05_partial_area_query_uses_exact_ids_and_explicit_m2(monkeypatch, tmp_path):
+    target = tmp_path / "RUN-003.rvt"
+    expected_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
+    calls = []
+
+    def read_tool(_transport, tool, arguments):
+        calls.append((tool, arguments))
+        return _known_area_takeoff_response(target)
+
+    monkeypatch.setattr(production_runner, "_read_tool", read_tool)
+
+    readings = production_runner._query_r05_partial_area_measurements(
+        object(), target, target.stem, expected_ids
+    )
+
+    assert set(readings) == expected_ids
+    assert all(reading["unit"] == "m2" for reading in readings.values())
+    assert calls == [
+        (
+            "horizun_quantities",
+            {
+                "mode": "takeoff",
+                "target_document_title": target.stem,
+                "element_ids": sorted(expected_ids),
+                "classification_parameter": "Comments",
+                "quantities": [
+                    {
+                        "name": "floor_area",
+                        "source": "parameter",
+                        "parameter": "Area",
+                        "unit": "m2",
+                    }
+                ],
+                "include_links": False,
+                "top": len(expected_ids),
+            },
+        )
+    ]
+
+
+def test_r05_partial_area_query_rejects_untyped_or_incomplete_area(monkeypatch, tmp_path):
+    target = tmp_path / "RUN-003.rvt"
+    expected_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
+    response = _known_area_takeoff_response(target)
+    response["rows"][0]["quantities"]["floor_area"]["unit"] = ""
+    monkeypatch.setattr(
+        production_runner,
+        "_read_tool",
+        lambda *_args: response,
+    )
+
+    with pytest.raises(ValueError, match="Area reading.*m2"):
+        production_runner._query_r05_partial_area_measurements(
+            object(), target, target.stem, expected_ids
+        )
+
+
 def test_r05_level_query_uses_only_the_exact_reconciled_floor_operations(monkeypatch):
     floors = _known_r05_floor_operations()
     other_operations = [
@@ -1840,6 +2049,47 @@ def test_known_r05_partial_rows_match_current_plan_bounds_area_and_level():
         "expected_geometry_source": "current_R05_plan",
         "observed_geometry_scope": "typed_bounds_area_level",
     }
+
+
+def test_known_r05_partial_geometry_uses_independent_m2_measurements_when_area_unit_is_blank():
+    authorization = SimpleNamespace(
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO", "CHILD_SECTOR", "RES_PAV_A", "RES_PAV_B",
+                "RES_PAV_C", "RES_PAV_D_COMMUNAL", "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+    )
+    payload = _known_partial_model(authorization)
+    floor_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
+    for row in payload["rows"]:
+        if row["element_id"] in floor_ids:
+            row["parameters"]["Area"] = {"value": 1.0, "unit": ""}
+    area_measurements = {
+        element_id: {
+            "value": 1.0,
+            "unit": "m2",
+            "measured_in": "Area parameter",
+            "state": "measured",
+        }
+        for element_id in floor_ids
+    }
+
+    evidence = production_runner._validate_known_r05_partial_geometry(
+        payload,
+        _known_failed_r05_journal()["records"][:8],
+        _known_r05_floor_operations(),
+        {311: "Level 1"},
+        area_measurements=area_measurements,
+    )
+
+    assert all(floor["area_source_unit"] == "m2" for floor in evidence["floors"])
+    assert all(
+        floor["area_source"] == "horizun_quantities:parameter:Area"
+        for floor in evidence["floors"]
+    )
 
 
 def test_known_r05_partial_geometry_accepts_full_plan_and_selects_only_known_floors():
@@ -2228,6 +2478,8 @@ def test_known_r05_partial_is_reconciled_without_closing_target_after_exact_chec
         tool_calls.append((tool, arguments))
         if tool == "get_document_info":
             return {"path": active_path[0]}
+        if tool == "horizun_quantities":
+            return _known_area_takeoff_response(target)
         if tool == "horizun_query_model":
             if Path(active_path[0]).resolve() == checkpoint.resolve():
                 return _known_p6_model(authorization)
@@ -2299,6 +2551,7 @@ def test_known_r05_partial_is_reconciled_without_closing_target_after_exact_chec
         journal_path=journal_path,
         run_key="restore-test",
         operations=_known_r05_floor_operations(),
+        target_document_title=target.stem,
     )
 
     assert evidence["target_preserved_active"] is True
@@ -2317,6 +2570,13 @@ def test_known_r05_partial_is_reconciled_without_closing_target_after_exact_chec
     assert query_arguments[3]["return_fields"] == ["unique_id", "category", "name", "level"]
     assert query_arguments[3]["return_parameters"] == ["Area"]
     assert query_arguments[4]["categories"] == ["OST_Levels"]
+    quantity_call = next(
+        arguments for tool, arguments in tool_calls if tool == "horizun_quantities"
+    )
+    assert quantity_call["target_document_title"] == target.stem
+    assert quantity_call["element_ids"] == sorted(
+        production_runner.RUN003_FAILED_R05_FLOOR_IDS.values()
+    )
     closes = [args for tool, args in tool_calls if tool == "horizun_document_session" and args["operation"] == "close"]
     assert len(closes) == 1
     assert all(args["save_on_close"] is False for args in closes)
@@ -2379,7 +2639,8 @@ def test_known_r05_partial_recovery_refuses_unexpected_model_rows_before_close(
     with pytest.raises(ValueError, match="does not match the known RUN-003 partial"):
         production_runner._restore_known_failed_r05_partial(
             object(), target, authorization, journal_path=journal_path,
-            run_key="restore-test", operations=_known_r05_floor_operations()
+            run_key="restore-test", operations=_known_r05_floor_operations(),
+            target_document_title=target.stem,
         )
 
     assert not any(tool == "horizun_document_session" for tool, _ in calls)
@@ -2453,6 +2714,7 @@ def test_p6_fingerprint_mismatch_persists_detailed_checkpoint_readback_before_fa
             journal_path=journal_path,
             run_key="run-1",
             operations=_known_r05_floor_operations(),
+            target_document_title=target.stem,
         )
 
     diagnostic = json.loads(diagnostic_path.read_text(encoding="utf-8"))

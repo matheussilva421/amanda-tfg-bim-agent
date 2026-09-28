@@ -289,6 +289,98 @@ def _validate_revit_session(
     return health
 
 
+def _validate_horizun_write_readiness(health: object) -> dict:
+    """Require the installed provider's complete registries and write controls."""
+
+    if not isinstance(health, dict):
+        raise TypeError("Horizun production readiness is not a typed health object")
+
+    registry = health.get("registry")
+    if not isinstance(registry, dict):
+        raise TypeError("Horizun command registry metadata is missing or untyped")
+    registered = registry.get("registered")
+    contract_commands = registry.get("contract_commands")
+    empty_registry_findings = ("missing", "unadvertised", "duplicates", "case_mismatches")
+    if (
+        registry.get("clean") is not True
+        or type(registered) is not int
+        or registered <= 0
+        or type(contract_commands) is not int
+        or contract_commands != registered
+        or any(registry.get(key) != [] for key in empty_registry_findings)
+    ):
+        raise ValueError("Horizun command registry is incomplete or inconsistent")
+
+    tool_packs = health.get("tool_packs")
+    if not isinstance(tool_packs, dict):
+        raise TypeError("Horizun tool registry metadata is missing or untyped")
+    tools_visible = tool_packs.get("tools_visible")
+    tools_total = tool_packs.get("tools_total")
+    if (
+        tool_packs.get("restricting") is not False
+        or type(tools_visible) is not int
+        or tools_visible <= 0
+        or type(tools_total) is not int
+        or tools_visible != tools_total
+        or tool_packs.get("problem") is not None
+    ):
+        raise ValueError("Horizun tool registry is incomplete or restricted")
+
+    controls = health.get("operational_controls")
+    if not isinstance(controls, dict):
+        raise TypeError("Horizun operational write controls are missing or untyped")
+    if controls.get("permission_profile") != "full_write":
+        raise ValueError("Horizun permission profile is not full_write")
+    if controls.get("mcp_paused") is not False:
+        raise ValueError("Horizun MCP is paused or pause state is unknown")
+
+    return {
+        "command_registry": {"registered": registered, "contract_commands": contract_commands},
+        "tool_registry": {"visible": tools_visible, "total": tools_total},
+        "permission_profile": "full_write",
+        "mcp_paused": False,
+    }
+
+
+def _validate_horizun_tool_list(reply: object, *, expected_visible: int) -> int:
+    """Require the MCP client's complete tool list to match provider health."""
+
+    result = reply.get("result") if isinstance(reply, dict) else None
+    tools = result.get("tools") if isinstance(result, dict) else None
+    if (
+        not isinstance(result, dict)
+        or result.get("nextCursor") not in (None, "")
+        or not isinstance(tools, list)
+        or len(tools) != expected_visible
+    ):
+        raise ValueError("Horizun MCP tools/list is incomplete or paginated")
+    names = []
+    for tool in tools:
+        name = tool.get("name") if isinstance(tool, dict) else None
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError("Horizun MCP tools/list contains an invalid tool name")
+        names.append(name)
+    if len(set(names)) != len(names):
+        raise ValueError("Horizun MCP tools/list contains duplicate tool names")
+    required = {
+        "get_document_info",
+        "horizun_create_elements",
+        "horizun_document_session",
+        "horizun_health",
+        "horizun_quantities",
+        "horizun_query_model",
+        "horizun_save_document",
+        "horizun_target",
+    }
+    missing = required - set(names)
+    if missing:
+        raise ValueError(
+            "Horizun MCP tool registry lacks required R05 tools: "
+            + ", ".join(sorted(missing))
+        )
+    return len(names)
+
+
 def _validate_canonical_target(
     rvt: Path, *, repository_root: Path = REPOSITORY_ROOT
 ) -> None:
@@ -972,8 +1064,130 @@ def _floor_operation_geometry(operation) -> dict:
     }
 
 
+def _query_r05_partial_area_measurements(
+    transport, target: Path, target_document_title: str, expected_ids
+) -> dict[int, dict]:
+    """Read the eight known floor Area parameters with an explicit m2 contract."""
+
+    expected_ids = set(expected_ids)
+    known_ids = set(RUN003_FAILED_R05_FLOOR_IDS.values())
+    if expected_ids != known_ids or len(expected_ids) != 8:
+        raise ValueError("R05 Area takeoff requires the exact known eight floor IDs")
+    if not isinstance(target_document_title, str) or not target_document_title.strip():
+        raise ValueError("R05 Area takeoff requires the health-reported document title")
+    target = Path(target).resolve()
+    arguments = {
+        "mode": "takeoff",
+        "target_document_title": target_document_title,
+        "element_ids": sorted(expected_ids),
+        # Required by Horizun's takeoff contract; classifier values are not used.
+        "classification_parameter": "Comments",
+        "quantities": [
+            {
+                "name": "floor_area",
+                "source": "parameter",
+                "parameter": "Area",
+                "unit": "m2",
+            }
+        ],
+        "include_links": False,
+        "top": len(expected_ids),
+    }
+    payload = _read_tool(transport, "horizun_quantities", arguments)
+    if not isinstance(payload, dict):
+        raise TypeError("R05 Area takeoff did not return a typed object")
+    definitions = payload.get("quantity_definitions")
+    expected_definition = {
+        "name": "floor_area",
+        "source": "parameter",
+        "parameter": "Area",
+        "unit": "m2",
+    }
+    if (
+        payload.get("mode") != "takeoff"
+        or payload.get("classification_parameter") != "Comments"
+        or not isinstance(definitions, list)
+        or len(definitions) != 1
+        or not isinstance(definitions[0], dict)
+        or any(definitions[0].get(key) != value for key, value in expected_definition.items())
+    ):
+        raise ValueError("R05 Area takeoff definition does not match parameter Area in m2")
+    coverage = payload.get("coverage")
+    rows = payload.get("rows")
+    if (
+        payload.get("elements_requested") != len(expected_ids)
+        or payload.get("coverage_complete") is not True
+        or payload.get("rows_matching") != len(expected_ids)
+        or payload.get("shown") != len(expected_ids)
+        or payload.get("top") != len(expected_ids)
+        or payload.get("truncated") is not False
+        or payload.get("failed") != []
+        or payload.get("links_not_loaded") != []
+        or not isinstance(coverage, dict)
+        or coverage.get("unreadable_readings") != 0
+        or coverage.get("invalid_readings") != 0
+        or coverage.get("all_worksets_open") is not True
+        or not isinstance(rows, list)
+        or len(rows) != len(expected_ids)
+    ):
+        raise ValueError("R05 Area takeoff coverage is incomplete")
+
+    measurements = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            raise TypeError("R05 Area takeoff row is not typed")
+        raw_id = row.get("element_id")
+        if type(raw_id) is int:
+            element_id = raw_id
+        elif isinstance(raw_id, str) and raw_id.isascii() and raw_id.isdecimal():
+            element_id = int(raw_id)
+            if str(element_id) != raw_id:
+                raise ValueError("R05 Area takeoff ElementId is not canonical")
+        else:
+            raise ValueError("R05 Area takeoff ElementId is invalid")
+        document_path = row.get("document_path")
+        if (
+            element_id not in expected_ids
+            or element_id in measurements
+            or not isinstance(document_path, str)
+            or Path(document_path).resolve() != target
+            or row.get("link_instance_id") is not None
+            or row.get("placement") is not None
+        ):
+            raise ValueError("R05 Area takeoff row identity does not match the exact target")
+        quantities = row.get("quantities")
+        reading = quantities.get("floor_area") if isinstance(quantities, dict) else None
+        value = reading.get("value") if isinstance(reading, dict) else None
+        measured_in = reading.get("measured_in") if isinstance(reading, dict) else None
+        if (
+            not isinstance(reading, dict)
+            or reading.get("state") != "measured"
+            or reading.get("unit") != "m2"
+            or isinstance(value, bool)
+            or not isinstance(value, (int, float))
+            or not math.isfinite(value)
+            or not isinstance(measured_in, str)
+            or not measured_in.strip()
+        ):
+            raise ValueError(f"R05 Area reading for ElementId {element_id} must report a measured value in m2")
+        measurements[element_id] = {
+            "value": float(value),
+            "unit": "m2",
+            "measured_in": measured_in,
+            "state": "measured",
+        }
+    if set(measurements) != expected_ids:
+        raise ValueError("R05 Area takeoff rows do not match the exact known floor IDs")
+    return measurements
+
+
 def _validate_known_r05_partial_geometry(
-    payload: object, records, operations, level_names: dict[int, str]
+    payload: object,
+    records,
+    operations,
+    level_names: dict[int, str],
+    *,
+    area_measurements: dict[int, dict] | None = None,
 ) -> dict:
     """Match all eight persisted partial floors to current plan extents, areas and levels."""
 
@@ -1011,6 +1225,11 @@ def _validate_known_r05_partial_geometry(
         int(record["element_id"]): (logical_id, record)
         for logical_id, record in records_by_logical.items()
     }
+    if area_measurements is not None and (
+        not isinstance(area_measurements, dict)
+        or set(area_measurements) != set(expected_by_id)
+    ):
+        raise ValueError("R05 Area measurements do not match the exact known eight floor IDs")
     partial_rows = [
         row
         for row in rows
@@ -1058,47 +1277,65 @@ def _validate_known_r05_partial_geometry(
                 ):
                     raise ValueError(f"known R05 floor bounds differ for {logical_id}")
 
-        parameters = row.get("parameters")
-        actual_area = parameters.get("Area") if isinstance(parameters, dict) else None
-        area_source_unit = "scalar_without_reported_unit"
-        if isinstance(actual_area, dict):
-            raw_area_unit = actual_area.get("unit", "")
-            area_source_unit = str(raw_area_unit)
-            normalized_unit = (
-                area_source_unit.strip().casefold()
-                .replace("\u00b2", "2")
-                .replace("^", "")
-                .replace(".", "")
-            )
-            unit_to_m2 = {
-                "m2": 1.0,
-                "sq m": 1.0,
-                "sqm": 1.0,
-                "square meter": 1.0,
-                "square meters": 1.0,
-                "square metre": 1.0,
-                "square metres": 1.0,
-                "ft2": 0.09290304,
-                "sf": 0.09290304,
-                "sq ft": 0.09290304,
-                "sqft": 0.09290304,
-                "square feet": 0.09290304,
-                "square foot": 0.09290304,
-            }
-            conversion = unit_to_m2.get(normalized_unit)
-            if conversion is None:
-                raise ValueError(
-                    f"known R05 floor Area unit is unsupported for {logical_id}: "
-                    f"raw={raw_area_unit!r}, normalized={normalized_unit!r}"
-                )
-            actual_area = actual_area.get("value")
+        area_source = None
+        if area_measurements is not None:
+            area_reading = area_measurements[element_id]
+            actual_area = area_reading.get("value")
+            area_source_unit = area_reading.get("unit")
             if (
-                isinstance(actual_area, bool)
+                area_reading.get("state") != "measured"
+                or area_source_unit != "m2"
+                or isinstance(actual_area, bool)
                 or not isinstance(actual_area, (int, float))
                 or not math.isfinite(actual_area)
+                or not isinstance(area_reading.get("measured_in"), str)
+                or not area_reading["measured_in"].strip()
             ):
-                raise ValueError(f"typed Area parameter is missing for {logical_id}")
-            actual_area = float(actual_area) * conversion
+                raise ValueError(f"typed m2 Area takeoff is missing for {logical_id}")
+            area_source = "horizun_quantities:parameter:Area"
+            actual_area = float(actual_area)
+        else:
+            parameters = row.get("parameters")
+            actual_area = parameters.get("Area") if isinstance(parameters, dict) else None
+            area_source_unit = "scalar_without_reported_unit"
+            if isinstance(actual_area, dict):
+                raw_area_unit = actual_area.get("unit", "")
+                area_source_unit = str(raw_area_unit)
+                normalized_unit = (
+                    area_source_unit.strip().casefold()
+                    .replace("\u00b2", "2")
+                    .replace("^", "")
+                    .replace(".", "")
+                )
+                unit_to_m2 = {
+                    "m2": 1.0,
+                    "sq m": 1.0,
+                    "sqm": 1.0,
+                    "square meter": 1.0,
+                    "square meters": 1.0,
+                    "square metre": 1.0,
+                    "square metres": 1.0,
+                    "ft2": 0.09290304,
+                    "sf": 0.09290304,
+                    "sq ft": 0.09290304,
+                    "sqft": 0.09290304,
+                    "square feet": 0.09290304,
+                    "square foot": 0.09290304,
+                }
+                conversion = unit_to_m2.get(normalized_unit)
+                if conversion is None:
+                    raise ValueError(
+                        f"known R05 floor Area unit is unsupported for {logical_id}: "
+                        f"raw={raw_area_unit!r}, normalized={normalized_unit!r}"
+                    )
+                actual_area = actual_area.get("value")
+                if (
+                    isinstance(actual_area, bool)
+                    or not isinstance(actual_area, (int, float))
+                    or not math.isfinite(actual_area)
+                ):
+                    raise ValueError(f"typed Area parameter is missing for {logical_id}")
+                actual_area = float(actual_area) * conversion
         if (
             isinstance(actual_area, bool)
             or not isinstance(actual_area, (int, float))
@@ -1109,20 +1346,22 @@ def _validate_known_r05_partial_geometry(
             float(actual_area), expected["area_m2"], rel_tol=0.0, abs_tol=1e-2
         ):
             raise ValueError(f"known R05 floor area differs for {logical_id}")
-        verified_floors.append(
-            {
-                "logical_id": logical_id,
-                "element_id": element_id,
-                "unique_id": row["unique_id"],
-                "level_id": expected["level_id"],
-                "level": expected_level_name,
-                "area_m2": float(actual_area),
-                "expected_area_m2": expected["area_m2"],
-                "area_source_unit": area_source_unit,
-                "bounding_box": bbox,
-                "readback_status": "VERIFIED",
-            }
-        )
+        floor_evidence = {
+            "logical_id": logical_id,
+            "element_id": element_id,
+            "unique_id": row["unique_id"],
+            "level_id": expected["level_id"],
+            "level": expected_level_name,
+            "area_m2": float(actual_area),
+            "expected_area_m2": expected["area_m2"],
+            "area_source_unit": area_source_unit,
+            "bounding_box": bbox,
+            "readback_status": "VERIFIED",
+        }
+        if area_source is not None:
+            floor_evidence["area_source"] = area_source
+            floor_evidence["area_measured_in"] = area_measurements[element_id]["measured_in"]
+        verified_floors.append(floor_evidence)
     verified_floors.sort(key=lambda floor: floor["logical_id"])
     return {
         "verified_partial_floor_ids": sorted(expected_by_id),
@@ -1375,6 +1614,7 @@ def _restore_known_failed_r05_partial(
     journal_path: Path,
     run_key: str,
     operations,
+    target_document_title: str,
 ) -> dict:
     """Reconcile the persisted eight-floor partial against P6 and current R05."""
 
@@ -1527,9 +1767,19 @@ def _restore_known_failed_r05_partial(
         _compare_known_partial_to_p6_checkpoint(
             live_again, checkpoint_detail_payload, records
         )
+        area_measurements = _query_r05_partial_area_measurements(
+            transport,
+            target,
+            target_document_title,
+            set(RUN003_FAILED_R05_FLOOR_IDS.values()),
+        )
         level_names = _query_r05_level_names(transport, operations)
         partial_geometry = _validate_known_r05_partial_geometry(
-            live_again, records, operations, level_names
+            live_again,
+            records,
+            operations,
+            level_names,
+            area_measurements=area_measurements,
         )
     except Exception:
         if checkpoint_opened:
@@ -2074,6 +2324,7 @@ def run(
     try:
         with McpProbeTransport(timeout=900.0) as transport:
             recovery_evidence = None
+            provider_readiness = None
             if study_authorization is not None:
                 health = _read_tool(transport, "horizun_health", {})
                 mcp_client_pid = transport.pin_process_identity()
@@ -2083,6 +2334,27 @@ def run(
                     revit_pid=revit_pid,
                     target_path=rvt,
                     mcp_client_pid=mcp_client_pid,
+                )
+                provider_readiness = _validate_horizun_write_readiness(health)
+                active_document = health.get("active_document")
+                target_document_title = (
+                    active_document.get("title")
+                    if isinstance(active_document, dict)
+                    else None
+                )
+                if not isinstance(target_document_title, str) or not target_document_title.strip():
+                    raise ValueError("Horizun health did not identify the active document title")
+                provider_readiness["mcp_tool_list_count"] = _validate_horizun_tool_list(
+                    transport.list_tools(),
+                    expected_visible=provider_readiness["tool_registry"]["visible"],
+                )
+                print(
+                    "Horizun readiness: commands "
+                    f"{provider_readiness['command_registry']['registered']}/"
+                    f"{provider_readiness['command_registry']['contract_commands']}, tools "
+                    f"{provider_readiness['tool_registry']['visible']}/"
+                    f"{provider_readiness['tool_registry']['total']}, MCP list "
+                    f"{provider_readiness['mcp_tool_list_count']}, full_write, paused=false"
                 )
             if revit_pid is not None:
                 selected = _select_revit_target(transport, revit_pid)
@@ -2124,7 +2396,9 @@ def run(
                         journal_path=RUN003_FAILED_R05_JOURNAL,
                         run_key=uuid.uuid4().hex[:12],
                         operations=plans[0].operations,
+                        target_document_title=target_document_title,
                     )
+                    recovery_evidence["provider_readiness"] = provider_readiness
                     baseline_fingerprint = recovery_evidence[
                         "p6_baseline_fingerprint"
                     ]
