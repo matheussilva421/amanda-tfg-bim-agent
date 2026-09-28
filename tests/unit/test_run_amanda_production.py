@@ -172,8 +172,9 @@ def test_post_p6_scope_requires_the_exact_run003_target_and_r05_r13_grant(tmp_pa
         )
 
 
-def test_run003_resume_uses_the_existing_target_without_template_or_save_as(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+@pytest.mark.parametrize("health_status", ["healthy", "unhealthy"])
+def test_run003_health_gate_passes_before_writer_lease_is_acquired(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, health_status: str
 ):
     target = tmp_path / "AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt"
     original_bytes = b"existing RUN-003 working document"
@@ -220,7 +221,7 @@ def test_run003_resume_uses_the_existing_target_without_template_or_save_as(
         records=[],
     )
     health = {
-        "status": "healthy",
+        "status": health_status,
         "revit_build": "27.2.0.39",
         "process_id": 38296,
         "other_clients_connected": 0,
@@ -247,6 +248,7 @@ def test_run003_resume_uses_the_existing_target_without_template_or_save_as(
     }
     captured = {}
     live_preflight_order = []
+    execution_events = []
     class FakeLock:
         owner_token = "run003-test-token"
 
@@ -257,6 +259,7 @@ def test_run003_resume_uses_the_existing_target_without_template_or_save_as(
             return None
 
         def acquire(self, **kwargs):
+            execution_events.append("lease_acquired")
             captured["lock_arguments"] = kwargs
 
         def release(self):
@@ -270,6 +273,7 @@ def test_run003_resume_uses_the_existing_target_without_template_or_save_as(
             self.process = SimpleNamespace(pid=40000)
 
         def __enter__(self):
+            execution_events.append("transport_started")
             return self
 
         def __exit__(self, *_args):
@@ -304,6 +308,7 @@ def test_run003_resume_uses_the_existing_target_without_template_or_save_as(
     monkeypatch.setattr(production_runner, "find_project_template", lambda *_: pytest.fail("resume must not open a template"))
     def record_live_tool(_transport, tool, _arguments):
         live_preflight_order.append(tool)
+        execution_events.append(tool)
         return health if tool == "horizun_health" else {"path": str(target)}
 
     monkeypatch.setattr(production_runner, "_read_tool", record_live_tool)
@@ -329,6 +334,18 @@ def test_run003_resume_uses_the_existing_target_without_template_or_save_as(
         production_runner, "_save_checkpoint_reopen_stage", record_persistence
     )
 
+    if health_status == "unhealthy":
+        with pytest.raises(ValueError, match="not healthy"):
+            production_runner.run(
+                target,
+                execute=True,
+                max_stage="R05",
+                revit_pid=38296,
+                resume_run003_study=True,
+            )
+        assert "lease_acquired" not in execution_events
+        return
+
     status = production_runner.run(
         target,
         execute=True,
@@ -338,6 +355,9 @@ def test_run003_resume_uses_the_existing_target_without_template_or_save_as(
     )
 
     assert status == 0
+    assert execution_events.index("horizun_health") < execution_events.index(
+        "lease_acquired"
+    )
     assert target.read_bytes() == original_bytes
     assert captured["plan_arguments"]["mode"].value == "NORMALIZED_STUDY_POST_P6"
     assert captured["plan_arguments"]["start_stage"] is BimStage.R05

@@ -2057,18 +2057,20 @@ def run(
             else "amanda-production-run"
         ),
     )
-    try:
-        owns_lock = _acquire_writer_lease(
-            lock,
-            document_identity=str(rvt),
-            reuse_existing_run003_lease=(
-                study_authorization is not None and reuse_existing_run003_lease
-            ),
-        )
-    except LockHeldByAnotherOwner as exc:
-        print(str(exc), file=sys.stderr)
-        return 2
-    print("lease acquired:" if owns_lock else "using existing RUN-003 lease")
+    owns_lock = False
+    lease_verified = False
+    if study_authorization is None:
+        try:
+            owns_lock = _acquire_writer_lease(
+                lock,
+                document_identity=str(rvt),
+                reuse_existing_run003_lease=False,
+            )
+        except LockHeldByAnotherOwner as exc:
+            print(str(exc), file=sys.stderr)
+            return 2
+        lease_verified = True
+        print("lease acquired:" if owns_lock else "using existing RUN-003 lease")
     try:
         with McpProbeTransport(timeout=900.0) as transport:
             recovery_evidence = None
@@ -2085,6 +2087,20 @@ def run(
             if revit_pid is not None:
                 selected = _select_revit_target(transport, revit_pid)
                 print("selected Revit PID:", selected["selected_pid"])
+            if study_authorization is not None:
+                try:
+                    owns_lock = _acquire_writer_lease(
+                        lock,
+                        document_identity=str(rvt),
+                        reuse_existing_run003_lease=reuse_existing_run003_lease,
+                    )
+                except LockHeldByAnotherOwner as exc:
+                    print(str(exc), file=sys.stderr)
+                    return 2
+                lease_verified = True
+                print(
+                    "lease acquired:" if owns_lock else "using existing RUN-003 lease"
+                )
             if study_authorization is not None:
                 info = _document_info(transport)
                 active = _active_path(info)
@@ -2314,7 +2330,7 @@ def run(
         if owns_lock:
             lock.release()
             print("lease released")
-        else:
+        elif lease_verified:
             print("existing RUN-003 lease retained")
 
 
