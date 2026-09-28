@@ -1,5 +1,27 @@
 # Current Handoff
 
+## Current state — P7-T01/R05 blocked at production runner transport
+
+The user explicitly authorizes P7-T01/R05 on RUN-003. Current authorization is R05 only; do not execute R06 or later. This is the latest transport discovery diagnosis and supersedes the prior continuation below.
+
+- The exact objective file was reread. `PROJECT_STATE.yaml` is now revision 246; P7-T01 remains `BLOCKED_BY_TOOL`, `revit_stage` remains R04, and `last_verified_commit` remains the runner code commit `73f71e0c15bb169d88729c0530bffafc975a81c0`.
+- A second invocation of the `.venv` production runner returned the same `no Revit is reachable` error. It stopped at `horizun_health`; no PID pinning, capability/target/checkpoint reads, lease acquisition, or model operation followed. The 600-second quiet window has now elapsed. No standalone Horizun client was used.
+- Fresh `Get-Process` evidence at 21:18:25 UTC found Revit PIDs 12660 and 3364 responding, with start times 20:25:29Z and 20:42:24Z. `journal.0037.txt` previously bound PID 12660, its Horizun startup, and the exact RUN-003 working document path. `Get-CimInstance Win32_Process` was denied by the sandbox, so no current command-line/window-title claim is made. PID 3364 was not touched.
+- Official Horizun documentation locates discovery under `%USERPROFILE%\.horizun`. The current file is `C:\Users\slvma\.horizun\discovery\revit-2027-12660.json`, 2,689 bytes, last modified at 20:27:14Z. Ordinary sandbox reads and ACL inspection were denied. An approved elevated, read-only ACL inspection reported owner `DELL-G15-5530\slvma` and one non-inherited FullControl allow entry for that same user. The discovery contents were not opened because they contain a token. This raises the hypothesis that the restricted runner child cannot read the owner-only discovery file; it is not yet proven.
+- The next discriminating action is one invocation of the exact R05-only production runner in the current user's unsandboxed context, allowing the process to read its ACL-protected discovery file without displaying the token. If auto-review rejects that command, stop and record the rejection. If health fails again, stop runner/provider calls for another 600 seconds and keep the blocker. If health passes, continue only through runner-enforced health, client-count, exact target/build/PID, lease, P6 and partial-floor/Area gates before any R05 write.
+- Live Revit window inventory was not available through the current computer-use surface (`apps` returned empty); the current process response plus journal binding are recorded as partial live evidence. Require the runner's typed exact-document health before a lease or write.
+- The writer lock is absent. The open working RVT remains unhashable while Revit holds it; last pre-open hash remains `F5BEEB6BF7D544710EA3A35DDE2B8A880E78FC4E284E12CB4A90E1BCCF982B19`. No save, close, write, checkpoint, or R05 model change occurred.
+- State/doc validation: YAML parsed 3/3. Focused repository-hygiene, status-consistency, and task-graph checks initially exposed two stale dashboard/handoff text contracts; after restoring the required current-state wording, the final command passed 30/30. Scoped `git diff --check` passed.
+- Local `main` is `898694a68b8fb2d0b48b908f2918eacbe96ee1bc`; commits through this state were pushed successfully earlier. The current `git ls-remote` could not connect to GitHub over port 443, so a fresh remote SHA is unavailable. Pre-existing RC01 deletions and untracked R04 presentation artifacts remain unstaged and untouched.
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_amanda_production.py --rvt 'revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt' --resume-run003-study --reuse-existing-run003-lease --max-stage R05 --revit-pid 12660 --execute
+```
+
+**Resume boundary:** first perform that single runner attempt with `sandbox_permissions=require_escalated`, and make no direct Horizun call. On health failure preserve P7-T01 as blocked and update this handoff. On health success follow only R05 gates; R06 remains NOT STARTED.
+
+## Previous update — P7-T01/R05 live runner gate (superseded)
+
 ## 2026-09-28 — P7-T01/R05 live runner gate (continuation)
 
 Authorization from `C:\Users\slvma\.codex\attachments\2d812ca3-d648-4941-bd6e-a2f73697395c\goal-objective.md` is limited to P7-T01/R05 on RUN-003. R06 and later remain NOT STARTED.

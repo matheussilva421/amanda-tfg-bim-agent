@@ -3364,23 +3364,26 @@ tasks:
       its own task gate; completing R05 does not start R06. R06 remains NOT STARTED.
     - >-
       Current blocker: RUNNER_TRANSPORT_UNREACHABLE:BLOCKING. Historical direct-app
-      health is stale. On 2026-09-28 the .venv production runner's horizun_health
-      returned "no Revit is reachable" before PID pinning, capabilities, target,
-      checkpoint, lease, or model access. The UI opened the requested RUN-003 path,
-      Revit journal 0037 binds the exact RUN-003 path and Horizun add-in startup
-      to PID 12660, but typed health and zero-other-client status remain
-      unverified. The project lease file is absent; no model write, save, or
-      checkpoint occurred.
+      health is stale. Two 2026-09-28 .venv production-runner attempts returned
+      "no Revit is reachable" before PID pinning, capabilities, target,
+      checkpoint, lease, or model access. Revit journal 0037 binds the exact
+      RUN-003 path and Horizun add-in startup to PID 12660; a fresh process check
+      found PID 12660 responding. Discovery is under %USERPROFILE%\.horizun and
+      its ACL grants FullControl only to the current user. Its token-bearing
+      contents were not read. Restricted-context access as the cause remains a
+      hypothesis. Typed health and zero-other-client status are unverified. The
+      project lease file is absent; no model write, save, or checkpoint occurred.
     - >-
       The current journal records Session12660_P0MainQueue, the exact document
       open, and Horizun MCP startup. Another responding process 3364 exists and
       remains untouched. The stdio transport returned no Revit reachable despite
-      this journal evidence. Details and the conservative 600-second retry
-      boundary are in state/HANDOFF.md.
+      this journal evidence. The discovery ACL hypothesis and next controlled
+      runner attempt are recorded in state/HANDOFF.md.
     - >-
-      Resume after 2026-09-28 21:06:15 UTC only after rechecking the live Revit
-      process/window mapping. Require the production runner's own transport to
-      report HEALTHY, zero other clients, and the exact active RUN-003 path.
+      The 600-second quiet window after the second failure has elapsed. Run the
+      exact production runner once in the current user context to test discovery
+      ACL access; require its own transport to report HEALTHY, zero other clients,
+      and the exact active RUN-003 path.
       Then acquire the lease through the runner and pass exact P6 reconciliation
       plus partial-floor/Area-unit gates. Use the R05-only runner and stop at R05.
   P7-T02:

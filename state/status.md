@@ -10,9 +10,10 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 is `BLOCKED_BY_TOOL` until live R05 persistence gates pass
 - Current authorization: P7-T01/R05 only; authorization ends at R05. Every later stage needs its own task gate; R05 completion does not start R06.
-- Current blocker: `RUNNER_TRANSPORT_UNREACHABLE:BLOCKING`; the production runner's installed stdio transport cannot reach the active Revit session.
-- Earlier direct-app health snapshots (PIDs 38296/9128) are historical and do not establish the current session. On 2026-09-28 the runner's own `horizun_health` returned `no Revit is reachable` before PID pinning, capability/target/checkpoint reads, lease acquisition, or model access.
-- Revit journal `journal.0037.txt` binds the exact RUN-003 path and Horizun MCP startup to PID 12660 (journal queue `Session12660_P0MainQueue`; start time matches the live process). PID 3364 is a second responding Revit process and was left untouched. The runner still cannot discover PID 12660; typed health and zero-other-client status remain unverified.
+- Current blocker: `RUNNER_TRANSPORT_UNREACHABLE:BLOCKING`; the production runner transport returned `no Revit is reachable` in two attempts and cannot currently reach the active Revit session.
+- Historical `direct app Horizun health reports HEALTHY` snapshots used stale PIDs and do not establish the current session. Resume only after the production runner can target the active Revit 2027 RUN-003 document.
+- Earlier direct-app health snapshots (PIDs 38296/9128) are historical and do not establish the current session. Two 2026-09-28 `.venv` runner attempts returned `no Revit is reachable` before PID pinning, capability/target/checkpoint reads, lease acquisition, or model access.
+- Revit journal `journal.0037.txt` binds the exact RUN-003 path and Horizun MCP startup to PID 12660 (journal queue `Session12660_P0MainQueue`; start time matches the live process). A fresh process check found PIDs 12660 and 3364 responding; PID 3364 remains untouched. Discovery is `C:\Users\slvma\.horizun\discovery\revit-2027-12660.json`. Its ACL grants FullControl only to the current user. The token-bearing file contents were not read. A restricted-runner access issue remains a hypothesis; typed health and zero-other-client status remain unverified.
 - The project writer lease file is absent. The RUN-003 target is open in Revit, so its current SHA-256 cannot be read; last pre-open hash was `F5BEEB6BF7D544710EA3A35DDE2B8A880E78FC4E284E12CB4A90E1BCCF982B19`, with the same observed size and mtime. No save, model write, or checkpoint occurred.
 - `P1`: 1/1 PASS
 - `P2`: 1/1 PASS
@@ -50,18 +51,21 @@ cannot discover it; do not reuse old health results as current evidence.
 The production runner starts
 `C:\Users\slvma\AppData\Local\Programs\Horizun\MCP\server\horizun-mcp.exe`
 (version 1.3.3.0), whose health call instead returns `no Revit is reachable`.
-The 2026-09-28 `.venv` runner attempt returned `no Revit is reachable` and
+Both 2026-09-28 `.venv` runner attempts returned `no Revit is reachable` and
 stopped before PID pinning, capabilities, target, checkpoint, lease, or model
-readback. Do not route a model write through another client. The formal blocker
-is `RUNNER_TRANSPORT_UNREACHABLE:BLOCKING`.
+readback. The latest attempt did not write or save the model. Do not route a
+model write through another client. The formal blocker is
+`RUNNER_TRANSPORT_UNREACHABLE:BLOCKING`.
 
-The runner returned by 2026-09-28 20:56:15 UTC; do not contact Horizun again
-before 21:06:15 UTC. After that quiet window, recheck the Revit process/window
-mapping and require the runner itself to report healthy, zero other clients, and
-the exact saved RUN-003 path. Then pass the lease, P6 reconciliation,
-eight-partial-floor, Area-unit, and all remaining R05 gates. No current project
-writer lease exists; preserve the open model and do not create a lease outside
-the runner.
+The first runner attempt returned by 2026-09-28 20:56:15 UTC; a second attempt
+after that quiet window returned the same health error. The additional 600-second
+quiet period has elapsed. The discovery file lives under `%USERPROFILE%\.horizun`
+and its ACL grants the current user FullControl; its secret contents were not
+read. Test the access-context hypothesis by running the exact R05-only production
+runner once in the current user context. Require runner health, zero other
+clients, and the exact saved RUN-003 path before any lease or model operation.
+Then pass P6 reconciliation, partial-floor and Area-unit gates. No writer lease
+exists; preserve the open model and do not create a lease outside the runner.
 
 ## Current RUN-003 R04 acceptance status
 
@@ -106,7 +110,7 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 - `SITE_OCCUPANCY` [BLOCKING]: confirmation of the current use of the lot and of the relocation premise for the police company unit
 - `SITE_FRONTAGE_COUNT` [DEGRADING]: whether the lot has three or four frontages
 - `SITE_TRUE_NORTH` [DEGRADING]: a verified true-north bearing with a source drawing datum
-- `RUNNER_TRANSPORT_UNREACHABLE` [BLOCKING, P7-T01 only]: current runner health returns `no Revit is reachable`; current UI window/PID and active-document binding remain unverified
+- `RUNNER_TRANSPORT_UNREACHABLE` [BLOCKING, P7-T01 only]: two current runner health attempts returned `no Revit is reachable`; PID 12660 and the exact document are bound by the live process start/journal, while the current UI window handle and typed health remain unverified. The owner-only discovery ACL is a cause hypothesis.
 
 ## Design and Revit recovery
 
@@ -117,8 +121,8 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 ## Writer lease
 
 - Status: `NOT_ACQUIRED` (project lock file absent)
-- The last runner attempt failed at `horizun_health` before lease acquisition. Historical owner PID 28364 is not current evidence.
-- Do not manually create, release, or reclaim a lease; only retry through the production runner after the quiet window.
+- Both current runner attempts failed at `horizun_health` before lease acquisition. Historical owner PID 28364 is not current evidence.
+- Do not manually create, release, or reclaim a lease; the next attempt is through the production runner in the user context that owns the discovery ACL.
 
 ## Git verification
 
