@@ -3370,19 +3370,29 @@ tasks:
       tools/list (80), full_write and mcp_paused=false. The owner-only discovery
       token was not read.
     - >-
-      Current blocker: R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING. The runner
-      entered guarded recovery for the known unsaved partial after the live
-      model did not match the accepted P6 element count. The exact eight-floor
-      parameter Area takeoff failed the measured-m2 gate for ElementId 331188.
-      No area or unit was inferred. The lease was released; no model write,
-      save or checkpoint occurred. A safe state/unit diagnostic is now emitted
-      on invalid quantity reads.
+      Current blocker: R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING. At 22:34:27Z
+      the official runner entered guarded recovery after the live model failed
+      the accepted P6 element-count gate. The exact eight-floor takeoff reported
+      English Area state=absent, unit=m2, with no value or measurement provenance
+      for ElementId 331188. No value or unit was inferred. The lease was
+      released; no model write, save, or checkpoint occurred. Diagnostic-only
+      P6 readback is preserved in the matching 8d2a63c9f246 journal artifact.
     - >-
-      The 600-second quiet window ends at 2026-09-28 22:31:31Z. After that,
-      run the exact production runner once using the elevated current-user
-      context. It will print bounded state/unit/value-type metadata on an invalid
-      takeoff reading without printing the numeric value. Require all recovery
-      and Area gates before any R05 write, then stop at R05.
+      Local TDD now queries English Area and localized Área separately. It uses
+      Área only when English Area is explicitly absent and localized Área is a
+      measured m2 value with provenance; if both are measured they must agree
+      within an inclusive 0.01 m2. The exact-boundary case traverses query
+      through geometry validation, and a just-over-boundary case is rejected.
+      Both comparison points use Decimal boundary semantics. Combined focused
+      R05/state suite: 183 passed, 1 unrelated R04 evidence-hash test deselected,
+      0 failed. Independent read-only re-review of the final Decimal correction
+      found no findings.
+    - >-
+      The 600-second quiet window after 22:34:27Z ended at 22:44:27Z. Before
+      another provider call, finish review and commit/publish the verified code
+      and state, recheck PID 12660 and the writer lock, then make one exact
+      official R05 runner attempt. Require all recovery and Area gates before
+      any R05 write, then stop at R05.
   P7-T02:
     id: P7-T02
     phase: P7

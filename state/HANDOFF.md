@@ -2,6 +2,22 @@
 
 ## Current state — P7-T01/R05 blocked at partial recovery
 
+Authorization remains limited to P7-T01/R05 on RUN-003. R06 and later remain NOT STARTED.
+
+- Formal state is revision 249: P7-T01 is BLOCKED_BY_TOOL, stage R04, and R05_PARTIAL_RECOVERY_UNVERIFIED is the active blocker. RUNNER_TRANSPORT_UNREACHABLE was resolved through the official runner in the elevated current-user context. `PROJECT_STATE.last_verified_commit` points to `1df883bb4cbf6fbe8bd75481019c55214449cc3e`.
+- The official runner at 22:21:31Z and 22:34:27Z passed live health, zero-other-client, exact target/build/PID 12660, command registry 73/73, provider tools 80/80, MCP tools/list 80, full_write, and mcp_paused=false. The live model failed the accepted P6 element-count gate and entered guarded recovery. At 22:34:27Z the English Area reading for ElementId 331188 was state=absent, unit=m2, with no measured value/provenance. Localized Área remains unconfirmed by live takeoff. No value or unit was inferred; runner lease was released; no R05 write/save/checkpoint occurred.
+- Latest diagnostic-only P6 readback: revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-8d2a63c9f246.json. Exact checkpoint manifest verified, 25 typed rows and complete coverage; acceptance_gate_passed=false and model_write_performed=false. Open target remains 5,152,768 bytes at its prior 2026-09-27 mtime. Do not hash or close it. Project writer lock is absent.
+- Recent elevated read-only process inspection classified PID 12660 as Revit 2027 at the expected executable path, with RevitAPI and Horizun loaded, a usable window handle, and SessionId 5. PID 3364 has neither module nor a window handle; leave it untouched. The next official runner must freshly verify the exact active RUN-003 document.
+- The local TDD change requests Area and Área as distinct typed m2 takeoff quantities. It uses Área only when Area is explicitly absent and the localized reading is measured with provenance; other English states fail closed. If both readings are measured, their decimal values must agree within an inclusive 0.01 m2. The selected parameter flows into recovery evidence; no geometry_area fallback is used.
+- Independent review found that ULP tolerance could accept a value just over 0.01 m2, then found downstream `math.isclose` could reject the permitted exact boundary. RED tests reproduced both. Decimal(str(value)) now preserves the inclusive boundary in both the parameter comparison and geometry validator; the exact-boundary test exercises query through recovery validation, and a just-over case is rejected. Targeted Area/geometry tests pass 11/11. The combined seven-module R05 suite plus state gates passes 183 tests, with one unrelated R04 evidence-hash test deselected and zero failures. Scoped diff check and YAML parsing pass. Ruff retains eight pre-existing findings (seven TRY004 and one RUF059); the introduced import-order finding was corrected. Final independent read-only re-review found no findings.
+- Implementation/test/evidence commit `1df883bb4cbf6fbe8bd75481019c55214449cc3e` is on `main`. Remaining formal state/handoff edits are uncommitted. The latest earlier remote check could not reach GitHub over port 443; retry push after the state commit. RC01 ACL-visible deletions and frozen R04 presentation outputs remain untouched and unstaged.
+
+Next: validate and commit the formal state/handoff, then push both commits when GitHub is reachable. Recheck PID 12660 and the writer lock before one exact R05-only runner invocation. The 600-second quiet window after 22:34:27Z elapsed at 22:44:27Z. Require fresh health, exclusive-client status, exact target/build/PID, provider/tool/write controls, runner-managed lease, P6 reconciliation, and all eight measured m2 readings before any R05 write. Then continue WRITE → independent READ → VERIFY → SAVE/CHECKPOINT → CLOSE/REOPEN/READBACK. Stop at R05.
+
+    .\.venv\Scripts\python.exe scripts\run_amanda_production.py --rvt 'revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt' --resume-run003-study --reuse-existing-run003-lease --max-stage R05 --revit-pid 12660 --execute
+
+## Previous update — P7-T01/R05 after the 22:21 runner attempt (superseded)
+
 Authorization remains limited to P7-T01/R05 on RUN-003. Do not execute R06 or later.
 
 - `PROJECT_STATE.yaml` is revision 248; P7-T01 remains `BLOCKED_BY_TOOL`, stage remains R04, and R06 is NOT STARTED. Code commit `58cd0ac5c78a74a35214cc120e20638ace20f6e3` adds bounded diagnostics for invalid Area readings.

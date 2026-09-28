@@ -152,25 +152,31 @@ blockers:
     12660 with zero other clients.
   reason: null
 - id: R05_PARTIAL_RECOVERY_UNVERIFIED
-  summary: Known unsaved R05 partial has no verified explicit m2 Area reading
+  summary: Known unsaved R05 partial has no verified explicit m2 floor Area reading
   severity: BLOCKING
   owner_phase: P7
   affected_tasks:
   - P7-T01
   evidence: >-
-    The 2026-09-28 official R05 runner passed provider readiness and entered
-    guarded recovery for the known unsaved partial. The live model did not pass
-    the accepted P6 element-count gate; recovery then queried the exact eight
-    known floor IDs. The explicit parameter Area takeoff did not return a
-    verified measured m2 reading for ElementId 331188. No value or unit was
+    At 2026-09-28 22:34:27Z, the official R05 runner passed health, exclusive
+    client, exact target/build/PID, provider/tool registries, full_write, and
+    unpaused gates, then entered guarded recovery for the known unsaved partial.
+    The live model did not pass the accepted P6 element-count gate. Its exact
+    eight-floor takeoff reported English Area state=absent, unit=m2, with no
+    value or measurement provenance for ElementId 331188. No value or unit was
     inferred. The runner released the lease before any R05 write/save/checkpoint.
     Diagnostic-only P6 readback is preserved in
-    revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-4df7d40a2c35.json.
+    revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-8d2a63c9f246.json.
+    Local recovery code now separately queries English Area and localized Área;
+    the localized parameter and complete measured readings remain unconfirmed
+    in a fresh live runner attempt.
   resolution: >-
     Reconcile the known partial against the exact P6 checkpoint, then obtain
     complete exact-target Area readings for all eight known floors with state
-    measured, unit m2, and measurement provenance. Continue through R05
-    persistence only after the runner validates every recovery gate.
+    measured, unit m2, and measurement provenance. Localized Área may be used
+    only when English Area is explicitly absent; if both are measured they
+    must agree within an inclusive 0.01 m2. Continue through R05 persistence
+    only after the runner validates every recovery gate.
   requires_user_action: false
   created_utc: '2026-09-28T22:21:31Z'
   resolved_utc: null
@@ -180,7 +186,8 @@ blockers:
   tasks_still_allowed: []
   allowed_tasks: []
   resolution_action: >-
-    Obtain typed complete Area readings explicitly in m2 for the exact eight
-    persisted floor IDs after P6 reconciliation; then complete the R05-only
-    WRITE-READ-VERIFY and persistence gates.
+    Through the official runner, obtain typed complete Area or conditionally
+    localized Área readings explicitly in m2 for the exact eight persisted floor
+    IDs after P6 reconciliation; then complete the R05-only WRITE-READ-VERIFY
+    and persistence gates.
   reason: R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING

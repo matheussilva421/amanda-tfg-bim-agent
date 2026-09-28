@@ -6,14 +6,14 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; currently blocked at the provider gate)
+- Next task: `P7-T01` (R05 architectural shell; blocked at partial recovery verification)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 is `BLOCKED_BY_TOOL` until live R05 persistence gates pass
 - Current authorization: P7-T01/R05 only; authorization ends at R05. Every later stage needs its own task gate; R05 completion does not start R06.
-- Current blocker: `R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING`; the official runner now passes provider readiness in the elevated user context, but guarded recovery cannot verify an explicit m2 Area reading for ElementId 331188.
-- Historical `direct app Horizun health reports HEALTHY` snapshots used stale PIDs and do not establish the current session. Resume only after the production runner can target the active Revit 2027 RUN-003 document.
-- The official runner in the elevated current-user context passed live health, zero-other-client, exact target/build/PID, command registry 73/73, provider tool registry 80/80, MCP tools/list 80, full_write, and mcp_paused=false. This resolves the sandbox discovery blocker; the discovery token was not read.
-- The runner entered guarded recovery because the live model includes the known unsaved partial and does not match the accepted P6 element count. The checkpoint's diagnostic-only readback contains 25 rows and complete coverage. The exact Area takeoff failed its measured-m2 gate for ElementId 331188. No model save, R05 write, or checkpoint occurred. The lease is absent; the open RUN-003 target must not be hashed or closed. Last pre-open hash remains `F5BEEB6BF7D544710EA3A35DDE2B8A880E78FC4E284E12CB4A90E1BCCF982B19`.
+- Current blocker: `R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING`. The 22:34:27Z live takeoff reported the English Area parameter state=absent for ElementId 331188; localized Área has not yet been queried live by the updated runner.
+- Read-only process inspection classified PID 12660 as Revit 2027 with RevitAPI and Horizun loaded and a usable window handle. PID 3364 has neither module nor a window handle and remains untouched. The next official runner must freshly verify the active exact RUN-003 target.
+- The official runner in the elevated current-user context passed live health, zero-other-client, exact target/build/PID 12660, command registry 73/73, provider tool registry 80/80, MCP tools/list 80, full_write, and mcp_paused=false at 22:21:31Z and 22:34:27Z. This resolves the sandbox discovery blocker; the discovery token was not read.
+- The runner entered guarded recovery because the live model did not match the accepted P6 element count. Its diagnostic-only P6 readback contains 25 rows and complete coverage. English Area was absent with unit m2 and no measured value/provenance. No value or unit was inferred. No model save, R05 write, or checkpoint occurred; the runner released its lease. The open RUN-003 target remains 5,152,768 bytes with the prior 2026-09-27 mtime; do not hash or close it.
 - `P1`: 1/1 PASS
 - `P2`: 1/1 PASS
 - `P3`: 1/1 PASS
@@ -51,21 +51,33 @@ older health snapshots as current evidence.
 
 The production runner starts
 `C:\Users\slvma\AppData\Local\Programs\Horizun\MCP\server\horizun-mcp.exe`
-(version 1.3.3.0). On 2026-09-28 22:21:31Z the official runner reported command
+(version 1.3.3.0). At 22:21:31Z and 22:34:27Z the official runner reported command
 registry 73/73, provider tools 80/80, MCP tools/list 80, full_write and
-mcp_paused=false. Its runner-enforced exclusive-client and exact-target gates
-also passed. Sandboxed attempts failed discovery because the owner-only
-discovery ACL is not readable in that context; its token was not read. Do not
-route model writes through another client. The transport blocker is resolved;
-the active gate is `R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING`.
+mcp_paused=false. Its exclusive-client and exact-target gates passed. Sandboxed
+attempts failed discovery because the owner-only discovery ACL is unreadable in
+that context; its token was not read. Do not route model writes through another
+client. RUNNER_TRANSPORT_UNREACHABLE is resolved; the active gate is
+`R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING`.
 
-The known partial entered guarded recovery after the current model failed the
-accepted P6 element-count check. The explicit Area takeoff failed for ElementId
-331188; no measurement or unit was inferred. The latest request returned at
-22:21:31 UTC; wait until 22:31:31 UTC before another Horizun call. Then retry
-once through the exact R05-only runner, which now prints bounded state/unit/
-value-type diagnostics for invalid readings. No standalone client, lease
-bypass, save or model write is allowed before the recovery gates pass.
+The known partial entered guarded recovery after the live model failed the
+accepted P6 element-count check. The 22:34:27Z exact eight-floor takeoff reported
+English Area state=absent, unit=m2, value_type=None, and no measurement provenance
+for ElementId 331188. The latest diagnostic is
+revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-8d2a63c9f246.json.
+The 600-second quiet window ended at 22:44:27Z. Local code queries Area and
+localized Área separately, uses Área only when Area is explicitly absent, and
+requires provenance and measured m2; when both are measured, decimal values
+must agree within an inclusive 0.01 m2. The exact-boundary path through geometry
+validation and the just-over rejection pass locally. Combined focused R05/state
+gates: 183 passed, 1 unrelated R04 evidence-hash test deselected, 0 failed.
+Independent read-only re-review found no findings. Ruff has eight pre-existing
+findings and no new findings on the changed lines. Implementation, tests, and
+the diagnostic are committed as
+`1df883bb4cbf6fbe8bd75481019c55214449cc3e`; formal state revision 249 points to
+that commit, and its closeout commit is still pending. Do not use geometry_area
+as a floor-plan substitute. Before the next call, commit the current state and
+handoff, try the normal GitHub push, recheck PID 12660 and the lock, and use only
+the exact R05 production runner.
 
 ## Current RUN-003 R04 acceptance status
 
@@ -111,7 +123,7 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 - `SITE_FRONTAGE_COUNT` [DEGRADING]: whether the lot has three or four frontages
 - `SITE_TRUE_NORTH` [DEGRADING]: a verified true-north bearing with a source drawing datum
 - `RUNNER_TRANSPORT_UNREACHABLE` [RESOLVED, 2026-09-28]: the official runner in the elevated current-user context passed live health, exclusive-client, exact-target, complete-registry, tools/list and write-control gates.
-- `R05_PARTIAL_RECOVERY_UNVERIFIED` [BLOCKING, P7-T01 only]: the known unsaved partial failed the explicit measured-m2 Area gate for ElementId 331188. No R05 write/save/checkpoint occurred.
+- `R05_PARTIAL_RECOVERY_UNVERIFIED` [BLOCKING, P7-T01 only]: guarded recovery found English Area state=absent for ElementId 331188; localized Área still needs live measured-m2 confirmation. No R05 write/save/checkpoint occurred.
 
 ## Design and Revit recovery
 
@@ -122,12 +134,12 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 ## Writer lease
 
 - Status: `NOT_ACQUIRED` (project lock file absent)
-- Both current runner attempts failed at `horizun_health` before lease acquisition. Historical owner PID 28364 is not current evidence.
-- Do not manually create, release, or reclaim a lease; the next attempt is through the production runner in the user context that owns the discovery ACL.
+- The latest runner attempt acquired and released the normal lease; the project lock is absent now. Historical owner PID 28364 is not current evidence.
+- Do not manually create, release, or reclaim a lease; the next attempt is through the production runner in the current user context that owns the discovery ACL.
 
 ## Git verification
 
-Current continuation: implementation commit `73f71e0c15bb169d88729c0530bffafc975a81c0` and state/handoff commit `821b2aa92697a0dab71fe79a0dce8699f3e4ba60` are pushed to `origin/main`; a fresh `git ls-remote origin refs/heads/main` returned the latter SHA. P7-T01 is still blocked; these commits contain no Revit model write.
+Current continuation at state revision 248 is based on HEAD `0308605d77184e9661fd2a21f618234bc8a8f2d5`. Local implementation/tests and the current handoff/dashboard update are not yet committed. The latest `git ls-remote` failed because GitHub port 443 was unreachable; push state is unverified. No Revit model write occurred.
 
 P7-T01 health-schema/transport-pin commit `f25b5e9080b2c4a9b5994bec918743c584ad00cb`
 is pushed to `origin/main`; a fresh `git ls-remote` matched. It contains the
