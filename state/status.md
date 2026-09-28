@@ -11,8 +11,9 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - Tasks: 193 total; P7-T01 is `BLOCKED_BY_TOOL` until live R05 persistence gates pass
 - Current authorization: P7-T01/R05 only; authorization ends at R05. Every later stage needs its own task gate; R05 completion does not start R06.
 - Current blocker: `RUNNER_TRANSPORT_UNREACHABLE:BLOCKING`; the production runner's installed stdio transport cannot reach the active Revit session.
-- The direct app Horizun health reports HEALTHY for Revit 2027 build `27.2.0.39`, PID `38296`, with the exact RUN-003 path active and matched; registry 73/73, tools 80/80, `full_write`, unpaused, and the zero-other-client gate passed.
-- The production runner transport returned `no Revit is reachable` before capabilities, target, checkpoint, or model access. It retained the RUN-003 lease; no model write/save/checkpoint occurred. The transport mismatch is unresolved.
+- Earlier direct-app health snapshots (PIDs 38296/9128) are historical and do not establish the current session. On 2026-09-28 the runner's own `horizun_health` returned `no Revit is reachable` before PID pinning, capability/target/checkpoint reads, lease acquisition, or model access.
+- Revit journal `journal.0037.txt` binds the exact RUN-003 path and Horizun MCP startup to PID 12660 (journal queue `Session12660_P0MainQueue`; start time matches the live process). PID 3364 is a second responding Revit process and was left untouched. The runner still cannot discover PID 12660; typed health and zero-other-client status remain unverified.
+- The project writer lease file is absent. The RUN-003 target is open in Revit, so its current SHA-256 cannot be read; last pre-open hash was `F5BEEB6BF7D544710EA3A35DDE2B8A880E78FC4E284E12CB4A90E1BCCF982B19`, with the same observed size and mtime. No save, model write, or checkpoint occurred.
 - `P1`: 1/1 PASS
 - `P2`: 1/1 PASS
 - `P3`: 1/1 PASS
@@ -42,22 +43,25 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 Preferred provider: `horizun`.
 
-The direct app Horizun health call reports HEALTHY and identifies the active,
-saved document as the exact RUN-003 path (`active_document_match=Matched`;
-Revit 2027 build `27.2.0.39`, PID `38296`). It reports 73/73 registry commands,
-80/80 visible tools, `full_write`, unpaused, and zero other clients.
+Earlier direct app health calls used stale PIDs. The current journal binds the
+exact RUN-003 document and Horizun add-in startup to PID 12660, but the runner
+cannot discover it; do not reuse old health results as current evidence.
 
 The production runner starts
 `C:\Users\slvma\AppData\Local\Programs\Horizun\MCP\server\horizun-mcp.exe`
 (version 1.3.3.0), whose health call instead returns `no Revit is reachable`.
-It stops before capabilities, target, checkpoint, or model readback. The reason
-for the disagreement is unresolved; do not route a model write through another
-client. The formal blocker is `RUNNER_TRANSPORT_UNREACHABLE:BLOCKING`.
+The 2026-09-28 `.venv` runner attempt returned `no Revit is reachable` and
+stopped before PID pinning, capabilities, target, checkpoint, lease, or model
+readback. Do not route a model write through another client. The formal blocker
+is `RUNNER_TRANSPORT_UNREACHABLE:BLOCKING`.
 
-Resume only after the production runner can target the active Revit 2027 RUN-003
-document and its own transport reports healthy, zero other clients, and the exact active path, then passes the existing lease,
-P6 reconciliation, eight-partial-floor, Area-unit and other R05 gates. Preserve
-the lease and model state; the current lease owner process remains alive.
+The runner returned by 2026-09-28 20:56:15 UTC; do not contact Horizun again
+before 21:06:15 UTC. After that quiet window, recheck the Revit process/window
+mapping and require the runner itself to report healthy, zero other clients, and
+the exact saved RUN-003 path. Then pass the lease, P6 reconciliation,
+eight-partial-floor, Area-unit, and all remaining R05 gates. No current project
+writer lease exists; preserve the open model and do not create a lease outside
+the runner.
 
 ## Current RUN-003 R04 acceptance status
 
@@ -102,7 +106,7 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 - `SITE_OCCUPANCY` [BLOCKING]: confirmation of the current use of the lot and of the relocation premise for the police company unit
 - `SITE_FRONTAGE_COUNT` [DEGRADING]: whether the lot has three or four frontages
 - `SITE_TRUE_NORTH` [DEGRADING]: a verified true-north bearing with a source drawing datum
-- `RUNNER_TRANSPORT_UNREACHABLE` [BLOCKING, P7-T01 only]: the runner's stdio Horizun server cannot discover the active Revit session although direct app health reports the exact RUN-003 target healthy
+- `RUNNER_TRANSPORT_UNREACHABLE` [BLOCKING, P7-T01 only]: current runner health returns `no Revit is reachable`; current UI window/PID and active-document binding remain unverified
 
 ## Design and Revit recovery
 
@@ -112,9 +116,9 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 
 ## Writer lease
 
-- Status: `HELD_FOR_P7`
-- Owner: `amanda-P7-RUN003-production` (PID 28364, alive)
-- Fencing generation: `2`
+- Status: `NOT_ACQUIRED` (project lock file absent)
+- The last runner attempt failed at `horizun_health` before lease acquisition. Historical owner PID 28364 is not current evidence.
+- Do not manually create, release, or reclaim a lease; only retry through the production runner after the quiet window.
 
 ## Git verification
 

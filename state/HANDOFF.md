@@ -1,5 +1,22 @@
 # Current Handoff
 
+## 2026-09-28 — P7-T01/R05 live runner gate (continuation)
+
+Authorization from `C:\Users\slvma\.codex\attachments\2d812ca3-d648-4941-bd6e-a2f73697395c\goal-objective.md` is limited to P7-T01/R05 on RUN-003. R06 and later remain NOT STARTED.
+
+- Runner correction committed as `73f71e0c15bb169d88729c0530bffafc975a81c0`. TDD RED reproduced two ordering failures: an unhealthy provider could acquire the lease, and a healthy provider saw lease acquisition before `horizun_health`. Moving study lease acquisition behind typed health, session validation, and PID target selection made both tests pass. Command `\.venv\Scripts\python.exe -m pytest tests/unit/test_run_amanda_production.py -q`: 89 passed, 0 failed. The combined R05 suite passed 221 tests with one unrelated pre-existing R04 visibility-evidence test deselected; that test's registry hash disagrees with the committed evidence file. Fresh R05 dry-run planned 704 operations (9 floors, 7 roofs, 688 walls), R05 only. Targeted `git diff --check` passed. Ruff reported nine baseline findings, none on the changed lines.
+- Revit 2027 build `27.2.0.39` was brought to the foreground through the computer-use UI. The exact RUN-003 working path was entered in Revit's Open dialog. Journal `journal.0037.txt` starts at `17:25:30.744` Fortaleza time, matching process 12660's `20:25:29.671Z` start; it names `Session12660_P0MainQueue`, records Horizun MCP 1.3.3.0 starting, then records the exact RUN-003 path opened and its `DocSymbol`. This binds the active RUN-003 document and loaded add-in to PID 12660. A second responding Revit process, PID 3364, also exists; do not terminate it. The runner's typed health still cannot discover the Revit session, so health, zero-other-client status, and typed active-document readback remain unverified.
+- The first runner invocation used global Python and stopped before runner startup because `ortools` was missing. The corrected `.venv` invocation planned only R05 and then received `Error: no Revit is reachable` from `horizun_health`. It stopped before PID pinning, capability/target/checkpoint reads, lease acquisition, or any model operation. The direct Horizun tool was not called.
+- `state/locks/revit-writer.lock` is absent. The exact working RVT is open and locked by Revit; size remains 5,152,768 bytes and mtime remains `2026-09-27T09:30:38.2675368Z`. Its last readable pre-open SHA-256 was `F5BEEB6BF7D544710EA3A35DDE2B8A880E78FC4E284E12CB4A90E1BCCF982B19`; hashing it now fails because the open process holds it. No save or close was requested. Treat the current on-disk hash as unverified and preserve the open document unchanged.
+- The runner request had returned by `2026-09-28 20:56:15 UTC`; use that as the conservative start of the 600-second quiet window. Do not contact Horizun again before `2026-09-28 21:06:15 UTC`, and do not use a separate MCP client. Before a retry, recheck the live process/journal and preserve PID 12660 as the current candidate. Use the exact R05 command below with the freshly confirmed PID. If its own health still says no Revit is reachable, stop and keep P7-T01 blocked; do not acquire/release a lease or substitute a direct tool call.
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_amanda_production.py --rvt 'revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt' --resume-run003-study --reuse-existing-run003-lease --max-stage R05 --revit-pid <fresh-active-Revit-PID> --execute
+```
+- Local code commit is `73f71e0c15bb169d88729c0530bffafc975a81c0` on `main`. The state/handoff closeout and push are pending. Existing RC01 deletions and the untracked R04 presentation package remain untouched and unstaged.
+
+**Resume boundary:** P7-T01 remains `BLOCKED_BY_TOOL`; no live R05 write, save, checkpoint, or cold-reopen verification occurred. After the quiet window, require runner health, zero other clients, exact active RUN-003 path/build/PID, lease and P6 reconciliation, then continue only through R05 WRITE → READ → VERIFY and its save/close/reopen/readback gates. Stop at R05.
+
 ## 2026-09-28 — Pacote final R04 para orientação (ZIP) — sessão concluída
 
 Entrega intermediária R04 finalizada e empacotada para a orientadora, a partir do checkpoint P6 aceito, sem tocar em R05/R06 nem em RC01.

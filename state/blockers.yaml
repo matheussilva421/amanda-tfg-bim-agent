@@ -126,14 +126,18 @@ blockers:
   affected_tasks:
   - P7-T01
   evidence: >-
-    Direct app Horizun health reported HEALTHY for Revit 2027 PID 38296 with the
-    exact RUN-003 path active, a clean 73/73 registry, 80/80 tools and zero other
-    clients. The production runner's installed stdio server instead returned
-    "no Revit is reachable" before target/checkpoint/model access. See handoff.
+    Historical direct-app health (PIDs 38296/9128) is not current evidence. On
+    2026-09-28 the .venv production runner's horizun_health returned "no Revit is
+    reachable" before PID pinning, capability/target/checkpoint reads, lease
+    acquisition, or model access. Revit journal 0037 binds the exact RUN-003 path
+    and Horizun MCP startup to PID 12660, but typed health and zero-other-client
+    status remain unverified. The project lock file is absent; the open RVT could
+    not be hashed because Revit holds it. No save or model write occurred. See
+    state/HANDOFF.md.
   resolution: >-
-    Reconcile why the production runner's installed Horizun stdio transport
-    cannot discover the active Revit session. Resume only after that same runner
-    transport passes health, client, exact-target and P6/partial-floor gates.
+    Reconcile the runner's Revit discovery/session binding. After the 600-second
+    quiet window, resume only when that same runner transport passes health,
+    client, exact-target and P6/partial-floor gates.
   requires_user_action: false
   created_utc: '2026-09-27T14:43:39Z'
   resolved_utc: null

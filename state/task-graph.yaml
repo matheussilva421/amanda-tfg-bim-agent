@@ -3363,22 +3363,26 @@ tasks:
       Current authorization covers P7-T01/R05 only. Every later stage requires
       its own task gate; completing R05 does not start R06. R06 remains NOT STARTED.
     - >-
-      Current blocker: RUNNER_TRANSPORT_UNREACHABLE:BLOCKING. Direct app Horizun
-      health reports HEALTHY for the exact active RUN-003 document, 73/73 registry
-      commands, 80/80 tools, and zero other clients. The production runner's
-      installed stdio server returned "no Revit is reachable" before its own
-      capability/client/target, checkpoint, or model gates. No write, save, or
-      checkpoint occurred; the existing lease was retained.
+      Current blocker: RUNNER_TRANSPORT_UNREACHABLE:BLOCKING. Historical direct-app
+      health is stale. On 2026-09-28 the .venv production runner's horizun_health
+      returned "no Revit is reachable" before PID pinning, capabilities, target,
+      checkpoint, lease, or model access. The UI opened the requested RUN-003 path,
+      Revit journal 0037 binds the exact RUN-003 path and Horizun add-in startup
+      to PID 12660, but typed health and zero-other-client status remain
+      unverified. The project lease file is absent; no model write, save, or
+      checkpoint occurred.
     - >-
-      Earlier UI inspection listed the RUN-003 window as minimized and the
-      captured state displayed Chrome; the later direct app health call proves
-      API access to the exact active path. The stdio transport discrepancy is
-      unresolved. Details are in state/HANDOFF.md.
+      The current journal records Session12660_P0MainQueue, the exact document
+      open, and Horizun MCP startup. Another responding process 3364 exists and
+      remains untouched. The stdio transport returned no Revit reachable despite
+      this journal evidence. Details and the conservative 600-second retry
+      boundary are in state/HANDOFF.md.
     - >-
-      Resume only after the production runner's own Horizun stdio transport
-      reports HEALTHY, zero other clients, and the exact active RUN-003 path.
-      Then require the retained lease, exact P6 reconciliation, and reconciled
-      partial floors/Area units. Use the R05-only runner and stop at R05.
+      Resume after 2026-09-28 21:06:15 UTC only after rechecking the live Revit
+      process/window mapping. Require the production runner's own transport to
+      report HEALTHY, zero other clients, and the exact active RUN-003 path.
+      Then acquire the lease through the runner and pass exact P6 reconciliation
+      plus partial-floor/Area-unit gates. Use the R05-only runner and stop at R05.
   P7-T02:
     id: P7-T02
     phase: P7
