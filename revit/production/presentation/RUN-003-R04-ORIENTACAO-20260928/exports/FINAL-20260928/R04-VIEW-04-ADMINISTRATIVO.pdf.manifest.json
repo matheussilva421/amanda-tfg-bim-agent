@@ -1,0 +1,250 @@
+{
+  "schema": "horizun.delivery-manifest/1",
+  "utc": "2026-09-28T13:10:07.8397422Z",
+  "document": "AMANDA-RUN-003-R04-PRESENTATION-20260928",
+  "combined": true,
+  "files": [
+    {
+      "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\presentation\\RUN-003-R04-ORIENTACAO-20260928\\exports\\FINAL-20260928\\R04-VIEW-04-ADMINISTRATIVO.pdf",
+      "bytes": 25547,
+      "sha256": "e386ed585242a6a28e8155402f848ff07214ce9e54f5185cfe214c6106dae8d1",
+      "pages": 1,
+      "expected_pages": 1,
+      "page_count_verified": true,
+      "page_geometry": [
+        {
+          "page": 1,
+          "width_points": 1190.552,
+          "height_points": 841.89
+        }
+      ],
+      "visual_approval": "not_performed",
+      "source_views": [
+        {
+          "id": 331252,
+          "unique_id": "3d04b7d4-2725-407d-8e4a-3c816e0286e3-00050df4",
+          "name": "R04-04-ADMIN-MASSA",
+          "sheet_number": null,
+          "revision_ids": []
+        }
+      ],
+      "page_verdicts": [
+        {
+          "page_width_points": 1190.552,
+          "page_height_points": 841.89,
+          "page_width_mm": 420.0,
+          "page_height_mm": 297.0,
+          "tolerance_points": 2.0,
+          "expected_width_points": 841.89,
+          "expected_height_points": 1190.551,
+          "paper_format": "verified",
+          "page_orientation_observed": "landscape",
+          "orientation": "verified",
+          "page_verified": true,
+          "page": 1,
+          "source_view_id": 331252
+        }
+      ]
+    }
+  ],
+  "print_policy": {
+    "schema": "horizun.pdf-print-policy/1",
+    "options": [
+      {
+        "option": "paper_format",
+        "source": "requested",
+        "requested": "ISO_A3",
+        "applied": "ISO_A3",
+        "status": "verified",
+        "pages": [
+          "verified"
+        ]
+      },
+      {
+        "option": "orientation",
+        "source": "requested",
+        "requested": "landscape",
+        "applied": "landscape",
+        "status": "verified",
+        "pages": [
+          "verified"
+        ]
+      },
+      {
+        "option": "placement",
+        "source": "defaulted",
+        "requested": null,
+        "applied": "center",
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "origin_offset_x",
+        "source": "defaulted",
+        "requested": null,
+        "applied": null,
+        "status": "not_applicable",
+        "reason": "offsets apply only with placement='lower_left'"
+      },
+      {
+        "option": "origin_offset_y",
+        "source": "defaulted",
+        "requested": null,
+        "applied": null,
+        "status": "not_applicable",
+        "reason": "offsets apply only with placement='lower_left'"
+      },
+      {
+        "option": "zoom",
+        "source": "requested",
+        "requested": "fit_to_page",
+        "applied": "fit_to_page",
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "zoom_percentage",
+        "source": "defaulted",
+        "requested": null,
+        "applied": null,
+        "status": "not_applicable",
+        "reason": "a percentage applies only with zoom='zoom'"
+      },
+      {
+        "option": "color_depth",
+        "source": "requested",
+        "requested": "color",
+        "applied": "color",
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "raster_quality",
+        "source": "requested",
+        "requested": "presentation",
+        "applied": "presentation",
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "export_quality_dpi",
+        "source": "requested",
+        "requested": 300,
+        "applied": 300,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "always_use_raster",
+        "source": "defaulted",
+        "requested": null,
+        "applied": false,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "hide_crop_boundaries",
+        "source": "requested",
+        "requested": true,
+        "applied": true,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "hide_scope_boxes",
+        "source": "requested",
+        "requested": true,
+        "applied": true,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "hide_reference_planes",
+        "source": "requested",
+        "requested": true,
+        "applied": true,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "hide_unreferenced_view_tags",
+        "source": "requested",
+        "requested": true,
+        "applied": true,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "mask_coincident_lines",
+        "source": "defaulted",
+        "requested": null,
+        "applied": false,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "replace_halftone_with_thin_lines",
+        "source": "defaulted",
+        "requested": null,
+        "applied": false,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "view_links_in_blue",
+        "source": "defaulted",
+        "requested": null,
+        "applied": false,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "stop_on_error",
+        "source": "defaulted",
+        "requested": null,
+        "applied": true,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      },
+      {
+        "option": "export_in_background",
+        "source": "defaulted",
+        "requested": null,
+        "applied": false,
+        "status": "requested_unverifiable",
+        "reason": "passed to the exporter and read back as applied; the produced PDF carries no trace this bridge can read, so it is NOT claimed as proved"
+      }
+    ],
+    "pages": [
+      {
+        "page_width_points": 1190.552,
+        "page_height_points": 841.89,
+        "page_width_mm": 420.0,
+        "page_height_mm": 297.0,
+        "tolerance_points": 2.0,
+        "expected_width_points": 841.89,
+        "expected_height_points": 1190.551,
+        "paper_format": "verified",
+        "page_orientation_observed": "landscape",
+        "orientation": "verified",
+        "page_verified": true,
+        "page": 1,
+        "source_view_id": 331252
+      }
+    ],
+    "composition": {
+      "pages_exceeding_titleblock": [],
+      "held": true,
+      "means": "with Default paper the page follows the sheet outline; a page larger than its titleblock proves something on the sheet lies outside it (inside the paper is not inside the frame)"
+    },
+    "verifiable_options_held": true,
+    "verified_from_output": [
+      "paper_format",
+      "orientation"
+    ],
+    "means": "verified = proved from the produced page geometry; requested_unverifiable = applied to the exporter, not provable from the file; verified_mismatch = the file contradicts the request."
+  },
+  "source_mapping": "export invocation mapping; page identity and visual content are not independently verified",
+  "visual_approval": "required",
+  "package_verified": true
+}

@@ -1,0 +1,293 @@
+{
+  "schema": "amanda.run003-r04-presentation/1",
+  "generated_date": "2026-09-28",
+  "run": "RUN-003",
+  "task": "supplemental R04 presentation packet from accepted P6 geometry",
+  "status": "COMPLETE_WITH_RECORDED_VISUAL_LIMITATIONS",
+  "authority": {
+    "geometry": "accepted P6 checkpoint / canonical four-board spatial arrangement",
+    "program": "official programa_necessidades.pdf; capacity and areas preserved",
+    "site": "locally normalized study; no cadastral/topographic or true-north claim"
+  },
+  "official_program": {
+    "capacity_persons": 20,
+    "internal_area_m2": 626,
+    "external_program_area_m2": 260,
+    "source": "docs/source/programa_necessidades.pdf"
+  },
+  "source_checkpoint": {
+    "path": "revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-CANON-011-RECONCILED-20260926.rvt",
+    "sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326"
+  },
+  "saved_derivative": {
+    "path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/AMANDA-RUN-003-R04-PRESENTATION-20260928.rvt",
+    "bytes": 5009408,
+    "last_saved_utc": "2026-09-28T12:57:51.0613816Z",
+    "sha256": "45bac6f94fc8fec465ea52c20fe6cd5a37c8159466a19fcff0b1eb329dc19d4b",
+    "hash_basis": "verified save and byte-identical checkpoint; after exports/captures Revit reported is_modified=false; external hash of the open RVT was denied by the file lock"
+  },
+  "final_checkpoint": {
+    "path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/snapshots/AMANDA-RUN-003-R04-PRESENTATION-FINAL-20260928.rvt",
+    "bytes": 5009408,
+    "sha256": "45bac6f94fc8fec465ea52c20fe6cd5a37c8159466a19fcff0b1eb329dc19d4b",
+    "manager_verify": true
+  },
+  "cold_reopen": {
+    "host": "Autodesk Revit 2027",
+    "build": "27.2.0.39",
+    "pid": 9128,
+    "document_path_matched": true,
+    "audit": true,
+    "file_version": "2027",
+    "host_version": "2027",
+    "upgraded": false,
+    "provider": "Horizun 1.3.3 HEALTHY",
+    "registered_commands": "73/73",
+    "visible_tools": "80/80",
+    "other_clients": 0
+  },
+  "geometry_readback": {
+    "baseline_path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/geometry-baseline-pre-presentation.json",
+    "baseline_sha256": "df1fcf2b768cffe46e3306a8a5aa0165cad0bb3bdd9d22f65859439412926bfd",
+    "rows": 25,
+    "by_category": {
+      "Massa": 7,
+      "Pisos": 14,
+      "Telhados": 4
+    },
+    "query_fingerprint": "1aac5d79b05b159a",
+    "coverage_complete": true,
+    "unreadable": 0,
+    "missing": 0,
+    "differences": 0,
+    "bbox_tolerance_m": 1e-8,
+    "compared_fields": [
+      "element_id",
+      "unique_id",
+      "category",
+      "name",
+      "bounding_box.min",
+      "bounding_box.max"
+    ]
+  },
+  "sheet": {
+    "element_id": 331392,
+    "number": "R04-01",
+    "name": "R04 Prancha de implantacao e orientacao",
+    "titleblock_type_id": 4428,
+    "titleblock_type": "A1 metrico",
+    "viewport_count": 1,
+    "viewport_id": 331553,
+    "view_id": 331530,
+    "text_notes": 29,
+    "query_coverage_complete": true
+  },
+  "pdf_exports": [
+    {
+      "file": "R04-01-PRANCHA-A1.pdf",
+      "type": "sheet",
+      "source_id": 331392,
+      "pages": 1,
+      "paper": "ISO_A1",
+      "dimensions_mm": [
+        841,
+        594
+      ],
+      "bytes": 77708,
+      "sha256": "02e961d593198aa8daf6483a1facd7c6a85e6ef353f733f6eca79eca12f60dd7",
+      "path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/exports/FINAL-20260928/R04-01-PRANCHA-A1.pdf",
+      "page_count_verified": true,
+      "visual_review": "rendered and reviewed"
+    },
+    {
+      "file": "R04-VIEW-01-IMPLANTACAO-GERAL.pdf",
+      "type": "view",
+      "source_id": 331218,
+      "pages": 1,
+      "paper": "ISO_A3",
+      "bytes": 35079,
+      "sha256": "c785e911288579e3d1d6e8794e8f91b72ff99f97624934522a9eefd2c6d08da6",
+      "path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/exports/FINAL-20260928/R04-VIEW-01-IMPLANTACAO-GERAL.pdf",
+      "page_count_verified": true,
+      "visual_review": "rendered and reviewed"
+    },
+    {
+      "file": "R04-VIEW-02-ISOMETRICA-GERAL.pdf",
+      "type": "view",
+      "source_id": 331230,
+      "pages": 1,
+      "paper": "ISO_A3",
+      "bytes": 76489,
+      "sha256": "c938c25bd266fb805872a3991ec5b844baf1fec8f19bfbb83fce6689cfab42af",
+      "path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/exports/FINAL-20260928/R04-VIEW-02-ISOMETRICA-GERAL.pdf",
+      "page_count_verified": true,
+      "visual_review": "rendered and reviewed"
+    },
+    {
+      "file": "R04-VIEW-03-RESIDENCIAL.pdf",
+      "type": "view",
+      "source_id": 331241,
+      "pages": 1,
+      "paper": "ISO_A3",
+      "bytes": 53655,
+      "sha256": "16e021483eba200f9630b4f8c35588351277d38a6a90aedbc161c7362e1dbb68",
+      "path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/exports/FINAL-20260928/R04-VIEW-03-RESIDENCIAL.pdf",
+      "page_count_verified": true,
+      "visual_review": "rendered and reviewed"
+    },
+    {
+      "file": "R04-VIEW-04-ADMINISTRATIVO.pdf",
+      "type": "view",
+      "source_id": 331252,
+      "pages": 1,
+      "paper": "ISO_A3",
+      "bytes": 25547,
+      "sha256": "e386ed585242a6a28e8155402f848ff07214ce9e54f5185cfe214c6106dae8d1",
+      "path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/exports/FINAL-20260928/R04-VIEW-04-ADMINISTRATIVO.pdf",
+      "page_count_verified": true,
+      "visual_review": "rendered and reviewed"
+    },
+    {
+      "file": "R04-VIEW-05-SERVICOS-CAPACITACAO.pdf",
+      "type": "view",
+      "source_id": 331283,
+      "pages": 1,
+      "paper": "ISO_A3",
+      "bytes": 52229,
+      "sha256": "beb84067329178012cc3581cf8e391eff845480d36fd1a6d7c7e1d4f90113076",
+      "path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/exports/FINAL-20260928/R04-VIEW-05-SERVICOS-CAPACITACAO.pdf",
+      "page_count_verified": true,
+      "visual_review": "rendered and reviewed"
+    },
+    {
+      "file": "R04-VIEW-06-INFANTIL-PLAYGROUND.pdf",
+      "type": "view",
+      "source_id": 331186,
+      "pages": 1,
+      "paper": "ISO_A3",
+      "bytes": 6252,
+      "sha256": "2b480dbf5aa0ad2f6af5a056470dfe75ba4b419c9b95cfc6ba4195ff5ef5b733",
+      "path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/exports/FINAL-20260928/R04-VIEW-06-INFANTIL-PLAYGROUND.pdf",
+      "page_count_verified": true,
+      "visual_review": "rendered and reviewed"
+    }
+  ],
+  "png_captures": [
+    {
+      "file": "R04-VIEW-01-IMPLANTACAO-GERAL.png",
+      "source_id": 331218,
+      "pixel_dimensions": [
+        2400,
+        2530
+      ],
+      "view_restored": true,
+      "bytes": 31566,
+      "sha256": "c9c2c3f729e5bcd910b34a3d48606c6fbae0d23e3a72edea2cd61938e6bbe1c1",
+      "path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/exports/FINAL-20260928/R04-VIEW-01-IMPLANTACAO-GERAL.png"
+    },
+    {
+      "file": "R04-VIEW-02-ISOMETRICA-GERAL.png",
+      "source_id": 331230,
+      "pixel_dimensions": [
+        2400,
+        1449
+      ],
+      "view_restored": true,
+      "bytes": 48277,
+      "sha256": "57ef987166fe807a43bc32261e5ee73e32d12d765ba334a3482e93b83f9a16af",
+      "path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/exports/FINAL-20260928/R04-VIEW-02-ISOMETRICA-GERAL.png"
+    },
+    {
+      "file": "R04-VIEW-03-RESIDENCIAL.png",
+      "source_id": 331241,
+      "pixel_dimensions": [
+        2400,
+        1672
+      ],
+      "view_restored": true,
+      "bytes": 44831,
+      "sha256": "323dad7abfabda11f532595146fb899ec8ae9f78201b15578067bf77e7c8be68",
+      "path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/exports/FINAL-20260928/R04-VIEW-03-RESIDENCIAL.png"
+    },
+    {
+      "file": "R04-VIEW-04-ADMINISTRATIVO.png",
+      "source_id": 331252,
+      "pixel_dimensions": [
+        2400,
+        2046
+      ],
+      "view_restored": true,
+      "bytes": 35795,
+      "sha256": "3823bddab96173e6077f25eb40a527b1693ef630c1d0e7175d610a6b0b9ddf6a",
+      "path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/exports/FINAL-20260928/R04-VIEW-04-ADMINISTRATIVO.png"
+    },
+    {
+      "file": "R04-VIEW-05-SERVICOS-CAPACITACAO.png",
+      "source_id": 331283,
+      "pixel_dimensions": [
+        2400,
+        1616
+      ],
+      "view_restored": true,
+      "bytes": 42219,
+      "sha256": "90e6ce8dc38bb064eeca2c8f35e3d1aa238c36f83ef9eeefa349eb1a566791c4",
+      "path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/exports/FINAL-20260928/R04-VIEW-05-SERVICOS-CAPACITACAO.png"
+    },
+    {
+      "file": "R04-VIEW-06-INFANTIL-PLAYGROUND.png",
+      "source_id": 331186,
+      "pixel_dimensions": [
+        2400,
+        3913
+      ],
+      "view_restored": true,
+      "bytes": 36386,
+      "sha256": "ce68a630d03bdc8db2caabb9de81e5d8563182c814d8327490b7d7b3411b9112",
+      "path": "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/exports/FINAL-20260928/R04-VIEW-06-INFANTIL-PLAYGROUND.png",
+      "temporary_element_ids": [
+        328658,
+        329971
+      ],
+      "temporary_display_style": "ShadingWithEdges",
+      "temporary_options_rolled_back": true
+    }
+  ],
+  "visual_qa": {
+    "a1_rendered": true,
+    "a1_page_geometry_mm": [
+      841,
+      594
+    ],
+    "a1_within_titleblock": true,
+    "all_six_a3_pdfs_rendered": true,
+    "all_six_pngs_reviewed": true,
+    "limitations": [
+      "conceptual massing/orientation only; interior partitions, doors/windows, furniture, playground equipment, construction detail not represented",
+      "child plan PDF is simple linework for mass/playground surface; focused PNG frames both elements",
+      "A1 title block retains generic Autodesk consultant/project placeholders",
+      "site boundary, topography, true north remain unverified"
+    ]
+  },
+  "scope_guards": {
+    "p6_source_edited": false,
+    "geonatal_researched": false,
+    "rc01_changed": false,
+    "p7_r05_started": false,
+    "r06_started": false,
+    "reused_s01_s02_r12": false,
+    "writer_lease_released": false
+  },
+  "formal_state": {
+    "project_state_revision": 244,
+    "last_completed_task": "P6-T01",
+    "next_task": "P7-T01",
+    "phase": "P7",
+    "phase_status": "PENDING",
+    "p7_task_status": "BLOCKED_BY_TOOL",
+    "updated": false
+  },
+  "automated_tests": {
+    "run": false,
+    "reason": "no source code changed"
+  }
+}

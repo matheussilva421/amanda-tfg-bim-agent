@@ -1,8 +1,24 @@
 # Current Handoff
 
-## 2026-09-27 — R04 presentation deliverable attempt
+## 2026-09-28 — R04 presentation packet closeout (supplemental)
 
-The requested intermediate orientation presentation from the accepted P6 checkpoint is **not started in Revit**. No derivative RVT, sheet, export, or PDF was created, and no model was opened or changed. The task remains active and must resume from the exact P6 checkpoint below after the single-writer lease is released normally.
+The presentation-only R04 board and six supporting views are saved from the accepted P6 source in a dedicated RUN-003 derivative. This is supplemental evidence for the P6/R04 design study; it does not start or advance P7/R05 or R06.
+
+- Source checkpoint SHA-256: `8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326`. Final presentation checkpoint: `revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/snapshots/AMANDA-RUN-003-R04-PRESENTATION-FINAL-20260928.rvt`, SHA-256 `45bac6f94fc8fec465ea52c20fe6cd5a37c8159466a19fcff0b1eb329dc19d4b`, 5,009,408 bytes.
+- The saved derivative was closed and reopened with Revit 2027 audit, without upgrade. Fresh model readback matched the pre-presentation baseline row by row: 25/25 spatial elements, 7 masses + 14 floors + 4 roofs, zero identity/name/bounds differences at 1e-8 m tolerance, zero unreadable rows, complete coverage. The active file reported `is_modified=false` after export/capture.
+- Sheet `R04-01`, ElementId 331392, has the A1 metric title block, one viewport, and 29 notes. The A1 PDF is 1 page at 841 × 594 mm. Six one-page A3 view PDFs and six PNGs are saved under `revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/exports/FINAL-20260928/`; see `RUN003-R04-PRESENTATION-MANIFEST.json` and `docs/reports/R04-presentation-RUN003-closeout-2026-09-28.md` for hashes and mapping.
+- Visual review passed for the board and six exports. The child plan is a mass/playground-surface orientation view, not a detailed play design; its focused PNG uses a temporary crop around current elements 328658 and 329971 and confirms view restoration. The A1 title block still contains generic Autodesk consultant/project placeholders. Site coordinates remain normalized and unsurveyed.
+- Horizun was HEALTHY at cold reopen (1.3.3; Revit 2027 build 27.2.0.39, PID 9128; exact document path matched; 73/73 registered commands; 80/80 tools visible; no other clients). Preserve the live RUN-003 presentation lease; do not release or reclaim it here.
+- No P6 source edit, GeoNatal search, RC01 edit, S01/S02/R12 reuse, P7/R05 write, or R06 work occurred. `PROJECT_STATE.yaml` and `state/task-graph.yaml` remain unchanged: P7-T01 is still next and blocked at the runner transport gate; phase P7 remains PENDING.
+- No code changed, so no automated tests were run. Verification consisted of provider/target health, cold reopen/audit, fresh typed geometry readback, checkpoint hash verification, PDF page geometry, SHA-256 inventory, and rendered visual review. The report, final exports, and manifest are to be committed/pushed; pre-existing RC01 deletions must remain untouched.
+
+### Exact resume boundary
+
+Treat this presentation derivative and its snapshot as read-only evidence unless a new task expressly authorizes presentation changes. Do not start P7/R05 or R06 from this closeout. For the formal next task, resolve the existing runner transport blocker and follow the current P7 task gate; preserve the RUN-003 lease until its original owner releases it normally.
+
+## Historical 2026-09-27 — R04 presentation deliverable attempt (superseded above)
+
+That was the status at the time of the 2026-09-27 handoff. It is superseded by the completed presentation closeout above.
 
 - Read-only checks confirm the P6 checkpoint `revit/production/evidence/AMANDA-RUN-003-R04/P6-T01-CANON-011-RECONCILED-20260926.rvt` is Revit 2027, non-workshared, 4,960,256 bytes, with SHA-256 `8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326`, matching its manifest. Horizun is HEALTHY on Revit 2027 build 27.2.0.39, PID 56064; target selection is explicit, registry clean, 80/80 tools visible, and no document is open.
 - The existing P6 capture manifest is bound to this checkpoint. It contains nine current captures. The child/playground attempt is excluded as near-blank; the only readable child/playground image is explicitly reference-only from the earlier `R04-T01` checkpoint. Do not present that older image as a current P6 capture.
