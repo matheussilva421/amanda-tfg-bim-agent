@@ -120,39 +120,67 @@ blockers:
   resolution_action: supply a source drawing or survey that fixes true north
   reason: null
 - id: RUNNER_TRANSPORT_UNREACHABLE
-  summary: Production R05 runner transport cannot reach the active Horizun/Revit session
+  summary: Sandbox-restricted runner cannot read owner-only Horizun discovery
   severity: BLOCKING
   owner_phase: P7
   affected_tasks:
   - P7-T01
   evidence: >-
-    Historical direct-app health (PIDs 38296/9128) is not current evidence. Two
-    sandboxed .venv production-runner attempts on 2026-09-28 returned "no Revit
-    is reachable" before PID pinning. A later invocation of the same official
-    runner in the current user's elevated context reached typed health/session
-    checks, selected PID 12660, acquired and released the normal writer lease,
-    and entered P6/partial recovery. This supports an access-context cause for
-    discovery behavior; the owner-only discovery file was not opened and its
-    token was not read. The attempt stopped before R05 write because the known
-    floor Area response had no unit. The new clean-registry, full tools/list,
-    full_write and unpaused gates have not had live evidence. A diagnostic-only
-    P6 readback is recorded in state/HANDOFF.md. No model save/write/checkpoint
-    occurred; the project lock is absent and the target remains open.
+    Two sandboxed .venv attempts returned "no Revit is reachable". On
+    2026-09-28 22:21:31Z, the official runner in the current user's elevated
+    context passed health, zero-other-client, exact target/build/PID, complete
+    command registry (73/73), unrestricted tool registry (80/80), MCP tools/list
+    (80), full_write and mcp_paused=false. This establishes that the ACL access
+    context caused the sandbox discovery failure. The discovery token was never
+    read. See state/HANDOFF.md and the readiness output.
   resolution: >-
-    Run the exact R05-only production runner once in the current user context.
-    Require health, zero other clients, exact target/build/PID, clean complete
-    command and tool registries, full_write, mcp_paused=false, runner-managed
-    lease, P6 reconciliation, and complete typed Area readings explicitly in
-    m2. Resolve the blocker only after the authorized R05 persistence gates pass.
+    Use the official production runner in the current user's elevated context;
+    this is required to read the owner-only discovery file without exposing its
+    token. Current health, zero-other-client, exact-target and full provider
+    readiness gates passed on 2026-09-28.
   requires_user_action: false
   created_utc: '2026-09-27T14:43:39Z'
-  resolved_utc: null
+  resolved_utc: '2026-09-28T22:21:31Z'
   source: P7-T01-runner-transport-gate
   tasks_blocked:
   - P7-T01
   tasks_still_allowed: []
   allowed_tasks: []
   resolution_action: >-
-    Complete the one controlled exact R05 runner attempt through current
-    transport/readiness, P6 and partial-floor gates, then pass R05 persistence.
-  reason: RUNNER_TRANSPORT_UNREACHABLE:BLOCKING
+    Resolved by running the official production runner in the current user's
+    elevated context, which passed provider health/readiness and targeted PID
+    12660 with zero other clients.
+  reason: null
+- id: R05_PARTIAL_RECOVERY_UNVERIFIED
+  summary: Known unsaved R05 partial has no verified explicit m2 Area reading
+  severity: BLOCKING
+  owner_phase: P7
+  affected_tasks:
+  - P7-T01
+  evidence: >-
+    The 2026-09-28 official R05 runner passed provider readiness and entered
+    guarded recovery for the known unsaved partial. The live model did not pass
+    the accepted P6 element-count gate; recovery then queried the exact eight
+    known floor IDs. The explicit parameter Area takeoff did not return a
+    verified measured m2 reading for ElementId 331188. No value or unit was
+    inferred. The runner released the lease before any R05 write/save/checkpoint.
+    Diagnostic-only P6 readback is preserved in
+    revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-4df7d40a2c35.json.
+  resolution: >-
+    Reconcile the known partial against the exact P6 checkpoint, then obtain
+    complete exact-target Area readings for all eight known floors with state
+    measured, unit m2, and measurement provenance. Continue through R05
+    persistence only after the runner validates every recovery gate.
+  requires_user_action: false
+  created_utc: '2026-09-28T22:21:31Z'
+  resolved_utc: null
+  source: P7-T01-R05-partial-recovery
+  tasks_blocked:
+  - P7-T01
+  tasks_still_allowed: []
+  allowed_tasks: []
+  resolution_action: >-
+    Obtain typed complete Area readings explicitly in m2 for the exact eight
+    persisted floor IDs after P6 reconciliation; then complete the R05-only
+    WRITE-READ-VERIFY and persistence gates.
+  reason: R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING

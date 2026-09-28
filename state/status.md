@@ -10,10 +10,10 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 is `BLOCKED_BY_TOOL` until live R05 persistence gates pass
 - Current authorization: P7-T01/R05 only; authorization ends at R05. Every later stage needs its own task gate; R05 completion does not start R06.
-- Current blocker: `RUNNER_TRANSPORT_UNREACHABLE:BLOCKING`; sandboxed runner attempts failed discovery, while one elevated official-runner attempt reached typed health/session checks and partial recovery but stopped before R05 because the existing Area value had no unit.
+- Current blocker: `R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING`; the official runner now passes provider readiness in the elevated user context, but guarded recovery cannot verify an explicit m2 Area reading for ElementId 331188.
 - Historical `direct app Horizun health reports HEALTHY` snapshots used stale PIDs and do not establish the current session. Resume only after the production runner can target the active Revit 2027 RUN-003 document.
-- Earlier direct-app health snapshots (PIDs 38296/9128) remain historical. On 2026-09-28 the official runner in the current user's elevated context reached typed health/session checks, selected PID 12660, and acquired/released its normal lease. The owner-only discovery ACL is the supported access-context explanation; its token-bearing contents were not read. The new complete-registry, MCP tools/list, full_write, and unpaused gates still need fresh live evidence.
-- The elevated attempt stopped before any R05 write because a known floor's Area response had no unit. The runner generated a diagnostic-only 25-row P6 readback, closed the checkpoint without saving, and released the lease. No model save, R05 write, or checkpoint occurred. The project writer lease file is currently absent; the open RUN-003 target must not be hashed or closed. Last pre-open hash remains `F5BEEB6BF7D544710EA3A35DDE2B8A880E78FC4E284E12CB4A90E1BCCF982B19`.
+- The official runner in the elevated current-user context passed live health, zero-other-client, exact target/build/PID, command registry 73/73, provider tool registry 80/80, MCP tools/list 80, full_write, and mcp_paused=false. This resolves the sandbox discovery blocker; the discovery token was not read.
+- The runner entered guarded recovery because the live model includes the known unsaved partial and does not match the accepted P6 element count. The checkpoint's diagnostic-only readback contains 25 rows and complete coverage. The exact Area takeoff failed its measured-m2 gate for ElementId 331188. No model save, R05 write, or checkpoint occurred. The lease is absent; the open RUN-003 target must not be hashed or closed. Last pre-open hash remains `F5BEEB6BF7D544710EA3A35DDE2B8A880E78FC4E284E12CB4A90E1BCCF982B19`.
 - `P1`: 1/1 PASS
 - `P2`: 1/1 PASS
 - `P3`: 1/1 PASS
@@ -45,28 +45,27 @@ Preferred provider: `horizun`.
 
 Earlier direct app health calls used stale PIDs. Journal `journal.0037.txt`
 binds the exact RUN-003 document and Horizun add-in startup to PID 12660. The
-official runner reached current typed health/session checks in the elevated
-user context and entered recovery; do not reuse old health results as current
-evidence.
+official runner in the elevated user context passed typed health, zero-other-
+client, exact-target/build/PID and all provider readiness gates; do not reuse
+older health snapshots as current evidence.
 
 The production runner starts
 `C:\Users\slvma\AppData\Local\Programs\Horizun\MCP\server\horizun-mcp.exe`
-(version 1.3.3.0). Sandboxed `.venv` attempts returned `no Revit is reachable`;
-one elevated invocation of the same official runner reached PID 12660, acquired
-and released the normal lease, and entered P6/partial recovery. It stopped on
-an Area response with no reported unit, before any R05 write. Do not route a
-model write through another client. The formal blocker remains
-`RUNNER_TRANSPORT_UNREACHABLE:BLOCKING` until the new readiness gates and R05
-verification pass.
+(version 1.3.3.0). On 2026-09-28 22:21:31Z the official runner reported command
+registry 73/73, provider tools 80/80, MCP tools/list 80, full_write and
+mcp_paused=false. Its runner-enforced exclusive-client and exact-target gates
+also passed. Sandboxed attempts failed discovery because the owner-only
+discovery ACL is not readable in that context; its token was not read. Do not
+route model writes through another client. The transport blocker is resolved;
+the active gate is `R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING`.
 
-The discovery file lives under `%USERPROFILE%\.horizun`; its ACL grants the
-current user FullControl and its secret contents were not read. The latest
-runner request returned at about 21:26:22 UTC, so the 600-second quiet window
-has elapsed. Before one exact R05-only retry, recheck the Revit process and
-absent writer lock. Require health, zero other clients, exact saved RUN-003 path,
-clean complete registries, `full_write`, `mcp_paused=false`, P6 reconciliation,
-and eight explicit `m2` Area readings. Preserve the open model and create no
-lease outside the runner.
+The known partial entered guarded recovery after the current model failed the
+accepted P6 element-count check. The explicit Area takeoff failed for ElementId
+331188; no measurement or unit was inferred. The latest request returned at
+22:21:31 UTC; wait until 22:31:31 UTC before another Horizun call. Then retry
+once through the exact R05-only runner, which now prints bounded state/unit/
+value-type diagnostics for invalid readings. No standalone client, lease
+bypass, save or model write is allowed before the recovery gates pass.
 
 ## Current RUN-003 R04 acceptance status
 
@@ -111,7 +110,8 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 - `SITE_OCCUPANCY` [BLOCKING]: confirmation of the current use of the lot and of the relocation premise for the police company unit
 - `SITE_FRONTAGE_COUNT` [DEGRADING]: whether the lot has three or four frontages
 - `SITE_TRUE_NORTH` [DEGRADING]: a verified true-north bearing with a source drawing datum
-- `RUNNER_TRANSPORT_UNREACHABLE` [BLOCKING, P7-T01 only]: sandboxed runner attempts failed discovery; one elevated official-runner attempt reached PID 12660 and typed health/session checks, then stopped before R05 because a known Area value had no unit. The owner-only discovery ACL is a supported access-context explanation; current complete-registry/tools-list/write-control gates remain unverified.
+- `RUNNER_TRANSPORT_UNREACHABLE` [RESOLVED, 2026-09-28]: the official runner in the elevated current-user context passed live health, exclusive-client, exact-target, complete-registry, tools/list and write-control gates.
+- `R05_PARTIAL_RECOVERY_UNVERIFIED` [BLOCKING, P7-T01 only]: the known unsaved partial failed the explicit measured-m2 Area gate for ElementId 331188. No R05 write/save/checkpoint occurred.
 
 ## Design and Revit recovery
 

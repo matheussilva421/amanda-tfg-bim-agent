@@ -2603,3 +2603,11 @@ entries:
   - 'TDD added complete provider registry/tools-list/full_write/unpaused gates and an exact eight-floor Area takeoff using explicit m2 units. Focused R05 suite: 156 passed, 1 unrelated R04 evidence-hash test deselected, 0 failed. Implementation commit c679db483dede056cd0223488f8444d45cf2b229.'
   recorded_utc: '2026-09-28T22:12:03Z'
   note: Run one exact R05-only production attempt under the current user's elevated context after publishing this state. Require all fresh live readiness, target, lease, P6 and typed m2 gates; stop on any failure and wait 600 seconds before another provider call. R06 remains NOT STARTED.
+- task_id: P7-T01
+  status: BLOCKED_BY_TOOL
+  evidence:
+  - 'At 2026-09-28 22:21:31Z, the official elevated runner passed health, zero-other-client, exact target/build/PID 12660, command registry 73/73, provider tools 80/80, MCP tools/list 80, full_write, and mcp_paused=false. This resolves RUNNER_TRANSPORT_UNREACHABLE for the approved execution context.'
+  - 'The live model failed the accepted P6 element-count gate and entered guarded partial recovery. The exact Area takeoff rejected ElementId 331188 at the measured-m2 gate. No value or unit was inferred; lease released; no model write/save/checkpoint occurred.'
+  - 'Diagnostic-only P6 readback is committed at revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-4df7d40a2c35.json. TDD for bounded state/unit/value-type error details: RED reproduced missing diagnostics; GREEN 2 passed. Broader R05 suite: 157 passed, 1 unrelated R04 hash test deselected, 0 failed. Code commit 58cd0ac5c78a74a35214cc120e20638ace20f6e3.'
+  recorded_utc: '2026-09-28T22:32:25Z'
+  note: 'Current blocker is R05_PARTIAL_RECOVERY_UNVERIFIED. After the state update is published, retry once through the exact official R05 runner; invalid quantity errors emit bounded diagnostics only. Stop unless P6 partial reconciliation and all eight explicit measured-m2 readings pass. R06 remains NOT STARTED.'

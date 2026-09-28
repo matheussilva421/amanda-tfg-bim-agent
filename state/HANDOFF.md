@@ -1,6 +1,23 @@
 # Current Handoff
 
-## Current state — P7-T01/R05, controlled runner retry ready
+## Current state — P7-T01/R05 blocked at partial recovery
+
+Authorization remains limited to P7-T01/R05 on RUN-003. Do not execute R06 or later.
+
+- `PROJECT_STATE.yaml` is revision 248; P7-T01 remains `BLOCKED_BY_TOOL`, stage remains R04, and R06 is NOT STARTED. Code commit `58cd0ac5c78a74a35214cc120e20638ace20f6e3` adds bounded diagnostics for invalid Area readings.
+- The original transport blocker is resolved for the official runner in the elevated current-user context. At 2026-09-28 22:21:31Z it passed health, zero-other-client, exact target/build/PID 12660, command registry 73/73, unrestricted provider tools 80/80, MCP tools/list 80, `full_write`, and `mcp_paused=false`. Sandboxed attempts had failed discovery because of the owner-only ACL. No token was read.
+- Current blocker is `R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING`. The live RUN-003 model failed the accepted P6 element-count check and entered guarded recovery for the known unsaved partial. The exact eight-floor Area takeoff rejected ElementId 331188 at the measured-m2 gate. No unit/value was inferred; no R05 write, save, or checkpoint occurred. The runner released its lease.
+- Diagnostic-only P6 readback: `revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-4df7d40a2c35.json`; checkpoint manifest verified, 25 typed rows, complete coverage, but acceptance_gate_passed=false and model_write_performed=false. The open target remains 5,152,768 bytes with its prior 2026-09-27 mtime; do not hash or close it. Writer lock is absent.
+- TDD for bounded failure details: the new test failed first because state/unit were omitted; after implementation, the diagnostic and incomplete-reading tests passed 2/2. Broader R05 suite: 157 passed, 1 unrelated R04 evidence-hash test deselected, 0 failed. The task-graph/dashboard/state-consistency gate passed 21/21 after the formal blocker transition. Ruff retains 8 existing runner findings.
+- Code/data commit: `58cd0ac5c78a74a35214cc120e20638ace20f6e3`; prior state commit `999f8bacc107fd7a4fbf5e6fdfcd7e2e443bf633` was pushed to GitHub. The new state revision 248 is not yet committed/pushed. A fresh `ls-remote` failed over TCP 443. RC01 deletions and R04 presentation files remain untouched and unstaged.
+
+The latest provider request returned at 22:21:31Z. Do not call Horizun again before 22:31:31Z. After that, recheck Revit PID and lock state, publish the current state, then run the exact R05-only runner once. Its invalid-reading error now prints only bounded state/unit/value-type metadata, never the numeric measurement. Continue only if exact partial/P6 reconciliation and all eight measured m2 readings pass; then finish R05 WRITE → READ → VERIFY → SAVE/CHECKPOINT → CLOSE/REOPEN/READBACK. Stop at R05.
+
+``` powershell
+.\.venv\Scripts\python.exe scripts\run_amanda_production.py --rvt 'revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt' --resume-run003-study --reuse-existing-run003-lease --max-stage R05 --revit-pid 12660 --execute
+```
+
+## Previous update — P7-T01/R05 before the 22:21 runner attempt (superseded)
 
 Authorization remains limited to P7-T01/R05 on RUN-003. Do not start R06 or later.
 

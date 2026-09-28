@@ -21,10 +21,10 @@ def test_status_dashboard_checkpoint_matches_project_state():
 def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     handoff = (ROOT / "state" / "HANDOFF.md").read_text(encoding="utf-8")
     assert (
-        "## Current state — P7-T01/R05 blocked at production runner transport"
+        "## Current state — P7-T01/R05 blocked at partial recovery"
         in handoff.splitlines()[:8]
     )
-    assert "Current authorization is R05 only." in handoff
+    assert "Authorization remains limited to P7-T01/R05 on RUN-003." in handoff
     assert "RUNNER_TRANSPORT_UNREACHABLE:BLOCKING" in handoff
     assert "direct Horizun health reports HEALTHY" in handoff
     assert "captured window content was Chrome" in handoff
@@ -44,17 +44,26 @@ def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     assert report_minute == recorded.replace(second=0, microsecond=0)
 
 
-def test_unreachable_production_runner_transport_is_a_formal_p7_blocker():
+def test_elevated_runner_resolves_transport_and_records_partial_recovery_blocker():
     project_state = yaml.safe_load(
         (ROOT / "PROJECT_STATE.yaml").read_text(encoding="utf-8")
     )
-    blocker = next(
+    transport_blocker = next(
         item
         for item in load_blockers(ROOT / "state")
         if item.id == "RUNNER_TRANSPORT_UNREACHABLE"
     )
+    recovery_blocker = next(
+        item
+        for item in load_blockers(ROOT / "state")
+        if item.id == "R05_PARTIAL_RECOVERY_UNVERIFIED"
+    )
 
-    assert "RUNNER_TRANSPORT_UNREACHABLE:BLOCKING" in project_state["blockers"]
-    assert blocker.severity.value == "BLOCKING"
-    assert blocker.affected_tasks == ["P7-T01"]
-    assert blocker.is_open
+    assert "RUNNER_TRANSPORT_UNREACHABLE:BLOCKING" not in project_state["blockers"]
+    assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" in project_state["blockers"]
+    assert transport_blocker.severity.value == "BLOCKING"
+    assert transport_blocker.affected_tasks == ["P7-T01"]
+    assert not transport_blocker.is_open
+    assert recovery_blocker.severity.value == "BLOCKING"
+    assert recovery_blocker.affected_tasks == ["P7-T01"]
+    assert recovery_blocker.is_open

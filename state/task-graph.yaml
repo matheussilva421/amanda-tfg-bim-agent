@@ -3363,28 +3363,26 @@ tasks:
       Current authorization covers P7-T01/R05 only. Every later stage requires
       its own task gate; completing R05 does not start R06. R06 remains NOT STARTED.
     - >-
-      Current blocker: RUNNER_TRANSPORT_UNREACHABLE:BLOCKING. Two sandboxed
-      2026-09-28 .venv attempts returned "no Revit is reachable". The same
-      official runner in the current user's elevated context reached typed
-      health/session checks, selected PID 12660, acquired/released the normal
-      lease and entered P6/partial recovery. This supports the owner-only
-      discovery access-context hypothesis; the token-bearing file was not read.
-      It stopped before R05 write because a known floor Area response had no
-      unit. The new registry/tools-list/full_write/unpaused gates still require
-      fresh live evidence. No model save, write or checkpoint occurred.
+      Former blocker RUNNER_TRANSPORT_UNREACHABLE:BLOCKING was resolved at
+      2026-09-28 22:21:31Z. The official runner in the current user's elevated
+      context passed health, zero-other-client, exact target/build/PID 12660,
+      clean command registry (73/73), unrestricted provider tools (80/80), MCP
+      tools/list (80), full_write and mcp_paused=false. The owner-only discovery
+      token was not read.
     - >-
-      The current journal records Session12660_P0MainQueue, the exact document
-      open, and Horizun MCP startup. Another responding process 3364 exists and
-      remains untouched. The stdio transport returned no Revit reachable despite
-      this journal evidence. The discovery ACL hypothesis and next controlled
-      runner attempt are recorded in state/HANDOFF.md.
+      Current blocker: R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING. The runner
+      entered guarded recovery for the known unsaved partial after the live
+      model did not match the accepted P6 element count. The exact eight-floor
+      parameter Area takeoff failed the measured-m2 gate for ElementId 331188.
+      No area or unit was inferred. The lease was released; no model write,
+      save or checkpoint occurred. A safe state/unit diagnostic is now emitted
+      on invalid quantity reads.
     - >-
-      The 600-second quiet window after the last runner call has elapsed. Run the
-      exact production runner once in the current user context; require HEALTHY,
-      zero other clients, exact RUN-003/build/PID, complete command/tool registries,
-      full_write, mcp_paused=false, runner-managed lease, exact P6 reconciliation,
-      and complete Area readings with explicit m2 units. Use the R05-only runner
-      and stop at R05.
+      The 600-second quiet window ends at 2026-09-28 22:31:31Z. After that,
+      run the exact production runner once using the elevated current-user
+      context. It will print bounded state/unit/value-type metadata on an invalid
+      takeoff reading without printing the numeric value. Require all recovery
+      and Area gates before any R05 write, then stop at R05.
   P7-T02:
     id: P7-T02
     phase: P7
