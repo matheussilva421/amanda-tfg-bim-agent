@@ -1,5 +1,23 @@
 # Current Handoff
 
+## 2026-09-28 — Pacote final R04 para orientação (ZIP) — sessão concluída
+
+Entrega intermediária R04 finalizada e empacotada para a orientadora, a partir do checkpoint P6 aceito, sem tocar em R05/R06 nem em RC01.
+
+- Derivado de apresentação salvo e verificado: `revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/AMANDA-RUN-003-R04-PRESENTATION-20260928.rvt`, SHA-256 `bf5f05050679191a0bf2ce4b731441aa20306dd36cfe426a3f2f37c33c42121a`, 5.013.504 bytes. Checkpoint final (cópia byte a byte) em `snapshots/AMANDA-RUN-003-R04-PRESENTATION-FINAL-ORIENTADORA.rvt`, mesmo hash.
+- Ciclo SAVE → CLOSE → REOPEN com auditoria (Revit 2027, sem upgrade) executado; leitura tipada dos 25 elementos espaciais com fingerprint `1aac5d79b05b159a` antes e depois — 25/25, GEOMETRY_DIFFERENCES = 0 (comparação tipada campo a campo; a extração bruta da API difere apenas por ruído de conversão de 4,4e-7 m, documentado).
+- Prancha A1 (`R04-01`, folha 331392) reorganizada: desenho maior à esquerda, título no topo, programa oficial e ressalvas, coluna de setores A–M e organização do programa à direita. Title block genérico Autodesk removido (delete tipado verificado, 1 + 9 em cascata) e substituído por carimbo acadêmico desenhado na folha (TFG, projeto, Aluno(a): Amanda, prancha, etapa, data 28/09/2026, escala 1:300, número R04-01, moldura e divisórias), sem inventar instituição/orientadora/matrícula/endereço.
+- Correção do Pavilhão D na prancha: “F — Residencial D — pavilhão comunitário: convivência, refeitório e copa” e “Residencial: 3 pavilhões de dormitórios/família + 1 pavilhão comunitário.”; descrições A/B/C alinhadas ao contrato canônico; programa oficial inalterado.
+- Vistas finais: 01 implantação (331218), 02 isométrica geral (331230, rótulos discretos), 03 residencial (331241, A/B/C/D com D comunitário), 04 administrativo (331252, rótulo “2 pavimentos”), 05 serviços/capacitação (331283), 06 infantil + playground (331571, vista 3D nova com massa e playground) e 07 corte do administrativo (331581, “Nível 1/Nível 2”). Massas reativadas nas plantas, cores de setor por vista (overrides de exibição) e enquadramentos por crop/seção calculados — nenhuma geometria alterada.
+- Pacote: `revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/delivery/AMANDA-TFG-R04-ORIENTADORA-20260928.zip`, 16.604.517 bytes, SHA-256 `bcc00f88ea6db7f7b940445e1a2be6afbb60fd8f9e7bd35fe68975732ae2c83a`; 56 arquivos conferidos por `SHA256SUMS.txt` após extração em pasta temporária (`AMANDA-TFG-R04-ORIENTADORA-20260928.zip.verification.json`, 0 problemas). O ZIP contém prancha, 7 PDFs de vistas, 8 PNGs, os três RVTs (P6, derivado editável e checkpoint final), relatórios, README, manifesto e evidências; caminhos internos relativos.
+- Relatório final: `docs/reports/R04-orientadora-final-package-2026-09-28.md` (com o SHA-256 do ZIP). README da entrega: `LEIA-ME-ORIENTADORA.md` no pacote, com “ABRIR PRIMEIRO: 01_PRANCHA/R04-01-PRANCHA-A1.pdf”.
+- Lease de escrita: readquirido pelo mecanismo normal do projeto (`WriterLock.acquire(reclaim_abandoned=True)`, geração 2, keeper PID 57852) após o dono anterior (PID 7860) estar comprovadamente morto; liberado ao fim da sessão pelo próprio token do owner. Nenhum force-release, nenhum lock removido à mão.
+- P7-T01/R05 continua pendente e bloqueado pelo gate de transporte do runner; R06 não iniciado; RC01 intocado; GeoNatal não pesquisado; S01/S02/R12 não reutilizados.
+
+### Limite exato de retomada
+
+O pacote R04 para orientação está fechado e verificado. Não iniciar R05/R06 a partir dele. Para uso da orientadora, basta o ZIP em `delivery/`; para novas alterações de apresentação, abrir o derivado salvo, trabalhar e repetir SAVE → CLOSE → REOPEN → readback tipado (25/25) antes de reexportar e reempacotar.
+
 ## 2026-09-28 — R04 presentation packet closeout (supplemental)
 
 The presentation-only R04 board and six supporting views are saved from the accepted P6 source in a dedicated RUN-003 derivative. This is supplemental evidence for the P6/R04 design study; it does not start or advance P7/R05 or R06.

@@ -1,0 +1,12 @@
+{
+  "schema": "amanda.run003-r04-orientadora-zip-verification/1",
+  "zip": "AMANDA-TFG-R04-ORIENTADORA-20260928.zip",
+  "zip_bytes": 16604517,
+  "zip_sha256": "bcc00f88ea6db7f7b940445e1a2be6afbb60fd8f9e7bd35fe68975732ae2c83a",
+  "entries": 58,
+  "hashes_checked": 56,
+  "required_present": true,
+  "problems": [],
+  "extracted_to": "C:\\Users\\slvma\\AppData\\Local\\Temp\\r04zip-5b989897",
+  "manifest_files": 55
+}
