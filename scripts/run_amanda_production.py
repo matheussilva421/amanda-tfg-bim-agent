@@ -865,7 +865,9 @@ def _load_known_failed_r05_records(journal_path: Path) -> list[dict]:
     if set(observed) != set(RUN003_FAILED_R05_FLOOR_IDS):
         raise ValueError("journal does not describe the known RUN-003 partial R05 attempt")
     if any(
-        record.get("element_id") != RUN003_FAILED_R05_FLOOR_IDS[logical_id]
+        isinstance(record.get("element_id"), bool)
+        or not isinstance(record.get("element_id"), int)
+        or record.get("element_id") != RUN003_FAILED_R05_FLOOR_IDS[logical_id]
         or record.get("capability") != "revit.create_floor"
         or not isinstance(record.get("unique_id"), str)
         or not record["unique_id"].strip()
@@ -1478,11 +1480,18 @@ def _validate_known_r05_partial_geometry(
     }
 
 
-def _remaining_r05_operations(operations, reconciled_logical_ids: set[str]) -> list:
+def _remaining_r05_operations(operations, reconciled_element_ids: set[int]) -> list:
     """Filter only the exact eight floor operations already read and reconciled."""
 
     expected_ids = set(RUN003_FAILED_R05_FLOOR_IDS)
-    if reconciled_logical_ids != expected_ids:
+    expected_element_ids = set(RUN003_FAILED_R05_FLOOR_IDS.values())
+    if (
+        any(
+            isinstance(element_id, bool) or not isinstance(element_id, int)
+            for element_id in reconciled_element_ids
+        )
+        or reconciled_element_ids != expected_element_ids
+    ):
         raise ValueError("reconciled IDs do not match the exact known eight-floor set")
     operation_ids = [getattr(operation, "logical_id", None) for operation in operations]
     matching = [logical_id for logical_id in operation_ids if logical_id in expected_ids]

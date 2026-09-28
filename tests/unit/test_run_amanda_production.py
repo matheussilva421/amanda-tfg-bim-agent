@@ -2562,7 +2562,7 @@ def test_r05_resume_skips_only_the_eight_fully_reconciled_floor_operations():
             payload={},
         ),
     ]
-    verified_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS)
+    verified_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
 
     remaining = production_runner._remaining_r05_operations(operations, verified_ids)
 
@@ -2571,6 +2571,39 @@ def test_r05_resume_skips_only_the_eight_fully_reconciled_floor_operations():
     ]
     with pytest.raises(ValueError, match="exact known eight-floor set"):
         production_runner._remaining_r05_operations(operations, verified_ids - {next(iter(verified_ids))})
+
+
+def test_r05_resume_rejects_float_element_ids_that_equal_known_integer_ids():
+    floors = _known_r05_floor_operations()
+    operations = [
+        SimpleNamespace(
+            logical_id="WALL-KEEP",
+            semantic_capability="revit.create_wall",
+            payload={},
+        ),
+        *floors,
+    ]
+    float_ids = {
+        float(element_id)
+        for element_id in production_runner.RUN003_FAILED_R05_FLOOR_IDS.values()
+    }
+
+    with pytest.raises(ValueError, match="exact known eight-floor set"):
+        production_runner._remaining_r05_operations(operations, float_ids)
+
+
+def test_failed_r05_journal_rejects_float_element_id_equal_to_known_integer(
+    tmp_path,
+):
+    journal = _known_failed_r05_journal()
+    journal["records"][0]["element_id"] = float(
+        journal["records"][0]["element_id"]
+    )
+    journal_path = tmp_path / "R05-failed.json"
+    journal_path.write_text(json.dumps(journal), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="journal identities do not match"):
+        production_runner._load_known_failed_r05_records(journal_path)
 
 
 def test_reconciled_partial_floor_records_rejoin_the_full_r05_result():

@@ -1,0 +1,489 @@
+{
+  "acceptance_gate_passed": false,
+  "checkpoint": {
+    "manifest_verified": true,
+    "opened_file_version": "2027",
+    "path": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\evidence\\AMANDA-RUN-003-R04\\P6-T01-CANON-011-RECONCILED-20260926.rvt",
+    "sha256": "8d8166b8da9d572c445619457e302f868ca2c7bac1cfce83b1b6114d02559326",
+    "upgrade_allowed": false
+  },
+  "fingerprints": {
+    "accepted": "4636abc6b294829b",
+    "observed_compact": "2f12a578c8451f3f",
+    "observed_detailed": "1aac5d79b05b159a"
+  },
+  "model_write_performed": false,
+  "readback": {
+    "categories": {
+      "Massa": 7,
+      "Pisos": 14,
+      "Telhados": 4
+    },
+    "coverage_complete": true,
+    "detailed_categories": {
+      "Massa": 7,
+      "Pisos": 14,
+      "Telhados": 4
+    },
+    "matched_total": 25,
+    "returned": 25,
+    "row_count": 25,
+    "rows": [
+      {
+        "bounding_box": {
+          "max": [
+            5.0,
+            -32.0,
+            6.4
+          ],
+          "min": [
+            -5.0,
+            -52.00000000000001,
+            0.0
+          ]
+        },
+        "category": "Massa",
+        "element_id": 328657,
+        "name": "MASS-ADMIN_ACOLHIMENTO",
+        "unique_id": "b7e45332-e04d-47e6-a37b-5347a9d3f22f-000503d1"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            -27.77918991365718,
+            -5.475765385825232,
+            3.2
+          ],
+          "min": [
+            -38.22081008634282,
+            -14.524234614174768,
+            0.0
+          ]
+        },
+        "category": "Massa",
+        "element_id": 328658,
+        "name": "MASS-CHILD_SECTOR",
+        "unique_id": "b7e45332-e04d-47e6-a37b-5347a9d3f22f-000503d2"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            -8.335898384862245,
+            43.18818963765306,
+            3.2
+          ],
+          "min": [
+            -17.664101615137756,
+            30.811810362346936,
+            0.0
+          ]
+        },
+        "category": "Massa",
+        "element_id": 328659,
+        "name": "MASS-RES_PAV_A",
+        "unique_id": "b7e45332-e04d-47e6-a37b-5347a9d3f22f-000503d3"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            -7.278679656440357,
+            12.457812016663352,
+            3.2
+          ],
+          "min": [
+            -18.721320343559643,
+            1.542187983336648,
+            0.0
+          ]
+        },
+        "category": "Massa",
+        "element_id": 328660,
+        "name": "MASS-RES_PAV_B",
+        "unique_id": "b7e45332-e04d-47e6-a37b-5347a9d3f22f-000503d4"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            17.932050807568878,
+            11.460660171779821,
+            3.2
+          ],
+          "min": [
+            8.06794919243112,
+            2.539339828220178,
+            0.0
+          ]
+        },
+        "category": "Massa",
+        "element_id": 328661,
+        "name": "MASS-RES_PAV_C",
+        "unique_id": "b7e45332-e04d-47e6-a37b-5347a9d3f22f-000503d5"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            18.432050807568878,
+            43.63861278752583,
+            3.2000000000000015
+          ],
+          "min": [
+            7.567949192431122,
+            30.361387212474167,
+            0.0
+          ]
+        },
+        "category": "Massa",
+        "element_id": 328662,
+        "name": "MASS-RES_PAV_D_COMMUNAL",
+        "unique_id": "b7e45332-e04d-47e6-a37b-5347a9d3f22f-000503d6"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            49.5,
+            -2.0016775850497517,
+            3.2
+          ],
+          "min": [
+            14.5,
+            -30.499999999999996,
+            0.0
+          ]
+        },
+        "category": "Massa",
+        "element_id": 328663,
+        "name": "MASS-SERVICE_CAPACITATION",
+        "unique_id": "b7e45332-e04d-47e6-a37b-5347a9d3f22f-000503d7"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            3.9999999999999996,
+            27.0,
+            0.0
+          ],
+          "min": [
+            -3.9999999999999996,
+            17.0,
+            -0.14999999999999997
+          ]
+        },
+        "category": "Pisos",
+        "element_id": 329943,
+        "name": "Genérico 150 mm - Preenchido",
+        "unique_id": "8aaab3c5-63a5-4959-a0b7-01e4c326d4c9-000508d7"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            4.999999999999999,
+            -5.999999999999999,
+            0.0
+          ],
+          "min": [
+            -4.999999999999999,
+            -13.999999999999998,
+            -0.14999999999999997
+          ]
+        },
+        "category": "Pisos",
+        "element_id": 329950,
+        "name": "Genérico 150 mm - Preenchido",
+        "unique_id": "8aaab3c5-63a5-4959-a0b7-01e4c326d4c9-000508de"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            60.99999999999999,
+            2.4999999999999996,
+            0.0
+          ],
+          "min": [
+            55.0,
+            -2.4999999999999996,
+            -0.14999999999999997
+          ]
+        },
+        "category": "Pisos",
+        "element_id": 329957,
+        "name": "Genérico 150 mm - Preenchido",
+        "unique_id": "8aaab3c5-63a5-4959-a0b7-01e4c326d4c9-000508e5"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            2.9999999999999996,
+            -21.5,
+            0.0
+          ],
+          "min": [
+            -2.9999999999999996,
+            -26.499999999999996,
+            -0.14999999999999997
+          ]
+        },
+        "category": "Pisos",
+        "element_id": 329964,
+        "name": "Genérico 150 mm - Preenchido",
+        "unique_id": "8aaab3c5-63a5-4959-a0b7-01e4c326d4c9-000508ec"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            -29.0,
+            -17.499999999999996,
+            0.0
+          ],
+          "min": [
+            -36.99999999999999,
+            -22.5,
+            -0.14999999999999997
+          ]
+        },
+        "category": "Pisos",
+        "element_id": 329971,
+        "name": "Genérico 150 mm - Preenchido",
+        "unique_id": "8aaab3c5-63a5-4959-a0b7-01e4c326d4c9-000508f3"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            -1.9999999999999998,
+            31.402853637,
+            0.0
+          ],
+          "min": [
+            -12.60586068,
+            26.002899247999995,
+            -0.14999999999999997
+          ]
+        },
+        "category": "Pisos",
+        "element_id": 329978,
+        "name": "Genérico 150 mm",
+        "unique_id": "8aaab3c5-63a5-4959-a0b7-01e4c326d4c9-000508fa"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            -2.0,
+            17.00455943,
+            0.0
+          ],
+          "min": [
+            -7.413503967,
+            3.8097631099999987,
+            -0.14999999999999997
+          ]
+        },
+        "category": "Pisos",
+        "element_id": 330024,
+        "name": "Genérico 150 mm",
+        "unique_id": "8aaab3c5-63a5-4959-a0b7-01e4c326d4c9-00050928"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            8.955883196,
+            17.582499895999998,
+            0.0
+          ],
+          "min": [
+            1.9999999999999991,
+            3.3642553359999976,
+            -0.14999999999999997
+          ]
+        },
+        "category": "Pisos",
+        "element_id": 330068,
+        "name": "Genérico 150 mm",
+        "unique_id": "8aaab3c5-63a5-4959-a0b7-01e4c326d4c9-00050954"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            8.271898346,
+            31.339845896,
+            0.0
+          ],
+          "min": [
+            2.000000000000001,
+            26.893825319,
+            -0.14999999999999997
+          ]
+        },
+        "category": "Pisos",
+        "element_id": 330125,
+        "name": "Genérico 150 mm",
+        "unique_id": "8aaab3c5-63a5-4959-a0b7-01e4c326d4c9-0005098d"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            -2.0,
+            31.402853637,
+            3.0249999999999995
+          ],
+          "min": [
+            -12.60586068,
+            26.002899247999995,
+            2.8999999999999995
+          ]
+        },
+        "category": "Telhados",
+        "element_id": 330174,
+        "name": "Genérico - 125 mm",
+        "unique_id": "8aaab3c5-63a5-4959-a0b7-01e4c326d4c9-000509be"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            -2.0,
+            17.00455943,
+            3.0249999999999995
+          ],
+          "min": [
+            -7.413503967,
+            3.80976311,
+            2.8999999999999995
+          ]
+        },
+        "category": "Telhados",
+        "element_id": 330397,
+        "name": "Genérico - 125 mm",
+        "unique_id": "8aaab3c5-63a5-4959-a0b7-01e4c326d4c9-00050a9d"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            8.955883196,
+            17.582499895999998,
+            3.0249999999999995
+          ],
+          "min": [
+            2.0,
+            3.3642553360000007,
+            2.8999999999999995
+          ]
+        },
+        "category": "Telhados",
+        "element_id": 330599,
+        "name": "Genérico - 125 mm",
+        "unique_id": "8aaab3c5-63a5-4959-a0b7-01e4c326d4c9-00050b67"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            8.271898346,
+            31.339845896,
+            3.0249999999999995
+          ],
+          "min": [
+            2.0,
+            26.893825319,
+            2.8999999999999995
+          ]
+        },
+        "category": "Telhados",
+        "element_id": 330863,
+        "name": "Genérico - 125 mm",
+        "unique_id": "8aaab3c5-63a5-4959-a0b7-01e4c326d4c9-00050c6f"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            15.643202818999999,
+            -27.775658350999997,
+            0.0
+          ],
+          "min": [
+            -0.7071067810000023,
+            -62.70710678100001,
+            -0.14999999999999997
+          ]
+        },
+        "category": "Pisos",
+        "element_id": 331095,
+        "name": "Genérico 150 mm - Preenchido",
+        "unique_id": "8aaab3c5-63a5-4959-a0b7-01e4c326d4c9-00050d57"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            62.0,
+            -16.885786438,
+            0.0
+          ],
+          "min": [
+            49.5,
+            -19.885786437999997,
+            -0.14999999999999997
+          ]
+        },
+        "category": "Pisos",
+        "element_id": 331108,
+        "name": "Genérico 150 mm - Preenchido",
+        "unique_id": "8aaab3c5-63a5-4959-a0b7-01e4c326d4c9-00050d64"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            5.0,
+            -32.0,
+            0.0
+          ],
+          "min": [
+            -5.0,
+            -52.00000000000001,
+            -0.14999999999999997
+          ]
+        },
+        "category": "Pisos",
+        "element_id": 331163,
+        "name": "Genérico 150 mm",
+        "unique_id": "fbd6b7c7-72ad-446d-a685-46c4ecca0a26-00050d9b"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            5.0,
+            -32.0,
+            4.0
+          ],
+          "min": [
+            -5.0,
+            -52.00000000000001,
+            3.85
+          ]
+        },
+        "category": "Pisos",
+        "element_id": 331170,
+        "name": "Genérico 150 mm",
+        "unique_id": "fbd6b7c7-72ad-446d-a685-46c4ecca0a26-00050da2"
+      },
+      {
+        "bounding_box": {
+          "max": [
+            1.0,
+            -52.00000000000001,
+            0.0
+          ],
+          "min": [
+            -1.0,
+            -61.081664261,
+            -0.14999999999999997
+          ]
+        },
+        "category": "Pisos",
+        "element_id": 331177,
+        "name": "Genérico 150 mm - Preenchido",
+        "unique_id": "fbd6b7c7-72ad-446d-a685-46c4ecca0a26-00050da9"
+      }
+    ],
+    "rows_sha256": "3732c3c44c405a6453df8157243b7695b442b9969c979c141c6e829011940c0d",
+    "unreadable_total": 0
+  },
+  "run_key": "ad4c234f46b4",
+  "schema_version": 1,
+  "status": "DIAGNOSTIC_ONLY_FINGERPRINT_MISMATCH"
+}
