@@ -74,10 +74,11 @@ Independent read-only re-review found no findings. Ruff has eight pre-existing
 findings and no new findings on the changed lines. Implementation, tests, and
 the diagnostic are committed as
 `1df883bb4cbf6fbe8bd75481019c55214449cc3e`; formal state revision 249 points to
-that commit, and its closeout commit is still pending. Do not use geometry_area
-as a floor-plan substitute. Before the next call, commit the current state and
-handoff, try the normal GitHub push, recheck PID 12660 and the lock, and use only
-the exact R05 production runner.
+that commit. Formal state commit `d21b4840cf5eaa23ac428f7d1cd5e6da5d0d3e3e` was
+pushed, and `origin/main` was verified at that SHA. This final handoff amendment
+is being committed separately. Do not use geometry_area as a floor-plan
+substitute. Before the next call, publish the amendment, recheck PID 12660 and
+the lock, and use only the exact R05 production runner.
 
 ## Current RUN-003 R04 acceptance status
 

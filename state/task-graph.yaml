@@ -3388,6 +3388,12 @@ tasks:
       0 failed. Independent read-only re-review of the final Decimal correction
       found no findings.
     - >-
+      Implementation/evidence commit 1df883bb4cbf6fbe8bd75481019c55214449cc3e
+      and formal-state commit d21b4840cf5eaa23ac428f7d1cd5e6da5d0d3e3e are on
+      main. A non-forced push succeeded and origin/main was verified at the
+      formal-state commit. Preserve the remaining RC01 deletions and frozen R04
+      presentation outputs.
+    - >-
       The 600-second quiet window after 22:34:27Z ended at 22:44:27Z. Before
       another provider call, finish review and commit/publish the verified code
       and state, recheck PID 12660 and the writer lock, then make one exact

@@ -2620,3 +2620,10 @@ entries:
   - 'Implementation, tests, and 22:34 diagnostic evidence committed on main as 1df883bb4cbf6fbe8bd75481019c55214449cc3e. Formal state revision 249 points last_verified_commit to that implementation commit; state/handoff closeout remains uncommitted, and no push has been attempted after the commit.'
   recorded_utc: '2026-09-28T23:22:11Z'
   note: 'Keep P7-T01 BLOCKED_BY_TOOL and R06 NOT STARTED. Validate and commit the state/handoff closeout separately, push if GitHub is reachable, recheck the Revit PID and writer lock, then make one exact R05-only official runner attempt. Stop on any failed recovery or Area gate.'
+- task_id: P7-T01
+  status: BLOCKED_BY_TOOL
+  evidence:
+  - 'The R05 recovery implementation/test/diagnostic commit is 1df883bb4cbf6fbe8bd75481019c55214449cc3e. Formal state revision 249 and closeout commit d21b4840cf5eaa23ac428f7d1cd5e6da5d0d3e3e were pushed to origin/main; elevated git ls-remote confirmed the exact remote SHA.'
+  - 'Final local gates before those commits: focused R05/state suite 183 passed, 1 unrelated R04 evidence-hash case deselected, 0 failed; state consistency/task graph/repository hygiene 19 passed; YAML parsed; diff check passed; Ruff has eight pre-existing findings and no new finding. Independent re-review found no findings.'
+  recorded_utc: '2026-09-28T23:26:05Z'
+  note: 'Keep the task blocked. Commit/push the current handoff amendment, then recheck PID 12660 and the writer lock and run one exact official R05-only attempt. R06 remains NOT STARTED.'
