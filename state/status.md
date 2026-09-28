@@ -122,6 +122,8 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 
 ## Git verification
 
+Current continuation: implementation commit `73f71e0c15bb169d88729c0530bffafc975a81c0` and state/handoff commit `821b2aa92697a0dab71fe79a0dce8699f3e4ba60` are pushed to `origin/main`; a fresh `git ls-remote origin refs/heads/main` returned the latter SHA. P7-T01 is still blocked; these commits contain no Revit model write.
+
 P7-T01 health-schema/transport-pin commit `f25b5e9080b2c4a9b5994bec918743c584ad00cb`
 is pushed to `origin/main`; a fresh `git ls-remote` matched. It contains the
 strict health validator, pinned transport lifecycle, regression tests and

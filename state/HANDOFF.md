@@ -13,7 +13,7 @@ Authorization from `C:\Users\slvma\.codex\attachments\2d812ca3-d648-4941-bd6e-a2
 ```powershell
 .\.venv\Scripts\python.exe scripts\run_amanda_production.py --rvt 'revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt' --resume-run003-study --reuse-existing-run003-lease --max-stage R05 --revit-pid <fresh-active-Revit-PID> --execute
 ```
-- Local code commit is `73f71e0c15bb169d88729c0530bffafc975a81c0` on `main`. The state/handoff closeout and push are pending. Existing RC01 deletions and the untracked R04 presentation package remain untouched and unstaged.
+- Local code commit is `73f71e0c15bb169d88729c0530bffafc975a81c0` on `main`; the state/handoff closeout is `821b2aa92697a0dab71fe79a0dce8699f3e4ba60`. Both were pushed to `origin/main`, and `git ls-remote origin refs/heads/main` returned `821b2aa92697a0dab71fe79a0dce8699f3e4ba60`. Existing RC01 deletions and the untracked R04 presentation package remain untouched and unstaged.
 
 **Resume boundary:** P7-T01 remains `BLOCKED_BY_TOOL`; no live R05 write, save, checkpoint, or cold-reopen verification occurred. After the quiet window, require runner health, zero other clients, exact active RUN-003 path/build/PID, lease and P6 reconciliation, then continue only through R05 WRITE → READ → VERIFY and its save/close/reopen/readback gates. Stop at R05.
 
