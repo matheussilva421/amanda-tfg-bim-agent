@@ -1169,7 +1169,22 @@ def _query_r05_partial_area_measurements(
             or not isinstance(measured_in, str)
             or not measured_in.strip()
         ):
-            raise ValueError(f"R05 Area reading for ElementId {element_id} must report a measured value in m2")
+            def safe_label(raw_value):
+                if raw_value is None:
+                    return "None"
+                if not isinstance(raw_value, str):
+                    return type(raw_value).__name__
+                return repr(raw_value.replace("\r", " ").replace("\n", " ")[:40])
+
+            state = reading.get("state") if isinstance(reading, dict) else None
+            unit = reading.get("unit") if isinstance(reading, dict) else None
+            value_type = type(value).__name__ if value is not None else "None"
+            measured_in_present = isinstance(measured_in, str) and bool(measured_in.strip())
+            raise ValueError(
+                f"R05 Area reading for ElementId {element_id} must report a measured value in m2 "
+                f"(state={safe_label(state)}, unit={safe_label(unit)}, "
+                f"value_type={value_type}, measured_in_present={measured_in_present})"
+            )
         measurements[element_id] = {
             "value": float(value),
             "unit": "m2",

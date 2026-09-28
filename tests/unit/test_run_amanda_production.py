@@ -1974,6 +1974,33 @@ def test_r05_partial_area_query_rejects_untyped_or_incomplete_area(monkeypatch, 
         )
 
 
+def test_r05_partial_area_failure_reports_safe_state_and_unit_diagnostics(
+    monkeypatch, tmp_path
+):
+    target = tmp_path / "RUN-003.rvt"
+    expected_ids = set(production_runner.RUN003_FAILED_R05_FLOOR_IDS.values())
+    response = _known_area_takeoff_response(target)
+    reading = response["rows"][0]["quantities"]["floor_area"]
+    reading.update({"state": "unavailable", "unit": "", "value": None})
+    monkeypatch.setattr(
+        production_runner,
+        "_read_tool",
+        lambda *_args: response,
+    )
+
+    with pytest.raises(ValueError) as exc_info:
+        production_runner._query_r05_partial_area_measurements(
+            object(), target, target.stem, expected_ids
+        )
+
+    message = str(exc_info.value)
+    assert "state='unavailable'" in message
+    assert "unit=''" in message
+    assert "value_type=None" in message
+    assert "measured_in_present=True" in message
+    assert "value=None" not in message
+
+
 def test_r05_level_query_uses_only_the_exact_reconciled_floor_operations(monkeypatch):
     floors = _known_r05_floor_operations()
     other_operations = [
