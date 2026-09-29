@@ -4,6 +4,8 @@
 
 Authorization remains limited to P7-T01/R05 on RUN-003. R06 and later remain NOT STARTED.
 
+- **R06 preparation input recorded, no R06 write authorized:** Amanda's 2026-09-29 two-floor administrative dimensional direction is now captured in `docs/inputs/2026-09-29-amanda-administrative-layout.md`, DEC-011, the dedicated P7-T02 plan, and GitHub issue #1. It preserves official program areas, treats the upper 5 m² support/archive as derived and the 10 m² veranda as semi-open, and rejects the dark CAD sketch as quantitative authority where it conflicts. Continue the current P7-T01/R05 recovery/implementation exactly from the live blocker; use this material only as R06 preflight until R05 PASS.
+
 - At 2026-09-29 05:14:55Z, a fresh Computer Use snapshot still returned `apps: []`; no native Revit UI was exposed. The user's “continue” did not choose a reminder-dialog action. Preserve the prior direction to leave it open: no click, save, close, discard, provider call, runner attempt, or model mutation occurred. The current active document and modal state remain unknown; the seven in-memory R05 writes remain unreconciled. P7-T01 remains formally `BLOCKED_BY_TOOL`, with `R05_STAGE_OPERATIONS_UNRECONCILED:BLOCKING` active.
 - **Exact resume:** after RUN-003 Revit is visible to Computer Use, inspect the live reminder text and choices read-only; do not act on stale text. Honor the user's explicit modal choice, then freshly check processes/lock and use only the official dynamic-PID R05 runner. Require independent readback of the seven writes before any continuation or persistence. R06 remains NOT STARTED.
 

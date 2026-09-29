@@ -3563,6 +3563,13 @@ tasks:
     - >-
       Place internal layout from the four boards and P1-T01 mapping. Preserve
       official room requirements; do not infer board-printed areas as official.
+    - >-
+      2026-09-29 USER_DIRECTED admin-layout input is recorded in
+      docs/inputs/2026-09-29-amanda-administrative-layout.md, DEC-011 and issue #1.
+      Use its nominal room dimensions only after P7-T01/R05 PASS; preserve the
+      single official ground-floor REQ-04-06, classify the upper 5 m2 support as
+      derived, keep the 10 m2 veranda semi-open/non-official internal useful area,
+      and treat the conflicting dark CAD sketch as reference-only.
   P7-T03:
     id: P7-T03
     phase: P7

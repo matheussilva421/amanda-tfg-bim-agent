@@ -96,6 +96,16 @@ The ground floor is the public intake and care sequence. The upper floor contain
 
 Fail the layout if psychology, social work, legal service, or meeting is placed upstairs; if coordination, administration, or team space is inserted into the public ground-floor intake sequence without approved deviation; or if the main public arrival logic is lost.
 
+#### Amanda-directed administrative dimensional targets — 2026-09-29
+
+Amanda provided a USER_DIRECTED dimensional/layout refinement for the two-storey administrative block. The detailed transcription and provenance are in `docs/inputs/2026-09-29-amanda-administrative-layout.md`; implementation is tracked in issue #1. This input refines the future R06 internal layout but does not change official program quantities/areas and does not authorize R06 before P7-T01/R05 passes.
+
+Ground-floor nominal clear-space targets: Psicologia 10 m² (2.50×4.00), Serviço Social 10 m² (2.50×4.00), Jurídico 10 m² (2.50×4.00), Reunião 15 m² (3.75×4.00), Copa 8 m² (2.00×4.00), Arquivo oficial 5 m² (1.25×4.00), Triagem 12 m² (3.00×4.00), Espera 15 m² (5.00×3.00), Registro 10 m² (2.50×4.00), Sanitário acessível 5 m² (~2.00×2.50), Controle 6 m² (2.00×3.00), Recepção 10 m² (~3.30×3.00). Preserve protected entrance, corridor, stair and elevator/core; do not introduce the dark-sketch 6 m² DML into this floor.
+
+Upper-floor nominal targets: Coordenação 10 m² (2.50×4.00), Secretaria/Admin 12 m² (3.00×4.00), Equipe 15 m² (3.75×4.00), Refeitório/Copa funcionários 15 m² (3.75×4.00), Multiuso/Grupos 30 m² (7.50×4.00), Sanitário/Vestiário 10 m² (2.50×4.00). Amanda also directs an upper `Apoio/Arquivo` of about 5 m² and a protected veranda of about 10 m². The upper support is architectural/derived and must not create a second official REQ-04-06; the veranda is semi-open and must not increase the official 626 m² internal useful total.
+
+These dimensions are nominal clear-layout targets, not exterior wall dimensions. R06 must reconcile wall thickness, circulation and the stair/elevator core around them; R08 remains responsible for formal Revit Room creation and official area readback. The dark CAD sketch supplied with the direction is adjacency/reference-only where non-conflicting because its 19 m² meeting room, 10 m² copa, 6 m² archive, 20 m² wait area and admin-ground DML conflict with the official/Amanda quantitative direction.
+
 ### Board 03 — Residential / dormitory pavilions
 
 | Pavilion | Board membership | Required organization |

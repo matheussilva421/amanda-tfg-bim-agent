@@ -75,3 +75,16 @@ This operational authorization does not claim Amanda's personal approval,
 surveyed or cadastral site truth, parcel fit, true north, site availability,
 FINAL, R14–R16, or GOLDEN. No GeoNatal research, RC01 modification, S01/S02/R12
 reuse, official program change, force push, or ZIP creation is authorized.
+
+## DEC-011 — Amanda-directed administrative layout dimensions
+
+Status: ACTIVE — USER_DIRECTED, 2026-09-29
+Authority: USER_DIRECTED for administrative spatial arrangement and nominal dimensional targets; official program PDF remains quantitative authority
+
+Amanda provided a concrete two-floor administrative layout direction for future P7-T02/R06. Ground-floor and upper-floor nominal dimensions are recorded in `docs/inputs/2026-09-29-amanda-administrative-layout.md` and implementation issue #1. The direction is consistent with the current Board-02 functional split and P6 20×10 m normalized-study envelope.
+
+The official program PDF continues to control official room quantities and official areas. The single official REQ-04-06 remains represented once on the ground floor. Amanda's upper `Apoio/Arquivo 5 m²` is retained as a derived architectural support space and must not be counted as a second official REQ-04-06. The protected upper veranda is approximately 10 m², semi-open, and must not be added to the official 626 m² internal useful area.
+
+The dark CAD sketch supplied with the same direction is reference-only for rough adjacency where non-conflicting; its different quantitative labels do not override the official program or Amanda's explicit tables. Nominal dimensions are clear-layout targets that R06 must reconcile against wall thickness, circulation, stair/elevator/core and the verified R05 shell.
+
+This decision prepares R06 only. It does not authorize R06 before P7-T01/R05 passes and does not move doors/windows (R07), formal Revit Rooms/area schedule (R08), or furniture (R10) into R06.

@@ -94,6 +94,12 @@ checkpoint where specified, commit and push before any later stage.
 | P7-T08 | R12 | Study materials, without changing canonical design decisions | P7-T07 |
 | P7-T09 | R13 | Plans, sections, elevations, schedules, sheets and explicit STUDY labeling | P7-T08 |
 
+### P7-T02 / R06 prepared input — Amanda administrative direction (2026-09-29)
+
+A new USER_DIRECTED administrative layout input is recorded in `docs/inputs/2026-09-29-amanda-administrative-layout.md`, with the implementation plan in `docs/plan/P7-T02-R06-administrative-layout-2026-09-29.md` and tracking issue #1. It preserves official program quantities/areas while fixing nominal room proportions and the intended two-floor arrangement. The upper 5 m² support/archive is derived rather than a second official REQ-04-06; the 10 m² veranda is semi-open/non-official internal useful area. The conflicting dark CAD sketch is not quantitative authority.
+
+This preparation does **not** start or authorize P7-T02. P7-T01/R05 remains the hard predecessor and the current execution gate.
+
 The current P7 authorization is limited to this normalized RUN-003 STUDY and
 `P7-T01/R05`. R06 and later stages are not authorized by this task; completing
 R05 does not start R06. This does not establish personal Amanda approval,
