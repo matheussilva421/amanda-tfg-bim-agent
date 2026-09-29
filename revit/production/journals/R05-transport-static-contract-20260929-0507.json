@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "event": "R05_TRANSPORT_STATIC_CONTRACT_AUDIT",
+  "observed_utc": "2026-09-29T05:07:11Z",
+  "status": "DISCOVERY_CONTEXT_DIVERGENCE_SUPPORTED_PATH_AND_ACL_NOT_PROVEN",
+  "read_only": true,
+  "no_mcp_process_started": true,
+  "runner_contract": {
+    "source": "src/amanda_agent/bim/providers/transport.py",
+    "server_path_rule": "LOCALAPPDATA/Programs/Horizun/MCP/server/horizun-mcp.exe",
+    "child_environment": "copy of the runner process environment",
+    "stdio": "JSON-RPC initialize and tool reply were parsed in the 04:19 attempt",
+    "stderr": "drained by the current transport implementation"
+  },
+  "installed_server": {
+    "path": "C:\\Users\\slvma\\AppData\\Local\\Programs\\Horizun\\MCP\\server\\horizun-mcp.exe",
+    "file_version": "1.3.3.0",
+    "sha256": "178A7CC335EC80250C0F605010A7E092ECA204F85417EFA535F876DDDEAE908D",
+    "managed_dll": {
+      "path": "C:\\Users\\slvma\\AppData\\Local\\Programs\\Horizun\\MCP\\server\\horizun-mcp.dll",
+      "file_version": "1.3.3.0",
+      "product_version": "1.3.3+cc4ea04e9ecfe547ad349f22e0864019ce1ead1f",
+      "bytes": 1103872,
+      "sha256": "DD360B3020E9C4AE652047015D0BA127A8FDA2A68612E9CA53EB2BD4D3B1514F"
+    },
+    "install_acl_observation": "The Programs/Horizun/MCP/server directories and executable ACLs include an inherited Modify/Synchronize allow for Dell-G15-5530\\CodexSandboxUsers. The default-context runner did start the configured executable and returned parsed JSON-RPC text. This rejects a broad inability to read/execute the installed server as the cause; it does not establish the discovery-file ACL."
+  },
+  "loaded_revit_addin": {
+    "process_id_at_observation": 12660,
+    "module_path": "C:\\Users\\slvma\\AppData\\Roaming\\Autodesk\\Revit\\Addins\\2027\\Horizun\\Horizun.Revit.dll",
+    "file_version": "1.3.3.0",
+    "product_version": "1.3.3+cc4ea04e9ecfe547ad349f22e0864019ce1ead1f",
+    "bytes": 4827648,
+    "sha256": "3F70B2D5929D345573E039F47858B3D51B23A82CCF67CB03D0AB0116671A7218",
+    "manifest": "C:\\Users\\slvma\\AppData\\Roaming\\Autodesk\\Revit\\Addins\\2027\\Horizun.addin",
+    "addin_acl_observation": "The add-in directory and loaded assembly ACLs also include an inherited Modify/Synchronize allow for Dell-G15-5530\\CodexSandboxUsers. This rejects a broad inability to read the installed add-in files; it does not establish discovery-file access."
+  },
+  "binary_embedded_contract_evidence": {
+    "method": "read-only ASCII and UTF-16 string extraction from the installed managed DLLs; neither binary was executed",
+    "finding": "Embedded diagnostic text says LocalApplicationData may be package-redirected under MSIX/AppContainer and differs by user or elevation context; it warns that the MCP client and user-launched Revit may resolve different discovery directories.",
+    "interpretation": "This directly supports a package/user discovery-context split as the leading explanation for the sandbox-versus-host-user contrast. It is static embedded guidance, not proof of the exact runtime path or selected file."
+  },
+  "observed_context_comparison": {
+    "default_sandbox": "Dell-G15-5530\\CodexSandboxOffline, SessionId 5, LOCALAPPDATA environment C:\\Users\\slvma\\AppData\\Local; official runner returned no-Revit-reachable at health.",
+    "host_user": "Dell-G15-5530\\slvma, non-administrator, SessionId 5; official dynamic-PID runner found the exact RUN-003 Revit process with Horizun loaded and health returned the modal response.",
+    "conclusion": "The official transport is usable in the host-user context. The sandbox-only no-Revit result correlates with principal/package context, despite the same recorded LOCALAPPDATA string and broad install/add-in ACL grants."
+  },
+  "hypothesis_matrix": {
+    "wrong_or_missing_server_executable": "REJECTED: exact configured executable exists; host-user runner also reached health through the official transport.",
+    "server_stdio_framing": "REJECTED_FOR_04_19: JSON-RPC reply was parsed and contained the provider's no-Revit text.",
+    "generic_install_or_addin_acl_denial": "REJECTED_AS_SUFFICIENT_CAUSE: inspected install/add-in paths grant the sandbox group Modify/Synchronize and the child returned a parsed reply.",
+    "principal_or_package_localapplicationdata_divergence": "SUPPORTED_AS_LEADING_CAUSE by the two-context health contrast and embedded provider guidance.",
+    "exact_discovery_root_and_selected_file": "UNKNOWN; no actual runtime path was captured and no root was guessed.",
+    "discovery_file_acl_or_effective_access": "UNKNOWN; the discovery location is unknown, so its ACL was not queried.",
+    "stale_discovery_or_startup_race": "UNKNOWN; no second client or fresh standalone probe was started.",
+    "target_pid_or_provider_cache": "HOST_USER_TARGET_REACHED; default sandbox did not discover a target; cache behavior remains UNKNOWN."
+  },
+  "safety_boundary": [
+    "No standalone MCP probe or second client was launched.",
+    "No ACLs were changed and no discovery path was guessed.",
+    "No Revit UI action, model write, save, close, hash, or checkpoint occurred.",
+    "Continue live production only through the official dynamic-PID R05 runner in the known host-user context after current UI/target state is available.",
+    "Never execute R06 or later."
+  ]
+}

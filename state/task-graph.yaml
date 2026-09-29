@@ -3534,6 +3534,19 @@ tasks:
       records the snapshot. No live runner, click, write, save, close, or hash
       was performed. Do not use a stale dialog observation to continue.
     - >-
+      Read-only static contract audit of the installed Horizun 1.3.3.0 server
+      and loaded Revit add-in found inherited CodexSandboxUsers access on both
+      installation trees. The sandbox runner had launched the server and
+      parsed JSON-RPC health text, so broad executable/add-in ACL denial is not
+      the cause. Embedded provider diagnostics support per-package/per-user
+      LocalApplicationData discovery divergence between the MCP client and
+      user-launched Revit. This is the leading access-context hypothesis, not
+      proof of the exact runtime discovery path or ACL. The exact root/file
+      remains UNKNOWN; do not guess it or alter ACLs. Journal
+      revit/production/journals/R05-transport-static-contract-20260929-0507.json
+      records hashes and bounded findings. No binary or new MCP client was
+      executed.
+    - >-
       Completing R05 still requires fresh live recovery, all remaining shell
       writes, independent read/verify, save/checkpoint, close/reopen/readback,
       and visual QA. On failure, preserve the target active and unsaved and

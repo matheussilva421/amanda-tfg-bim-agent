@@ -2780,3 +2780,20 @@ entries:
   - 'Revision-261 repository checks passed: focused status/task-graph/repository-hygiene suite 33/33; four YAML and three JSON files parsed; scoped git diff --check passed. No live Revit verification is implied.'
   recorded_utc: '2026-09-29T04:55:00Z'
   note: 'R05 remains blocked before live recovery. Restore CUA visibility and freshly verify modal/active-document state; preserve the unsaved target and seven unreconciled writes. Then recheck process/modules/lease/target and use only the official dynamic-PID R05 runner. Never execute R06.'
+- task_id: P7-T01
+  status: BLOCKED_BY_TOOL
+  evidence:
+  - >-
+    A read-only static audit traced the installed runner server and loaded
+    Horizun Revit add-in paths, versions, hashes, and installation ACLs. The
+    Codex sandbox group has inherited Modify/Synchronize grants on both trees;
+    the default runner launched the server and parsed a JSON-RPC health reply.
+    This rejects broad executable/add-in ACL denial. Embedded provider text
+    supports per-package/per-user LocalApplicationData discovery divergence as
+    the leading explanation for the sandbox/host-user contrast, but the exact
+    runtime discovery root/file/ACL remains unknown. No server binary or new
+    MCP client was executed. See
+    revit/production/journals/R05-transport-static-contract-20260929-0507.json.
+  - 'The official transport previously reached the RUN-003 Revit process in host-user context and stopped only because health reported the reminder modal; RUNNER_TRANSPORT_UNREACHABLE remains resolved for that context. The active blocker is still the seven unreconciled R05 writes plus unavailable current CUA window state.'
+  recorded_utc: '2026-09-29T05:07:11Z'
+  note: 'Do not edit server/add-in ACLs or guess the discovery root. Resume only when the current Revit UI/target is visible and freshly verified; then use the official dynamic-PID R05 runner in host-user context. Preserve the seven writes unsaved; never execute R06.'

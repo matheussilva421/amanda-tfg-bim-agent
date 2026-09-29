@@ -391,6 +391,16 @@ blockers:
     state and active document are UNKNOWN. See
     revit/production/journals/R05-live-preflight-20260929-0453.json. Do not
     click or close the reminder based on the stale screenshot.
+    A read-only static contract audit found the configured Horizun executable
+    and loaded Revit add-in paths, versions, and hashes. Their installation
+    ACLs grant the Codex sandbox group Modify/Synchronize; the sandbox runner
+    also launched the executable and parsed its JSON-RPC health text. Embedded
+    Horizun diagnostics state that LocalApplicationData can be package/user
+    redirected, splitting MCP-client discovery from user-launched Revit. This
+    supports package/principal discovery-context divergence as the leading
+    explanation, but the actual discovery root/file and its ACL remain UNKNOWN.
+    See revit/production/journals/R05-transport-static-contract-20260929-0507.json.
+    Do not change ACLs, guess a root, or add a transport fallback.
   resolution: >-
     Through the official production runner, freshly prove provider readiness,
     exact RUN-003 document and target, enumerate a complete view inventory, and
