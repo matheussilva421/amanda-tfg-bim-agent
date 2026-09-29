@@ -234,7 +234,7 @@ def test_current_state_blocks_run003_r05_until_stage_operations_are_reconciled()
 
     handoff = (ROOT / "state/HANDOFF.md").read_text(encoding="utf-8")
     normalized_handoff = " ".join(handoff.split())
-    assert "## Current state — P7-T01/R05 blocked at typed view-query response" in handoff.splitlines()[:8]
+    assert "## Current state — P7-T01/R05 blocked at P6 recovery cleanup" in handoff.splitlines()[:8]
     assert "passed measured m2 Area/provenance checks for all eight persisted floors" in normalized_handoff
     assert "explicitly authorizes P7-T01/R05" in normalized_handoff
     assert "XY bounds, Revit Area, and resolved level name" in normalized_handoff

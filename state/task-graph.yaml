@@ -3426,6 +3426,23 @@ tasks:
       and lock and retry only through the official dynamic-PID R05 runner. R06
       remains NOT STARTED.
     - >-
+      Around 03:33-03:35Z, the official dynamic-PID runner passed readiness,
+      acquired the lease, and reconciled the P6 checkpoint fingerprint, then
+      failed the accepted live element-count gate. Guarded recovery could not
+      verify target reactivation; cleanup failed with `RUN-003 P6 checkpoint
+      close was not verified: None`. The runner
+      released the lease. Diagnostic
+      revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-1bfe69b64324.json
+      records 25/25 rows, complete coverage, zero unreadable, and
+      model_write_performed=false. No R05 geometry operation, save, or
+      checkpoint occurred. PID 12660's visible window later showed RUN-003 as
+      active, but the P6 inspection document's close state remains unverified.
+      TDD makes untyped document-session replies fail with bounded diagnostics;
+      commit 8bdd1f9a267edda9105b75d55404795823d5937e is pushed. Focused
+      R05/state suite: 281 passed, 0 failed with one unrelated R04 evidence-hash
+      case deselected. Retry only after state revision 256 is published and the
+      conservative quiet deadline 03:46:36Z. R06 remains NOT STARTED.
+    - >-
       Completing R05 still requires fresh live recovery, all remaining shell
       writes, independent read/verify, save/checkpoint, close/reopen/readback,
       and visual QA. On failure, preserve the target active and unsaved and

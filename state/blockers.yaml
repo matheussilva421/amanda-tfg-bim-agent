@@ -299,6 +299,21 @@ blockers:
     occurred. TDD now raises a bounded diagnostic; commit ccb6e87 is pushed and
     the focused R05/state suite passed 279 tests, with one unrelated R04
     evidence-hash case deselected. The provider-side cause is not established.
+    Around 03:33-03:35Z the official dynamic-PID runner passed readiness,
+    acquired the lease, and reconciled the P6 fingerprint, then failed the
+    accepted live element-count gate. Guarded recovery failed to verify target
+    reactivation; cleanup could not verify P6 inspection close because
+    horizun_document_session decoded to None. The runner released the lease.
+    Diagnostic
+    revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-1bfe69b64324.json
+    records 25/25 rows, complete coverage, zero unreadable, and
+    model_write_performed=false. No R05 geometry operation, save, or checkpoint
+    occurred. A later process snapshot showed the visible RUN-003 target, but
+    whether the P6 inspection document remains open is not known. TDD now
+    raises a bounded diagnostic for untyped document-session replies; commit
+    8bdd1f9a267edda9105b75d55404795823d5937e is pushed. Focused R05/state suite:
+    281 passed, 0 failed, one unrelated R04 evidence-hash case deselected.
+    The provider-side root cause remains unknown.
   resolution: >-
     Through the official production runner, freshly prove provider readiness,
     exact RUN-003 document and target, enumerate a complete view inventory, and
@@ -317,10 +332,10 @@ blockers:
   tasks_still_allowed: []
   allowed_tasks: []
   resolution_action: >-
-    After publishing state revision 255, use only the official health-first
+    After publishing state revision 256, use only the official health-first
     runner for one exact R05-only attempt, omitting a historical PID so the
     runner dynamically selects and proves the live session. Do not invoke it
-    before 2026-09-29 03:27:49Z, the conservative end of the latest provider
+    before 2026-09-29 03:46:36Z, the conservative end of the latest provider
     quiet window. It must reconcile
     P6, the eight prior floors, and every verified write in the failed-stage
     journal using a complete cursor-paged view inventory and complete edge
