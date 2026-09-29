@@ -25,7 +25,10 @@ def test_current_handoff_records_modal_health_blocker_and_matches_p6_report_time
     assert current_heading in handoff.splitlines()[:8]
     current = handoff.split(current_heading, 1)[1].split("\n## Previous update", 1)[0]
     assert "Authorization remains limited to P7-T01/R05 on RUN-003." in current
-    assert "The former transport and resume-dispatch blockers are resolved." in current
+    assert (
+        "The former transport and resume-dispatch blockers are resolved for the "
+        "documented elevated execution context."
+    ) in current
     assert "`R05_STAGE_OPERATIONS_UNRECONCILED:BLOCKING` is the active blocker." in current
     assert "horizun_get_dimension_references" in current
     assert "courtyard void" in current
@@ -48,6 +51,9 @@ def test_current_handoff_records_modal_health_blocker_and_matches_p6_report_time
     assert "before readiness, lease acquisition, or R05 dispatch" in current
     assert "model write, save, or checkpoint was dispatched" in current
     assert "04:02:56Z" in current
+    assert "R05-no-revit-reachable-20260929-0419.json" in current
+    assert "Dell-G15-5530\\CodexSandboxOffline" in current
+    assert "elevated context" in current
     assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" not in current
     assert "R06 and later remain NOT STARTED." in current
 
@@ -104,6 +110,30 @@ def test_latest_modal_health_retry_is_recorded_without_lease_or_write():
     assert processes[12660]["horizun_module_loaded"] is True
     assert processes[12660]["main_window_handle"] == 0
     assert journal["quiet_deadline_utc"] == "2026-09-29T04:16:00Z"
+
+
+def test_sandbox_no_revit_attempt_records_execution_context_and_stops_prelease():
+    journal_path = (
+        ROOT
+        / "revit"
+        / "production"
+        / "journals"
+        / "R05-no-revit-reachable-20260929-0419.json"
+    )
+    journal = json.loads(journal_path.read_text(encoding="utf-8"))
+
+    assert journal["status"] == "BLOCKED_BY_TOOL_NO_REVIT_REACHABLE"
+    assert journal["provider_tool"] == "horizun_health"
+    assert "no Revit is reachable" in journal["health_text_preview"]
+    assert journal["provider_ready"] is False
+    assert journal["lease_acquired"] is False
+    assert journal["stage_dispatch_started"] is False
+    assert journal["model_write_dispatched"] is False
+    assert journal["runner_context"]["user"] == "Dell-G15-5530\\CodexSandboxOffline"
+    assert journal["runner_context"]["is_administrator"] is False
+    assert journal["runner_context"]["horizun_variable_names"] == []
+    assert journal["server"]["file_version"] == "1.3.3.0"
+    assert journal["quiet_deadline_utc"] == "2026-09-29T04:30:00Z"
 
 
 def test_official_runner_dispatches_r05_and_records_stage_operation_blocker():

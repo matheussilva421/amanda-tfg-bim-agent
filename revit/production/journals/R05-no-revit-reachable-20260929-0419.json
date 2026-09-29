@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "status": "BLOCKED_BY_TOOL_NO_REVIT_REACHABLE",
+  "runner": "scripts/run_amanda_production.py",
+  "arguments": [
+    "--resume-run003-study",
+    "--max-stage",
+    "R05",
+    "--execute"
+  ],
+  "target": "revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "runner_start_after_utc_check": "2026-09-29T04:19:47Z",
+  "runner_result_observed_at_utc": "2026-09-29T04:21:41Z",
+  "runner_exit_code": 1,
+  "execution_context": "default_sandbox",
+  "provider_tool": "horizun_health",
+  "provider_ready": false,
+  "lease_acquired": false,
+  "stage_dispatch_started": false,
+  "model_write_dispatched": false,
+  "save_or_checkpoint_dispatched": false,
+  "error_type": "TypeError",
+  "error": "Horizun health reply was untyped",
+  "health_text_preview": "Error: no Revit is reachable. Is Revit running with the Horizun add-in loaded?",
+  "reply_shape": {
+    "reply_keys": [
+      "id",
+      "jsonrpc",
+      "result"
+    ],
+    "result_type": "dict",
+    "result_keys": [
+      "content",
+      "isError"
+    ],
+    "content_types": [
+      "text"
+    ],
+    "error_present": false,
+    "structured_content_present": false
+  },
+  "runner_context": {
+    "user": "Dell-G15-5530\\CodexSandboxOffline",
+    "is_administrator": false,
+    "powershell_pid": 60608,
+    "session_id": 5,
+    "architecture": "x64",
+    "cwd": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda",
+    "USERPROFILE": "C:\\Users\\slvma",
+    "APPDATA": "C:\\Users\\slvma\\AppData\\Roaming",
+    "LOCALAPPDATA": "C:\\Users\\slvma\\AppData\\Local",
+    "HOME": "",
+    "TEMP": "C:\\Users\\slvma\\AppData\\Local\\Temp",
+    "path_relevant": [
+      "C:\\Users\\slvma\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell",
+      "C:\\Python314\\Scripts\\",
+      "C:\\Python314\\",
+      "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+    ],
+    "horizun_variable_names": [],
+    "parent_pid": "not captured; CIM access denied",
+    "mcp_child_pid": "not captured"
+  },
+  "server": {
+    "path": "C:\\Users\\slvma\\AppData\\Local\\Programs\\Horizun\\MCP\\server\\horizun-mcp.exe",
+    "file_version": "1.3.3.0",
+    "product_version": "1.3.3+cc4ea04e9ecfe547ad349f22e0864019ce1ead1f",
+    "sha256": "178A7CC335EC80250C0F605010A7E092ECA204F85417EFA535F876DDDEAE908D",
+    "discovery_root": "unknown; not declared by the inspected transport/tool-discovery contract",
+    "discovery_file": "unknown; no path guessed"
+  },
+  "historical_comparator": {
+    "source": "state/HANDOFF.md, superseded P7-T01 transport investigation",
+    "observation": "The same official runner in the elevated current-user context passed health and readiness, selected the Horizun-loaded Revit process, and entered P6/partial recovery.",
+    "environment_values_and_server_hash_recorded": false,
+    "interpretation": "The current non-administrator sandbox identity matches the previously observed no-Revit-reachable failure class; an elevated live comparator is still needed in this continuation."
+  },
+  "hypothesis_matrix": {
+    "executable_path_and_launch": "REJECTED_AS_CAUSE_FOR_THIS_ATTEMPT: configured executable exists, version/hash captured, and JSON-RPC health text was returned",
+    "stdio_framing": "REJECTED_AS_CAUSE_FOR_THIS_ATTEMPT: parsed JSON-RPC result contains bounded provider text",
+    "runner_user_and_elevation": "SUPPORTED: current identity is Dell-G15-5530\\CodexSandboxOffline and IsAdministrator=false; historical elevated invocation passed health",
+    "session_id": "CURRENT=5; historical comparator not recorded",
+    "discovery_root_and_acl": "UNKNOWN: exact root/file not declared by inspected repository contract and ACL was not queried",
+    "stale_discovery_or_startup_race": "UNKNOWN",
+    "stderr_and_subprocess_lifecycle": "NO_FAILURE_EVIDENCE_IN_THIS_ATTEMPT; child PID/stderr counters not captured",
+    "target_pid_and_provider_cache": "UNKNOWN: health could not discover a Revit target"
+  },
+  "preflight_process_snapshot": {
+    "observed_at_utc": "2026-09-29T04:19:47Z",
+    "revit_processes": [
+      {
+        "pid": 3364,
+        "session_id": 5,
+        "main_window_handle": 7145654,
+        "main_window_title": "Autodesk Revit 2027.2",
+        "revit_api_loaded": false,
+        "horizun_module_loaded": false
+      },
+      {
+        "pid": 12660,
+        "session_id": 5,
+        "main_window_handle": 0,
+        "main_window_title": "",
+        "revit_api_loaded": true,
+        "horizun_module_loaded": true
+      }
+    ]
+  },
+  "postrun_state": {
+    "observed_at_utc": "2026-09-29T04:21:41Z",
+    "writer_lock_present": false,
+    "target_bytes": 5152768,
+    "target_last_write_utc": "2026-09-27T09:30:38.2675368Z",
+    "revit_processes_still_present": [
+      3364,
+      12660
+    ]
+  },
+  "quiet_deadline_utc": "2026-09-29T04:30:00Z",
+  "notes": [
+    "This was the sole post-cooldown call from the default sandbox context. Do not repeat it in the same context.",
+    "No model write, save, checkpoint, or lease acquisition was attempted.",
+    "After 04:30:00Z, retry only the official dynamic-PID R05 runner in the previously known-working elevated context, then classify the health response before any further call.",
+    "Do not read or record discovery tokens; do not guess the discovery root; never execute R06."
+  ]
+}

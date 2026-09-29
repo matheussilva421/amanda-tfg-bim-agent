@@ -3478,6 +3478,22 @@ tasks:
       RED on the missing journal. Quiet deadline: 04:16:00Z. R06 remains NOT
       STARTED.
     - >-
+      After the 04:16Z quiet deadline, one official R05 runner invocation in
+      the default sandbox context returned `Error: no Revit is reachable` at
+      horizun_health and exited 1 before readiness, lease acquisition, stage
+      dispatch, write, save, or checkpoint. Journal
+      revit/production/journals/R05-no-revit-reachable-20260929-0419.json
+      records the bounded reply, process/target/lock state, exact sandbox user,
+      non-administrator status, environment fields without secret values, and
+      Horizun executable path/version/SHA-256. The server executable exists and
+      JSON-RPC returned a parsed text result; executable absence and stdio
+      framing are not supported causes for this attempt. Historical elevated
+      success plus this non-admin sandbox failure supports an access-context
+      hypothesis, but the exact discovery file/ACL and old elevated environment
+      remain unknown. Current no-Revit-reachable quiet deadline is 04:30:00Z.
+      Retry only through the official runner in the known-working elevated
+      context with dynamic PID selection. R06 remains NOT STARTED.
+    - >-
       Completing R05 still requires fresh live recovery, all remaining shell
       writes, independent read/verify, save/checkpoint, close/reopen/readback,
       and visual QA. On failure, preserve the target active and unsaved and

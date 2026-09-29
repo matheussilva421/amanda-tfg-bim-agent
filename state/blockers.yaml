@@ -339,6 +339,23 @@ blockers:
     modal text/buttons and P6 inspection-document disposition remain unknown.
     No save, close, discard, or click occurred. Revision 258 keeps this blocker
     active and sets the conservative quiet deadline to 04:16:00Z.
+    After that quiet window, the official runner was invoked once from the
+    default sandbox context. At horizun_health it returned
+    `Error: no Revit is reachable. Is Revit running with the Horizun add-in
+    loaded?` and exited before readiness, lease, R05 dispatch, write, save, or
+    checkpoint. Diagnostic
+    revit/production/journals/R05-no-revit-reachable-20260929-0419.json records
+    the result and bounded execution context: identity
+    Dell-G15-5530\CodexSandboxOffline, non-administrator, SessionId 5, inherited
+    environment with no HORIZUN_* names, and the configured Horizun executable
+    path/version/hash. Its JSON-RPC text reply was parsed; executable absence
+    and stdio framing are not supported causes. Historical elevated success and
+    this sandbox failure support an access-context/ACL explanation, but the
+    exact discovery root/file/ACL and historical elevated environment are not
+    captured. At 04:21:41Z the writer lock was absent and target metadata
+    unchanged. Keep RUNNER_TRANSPORT_UNREACHABLE resolved only for the
+    previously proven elevated execution context; the current attempt was from
+    the sandbox identity. The conservative quiet deadline is 04:30:00Z.
   resolution: >-
     Through the official production runner, freshly prove provider readiness,
     exact RUN-003 document and target, enumerate a complete view inventory, and
@@ -357,17 +374,18 @@ blockers:
   tasks_still_allowed: []
   allowed_tasks: []
   resolution_action: >-
-    After publishing state revision 258 and the 04:16:00Z conservative quiet
-    deadline, make a fresh read-only process/lock inspection. Use only the
-    official health-first runner for one exact R05-only attempt with dynamic PID
-    selection; do not pin either previously observed PID. If health still
-    reports the modal, stop before readiness/lease/write and preserve the model.
-    If health passes, require exact RUN-003 target proof, then reconcile P6, the
-    eight prior floors, and every verified write in the failed-stage journal
-    using a complete cursor-paged view inventory and complete edge geometry
-    readback; skip only exact reconciled operations and continue remaining R05
-    operations. Then complete independent read/verify/save/checkpoint/close/
-    reopen/readback and visual QA before marking P7-T01 complete. Do not dismiss,
-    save, close, or discard the modal/model without its exact text and choices;
-    R06 remains out of scope.
+    After publishing state revision 259 and the 04:30:00Z conservative quiet
+    deadline, make a fresh read-only process/lock inspection. Run only the
+    official health-first R05 runner in the previously known-working elevated
+    context with dynamic PID selection; do not pin either observed PID or start
+    a standalone probe. If health reports no reachable Revit or the modal, stop
+    before readiness/lease/write and preserve the model. If health passes,
+    require exact RUN-003 target proof, then reconcile P6, the eight prior floors,
+    and every verified write in the failed-stage journal using a complete
+    cursor-paged view inventory and complete edge geometry readback; skip only
+    exact reconciled operations and continue remaining R05 operations. Then
+    complete independent read/verify/save/checkpoint/close/reopen/readback and
+    visual QA before marking P7-T01 complete. Do not dismiss, save, close, or
+    discard the modal/model without its exact text and choices; R06 remains out
+    of scope.
   reason: R05_STAGE_OPERATIONS_UNRECONCILED:BLOCKING
