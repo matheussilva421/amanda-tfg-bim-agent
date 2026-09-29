@@ -326,6 +326,19 @@ blockers:
     metadata. The modal and P6 inspection-document disposition remain unknown.
     A human was asked to provide exact dialog text and button labels without
     selecting an action. Provider quiet deadline is 04:02:56Z.
+    Around 04:05Z, a second official dynamic-PID runner attempt again failed at
+    horizun_health with the same modal class #32770 and untyped bounded text.
+    It stopped before readiness, lease acquisition, R05 dispatch, geometry
+    write, save, or checkpoint. Journal
+    revit/production/journals/R05-modal-health-blocker-20260929-0405.json
+    records this attempt. At 04:10:50Z, read-only inspection found no writer
+    lock and unchanged target metadata. PID 3364 had a generic visible Revit
+    2027.2 window without RevitAPI/Horizun modules; PID 12660 had both modules
+    but no main window. CIM process inventory was access denied. This changed
+    attribution does not prove the active RUN-003 document or targetability;
+    modal text/buttons and P6 inspection-document disposition remain unknown.
+    No save, close, discard, or click occurred. Revision 258 keeps this blocker
+    active and sets the conservative quiet deadline to 04:16:00Z.
   resolution: >-
     Through the official production runner, freshly prove provider readiness,
     exact RUN-003 document and target, enumerate a complete view inventory, and
@@ -344,17 +357,17 @@ blockers:
   tasks_still_allowed: []
   allowed_tasks: []
   resolution_action: >-
-    After publishing state revision 257 and receiving the exact modal text and
-    button labels, use only the official health-first
-    runner for one exact R05-only attempt, omitting a historical PID so the
-    runner dynamically selects and proves the live session. Do not invoke it
-    before 2026-09-29 04:02:56Z, the conservative end of the latest provider
-    quiet window. It must first pass health after the modal is safely resolved,
-    then reconcile
-    P6, the eight prior floors, and every verified write in the failed-stage
-    journal using a complete cursor-paged view inventory and complete edge
-    geometry readback; skip only exact reconciled
-    operations and continue remaining R05 operations. Then complete independent
-    read/verify/save/checkpoint/close/reopen/readback and visual QA before marking
-    P7-T01 complete.
+    After publishing state revision 258 and the 04:16:00Z conservative quiet
+    deadline, make a fresh read-only process/lock inspection. Use only the
+    official health-first runner for one exact R05-only attempt with dynamic PID
+    selection; do not pin either previously observed PID. If health still
+    reports the modal, stop before readiness/lease/write and preserve the model.
+    If health passes, require exact RUN-003 target proof, then reconcile P6, the
+    eight prior floors, and every verified write in the failed-stage journal
+    using a complete cursor-paged view inventory and complete edge geometry
+    readback; skip only exact reconciled operations and continue remaining R05
+    operations. Then complete independent read/verify/save/checkpoint/close/
+    reopen/readback and visual QA before marking P7-T01 complete. Do not dismiss,
+    save, close, or discard the modal/model without its exact text and choices;
+    R06 remains out of scope.
   reason: R05_STAGE_OPERATIONS_UNRECONCILED:BLOCKING

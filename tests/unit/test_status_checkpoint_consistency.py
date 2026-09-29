@@ -1,3 +1,4 @@
+import json
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -50,14 +51,59 @@ def test_current_handoff_records_modal_health_blocker_and_matches_p6_report_time
     assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" not in current
     assert "R06 and later remain NOT STARTED." in current
 
-    report = (ROOT / "docs" / "reports" / "P6-T01-run003-visual-geometric-acceptance.md").read_text(encoding="utf-8")
-    report_time = next(line.removeprefix("**Atualização:** ").removesuffix(" UTC") for line in report.splitlines() if line.startswith("**Atualização:**"))
-    report_minute = datetime.strptime(report_time, "%Y-%m-%d %H:%M").replace(tzinfo=timezone.utc)
-    history = yaml.safe_load((ROOT / "state" / "task-history.yaml").read_text(encoding="utf-8"))
-    current_p6 = [entry for entry in history["entries"] if entry["task_id"] == "P6-T01"][-1]
+    report = (
+        ROOT / "docs" / "reports" / "P6-T01-run003-visual-geometric-acceptance.md"
+    ).read_text(encoding="utf-8")
+    report_time = next(
+        line.removeprefix("**Atualização:** ").removesuffix(" UTC")
+        for line in report.splitlines()
+        if line.startswith("**Atualização:**")
+    )
+    report_minute = datetime.strptime(report_time, "%Y-%m-%d %H:%M").replace(
+        tzinfo=timezone.utc
+    )
+    history = yaml.safe_load(
+        (ROOT / "state" / "task-history.yaml").read_text(encoding="utf-8")
+    )
+    current_p6 = [
+        entry for entry in history["entries"] if entry["task_id"] == "P6-T01"
+    ][-1]
     assert current_p6["status"] == "PASS"
-    recorded = datetime.fromisoformat(current_p6["recorded_utc"].replace("Z", "+00:00"))
+    recorded = datetime.fromisoformat(
+        current_p6["recorded_utc"].replace("Z", "+00:00")
+    )
     assert report_minute == recorded.replace(second=0, microsecond=0)
+
+
+def test_latest_modal_health_retry_is_recorded_without_lease_or_write():
+    journal_path = (
+        ROOT
+        / "revit"
+        / "production"
+        / "journals"
+        / "R05-modal-health-blocker-20260929-0405.json"
+    )
+    journal = json.loads(journal_path.read_text(encoding="utf-8"))
+
+    assert journal["status"] == "BLOCKED_BY_TOOL_MODAL_DIALOG"
+    assert journal["runner_exit_code"] == 1
+    assert journal["provider_tool"] == "horizun_health"
+    assert journal["runner_start_after_utc_check"] == "2026-09-29T04:05:34Z"
+    assert journal["provider_ready"] is False
+    assert journal["lease_acquired"] is False
+    assert journal["stage_dispatch_started"] is False
+    assert journal["geometry_write_dispatched"] is False
+    assert journal["save_or_checkpoint_dispatched"] is False
+    assert journal["postrun_state"]["modal_disposition"] == "unresolved"
+    assert journal["postrun_state"]["writer_lock_present"] is False
+    processes = {
+        process["pid"]: process
+        for process in journal["postrun_state"]["revit_processes"]
+    }
+    assert processes[3364]["horizun_module_loaded"] is False
+    assert processes[12660]["horizun_module_loaded"] is True
+    assert processes[12660]["main_window_handle"] == 0
+    assert journal["quiet_deadline_utc"] == "2026-09-29T04:16:00Z"
 
 
 def test_official_runner_dispatches_r05_and_records_stage_operation_blocker():

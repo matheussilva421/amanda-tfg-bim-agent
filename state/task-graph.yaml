@@ -3461,6 +3461,23 @@ tasks:
       STARTED. Revision-257 state/hygiene tests passed 30/30; formal YAML and
       diagnostic JSON parsed and scoped git diff --check passed.
     - >-
+      A second official dynamic-PID attempt after the 04:05:34Z preflight again
+      failed at horizun_health with an untyped text reply reporting modal class
+      #32770; the console-rendered title remains unconfirmed. The runner exited
+      before provider readiness, lease acquisition, R05 dispatch, model write,
+      save, or checkpoint. Journal
+      revit/production/journals/R05-modal-health-blocker-20260929-0405.json
+      records the bounded response and the changing read-only process/window
+      snapshot. At 04:10:50Z PID 3364 had a generic visible Revit window without
+      RevitAPI/Horizun modules; PID 12660 retained those modules but had no main
+      window. CIM process inspection was access denied; exact active document
+      and modal disposition remain unknown. Writer lock absent and target
+      metadata unchanged at 5,152,768 bytes / 2026-09-27T09:30:38.2675368Z.
+      Do not save, close, discard, hash, or click; the seven partial writes are
+      still unreconciled. Revision 258 regression test: 1 passed after expected
+      RED on the missing journal. Quiet deadline: 04:16:00Z. R06 remains NOT
+      STARTED.
+    - >-
       Completing R05 still requires fresh live recovery, all remaining shell
       writes, independent read/verify, save/checkpoint, close/reopen/readback,
       and visual QA. On failure, preserve the target active and unsaved and

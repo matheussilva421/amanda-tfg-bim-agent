@@ -2707,3 +2707,18 @@ entries:
   - 'Revision-257 state/hygiene tests passed 30 tests, 0 failed. All four YAML files and the new diagnostic JSON parsed; scoped git diff --check passed.'
   recorded_utc: '2026-09-29T03:59:08Z'
   note: 'Wait for the exact modal text and button labels. Do not save, close, discard, or click the dialog or model. After revision 257 is published and the 04:02:56Z quiet deadline passes, recheck processes and lock read-only. Retry only through the official R05 dynamic-PID runner if the modal has been safely resolved; otherwise record the blocker and stop before lease/write. Never execute R06.'
+- task_id: P7-T01
+  status: BLOCKED_BY_TOOL
+  evidence:
+  - 'The official dynamic-PID R05 runner attempt after the 04:05:34Z preflight again failed at horizun_health with an untyped JSON-RPC text result reporting modal class #32770 and that Revit would not service the bridge. The runner exited 1 before readiness, lease acquisition, R05 dispatch, model write, save, or checkpoint.'
+  - >-
+    Journal revit/production/journals/R05-modal-health-blocker-20260929-0405.json
+    records the bounded response. At 04:10:50Z, read-only inspection found no
+    writer lock and unchanged target metadata (5,152,768 bytes;
+    2026-09-27T09:30:38.2675368Z). PID 3364 had a generic visible Revit 2027.2
+    window without RevitAPI/Horizun modules; PID 12660 had both modules but no
+    main window. CIM process inventory returned access denied. Active target,
+    modal disposition, and P6 inspection-document disposition remain unknown.
+  - 'A new focused regression first failed because the 04:05 journal did not exist, then passed after the bounded record was added: 1 passed, 0 failed. Formal state revision 258 retains P7-T01 BLOCKED_BY_TOOL, R05_STAGE_OPERATIONS_UNRECONCILED:BLOCKING, and R06 NOT STARTED.'
+  recorded_utc: '2026-09-29T04:14:34Z'
+  note: 'Do not save, close, discard, hash, or click the modal/model; seven partial R05 writes remain unreconciled. Wait until 2026-09-29T04:16:00Z, then make a fresh read-only process/lock inspection. If safe, use only the official dynamic-PID R05 runner. If horizun_health still reports the modal, stop before lease/write and preserve the model. Never execute R06.'
