@@ -370,7 +370,27 @@ blockers:
     The dialog remains open; no option or close control was selected. Journal
     revit/production/journals/R05-modal-ui-inspection-20260929-0434.json records
     the exact visual readback. The user was asked which non-save action, if any,
-    to take; response pending. Host-user run quiet deadline is 04:41:00Z.
+    to take; response pending. Host-user run quiet deadline was 04:41:00Z.
+    A fresh R05-only official-runner dry-run at 04:48Z returned with
+    707 unique desired operations: 688 walls, 9 floors, and 10 roofs. The
+    current layout hash is
+    7fde3e34a162167ce27fe2e3158a38f446882816a7c81bb326d486bdfaaae2e2 and the
+    approval hash is
+    961b6edc95bd097fe600b2ce968aacdf28876bf3c587b788a0b2358baddfc0b0. Its
+    complete desired logical IDs and capabilities are recorded in
+    revit/production/journals/R05-current-plan-dry-run-20260929-0445.json.
+    The runner returned before constructing McpProbeTransport; no live model
+    status or satisfied-operation count was inferred, and no Revit call, lease,
+    write, save, or checkpoint occurred.
+    At 04:53:16Z, read-only inspection found PID 12660 alive with RevitAPI and
+    Horizun loaded but no main-window handle; PID 3364 had a generic visible
+    Revit 2027.2 window without either module. No writer lock was present and
+    target metadata remained unchanged at 5,152,768 bytes and
+    2026-09-27T09:30:38.2675368Z. CUA's current native-app inventory was empty,
+    so the exact 04:34 reminder state could not be reverified; current modal
+    state and active document are UNKNOWN. See
+    revit/production/journals/R05-live-preflight-20260929-0453.json. Do not
+    click or close the reminder based on the stale screenshot.
   resolution: >-
     Through the official production runner, freshly prove provider readiness,
     exact RUN-003 document and target, enumerate a complete view inventory, and
@@ -389,12 +409,14 @@ blockers:
   tasks_still_allowed: []
   allowed_tasks: []
   resolution_action: >-
-    Wait for the pending user choice about the reminder. If the user elects to
-    leave it open, do not call Horizun. If the user authorizes a non-save
-    dismissal, wait until the 04:41:00Z quiet deadline, freshly inspect
-    processes/lock/target, and run only the official health-first R05 runner in
-    the host-user context with dynamic PID selection; do not pin either PID or
-    start a standalone probe. If health reports no reachable Revit or the modal,
+    Obtain a current CUA-visible Revit window and verify the reminder state;
+    do not use a stale screenshot or another UI technology to dismiss it. Do
+    not select a save option. After a user-authorized safe dismissal (or if the
+    reminder is independently absent), freshly inspect processes, modules,
+    lock, target and active document, then run only the official health-first
+    R05 runner in the host-user context with dynamic PID selection; do not pin
+    either PID or start a standalone probe. If health reports no reachable
+    Revit or the modal,
     stop before readiness/lease/write and preserve the model. If health passes,
     prove exact RUN-003 target, then reconcile P6, the eight prior floors, and
     every verified write with complete cursor-paged view inventory and edge

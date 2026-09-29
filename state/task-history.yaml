@@ -2754,3 +2754,29 @@ entries:
   - 'The user was asked to choose whether to leave the dialog open or authorize a non-save dismissal; response is pending. Seven partial R05 writes remain unreconciled. The modal regression first failed because the UI journal was absent, then passed 1 test, 0 failed.'
   recorded_utc: '2026-09-29T04:38:06Z'
   note: 'Preserve the reminder and model while the user choice is pending. If the user elects a non-save dismissal, wait until the 04:41:00Z quiet deadline, then freshly inspect process/lock/target and use only the official dynamic-PID R05 runner in host-user context. Do not use a standalone probe or save option. Never execute R06.'
+- task_id: P7-T01
+  status: BLOCKED_BY_TOOL
+  evidence:
+  - >-
+    Fresh official production-runner dry-run (no --execute) recalculated the
+    current R05 desired plan as 707 unique operations: 688 walls, 9 floors, and
+    10 roofs. It matched solution AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C,
+    approval hash 961b6edc95bd097fe600b2ce968aacdf28876bf3c587b788a0b2358baddfc0b0,
+    and layout hash 7fde3e34a162167ce27fe2e3158a38f446882816a7c81bb326d486bdfaaae2e2.
+    The full plan is recorded in
+    revit/production/journals/R05-current-plan-dry-run-20260929-0445.json.
+    The official runner returned before constructing McpProbeTransport; it did
+    not contact Revit or acquire a lease. No live operation satisfaction is
+    inferred; seven previously written operations remain unreconciled.
+  - >-
+    At 2026-09-29T04:53:16Z, read-only process/module inspection found PID 12660
+    alive with RevitAPI.dll and Horizun.Revit.dll but no main-window handle,
+    while PID 3364 had a generic visible Revit 2027.2 window without those
+    modules. No writer lock was present; target remained 5,152,768 bytes with
+    2026-09-27T09:30:38.2675368Z mtime. CUA native-app inventory was empty, so
+    current active document and modal state could not be verified. Journal
+    revit/production/journals/R05-live-preflight-20260929-0453.json records the
+    snapshot; no UI action or live provider call occurred.
+  - 'Revision-261 repository checks passed: focused status/task-graph/repository-hygiene suite 33/33; four YAML and three JSON files parsed; scoped git diff --check passed. No live Revit verification is implied.'
+  recorded_utc: '2026-09-29T04:55:00Z'
+  note: 'R05 remains blocked before live recovery. Restore CUA visibility and freshly verify modal/active-document state; preserve the unsaved target and seven unreconciled writes. Then recheck process/modules/lease/target and use only the official dynamic-PID R05 runner. Never execute R06.'

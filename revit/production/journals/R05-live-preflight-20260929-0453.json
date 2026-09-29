@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "status": "BLOCKED_BEFORE_LIVE_RECOVERY",
+  "observed_utc": "2026-09-29T04:53:16.6406383Z",
+  "method": [
+    "read-only PowerShell Get-Process and module inventory",
+    "read-only target metadata and writer-lock existence",
+    "cua.getState native-app inventory"
+  ],
+  "target": {
+    "path": "revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+    "bytes": 5152768,
+    "last_write_utc": "2026-09-27T09:30:38.2675368Z"
+  },
+  "writer_lock_present": false,
+  "revit_processes": [
+    {
+      "pid": 12660,
+      "start_utc": "2026-09-28T20:25:29.6712556Z",
+      "main_window_handle": 0,
+      "main_window_title": "",
+      "has_RevitAPI": true,
+      "has_Horizun": true
+    },
+    {
+      "pid": 3364,
+      "start_utc": "2026-09-28T20:42:24.6710841Z",
+      "main_window_handle": 7145654,
+      "main_window_title": "Autodesk Revit 2027.2",
+      "has_RevitAPI": false,
+      "has_Horizun": false
+    }
+  ],
+  "ui_inventory": {
+    "cua_getState_native_apps": [],
+    "revit_window_or_modal_reverified": false,
+    "last_exact_modal_readback": "revit/production/journals/R05-modal-ui-inspection-20260929-0434.json"
+  },
+  "current_active_document_identity": "UNKNOWN",
+  "current_modal_state": "UNKNOWN",
+  "user_selected_modal_action": null,
+  "r05_current_plan_dry_run": {
+    "journal": "revit/production/journals/R05-current-plan-dry-run-20260929-0445.json",
+    "status": "DRY_RUN_PLANNED_NO_LIVE_READBACK",
+    "desired_operations": 707,
+    "unique_logical_ids": 707,
+    "by_semantic_capability": {
+      "revit.create_floor": 9,
+      "revit.create_roof": 10,
+      "revit.create_wall": 688
+    },
+    "current_live_satisfied_operation_count": null,
+    "unreconciled_partial_writes": 7,
+    "provider_transport_created": false
+  },
+  "actions_taken": {
+    "official_live_runner_invoked": false,
+    "ui_clicked": false,
+    "model_saved": false,
+    "document_closed": false,
+    "target_hashed": false,
+    "r05_write_dispatched": false,
+    "r06_or_later_executed": false
+  },
+  "resume_requirements": [
+    "Restore a CUA-visible native Revit window and resolve the reminder without selecting a save action; the exact current dialog state must be freshly observed.",
+    "Keep the seven partial R05 writes unreconciled and unsaved until the official dynamic-PID runner independently reads and verifies them against the current plan.",
+    "Recheck Revit process/module identity, target document, writer lock, provider readiness, and RUN-003 path before R05 recovery.",
+    "Use only the official production runner for live provider access; never execute R06."
+  ]
+}

@@ -1,0 +1,4993 @@
+{
+  "schema_version": 1,
+  "event": "R05_CURRENT_PLAN_DRY_RUN",
+  "captured_utc": "2026-09-29T04:51:27Z",
+  "status": "DRY_RUN_PLANNED_NO_LIVE_READBACK",
+  "command": [
+    ".venv/Scripts/python.exe",
+    "scripts/run_amanda_production.py",
+    "--rvt",
+    "revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+    "--resume-run003-study",
+    "--max-stage",
+    "R05"
+  ],
+  "execute_flag": false,
+  "provider_transport_created": false,
+  "target": "C:\\Users\\slvma\\Downloads\\Github\\Projeto Amanda\\revit\\production\\working\\AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "selection": {
+    "solution_id": "AMANDA-RUN-003-PAVILION-CANONICAL-4B1275558A6C",
+    "approval_hash": "961b6edc95bd097fe600b2ce968aacdf28876bf3c587b788a0b2358baddfc0b0",
+    "layout_hash": "7fde3e34a162167ce27fe2e3158a38f446882816a7c81bb326d486bdfaaae2e2"
+  },
+  "planned_stages": [
+    "R05"
+  ],
+  "total_desired_operations": 707,
+  "unique_logical_ids": 707,
+  "duplicate_logical_ids": [],
+  "by_semantic_capability": {
+    "revit.create_floor": 9,
+    "revit.create_roof": 10,
+    "revit.create_wall": 688
+  },
+  "current_live_satisfied_operation_count": null,
+  "unreconciled_partial_r05_writes": 7,
+  "desired_operations": [
+    {
+      "logical_id": "WALL-eaa967decf85-ADMIN_ACOLHIMENTO-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ff8757cc8511-ADMIN_ACOLHIMENTO-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9dad3cd32f12-ADMIN_ACOLHIMENTO-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-116265617424-ADMIN_ACOLHIMENTO-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-eaa967decf85-ADMIN_ACOLHIMENTO-L2",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ff8757cc8511-ADMIN_ACOLHIMENTO-L2",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9dad3cd32f12-ADMIN_ACOLHIMENTO-L2",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-116265617424-ADMIN_ACOLHIMENTO-L2",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "ROOF-ADMIN_ACOLHIMENTO-L2",
+      "semantic_capability": "revit.create_roof",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-06799bd96158-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5c15cafcd049-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4690260c7a9d-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3c6f9525c858-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4a1aec2a41fc-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-189c86e85698-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4160ec2f3a81-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8579623ae8dc-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2be5a1fd69fc-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8df9fae40485-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-52e70db594ba-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-50f7502a813b-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4e75deafed74-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-31a96dd058a2-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f30db892748f-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c6eee2f73190-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8a028294b3e9-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7ec4bf3a0876-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-abbd67d7d620-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e718fdbb6e60-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8541ea562a88-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fe337b611b36-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0136360fe7db-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-44851f755828-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6497ccc0352b-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-89f68abb6d05-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8fefcfbdbfde-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b56d2b407e55-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8254a078baaf-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c7f8cbe2af6d-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2b9187e36c7f-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e7f0c51291f4-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-401fa536f470-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-264266b19c40-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-89fc17d79020-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9ed448eee542-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1be693491ffa-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-cfce7501a0e3-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-22e1a19f6c33-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-65819a2f8062-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6ee2388fcf93-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8b792dab2488-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ddcf2e08d6e4-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8de3dae93b16-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-120384ebbc7f-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ae0a177e7ffa-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d828d43f7398-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7fee72c71a72-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4e5ad526af01-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c8620a4d3ba4-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-76e803d003ec-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-83e65864ff0a-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4232d1ffafde-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5821af5f8912-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fdf66e393d0b-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-39318a532c67-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e83c10d501b8-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-81c85f78729a-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3c426a3ac7d2-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c2df72ec5b10-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bce69dc09008-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1d4adc0a82aa-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b8afe3139dad-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-28d48f9290d2-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-db1104f40975-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-11840cdc5b88-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-36f602989d9a-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-424f3a044b09-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-debd529c58b6-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-76315bd04d05-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a068517ef270-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e0f012c25f17-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ef1181bca419-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-69f8c510cba2-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2213f271c2cf-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fc1f6e401738-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-804ab4e92e12-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e2180a1c127a-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f9c35cca900f-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-41d5244ddb39-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2dbabfa2d1e7-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-45214a4de1ad-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9271dfbc2caf-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-df463b44aeee-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-15df62362bd0-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d6dd70cfa451-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4b27e17da2b9-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-00fd36cfaa82-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-35ffc7c17c83-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c5e0e5b7debe-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fc7daced8fac-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e70baa93cd5c-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-80745b85320d-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-61971dd0e043-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-10262029d635-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-50339a4613a8-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7a7974f78bf7-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "FLOOR-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_floor",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "ROOF-RES_PAV_A-L1",
+      "semantic_capability": "revit.create_roof",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-00b6953e41c1-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a7662e534b41-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1cd204297e87-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8848d35d2a46-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8f2562bbfcba-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-72fe394dd816-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2a6337655147-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-977b7cfcc2c5-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7e7200caa91c-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8e7f98a29810-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4ccac17d3aef-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-20af193d0e89-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6bcdea66a962-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2ce0da311d46-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-88e9738a4d50-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3e3dd0d00344-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-04965bd90d32-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-728dfe619fd6-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1413b6b70a48-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2332881ba2ba-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-329b00db8fb5-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-973860139a97-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-59a2d4755b3a-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-58fcd856e581-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-834792919db3-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8b4b0e097378-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-20f1a0880ff1-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4df0e0c73e83-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fa4fff9460d1-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c7e6f34f3e42-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0beddb41a6b4-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-aab7a26f0ad2-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4b559adca46a-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-24190868abb2-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-98d94a01c005-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c61388d713f9-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-92aaed03eb3e-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d4bfd5af2f2f-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a11b316055b5-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6e3efb1acffb-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-907de4b595b6-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-97b170f0252d-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3561127aedd1-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-33eb0f559cdf-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-14ade3311024-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7bfb5bfa4277-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f36c68951453-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d1a275211ccd-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1a7c747f8e37-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5998af9b3874-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8588fcee93e3-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-cad69ae0a9c2-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-49b0b27e9e51-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-cc11319433b4-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3f585702b4b2-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-042ff6144a66-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b3ca191ca290-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ff3b50240969-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3e1e5ca04b2f-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6ab0d50c3116-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-968cb3a584e0-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-857d0d5c9d6f-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-98f03a419da1-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-244cf0659dda-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e5ab114b10c0-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bdbe2fccae5c-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-635c5dfb8a50-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1d0daa087355-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d893071ab39e-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-93ee7dd26bcf-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0c1316ef5c75-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-90f4b1c63b48-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ec13f0a35919-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-632741be0f04-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3e22aecbe62a-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bb138dd6641a-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-807211e81795-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8a5044874ba2-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-eab59e110f37-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-abe9b2a3ae95-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-860519f2a8e9-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bbdd3141995b-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a0936c23a5ba-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b2cb7cfd21da-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "FLOOR-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_floor",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "ROOF-RES_PAV_B-L1",
+      "semantic_capability": "revit.create_roof",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0b7b22b994f0-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8481af780d03-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e1afc21b5869-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-80e5bc8f135f-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7bd40111b330-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7fc574217dd0-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-648528bded13-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bfed0db2db9f-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-25f14b97b6ca-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9236dade3d09-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d97b08cb810c-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a033b5f06719-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-345d71d3abd4-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-62dfdd30f3d4-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-87388bf95af9-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-59e60db1e64f-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-aaa806498d4a-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1b2dacdb7b6a-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a61b73e97363-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a1c1648e2041-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4353a9331a8b-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ff66c220be21-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bd2bd0d63f10-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-012385468b2d-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1c544d87c05d-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2e64db79b058-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-28de68275004-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1137d514ec64-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8d043a85b7e5-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8373befc2403-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-22421aa0295d-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-475fbeb5a724-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-77ec3cc0cd96-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bc659c4697a5-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c88b2b04d12b-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e1ae0e35d698-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-90ac055b9b16-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7d8111159026-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c5a22e085b8a-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-eb0c92beb89c-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4dc0bf06a6e8-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-cb97c712d4c4-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d38c965c311b-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-88862dabd6ea-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-003992ffc685-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e1fc4a959eb7-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-cc7503f5197f-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-27c097ded119-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-95347ea7a76c-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f0ecef3320a6-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-58af7c4a49ad-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-36de259d064b-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-81c06e32ef04-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ee73e9eda48c-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3aff6cb9b1d1-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c2405a3c14a8-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b45bd2c3a9f7-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-cdd5ae3c922f-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6cb024b685ef-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-109400e662e3-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5d3b38a1dfe0-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b91949848442-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-24076957f894-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-130f1b4dbce4-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e69a3c11805b-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7963d233e6ca-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0aab61bc689b-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f9e068047580-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-95702b582f2a-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fb47cd39b89f-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a1c4f683f980-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ffce0897c929-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-33d72b62cc30-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b7b98c56544d-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4250904eebe1-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c1907d1b26e0-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-16bf57a7731e-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4a44e7aece8e-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-460852879f77-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4c33f6e006d6-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3702a9f66e4c-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d2b5bbd76ba7-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ad7d1c4e0831-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7beab6cf5e0e-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-686ac4fb96ab-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fa69f481bccb-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ba6a3870a037-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ca6ca6eaa190-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-63c0535663b1-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-19f49d8ce29a-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fe9e45075c4e-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7788f3251b2f-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1a79e17dd97d-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "FLOOR-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_floor",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "ROOF-RES_PAV_C-L1",
+      "semantic_capability": "revit.create_roof",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7bc150ab940a-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-cda228d3a556-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9f908bfa02f0-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-80f8cc30f534-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-40bb8327de8a-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-afee8cd88da1-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fd158c7f4faf-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1804b2490181-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c05294f9b641-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-34eb19bc8625-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-46f03d0c347c-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-22cefc0bdbdc-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-321b77f11061-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2cb3d17d2f40-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-00dbcbe1918b-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-20c229979297-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-53febc2fafd5-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e09dcd27e443-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1802c786b76a-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b6173e24dba8-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-63d4643a02b4-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-10a9ec8a4f80-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a596f94af51c-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6190f4543124-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ecf8232871b6-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-cd558f0642fd-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ea8e957d70cd-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-85d7d40eb9b1-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d38358b8b9a1-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a413b6b026d6-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0562bb1f79f7-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-989f9228f534-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f96feb5b0fb7-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-222fca373bbc-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4b8ba1ae945c-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9e20ffda7413-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a9d57468f554-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9d8685f8535f-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1520ac3f5bcf-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-59450be8e72d-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-24bbb7e98a2e-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e3aa5366f682-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-50e8e4e629cd-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b07c98dc302e-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4ef686e4987e-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ad53be92627c-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ce9229ea5b36-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8392b5eaa6ba-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1c56d3d44acf-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0471cc20e768-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-485cb24be689-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-64878dc8c5ba-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-47a5e1587f25-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-64680a21c6ef-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d5d5965f31f0-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-feb8e9d3e1bd-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3d8be9721dd4-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6b32249688a7-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7c74cfecee6b-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-82b60a3d629b-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c1f934d46026-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-403b1441706e-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-33feaeb7bb36-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-40f34de8bb99-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ce8f8c74cb00-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3d5cec39c957-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7d4f7af817f6-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-22a89f700f76-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-253be23a9de3-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ff8f472a8182-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "FLOOR-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_floor",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "ROOF-RES_PAV_D_COMMUNAL-L1",
+      "semantic_capability": "revit.create_roof",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ab091cdd37c4-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-02e1709f0f01-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-19a249d824d1-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b33741c824af-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-03143d75ae9f-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-978336a5d1a2-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-64c62ab14698-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8df99d011b2b-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4f21883fe753-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3e2948e70e83-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-42c1c8f805dd-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d188b8cac89a-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e9f922c50d05-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a4543a5224c3-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-beb2ed65288b-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4da132ae8cba-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5db5308fad96-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0df7d70e8250-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-22bed5075eaa-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1c10af9b1c88-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-757e65c089cd-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-eb20944ee060-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0234d7011048-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-95b1dff8412a-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-26ae4e137ffb-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-22332c9b5114-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c4db68b77de2-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-606a7fb9f9ac-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e77e7e631f91-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1f7870d0ca46-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-059f84b24eb7-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-21322979ab17-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bd1f4395ea39-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-dbbf4a758c62-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bfdb90f804d7-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b58affbcd286-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4051e42fdce6-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6f64ac4e94a8-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a78868e7a464-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-73fa9ba12409-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-84c83f64f197-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-03510024b702-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-67a5586b7a1a-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-51ff9745ac19-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5d576197ad50-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-134c86d43eab-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-62bcb0538825-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bc450eabb558-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1d077a9c3b46-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-949a23951f6f-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7bbb18be4e58-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5646583c118f-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-37332fb64aa9-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-81686058e609-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bdae7e05cb20-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ffd909ef52f2-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-98801b564715-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f5c5c588edb0-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-611517b9e2fb-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8f3f15d05474-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-aa2cd73cb4c4-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5021994c198e-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4f2bd7cb0144-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8bdb3992783e-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-44edaf293fed-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5858062ae557-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9b6acef2e49a-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fc605097afc9-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b3f90c4577e4-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-983f8c842b8c-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-cce5fabff60c-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-47486c9f5b20-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6a13c806817e-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2677e2ed3474-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7d668525d21d-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-63b38a26584a-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b4b062a25257-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-44a321207ab0-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0bb652acb8bc-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-729c6d1afd68-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ce9a5a0c0043-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-45647a2e803d-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c9f0f85f44fe-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2a52abee40e2-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-dc02851ae5de-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f8f6bf3b7cf1-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8afac4c39b56-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-35e825ea1a5e-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3ebf94fcd650-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4e5076d74f9d-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2a89cffb6c39-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-cc8bc1f85074-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-935f2fc26d57-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b42583bd1524-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4d666cbaca97-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-07797d37c2d6-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d8bed14fbc97-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6649804545a3-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-aa9f73ac248e-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-84e4286b5632-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2a3bb4d9c9d8-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-600012f9ccce-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-53d7683b6fdb-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-97c644214408-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a849f1b27fbf-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e21fe6d9d71d-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3f6f1b8a93b9-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4dc520af2fdf-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0e5f50fd8e08-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-69909207fa07-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c384c7f89688-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f923cbeda292-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-863c89809ed2-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6ab85456e608-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-121a1b3b98b4-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5b38c4f799bb-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bfb0e088bca3-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a47263020095-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9228dcf7f875-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1a9d1dbf086a-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-89cb0c2a77e6-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6c09253ed470-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8f552e75a50a-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-26ba2c31764e-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5c71261d848a-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e4a6e440272b-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7eef61e82528-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c2b997582876-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-95cdd838a326-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f849741bd5f4-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-01285741bd65-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5ec4e9bbbbee-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-146946e5cefb-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-24fb5e5160ef-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5b5803c6b27c-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8161f39f0463-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a0c8cb12b5f5-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1e983d913c3f-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-852aa5106ad0-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0a348c5cf8e4-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c382fea84684-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-adf6e7cfdde9-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0bdbc92521be-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-67f21c25400b-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-707a60eae5b4-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-835913513c27-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-aae7ade5fdaf-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d9825383c911-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2b2a02db0a5a-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7c0377d562d8-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3648ec80a430-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-41e983a93896-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-304bcf4892dd-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e43e02f4adcd-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ac4f494de00f-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ed1fb4af8254-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d7a8964bdae6-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2b74bdfbb65e-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6f1c74d5d389-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-03dd10abc351-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fb07d56fcf25-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8a1e7f7b855f-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b248946db6ef-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-86cc8a002e43-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f5154c40f8ae-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-062004df1b81-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-65a504f3df56-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5f5300b7a113-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b45548a97186-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bc6eda93c079-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9adfd8f5f5de-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5abb4c690d09-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a83807f70fbf-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fa037aa46b9f-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-19af477b483d-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3550f011cb35-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2b46ae2d2507-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-02a8af1ef064-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a29fd25338a9-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4ab39f6909ea-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ffaafbd415d4-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f0980b519c5f-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a5c803443867-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6032fe3b5f18-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-380a2e8d5997-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bb95c5cfe56d-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-810c9e1d7aaa-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3f91bd413772-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9b8722bf45c2-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e9703a2ba150-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-debcc8f5862d-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-978ab056d5e9-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6eaa8938f1aa-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1e3e306babfe-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-399e3bea4451-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c4eed80084e3-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-de43f29368e1-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-69920d9aaa57-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-cc54e562f208-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-51906123b215-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d3900abd3279-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9e29f92a22e8-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d20b08b4e54f-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b46acba662e5-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5360c205b9e4-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a1baf3f5c506-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a062e7b86294-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d7de1a97d2a9-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ff5bf39773a1-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6b909d0c10f6-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-15a390b9b00b-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fe4ec236260a-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1b108bc6a857-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8c853f8bb7f7-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1c7d7cbc2802-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ed8c3a9660c4-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5c50f04f1df5-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c45a942739f2-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c82eca0652a8-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7bf024920878-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-89e05d23d229-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0b9a0b186970-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9c3350157c8c-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-706a5669ad6a-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ffe6afa2209b-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5aae559dfcb7-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1703de3b29f8-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4925f6c02e3a-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2799d59e068a-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1eee84e82a6f-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-efe66696d4fd-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a10a3ef5fd16-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0517cccf733d-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ea134dab69af-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ea5704b00c51-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5c8a9f27bb11-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b8826d2a2b6d-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ca3fb29acb05-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-dc2a38a7d502-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f9d55a127cc0-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1e3f3eb72060-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1627bba0366c-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-378e7bd00450-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-cf83a87c722c-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0b65b3a1dcde-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-026e8f07a8a2-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-83703ae8461a-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e2b8c1fa11b6-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-cd7bb1457a9e-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4555a1c78354-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bc88a5d442f7-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5591e3ac5b2d-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b313ab01572c-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5a806f6d3c71-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-581415bc7551-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-34f7ff747eb5-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-afc5ae3244b4-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f7771e193874-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-500981d7c42e-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bb84ff5b7a3b-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c7cf2099b269-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-36f676010818-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-47d102b95683-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-511f2fb0f942-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-7d470111d444-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c1a110eb78d0-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-37592121ee5f-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8ba00208c29d-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ddc96b6b4ce8-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c4034aebb7f4-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-09c9d476de17-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1e927f086ceb-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0573ed9d5246-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6b829c9627d6-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fe6e6692b8e0-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-aa1697dd755c-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d4b8262d9060-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fdaa58648caf-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-006b99d9233c-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ef7c5c595fda-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-842db76e4521-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-3036ac87ec46-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2ae14b47b815-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4419f7a16617-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-39a1c1f02cd4-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-477c81019477-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4e63ebf29c28-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1a4adbc6ef1c-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0988df43e075-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f5267ccbb963-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-756e6d55e7bb-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-bf13efe4edfb-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-480ecb911a72-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-69361ed986d5-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f22d99910912-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-0bea5d8ae2a2-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9127c9e155f4-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d98669dd7b93-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-48f8221c2701-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-339faf450267-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-d64bc95763b6-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6658a81e20ca-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-a69db7333975-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-2d036851a60f-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-25ab42cafc69-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1a8ad431ec3a-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-6eac92faff53-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-985b6d1df49e-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-fffcdf70afeb-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8571f48ccc09-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1550d90ae729-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-101ff50846b9-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-55b1c8b3cc62-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9138bb29db1f-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e92dd220e9ae-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-32ddc7130cdc-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-edc0aea45758-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-8e0fef046f58-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b49aaa90acc0-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-706ad4ec8897-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-5904f3bdd96f-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-c41a128882ea-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-e79b8cb11ef4-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-b6778e1876cb-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-ab1139ae5d9c-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f4c3b988a6af-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-829b3d7726ac-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1988bd0dad25-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-1a1735fd92a0-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4a347312f163-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-4a208bdb2f5f-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-f9b8fd3237ee-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "FLOOR-SERVICE_CAPACITATION-L1",
+      "semantic_capability": "revit.create_floor",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "ROOF-SERVICE_CAPACITATION-L1-P01",
+      "semantic_capability": "revit.create_roof",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "ROOF-SERVICE_CAPACITATION-L1-P02",
+      "semantic_capability": "revit.create_roof",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "ROOF-SERVICE_CAPACITATION-L1-P03",
+      "semantic_capability": "revit.create_roof",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "ROOF-SERVICE_CAPACITATION-L1-P04",
+      "semantic_capability": "revit.create_roof",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-378e27a2eee5-CHILD_SECTOR-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-23dafa537836-CHILD_SECTOR-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-296d8a4a46dc-CHILD_SECTOR-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "WALL-9b0157e4f511-CHILD_SECTOR-L1",
+      "semantic_capability": "revit.create_wall",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "FLOOR-CHILD_SECTOR-L1-P01",
+      "semantic_capability": "revit.create_floor",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "FLOOR-CHILD_SECTOR-L1-P02",
+      "semantic_capability": "revit.create_floor",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "FLOOR-CHILD_SECTOR-L1-P03",
+      "semantic_capability": "revit.create_floor",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "FLOOR-CHILD_SECTOR-L1-P04",
+      "semantic_capability": "revit.create_floor",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    },
+    {
+      "logical_id": "ROOF-CHILD_SECTOR-L1",
+      "semantic_capability": "revit.create_roof",
+      "preferred_provider": "horizun",
+      "fallback_providers": [],
+      "blocked_by": []
+    }
+  ],
+  "notes": [
+    "The official runner returned from non-execute planning before constructing McpProbeTransport; no Revit call, lease, model write, save, or checkpoint occurred.",
+    "This plan is desired state only. It does not reconcile any operation against the current live model.",
+    "The seven in-memory R05 writes remain unreconciled and must not be skipped without a fresh official-runner readback.",
+    "R06 and later were not planned or executed by this R05-only invocation."
+  ]
+}

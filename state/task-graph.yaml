@@ -3516,6 +3516,24 @@ tasks:
       remain unreconciled. Latest provider quiet deadline is 04:41:00Z. R06
       remains NOT STARTED.
     - >-
+      The official R05-only non-execute dry-run recalculated 707 unique desired
+      operations: 688 walls, 9 floors, and 10 roofs. Layout hash
+      7fde3e34a162167ce27fe2e3158a38f446882816a7c81bb326d486bdfaaae2e2 and
+      approval hash 961b6edc95bd097fe600b2ce968aacdf28876bf3c587b788a0b2358baddfc0b0
+      match the current canonical selection. The full operation list is in
+      revit/production/journals/R05-current-plan-dry-run-20260929-0445.json.
+      Source control flow returns before MCP transport construction. This is
+      desired planning only; no live-satisfied operation count is established.
+    - >-
+      At 04:53:16Z, PID 12660 was alive with RevitAPI and Horizun modules but
+      had no main-window handle; PID 3364 displayed generic Revit 2027.2 without
+      either module. The writer lock was absent and target metadata remained
+      unchanged. CUA returned no native apps, so the 04:34 reminder screenshot
+      is stale for current UI state and the active document/modal are unknown.
+      Journal revit/production/journals/R05-live-preflight-20260929-0453.json
+      records the snapshot. No live runner, click, write, save, close, or hash
+      was performed. Do not use a stale dialog observation to continue.
+    - >-
       Completing R05 still requires fresh live recovery, all remaining shell
       writes, independent read/verify, save/checkpoint, close/reopen/readback,
       and visual QA. On failure, preserve the target active and unsaved and
