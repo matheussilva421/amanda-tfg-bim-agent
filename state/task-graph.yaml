@@ -3487,12 +3487,34 @@ tasks:
       non-administrator status, environment fields without secret values, and
       Horizun executable path/version/SHA-256. The server executable exists and
       JSON-RPC returned a parsed text result; executable absence and stdio
-      framing are not supported causes for this attempt. Historical elevated
-      success plus this non-admin sandbox failure supports an access-context
-      hypothesis, but the exact discovery file/ACL and old elevated environment
-      remain unknown. Current no-Revit-reachable quiet deadline is 04:30:00Z.
-      Retry only through the official runner in the known-working elevated
-      context with dynamic PID selection. R06 remains NOT STARTED.
+      framing are not supported causes for this attempt. The prior host-user
+      success, previously described as elevated, plus this non-admin sandbox
+      failure supports an access-context hypothesis. A host-user context probe
+      reports IsAdministrator=false; the historical label did not establish
+      Windows admin membership. The exact discovery file/ACL remains unknown.
+      Current no-Revit-reachable quiet deadline is 04:30:00Z. Retry only through
+      the official runner in host-user context with dynamic PID selection. R06
+      remains NOT STARTED.
+    - >-
+      After 04:30Z, the official dynamic-PID runner in host-user context
+      DELL-G15-5530\slvma (non-administrator) observed the exact RUN-003 target
+      in Revit PID 12660 with Horizun loaded, then horizun_health reported the
+      modal #32770. It exited before readiness, lease, stage dispatch, write,
+      save, or checkpoint. The live runner reached the target in this context;
+      the default CodexSandboxOffline context returned no-Revit-reachable. This
+      contrast supports an identity/access-context explanation for sandbox
+      discovery but does not identify the exact discovery-file ACL.
+    - >-
+      Read-only Computer Use screenshot captured the prompt title "Projeto não
+      recentemente salvo", text "Você não salvou seu projeto recentemente. O que
+      deseja fazer?", and four choices: "Salvar o projeto", "Salvar o projeto e
+      definir intervalos de lembrete", "Não salve e defina intervalos de
+      lembrete", and "Cancelar". Journal
+      revit/production/journals/R05-modal-ui-inspection-20260929-0434.json
+      records the exact text. No option or title-bar close was selected; the
+      dialog remains open. User direction is pending. Seven prior R05 writes
+      remain unreconciled. Latest provider quiet deadline is 04:41:00Z. R06
+      remains NOT STARTED.
     - >-
       Completing R05 still requires fresh live recovery, all remaining shell
       writes, independent read/verify, save/checkpoint, close/reopen/readback,

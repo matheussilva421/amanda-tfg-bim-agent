@@ -27,7 +27,7 @@ def test_current_handoff_records_modal_health_blocker_and_matches_p6_report_time
     assert "Authorization remains limited to P7-T01/R05 on RUN-003." in current
     assert (
         "The former transport and resume-dispatch blockers are resolved for the "
-        "documented elevated execution context."
+        "documented host-user execution context."
     ) in current
     assert "`R05_STAGE_OPERATIONS_UNRECONCILED:BLOCKING` is the active blocker." in current
     assert "horizun_get_dimension_references" in current
@@ -53,7 +53,7 @@ def test_current_handoff_records_modal_health_blocker_and_matches_p6_report_time
     assert "04:02:56Z" in current
     assert "R05-no-revit-reachable-20260929-0419.json" in current
     assert "Dell-G15-5530\\CodexSandboxOffline" in current
-    assert "elevated context" in current
+    assert "not an administrator" in current
     assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" not in current
     assert "R06 and later remain NOT STARTED." in current
 
@@ -134,6 +134,33 @@ def test_sandbox_no_revit_attempt_records_execution_context_and_stops_prelease()
     assert journal["runner_context"]["horizun_variable_names"] == []
     assert journal["server"]["file_version"] == "1.3.3.0"
     assert journal["quiet_deadline_utc"] == "2026-09-29T04:30:00Z"
+
+
+def test_live_modal_text_is_recorded_and_dialog_remains_open():
+    journal_path = (
+        ROOT
+        / "revit"
+        / "production"
+        / "journals"
+        / "R05-modal-ui-inspection-20260929-0434.json"
+    )
+    journal = json.loads(journal_path.read_text(encoding="utf-8"))
+
+    assert journal["status"] == "BLOCKED_BY_USER_MODAL_CHOICE"
+    assert journal["dialog"]["title"] == "Projeto não recentemente salvo"
+    assert journal["dialog"]["prompt"] == (
+        "Você não salvou seu projeto recentemente. O que deseja fazer?"
+    )
+    assert journal["dialog"]["choices"] == [
+        "Salvar o projeto",
+        "Salvar o projeto e definir intervalos de lembrete",
+        "Não salve e defina intervalos de lembrete",
+        "Cancelar",
+    ]
+    assert journal["action_taken"] is False
+    assert journal["dialog_remains_open"] is True
+    assert journal["model_saved"] is False
+    assert journal["context"]["quiet_deadline_utc"] == "2026-09-29T04:41:00Z"
 
 
 def test_official_runner_dispatches_r05_and_records_stage_operation_blocker():

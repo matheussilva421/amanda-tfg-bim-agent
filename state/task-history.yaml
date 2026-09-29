@@ -2733,9 +2733,24 @@ entries:
     configured Horizun executable existed at version 1.3.3.0 with SHA-256
     178A7CC335EC80250C0F605010A7E092ECA204F85417EFA535F876DDDEAE908D. The
     parsed JSON-RPC text response makes executable absence and stdio framing
-    unsupported causes. Historical elevated-runner success supports an
-    access-context hypothesis, while exact discovery path/ACL and historical
-    elevated environment remain unverified.
+    unsupported causes. Historical host-user success (previously called
+    elevated in the handoff) supports an access-context hypothesis. The current
+    host-user context probe reports IsAdministrator=false; exact discovery
+    path/ACL and historical process context remain unverified.
   - 'Read-only post-run state at 04:21:41Z: no writer lock, unchanged target at 5,152,768 bytes / 2026-09-27T09:30:38.2675368Z, and both Revit processes remained. New focused TDD check: expected RED on missing journal, then GREEN 1 passed, 0 failed.'
   recorded_utc: '2026-09-29T04:26:35Z'
-  note: 'Do not retry from the same sandbox context. After 2026-09-29T04:30:00Z, refresh processes and lock read-only, then invoke only the official R05 runner in the previously known-working elevated context with dynamic PID selection. If health returns no Revit or the modal, stop before lease/write, record the result, and preserve the model. Never execute R06.'
+  note: 'Do not retry from the same sandbox context. After 2026-09-29T04:30:00Z, refresh processes and lock read-only, then invoke only the official R05 runner in the previously known-working host-user context with dynamic PID selection. If health returns no Revit or the modal, stop before lease/write, record the result, and preserve the model. Never execute R06.'
+- task_id: P7-T01
+  status: BLOCKED_BY_TOOL
+  evidence:
+  - 'After 04:30Z, the official dynamic-PID runner in the host-user context reached Revit PID 12660 with the exact RUN-003 window and Horizun loaded, then failed at horizun_health on modal class #32770. It exited before readiness, lease acquisition, R05 dispatch, write, save, or checkpoint.'
+  - >-
+    Read-only Computer Use inspection captured the exact reminder text/title
+    and choices. The prompt says the project has not been saved recently and asks
+    what to do; options are save, save plus reminder intervals, do not save plus
+    reminder intervals, or cancel. It is not worded as a close/discard dialog.
+    The modal remains open and no option/close control was selected. See
+    revit/production/journals/R05-modal-ui-inspection-20260929-0434.json.
+  - 'The user was asked to choose whether to leave the dialog open or authorize a non-save dismissal; response is pending. Seven partial R05 writes remain unreconciled. The modal regression first failed because the UI journal was absent, then passed 1 test, 0 failed.'
+  recorded_utc: '2026-09-29T04:38:06Z'
+  note: 'Preserve the reminder and model while the user choice is pending. If the user elects a non-save dismissal, wait until the 04:41:00Z quiet deadline, then freshly inspect process/lock/target and use only the official dynamic-PID R05 runner in host-user context. Do not use a standalone probe or save option. Never execute R06.'

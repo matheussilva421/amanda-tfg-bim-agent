@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "status": "BLOCKED_BY_USER_MODAL_CHOICE",
+  "observed_by_utc": "2026-09-29T04:34:36Z",
+  "inspection_method": "@oai/sky read-only Revit window screenshot",
+  "revit_window": {
+    "process_id": 12660,
+    "app": "process:C:\\Program Files\\Autodesk\\Revit 2027\\Revit.exe",
+    "title": "Autodesk Revit 2027.2 - EDUCACIONAL (NÃO COMERCIAL) - [AMANDA-RUN-003-PAVILION-CANONICAL-STUDY - Planta de piso: Nível 1]",
+    "window_was_minimized_before_inspection": true,
+    "foreground_activation_performed": true,
+    "activation_clicked_no_control": true
+  },
+  "dialog": {
+    "window_class_from_provider": "#32770",
+    "title": "Projeto não recentemente salvo",
+    "prompt": "Você não salvou seu projeto recentemente. O que deseja fazer?",
+    "choices": [
+      "Salvar o projeto",
+      "Salvar o projeto e definir intervalos de lembrete",
+      "Não salve e defina intervalos de lembrete",
+      "Cancelar"
+    ],
+    "title_bar_close_control_visible": true,
+    "accessibility_tree": null,
+    "visual_text_read_from_screenshot": true
+  },
+  "action_taken": false,
+  "dialog_remains_open": true,
+  "model_saved": false,
+  "target": "revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "target_bytes": 5152768,
+  "target_last_write_utc": "2026-09-27T09:30:38.2675368Z",
+  "writer_lock_present": false,
+  "unreconciled_partial_r05_writes": 7,
+  "context": {
+    "latest_official_runner_result": "horizun_health returned untyped text reporting the same modal; runner exited before readiness or lease acquisition",
+    "last_runner_attempted_after_utc_check": "2026-09-29T04:30:03Z",
+    "quiet_deadline_utc": "2026-09-29T04:41:00Z",
+    "user_choice_pending": true
+  },
+  "notes": [
+    "The live prompt is a reminder that the project has not been saved recently; it is not worded as a close/discard confirmation.",
+    "No prompt choice, title-bar close control, save, document close, or discard action was issued.",
+    "Do not select any option until the user changes the prior instruction to leave the modal open.",
+    "The seven partial R05 writes remain unreconciled; preserve the model and never execute R06."
+  ]
+}
