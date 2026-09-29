@@ -192,7 +192,7 @@ def test_run003_p6_keeps_r05_blocked_and_later_stages_pending():
         assert task["status"] == expected_status
         assert task["depends_on"] == [predecessor]
 
-    assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" in " ".join(
+    assert "R05_RESUME_DISPATCH_UNVERIFIED:BLOCKING" in " ".join(
         tasks["P7-T01"]["evidence"]
     )
     assert "completing R05 does not start R06" in " ".join(

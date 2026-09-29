@@ -20,19 +20,14 @@ def test_status_dashboard_checkpoint_matches_project_state():
 
 def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     handoff = (ROOT / "state" / "HANDOFF.md").read_text(encoding="utf-8")
-    assert (
-        "## Current state — P7-T01/R05 blocked at partial recovery"
-        in handoff.splitlines()[:8]
-    )
-    assert "Authorization remains limited to P7-T01/R05 on RUN-003." in handoff
-    assert "RUNNER_TRANSPORT_UNREACHABLE:BLOCKING" in handoff
-    assert "direct Horizun health reports HEALTHY" in handoff
-    assert "captured window content was Chrome" in handoff
-    assert "The third health-first retry at about 13:32Z" in handoff
-    assert "RUN-003 lease was retained" in handoff
-    assert "## Prior closeout — P4-T01 R04" in handoff
-    assert "## Historical continuation — 2026-09-26 (P4-T01 / RUN-003 R04 geometry completion)" in handoff
-    assert "## Current continuation — 2026-09-26 (P4-T01 / RUN-003 R04 geometry completion)" not in handoff
+    current_heading = "## Current state — P7-T01/R05 blocked at resume dispatch"
+    assert current_heading in handoff.splitlines()[:8]
+    current = handoff.split(current_heading, 1)[1].split("\n## Previous update", 1)[0]
+    assert "Authorization remains limited to P7-T01/R05 on RUN-003." in current
+    assert "RUNNER_TRANSPORT_UNREACHABLE is resolved." in current
+    assert "R05_RESUME_DISPATCH_UNVERIFIED is the active blocker." in current
+    assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" not in current
+    assert "R06 and later remain NOT STARTED." in current
 
     report = (ROOT / "docs" / "reports" / "P6-T01-run003-visual-geometric-acceptance.md").read_text(encoding="utf-8")
     report_time = next(line.removeprefix("**Atualização:** ").removesuffix(" UTC") for line in report.splitlines() if line.startswith("**Atualização:**"))

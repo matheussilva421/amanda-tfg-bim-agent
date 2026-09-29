@@ -130,9 +130,11 @@ def test_source_inventory_records_the_current_operational_documents(tmp_path: Pa
     }.issubset(paths)
 
 
-def test_no_generated_zip_package_is_tracked():
-    # Catches generated plan packages being committed as repository sources.
-    assert _git("ls-files", "*.zip") == []
+def test_only_r04_compatibility_zip_is_tracked():
+    # Preserve the reviewed compatibility export while keeping generated bundles out.
+    assert _git("ls-files", "*.zip") == [
+        "revit/production/presentation/RUN-003-R04-ORIENTACAO-20260928/exports/COMPATIBILIDADE-REVIT-2026-20260928.zip"
+    ]
 
 
 def test_source_zip_files_are_not_hidden_by_generated_package_ignores():
@@ -182,7 +184,7 @@ def test_exactly_four_canonical_board_images_are_active():
     ]
 
 
-def test_current_state_blocks_run003_r05_until_partial_recovery_is_verified():
+def test_current_state_blocks_run003_r05_until_resume_dispatch_is_verified():
     state = StateStore(ROOT / "PROJECT_STATE.yaml").load()
     registry = load_registry(ROOT / "state/task-graph.yaml")
 
