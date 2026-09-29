@@ -519,12 +519,22 @@ def _read_tool(transport, tool, arguments):
                 "Horizun health reply was untyped: "
                 f"{_health_reply_diagnostic(reply)}"
             )
+        if tool == "horizun_query_model":
+            raise TypeError(
+                "Horizun model query reply was untyped: "
+                f"{_health_reply_diagnostic(reply)}"
+            )
         return None
     result = reply.get("result")
     if not isinstance(result, dict):
         if tool == "horizun_health":
             raise TypeError(
                 "Horizun health reply was untyped: "
+                f"{_health_reply_diagnostic(reply)}"
+            )
+        if tool == "horizun_query_model":
+            raise TypeError(
+                "Horizun model query reply was untyped: "
                 f"{_health_reply_diagnostic(reply)}"
             )
         result = {}
@@ -540,6 +550,11 @@ def _read_tool(transport, tool, arguments):
     if tool == "horizun_health":
         raise TypeError(
             "Horizun health reply was untyped: "
+            f"{_health_reply_diagnostic(reply)}"
+        )
+    if tool == "horizun_query_model":
+        raise TypeError(
+            "Horizun model query reply was untyped: "
             f"{_health_reply_diagnostic(reply)}"
         )
     return None

@@ -486,6 +486,32 @@ def test_untyped_health_reply_reports_only_structural_diagnostics(reply, expecte
     assert expected in str(error.value)
 
 
+@pytest.mark.parametrize(
+    ("reply", "expected"),
+    [
+        (None, "no JSON-RPC reply"),
+        (
+            {
+                "jsonrpc": "2.0",
+                "id": 1,
+                "result": {
+                    "content": [{"type": "text", "text": "view query unavailable"}]
+                },
+            },
+            "text_preview='view query unavailable'",
+        ),
+    ],
+)
+def test_untyped_model_query_reply_fails_with_bounded_diagnostic(reply, expected):
+    class FakeTransport:
+        def call(self, _tool, _arguments):
+            return reply
+
+    with pytest.raises(TypeError, match="model query reply was untyped") as error:
+        production_runner._read_tool(FakeTransport(), "horizun_query_model", {})
+    assert expected in str(error.value)
+
+
 def _valid_horizun_production_readiness():
     return {
         "registry": {
