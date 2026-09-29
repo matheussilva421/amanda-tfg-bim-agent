@@ -6,14 +6,14 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; blocked at partial recovery verification)
+- Next task: `P7-T01` (R05 architectural shell; blocked at resume dispatch)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 is `BLOCKED_BY_TOOL` until live R05 persistence gates pass
 - Current authorization: P7-T01/R05 only; authorization ends at R05. Every later stage needs its own task gate; R05 completion does not start R06.
-- Current blocker: `R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING`. The 22:34:27Z live takeoff reported the English Area parameter state=absent for ElementId 331188; localized Área has not yet been queried live by the updated runner.
+- Current blocker: `R05_RESUME_DISPATCH_UNVERIFIED:BLOCKING`. Around 23:28:59Z the official runner passed exact P6 and partial geometry reconciliation and verified all eight m2 Area/provenance readings, then stopped before R05 stage dispatch on an element-ID/logical-ID mismatch.
 - Read-only process inspection classified PID 12660 as Revit 2027 with RevitAPI and Horizun loaded and a usable window handle. PID 3364 has neither module nor a window handle and remains untouched. The next official runner must freshly verify the active exact RUN-003 target.
 - The official runner in the elevated current-user context passed live health, zero-other-client, exact target/build/PID 12660, command registry 73/73, provider tool registry 80/80, MCP tools/list 80, full_write, and mcp_paused=false at 22:21:31Z and 22:34:27Z. This resolves the sandbox discovery blocker; the discovery token was not read.
-- The runner entered guarded recovery because the live model did not match the accepted P6 element count. Its diagnostic-only P6 readback contains 25 rows and complete coverage. English Area was absent with unit m2 and no measured value/provenance. No value or unit was inferred. No model save, R05 write, or checkpoint occurred; the runner released its lease. The open RUN-003 target remains 5,152,768 bytes with the prior 2026-09-27 mtime; do not hash or close it.
+- The earlier 22:34:27Z takeoff reported English Area absent for ElementId 331188; the later 23:28:59Z official runner completed measured m2 Area/provenance and geometry checks for all eight persisted floors. It then stopped before R05 stage dispatch because the exact persisted element IDs were compared with logical IDs. The runner released its lease. Latest diagnostic: revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-ad4c234f46b4.json; it records 25 typed rows, complete coverage, and model_write_performed=false. No R05 stage write/save/checkpoint occurred. The open RUN-003 target remains 5,152,768 bytes with the prior 2026-09-27 mtime; do not hash or close it. The project writer lock is absent.
 - `P1`: 1/1 PASS
 - `P2`: 1/1 PASS
 - `P3`: 1/1 PASS
@@ -64,21 +64,19 @@ accepted P6 element-count check. The 22:34:27Z exact eight-floor takeoff reporte
 English Area state=absent, unit=m2, value_type=None, and no measurement provenance
 for ElementId 331188. The latest diagnostic is
 revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-8d2a63c9f246.json.
-The 600-second quiet window ended at 22:44:27Z. Local code queries Area and
-localized Área separately, uses Área only when Area is explicitly absent, and
-requires provenance and measured m2; when both are measured, decimal values
-must agree within an inclusive 0.01 m2. The exact-boundary path through geometry
-validation and the just-over rejection pass locally. Combined focused R05/state
-gates: 183 passed, 1 unrelated R04 evidence-hash test deselected, 0 failed.
-Independent read-only re-review found no findings. Ruff has eight pre-existing
-findings and no new findings on the changed lines. Implementation, tests, and
-the diagnostic are committed as
-`1df883bb4cbf6fbe8bd75481019c55214449cc3e`; formal state revision 249 points to
-that commit. Formal state commit `d21b4840cf5eaa23ac428f7d1cd5e6da5d0d3e3e` was
-pushed, and `origin/main` was verified at that SHA. This final handoff amendment
-is being committed separately. Do not use geometry_area as a floor-plan
-substitute. Before the next call, publish the amendment, recheck PID 12660 and
-the lock, and use only the exact R05 production runner.
+The 600-second quiet window after the latest diagnostic ended at 23:38:59Z.
+Local code queries Area and localized Área separately, uses Área only when Area
+is explicitly absent, and requires provenance and measured m2; when both are
+measured, decimal values must agree within an inclusive 0.01 m2. It validates
+the exact integer ElementIds before mapping them to the known floor logical IDs.
+The exact-boundary and just-over cases pass. Combined focused R05/state gates:
+185 passed, 1 unrelated R04 evidence-hash test deselected, 0 failed. Independent
+review found no findings; Ruff retains eight pre-existing findings. The latest
+implementation/evidence fix commit is
+`e43beb2839072eb31691fff18798698014bce76c`; state revision 250 points to it.
+The earlier origin/main SHA is `31fe1ccd47f3ebc6ed284e0d653ff77181168993`;
+push the current code/state commits before the next live attempt. Do not use
+geometry_area as a floor-plan substitute.
 
 ## Current RUN-003 R04 acceptance status
 
@@ -124,7 +122,8 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 - `SITE_FRONTAGE_COUNT` [DEGRADING]: whether the lot has three or four frontages
 - `SITE_TRUE_NORTH` [DEGRADING]: a verified true-north bearing with a source drawing datum
 - `RUNNER_TRANSPORT_UNREACHABLE` [RESOLVED, 2026-09-28]: the official runner in the elevated current-user context passed live health, exclusive-client, exact-target, complete-registry, tools/list and write-control gates.
-- `R05_PARTIAL_RECOVERY_UNVERIFIED` [BLOCKING, P7-T01 only]: guarded recovery found English Area state=absent for ElementId 331188; localized Área still needs live measured-m2 confirmation. No R05 write/save/checkpoint occurred.
+- `R05_PARTIAL_RECOVERY_UNVERIFIED` [RESOLVED, 2026-09-28]: the official runner reconciled exact P6 readback, partial geometry, and all eight measured m2 Area/provenance readings.
+- `R05_RESUME_DISPATCH_UNVERIFIED` [BLOCKING, P7-T01 only]: after successful live recovery, the runner stopped before R05 dispatch on an element-ID/logical-ID mismatch. The local fix rejects non-integer IDs and needs a fresh live retry.
 
 ## Design and Revit recovery
 

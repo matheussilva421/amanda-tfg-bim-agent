@@ -152,7 +152,7 @@ blockers:
     12660 with zero other clients.
   reason: null
 - id: R05_PARTIAL_RECOVERY_UNVERIFIED
-  summary: Known unsaved R05 partial has no verified explicit m2 floor Area reading
+  summary: The known unsaved R05 partial now has complete typed m2 Area readback
   severity: BLOCKING
   owner_phase: P7
   affected_tasks:
@@ -167,27 +167,68 @@ blockers:
     inferred. The runner released the lease before any R05 write/save/checkpoint.
     Diagnostic-only P6 readback is preserved in
     revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-8d2a63c9f246.json.
-    Local recovery code now separately queries English Area and localized Área;
-    the localized parameter and complete measured readings remain unconfirmed
-    in a fresh live runner attempt.
+    On 2026-09-28 around 23:28:59Z, the official runner passed exact P6
+    fingerprint reconciliation, complete typed rows, exact partial geometry,
+    and all eight measured Area m2/provenance checks against the current R05
+    plan. The runner then stopped at a separate resume-dispatch ID-set bug;
+    no R05 stage operation was started.
   resolution: >-
-    Reconcile the known partial against the exact P6 checkpoint, then obtain
-    complete exact-target Area readings for all eight known floors with state
-    measured, unit m2, and measurement provenance. Localized Área may be used
-    only when English Area is explicitly absent; if both are measured they
-    must agree within an inclusive 0.01 m2. Continue through R05 persistence
-    only after the runner validates every recovery gate.
+    The official runner reconciled the known partial against the exact P6
+    checkpoint and current R05 plan, then verified complete measured m2 Area
+    readings with provenance for all eight exact floor IDs. Where both
+    parameters were measured, the inclusive 0.01 m2 agreement check passed.
   requires_user_action: false
   created_utc: '2026-09-28T22:21:31Z'
-  resolved_utc: null
+  resolved_utc: '2026-09-28T23:28:59Z'
   source: P7-T01-R05-partial-recovery
   tasks_blocked:
   - P7-T01
   tasks_still_allowed: []
   allowed_tasks: []
   resolution_action: >-
-    Through the official runner, obtain typed complete Area or conditionally
-    localized Área readings explicitly in m2 for the exact eight persisted floor
-    IDs after P6 reconciliation; then complete the R05-only WRITE-READ-VERIFY
-    and persistence gates.
-  reason: R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING
+    Completed by the official runner's exact P6, geometry, and eight-floor
+    measured m2/provenance recovery gates. Continue with the separate R05
+    resume-dispatch gate and stage WRITE-READ-VERIFY/persistence gates.
+  reason: null
+- id: R05_RESUME_DISPATCH_UNVERIFIED
+  summary: The live-verified partial has not yet passed R05 resume dispatch
+  severity: BLOCKING
+  owner_phase: P7
+  affected_tasks:
+  - P7-T01
+  evidence: >-
+    Around 2026-09-28 23:28:59Z, the official runner passed health/readiness,
+    zero-other-client, exact target/build/PID 12660, P6 fingerprint reconciliation,
+    complete typed readback, exact partial geometry, and all eight measured m2
+    Area/provenance gates. It then raised "reconciled IDs do not match the exact
+    known eight-floor set" before R05 stage dispatch because persisted element
+    IDs were compared to logical IDs. The runner released its lease. The new
+    diagnostic-only P6 readback is
+    revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-ad4c234f46b4.json;
+    model_write_performed=false. Read-only post-run inspection found no writer
+    lock and the target unchanged at 5,152,768 bytes with its prior
+    2026-09-27T09:30:38.2675368Z modification time.
+    TDD reproduced the mismatch and malformed float-ID acceptance. Commit
+    e43beb2839072eb31691fff18798698014bce76c fixes the exact element-ID domain
+    and rejects non-integer/bool IDs at journal and dispatch boundaries. The
+    focused suite passed 185 tests with one unrelated R04 hash test deselected;
+    independent review found no findings. Fresh live dispatch remains unverified.
+  resolution: >-
+    Push the tested exact element-ID resume fix and this state, then make one
+    exact R05-only official runner attempt after fresh process/lock checks. It
+    must pass the same P6, partial geometry, and all-eight Area gates, map only
+    the exact reconciled element IDs to the known eight logical floor IDs, and
+    proceed to R05 before this blocker can be resolved.
+  requires_user_action: false
+  created_utc: '2026-09-28T23:28:59Z'
+  resolved_utc: null
+  source: P7-T01-R05-resume-dispatch
+  tasks_blocked:
+  - P7-T01
+  tasks_still_allowed: []
+  allowed_tasks: []
+  resolution_action: >-
+    Verify the pushed ID-type guard and exact element-ID-to-logical-ID mapping
+    through the official R05 runner, then continue only through the authorized
+    R05 WRITE-READ-VERIFY and persistence gates.
+  reason: R05_RESUME_DISPATCH_UNVERIFIED:BLOCKING

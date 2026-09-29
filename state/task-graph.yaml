@@ -3370,35 +3370,35 @@ tasks:
       tools/list (80), full_write and mcp_paused=false. The owner-only discovery
       token was not read.
     - >-
-      Current blocker: R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING. At 22:34:27Z
-      the official runner entered guarded recovery after the live model failed
-      the accepted P6 element-count gate. The exact eight-floor takeoff reported
-      English Area state=absent, unit=m2, with no value or measurement provenance
-      for ElementId 331188. No value or unit was inferred. The lease was
-      released; no model write, save, or checkpoint occurred. Diagnostic-only
-      P6 readback is preserved in the matching 8d2a63c9f246 journal artifact.
+      The live R05 partial recovery blocker was resolved by the official runner
+      around 23:28:59Z: exact P6 fingerprint/readback, partial geometry, and all
+      eight measured m2 Area/provenance gates passed. The runner then failed
+      before R05 stage dispatch because exact persisted element IDs were passed
+      to a helper comparing logical IDs. The lease was released; the diagnostic
+      says model_write_performed=false. A read-only check found no writer lock
+      and the target unchanged at 5,152,768 bytes and its prior 2026-09-27 mtime.
+      Current blocker: R05_RESUME_DISPATCH_UNVERIFIED:BLOCKING.
     - >-
-      Local TDD now queries English Area and localized Área separately. It uses
-      Área only when English Area is explicitly absent and localized Área is a
-      measured m2 value with provenance; if both are measured they must agree
-      within an inclusive 0.01 m2. The exact-boundary case traverses query
-      through geometry validation, and a just-over-boundary case is rejected.
-      Both comparison points use Decimal boundary semantics. Combined focused
-      R05/state suite: 183 passed, 1 unrelated R04 evidence-hash test deselected,
-      0 failed. Independent read-only re-review of the final Decimal correction
+      TDD reproduced both the element-ID/logical-ID mismatch and acceptance of
+      float IDs equal to integer IDs. The helper now validates the exact eight
+      integer element IDs, then filters only their fixed logical floor IDs; the
+      journal loader rejects bool/non-integer IDs. Combined focused R05/state
+      suite: 185 passed, 1 unrelated R04 evidence-hash test deselected, 0 failed.
+      Ruff retains eight pre-existing findings; independent read-only review
       found no findings.
     - >-
-      Implementation/evidence commit 1df883bb4cbf6fbe8bd75481019c55214449cc3e
-      and formal-state commit d21b4840cf5eaa23ac428f7d1cd5e6da5d0d3e3e are on
-      main. A non-forced push succeeded and origin/main was verified at the
-      formal-state commit. Preserve the remaining RC01 deletions and frozen R04
-      presentation outputs.
+      Verified implementation/evidence commit
+      e43beb2839072eb31691fff18798698014bce76c is on main but not yet pushed.
+      `PROJECT_STATE.yaml` is revision 250 and points last_verified_commit to
+      this code commit. Earlier commits through 31fe1ccd47f3ebc6ed284e0d653ff77181168993
+      were pushed and origin/main verified. RC01 deletions and frozen R04
+      presentation outputs remain untouched.
     - >-
-      The 600-second quiet window after 22:34:27Z ended at 22:44:27Z. Before
-      another provider call, finish review and commit/publish the verified code
-      and state, recheck PID 12660 and the writer lock, then make one exact
-      official R05 runner attempt. Require all recovery and Area gates before
-      any R05 write, then stop at R05.
+      The 600-second quiet window after the 23:28:59Z diagnostic ended at
+      23:38:59Z. Before the next provider call, commit/push the verified code
+      and formal state, recheck PID 12660 and the writer lock, then make one
+      exact official R05 runner attempt. Stop at R05 and require every live
+      recovery/Area gate before R05 writes.
   P7-T02:
     id: P7-T02
     phase: P7

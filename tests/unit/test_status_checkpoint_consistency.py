@@ -44,7 +44,7 @@ def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     assert report_minute == recorded.replace(second=0, microsecond=0)
 
 
-def test_elevated_runner_resolves_transport_and_records_partial_recovery_blocker():
+def test_elevated_runner_resolves_transport_and_records_resume_dispatch_blocker():
     project_state = yaml.safe_load(
         (ROOT / "PROJECT_STATE.yaml").read_text(encoding="utf-8")
     )
@@ -53,17 +53,26 @@ def test_elevated_runner_resolves_transport_and_records_partial_recovery_blocker
         for item in load_blockers(ROOT / "state")
         if item.id == "RUNNER_TRANSPORT_UNREACHABLE"
     )
-    recovery_blocker = next(
+    partial_recovery_blocker = next(
         item
         for item in load_blockers(ROOT / "state")
         if item.id == "R05_PARTIAL_RECOVERY_UNVERIFIED"
     )
+    dispatch_blocker = next(
+        item
+        for item in load_blockers(ROOT / "state")
+        if item.id == "R05_RESUME_DISPATCH_UNVERIFIED"
+    )
 
     assert "RUNNER_TRANSPORT_UNREACHABLE:BLOCKING" not in project_state["blockers"]
-    assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" in project_state["blockers"]
+    assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" not in project_state["blockers"]
+    assert "R05_RESUME_DISPATCH_UNVERIFIED:BLOCKING" in project_state["blockers"]
     assert transport_blocker.severity.value == "BLOCKING"
     assert transport_blocker.affected_tasks == ["P7-T01"]
     assert not transport_blocker.is_open
-    assert recovery_blocker.severity.value == "BLOCKING"
-    assert recovery_blocker.affected_tasks == ["P7-T01"]
-    assert recovery_blocker.is_open
+    assert partial_recovery_blocker.severity.value == "BLOCKING"
+    assert partial_recovery_blocker.affected_tasks == ["P7-T01"]
+    assert not partial_recovery_blocker.is_open
+    assert dispatch_blocker.severity.value == "BLOCKING"
+    assert dispatch_blocker.affected_tasks == ["P7-T01"]
+    assert dispatch_blocker.is_open

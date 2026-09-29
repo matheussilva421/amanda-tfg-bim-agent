@@ -2627,3 +2627,12 @@ entries:
   - 'Final local gates before those commits: focused R05/state suite 183 passed, 1 unrelated R04 evidence-hash case deselected, 0 failed; state consistency/task graph/repository hygiene 19 passed; YAML parsed; diff check passed; Ruff has eight pre-existing findings and no new finding. Independent re-review found no findings.'
   recorded_utc: '2026-09-28T23:26:05Z'
   note: 'Keep the task blocked. Commit/push the current handoff amendment, then recheck PID 12660 and the writer lock and run one exact official R05-only attempt. R06 remains NOT STARTED.'
+- task_id: P7-T01
+  status: BLOCKED_BY_TOOL
+  evidence:
+  - 'Around 2026-09-28 23:28:59Z, the official R05 runner passed health/readiness, exact P6 fingerprint and typed readback reconciliation, known partial geometry, and all eight measured m2 Area/provenance gates. It then stopped before stage dispatch because _remaining_r05_operations compared exact persisted element IDs against logical IDs. The runner released the lease. No R05 stage operation, model write, save, or checkpoint occurred.'
+  - 'Diagnostic-only P6 evidence is revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-ad4c234f46b4.json; it records model_write_performed=false, complete coverage and 25 typed rows. Read-only checks found no writer lock and target metadata unchanged at 5,152,768 bytes and mtime 2026-09-27T09:30:38.2675368Z.'
+  - 'TDD reproduced the element-ID/logical-ID mismatch and float-equals-integer acceptance. Code now validates exact integer element IDs and rejects bool/float IDs in the journal loader and dispatch helper. Targeted ID tests: 3 passed. Combined R05/state suite: 185 passed, 1 unrelated R04 evidence-hash test deselected, 0 failed. Ruff retains eight pre-existing findings; independent review found no findings.'
+  - 'Fix/evidence commit e43beb2839072eb31691fff18798698014bce76c is local on main. PROJECT_STATE revision 250 points last_verified_commit to it and records R05_RESUME_DISPATCH_UNVERIFIED as the only P7 task blocker; these formal-state edits remain uncommitted/unpushed.'
+  recorded_utc: '2026-09-28T23:41:50Z'
+  note: 'After committing/pushing the fix and revision-250 state, freshly recheck Revit PID 12660 and writer lock, then make one exact official R05-only runner attempt. R06 remains NOT STARTED. Stop on any failed live gate.'
