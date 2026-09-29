@@ -18,9 +18,9 @@ def test_status_dashboard_checkpoint_matches_project_state():
     assert expected in dashboard
 
 
-def test_current_handoff_records_p6_recovery_cleanup_failure_and_matches_p6_report_time():
+def test_current_handoff_records_modal_health_blocker_and_matches_p6_report_time():
     handoff = (ROOT / "state" / "HANDOFF.md").read_text(encoding="utf-8")
-    current_heading = "## Current state — P7-T01/R05 blocked at P6 recovery cleanup"
+    current_heading = "## Current state — P7-T01/R05 blocked by Revit modal health gate"
     assert current_heading in handoff.splitlines()[:8]
     current = handoff.split(current_heading, 1)[1].split("\n## Previous update", 1)[0]
     assert "Authorization remains limited to P7-T01/R05 on RUN-003." in current
@@ -42,6 +42,11 @@ def test_current_handoff_records_p6_recovery_cleanup_failure_and_matches_p6_repo
     assert "PID 12660" in current
     assert "close status remains unverified" in current
     assert "03:46:36Z" in current
+    assert "BLOCKED_BY_TOOL_MODAL_DIALOG" in current
+    assert "R05-modal-health-blocker-20260929-0350.json" in current
+    assert "before readiness, lease acquisition, or R05 dispatch" in current
+    assert "model write, save, or checkpoint was dispatched" in current
+    assert "04:02:56Z" in current
     assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" not in current
     assert "R06 and later remain NOT STARTED." in current
 

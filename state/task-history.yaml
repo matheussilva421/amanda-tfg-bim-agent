@@ -2692,3 +2692,18 @@ entries:
   - 'Formal state remains BLOCKED_BY_TOOL, revit_stage R04, last_completed_task P6-T01, and R06 NOT STARTED. The conservative provider quiet deadline is 2026-09-29T03:46:36Z, measured from the first clock check after the latest runner had ended.'
   recorded_utc: '2026-09-29T03:48:29Z'
   note: 'Publish state revision 256, wait until the conservative provider quiet deadline, and freshly inspect Revit processes and writer lock. Then use only the official dynamic-PID production runner for R05. Require fresh open-document/target proof, typed document-session results, exact P6 and partial reconciliation, and full edge geometry reconciliation of all seven unsaved writes. On failure preserve the target unsaved, record the exact response, and wait another 600 seconds before any separate provider call. Never execute R06.'
+- task_id: P7-T01
+  status: BLOCKED_BY_TOOL
+  evidence:
+  - 'Around 2026-09-29 03:50Z, the official dynamic-PID runner failed at horizun_health with an untyped JSON-RPC result. The bounded text reported Revit modal class #32770, displayed as Projeto n[replacement character]o recentemente salvo, and said the bridge would not service requests until the dialog is dismissed. Runner stopped before provider readiness, lease acquisition, or R05 dispatch.'
+  - >-
+    Diagnostic revit/production/journals/R05-modal-health-blocker-20260929-0350.json
+    records the response and process/target/lock snapshots. No model write,
+    save, or checkpoint was dispatched. Post-run inspection at 03:52:56Z found
+    PID 12660's visible window on RUN-003, writer lock absent, and target
+    metadata unchanged at 5,152,768 bytes / 2026-09-27T09:30:38.2675368Z. Modal
+    disposition and P6 inspection-document open/closed state remain unknown.
+  - 'A human was asked to provide the exact modal text and button labels while leaving it open. Formal status remains BLOCKED_BY_TOOL with R05_STAGE_OPERATIONS_UNRECONCILED:BLOCKING; R06 remains NOT STARTED. Revision 257 sets requires_user_action=true and the conservative quiet deadline to 2026-09-29T04:02:56Z.'
+  - 'Revision-257 state/hygiene tests passed 30 tests, 0 failed. All four YAML files and the new diagnostic JSON parsed; scoped git diff --check passed.'
+  recorded_utc: '2026-09-29T03:59:08Z'
+  note: 'Wait for the exact modal text and button labels. Do not save, close, discard, or click the dialog or model. After revision 257 is published and the 04:02:56Z quiet deadline passes, recheck processes and lock read-only. Retry only through the official R05 dynamic-PID runner if the modal has been safely resolved; otherwise record the blocker and stop before lease/write. Never execute R06.'

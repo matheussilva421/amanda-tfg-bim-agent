@@ -3443,6 +3443,24 @@ tasks:
       case deselected. Retry only after state revision 256 is published and the
       conservative quiet deadline 03:46:36Z. R06 remains NOT STARTED.
     - >-
+      The latest official dynamic-PID attempt around 03:50Z failed at
+      horizun_health before readiness or lease acquisition. Its bounded text
+      reply reported a Revit modal dialog class #32770, displayed in the
+      console as `Projeto n\ufffdo recentemente salvo`, and said Revit would
+      not service the bridge until the dialog is dismissed. Runner status is
+      BLOCKED_BY_TOOL_MODAL_DIALOG. Diagnostic
+      revit/production/journals/R05-modal-health-blocker-20260929-0350.json
+      records the response and process/target/lock snapshots. No R05 dispatch,
+      model write, save, or checkpoint occurred. Post-run inspection showed
+      PID 12660 still displaying RUN-003, no writer lock, and unchanged target
+      metadata; the dialog and P6 inspection-document disposition remain
+      unresolved. A human was asked to report exact dialog text and button
+      labels without clicking. The conservative quiet deadline is 04:02:56Z;
+      after state revision 257 publication and fresh process/lock inspection,
+      retry only through the official dynamic-PID R05 runner. R06 remains NOT
+      STARTED. Revision-257 state/hygiene tests passed 30/30; formal YAML and
+      diagnostic JSON parsed and scoped git diff --check passed.
+    - >-
       Completing R05 still requires fresh live recovery, all remaining shell
       writes, independent read/verify, save/checkpoint, close/reopen/readback,
       and visual QA. On failure, preserve the target active and unsaved and

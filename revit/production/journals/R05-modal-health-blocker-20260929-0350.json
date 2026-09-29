@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "status": "BLOCKED_BY_TOOL_MODAL_DIALOG",
+  "runner": "scripts/run_amanda_production.py",
+  "arguments": [
+    "--resume-run003-study",
+    "--max-stage",
+    "R05",
+    "--execute"
+  ],
+  "target": "revit/production/working/AMANDA-RUN-003-PAVILION-CANONICAL-STUDY.rvt",
+  "runner_start_after_utc_check": "2026-09-29T03:50:10Z",
+  "runner_finished_before_utc_check": "2026-09-29T03:52:56Z",
+  "provider_tool": "horizun_health",
+  "provider_ready": false,
+  "lease_acquired": false,
+  "stage_dispatch_started": false,
+  "geometry_write_dispatched": false,
+  "save_or_checkpoint_dispatched": false,
+  "error_type": "TypeError",
+  "error": "Horizun health reply was untyped",
+  "reply_shape": {
+    "reply_keys": [
+      "id",
+      "jsonrpc",
+      "result"
+    ],
+    "result_keys": [
+      "content",
+      "isError"
+    ],
+    "content_types": [
+      "text"
+    ],
+    "structured_content_present": false
+  },
+  "modal": {
+    "window_class": "#32770",
+    "console_title_text": "Projeto n\ufffdo recentemente salvo",
+    "console_encoding_note": "Console output rendered the Portuguese accented character incorrectly; title interpretation is unconfirmed.",
+    "health_text_preview": "Error: Revit has a MODAL DIALOG open: 'Projeto n\ufffdo recentemente salvo' [#32770]. 'horizun_health' was queued but Revit does not service the bridge until the dia",
+    "preview_truncated": true
+  },
+  "preflight_process_snapshot": {
+    "revit_pid": 12660,
+    "session_id": 5,
+    "visible_window_title": "Autodesk Revit 2027.2 - EDUCACIONAL (NÃO COMERCIAL) - [AMANDA-RUN-003-PAVILION-CANONICAL-STUDY - Planta de piso: Nível 1]",
+    "horizun_module_loaded": true,
+    "other_revit_pid": 3364,
+    "other_revit_window_handle": 0,
+    "other_revit_horizun_module_loaded": false
+  },
+  "postrun_state": {
+    "writer_lock_present": false,
+    "target_bytes": 5152768,
+    "target_last_write_utc": "2026-09-27T09:30:38.2675368Z",
+    "visible_window_still_shows_run003": true,
+    "modal_disposition": "unresolved"
+  },
+  "quiet_deadline_utc": "2026-09-29T04:02:56Z",
+  "notes": [
+    "The runner stopped during the health-first gate before lease acquisition or R05 dispatch.",
+    "Do not save, close, or discard the unsaved RUN-003 model; the seven prior partial writes remain unverified.",
+    "No second provider call is permitted before the quiet deadline.",
+    "A human must inspect the modal and report its exact text and available choices before any UI action is considered."
+  ]
+}

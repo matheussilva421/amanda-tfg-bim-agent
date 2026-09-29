@@ -314,6 +314,18 @@ blockers:
     8bdd1f9a267edda9105b75d55404795823d5937e is pushed. Focused R05/state suite:
     281 passed, 0 failed, one unrelated R04 evidence-hash case deselected.
     The provider-side root cause remains unknown.
+    The official dynamic-PID runner around 03:50Z then failed at its first
+    horizun_health gate: bounded MCP text reported modal class #32770 with
+    console title `Projeto n\ufffdo recentemente salvo` and said the bridge
+    would not service requests until the dialog is dismissed. It exited before
+    readiness, lease acquisition, or R05 dispatch. Diagnostic
+    revit/production/journals/R05-modal-health-blocker-20260929-0350.json
+    records the response and process/target/lock snapshots. No model write,
+    save, or checkpoint was dispatched. Post-run inspection at 03:52:56Z found
+    PID 12660's visible window on RUN-003, no writer lock, and unchanged target
+    metadata. The modal and P6 inspection-document disposition remain unknown.
+    A human was asked to provide exact dialog text and button labels without
+    selecting an action. Provider quiet deadline is 04:02:56Z.
   resolution: >-
     Through the official production runner, freshly prove provider readiness,
     exact RUN-003 document and target, enumerate a complete view inventory, and
@@ -323,7 +335,7 @@ blockers:
     save/checkpoint, close/reopen/readback, and visual QA gates. If any live gate
     fails, preserve the target active and unsaved and record the exact failure.
     Never start R06.
-  requires_user_action: false
+  requires_user_action: true
   created_utc: '2026-09-29T00:41:13Z'
   resolved_utc: null
   source: P7-T01-R05-stage-operation-failure
@@ -332,11 +344,13 @@ blockers:
   tasks_still_allowed: []
   allowed_tasks: []
   resolution_action: >-
-    After publishing state revision 256, use only the official health-first
+    After publishing state revision 257 and receiving the exact modal text and
+    button labels, use only the official health-first
     runner for one exact R05-only attempt, omitting a historical PID so the
     runner dynamically selects and proves the live session. Do not invoke it
-    before 2026-09-29 03:46:36Z, the conservative end of the latest provider
-    quiet window. It must reconcile
+    before 2026-09-29 04:02:56Z, the conservative end of the latest provider
+    quiet window. It must first pass health after the modal is safely resolved,
+    then reconcile
     P6, the eight prior floors, and every verified write in the failed-stage
     journal using a complete cursor-paged view inventory and complete edge
     geometry readback; skip only exact reconciled

@@ -210,6 +210,9 @@ def test_run003_p6_keeps_r05_blocked_and_later_stages_pending():
     assert "P6 checkpoint close was not verified" in " ".join(
         tasks["P7-T01"]["evidence"]
     )
+    assert "BLOCKED_BY_TOOL_MODAL_DIALOG" in " ".join(
+        tasks["P7-T01"]["evidence"]
+    )
     assert "completing R05 does not start R06" in " ".join(
         tasks["P7-T01"]["evidence"]
     )
