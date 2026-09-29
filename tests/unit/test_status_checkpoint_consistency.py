@@ -18,9 +18,9 @@ def test_status_dashboard_checkpoint_matches_project_state():
     assert expected in dashboard
 
 
-def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
+def test_current_handoff_records_typed_query_failure_and_matches_p6_report_time():
     handoff = (ROOT / "state" / "HANDOFF.md").read_text(encoding="utf-8")
-    current_heading = "## Current state — P7-T01/R05 blocked at failed-stage geometry recovery"
+    current_heading = "## Current state — P7-T01/R05 blocked at typed view-query response"
     assert current_heading in handoff.splitlines()[:8]
     current = handoff.split(current_heading, 1)[1].split("\n## Previous update", 1)[0]
     assert "Authorization remains limited to P7-T01/R05 on RUN-003." in current
@@ -32,6 +32,11 @@ def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     assert "latest live recovery stopped at the incomplete view-inventory gate" in current
     assert "cursor-paged complete OST_Views inventory" in current
     assert "did not return exactly one `{3D}` view" in current
+    assert "model query reply was untyped" in current
+    assert "reply_type=NoneType" in current
+    assert "R05-2f373fcb3511-p6-readback-diagnostic-a80179529323.json" in current
+    assert "No edge-reference query, R05 write, save, or checkpoint occurred" in current
+    assert "03:27:49Z" in current
     assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" not in current
     assert "R06 and later remain NOT STARTED." in current
 
