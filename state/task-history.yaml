@@ -2636,3 +2636,22 @@ entries:
   - 'Fix/evidence commit e43beb2839072eb31691fff18798698014bce76c is local on main. PROJECT_STATE revision 250 points last_verified_commit to it and records R05_RESUME_DISPATCH_UNVERIFIED as the only P7 task blocker; these formal-state edits remain uncommitted/unpushed.'
   recorded_utc: '2026-09-28T23:41:50Z'
   note: 'After committing/pushing the fix and revision-250 state, freshly recheck Revit PID 12660 and writer lock, then make one exact official R05-only runner attempt. R06 remains NOT STARTED. Stop on any failed live gate.'
+- task_id: P7-T01
+  status: BLOCKED_BY_TOOL
+  evidence:
+  - 'Around 2026-09-29 00:40-00:41Z, the official runner passed health/readiness, exact RUN-003 target/build/PID 12660, zero-other-client, provider/tool/write controls, P6 and partial recovery, and all eight measured m2 Area/provenance gates; it dispatched R05.'
+  - 'Journal revit/production/journals/R05-0751bf08af96.json records 704 operations: 15 VERIFIED (eight known floors plus seven newly written service-floor/roof elements) and 689 FAILED (688 wall type lookups and one service roof). Persistence is null; target_preserved_active=true; no save/checkpoint/independent post-failure readback occurred; lease released.'
+  - 'Failures are traced to display name Genérico - 250 mm sent as wall type_id and a service roof profile with seven loops where the provider accepts exactly one. Fresh process inventory at 01:02Z found PIDs 12660/3364 responding, both MainWindowHandle=0; writer lock absent; target metadata unchanged at 5,152,768 bytes and mtime 2026-09-27T09:30:38Z.'
+  - 'State transition TDD: edited assertions first; RED was 3 failures against stale revision-250 state. Updated PROJECT_STATE revision 251, blockers, dashboard, task graph, and handoff. Focused command .venv\\Scripts\\python.exe -m pytest tests\\unit\\test_status_checkpoint_consistency.py tests\\unit\\test_task_graph.py -q passed 18 tests, 0 failed. All four YAML state files parsed.'
+  - 'Before the live attempt, the focused R05/state suite passed 260 tests with one unrelated R04 lab-evidence hash test deselected. HEAD and origin/main were aligned at c4f0f62dbbb9d74187c151dce0187e5947955fb8 before this state update. State/handoff changes are currently uncommitted; RC01 deletions and frozen/untracked R04 presentation artifacts remain untouched.'
+  recorded_utc: '2026-09-29T01:13:25Z'
+  note: 'Offline recovery, wall type ID 250, and one-loop roof patches are implemented and pushed. Formal state revision 252 is current; next dynamically prove provider and RUN-003 through one official R05-only attempt. Never execute R06.'
+- task_id: P7-T01
+  status: BLOCKED_BY_TOOL
+  evidence:
+  - 'After the offline geometry fix, the formal-state handoff assertions were run first and failed RED in 2 tests because the handoff and task graph lacked the required edge-geometry and courtyard-void evidence; 16 tests passed. The state files were then updated to keep P7-T01 BLOCKED_BY_TOOL and R06 NOT STARTED.'
+  - 'PROJECT_STATE revision 252 points last_verified_commit to 52e3e81310c3b4b0134d1d05f271c1c34a22da78. The R05 blocker remains open: no fresh live typed edge readback has reconciled the seven unsaved writes, and no save/checkpoint/close is authorized.'
+  - 'Offline fix passes wall type resolution through source-backed ElementId 250, splits the service roof into four deterministic single-loop patches, and validates complete paged edge geometry for exact IDs/UniqueIds, horizontal rings including the service-floor courtyard void, elevations, top/bottom footprints, vertical edges, and independent Z bounds. Missing or ambiguous geometry fails closed.'
+  - 'Focused R05/state validation passed 274 tests, 0 failed, with one unrelated R04 lab-evidence hash test deselected. Official runner dry-run planned only R05 and wrote nothing. Ruff retains eight baseline findings, with no new findings. Around 02:37Z the writer lock was absent; process inventory did not prove provider binding or active document.'
+  recorded_utc: '2026-09-29T02:43:06Z'
+  note: 'Publish this state/handoff closeout, then call only the official production runner for R05 with dynamic process selection. Require fresh provider/target gates and complete edge geometry reconciliation; on failure preserve the target active and unsaved, record the exact blocker, and wait 600 seconds before another separate provider call. If R05 passes, finish persistence and independent reopen/readback/visual gates; never execute R06.'

@@ -6,14 +6,14 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 
 - Phase: `P7` — detailed-production
 - Phase status: `PENDING`
-- Next task: `P7-T01` (R05 architectural shell; blocked at resume dispatch)
+- Next task: `P7-T01` (R05 architectural shell; blocked after failed stage attempt)
 - Last recorded task: `P6-T01`
 - Tasks: 193 total; P7-T01 is `BLOCKED_BY_TOOL` until live R05 persistence gates pass
 - Current authorization: P7-T01/R05 only; authorization ends at R05. Every later stage needs its own task gate; R05 completion does not start R06.
-- Current blocker: `R05_RESUME_DISPATCH_UNVERIFIED:BLOCKING`. Around 23:28:59Z the official runner passed exact P6 and partial geometry reconciliation and verified all eight m2 Area/provenance readings, then stopped before R05 stage dispatch on an element-ID/logical-ID mismatch.
-- Read-only process inspection classified PID 12660 as Revit 2027 with RevitAPI and Horizun loaded and a usable window handle. PID 3364 has neither module nor a window handle and remains untouched. The next official runner must freshly verify the active exact RUN-003 target.
-- The official runner in the elevated current-user context passed live health, zero-other-client, exact target/build/PID 12660, command registry 73/73, provider tool registry 80/80, MCP tools/list 80, full_write, and mcp_paused=false at 22:21:31Z and 22:34:27Z. This resolves the sandbox discovery blocker; the discovery token was not read.
-- The earlier 22:34:27Z takeoff reported English Area absent for ElementId 331188; the later 23:28:59Z official runner completed measured m2 Area/provenance and geometry checks for all eight persisted floors. It then stopped before R05 stage dispatch because the exact persisted element IDs were compared with logical IDs. The runner released its lease. Latest diagnostic: revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-ad4c234f46b4.json; it records 25 typed rows, complete coverage, and model_write_performed=false. No R05 stage write/save/checkpoint occurred. The open RUN-003 target remains 5,152,768 bytes with the prior 2026-09-27 mtime; do not hash or close it. The project writer lock is absent.
+- Current blocker: `R05_STAGE_OPERATIONS_UNRECONCILED:BLOCKING`. Around 00:40-00:41Z on 2026-09-29 the official runner passed health/readiness, zero-other-client, exact RUN-003 target/build/PID 12660, command registry 73/73, provider tools 80/80, MCP tools/list 80, full_write, mcp_paused=false, P6/partial reconciliation, and all eight measured m2 Area/provenance gates. It dispatched R05 and recorded 704 operations: 15 VERIFIED (eight prior floors plus seven new live writes) and 689 FAILED (688 wall-type lookups and one multi-loop service roof). Persistence is null; no save, checkpoint, or independent post-failure readback occurred. The runner released its lease.
+- Failure journal: `revit/production/journals/R05-0751bf08af96.json`. Code now resolves wall type ID `250` and splits the multi-loop service roof into four deterministic one-loop patches. Recovery now requires complete typed `horizun_get_dimension_references` edge geometry for all seven writes, including the service-floor courtyard void, planned elevations, matching lower profiles, and vertical edges; model-query Z bounds must agree. No live edge readback has run, so the seven in-memory writes remain unreconciled. Preserve the target active and unsaved; R06 remains NOT STARTED.
+- Fresh read-only inspection around 02:37Z found the writer lock absent; Revit PID 3364 has a visible Revit 2027.2 main window, while PID 12660 has no main window. This does not prove provider binding or the active document. Do not use a historical PID; the official runner must dynamically select the process and prove the exact RUN-003 target and readiness. The prior on-disk target record is 5,152,768 bytes with last write `2026-09-27T09:30:38Z`; do not hash while open.
+- Offline gates: the focused R05/state suite passed 274 tests, 0 failed, with one unrelated R04 lab-evidence hash case deselected. The official runner dry-run planned only R05 and wrote nothing. Scoped `git diff --check` passed; Ruff retains eight pre-existing findings and no new ones. Fix commit `52e3e81` is pushed. After publishing state revision 252, run one official R05-only attempt with dynamic PID selection. If fresh geometry reconciliation fails, stop without save/close; if it passes, continue the remaining R05 operation and persistence/readback/visual gates. Never execute R06.
 - `P1`: 1/1 PASS
 - `P2`: 1/1 PASS
 - `P3`: 1/1 PASS
@@ -39,44 +39,34 @@ Source: live files in the project workspace. Missing values remain `NOT_RECORDED
 - Revit build: `27.2.0.39`
 - Revit product version: `20260716_1515(x64)`
 
-## Provider health
+## Provider health and current R05 recovery
 
-Preferred provider: `horizun`.
+Preferred provider: `horizun`; all model operations must go through the official
+production runner. The last live attempt, around 00:40-00:41Z on 2026-09-29,
+passed health/readiness, zero-other-client, exact RUN-003 target/build, provider
+registries and write controls, P6/partial reconciliation, and all eight measured
+m2 Area/provenance gates. It dispatched R05 but failed on 688 wall type lookups
+and one multi-loop service roof. Journal:
+`revit/production/journals/R05-0751bf08af96.json`. The seven new service-floor
+and roof writes remain in-memory and have no independent post-failure readback;
+there was no save or checkpoint, and the runner released its lease.
 
-Earlier direct app health calls used stale PIDs. Journal `journal.0037.txt`
-binds the exact RUN-003 document and Horizun add-in startup to PID 12660. The
-official runner in the elevated user context passed typed health, zero-other-
-client, exact-target/build/PID and all provider readiness gates; do not reuse
-older health snapshots as current evidence.
+The offline fix commit `52e3e81310c3b4b0134d1d05f271c1c34a22da78` is pushed.
+Wall type resolution now uses source-backed ElementId 250, and the service roof
+uses four deterministic one-loop patches. Recovery requires complete typed
+`horizun_get_dimension_references` edge geometry, including exact identities,
+closed horizontal rings and the service-floor courtyard void, elevations within
+1 mm, matching top/bottom footprints, vertical edges on the expected profile,
+and matching model-query Z bounds. No fresh live edge readback has occurred;
+the active blocker remains `R05_STAGE_OPERATIONS_UNRECONCILED:BLOCKING`.
 
-The production runner starts
-`C:\Users\slvma\AppData\Local\Programs\Horizun\MCP\server\horizun-mcp.exe`
-(version 1.3.3.0). At 22:21:31Z and 22:34:27Z the official runner reported command
-registry 73/73, provider tools 80/80, MCP tools/list 80, full_write and
-mcp_paused=false. Its exclusive-client and exact-target gates passed. Sandboxed
-attempts failed discovery because the owner-only discovery ACL is unreadable in
-that context; its token was not read. Do not route model writes through another
-client. RUNNER_TRANSPORT_UNREACHABLE is resolved; the active gate is
-`R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING`.
-
-The known partial entered guarded recovery after the live model failed the
-accepted P6 element-count check. The 22:34:27Z exact eight-floor takeoff reported
-English Area state=absent, unit=m2, value_type=None, and no measurement provenance
-for ElementId 331188. The latest diagnostic is
-revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-8d2a63c9f246.json.
-The 600-second quiet window after the latest diagnostic ended at 23:38:59Z.
-Local code queries Area and localized Área separately, uses Área only when Area
-is explicitly absent, and requires provenance and measured m2; when both are
-measured, decimal values must agree within an inclusive 0.01 m2. It validates
-the exact integer ElementIds before mapping them to the known floor logical IDs.
-The exact-boundary and just-over cases pass. Combined focused R05/state gates:
-185 passed, 1 unrelated R04 evidence-hash test deselected, 0 failed. Independent
-review found no findings; Ruff retains eight pre-existing findings. The latest
-implementation/evidence fix commit is
-`e43beb2839072eb31691fff18798698014bce76c`; state revision 250 points to it.
-The earlier origin/main SHA is `31fe1ccd47f3ebc6ed284e0d653ff77181168993`;
-push the current code/state commits before the next live attempt. Do not use
-geometry_area as a floor-plan substitute.
+Read-only process/lock inspection around 02:37Z found no writer lock, PID 3364
+with a visible Revit 2027.2 main window, and PID 12660 without one. This does not
+prove provider binding or the active document. The next invocation must use the
+official runner without a pinned PID and dynamically prove the exact target and
+readiness. State revision 252 records this boundary. The 600-second quiet window
+after the last provider activity has elapsed. Do not hash, save, or close the
+target before live recovery; do not start R06.
 
 ## Current RUN-003 R04 acceptance status
 
@@ -123,7 +113,8 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 - `SITE_TRUE_NORTH` [DEGRADING]: a verified true-north bearing with a source drawing datum
 - `RUNNER_TRANSPORT_UNREACHABLE` [RESOLVED, 2026-09-28]: the official runner in the elevated current-user context passed live health, exclusive-client, exact-target, complete-registry, tools/list and write-control gates.
 - `R05_PARTIAL_RECOVERY_UNVERIFIED` [RESOLVED, 2026-09-28]: the official runner reconciled exact P6 readback, partial geometry, and all eight measured m2 Area/provenance readings.
-- `R05_RESUME_DISPATCH_UNVERIFIED` [BLOCKING, P7-T01 only]: after successful live recovery, the runner stopped before R05 dispatch on an element-ID/logical-ID mismatch. The local fix rejects non-integer IDs and needs a fresh live retry.
+- `R05_RESUME_DISPATCH_UNVERIFIED` [RESOLVED, 2026-09-29]: the official runner passed recovery and dispatch gates and entered R05.
+- `R05_STAGE_OPERATIONS_UNRECONCILED` [BLOCKING, P7-T01 only]: the failed stage left seven verified but unsaved writes in the open model and 689 operations failed. Reconcile those writes by fresh typed readback before retry.
 
 ## Design and Revit recovery
 
@@ -134,12 +125,12 @@ Blocker severity applies to the affected tasks and claims; check state/blockers.
 ## Writer lease
 
 - Status: `NOT_ACQUIRED` (project lock file absent)
-- The latest runner attempt acquired and released the normal lease; the project lock is absent now. Historical owner PID 28364 is not current evidence.
-- Do not manually create, release, or reclaim a lease; the next attempt is through the production runner in the current user context that owns the discovery ACL.
+- The latest runner attempt acquired and released the normal lease; the project lock is absent now. It left seven verified stage writes in the still-open in-memory target, with no save or checkpoint. Historical owner PID 28364 is not current evidence.
+- Do not manually create, release, or reclaim a lease. Reconcile the live partial first, then use only the official production runner in the current user context that owns the discovery ACL.
 
 ## Git verification
 
-Current continuation at state revision 248 is based on HEAD `0308605d77184e9661fd2a21f618234bc8a8f2d5`. Local implementation/tests and the current handoff/dashboard update are not yet committed. The latest `git ls-remote` failed because GitHub port 443 was unreachable; push state is unverified. No Revit model write occurred.
+Current continuation is state revision 252, based on implementation commit `52e3e81` (`fix(r05): reconcile failed shell writes by geometry`), pushed to `origin/main`. This state/handoff closeout records that fix and the still-open live-reconciliation blocker. The failed official runner left seven unsaved in-memory R05 elements; independent live geometry readback is still required before resuming. RC01 deletions and presentation artifacts remain untouched and outside the scoped closeout.
 
 P7-T01 health-schema/transport-pin commit `f25b5e9080b2c4a9b5994bec918743c584ad00cb`
 is pushed to `origin/main`; a fresh `git ls-remote` matched. It contains the

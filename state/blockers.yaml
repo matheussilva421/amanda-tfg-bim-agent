@@ -214,21 +214,78 @@ blockers:
     focused suite passed 185 tests with one unrelated R04 hash test deselected;
     independent review found no findings. Fresh live dispatch remains unverified.
   resolution: >-
-    Push the tested exact element-ID resume fix and this state, then make one
-    exact R05-only official runner attempt after fresh process/lock checks. It
-    must pass the same P6, partial geometry, and all-eight Area gates, map only
-    the exact reconciled element IDs to the known eight logical floor IDs, and
-    proceed to R05 before this blocker can be resolved.
+    The official runner passed fresh health/readiness, exact RUN-003 target,
+    P6 and partial-model reconciliation, the eight-floor Area gates, and R05
+    dispatch. The stage then ran and produced a separate incomplete-operation
+    blocker, recorded as R05_STAGE_OPERATIONS_UNRECONCILED.
   requires_user_action: false
   created_utc: '2026-09-28T23:28:59Z'
-  resolved_utc: null
+  resolved_utc: '2026-09-29T00:41:13Z'
   source: P7-T01-R05-resume-dispatch
   tasks_blocked:
   - P7-T01
   tasks_still_allowed: []
   allowed_tasks: []
   resolution_action: >-
-    Verify the pushed ID-type guard and exact element-ID-to-logical-ID mapping
-    through the official R05 runner, then continue only through the authorized
-    R05 WRITE-READ-VERIFY and persistence gates.
-  reason: R05_RESUME_DISPATCH_UNVERIFIED:BLOCKING
+    Resolved when the official runner passed the resume gates and began the
+    authorized R05 stage. Continue only through the R05 operation, readback,
+    verification, and persistence gates.
+  reason: null
+- id: R05_STAGE_OPERATIONS_UNRECONCILED
+  summary: Seven failed-stage writes remain unverified in the open RUN-003 model
+  severity: BLOCKING
+  owner_phase: P7
+  affected_tasks:
+  - P7-T01
+  evidence: >-
+    Around 2026-09-29 00:40-00:41Z the official runner passed health/readiness,
+    zero-other-client, exact RUN-003 target/build/PID 12660, provider registry
+    73/73, provider tools 80/80, MCP tools/list 80, full_write, mcp_paused=false,
+    P6 fingerprint reconciliation, partial-model reconciliation, and all eight
+    measured m2 Area/provenance gates. It dispatched R05 and journaled
+    revit/production/journals/R05-0751bf08af96.json: 704 records, 15 VERIFIED
+    (eight previously reconciled floors and seven new in-memory writes), and
+    689 FAILED (688 wall type lookups and one service roof profile). The service
+    floor and six other roofs are among the seven new writes. Persistence is
+    null and target_preserved_active=true. No save, checkpoint, or independent
+    post-failure live readback occurred. The runner released the writer lease.
+    The journal reports 688 wall failures because logical type name
+    'Genérico - 250 mm' could not resolve in OST_Walls; the service roof failed
+    because the provider accepts exactly one closed footprint loop. Offline TDD
+    now passes the source-backed wall ElementId 250 and decomposes the service
+    roof into deterministic one-loop patches. Recovery now requires complete
+    typed edge geometry readback for all seven writes: exact IDs/UniqueIds,
+    closed horizontal rings including the service-floor courtyard void,
+    elevations within 1 mm, matching top/bottom profiles, vertical edges on the
+    expected profile, and agreeing model-query Z bounds. No live edge readback
+    has occurred. Around 02:37Z the writer lock was absent; PID 3364 had a
+    visible Revit 2027.2 main window and PID 12660 had none. This does not prove
+    provider binding or active document. The last recorded on-disk target was
+    5,152,768 bytes, last write 2026-09-27T09:30:38Z. Preserve it active and
+    unsaved; do not hash, save, close, or skip writes before fresh reconciliation.
+  resolution: >-
+    Through the official production runner, freshly prove provider readiness,
+    exact RUN-003 document and target, then reconcile every journaled write with
+    the complete edge geometry contract and current R05 plan. If recovery passes,
+    continue the remaining R05 operations and all independent read/verify,
+    save/checkpoint, close/reopen/readback, and visual QA gates. If any live gate
+    fails, preserve the target active and unsaved and record the exact failure.
+    Never start R06.
+  requires_user_action: false
+  created_utc: '2026-09-29T00:41:13Z'
+  resolved_utc: null
+  source: P7-T01-R05-stage-operation-failure
+  tasks_blocked:
+  - P7-T01
+  tasks_still_allowed: []
+  allowed_tasks: []
+  resolution_action: >-
+    After publishing state revision 252, use only the official health-first
+    runner for one exact R05-only attempt, omitting a historical PID so the
+    runner dynamically selects and proves the live session. It must reconcile
+    P6, the eight prior floors, and every verified write in the failed-stage
+    journal using complete edge geometry readback; skip only exact reconciled
+    operations and continue remaining R05 operations. Then complete independent
+    read/verify/save/checkpoint/close/reopen/readback and visual QA before marking
+    P7-T01 complete.
+  reason: R05_STAGE_OPERATIONS_UNRECONCILED:BLOCKING

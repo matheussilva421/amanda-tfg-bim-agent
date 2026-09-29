@@ -3363,42 +3363,46 @@ tasks:
       Current authorization covers P7-T01/R05 only. Every later stage requires
       its own task gate; completing R05 does not start R06. R06 remains NOT STARTED.
     - >-
-      Former blocker RUNNER_TRANSPORT_UNREACHABLE:BLOCKING was resolved at
-      2026-09-28 22:21:31Z. The official runner in the current user's elevated
-      context passed health, zero-other-client, exact target/build/PID 12660,
-      clean command registry (73/73), unrestricted provider tools (80/80), MCP
-      tools/list (80), full_write and mcp_paused=false. The owner-only discovery
-      token was not read.
+      RUNNER_TRANSPORT_UNREACHABLE and R05_RESUME_DISPATCH_UNVERIFIED are
+      resolved. The 2026-09-29 00:40-00:41Z official attempt passed fresh
+      health/readiness, zero-other-client, exact RUN-003 target/build, provider
+      registries, write controls, P6/partial reconciliation, and all eight
+      measured m2 Area/provenance gates before dispatching R05.
     - >-
-      The live R05 partial recovery blocker was resolved by the official runner
-      around 23:28:59Z: exact P6 fingerprint/readback, partial geometry, and all
-      eight measured m2 Area/provenance gates passed. The runner then failed
-      before R05 stage dispatch because exact persisted element IDs were passed
-      to a helper comparing logical IDs. The lease was released; the diagnostic
-      says model_write_performed=false. A read-only check found no writer lock
-      and the target unchanged at 5,152,768 bytes and its prior 2026-09-27 mtime.
-      Current blocker: R05_RESUME_DISPATCH_UNVERIFIED:BLOCKING.
+      Journal revit/production/journals/R05-0751bf08af96.json records 704
+      operations: 15 VERIFIED (eight prior floors plus seven new in-memory
+      writes: one service floor and six roofs) and 689 FAILED (688 wall-type
+      lookups and one service roof profile). Persistence is null,
+      target_preserved_active=true, and no independent post-failure readback,
+      save, or checkpoint occurred. The active blocker remains
+      R05_STAGE_OPERATIONS_UNRECONCILED:BLOCKING.
     - >-
-      TDD reproduced both the element-ID/logical-ID mismatch and acceptance of
-      float IDs equal to integer IDs. The helper now validates the exact eight
-      integer element IDs, then filters only their fixed logical floor IDs; the
-      journal loader rejects bool/non-integer IDs. Combined focused R05/state
-      suite: 185 passed, 1 unrelated R04 evidence-hash test deselected, 0 failed.
-      Ruff retains eight pre-existing findings; independent read-only review
-      found no findings.
+      Offline TDD fixes wall type resolution to source-backed ElementId 250 and
+      decomposes the service roof into four deterministic one-loop patches.
+      Fail-closed recovery now requires complete edge geometry readback for all
+      seven writes: exact IDs/UniqueIds, horizontal closed rings including the
+      service-floor courtyard void, elevation within 1 mm, matching top/bottom
+      profiles, vertical edges on the expected profile, and model-query Z bounds
+      agreement. Curved, ambiguous, or incomplete geometry is rejected. No
+      fresh live edge readback has occurred; the seven writes remain
+      unreconciled, and no save or close is authorized.
     - >-
-      Verified implementation/evidence commit
-      e43beb2839072eb31691fff18798698014bce76c is on main but not yet pushed.
-      `PROJECT_STATE.yaml` is revision 250 and points last_verified_commit to
-      this code commit. Earlier commits through 31fe1ccd47f3ebc6ed284e0d653ff77181168993
-      were pushed and origin/main verified. RC01 deletions and frozen R04
-      presentation outputs remain untouched.
+      The focused R05/state suite passed 274 tests, 0 failed, with one unrelated
+      R04 lab-evidence hash case deselected. Official runner dry-run planned only
+      R05 and wrote nothing. Ruff has the same eight baseline findings and no
+      new findings. Fix commit 52e3e81310c3b4b0134d1d05f271c1c34a22da78 is
+      pushed. PROJECT_STATE revision 252 points last_verified_commit to it.
+      RC01 deletions and frozen R04 presentation artifacts remain untouched.
+      Fresh process inspection around 02:37Z found PID 3364 with a visible
+      Revit 2027.2 main window and PID 12660 without one; neither establishes
+      provider binding or active document. No writer lock was present. After
+      publishing state, invoke only the official R05 runner without a pinned PID
+      so it dynamically proves the session and exact target. Never execute R06.
     - >-
-      The 600-second quiet window after the 23:28:59Z diagnostic ended at
-      23:38:59Z. Before the next provider call, commit/push the verified code
-      and formal state, recheck PID 12660 and the writer lock, then make one
-      exact official R05 runner attempt. Stop at R05 and require every live
-      recovery/Area gate before R05 writes.
+      Completing R05 still requires fresh live recovery, all remaining shell
+      writes, independent read/verify, save/checkpoint, close/reopen/readback,
+      and visual QA. If live geometry recovery fails, preserve the target active
+      and unsaved and record the exact failed gate.
   P7-T02:
     id: P7-T02
     phase: P7

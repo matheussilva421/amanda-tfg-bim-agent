@@ -20,12 +20,14 @@ def test_status_dashboard_checkpoint_matches_project_state():
 
 def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     handoff = (ROOT / "state" / "HANDOFF.md").read_text(encoding="utf-8")
-    current_heading = "## Current state — P7-T01/R05 blocked at resume dispatch"
+    current_heading = "## Current state — P7-T01/R05 blocked after failed stage attempt"
     assert current_heading in handoff.splitlines()[:8]
     current = handoff.split(current_heading, 1)[1].split("\n## Previous update", 1)[0]
     assert "Authorization remains limited to P7-T01/R05 on RUN-003." in current
-    assert "RUNNER_TRANSPORT_UNREACHABLE is resolved." in current
-    assert "R05_RESUME_DISPATCH_UNVERIFIED is the active blocker." in current
+    assert "The former transport and resume-dispatch blockers are resolved." in current
+    assert "`R05_STAGE_OPERATIONS_UNRECONCILED:BLOCKING` is the active blocker." in current
+    assert "horizun_get_dimension_references" in current
+    assert "courtyard void" in current
     assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" not in current
     assert "R06 and later remain NOT STARTED." in current
 
@@ -39,7 +41,7 @@ def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     assert report_minute == recorded.replace(second=0, microsecond=0)
 
 
-def test_elevated_runner_resolves_transport_and_records_resume_dispatch_blocker():
+def test_official_runner_dispatches_r05_and_records_stage_operation_blocker():
     project_state = yaml.safe_load(
         (ROOT / "PROJECT_STATE.yaml").read_text(encoding="utf-8")
     )
@@ -58,10 +60,16 @@ def test_elevated_runner_resolves_transport_and_records_resume_dispatch_blocker(
         for item in load_blockers(ROOT / "state")
         if item.id == "R05_RESUME_DISPATCH_UNVERIFIED"
     )
+    stage_operations_blocker = next(
+        item
+        for item in load_blockers(ROOT / "state")
+        if item.id == "R05_STAGE_OPERATIONS_UNRECONCILED"
+    )
 
     assert "RUNNER_TRANSPORT_UNREACHABLE:BLOCKING" not in project_state["blockers"]
     assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" not in project_state["blockers"]
-    assert "R05_RESUME_DISPATCH_UNVERIFIED:BLOCKING" in project_state["blockers"]
+    assert "R05_RESUME_DISPATCH_UNVERIFIED:BLOCKING" not in project_state["blockers"]
+    assert "R05_STAGE_OPERATIONS_UNRECONCILED:BLOCKING" in project_state["blockers"]
     assert transport_blocker.severity.value == "BLOCKING"
     assert transport_blocker.affected_tasks == ["P7-T01"]
     assert not transport_blocker.is_open
@@ -70,4 +78,7 @@ def test_elevated_runner_resolves_transport_and_records_resume_dispatch_blocker(
     assert not partial_recovery_blocker.is_open
     assert dispatch_blocker.severity.value == "BLOCKING"
     assert dispatch_blocker.affected_tasks == ["P7-T01"]
-    assert dispatch_blocker.is_open
+    assert not dispatch_blocker.is_open
+    assert stage_operations_blocker.severity.value == "BLOCKING"
+    assert stage_operations_blocker.affected_tasks == ["P7-T01"]
+    assert stage_operations_blocker.is_open
