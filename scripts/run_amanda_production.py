@@ -511,32 +511,28 @@ def _health_reply_diagnostic(reply: object) -> str:
     )
 
 
+def _raise_for_untyped_tool_reply(tool, reply):
+    labels = {
+        "horizun_health": "health",
+        "horizun_query_model": "model query",
+        "horizun_document_session": "document session",
+    }
+    label = labels.get(tool)
+    if label is not None:
+        raise TypeError(
+            f"Horizun {label} reply was untyped: "
+            f"{_health_reply_diagnostic(reply)}"
+        )
+
+
 def _read_tool(transport, tool, arguments):
     reply = transport.call(tool, arguments)
     if reply is None:
-        if tool == "horizun_health":
-            raise TypeError(
-                "Horizun health reply was untyped: "
-                f"{_health_reply_diagnostic(reply)}"
-            )
-        if tool == "horizun_query_model":
-            raise TypeError(
-                "Horizun model query reply was untyped: "
-                f"{_health_reply_diagnostic(reply)}"
-            )
+        _raise_for_untyped_tool_reply(tool, reply)
         return None
     result = reply.get("result")
     if not isinstance(result, dict):
-        if tool == "horizun_health":
-            raise TypeError(
-                "Horizun health reply was untyped: "
-                f"{_health_reply_diagnostic(reply)}"
-            )
-        if tool == "horizun_query_model":
-            raise TypeError(
-                "Horizun model query reply was untyped: "
-                f"{_health_reply_diagnostic(reply)}"
-            )
+        _raise_for_untyped_tool_reply(tool, reply)
         result = {}
     payload = result.get("structuredContent")
     if payload is not None:
@@ -547,16 +543,7 @@ def _read_tool(transport, tool, arguments):
                 return json.loads(item["text"])
             except json.JSONDecodeError:
                 continue
-    if tool == "horizun_health":
-        raise TypeError(
-            "Horizun health reply was untyped: "
-            f"{_health_reply_diagnostic(reply)}"
-        )
-    if tool == "horizun_query_model":
-        raise TypeError(
-            "Horizun model query reply was untyped: "
-            f"{_health_reply_diagnostic(reply)}"
-        )
+    _raise_for_untyped_tool_reply(tool, reply)
     return None
 
 
