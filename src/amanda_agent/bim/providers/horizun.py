@@ -1459,6 +1459,10 @@ else:
                 raise HorizunRequestError(
                     f"logical type {value!r} is absent from catalog {catalog_path!r}"
                 )
+        if value.strip().isdigit():
+            resolved = int(value.strip())
+            resolution_cache[cache_key] = resolved
+            return resolved
         rows = stage_cache.get(category)
         if rows is None:
             raw = self._read_tool(

@@ -15,6 +15,7 @@ from types import SimpleNamespace
 
 import pytest
 from shapely.geometry import LineString, Polygon
+from shapely.ops import unary_union
 
 from amanda_agent.bim.models import BimStage
 from amanda_agent.bim.stages import ExecutionMode, StagePreflightError, run_preflight
@@ -1274,20 +1275,34 @@ def test_run003_service_floor_and_roof_preserve_curved_courtyard_voids(
         == "SERVICE_CAPACITATION"
     ]
 
-    assert {operation.semantic_capability for operation in operations} == {
-        "revit.create_floor",
-        "revit.create_roof",
-    }
-    for operation in operations:
-        rings = _profile_rings(operation)
-        assert len(rings) == 1 + len(source.interiors)
-        rebuilt = Polygon(
-            [(point[0], point[1]) for point in rings[0]],
-            holes=[[(point[0], point[1]) for point in ring] for ring in rings[1:]],
-        )
-        assert rebuilt.is_valid
-        assert rebuilt.hausdorff_distance(source) <= 0.001
-        assert abs(rebuilt.area - source.area) <= 0.001
+    floors = [item for item in operations if item.semantic_capability == "revit.create_floor"]
+    roofs = [item for item in operations if item.semantic_capability == "revit.create_roof"]
+    assert len(floors) == 1
+    assert len(roofs) == 4
+
+    floor_rings = _profile_rings(floors[0])
+    assert len(floor_rings) == 1 + len(source.interiors)
+    floor = Polygon(
+        [(point[0], point[1]) for point in floor_rings[0]],
+        holes=[[(point[0], point[1]) for point in ring] for ring in floor_rings[1:]],
+    )
+    assert floor.is_valid
+    assert floor.hausdorff_distance(source) <= 0.001
+    assert floor.symmetric_difference(source).area <= 0.001
+
+    patches = [
+        Polygon([(point[0], point[1]) for point in _profile_rings(operation)[0]])
+        for operation in roofs
+    ]
+    assert all(patch.is_valid and not patch.interiors for patch in patches)
+    assert [operation.logical_id for operation in roofs] == [
+        f"ROOF-SERVICE_CAPACITATION-L1-P{index:02d}" for index in range(1, 5)
+    ]
+    roof_union = unary_union(patches)
+    assert roof_union.is_valid
+    assert len(roof_union.interiors) == len(source.interiors)
+    assert roof_union.symmetric_difference(source).area <= 0.001
+    assert roof_union.hausdorff_distance(source) <= 0.001
 
 
 def test_run003_service_profiles_have_no_submillimeter_edges(
@@ -1318,7 +1333,7 @@ def test_run003_service_profiles_have_no_submillimeter_edges(
             assert min(edge_lengths) >= 0.001
 
 
-def test_run003_external_walls_use_the_source_backed_template_type_name(
+def test_run003_external_walls_use_the_source_backed_template_type_id(
     registry, canonical_program
 ):
     plan, _layout, _authorization = _p6_run003_r05_plan(registry, canonical_program)
@@ -1330,5 +1345,5 @@ def test_run003_external_walls_use_the_source_backed_template_type_name(
 
     assert walls
     assert {operation.payload["properties"]["type_id"] for operation in walls} == {
-        "Genérico - 250 mm"
+        "250"
     }

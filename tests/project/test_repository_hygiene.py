@@ -184,7 +184,7 @@ def test_exactly_four_canonical_board_images_are_active():
     ]
 
 
-def test_current_state_blocks_run003_r05_until_resume_dispatch_is_verified():
+def test_current_state_blocks_run003_r05_until_stage_operations_are_reconciled():
     state = StateStore(ROOT / "PROJECT_STATE.yaml").load()
     registry = load_registry(ROOT / "state/task-graph.yaml")
 
@@ -198,7 +198,8 @@ def test_current_state_blocks_run003_r05_until_resume_dispatch_is_verified():
     assert "SITE_OCCUPANCY:DEGRADING" in state.blockers
     assert "RUNNER_TRANSPORT_UNREACHABLE:BLOCKING" not in state.blockers
     assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" not in state.blockers
-    assert "R05_RESUME_DISPATCH_UNVERIFIED:BLOCKING" in state.blockers
+    assert "R05_RESUME_DISPATCH_UNVERIFIED:BLOCKING" not in state.blockers
+    assert "R05_STAGE_OPERATIONS_UNRECONCILED:BLOCKING" in state.blockers
     assert "P1-T01" in registry.tasks
     assert registry.tasks["P1-T01"].status.value == "PASS"
     assert registry.tasks["P2-T01"].status.value == "PASS"
@@ -226,12 +227,14 @@ def test_current_state_blocks_run003_r05_until_resume_dispatch_is_verified():
     assert "authorization ends at R05" in dashboard
     assert "`RUNNER_TRANSPORT_UNREACHABLE` [RESOLVED" in dashboard
     assert "`R05_PARTIAL_RECOVERY_UNVERIFIED` [RESOLVED, 2026-09-28]" in dashboard
-    assert "`R05_RESUME_DISPATCH_UNVERIFIED` [BLOCKING, P7-T01 only]" in dashboard
-    assert "earlier 22:34:27Z takeoff reported English Area absent for ElementId 331188" in normalized_dashboard
+    assert "`R05_RESUME_DISPATCH_UNVERIFIED` [RESOLVED, 2026-09-29]" in dashboard
+    assert "`R05_STAGE_OPERATIONS_UNRECONCILED` [BLOCKING, P7-T01 only]" in dashboard
+    assert "R05-0751bf08af96.json" in normalized_dashboard
+    assert "689 FAILED (688 wall-type lookups and one multi-loop service roof)" in normalized_dashboard
 
     handoff = (ROOT / "state/HANDOFF.md").read_text(encoding="utf-8")
     normalized_handoff = " ".join(handoff.split())
-    assert "## Current state — P7-T01/R05 blocked at resume dispatch" in handoff.splitlines()[:8]
+    assert "## Current state — P7-T01/R05 blocked after failed stage attempt" in handoff.splitlines()[:8]
     assert "passed measured m2 Area/provenance checks for all eight persisted floors" in normalized_handoff
     assert "explicitly authorizes P7-T01/R05" in normalized_handoff
     assert "XY bounds, Revit Area, and resolved level name" in normalized_handoff

@@ -29,6 +29,9 @@ sys.path.insert(0, str(REPOSITORY_ROOT / "src"))
 RUN003_FAILED_R05_JOURNAL = (
     REPOSITORY_ROOT / "revit/production/journals/R05-2f373fcb3511.json"
 )
+RUN003_FAILED_R05_STAGE_JOURNAL = (
+    REPOSITORY_ROOT / "revit/production/journals/R05-0751bf08af96.json"
+)
 RUN003_FAILED_R05_FLOOR_IDS = {
     "FLOOR-RES_PAV_A-L1": 331188,
     "FLOOR-RES_PAV_B-L1": 331289,
@@ -38,6 +41,15 @@ RUN003_FAILED_R05_FLOOR_IDS = {
     "FLOOR-CHILD_SECTOR-L1-P02": 331556,
     "FLOOR-CHILD_SECTOR-L1-P03": 331564,
     "FLOOR-CHILD_SECTOR-L1-P04": 331572,
+}
+RUN003_FAILED_R05_STAGE_WRITE_CAPABILITIES = {
+    "FLOOR-SERVICE_CAPACITATION-L1": "revit.create_floor",
+    "ROOF-ADMIN_ACOLHIMENTO-L2": "revit.create_roof",
+    "ROOF-RES_PAV_A-L1": "revit.create_roof",
+    "ROOF-RES_PAV_B-L1": "revit.create_roof",
+    "ROOF-RES_PAV_C-L1": "revit.create_roof",
+    "ROOF-RES_PAV_D_COMMUNAL-L1": "revit.create_roof",
+    "ROOF-CHILD_SECTOR-L1": "revit.create_roof",
 }
 
 from amanda_agent.bim.checkpoints import CheckpointManager
@@ -879,8 +891,639 @@ def _load_known_failed_r05_records(journal_path: Path) -> list[dict]:
     return list(observed.values())
 
 
+def _load_known_failed_r05_stage_records(journal_path: Path, operations) -> list[dict]:
+    """Load the seven verified writes from the exact failed R05 stage journal."""
+
+    try:
+        journal = json.loads(Path(journal_path).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError("known failed R05 stage journal is unavailable") from exc
+    records = journal.get("records") if isinstance(journal, dict) else None
+    if (
+        not isinstance(journal, dict)
+        or journal.get("stage") != "R05"
+        or journal.get("status") != "FAILED"
+        or journal.get("persistence") is not None
+        or not isinstance(records, list)
+        or len(records) != 704
+        or not all(isinstance(record, dict) for record in records)
+    ):
+        raise ValueError("journal does not describe the known failed RUN-003 R05 stage")
+
+    verified = [record for record in records if record.get("status") == "VERIFIED"]
+    failed = [record for record in records if record.get("status") == "FAILED"]
+    floor_ids = set(RUN003_FAILED_R05_FLOOR_IDS)
+    stage_ids = set(RUN003_FAILED_R05_STAGE_WRITE_CAPABILITIES)
+    verified_by_id = {record.get("logical_id"): record for record in verified}
+    if (
+        len(verified) != 15
+        or len(failed) != 689
+        or len(verified_by_id) != len(verified)
+        or set(verified_by_id) != floor_ids | stage_ids
+        or sum(record.get("capability") == "revit.create_wall" for record in failed) != 688
+        or sum(record.get("capability") == "revit.create_roof" for record in failed) != 1
+        or any(
+            record.get("logical_id") != "ROOF-SERVICE_CAPACITATION-L1"
+            for record in failed
+            if record.get("capability") == "revit.create_roof"
+        )
+        or any(
+            record.get("capability") != "revit.create_wall"
+            for record in failed
+            if record.get("capability") != "revit.create_roof"
+        )
+    ):
+        raise ValueError("failed stage journal does not contain the exact verified/failed R05 sets")
+
+    old_floors = [verified_by_id[logical_id] for logical_id in floor_ids]
+    if any(
+        isinstance(record.get("element_id"), bool)
+        or not isinstance(record.get("element_id"), int)
+        or record["element_id"] != RUN003_FAILED_R05_FLOOR_IDS[record["logical_id"]]
+        or record.get("capability") != "revit.create_floor"
+        or not isinstance(record.get("unique_id"), str)
+        or not record["unique_id"].strip()
+        for record in old_floors
+    ):
+        raise ValueError("failed stage journal's known floor identities do not match RUN-003")
+
+    stage_records = [verified_by_id[logical_id] for logical_id in RUN003_FAILED_R05_STAGE_WRITE_CAPABILITIES]
+    if any(
+        isinstance(record.get("element_id"), bool)
+        or not isinstance(record.get("element_id"), int)
+        or record["element_id"] <= 0
+        or record.get("capability") != RUN003_FAILED_R05_STAGE_WRITE_CAPABILITIES[record["logical_id"]]
+        or not isinstance(record.get("unique_id"), str)
+        or not record["unique_id"].strip()
+        or record.get("error") is not None
+        for record in stage_records
+    ) or len({record["element_id"] for record in stage_records}) != 7 or len(
+        {record["unique_id"] for record in stage_records}
+    ) != 7:
+        raise ValueError("failed stage journal identities do not match the seven known R05 writes")
+
+    operations_by_id = {}
+    for operation in operations:
+        logical_id = getattr(operation, "logical_id", None)
+        if logical_id in stage_ids:
+            if logical_id in operations_by_id:
+                raise ValueError("current R05 plan duplicates a verified failed-stage logical ID")
+            operations_by_id[logical_id] = operation
+    if set(operations_by_id) != stage_ids or any(
+        getattr(operations_by_id[logical_id], "semantic_capability", None)
+        != RUN003_FAILED_R05_STAGE_WRITE_CAPABILITIES[logical_id]
+        for logical_id in stage_ids
+    ):
+        raise ValueError("current R05 plan does not contain the exact seven verified stage writes")
+    return stage_records
+
+
+def _query_r05_inspection_view_id(transport) -> int:
+    """Resolve the exact non-template default 3D view for typed edge inspection."""
+
+    payload = _read_tool(
+        transport,
+        "horizun_query_model",
+        {
+            "categories": ["OST_Views"],
+            "name": "{3D}",
+            "cache_mode": "bypass",
+            "include_types": False,
+            "max_rows": 500,
+            "response_mode": "compact",
+            "return_fields": ["unique_id", "name", "is_view_template", "view_type"],
+        },
+    )
+    rows = payload.get("rows") if isinstance(payload, dict) else None
+    if (
+        not isinstance(rows, list)
+        or payload.get("matched_total") != payload.get("returned")
+        or payload.get("returned") != len(rows)
+        or payload.get("coverage_complete") is not True
+        or payload.get("unreadable_total") != 0
+    ):
+        raise ValueError("RUN-003 exact default 3D view readback is incomplete")
+    exact = [row for row in rows if isinstance(row, dict) and row.get("name") == "{3D}"]
+    if len(exact) != 1:
+        raise ValueError("RUN-003 must expose exactly one view named {3D} for edge readback")
+    row = exact[0]
+    view_id = row.get("element_id")
+    if (
+        isinstance(view_id, bool)
+        or not isinstance(view_id, int)
+        or view_id <= 0
+        or not isinstance(row.get("unique_id"), str)
+        or not row["unique_id"].strip()
+        or row.get("is_view_template") is not False
+        or row.get("view_type") != "ThreeD"
+    ):
+        raise ValueError("RUN-003 default {3D} inspection view is not a typed non-template 3D view")
+    return view_id
+
+
+def _query_known_r05_stage_edges(transport, records, view_id: int) -> dict:
+    """Read every edge reference for the exact seven failed-stage writes."""
+
+    records = list(records)
+    element_ids = [record.get("element_id") for record in records]
+    if (
+        len(records) != 7
+        or any(isinstance(value, bool) or not isinstance(value, int) or value <= 0 for value in element_ids)
+        or len(set(element_ids)) != 7
+        or isinstance(view_id, bool)
+        or not isinstance(view_id, int)
+        or view_id <= 0
+    ):
+        raise ValueError("failed-stage R05 edge query requires the exact seven identities and one view")
+
+    offset = 0
+    total_candidates = None
+    all_rows = []
+    while True:
+        payload = _read_tool(
+            transport,
+            "horizun_get_dimension_references",
+            {
+                "element_ids": sorted(element_ids),
+                "view_id": view_id,
+                "selectors": ["edge"],
+                "units": "m",
+                "max_results": 500,
+                "offset": offset,
+                "include_incompatible": True,
+            },
+        )
+        coverage = payload.get("coverage") if isinstance(payload, dict) else None
+        rows = payload.get("rows") if isinstance(payload, dict) else None
+        page_total = payload.get("total_candidates") if isinstance(payload, dict) else None
+        returned = payload.get("returned") if isinstance(payload, dict) else None
+        if (
+            not isinstance(coverage, dict)
+            or coverage.get("requested") != 7
+            or coverage.get("inspected") != 7
+            or coverage.get("unreadable") != []
+            or payload.get("offset") != offset
+            or isinstance(page_total, bool)
+            or not isinstance(page_total, int)
+            or page_total < 1
+            or isinstance(returned, bool)
+            or not isinstance(returned, int)
+            or not isinstance(rows, list)
+            or returned != len(rows)
+            or returned > 500
+            or not isinstance(payload.get("truncated"), bool)
+            or payload.get("warnings") != []
+        ):
+            raise ValueError("failed-stage R05 edge readback page has incomplete coverage or malformed data")
+        if total_candidates is None:
+            total_candidates = page_total
+        elif page_total != total_candidates:
+            raise ValueError("failed-stage R05 edge readback page totals changed during pagination")
+        all_rows.extend(rows)
+        offset += returned
+        if payload["truncated"] is False:
+            if offset != total_candidates:
+                raise ValueError("failed-stage R05 edge readback ended before every edge candidate was returned")
+            break
+        if returned == 0 or offset >= total_candidates:
+            raise ValueError("failed-stage R05 edge readback pagination did not advance consistently")
+
+    return {
+        "coverage": {"requested": 7, "inspected": 7, "unreadable": []},
+        "total_candidates": total_candidates,
+        "returned": len(all_rows),
+        "offset": 0,
+        "truncated": False,
+        "warnings": [],
+        "rows": all_rows,
+    }
+
+
+def _closed_edge_cycles(segments, *, point_tolerance_m: float = 1e-5):
+    """Build simple closed loops from coplanar line edges; reject ambiguous topology."""
+
+    adjacency: dict[tuple[int, int], list[tuple[int, int]]] = {}
+    edges = set()
+    for first, second in segments:
+        a = (round(first[0] / point_tolerance_m), round(first[1] / point_tolerance_m))
+        b = (round(second[0] / point_tolerance_m), round(second[1] / point_tolerance_m))
+        if a == b:
+            raise ValueError("failed-stage R05 edge readback contains a zero-length horizontal edge")
+        edge = tuple(sorted((a, b)))
+        if edge in edges:
+            raise ValueError("failed-stage R05 edge readback contains duplicate coplanar edges")
+        edges.add(edge)
+        adjacency.setdefault(a, []).append(b)
+        adjacency.setdefault(b, []).append(a)
+    if not edges or any(len(neighbors) != 2 for neighbors in adjacency.values()):
+        raise ValueError("failed-stage R05 horizontal edges do not form closed, unambiguous loops")
+
+    unvisited = set(edges)
+    cycles = []
+    while unvisited:
+        first_edge = min(unvisited)
+        start = first_edge[0]
+        current = start
+        path = [start]
+        while True:
+            options = sorted(
+                neighbor
+                for neighbor in adjacency[current]
+                if tuple(sorted((current, neighbor))) in unvisited
+            )
+            if not options:
+                raise ValueError("failed-stage R05 horizontal edge loop is open")
+            next_vertex = options[0]
+            unvisited.remove(tuple(sorted((current, next_vertex))))
+            current = next_vertex
+            if current == start:
+                break
+            path.append(current)
+        if len(path) < 3:
+            raise ValueError("failed-stage R05 horizontal edge loop has fewer than three vertices")
+        coords = [
+            (vertex[0] * point_tolerance_m, vertex[1] * point_tolerance_m)
+            for vertex in path
+        ]
+        coords.append(coords[0])
+        cycles.append(coords)
+    return cycles
+
+
+def _validate_known_r05_stage_geometry(payload: object, records, operations, *, view_id: int) -> dict:
+    """Reconcile exact solid-edge coverage, profile loops, courtyard holes, and elevations."""
+
+    from shapely.geometry import LineString, Point, Polygon
+
+    records = list(records)
+    operations = list(operations)
+    records_by_id = {
+        record.get("logical_id"): record for record in records if isinstance(record, dict)
+    }
+    operations_by_id = {
+        getattr(operation, "logical_id", None): operation
+        for operation in operations
+        if getattr(operation, "logical_id", None) in RUN003_FAILED_R05_STAGE_WRITE_CAPABILITIES
+    }
+    expected_ids = set(RUN003_FAILED_R05_STAGE_WRITE_CAPABILITIES)
+    rows = payload.get("rows") if isinstance(payload, dict) else None
+    coverage = payload.get("coverage") if isinstance(payload, dict) else None
+    if (
+        set(records_by_id) != expected_ids
+        or len(records_by_id) != len(records)
+        or set(operations_by_id) != expected_ids
+        or not isinstance(rows, list)
+        or not isinstance(coverage, dict)
+        or coverage.get("requested") != 7
+        or coverage.get("inspected") != 7
+        or coverage.get("unreadable") != []
+        or isinstance(payload.get("total_candidates"), bool)
+        or not isinstance(payload.get("total_candidates"), int)
+        or payload.get("total_candidates") != len(rows)
+        or payload.get("returned") != len(rows)
+        or payload.get("offset") != 0
+        or payload.get("truncated") is not False
+        or payload.get("warnings") != []
+    ):
+        raise ValueError("failed-stage R05 geometry coverage is incomplete or not the exact seven-write set")
+
+    rows_by_id = {element_id: [] for element_id in (record["element_id"] for record in records)}
+    record_by_element = {record["element_id"]: record for record in records}
+    if len(record_by_element) != 7:
+        raise ValueError("failed-stage R05 geometry journal identities are missing or duplicated")
+    for row in rows:
+        if not isinstance(row, dict):
+            raise TypeError("failed-stage R05 geometry row is not typed")
+        element_id = row.get("element_id")
+        record = record_by_element.get(element_id)
+        if (
+            isinstance(element_id, bool)
+            or not isinstance(element_id, int)
+            or record is None
+            or row.get("unique_id") != record.get("unique_id")
+            or row.get("selector") != "edge"
+            or row.get("reference_type") != "edge"
+            or row.get("view_id") != view_id
+            or row.get("ambiguous") is not False
+            or row.get("warnings") != []
+            or row.get("link_instance") is not None
+        ):
+            raise ValueError("failed-stage R05 edge identity or reference provenance differs")
+        geometry = row.get("geometry")
+        if not isinstance(geometry, dict) or geometry.get("kind") != "line":
+            raise ValueError("failed-stage R05 geometry contains an unsupported non-line edge")
+        points = []
+        for name in ("start", "end"):
+            point = geometry.get(name)
+            if (
+                not isinstance(point, (list, tuple))
+                or len(point) != 3
+                or any(
+                    isinstance(value, bool)
+                    or not isinstance(value, (int, float))
+                    or not math.isfinite(value)
+                    for value in point
+                )
+            ):
+                raise ValueError("failed-stage R05 edge has malformed or non-finite coordinates")
+            points.append(tuple(float(value) for value in point))
+        rows_by_id[element_id].append(tuple(points))
+
+    verified_writes = []
+    elevation_tolerance_m = 1e-3
+    point_tolerance_m = 1e-5
+    for logical_id, capability in RUN003_FAILED_R05_STAGE_WRITE_CAPABILITIES.items():
+        record = records_by_id[logical_id]
+        operation = operations_by_id[logical_id]
+        if (
+            getattr(operation, "semantic_capability", None) != capability
+            or isinstance(record.get("element_id"), bool)
+            or not isinstance(record.get("element_id"), int)
+            or not isinstance(record.get("unique_id"), str)
+            or not record["unique_id"].strip()
+        ):
+            raise ValueError(f"failed-stage R05 geometry identity differs for {logical_id}")
+        geometry = operation.payload.get("geometry") if isinstance(operation.payload, dict) else None
+        rings = geometry.get("footprint") if isinstance(geometry, dict) else None
+        if not isinstance(rings, list) or not rings:
+            raise ValueError(f"current R05 profile is invalid for {logical_id}")
+
+        expected_lines = []
+        for ring in rings:
+            if not isinstance(ring, list) or len(ring) < 4:
+                raise ValueError(f"current R05 profile is invalid for {logical_id}")
+            coords = []
+            ring_z = []
+            for point in ring:
+                if (
+                    not isinstance(point, (list, tuple))
+                    or len(point) not in {2, 3}
+                    or any(
+                        isinstance(value, bool)
+                        or not isinstance(value, (int, float))
+                        or not math.isfinite(value)
+                        for value in point
+                    )
+                ):
+                    raise ValueError(f"current R05 profile is invalid for {logical_id}")
+                coords.append((float(point[0]), float(point[1])))
+                ring_z.append(float(point[2]) if len(point) == 3 else 0.0)
+            if (
+                math.hypot(coords[0][0] - coords[-1][0], coords[0][1] - coords[-1][1]) > point_tolerance_m
+                or max(ring_z) - min(ring_z) > point_tolerance_m
+            ):
+                raise ValueError(f"current R05 profile is not a closed planar ring for {logical_id}")
+            expected_lines.append(LineString(coords))
+        expected_z = sum(
+            float(point[2]) if len(point) == 3 else 0.0
+            for ring in rings
+            for point in ring[:-1]
+        ) / sum(len(ring) - 1 for ring in rings)
+        if any(
+            abs((float(point[2]) if len(point) == 3 else 0.0) - expected_z) > point_tolerance_m
+            for ring in rings
+            for point in ring[:-1]
+        ):
+            raise ValueError(f"current R05 profile rings do not share one elevation for {logical_id}")
+        expected_polygon = Polygon(
+            list(expected_lines[0].coords),
+            [list(line.coords) for line in expected_lines[1:]],
+        )
+        if expected_polygon.is_empty or not expected_polygon.is_valid or expected_polygon.area <= 0:
+            raise ValueError(f"current R05 footprint is invalid for {logical_id}")
+
+        def rings_match(observed_lines, expected_lines=expected_lines) -> bool:
+            if len(observed_lines) != len(expected_lines):
+                return False
+            unmatched = list(observed_lines)
+            for expected_line in expected_lines:
+                candidates = [
+                    (expected_line.hausdorff_distance(actual), index)
+                    for index, actual in enumerate(unmatched)
+                ]
+                distance, index = min(candidates, default=(math.inf, -1))
+                if distance > elevation_tolerance_m:
+                    return False
+                unmatched.pop(index)
+            return not unmatched
+
+        horizontal = []
+        all_points = []
+        vertical_edges = []
+        for first, second in rows_by_id[record["element_id"]]:
+            all_points.extend((first, second))
+            if abs(first[2] - second[2]) <= point_tolerance_m:
+                if math.hypot(first[0] - second[0], first[1] - second[1]) > point_tolerance_m:
+                    horizontal.append(((first[2] + second[2]) / 2.0, (first[0], first[1]), (second[0], second[1])))
+            elif (
+                math.hypot(first[0] - second[0], first[1] - second[1]) <= point_tolerance_m
+            ):
+                vertical_edges.append((first, second))
+            else:
+                raise ValueError(f"failed-stage R05 contains a sloped edge for {logical_id}")
+        planes = []
+        for z, first, second in sorted(horizontal, key=lambda item: item[0]):
+            if planes and abs(z - planes[-1]["z"]) <= point_tolerance_m:
+                plane = planes[-1]
+                plane["segments"].append((first, second))
+                plane["z_values"].append(z)
+                plane["z"] = sum(plane["z_values"]) / len(plane["z_values"])
+            else:
+                planes.append({"z": z, "z_values": [z], "segments": [(first, second)]})
+
+        matching_planes = []
+        for plane in planes:
+            cycles = _closed_edge_cycles(plane["segments"], point_tolerance_m=point_tolerance_m)
+            observed_lines = [LineString(cycle) for cycle in cycles]
+            if not rings_match(observed_lines):
+                raise ValueError(f"failed-stage R05 horizontal footprint differs for {logical_id}")
+            if abs(plane["z"] - expected_z) <= elevation_tolerance_m:
+                matching_planes.append(plane)
+        if len(matching_planes) != 1:
+            raise ValueError(
+                f"failed-stage R05 footprint or elevation does not match the current plan for {logical_id}"
+            )
+        if len(planes) < 2 or not vertical_edges or not all_points:
+            raise ValueError(f"failed-stage R05 solid extents are incomplete for {logical_id}")
+        for first, second in vertical_edges:
+            for endpoint in (first, second):
+                if expected_polygon.boundary.distance(Point(endpoint[0], endpoint[1])) > elevation_tolerance_m:
+                    raise ValueError(f"failed-stage R05 vertical profile differs for {logical_id}")
+        plane = matching_planes[0]
+        edge_min_z = min(point[2] for point in all_points)
+        edge_max_z = max(point[2] for point in all_points)
+        verified_writes.append(
+            {
+                "logical_id": logical_id,
+                "element_id": record["element_id"],
+                "unique_id": record["unique_id"],
+                "capability": capability,
+                "readback_status": "VERIFIED",
+                "footprint_ring_count": len(expected_lines),
+                "expected_elevation_m": expected_z,
+                "observed_elevation_m": plane["z"],
+                "edge_bounds_z_m": [edge_min_z, edge_max_z],
+                "edge_count": len(rows_by_id[record["element_id"]]),
+            }
+        )
+    return {
+        "readback_status": "VERIFIED",
+        "checks": {
+            "coverage": "PASS",
+            "identity": "PASS",
+            "footprint": "PASS",
+            "elevation": "PASS",
+            "solid_profile": "PASS",
+        },
+        "writes": verified_writes,
+        "view_id": view_id,
+        "edge_candidates": len(rows),
+    }
+
+
+def _validate_known_r05_stage_writes(
+    payload: object, records, operations, *, edge_payload: object, view_id: int
+) -> dict:
+    """Independently reconcile failed-stage identity, bounds, footprint and elevation."""
+
+    records = list(records)
+    expected_capabilities = RUN003_FAILED_R05_STAGE_WRITE_CAPABILITIES
+    records_by_id = {record.get("logical_id"): record for record in records if isinstance(record, dict)}
+    operations_by_id = {
+        getattr(operation, "logical_id", None): operation
+        for operation in operations
+        if getattr(operation, "logical_id", None) in expected_capabilities
+    }
+    rows = payload.get("rows") if isinstance(payload, dict) else None
+    expected_element_ids = {
+        record.get("element_id") for record in records_by_id.values()
+    }
+    if (
+        set(records_by_id) != set(expected_capabilities)
+        or len(records_by_id) != len(records)
+        or set(operations_by_id) != set(expected_capabilities)
+        or not isinstance(rows, list)
+        or payload.get("matched_total") != 7
+        or payload.get("returned") != 7
+        or payload.get("coverage_complete") is not True
+        or payload.get("unreadable_total") != 0
+        or len(rows) != 7
+    ):
+        raise ValueError("failed-stage R05 live readback is incomplete or not the exact seven-write set")
+    rows_by_id = {
+        row.get("element_id"): row for row in rows if isinstance(row, dict)
+    }
+    if (
+        len(rows_by_id) != 7
+        or set(rows_by_id) != expected_element_ids
+        or any(isinstance(element_id, bool) or not isinstance(element_id, int) for element_id in rows_by_id)
+    ):
+        raise ValueError("failed-stage R05 live readback element IDs are missing or duplicated")
+
+    verified_writes = []
+    for logical_id, capability in expected_capabilities.items():
+        record = records_by_id[logical_id]
+        operation = operations_by_id[logical_id]
+        if getattr(operation, "semantic_capability", None) != capability:
+            raise ValueError(f"current R05 capability differs for {logical_id}")
+        row = rows_by_id[record["element_id"]]
+        expected_category = "Pisos" if capability == "revit.create_floor" else "Telhados"
+        if (
+            row.get("unique_id") != record.get("unique_id")
+            or row.get("category") != expected_category
+        ):
+            raise ValueError(f"failed-stage R05 live identity or category differs for {logical_id}")
+
+        geometry = operation.payload.get("geometry") if isinstance(operation.payload, dict) else None
+        rings = geometry.get("footprint") if isinstance(geometry, dict) else None
+        points = [point for ring in rings for point in ring] if isinstance(rings, list) else []
+        if not points or any(
+            not isinstance(point, (list, tuple))
+            or len(point) not in {2, 3}
+            or any(
+                isinstance(value, bool)
+                or not isinstance(value, (int, float))
+                or not math.isfinite(value)
+                for value in point
+            )
+            for point in points
+        ):
+            raise ValueError(f"current R05 profile is invalid for {logical_id}")
+        bounds = row.get("bounding_box")
+        if not isinstance(bounds, dict):
+            raise TypeError(f"failed-stage R05 bounds are missing for {logical_id}")
+        for bound, selector in (("min", min), ("max", max)):
+            actual = bounds.get(bound)
+            if not isinstance(actual, (list, tuple)) or len(actual) != 3:
+                raise ValueError(f"failed-stage R05 bounds are malformed for {logical_id}")
+            if any(
+                isinstance(value, bool)
+                or not isinstance(value, (int, float))
+                or not math.isfinite(value)
+                for value in actual
+            ):
+                raise ValueError(f"failed-stage R05 bounds are malformed for {logical_id}")
+            for axis in range(2):
+                expected = selector(float(point[axis]) for point in points)
+                value = actual[axis]
+                if not math.isclose(float(value), expected, rel_tol=0.0, abs_tol=1e-3):
+                    raise ValueError(f"failed-stage R05 bounds differ for {logical_id}")
+        verified_writes.append(
+            {
+                "logical_id": logical_id,
+                "element_id": record["element_id"],
+                "unique_id": record["unique_id"],
+                "capability": capability,
+                "category": expected_category,
+                "bounding_box": bounds,
+                "readback_status": "VERIFIED",
+            }
+        )
+    geometry_evidence = _validate_known_r05_stage_geometry(
+        edge_payload, records, operations, view_id=view_id
+    )
+    geometry_by_id = {write["logical_id"]: write for write in geometry_evidence["writes"]}
+    for write in verified_writes:
+        geometry_write = geometry_by_id.get(write["logical_id"])
+        if geometry_write is None or geometry_write["element_id"] != write["element_id"] or geometry_write["unique_id"] != write["unique_id"]:
+            raise ValueError(f"failed-stage R05 identity differs between typed readbacks for {write['logical_id']}")
+        bounds_z = write["bounding_box"]
+        if any(
+            abs(float(bounds_z[bound][2]) - geometry_write["edge_bounds_z_m"][index])
+            > 1e-3
+            for index, bound in enumerate(("min", "max"))
+        ):
+            raise ValueError(f"failed-stage R05 3D bounds differ between typed readbacks for {write['logical_id']}")
+        write.update(
+            {
+                "footprint_ring_count": geometry_write["footprint_ring_count"],
+                "expected_elevation_m": geometry_write["expected_elevation_m"],
+                "observed_elevation_m": geometry_write["observed_elevation_m"],
+                "edge_bounds_z_m": geometry_write["edge_bounds_z_m"],
+                "edge_count": geometry_write["edge_count"],
+            }
+        )
+    return {
+        "readback_status": "VERIFIED",
+        "checks": {
+            "coverage": "PASS",
+            "identity": "PASS",
+            "bounds_xy": "PASS",
+            "bounds_z": "PASS",
+            "footprint": "PASS",
+            "elevation": "PASS",
+            "solid_profile": "PASS",
+        },
+        "writes": verified_writes,
+        "geometry_readback": {
+            "view_id": view_id,
+            "edge_candidates": geometry_evidence["edge_candidates"],
+        },
+    }
+
+
 def _validate_known_r05_partial_model(payload: object, records, authorization) -> dict:
-    """Prove the live document is exactly P6 plus the eight journaled floor writes."""
+    """Prove the live document is exactly P6 plus the journaled R05 writes."""
 
     expected_message = "live document does not match the known RUN-003 partial R05 state"
     if not isinstance(payload, dict):
@@ -918,17 +1561,55 @@ def _validate_known_r05_partial_model(payload: object, records, authorization) -
     def reject(detail: str) -> None:
         raise ValueError(f"{expected_message}: {detail}; {observed}")
 
-    expected_live_categories = {"Massa": 7, "Pisos": 22, "Telhados": 4}
+    records = list(records)
+    expected_partial_categories = {"Pisos": 0, "Telhados": 0}
+    expected_logical_ids = set(RUN003_FAILED_R05_FLOOR_IDS)
+    if len(records) > len(RUN003_FAILED_R05_FLOOR_IDS):
+        expected_logical_ids |= set(RUN003_FAILED_R05_STAGE_WRITE_CAPABILITIES)
+    records_by_id = {
+        record.get("element_id"): record for record in records if isinstance(record, dict)
+    }
     if (
-        payload.get("matched_total") != 33
-        or payload.get("returned") != 33
+        len(records_by_id) != len(records)
+        or {record.get("logical_id") for record in records_by_id.values()}
+        != expected_logical_ids
+        or any(
+            isinstance(record.get("element_id"), bool)
+            or not isinstance(record.get("element_id"), int)
+            or not isinstance(record.get("unique_id"), str)
+            or not record["unique_id"].strip()
+            for record in records_by_id.values()
+        )
+        or len({record["unique_id"] for record in records_by_id.values()}) != len(records)
+    ):
+        reject("journaled R05 partial identities are not the exact known set")
+    for record in records_by_id.values():
+        logical_id = record["logical_id"]
+        capability = (
+            "revit.create_floor"
+            if logical_id in RUN003_FAILED_R05_FLOOR_IDS
+            else RUN003_FAILED_R05_STAGE_WRITE_CAPABILITIES.get(logical_id)
+        )
+        if record.get("capability") != capability:
+            reject(f"journaled R05 partial capability differs for {logical_id}")
+        category = "Pisos" if capability == "revit.create_floor" else "Telhados"
+        expected_partial_categories[category] += 1
+    expected_live_categories = {
+        "Massa": 7,
+        "Pisos": 14 + expected_partial_categories["Pisos"],
+        "Telhados": 4 + expected_partial_categories["Telhados"],
+    }
+    expected_total = 25 + len(records)
+    if (
+        payload.get("matched_total") != expected_total
+        or payload.get("returned") != expected_total
         or payload.get("coverage_complete") is not True
         or payload.get("unreadable_total") != 0
         or reported_categories != expected_live_categories
         or not isinstance(rows, list)
-        or len(rows) != 33
+        or len(rows) != expected_total
     ):
-        reject("live completeness or expected 7/22/4 category counts differ")
+        reject(f"live completeness or expected categories {expected_live_categories!r} differ")
     by_id = {
         row.get("element_id"): row
         for row in rows
@@ -937,17 +1618,20 @@ def _validate_known_r05_partial_model(payload: object, records, authorization) -
         and not isinstance(row.get("element_id"), bool)
     }
     if (
-        len(by_id) != 33
+        len(by_id) != expected_total
         or set(by_id) != {row.get("element_id") for row in rows}
-        or len({row.get("unique_id") for row in rows if isinstance(row.get("unique_id"), str)}) != 33
+        or len({row.get("unique_id") for row in rows if isinstance(row.get("unique_id"), str)}) != expected_total
     ):
         reject("element IDs or unique IDs are missing, duplicated, or malformed")
-    expected_partial = {record["element_id"]: record for record in records}
+    expected_partial = records_by_id
     for element_id, expected in expected_partial.items():
         row = by_id.get(element_id)
+        expected_category = (
+            "Pisos" if expected.get("capability") == "revit.create_floor" else "Telhados"
+        )
         if (
             not isinstance(row, dict)
-            or row.get("category") != "Pisos"
+            or row.get("category") != expected_category
             or row.get("unique_id") != expected["unique_id"]
         ):
             reject(f"journaled partial element {element_id} is missing or mismatched")
@@ -999,9 +1683,9 @@ def _validate_known_r05_partial_model(payload: object, records, authorization) -
     if missing_admin_ids:
         reject(f"administrative P6 floor IDs are missing: {missing_admin_ids!r}")
     return {
-        "matched_total": 33,
+        "matched_total": expected_total,
         "partial_element_ids": sorted(expected_partial),
-        "p6_element_count_after_excluding_partial": 25,
+        "p6_element_count_after_excluding_partial": expected_total - len(expected_partial),
         "p6_categories_after_excluding_partial": baseline_categories,
     }
 
@@ -1480,40 +2164,86 @@ def _validate_known_r05_partial_geometry(
     }
 
 
-def _remaining_r05_operations(operations, reconciled_element_ids: set[int]) -> list:
-    """Filter only the exact eight floor operations already read and reconciled."""
+def _remaining_r05_operations(operations, reconciled_element_ids) -> list:
+    """Filter only operations backed by an exact independent live readback."""
 
     expected_ids = set(RUN003_FAILED_R05_FLOOR_IDS)
     expected_element_ids = set(RUN003_FAILED_R05_FLOOR_IDS.values())
-    if (
-        any(
-            isinstance(element_id, bool) or not isinstance(element_id, int)
-            for element_id in reconciled_element_ids
-        )
-        or reconciled_element_ids != expected_element_ids
-    ):
-        raise ValueError("reconciled IDs do not match the exact known eight-floor set")
     operation_ids = [getattr(operation, "logical_id", None) for operation in operations]
-    matching = [logical_id for logical_id in operation_ids if logical_id in expected_ids]
-    if (
-        set(matching) != expected_ids
-        or len(matching) != len(expected_ids)
-        or any(
-            getattr(operation, "semantic_capability", None) != "revit.create_floor"
+    if isinstance(reconciled_element_ids, set):
+        if (
+            any(
+                isinstance(element_id, bool) or not isinstance(element_id, int)
+                for element_id in reconciled_element_ids
+            )
+            or reconciled_element_ids != expected_element_ids
+        ):
+            raise ValueError("reconciled IDs do not match the exact known eight-floor set")
+        matching = [logical_id for logical_id in operation_ids if logical_id in expected_ids]
+        if (
+            set(matching) != expected_ids
+            or len(matching) != len(expected_ids)
+            or any(
+                getattr(operation, "semantic_capability", None) != "revit.create_floor"
+                for operation in operations
+                if getattr(operation, "logical_id", None) in expected_ids
+            )
+        ):
+            raise ValueError("current R05 plan does not contain the exact known eight-floor set")
+        reconciled_logical_ids = expected_ids
+    else:
+        records = list(reconciled_element_ids)
+        required_capabilities = {
+            **{logical_id: "revit.create_floor" for logical_id in expected_ids},
+            **RUN003_FAILED_R05_STAGE_WRITE_CAPABILITIES,
+        }
+        records_by_logical = {
+            record.get("logical_id"): record
+            for record in records
+            if isinstance(record, dict)
+        }
+        if (
+            len(records_by_logical) != len(records)
+            or set(records_by_logical) not in (expected_ids, set(required_capabilities))
+            or any(
+                record.get("status") != "VERIFIED"
+                or isinstance(record.get("element_id"), bool)
+                or not isinstance(record.get("element_id"), int)
+                or not isinstance(record.get("unique_id"), str)
+                or not record["unique_id"].strip()
+                or record.get("capability") != required_capabilities[logical_id]
+                for logical_id, record in records_by_logical.items()
+            )
+            or len({record["element_id"] for record in records_by_logical.values()})
+            != len(records_by_logical)
+            or len({record["unique_id"] for record in records_by_logical.values()})
+            != len(records_by_logical)
+        ):
+            raise ValueError("reconciled records do not match the exact known R05 write set")
+        for logical_id, record in records_by_logical.items():
+            if logical_id in expected_ids and record["element_id"] != RUN003_FAILED_R05_FLOOR_IDS[logical_id]:
+                raise ValueError("reconciled records do not match the exact known eight-floor set")
+        operation_by_logical = {
+            getattr(operation, "logical_id", None): operation
             for operation in operations
-            if getattr(operation, "logical_id", None) in expected_ids
-        )
-    ):
-        raise ValueError("current R05 plan does not contain the exact known eight-floor set")
+        }
+        if any(
+            logical_id not in operation_by_logical
+            or getattr(operation_by_logical[logical_id], "semantic_capability", None)
+            != required_capabilities[logical_id]
+            for logical_id in records_by_logical
+        ):
+            raise ValueError("current R05 plan does not match the reconciled write records")
+        reconciled_logical_ids = set(records_by_logical)
     return [
         operation
         for operation in operations
-        if getattr(operation, "logical_id", None) not in expected_ids
+        if getattr(operation, "logical_id", None) not in reconciled_logical_ids
     ]
 
 
 def _merge_reconciled_r05_records(plan, result, recovery_evidence: dict):
-    """Combine current R05 writes with the eight independently re-read prior floors."""
+    """Combine current R05 results with every independently re-read prior write."""
 
     reconciled = recovery_evidence.get("reconciled_partial_floors")
     if not isinstance(reconciled, dict) or not isinstance(reconciled.get("floors"), list):
@@ -1527,8 +2257,38 @@ def _merge_reconciled_r05_records(plan, result, recovery_evidence: dict):
         raise ValueError("full R05 plan lost a reconciled floor operation")
 
     existing_ids = {record.logical_id for record in result.records}
-    if existing_ids & expected_ids:
-        raise ValueError("R05 execution unexpectedly repeated a reconciled floor write")
+    stage_evidence = recovery_evidence.get("reconciled_failed_stage_writes")
+    stage_writes = stage_evidence.get("writes") if isinstance(stage_evidence, dict) else []
+    if stage_evidence is not None and (
+        stage_evidence.get("readback_status") != "VERIFIED"
+        or stage_evidence.get("checks")
+        != {
+            "coverage": "PASS",
+            "identity": "PASS",
+            "bounds_xy": "PASS",
+            "bounds_z": "PASS",
+            "footprint": "PASS",
+            "elevation": "PASS",
+            "solid_profile": "PASS",
+        }
+        or not isinstance(stage_evidence.get("geometry_readback"), dict)
+        or not isinstance(stage_writes, list)
+    ):
+        raise ValueError("failed-stage live readback evidence is incomplete")
+    expected_stage_ids = set(RUN003_FAILED_R05_STAGE_WRITE_CAPABILITIES)
+    stage_by_id = {
+        write.get("logical_id"): write
+        for write in stage_writes
+        if isinstance(write, dict)
+    }
+    if stage_evidence is not None and (
+        set(stage_by_id) != expected_stage_ids
+        or len(stage_by_id) != len(stage_writes)
+    ):
+        raise ValueError("failed-stage live readback is not the exact seven-write set")
+    reconciled_ids = expected_ids | set(stage_by_id)
+    if existing_ids & reconciled_ids:
+        raise ValueError("R05 execution unexpectedly repeated a reconciled write")
     for logical_id, floor in floors_by_id.items():
         if floor.get("readback_status") != "VERIFIED":
             raise ValueError(f"RUN-003 partial floor is not verified: {logical_id}")
@@ -1554,6 +2314,41 @@ def _merge_reconciled_r05_records(plan, result, recovery_evidence: dict):
                     "reconciled_existing": True,
                     "prior_journal_status": "VERIFIED",
                     "geometry_checks": reconciled["geometry_checks"],
+                },
+            )
+        )
+    for logical_id, write in stage_by_id.items():
+        operation = all_operations.get(logical_id)
+        if (
+            operation is None
+            or getattr(operation, "semantic_capability", None)
+            != RUN003_FAILED_R05_STAGE_WRITE_CAPABILITIES[logical_id]
+            or write.get("readback_status") != "VERIFIED"
+            or write.get("capability")
+            != RUN003_FAILED_R05_STAGE_WRITE_CAPABILITIES[logical_id]
+            or isinstance(write.get("element_id"), bool)
+            or not isinstance(write.get("element_id"), int)
+            or not isinstance(write.get("unique_id"), str)
+            or not write["unique_id"].strip()
+        ):
+            raise ValueError(f"failed-stage readback does not match the current plan for {logical_id}")
+        result.records.append(
+            OperationRunRecord(
+                stage=BimStage.R05,
+                logical_id=logical_id,
+                semantic_capability=write["capability"],
+                provider=getattr(operation, "preferred_provider", None) or "horizun",
+                tool="reconciled_failed_stage_readback",
+                reported_success=True,
+                status=RunStatus.VERIFIED,
+                unique_id=write["unique_id"],
+                evidence={
+                    "element_id": write["element_id"],
+                    "unique_id": write["unique_id"],
+                    "bounding_box": write["bounding_box"],
+                    "reconciled_existing": True,
+                    "prior_journal_status": "VERIFIED",
+                    "readback_checks": stage_evidence["checks"],
                 },
             )
         )
@@ -1597,7 +2392,7 @@ def _row_model_snapshot(row: object) -> tuple:
 
 
 def _compare_known_partial_to_p6_checkpoint(partial_payload, checkpoint_payload, records) -> None:
-    """Require the unsaved target to equal the P6 checkpoint plus eight floors."""
+    """Require the unsaved target to equal P6 plus the exact reconciled writes."""
 
     partial_ids = {record["element_id"] for record in records}
     partial_rows = partial_payload.get("rows") if isinstance(partial_payload, dict) else None
@@ -1723,11 +2518,12 @@ def _restore_known_failed_r05_partial(
     authorization,
     *,
     journal_path: Path,
+    stage_journal_path: Path | None = None,
     run_key: str,
     operations,
     target_document_title: str,
 ) -> dict:
-    """Reconcile the persisted eight-floor partial against P6 and current R05."""
+    """Reconcile the known unsaved R05 writes against P6 and the current plan."""
 
     target = Path(target).resolve()
     permits_target_path = getattr(authorization, "permits_target_path", None)
@@ -1737,7 +2533,13 @@ def _restore_known_failed_r05_partial(
     active = _active_path(info)
     if not active or Path(active).resolve() != target:
         raise ValueError("cannot restore RUN-003 partial: exact target is not active")
-    records = _load_known_failed_r05_records(journal_path)
+    floor_records = _load_known_failed_r05_records(journal_path)
+    stage_records = (
+        _load_known_failed_r05_stage_records(stage_journal_path, operations)
+        if stage_journal_path is not None
+        else []
+    )
+    records = [*floor_records, *stage_records]
     live = _read_tool(
         transport,
         "horizun_query_model",
@@ -1887,11 +2689,40 @@ def _restore_known_failed_r05_partial(
         level_names = _query_r05_level_names(transport, operations)
         partial_geometry = _validate_known_r05_partial_geometry(
             live_again,
-            records,
+            floor_records,
             operations,
             level_names,
             area_measurements=area_measurements,
         )
+        stage_readback = None
+        if stage_records:
+            stage_element_ids = sorted(record["element_id"] for record in stage_records)
+            stage_payload = _read_tool(
+                transport,
+                "horizun_query_model",
+                {
+                    "element_ids": stage_element_ids,
+                    "categories": ["OST_Floors", "OST_Roofs"],
+                    "coordinate_units": "m",
+                    "include_bounding_box": True,
+                    "include_types": False,
+                    "max_rows": len(stage_element_ids),
+                    "response_mode": "compact",
+                    "cache_mode": "bypass",
+                    "return_fields": ["unique_id", "category", "name"],
+                },
+            )
+            stage_view_id = _query_r05_inspection_view_id(transport)
+            stage_edge_payload = _query_known_r05_stage_edges(
+                transport, stage_records, stage_view_id
+            )
+            stage_readback = _validate_known_r05_stage_writes(
+                stage_payload,
+                stage_records,
+                operations,
+                edge_payload=stage_edge_payload,
+                view_id=stage_view_id,
+            )
     except Exception:
         if checkpoint_opened:
             try:
@@ -1911,8 +2742,10 @@ def _restore_known_failed_r05_partial(
     return {
         "journal_path": str(Path(journal_path).resolve()),
         "reconciled_persisted_writes": state["partial_element_ids"],
+        "reconciled_r05_records": records,
         "pre_close_live_state": live_state,
         "reconciled_partial_floors": partial_geometry,
+        "reconciled_failed_stage_writes": stage_readback,
         "p6_checkpoint": {
             "path": str(checkpoint),
             "checkpoint_manager_verified": checkpoint_verified,
@@ -2505,6 +3338,11 @@ def run(
                         rvt,
                         study_authorization,
                         journal_path=RUN003_FAILED_R05_JOURNAL,
+                        stage_journal_path=(
+                            RUN003_FAILED_R05_STAGE_JOURNAL
+                            if RUN003_FAILED_R05_STAGE_JOURNAL.is_file()
+                            else None
+                        ),
                         run_key=uuid.uuid4().hex[:12],
                         operations=plans[0].operations,
                         target_document_title=target_document_title,
@@ -2584,13 +3422,13 @@ def run(
                 if recovery_evidence is not None and plan.stage is BimStage.R05:
                     remaining = _remaining_r05_operations(
                         plan.operations,
-                        set(recovery_evidence["reconciled_persisted_writes"]),
+                        recovery_evidence["reconciled_r05_records"],
                     )
                     execution_plan = plan.model_copy(update={"operations": remaining})
                     print(
                         "R05 idempotent resume:",
-                        len(recovery_evidence["reconciled_persisted_writes"]),
-                        "reconciled floor operations skipped;",
+                        len(recovery_evidence["reconciled_r05_records"]),
+                        "independently reconciled prior R05 operations skipped;",
                         len(remaining),
                         "current plan operations remain",
                     )

@@ -30,6 +30,8 @@ from pathlib import Path
 from typing import Any
 
 from shapely.geometry import LineString, Polygon  # type: ignore[import-untyped]
+from shapely.ops import triangulate, unary_union  # type: ignore[import-untyped]
+from shapely.strtree import STRtree  # type: ignore[import-untyped]
 
 from amanda_agent.bim.models import BimStage, DesiredState
 from amanda_agent.bim.stages import (
@@ -113,7 +115,6 @@ LEVEL_LOGICAL_ID = "LEVEL-01"
 #: reference is resolved by the bridge against an instance listing, which cannot
 #: hold a type, so resolving a name there always finds nothing.
 EXTERNAL_WALL_TYPE_ID = 250  # "Genérico - 250 mm"
-EXTERNAL_WALL_TYPE_NAME = "Genérico - 250 mm"
 INTERNAL_WALL_TYPE_ID = 220  # "Interior - 138 mm Divisória (1-hr)"
 
 #: Operations that Revit refuses unless they name their level.
@@ -867,6 +868,91 @@ def _simplify_r05_profile(polygon: Polygon) -> Polygon:
     return simplified
 
 
+def _roof_patch_key(polygon: Polygon) -> tuple:
+    normalized = polygon.normalize()
+    return (
+        *(round(float(value), 9) for value in polygon.bounds),
+        round(float(polygon.area), 9),
+        normalized.wkb_hex,
+    )
+
+
+def _roof_polygon_parts(geometry) -> list[Polygon]:
+    if isinstance(geometry, Polygon):
+        return [geometry] if not geometry.is_empty and geometry.area > 1e-12 else []
+    parts = getattr(geometry, "geoms", None)
+    if parts is None:
+        return []
+    return [polygon for part in parts for polygon in _roof_polygon_parts(part)]
+
+
+def _decompose_r05_roof_profile(polygon: Polygon) -> list[Polygon]:
+    """Cover a roof with deterministic simple loops while preserving its voids."""
+
+    if not isinstance(polygon, Polygon) or not polygon.is_valid or polygon.is_empty:
+        raise ProductionBimError("R05 roof source must be one valid polygon")
+    tolerance = R05_PROFILE_SIMPLIFICATION_TOLERANCE_M
+    if not polygon.interiors:
+        return [_simplify_r05_profile(polygon)]
+
+    pieces = [
+        part
+        for triangle in triangulate(polygon)
+        for part in _roof_polygon_parts(triangle.intersection(polygon))
+    ]
+    if not pieces or any(part.interiors for part in pieces):
+        raise ProductionBimError("R05 roof triangulation did not produce simple polygon patches")
+
+    while True:
+        tree = STRtree(pieces)
+        candidates = []
+        for left_index, left in enumerate(pieces):
+            for raw_right_index in tree.query(left, predicate="touches"):
+                right_index = int(raw_right_index)
+                if right_index <= left_index:
+                    continue
+                right = pieces[right_index]
+                if left.boundary.intersection(right.boundary).length <= 1e-9:
+                    continue
+                merged = left.union(right)
+                if isinstance(merged, Polygon) and merged.is_valid and not merged.interiors:
+                    candidates.append(
+                        (
+                            -float(merged.area),
+                            _roof_patch_key(merged),
+                            left_index,
+                            right_index,
+                            merged,
+                        )
+                    )
+        if not candidates:
+            break
+        candidates.sort(key=lambda item: (item[0], item[1], item[2], item[3]))
+        consumed: set[int] = set()
+        merged_patches = []
+        for _negative_area, _key, left_index, right_index, merged in candidates:
+            if left_index in consumed or right_index in consumed:
+                continue
+            consumed.update((left_index, right_index))
+            merged_patches.append(merged)
+        pieces = [
+            piece for index, piece in enumerate(pieces) if index not in consumed
+        ] + merged_patches
+        pieces.sort(key=_roof_patch_key)
+
+    patches = [_simplify_r05_profile(piece) for piece in pieces]
+    covered = unary_union(patches)
+    if (
+        not covered.is_valid
+        or covered.geom_type != "Polygon"
+        or len(covered.interiors) != len(polygon.interiors)
+        or covered.symmetric_difference(polygon).area > tolerance
+        or covered.hausdorff_distance(polygon) > tolerance
+    ):
+        raise ProductionBimError("R05 roof patches do not preserve the source footprint within 1 mm")
+    return sorted(patches, key=_roof_patch_key)
+
+
 def plan_canonical_shell_stage(
     request,
     layout: CanonicalPavilionLayout,
@@ -958,12 +1044,29 @@ def plan_canonical_shell_stage(
             base_elevation, top_elevation = (
                 wall_elevations[level] if continuation else (0.0, 0.0)
             )
+            roof_profiles = (
+                _decompose_r05_roof_profile(envelope_polygons[0])
+                if creates_roof
+                else []
+            )
             roof = (
-                {
-                    "geometry": envelope_polygons[0],
-                    "type": "verified-target-default",
-                    "offset": top_elevation - base_elevation,
-                }
+                [
+                    {
+                        "geometry": profile,
+                        "type": "verified-target-default",
+                        "offset": top_elevation - base_elevation,
+                        **(
+                            {
+                                "logical_id": (
+                                    f"ROOF-{block.component_id}-L{level}-P{index:02d}"
+                                )
+                            }
+                            if len(roof_profiles) > 1
+                            else {}
+                        ),
+                    }
+                    for index, profile in enumerate(roof_profiles, start=1)
+                ]
                 if creates_roof
                 else None
             )
@@ -974,13 +1077,12 @@ def plan_canonical_shell_stage(
                 slab_loops=[],
                 roof=roof,
                 wall_types={
-                    "external": EXTERNAL_WALL_TYPE_NAME,
+                    "external": str(EXTERNAL_WALL_TYPE_ID),
                     "internal": str(INTERNAL_WALL_TYPE_ID),
                 },
                 wall_type_source=(
-                    "type name read from installed Revit 2027 template "
-                    "Default_M_PTB.rte; Horizun resolves one exact OST_Walls "
-                    "match in the target before each dry run"
+                    "element IDs read from installed Revit 2027 template "
+                    "Default_M_PTB.rte: external type 250 and internal type 220"
                 ),
                 include_shared_walls=False,
             )
@@ -996,7 +1098,12 @@ def plan_canonical_shell_stage(
                     suffix = f"-P{loop_index:02d}" if len(floor_polygons) > 1 else ""
                     logical_id = f"FLOOR-{block.component_id}-L{level}{suffix}"
                 elif element.category == "ROOF":
-                    logical_id = f"ROOF-{block.component_id}-L{level}"
+                    roof_prefix = f"ROOF-{block.component_id}-L{level}"
+                    logical_id = (
+                        element.logical_id
+                        if element.logical_id.startswith(f"{roof_prefix}-P")
+                        else roof_prefix
+                    )
                 else:
                     logical_id = f"{element.logical_id}-{block.component_id}-L{level}"
                 properties = dict(element.properties)
@@ -1605,10 +1712,10 @@ def _stamp(plan, solution_id, approval_hash):
                 "start": start,
                 "end": end,
             }
-            # The provider resolves a wall type by NAME through the type_id
-            # field, so the template's real type name travels there.  The stage
-            # keeps its own wall_type_id for the accounting, and the bridge is
-            # given the field it reads.
+            # The stage stores the source-backed template type in properties;
+            # this adapter places it in the typed bridge field. Decimal ElementId
+            # strings are converted below, while R06's compiler-only internal
+            # wall name is mapped to the verified template type.
             properties = operation.payload.get("properties")
             properties = dict(properties) if isinstance(properties, Mapping) else {}
             if properties.get("height_status") != "UNRESOLVED_CANONICAL_GEOMETRIC_ACCEPTANCE":

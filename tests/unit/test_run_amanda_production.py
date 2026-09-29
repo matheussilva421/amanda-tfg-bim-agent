@@ -1769,6 +1769,179 @@ def _known_failed_r05_journal():
     return {"stage": "R05", "status": "FAILED", "persistence": None, "records": records}
 
 
+def _known_failed_r05_stage_write_operations():
+    definitions = [
+        ("FLOOR-SERVICE_CAPACITATION-L1", "revit.create_floor", 0, 0, 4, 3, 0.0),
+        ("ROOF-ADMIN_ACOLHIMENTO-L2", "revit.create_roof", 10, 0, 12, 3, 6.4),
+        ("ROOF-RES_PAV_A-L1", "revit.create_roof", 20, 0, 22, 3, 3.2),
+        ("ROOF-RES_PAV_B-L1", "revit.create_roof", 30, 0, 32, 3, 3.2),
+        ("ROOF-RES_PAV_C-L1", "revit.create_roof", 40, 0, 42, 3, 3.2),
+        ("ROOF-RES_PAV_D_COMMUNAL-L1", "revit.create_roof", 50, 0, 52, 3, 3.2),
+        ("ROOF-CHILD_SECTOR-L1", "revit.create_roof", 60, 0, 62, 3, 3.2),
+    ]
+    operations = []
+    for logical_id, capability, min_x, min_y, max_x, max_y, z in definitions:
+        outer = [
+            [min_x, min_y, z],
+            [max_x, min_y, z],
+            [max_x, max_y, z],
+            [min_x, max_y, z],
+            [min_x, min_y, z],
+        ]
+        rings = [outer]
+        if logical_id == "FLOOR-SERVICE_CAPACITATION-L1":
+            rings.append(
+                [[1, 1, z], [1.5, 1, z], [1.5, 1.5, z], [1, 1.5, z], [1, 1, z]]
+            )
+        operations.append(
+            SimpleNamespace(
+                logical_id=logical_id,
+                semantic_capability=capability,
+                preferred_provider="horizun",
+                payload={"geometry": {"footprint": rings}},
+            )
+        )
+    return operations
+
+
+def _known_failed_r05_stage_journal():
+    writes = [
+        ("FLOOR-SERVICE_CAPACITATION-L1", 333278, "revit.create_floor"),
+        ("ROOF-ADMIN_ACOLHIMENTO-L2", 331580, "revit.create_roof"),
+        ("ROOF-RES_PAV_A-L1", 331597, "revit.create_roof"),
+        ("ROOF-RES_PAV_B-L1", 332072, "revit.create_roof"),
+        ("ROOF-RES_PAV_C-L1", 332482, "revit.create_roof"),
+        ("ROOF-RES_PAV_D_COMMUNAL-L1", 332936, "revit.create_roof"),
+        ("ROOF-CHILD_SECTOR-L1", 333614, "revit.create_roof"),
+    ]
+    records = list(_known_failed_r05_journal()["records"][:8])
+    records.extend(
+        {
+            "logical_id": logical_id,
+            "status": "VERIFIED",
+            "element_id": element_id,
+            "unique_id": f"stage-uid-{element_id}",
+            "capability": capability,
+            "error": None,
+        }
+        for logical_id, element_id, capability in writes
+    )
+    records.extend(
+        {
+            "logical_id": f"FAILED-WALL-{index:03d}",
+            "status": "FAILED",
+            "element_id": None,
+            "unique_id": None,
+            "capability": "revit.create_wall",
+            "error": {"message": "wall type resolution failed"},
+        }
+        for index in range(688)
+    )
+    records.append(
+        {
+            "logical_id": "ROOF-SERVICE_CAPACITATION-L1",
+            "status": "FAILED",
+            "element_id": None,
+            "unique_id": None,
+            "capability": "revit.create_roof",
+            "error": {"message": "roof profile has more than one loop"},
+        }
+    )
+    return {"stage": "R05", "status": "FAILED", "persistence": None, "records": records}
+
+
+def _known_failed_r05_stage_readback(records, operations):
+    by_operation = {operation.logical_id: operation for operation in operations}
+    rows = []
+    for record in records:
+        points = [
+            point
+            for ring in by_operation[record["logical_id"]].payload["geometry"]["footprint"]
+            for point in ring
+        ]
+        rows.append(
+            {
+                "element_id": record["element_id"],
+                "unique_id": record["unique_id"],
+                "category": "Pisos"
+                if record["capability"] == "revit.create_floor"
+                else "Telhados",
+                "name": record["logical_id"],
+                "bounding_box": {
+                    "min": [min(point[0] for point in points), min(point[1] for point in points), min(point[2] for point in points) - 0.2],
+                    "max": [max(point[0] for point in points), max(point[1] for point in points), max(point[2] for point in points)],
+                },
+            }
+        )
+    return {
+        "matched_total": len(rows),
+        "returned": len(rows),
+        "coverage_complete": True,
+        "unreadable_total": 0,
+        "rows": rows,
+    }
+
+
+def _known_failed_r05_stage_edge_readback(records, operations, *, view_id=900001):
+    by_operation = {operation.logical_id: operation for operation in operations}
+    rows = []
+    for record in records:
+        operation = by_operation[record["logical_id"]]
+        rings = operation.payload["geometry"]["footprint"]
+        z_values = [
+            float(point[2]) if len(point) == 3 else 0.0
+            for ring in rings
+            for point in ring
+        ]
+        top_z = z_values[0]
+        for ring in rings:
+            points = [
+                (float(point[0]), float(point[1]), float(point[2]) if len(point) == 3 else 0.0)
+                for point in ring[:-1]
+            ]
+            for plane_z in (top_z, top_z - 0.2):
+                plane = [(x, y, plane_z) for x, y, _ in points]
+                for first, second in zip(plane, [*plane[1:], plane[0]], strict=True):
+                    rows.append(
+                        {
+                            "element_id": record["element_id"],
+                            "unique_id": record["unique_id"],
+                            "selector": "edge",
+                            "reference_type": "edge",
+                            "view_id": view_id,
+                            "ambiguous": False,
+                            "warnings": [],
+                            "geometry": {"kind": "line", "start": list(first), "end": list(second)},
+                        }
+                    )
+            for point in points:
+                rows.append(
+                    {
+                        "element_id": record["element_id"],
+                        "unique_id": record["unique_id"],
+                        "selector": "edge",
+                        "reference_type": "edge",
+                        "view_id": view_id,
+                        "ambiguous": False,
+                        "warnings": [],
+                        "geometry": {
+                            "kind": "line",
+                            "start": [point[0], point[1], top_z - 0.2],
+                            "end": [point[0], point[1], top_z],
+                        },
+                    }
+                )
+    return {
+        "coverage": {"requested": 7, "inspected": 7, "unreadable": []},
+        "total_candidates": len(rows),
+        "returned": len(rows),
+        "offset": 0,
+        "truncated": False,
+        "warnings": [],
+        "rows": rows,
+    }
+
+
 def _known_partial_model(authorization):
     categories = {"Massa": 7, "Pisos": 22, "Telhados": 4}
     rows = []
@@ -1832,6 +2005,20 @@ def _known_partial_model(authorization):
         "summary": {"by_category": categories},
         "rows": rows,
     }
+
+
+def _known_partial_model_with_failed_stage_writes(authorization, records, operations):
+    payload = _known_partial_model(authorization)
+    stage_readback = _known_failed_r05_stage_readback(records, operations)
+    payload["rows"].extend(stage_readback["rows"])
+    payload["matched_total"] = 40
+    payload["returned"] = 40
+    payload["summary"]["by_category"] = {
+        "Massa": 7,
+        "Pisos": 23,
+        "Telhados": 10,
+    }
+    return payload
 
 
 def _known_p6_model(authorization):
@@ -2592,6 +2779,263 @@ def test_r05_resume_rejects_float_element_ids_that_equal_known_integer_ids():
         production_runner._remaining_r05_operations(operations, float_ids)
 
 
+def test_failed_stage_journal_recovers_only_the_seven_new_verified_writes(tmp_path):
+    journal_path = tmp_path / "R05-stage-failed.json"
+    journal_path.write_text(json.dumps(_known_failed_r05_stage_journal()), encoding="utf-8")
+    operations = _known_failed_r05_stage_write_operations()
+
+    recovered = production_runner._load_known_failed_r05_stage_records(
+        journal_path, operations
+    )
+
+    assert [record["logical_id"] for record in recovered] == [
+        operation.logical_id for operation in operations
+    ]
+    assert len({record["element_id"] for record in recovered}) == 7
+    assert len({record["unique_id"] for record in recovered}) == 7
+
+
+def test_failed_stage_r05_writes_require_independent_identity_and_bounds_readback(tmp_path):
+    journal_path = tmp_path / "R05-stage-failed.json"
+    journal_path.write_text(json.dumps(_known_failed_r05_stage_journal()), encoding="utf-8")
+    operations = _known_failed_r05_stage_write_operations()
+    records = production_runner._load_known_failed_r05_stage_records(journal_path, operations)
+    readback = _known_failed_r05_stage_readback(records, operations)
+    edge_readback = _known_failed_r05_stage_edge_readback(records, operations)
+
+    evidence = production_runner._validate_known_r05_stage_writes(
+        readback,
+        records,
+        operations,
+        edge_payload=edge_readback,
+        view_id=900001,
+    )
+
+    assert evidence["readback_status"] == "VERIFIED"
+    assert len(evidence["writes"]) == 7
+    assert evidence["checks"] == {
+        "coverage": "PASS",
+        "identity": "PASS",
+        "bounds_xy": "PASS",
+        "bounds_z": "PASS",
+        "footprint": "PASS",
+        "elevation": "PASS",
+        "solid_profile": "PASS",
+    }
+
+    changed_bounds = deepcopy(readback)
+    changed_bounds["rows"][0]["bounding_box"]["max"][0] += 0.01
+    with pytest.raises(ValueError, match="bounds differ"):
+        production_runner._validate_known_r05_stage_writes(
+            changed_bounds,
+            records,
+            operations,
+            edge_payload=edge_readback,
+            view_id=900001,
+        )
+
+    invalid_z_bounds = deepcopy(readback)
+    invalid_z_bounds["rows"][0]["bounding_box"]["max"][2] = float("nan")
+    with pytest.raises(ValueError, match="bounds are malformed"):
+        production_runner._validate_known_r05_stage_writes(
+            invalid_z_bounds,
+            records,
+            operations,
+            edge_payload=edge_readback,
+            view_id=900001,
+        )
+
+
+def test_failed_stage_r05_geometry_requires_complete_edge_readback(tmp_path):
+    journal_path = tmp_path / "R05-stage-failed.json"
+    journal_path.write_text(json.dumps(_known_failed_r05_stage_journal()), encoding="utf-8")
+    operations = _known_failed_r05_stage_write_operations()
+    records = production_runner._load_known_failed_r05_stage_records(journal_path, operations)
+    edge_readback = _known_failed_r05_stage_edge_readback(records, operations)
+
+    evidence = production_runner._validate_known_r05_stage_geometry(
+        edge_readback, records, operations, view_id=900001
+    )
+
+    assert evidence["readback_status"] == "VERIFIED"
+    assert len(evidence["writes"]) == 7
+    assert evidence["checks"] == {
+        "coverage": "PASS",
+        "identity": "PASS",
+        "footprint": "PASS",
+        "elevation": "PASS",
+        "solid_profile": "PASS",
+    }
+
+
+def test_failed_stage_r05_geometry_rejects_missing_service_floor_courtyard(tmp_path):
+    journal_path = tmp_path / "R05-stage-failed.json"
+    journal_path.write_text(json.dumps(_known_failed_r05_stage_journal()), encoding="utf-8")
+    operations = _known_failed_r05_stage_write_operations()
+    records = production_runner._load_known_failed_r05_stage_records(journal_path, operations)
+    edge_readback = _known_failed_r05_stage_edge_readback(records, operations)
+    service_floor_id = next(
+        record["element_id"]
+        for record in records
+        if record["logical_id"] == "FLOOR-SERVICE_CAPACITATION-L1"
+    )
+    edge_readback["rows"] = [
+        row
+        for row in edge_readback["rows"]
+        if not (
+            row["element_id"] == service_floor_id
+            and all(
+                1 - 1e-9 <= coordinate <= 1.5 + 1e-9
+                for point in (row["geometry"]["start"], row["geometry"]["end"])
+                for coordinate in point[:2]
+            )
+            and abs(row["geometry"]["start"][2]) <= 1e-9
+            and abs(row["geometry"]["end"][2]) <= 1e-9
+        )
+    ]
+    edge_readback["total_candidates"] = len(edge_readback["rows"])
+    edge_readback["returned"] = len(edge_readback["rows"])
+
+    with pytest.raises(ValueError, match="footprint"):
+        production_runner._validate_known_r05_stage_geometry(
+            edge_readback, records, operations, view_id=900001
+        )
+
+
+def test_failed_stage_r05_geometry_rejects_roof_at_wrong_elevation(tmp_path):
+    journal_path = tmp_path / "R05-stage-failed.json"
+    journal_path.write_text(json.dumps(_known_failed_r05_stage_journal()), encoding="utf-8")
+    operations = _known_failed_r05_stage_write_operations()
+    records = production_runner._load_known_failed_r05_stage_records(journal_path, operations)
+    edge_readback = _known_failed_r05_stage_edge_readback(records, operations)
+    admin_roof_id = next(
+        record["element_id"]
+        for record in records
+        if record["logical_id"] == "ROOF-ADMIN_ACOLHIMENTO-L2"
+    )
+    for row in edge_readback["rows"]:
+        if row["element_id"] != admin_roof_id:
+            continue
+        for endpoint in ("start", "end"):
+            if abs(row["geometry"][endpoint][2] - 6.4) <= 1e-9:
+                row["geometry"][endpoint][2] += 0.01
+
+    with pytest.raises(ValueError, match="elevation"):
+        production_runner._validate_known_r05_stage_geometry(
+            edge_readback, records, operations, view_id=900001
+        )
+
+
+def test_failed_stage_r05_geometry_rejects_incomplete_element_coverage(tmp_path):
+    journal_path = tmp_path / "R05-stage-failed.json"
+    journal_path.write_text(json.dumps(_known_failed_r05_stage_journal()), encoding="utf-8")
+    operations = _known_failed_r05_stage_write_operations()
+    records = production_runner._load_known_failed_r05_stage_records(journal_path, operations)
+    edge_readback = _known_failed_r05_stage_edge_readback(records, operations)
+    edge_readback["coverage"]["inspected"] = 6
+
+    with pytest.raises(ValueError, match="coverage"):
+        production_runner._validate_known_r05_stage_geometry(
+            edge_readback, records, operations, view_id=900001
+        )
+
+
+def test_failed_stage_r05_geometry_rejects_vertical_edge_outside_the_profile(tmp_path):
+    journal_path = tmp_path / "R05-stage-failed.json"
+    journal_path.write_text(json.dumps(_known_failed_r05_stage_journal()), encoding="utf-8")
+    operations = _known_failed_r05_stage_write_operations()
+    records = production_runner._load_known_failed_r05_stage_records(journal_path, operations)
+    edge_readback = _known_failed_r05_stage_edge_readback(records, operations)
+    roof_id = next(record["element_id"] for record in records if record["logical_id"].startswith("ROOF-"))
+    vertical_edge = next(
+        row
+        for row in edge_readback["rows"]
+        if row["element_id"] == roof_id
+        and abs(row["geometry"]["start"][2] - row["geometry"]["end"][2]) > 0.1
+    )
+    vertical_edge["geometry"]["start"][0] += 0.02
+    vertical_edge["geometry"]["end"][0] += 0.02
+    vertical_edge["geometry"]["start"][1] += 0.02
+    vertical_edge["geometry"]["end"][1] += 0.02
+
+    with pytest.raises(ValueError, match="vertical profile"):
+        production_runner._validate_known_r05_stage_geometry(
+            edge_readback, records, operations, view_id=900001
+        )
+
+
+def test_failed_stage_r05_edge_query_reads_every_page(tmp_path, monkeypatch):
+    journal_path = tmp_path / "R05-stage-failed.json"
+    journal_path.write_text(json.dumps(_known_failed_r05_stage_journal()), encoding="utf-8")
+    operations = _known_failed_r05_stage_write_operations()
+    records = production_runner._load_known_failed_r05_stage_records(journal_path, operations)
+    template = _known_failed_r05_stage_edge_readback(records, operations, view_id=900001)
+    all_rows = template["rows"] * 5 + template["rows"][:22]
+    calls = []
+
+    def read_tool(_transport, tool, arguments):
+        assert tool == "horizun_get_dimension_references"
+        calls.append(arguments)
+        offset = arguments["offset"]
+        rows = all_rows[offset : offset + 500]
+        return {
+            "coverage": {"requested": 7, "inspected": 7, "unreadable": []},
+            "total_candidates": len(all_rows),
+            "returned": len(rows),
+            "offset": offset,
+            "truncated": offset + len(rows) < len(all_rows),
+            "warnings": [],
+            "rows": rows,
+        }
+
+    monkeypatch.setattr(production_runner, "_read_tool", read_tool)
+
+    payload = production_runner._query_known_r05_stage_edges(object(), records, 900001)
+
+    assert len(payload["rows"]) == 502
+    assert [call["offset"] for call in calls] == [0, 500]
+    assert all(call["max_results"] == 500 for call in calls)
+
+
+def test_r05_inspection_view_rejects_template_view(monkeypatch):
+    monkeypatch.setattr(
+        production_runner,
+        "_read_tool",
+        lambda *_args: {
+            "matched_total": 1,
+            "returned": 1,
+            "coverage_complete": True,
+            "unreadable_total": 0,
+            "rows": [
+                {
+                    "element_id": 900001,
+                    "unique_id": "template-view",
+                    "name": "{3D}",
+                    "is_view_template": True,
+                    "view_type": "ThreeD",
+                }
+            ],
+        },
+    )
+
+    with pytest.raises(ValueError, match="non-template 3D view"):
+        production_runner._query_r05_inspection_view_id(object())
+
+
+def test_r05_resume_skips_only_all_fifteen_independently_reconciled_writes():
+    floors = _known_r05_floor_operations()
+    stage_operations = _known_failed_r05_stage_write_operations()
+    operations = [*floors, *stage_operations, SimpleNamespace(logical_id="WALL-KEEP")]
+    records = [
+        *_known_failed_r05_journal()["records"][:8],
+        *_known_failed_r05_stage_journal()["records"][8:15],
+    ]
+
+    remaining = production_runner._remaining_r05_operations(operations, records)
+
+    assert [operation.logical_id for operation in remaining] == ["WALL-KEEP"]
+
+
 def test_failed_r05_journal_rejects_float_element_id_equal_to_known_integer(
     tmp_path,
 ):
@@ -2659,6 +3103,74 @@ def test_reconciled_partial_floor_records_rejoin_the_full_r05_result():
     assert sum(record.evidence.get("reconciled_existing", False) for record in merged.records) == 8
 
 
+def test_reconciled_failed_stage_writes_rejoin_the_full_r05_result():
+    floors = _known_r05_floor_operations()
+    stage_operations = _known_failed_r05_stage_write_operations()
+    wall = SimpleNamespace(
+        logical_id="WALL-CREATED-NOW",
+        semantic_capability="revit.create_wall",
+        preferred_provider="horizun",
+        payload={},
+    )
+    plan = SimpleNamespace(operations=[*floors, *stage_operations, wall])
+    current_result = SimpleNamespace(
+        status=production_runner.RunStatus.VERIFIED,
+        records=[
+            SimpleNamespace(
+                logical_id=wall.logical_id,
+                semantic_capability=wall.semantic_capability,
+                provider="horizun",
+                tool="horizun_create_elements",
+                reported_success=True,
+                status=production_runner.RunStatus.VERIFIED,
+                unique_id="new-wall-uid",
+                evidence={"element_id": 440001, "unique_id": "new-wall-uid"},
+                error=None,
+            )
+        ],
+    )
+    stage_records = _known_failed_r05_stage_journal()["records"][8:15]
+    stage_evidence = production_runner._validate_known_r05_stage_writes(
+        _known_failed_r05_stage_readback(stage_records, stage_operations),
+        stage_records,
+        stage_operations,
+        edge_payload=_known_failed_r05_stage_edge_readback(stage_records, stage_operations),
+        view_id=900001,
+    )
+    partial_floors = [
+        {
+            "logical_id": record["logical_id"],
+            "element_id": record["element_id"],
+            "unique_id": record["unique_id"],
+            "readback_status": "VERIFIED",
+            "level": "Level 1",
+            "level_id": 311,
+            "area_m2": 1.0,
+            "area_source_unit": "m2",
+            "bounding_box": {"min": [0, 0, 0], "max": [1, 1, 0.1]},
+        }
+        for record in _known_failed_r05_journal()["records"][:8]
+    ]
+
+    merged = production_runner._merge_reconciled_r05_records(
+        plan,
+        current_result,
+        {
+            "reconciled_partial_floors": {
+                "floors": partial_floors,
+                "geometry_checks": {"bounds_xy": "PASS"},
+            },
+            "reconciled_failed_stage_writes": stage_evidence,
+        },
+    )
+
+    assert merged.status is production_runner.RunStatus.VERIFIED
+    assert [record.logical_id for record in merged.records] == [
+        operation.logical_id for operation in plan.operations
+    ]
+    assert sum(record.evidence.get("reconciled_existing", False) for record in merged.records) == 15
+
+
 def test_known_partial_recovery_error_includes_observed_counts_and_categories():
     authorization = SimpleNamespace(
         mass_bounding_boxes_m={
@@ -2712,6 +3224,41 @@ def test_known_partial_recovery_error_reports_unrecognized_row_field_names():
             _known_failed_r05_journal()["records"][:8],
             authorization,
         )
+
+
+def test_failed_stage_partial_model_equals_p6_plus_eight_floors_and_seven_writes():
+    authorization = SimpleNamespace(
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO",
+                "CHILD_SECTOR",
+                "RES_PAV_A",
+                "RES_PAV_B",
+                "RES_PAV_C",
+                "RES_PAV_D_COMMUNAL",
+                "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+    )
+    stage_operations = _known_failed_r05_stage_write_operations()
+    stage_records = _known_failed_r05_stage_journal()["records"][8:15]
+    records = [*_known_failed_r05_journal()["records"][:8], *stage_records]
+    payload = _known_partial_model_with_failed_stage_writes(
+        authorization, stage_records, stage_operations
+    )
+
+    state = production_runner._validate_known_r05_partial_model(
+        payload, records, authorization
+    )
+    production_runner._compare_known_partial_to_p6_checkpoint(
+        payload, _known_p6_model(authorization), records
+    )
+
+    assert state["matched_total"] == 40
+    assert len(state["partial_element_ids"]) == 15
+    assert state["p6_element_count_after_excluding_partial"] == 25
 
 
 def test_known_partial_recovery_rejects_changed_existing_p6_element_geometry():
@@ -2778,9 +3325,31 @@ def test_known_r05_partial_is_reconciled_without_closing_target_after_exact_chec
             return {"path": active_path[0]}
         if tool == "horizun_quantities":
             return _known_area_takeoff_response(target)
+        if tool == "horizun_get_dimension_references":
+            return _known_failed_r05_stage_edge_readback(
+                _known_failed_r05_stage_journal()["records"][8:15],
+                _known_failed_r05_stage_write_operations(),
+                view_id=900001,
+            )
         if tool == "horizun_query_model":
             if Path(active_path[0]).resolve() == checkpoint.resolve():
                 return _known_p6_model(authorization)
+            if arguments.get("name") == "{3D}":
+                return {
+                    "matched_total": 1,
+                    "returned": 1,
+                    "coverage_complete": True,
+                    "unreadable_total": 0,
+                    "rows": [
+                        {
+                            "element_id": 900001,
+                            "unique_id": "view-900001",
+                            "name": "{3D}",
+                            "is_view_template": False,
+                            "view_type": "ThreeD",
+                        }
+                    ],
+                }
             if arguments.get("categories") == ["OST_Levels"]:
                 return {
                     "matched_total": 1,
@@ -2896,6 +3465,182 @@ def test_known_r05_partial_is_reconciled_without_closing_target_after_exact_chec
         and args["operation"] == "close"
         and Path(args.get("target_document", "")).resolve() == target.resolve()
         for tool, args in tool_calls
+    )
+
+
+def test_failed_stage_r05_partial_is_reconciled_before_any_resume_write(tmp_path, monkeypatch):
+    target = tmp_path / "RUN-003.rvt"
+    target.write_bytes(b"unsaved-target-placeholder")
+    checkpoint = tmp_path / "P6-checkpoint.rvt"
+    checkpoint.write_bytes(b"verified-checkpoint-placeholder")
+    floor_journal = tmp_path / "R05-floors-failed.json"
+    floor_journal.write_text(json.dumps(_known_failed_r05_journal()), encoding="utf-8")
+    stage_journal = tmp_path / "R05-stage-failed.json"
+    stage_journal.write_text(
+        json.dumps(_known_failed_r05_stage_journal()), encoding="utf-8"
+    )
+    authorization = SimpleNamespace(
+        checkpoint_sha256="a" * 64,
+        checkpoint_path="P6-checkpoint.rvt",
+        p6_readback_fingerprint="p6-fingerprint",
+        mass_bounding_boxes_m={
+            name: {"min": [0.0, 0.0, 0.0], "max": [1.0, 1.0, 1.0]}
+            for name in (
+                "ADMIN_ACOLHIMENTO",
+                "CHILD_SECTOR",
+                "RES_PAV_A",
+                "RES_PAV_B",
+                "RES_PAV_C",
+                "RES_PAV_D_COMMUNAL",
+                "SERVICE_CAPACITATION",
+            )
+        },
+        administrative_floor_element_ids={"L1": 330001, "L2": 330002},
+        permits_target_path=lambda path: Path(path).resolve() == target.resolve(),
+    )
+    stage_operations = _known_failed_r05_stage_write_operations()
+    operations = [*_known_r05_floor_operations(), *stage_operations]
+    stage_records = _known_failed_r05_stage_journal()["records"][8:15]
+    live_payload = _known_partial_model_with_failed_stage_writes(
+        authorization, stage_records, stage_operations
+    )
+    stage_payload = _known_failed_r05_stage_readback(stage_records, stage_operations)
+    active_path = [str(target)]
+    calls = []
+    monkeypatch.setattr(production_runner, "REPOSITORY_ROOT", tmp_path)
+
+    def read_tool(_transport, tool, arguments):
+        calls.append((tool, arguments))
+        if tool == "get_document_info":
+            return {"path": active_path[0]}
+        if tool == "horizun_quantities":
+            return _known_area_takeoff_response(target)
+        if tool == "horizun_get_dimension_references":
+            return _known_failed_r05_stage_edge_readback(
+                stage_records, stage_operations, view_id=900001
+            )
+        if tool == "horizun_query_model":
+            if arguments.get("name") == "{3D}":
+                return {
+                    "matched_total": 1,
+                    "returned": 1,
+                    "coverage_complete": True,
+                    "unreadable_total": 0,
+                    "rows": [
+                        {
+                            "element_id": 900001,
+                            "unique_id": "view-900001",
+                            "name": "{3D}",
+                            "is_view_template": False,
+                            "view_type": "ThreeD",
+                        }
+                    ],
+                }
+            if arguments.get("element_ids") and arguments.get("categories") == ["OST_Levels"]:
+                return {
+                    "matched_total": 1,
+                    "returned": 1,
+                    "coverage_complete": True,
+                    "unreadable_total": 0,
+                    "rows": [
+                        {
+                            "element_id": 311,
+                            "unique_id": "level-311",
+                            "category": "Levels",
+                            "name": "Level 1",
+                        }
+                    ],
+                }
+            if arguments.get("element_ids"):
+                return stage_payload
+            if Path(active_path[0]).resolve() == checkpoint.resolve():
+                return _known_p6_model(authorization)
+            return live_payload
+        if tool == "horizun_document_session":
+            if arguments["operation"] == "open":
+                active_path[0] = arguments.get("file_path", "")
+                return {
+                    "status": "opened",
+                    "opened_now": True,
+                    "active_document_verified": True,
+                    "path": active_path[0],
+                    "path_is_the_one_requested": True,
+                    "opened_from": active_path[0],
+                    "identified_by": "path",
+                    "expected_version": "2027",
+                    "host_version": "2027",
+                    "file_version_before_open": "2027",
+                    "upgraded": False,
+                    "version_guard": "checked",
+                }
+            if arguments["operation"] == "close":
+                active_path[0] = str(target)
+                return {"closed": True}
+        raise AssertionError(f"unexpected tool {tool}")
+
+    monkeypatch.setattr(production_runner, "_read_tool", read_tool)
+    monkeypatch.setattr(
+        production_runner,
+        "_document_info",
+        lambda _transport: {"path": active_path[0]},
+    )
+    monkeypatch.setattr(
+        production_runner, "_validate_p6_live_readback", lambda *_args: "p6-fingerprint"
+    )
+    monkeypatch.setattr(
+        production_runner.CheckpointManager, "verify_checkpoint", lambda *_: True
+    )
+
+    class FakeTransport:
+        def call(self, tool, arguments):
+            calls.append((tool, arguments))
+            if tool == "horizun_document_session" and arguments.get("operation") == "open":
+                active_path[0] = arguments.get("file_path", "")
+            return {"result": {"structuredContent": {}}}
+
+    evidence = production_runner._restore_known_failed_r05_partial(
+        FakeTransport(),
+        target,
+        authorization,
+        journal_path=floor_journal,
+        stage_journal_path=stage_journal,
+        run_key="failed-stage-restore",
+        operations=operations,
+        target_document_title=target.stem,
+    )
+
+    assert evidence["target_preserved_active"] is True
+    assert evidence["pre_close_live_state"]["matched_total"] == 40
+    assert len(evidence["reconciled_r05_records"]) == 15
+    assert evidence["reconciled_failed_stage_writes"]["readback_status"] == "VERIFIED"
+    assert evidence["reconciled_failed_stage_writes"]["checks"]["footprint"] == "PASS"
+    assert evidence["reconciled_failed_stage_writes"]["checks"]["elevation"] == "PASS"
+    exact_stage_query = next(
+        arguments
+        for tool, arguments in calls
+        if tool == "horizun_query_model"
+        and set(arguments.get("element_ids", []))
+        == {record["element_id"] for record in stage_records}
+    )
+    assert exact_stage_query["cache_mode"] == "bypass"
+    assert exact_stage_query["include_bounding_box"] is True
+    view_query = next(
+        arguments
+        for tool, arguments in calls
+        if tool == "horizun_query_model" and arguments.get("name") == "{3D}"
+    )
+    assert view_query["categories"] == ["OST_Views"]
+    edge_query = next(
+        arguments for tool, arguments in calls if tool == "horizun_get_dimension_references"
+    )
+    assert edge_query["view_id"] == 900001
+    assert edge_query["element_ids"] == sorted(record["element_id"] for record in stage_records)
+    assert active_path[0] == str(target)
+    assert not any(
+        tool == "horizun_document_session"
+        and arguments.get("operation") == "close"
+        and Path(arguments.get("target_document", "")).resolve() == target.resolve()
+        for tool, arguments in calls
     )
 
 

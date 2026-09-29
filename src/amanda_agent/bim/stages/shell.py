@@ -312,7 +312,7 @@ def plan_shell_stage(
     gross_shell: Any | None = None,
     floor_loops: Sequence[Any] | None = None,
     slab_loops: Sequence[Any] | None = None,
-    roof: Mapping[str, Any] | None = None,
+    roof: Mapping[str, Any] | Sequence[Mapping[str, Any]] | None = None,
     openings: Sequence[Any] | None = None,
     wall_types: Mapping[str, str] | None = None,
     wall_type_source: str | None = None,
@@ -477,25 +477,35 @@ def plan_shell_stage(
     )
     add_loop_elements(slab_loops or [], "SLAB", SLAB_CAPABILITY, "SLAB")
     if roof is not None or shell_polygon is not None:
-        roof_polygon = _as_polygon(
-            roof.get("geometry", shell_polygon) if roof is not None else shell_polygon
+        roof_specs = (
+            [roof]
+            if isinstance(roof, Mapping)
+            else list(roof)
+            if roof is not None
+            else [None]
         )
-        roof_properties = dict(roof or {})
-        roof_properties.pop("geometry", None)
-        roof_properties.setdefault("type", "simple-approved")
-        roof_properties.setdefault("elevation_m", 0.0)
-        roof_properties["closed_loop"] = True
-        element = DesiredElement(
-            logical_id="ROOF-001",
-            category="ROOF",
-            geometry=_polygon_geometry(roof_polygon),
-            properties=roof_properties,
-            requirement_id="R05-SHELL",
-            design_option=selected_option,
-            generation_run=effective.generation_run,
-        )
-        elements.append(element)
-        capabilities[element.logical_id] = ROOF_CAPABILITY
+        for index, spec in enumerate(roof_specs, start=1):
+            roof_properties = dict(spec or {})
+            roof_geometry = roof_properties.pop("geometry", shell_polygon)
+            requested_id = roof_properties.pop("logical_id", None)
+            roof_polygon = _as_polygon(roof_geometry)
+            roof_properties.setdefault("type", "simple-approved")
+            roof_properties.setdefault("elevation_m", 0.0)
+            roof_properties["closed_loop"] = True
+            logical_id = requested_id or (
+                "ROOF-001" if len(roof_specs) == 1 else f"ROOF-{index:03d}"
+            )
+            element = DesiredElement(
+                logical_id=logical_id,
+                category="ROOF",
+                geometry=_polygon_geometry(roof_polygon),
+                properties=roof_properties,
+                requirement_id="R05-SHELL",
+                design_option=selected_option,
+                generation_run=effective.generation_run,
+            )
+            elements.append(element)
+            capabilities[element.logical_id] = ROOF_CAPABILITY
 
     planned_external: Sequence[DesiredElement | Mapping[str, Any]] = ()
     if external_planner is not None:

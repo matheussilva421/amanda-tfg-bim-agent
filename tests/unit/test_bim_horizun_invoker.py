@@ -1087,6 +1087,45 @@ def test_typed_wall_resolves_logical_level_and_type_ids_and_caches_stage_reads()
     assert second_row["type_id"] == 398
 
 
+def test_typed_wall_treats_decimal_type_id_string_as_element_id():
+    transport = FakeMcpTransport(
+        _reply({"title": "LAB_AMANDA", "path": "LAB_AMANDA.rvt", "version": "2027"}),
+        _reply({"rows": [{"element_id": 250}, {"element_id": 311}]}),
+        _reply({"created_ids": [901]}),
+        _reply(
+            {
+                "rows": [
+                    {
+                        "element_id": 901,
+                        "unique_id": "uid-wall-901",
+                        "category": "Paredes",
+                    }
+                ]
+            }
+        ),
+    )
+
+    result = HorizunInvoker(transport=transport).invoke(
+        _wall_call(properties={"type_id": "250", "structural": False})
+    )
+
+    create_request = next(
+        arguments
+        for tool, arguments in transport.calls
+        if tool == "horizun_create_elements"
+    )
+    assert create_request["elements"][0]["type_id"] == 250
+    assert transport.calls[1] == (
+        "horizun_query_model",
+        {
+            "element_ids": [250, 311],
+            "response_mode": "compact",
+            "cache_mode": "bypass",
+        },
+    )
+    assert result.reported_success is True
+
+
 @pytest.mark.parametrize(
     ("capability", "stage", "category"),
     [
