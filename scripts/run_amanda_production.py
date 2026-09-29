@@ -981,33 +981,139 @@ def _load_known_failed_r05_stage_records(journal_path: Path, operations) -> list
 def _query_r05_inspection_view_id(transport) -> int:
     """Resolve the exact non-template default 3D view for typed edge inspection."""
 
-    payload = _read_tool(
-        transport,
-        "horizun_query_model",
-        {
-            "categories": ["OST_Views"],
-            "cache_mode": "bypass",
-            "include_types": False,
-            "max_rows": 500,
-            "response_mode": "compact",
-            "return_fields": [
-                "element_id",
-                "unique_id",
-                "name",
-                "is_view_template",
-                "view_type",
-            ],
-        },
-    )
-    rows = payload.get("rows") if isinstance(payload, dict) else None
-    if (
-        not isinstance(rows, list)
-        or payload.get("matched_total") != payload.get("returned")
-        or payload.get("returned") != len(rows)
-        or payload.get("coverage_complete") is not True
-        or payload.get("unreadable_total") != 0
-    ):
-        raise ValueError("RUN-003 exact default 3D view readback is incomplete")
+    query = {
+        "categories": ["OST_Views"],
+        "cache_mode": "bypass",
+        "include_types": False,
+        "max_rows": 500,
+        "response_mode": "compact",
+        "return_fields": [
+            "element_id",
+            "unique_id",
+            "name",
+            "is_view_template",
+            "view_type",
+        ],
+    }
+    rows = []
+    expected_total = None
+    expected_offset = 0
+    cursor = None
+    seen_cursors = set()
+    max_pages = 100
+
+    def fail_incomplete_page(page_number: int, payload: object, reason: str) -> ValueError:
+        if not isinstance(payload, dict):
+            shape = f"reply_type={type(payload).__name__}"
+        else:
+            page_rows = payload.get("rows")
+
+            def bounded(field: str) -> str:
+                value = payload.get(field)
+                if type(value) in (int, bool) or value is None:
+                    return repr(value)
+                if isinstance(value, str):
+                    return repr(value[:32])
+                return type(value).__name__
+
+            shape = (
+                f"matched_total={bounded('matched_total')}, "
+                f"returned={bounded('returned')}, offset={bounded('offset')}, "
+                f"truncated={bounded('truncated')}, "
+                f"next_cursor_present={bool(payload.get('next_cursor'))}, "
+                f"coverage_complete={bounded('coverage_complete')}, "
+                f"unreadable_total={bounded('unreadable_total')}, "
+                f"rows_type={type(page_rows).__name__}, "
+                f"row_count={len(page_rows) if isinstance(page_rows, list) else 'unknown'}"
+            )
+        return ValueError(
+            "RUN-003 exact default 3D view inventory is incomplete: "
+            f"page={page_number}, reason={reason}, {shape}"
+        )
+
+    for page_number in range(1, max_pages + 1):
+        arguments = dict(query)
+        if cursor is not None:
+            arguments["cursor"] = cursor
+        payload = _read_tool(transport, "horizun_query_model", arguments)
+        if not isinstance(payload, dict):
+            raise fail_incomplete_page(page_number, payload, "reply is not an object")
+        page_rows = payload.get("rows")
+        total = payload.get("matched_total")
+        returned = payload.get("returned")
+        offset = payload.get("offset")
+        truncated = payload.get("truncated")
+        next_cursor = payload.get("next_cursor")
+        if (
+            not isinstance(page_rows, list)
+            or isinstance(total, bool)
+            or not isinstance(total, int)
+            or total < 0
+            or isinstance(returned, bool)
+            or not isinstance(returned, int)
+            or returned != len(page_rows)
+            or isinstance(offset, bool)
+            or not isinstance(offset, int)
+            or offset != expected_offset
+            or not isinstance(truncated, bool)
+            or type(payload.get("coverage_complete")) is not bool
+            or isinstance(payload.get("unreadable_total"), bool)
+            or not isinstance(payload.get("unreadable_total"), int)
+            or payload.get("unreadable_total") != 0
+        ):
+            raise fail_incomplete_page(page_number, payload, "page metadata is invalid")
+        if expected_total is None:
+            expected_total = total
+        elif total != expected_total:
+            raise fail_incomplete_page(page_number, payload, "matched_total changed between pages")
+        rows.extend(page_rows)
+
+        if truncated:
+            if (
+                returned == 0
+                or expected_offset + returned >= total
+                or not isinstance(next_cursor, str)
+                or not next_cursor.strip()
+                or next_cursor in seen_cursors
+            ):
+                raise fail_incomplete_page(page_number, payload, "truncated page has no advancing cursor")
+            seen_cursors.add(next_cursor)
+            expected_offset += returned
+            cursor = next_cursor
+            continue
+
+        if (
+            next_cursor not in (None, "")
+            or expected_offset + returned != total
+            or payload.get("coverage_complete") is not True
+        ):
+            raise fail_incomplete_page(page_number, payload, "final page does not prove complete coverage")
+        expected_offset += returned
+        break
+    else:
+        raise ValueError(
+            f"RUN-003 view inventory exceeded the {max_pages}-page safety limit"
+        )
+
+    if expected_total != len(rows) or expected_offset != expected_total:
+        raise ValueError("RUN-003 view inventory row count does not match complete coverage")
+    element_ids = []
+    for row in rows:
+        if not isinstance(row, dict):
+            raise TypeError("RUN-003 view inventory contains an untyped row")
+        element_id = row.get("element_id")
+        unique_id = row.get("unique_id")
+        if (
+            isinstance(element_id, bool)
+            or not isinstance(element_id, int)
+            or element_id <= 0
+            or not isinstance(unique_id, str)
+            or not unique_id.strip()
+        ):
+            raise ValueError("RUN-003 view inventory contains incomplete element identity")
+        element_ids.append(element_id)
+    if len(set(element_ids)) != len(element_ids):
+        raise ValueError("RUN-003 view inventory contains duplicate element IDs")
     exact = [row for row in rows if isinstance(row, dict) and row.get("name") == "{3D}"]
     if len(exact) != 1:
         raise ValueError(

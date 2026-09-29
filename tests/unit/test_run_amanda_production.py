@@ -3005,6 +3005,9 @@ def test_r05_inspection_view_enumerates_views_and_requests_element_id(monkeypatc
         return {
             "matched_total": 2,
             "returned": 2,
+            "offset": 0,
+            "truncated": False,
+            "next_cursor": None,
             "coverage_complete": True,
             "unreadable_total": 0,
             "rows": [
@@ -3050,6 +3053,95 @@ def test_r05_inspection_view_enumerates_views_and_requests_element_id(monkeypatc
     ]
 
 
+def test_r05_inspection_view_paginates_complete_view_inventory(monkeypatch):
+    calls = []
+    first_page = [
+        {
+            "element_id": index + 1,
+            "unique_id": f"plan-view-{index + 1}",
+            "name": f"Plan {index + 1}",
+            "is_view_template": False,
+            "view_type": "FloorPlan",
+        }
+        for index in range(500)
+    ]
+
+    def read_tool(_transport, tool, arguments):
+        calls.append((tool, arguments))
+        if arguments.get("cursor") == "page-2":
+            rows = [
+                {
+                    "element_id": 900001,
+                    "unique_id": "default-3d-view",
+                    "name": "{3D}",
+                    "is_view_template": False,
+                    "view_type": "ThreeD",
+                }
+            ]
+            return {
+                "matched_total": 501,
+                "returned": 1,
+                "offset": 500,
+                "truncated": False,
+                "next_cursor": None,
+                "coverage_complete": True,
+                "unreadable_total": 0,
+                "rows": rows,
+            }
+        return {
+            "matched_total": 501,
+            "returned": 500,
+            "offset": 0,
+            "truncated": True,
+            "next_cursor": "page-2",
+            "coverage_complete": False,
+            "unreadable_total": 0,
+            "rows": first_page,
+        }
+
+    monkeypatch.setattr(production_runner, "_read_tool", read_tool)
+
+    assert production_runner._query_r05_inspection_view_id(object()) == 900001
+
+    assert len(calls) == 2
+    assert calls[0][1]["max_rows"] == 500
+    assert "cursor" not in calls[0][1]
+    assert calls[1][1]["cursor"] == "page-2"
+
+
+def test_r05_inspection_view_rejects_a_repeated_page_cursor(monkeypatch):
+    calls = []
+
+    def read_tool(_transport, _tool, arguments):
+        calls.append(arguments)
+        offset = 0 if "cursor" not in arguments else 1
+        return {
+            "matched_total": 3,
+            "returned": 1,
+            "offset": offset,
+            "truncated": True,
+            "next_cursor": "same-cursor",
+            "coverage_complete": False,
+            "unreadable_total": 0,
+            "rows": [
+                {
+                    "element_id": 900000 + offset,
+                    "unique_id": f"view-{offset}",
+                    "name": f"Plan {offset}",
+                    "is_view_template": False,
+                    "view_type": "FloorPlan",
+                }
+            ],
+        }
+
+    monkeypatch.setattr(production_runner, "_read_tool", read_tool)
+
+    with pytest.raises(ValueError, match="truncated page has no advancing cursor"):
+        production_runner._query_r05_inspection_view_id(object())
+
+    assert len(calls) == 2
+
+
 def test_r05_inspection_view_rejects_template_view(monkeypatch):
     monkeypatch.setattr(
         production_runner,
@@ -3057,6 +3149,9 @@ def test_r05_inspection_view_rejects_template_view(monkeypatch):
         lambda *_args: {
             "matched_total": 1,
             "returned": 1,
+            "offset": 0,
+            "truncated": False,
+            "next_cursor": None,
             "coverage_complete": True,
             "unreadable_total": 0,
             "rows": [
@@ -3387,10 +3482,13 @@ def test_known_r05_partial_is_reconciled_without_closing_target_after_exact_chec
         if tool == "horizun_query_model":
             if Path(active_path[0]).resolve() == checkpoint.resolve():
                 return _known_p6_model(authorization)
-            if arguments.get("name") == "{3D}":
+            if arguments.get("categories") == ["OST_Views"]:
                 return {
                     "matched_total": 1,
                     "returned": 1,
+                    "offset": 0,
+                    "truncated": False,
+                    "next_cursor": None,
                     "coverage_complete": True,
                     "unreadable_total": 0,
                     "rows": [
@@ -3577,6 +3675,9 @@ def test_failed_stage_r05_partial_is_reconciled_before_any_resume_write(tmp_path
                 return {
                     "matched_total": 1,
                     "returned": 1,
+                    "offset": 0,
+                    "truncated": False,
+                    "next_cursor": None,
                     "coverage_complete": True,
                     "unreadable_total": 0,
                     "rows": [
