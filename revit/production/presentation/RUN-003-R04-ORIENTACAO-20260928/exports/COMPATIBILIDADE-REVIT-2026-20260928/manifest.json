@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "exports": [
+    {
+      "derivation": "Exported from the exact source RVT through Horizun.",
+      "source_rvt": "AMANDA-RUN-003-R04-PRESENTATION-20260928.rvt",
+      "verification": {
+        "end_marker": "END-ISO-10303-21;",
+        "entity_records": 1503,
+        "schema_header": "IFC2X3"
+      },
+      "sha256": "40F21393EE69964651D4B9F32FD83238FCC947FD680159D098FCFAA6AE98C16E",
+      "bytes": 102940,
+      "format": "IFC",
+      "settings": {
+        "base_quantities": true,
+        "schema": "IFC2x3CV2"
+      },
+      "output": "AMANDA-RUN-003-R04-PRESENTATION-20260928.ifc",
+      "source_sha256": "BF5F05050679191A0BF2CE4B731441AA20306DD36CFE426A3F2F37C33C42121A"
+    },
+    {
+      "derivation": "Exported from the exact source RVT through Horizun.",
+      "source_rvt": "AMANDA-RUN-003-R04-PRESENTATION-20260928.rvt",
+      "verification": {
+        "header_signature": "AC1027"
+      },
+      "sha256": "EC4C5508C9243985DE24703744F0F6EA9A562C47778CF30A68E1332FFD85BD5B",
+      "bytes": 192037,
+      "format": "DWG",
+      "settings": {
+        "view": "R04-02-ISOMETRICA-GERAL",
+        "header_signature": "AC1027",
+        "acad_version": "2013",
+        "view_id": 331230
+      },
+      "output": "AMANDA-RUN-003-R04-PRESENTATION-20260928-ISOMETRIA.dwg",
+      "source_sha256": "BF5F05050679191A0BF2CE4B731441AA20306DD36CFE426A3F2F37C33C42121A"
+    },
+    {
+      "derivation": "Byte-for-byte copy of the IFC above; the final checkpoint RVT SHA-256 equals the presentation source RVT.",
+      "source_rvt": "AMANDA-RUN-003-R04-PRESENTATION-FINAL-ORIENTADORA.rvt",
+      "verification": {
+        "end_marker": "END-ISO-10303-21;",
+        "entity_records": 1503,
+        "schema_header": "IFC2X3"
+      },
+      "sha256": "40F21393EE69964651D4B9F32FD83238FCC947FD680159D098FCFAA6AE98C16E",
+      "bytes": 102940,
+      "format": "IFC",
+      "settings": {
+        "base_quantities": true,
+        "schema": "IFC2x3CV2"
+      },
+      "output": "AMANDA-RUN-003-R04-PRESENTATION-FINAL-ORIENTADORA-20260928.ifc",
+      "source_sha256": "BF5F05050679191A0BF2CE4B731441AA20306DD36CFE426A3F2F37C33C42121A"
+    },
+    {
+      "derivation": "Byte-for-byte copy of the DWG above; the final checkpoint RVT SHA-256 equals the presentation source RVT.",
+      "source_rvt": "AMANDA-RUN-003-R04-PRESENTATION-FINAL-ORIENTADORA.rvt",
+      "verification": {
+        "header_signature": "AC1027"
+      },
+      "sha256": "EC4C5508C9243985DE24703744F0F6EA9A562C47778CF30A68E1332FFD85BD5B",
+      "bytes": 192037,
+      "format": "DWG",
+      "settings": {
+        "view": "R04-02-ISOMETRICA-GERAL",
+        "header_signature": "AC1027",
+        "acad_version": "2013",
+        "view_id": 331230
+      },
+      "output": "AMANDA-RUN-003-R04-PRESENTATION-FINAL-ORIENTADORA-20260928-ISOMETRIA.dwg",
+      "source_sha256": "BF5F05050679191A0BF2CE4B731441AA20306DD36CFE426A3F2F37C33C42121A"
+    },
+    {
+      "derivation": "Exported from the exact source RVT through Horizun.",
+      "source_rvt": "P6-T01-CANON-011-RECONCILED-20260926.rvt",
+      "verification": {
+        "end_marker": "END-ISO-10303-21;",
+        "entity_records": 1503,
+        "schema_header": "IFC2X3"
+      },
+      "sha256": "D8F63A8A86ED29150D9BB3801B562752D8CB4E76D5CCEC0BDF40F8C0F3761487",
+      "bytes": 102936,
+      "format": "IFC",
+      "settings": {
+        "base_quantities": true,
+        "schema": "IFC2x3CV2"
+      },
+      "output": "P6-T01-CANON-011-RECONCILED-20260926.ifc",
+      "source_sha256": "8D8166B8DA9D572C445619457E302F868CA2C7BAC1CFCE83B1B6114D02559326"
+    },
+    {
+      "derivation": "Exported from the exact source RVT through Horizun.",
+      "source_rvt": "P6-T01-CANON-011-RECONCILED-20260926.rvt",
+      "verification": {
+        "header_signature": "AC1027"
+      },
+      "sha256": "B4FF9CD740904E6C71DB5692A9EA0BD2B0283B997729C21749BB1ED226E080E9",
+      "bytes": 190277,
+      "format": "DWG",
+      "settings": {
+        "view": "P6-R04-RUN003-CANONICAL-ISOMETRIC",
+        "header_signature": "AC1027",
+        "acad_version": "2013",
+        "view_id": 328677
+      },
+      "output": "P6-T01-CANON-011-RECONCILED-20260926-ISOMETRIA.dwg",
+      "source_sha256": "8D8166B8DA9D572C445619457E302F868CA2C7BAC1CFCE83B1B6114D02559326"
+    }
+  ],
+  "sidecars": [
+    {
+      "purpose": "Revit-generated plot configuration sidecar for DWG export.",
+      "sha256": "ACCED7B7D874067F746A29EC1039C4DAF5C47E181BDF6E5078B767C89517CFD9",
+      "file": "AMANDA-RUN-003-R04-PRESENTATION-20260928-ISOMETRIA.pcp",
+      "bytes": 22737
+    },
+    {
+      "purpose": "Revit-generated plot configuration sidecar for DWG export.",
+      "sha256": "AE02E57B9B60E92BFFBFDCBA9F5B112A8D0341657363F5D52039FA98C072E669",
+      "file": "P6-T01-CANON-011-RECONCILED-20260926-ISOMETRIA.pcp",
+      "bytes": 22744
+    }
+  ],
+  "intent": "Interchange files for use with Revit 2026 or AutoCAD; these are not native Revit 2026 RVTs.",
+  "generated_utc": "2026-09-29T00:08:57.7512595Z",
+  "source_integrity": {
+    "presentation_source_and_final_checkpoint_sha256_match": true,
+    "revit_reported_disk_bytes_unchanged_on_close": true,
+    "all_three_source_rvts_closed_without_save": true
+  },
+  "revit": {
+    "version": "2027",
+    "build": "27.2.0.39",
+    "exporter": "Horizun 1.3.3",
+    "product": "Autodesk Revit"
+  },
+  "source_models": [
+    {
+      "sha256": "BF5F05050679191A0BF2CE4B731441AA20306DD36CFE426A3F2F37C33C42121A",
+      "file": "AMANDA-RUN-003-R04-PRESENTATION-20260928.rvt",
+      "bytes": 5013504
+    },
+    {
+      "sha256": "BF5F05050679191A0BF2CE4B731441AA20306DD36CFE426A3F2F37C33C42121A",
+      "file": "AMANDA-RUN-003-R04-PRESENTATION-FINAL-ORIENTADORA.rvt",
+      "bytes": 5013504
+    },
+    {
+      "sha256": "8D8166B8DA9D572C445619457E302F868CA2C7BAC1CFCE83B1B6114D02559326",
+      "file": "P6-T01-CANON-011-RECONCILED-20260926.rvt",
+      "bytes": 4960256
+    }
+  ],
+  "limitations": [
+    "IFC uses IFC2x3 Coordination View 2.0 and is a derived exchange model; Revit 2026 import was not exercised because Revit 2026 is not installed in this environment.",
+    "Each DWG contains one exported 3D isometric view, not the full parametric Revit document. AutoCAD rendering/open was not exercised here.",
+    "The final-orientadora exports are byte-for-byte copies of the presentation exports because their source RVTs are byte-identical."
+  ]
+}
