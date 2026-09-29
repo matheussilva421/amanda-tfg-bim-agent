@@ -986,12 +986,17 @@ def _query_r05_inspection_view_id(transport) -> int:
         "horizun_query_model",
         {
             "categories": ["OST_Views"],
-            "name": "{3D}",
             "cache_mode": "bypass",
             "include_types": False,
             "max_rows": 500,
             "response_mode": "compact",
-            "return_fields": ["unique_id", "name", "is_view_template", "view_type"],
+            "return_fields": [
+                "element_id",
+                "unique_id",
+                "name",
+                "is_view_template",
+                "view_type",
+            ],
         },
     )
     rows = payload.get("rows") if isinstance(payload, dict) else None
@@ -1005,7 +1010,10 @@ def _query_r05_inspection_view_id(transport) -> int:
         raise ValueError("RUN-003 exact default 3D view readback is incomplete")
     exact = [row for row in rows if isinstance(row, dict) and row.get("name") == "{3D}"]
     if len(exact) != 1:
-        raise ValueError("RUN-003 must expose exactly one view named {3D} for edge readback")
+        raise ValueError(
+            "RUN-003 must expose exactly one view named {3D} for edge readback; "
+            f"found {len(exact)} among {len(rows)} completely read views"
+        )
     row = exact[0]
     view_id = row.get("element_id")
     if (

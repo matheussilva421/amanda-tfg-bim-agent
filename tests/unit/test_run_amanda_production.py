@@ -2997,6 +2997,59 @@ def test_failed_stage_r05_edge_query_reads_every_page(tmp_path, monkeypatch):
     assert all(call["max_results"] == 500 for call in calls)
 
 
+def test_r05_inspection_view_enumerates_views_and_requests_element_id(monkeypatch):
+    calls = []
+
+    def read_tool(_transport, tool, arguments):
+        calls.append((tool, arguments))
+        return {
+            "matched_total": 2,
+            "returned": 2,
+            "coverage_complete": True,
+            "unreadable_total": 0,
+            "rows": [
+                {
+                    "element_id": 900000,
+                    "unique_id": "plan-view",
+                    "name": "Level 1",
+                    "is_view_template": False,
+                    "view_type": "FloorPlan",
+                },
+                {
+                    "element_id": 900001,
+                    "unique_id": "default-3d-view",
+                    "name": "{3D}",
+                    "is_view_template": False,
+                    "view_type": "ThreeD",
+                },
+            ],
+        }
+
+    monkeypatch.setattr(production_runner, "_read_tool", read_tool)
+
+    assert production_runner._query_r05_inspection_view_id(object()) == 900001
+
+    assert calls == [
+        (
+            "horizun_query_model",
+            {
+                "categories": ["OST_Views"],
+                "cache_mode": "bypass",
+                "include_types": False,
+                "max_rows": 500,
+                "response_mode": "compact",
+                "return_fields": [
+                    "element_id",
+                    "unique_id",
+                    "name",
+                    "is_view_template",
+                    "view_type",
+                ],
+            },
+        )
+    ]
+
+
 def test_r05_inspection_view_rejects_template_view(monkeypatch):
     monkeypatch.setattr(
         production_runner,
@@ -3520,7 +3573,7 @@ def test_failed_stage_r05_partial_is_reconciled_before_any_resume_write(tmp_path
                 stage_records, stage_operations, view_id=900001
             )
         if tool == "horizun_query_model":
-            if arguments.get("name") == "{3D}":
+            if arguments.get("categories") == ["OST_Views"]:
                 return {
                     "matched_total": 1,
                     "returned": 1,
@@ -3627,9 +3680,12 @@ def test_failed_stage_r05_partial_is_reconciled_before_any_resume_write(tmp_path
     view_query = next(
         arguments
         for tool, arguments in calls
-        if tool == "horizun_query_model" and arguments.get("name") == "{3D}"
+        if tool == "horizun_query_model"
+        and arguments.get("categories") == ["OST_Views"]
     )
     assert view_query["categories"] == ["OST_Views"]
+    assert "name" not in view_query
+    assert "element_id" in view_query["return_fields"]
     edge_query = next(
         arguments for tool, arguments in calls if tool == "horizun_get_dimension_references"
     )
