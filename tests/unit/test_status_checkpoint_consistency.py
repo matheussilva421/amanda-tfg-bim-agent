@@ -20,7 +20,7 @@ def test_status_dashboard_checkpoint_matches_project_state():
 
 def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     handoff = (ROOT / "state" / "HANDOFF.md").read_text(encoding="utf-8")
-    current_heading = "## Current state — P7-T01/R05 blocked after failed stage attempt"
+    current_heading = "## Current state — P7-T01/R05 blocked at failed-stage geometry recovery"
     assert current_heading in handoff.splitlines()[:8]
     current = handoff.split(current_heading, 1)[1].split("\n## Previous update", 1)[0]
     assert "Authorization remains limited to P7-T01/R05 on RUN-003." in current
@@ -28,6 +28,8 @@ def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     assert "`R05_STAGE_OPERATIONS_UNRECONCILED:BLOCKING` is the active blocker." in current
     assert "horizun_get_dimension_references" in current
     assert "courtyard void" in current
+    assert "complete OST_Views inventory" in current
+    assert "did not return exactly one `{3D}` view" in current
     assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" not in current
     assert "R06 and later remain NOT STARTED." in current
 

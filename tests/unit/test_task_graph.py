@@ -198,6 +198,9 @@ def test_run003_p6_keeps_r05_blocked_and_later_stages_pending():
     assert "complete edge geometry readback" in " ".join(
         tasks["P7-T01"]["evidence"]
     )
+    assert "complete OST_Views inventory" in " ".join(
+        tasks["P7-T01"]["evidence"]
+    )
     assert "completing R05 does not start R06" in " ".join(
         tasks["P7-T01"]["evidence"]
     )

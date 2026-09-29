@@ -263,10 +263,24 @@ blockers:
     provider binding or active document. The last recorded on-disk target was
     5,152,768 bytes, last write 2026-09-27T09:30:38Z. Preserve it active and
     unsaved; do not hash, save, close, or skip writes before fresh reconciliation.
+    Around 02:46-02:48Z on 2026-09-29, the official dynamic-PID runner passed
+    provider readiness and P6 checkpoint fingerprint reconciliation, then
+    entered guarded recovery after the expected live element-count mismatch.
+    Recovery failed before edge lookup because the previous query did not
+    return exactly one `{3D}` view. The runner released the lease. Diagnostic
+    revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-29e76e9478c7.json
+    records 25/25 rows, complete coverage, zero unreadable, and
+    model_write_performed=false. No R05 stage write, target save, or new
+    checkpoint occurred. Offline TDD now enumerates complete OST_Views and
+    explicitly requests element_id before local exact-view selection; commit
+    c995d6ba9d0f28432dc0a90530ffa4316dbe9eb3 is pushed. Read-only target
+    metadata remains 5,152,768 bytes with last write
+    2026-09-27T09:30:38.2675368Z; no writer lock is present.
   resolution: >-
     Through the official production runner, freshly prove provider readiness,
-    exact RUN-003 document and target, then reconcile every journaled write with
-    the complete edge geometry contract and current R05 plan. If recovery passes,
+    exact RUN-003 document and target, enumerate a complete view inventory, and
+    reconcile every journaled write with the complete edge geometry contract
+    and current R05 plan. If recovery passes,
     continue the remaining R05 operations and all independent read/verify,
     save/checkpoint, close/reopen/readback, and visual QA gates. If any live gate
     fails, preserve the target active and unsaved and record the exact failure.
@@ -280,9 +294,11 @@ blockers:
   tasks_still_allowed: []
   allowed_tasks: []
   resolution_action: >-
-    After publishing state revision 252, use only the official health-first
+    After publishing state revision 253, use only the official health-first
     runner for one exact R05-only attempt, omitting a historical PID so the
-    runner dynamically selects and proves the live session. It must reconcile
+    runner dynamically selects and proves the live session. Do not invoke it
+    before 2026-09-29 02:58:04Z, the conservative end of the provider quiet
+    window. It must reconcile
     P6, the eight prior floors, and every verified write in the failed-stage
     journal using complete edge geometry readback; skip only exact reconciled
     operations and continue remaining R05 operations. Then complete independent
