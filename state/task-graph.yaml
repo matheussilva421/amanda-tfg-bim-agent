@@ -3387,11 +3387,11 @@ tasks:
       fresh live edge readback has occurred; the seven writes remain
       unreconciled, and no save or close is authorized.
     - >-
-      The focused R05/state suite passed 275 tests, 0 failed, with one unrelated
+      The focused R05/state suite passed 277 tests, 0 failed, with one unrelated
       R04 lab-evidence hash case deselected. Official runner dry-run planned only
       R05 and wrote nothing. Ruff has the same eight baseline findings and no
-      new findings. Fix commit c995d6ba9d0f28432dc0a90530ffa4316dbe9eb3 is
-      pushed. PROJECT_STATE revision 253 points last_verified_commit to it.
+      new findings. Fix commit 6ef899c5ef948c24b6ecd5922f03342af47440ae is
+      pushed. PROJECT_STATE revision 254 points last_verified_commit to it.
       RC01 deletions and frozen R04 presentation artifacts remain untouched.
       Fresh process inspection around 02:37Z found PID 3364 with a visible
       Revit 2027.2 main window and PID 12660 without one; neither establishes
@@ -3399,22 +3399,21 @@ tasks:
       publishing state, invoke only the official R05 runner without a pinned PID
       so it dynamically proves the session and exact target. Never execute R06.
     - >-
-      Around 02:46-02:48Z the official runner passed fresh readiness and P6
-      checkpoint fingerprint reconciliation. Guarded recovery then failed
-      closed because the prior filtered query did not return exactly one {3D}
-      view. No edge-reference query or R05 write/save/new checkpoint occurred;
-      the runner released the lease. Diagnostic
-      revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-29e76e9478c7.json
+      Latest live recovery around 03:02-03:03Z passed provider readiness and P6
+      checkpoint fingerprint reconciliation, then failed closed because the
+      OST_Views inventory query was incomplete. No edge-reference query or R05
+      write/save/new checkpoint occurred; the runner released the lease.
+      Diagnostic revit/production/journals/R05-2f373fcb3511-p6-readback-diagnostic-0f532d88932b.json
       has 25 complete rows, zero unreadable, and model_write_performed=false.
-      The pushed code fix enumerates the complete OST_Views inventory and
-      requests element_id. Retry only after the conservative cooldown ending
-      2026-09-29 02:58:04Z, with dynamic PID selection. P7-T01 stays blocked;
-      R06 remains NOT STARTED.
+      The pushed code uses a cursor-paged complete OST_Views inventory and
+      validates offsets/totals, final coverage, identity, and cursor advance.
+      Retry only after 2026-09-29 03:13:03Z and state publication, with dynamic
+      PID selection. P7-T01 stays blocked; R06 remains NOT STARTED.
     - >-
       Completing R05 still requires fresh live recovery, all remaining shell
       writes, independent read/verify, save/checkpoint, close/reopen/readback,
-      and visual QA. If live geometry recovery fails, preserve the target active
-      and unsaved and record the exact failed gate.
+      and visual QA. On failure, preserve the target active and unsaved and
+      record the exact failed gate.
   P7-T02:
     id: P7-T02
     phase: P7

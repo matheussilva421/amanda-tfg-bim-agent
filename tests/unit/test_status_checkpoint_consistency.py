@@ -29,6 +29,8 @@ def test_current_handoff_is_unambiguous_and_matches_p6_report_time():
     assert "horizun_get_dimension_references" in current
     assert "courtyard void" in current
     assert "complete OST_Views inventory" in current
+    assert "latest live recovery stopped at the incomplete view-inventory gate" in current
+    assert "cursor-paged complete OST_Views inventory" in current
     assert "did not return exactly one `{3D}` view" in current
     assert "R05_PARTIAL_RECOVERY_UNVERIFIED:BLOCKING" not in current
     assert "R06 and later remain NOT STARTED." in current
